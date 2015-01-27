@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4B2BF50E-0B2B-4487-B498-FEB4901730D6}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Thycotic.RabitMqTools</RootNamespace>
+    <AssemblyName>Thycotic.RabitMqTools</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="RabbitMq\Modules\README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RabbitMq\AddUser.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\AddExchange.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\AddMessage.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\AddPermission.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\AddQueue.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\AddQueueBinding.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\AddUser.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\AddVirtualHost.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\ApplyFilter.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\ClearQueue.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\Constants.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\CopyMessage.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetChannel.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetConnection.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetExchange.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetItemsFromRabbitMQApi.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetMessage.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetNode.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetOverview.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetPermission.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetQueue.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetQueueBinding.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetRabbitMQCredentials.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetUser.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\GetVirtualHost.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\Invoke_RestMethodProxy.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\LICENSE" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\MoveMessage.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\NamesToString.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\NormaliseCredentials.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\PreventUnEscapeDotsAndSlashesOnUri.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RabbitMqTools.Format.Ps1xml" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RabbitMQTools.psd1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RabbitMQTools.psm1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\README.md" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RegisterServer.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RemoveConnection.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RemoveExchange.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RemovePermission.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RemoveQueue.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RemoveQueueBinding.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RemoveUser.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\RemoveVirtualHost.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\SendItemsToOutput.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\SetPermission.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\SetUser.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\TabExpansions.ps1" />
+    <None Include="RabbitMq\Modules\RabbitMQTools\UnregisterServer.ps1" />
+    <None Include="RabbitMq\Modules\_InstallModules.ps1" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
