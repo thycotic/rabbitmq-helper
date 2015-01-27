@@ -1,4 +1,6 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.Configuration;
+using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.SecretServerAgent2.IoC;
@@ -31,14 +33,12 @@ namespace Thycotic.SecretServerAgent2
 
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();
+                
+                Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
 
-                // Register types that expose interfaces...
-                //builder.RegisterType<ConsoleLogger>.As<ILogger>();
+                builder.RegisterModule(new MessageQueueModule(configurationProvider));
 
-                builder.RegisterModule(new MessageQueueModule());
-
-                // Build the container to finalize registrations
-                // and prepare for object resolution.
+                // Build the container to finalize registrations and prepare for object resolution.
                 IoCContainer = builder.Build();
             }
         }

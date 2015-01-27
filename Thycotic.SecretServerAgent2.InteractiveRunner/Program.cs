@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.ServiceProcess;
 using Autofac;
+using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Agent;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner

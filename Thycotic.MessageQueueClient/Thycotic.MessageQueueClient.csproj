@@ -37,6 +37,9 @@
     <AssemblyOriginatorKeyFile>..\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client">
       <HintPath>..\packages\RabbitMQ.Client.3.4.3\lib\net35\RabbitMQ.Client.dll</HintPath>
     </Reference>
@@ -49,7 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMessageBus.cs" />
+    <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RabbitMq\RabbitMqConnection.cs" />
+    <Compile Include="RabbitMq\DefaultConfigValues.cs" />
+    <Compile Include="RabbitMq\IRabbitMqConnection.cs" />
+    <Compile Include="RabbitMq\RabbitMqMessageBus.cs" />
+    <Compile Include="RabbitMq\RpcError.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">
@@ -57,9 +67,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RabbitMq\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.Logging\Thycotic.Logging.csproj">
       <Project>{fe8be3ea-3f69-488e-8ac8-cfe47525d93f}</Project>

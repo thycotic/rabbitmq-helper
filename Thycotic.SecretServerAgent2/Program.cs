@@ -8,7 +8,7 @@ namespace Thycotic.SecretServerAgent2
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        private static void Main()
+        static void Main(string[] args)
         {
             var servicesToRun = new ServiceBase[]
             {
