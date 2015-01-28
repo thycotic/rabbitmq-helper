@@ -6,16 +6,16 @@ using Thycotic.MessageQueueClient.RabbitMq;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
-    public class AutofacRpcConsumer<TMsg, TResponse, THandler> : ConsumerWrapperBase<TMsg, THandler>
+    public class RpcConsumerWrapper<TMsg, TResponse, THandler> : ConsumerWrapperBase<TMsg, THandler>
         where THandler : IConsumer<TMsg, TResponse>
     {
         //private readonly Func<Owned<IConsume<TMsg, TResponse>>> _handlerFactory;
         private readonly IMessageSerializer _serializer;
         private readonly IRabbitMqConnection _rmq;
         //private readonly IActivityMonitor _monitor;
-        private readonly ILogWriter _log = Log.Get(typeof (AutofacRpcConsumer<TMsg, TResponse, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof (RpcConsumerWrapper<TMsg, TResponse, THandler>));
 
-        public AutofacRpcConsumer(IMessageSerializer serializer, IRabbitMqConnection rmq)
+        public RpcConsumerWrapper(IMessageSerializer serializer, IRabbitMqConnection rmq)
             : base(rmq)
         {
 

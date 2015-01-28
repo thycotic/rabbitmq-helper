@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.MessageQueueClient.Wrappers;
-using Thycotic.Messages;
 using Thycotic.SecretServerAgent2.Logic.Areas.POC;
 using Module = Autofac.Module;
 
@@ -44,11 +42,11 @@ namespace Thycotic.SecretServerAgent2.IoC
 
         }
 
-        private void LoadConsumers(ContainerBuilder builder, Type type)
+        private static void LoadConsumers(ContainerBuilder builder, Type type)
         {
             var logicAssembly = Assembly.GetAssembly(typeof (HelloWorldConsumer));
 
-            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(typeof(IConsumer<>))).InstancePerDependency();
+            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(type)).InstancePerDependency();
         }
     }
 }

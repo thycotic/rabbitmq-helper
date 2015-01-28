@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Thycotic.Logging;
+using Thycotic.MessageQueueClient.RabbitMq;
 
-namespace Thycotic.MessageQueueClient.RabbitMq
+namespace Thycotic.MessageQueueClient.Wrappers
 {
     public abstract class ConsumerWrapperBase<TRequest, THandler> : IBasicConsumer, IDisposable
     {
@@ -13,7 +14,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
         
         public event ConsumerCancelledEventHandler ConsumerCancelled;
 
-        private bool _terminated = false;
+        private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TRequest, THandler>));
 

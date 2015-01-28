@@ -52,7 +52,7 @@ namespace Thycotic.SecretServerAgent2
 
         public void Start(string[] args)
         {
-            this.OnStart(args);
+            OnStart(args);
         }
 
         protected override void OnStart(string[] args)
