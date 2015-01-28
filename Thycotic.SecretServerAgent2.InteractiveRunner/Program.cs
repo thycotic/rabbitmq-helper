@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.MessageQueueClient;
@@ -41,9 +42,10 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
         private static void ConfigureCli(CommandLineInterface cli, IContainer container)
         {
+            var bus = container.Resolve<IMessageBus>();
+
             cli.AddCommand(new ConsoleCommand { Name = "postmessage" }, parameters =>
             {
-                var bus = container.Resolve<IMessageBus>();
 
                 string content;
                 if (!parameters.TryGet("content", out content)) return;
@@ -54,6 +56,24 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 };
 
                 bus.Publish(message);
+            });
+
+            cli.AddCommand(new ConsoleCommand { Name = "flood" }, parameters =>
+            {
+                string countString;
+                if (!parameters.TryGet("count", out countString)) return;
+
+                var count = Convert.ToInt32(countString);
+
+                for (var loop = 0; loop < count; loop++)
+                {
+                    var message = new HelloWorldMessage
+                    {
+                        Content = string.Format("{0} {1}", loop, Guid.NewGuid())
+                    };
+
+                    bus.Publish(message);
+                }
             });
         }
     }
