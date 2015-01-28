@@ -1,19 +1,50 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Autofac;
+using RabbitMQ.Client;
+using Thycotic.Utility;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
     public class ConsumerWrapperFactory : IConsumerWrapperFactory, IStartable
     {
-        private readonly IContainer _container;
+        private readonly IComponentContext _context;
 
-        public ConsumerWrapperFactory(IContainer container)
+        private readonly HashSet<IConsumerWrapperBase> _consumerWrappers = new HashSet<IConsumerWrapperBase>();
+
+        public ConsumerWrapperFactory(IComponentContext context)
         {
-            _container = container;
+            _context = context;
         }
 
         public void Start()
         {
-            var temp = _container.ComponentRegistry.Registrations;
+            StartConsumers(typeof (IConsumer<>));
+        }
+
+        private void StartConsumers(Type type)
+        {
+            var wrapperType = typeof (SimpleConsumerWrapper<,>);
+
+            var consumerTypes = _context.ComponentRegistry.Registrations.Where(r => r.Activator.LimitType.IsAssignableToGenericType(type));
+
+            consumerTypes.ToList().ForEach(ct =>
+            {
+                var consumerType = ct.Activator.LimitType;
+                var targetInterface = consumerType.GetInterfaces().Single(t => t.IsAssignableToGenericType(type));
+                var messageType = targetInterface.GetGenericArguments()[0];
+
+                var consumerWrapperType = wrapperType.MakeGenericType(messageType, consumerType);
+
+                var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
+
+                _consumerWrappers.Add(consumerWrapper);
+
+                consumerWrapper.StartConsuming();
+                //consumer
+
+            });
         }
     }
 }

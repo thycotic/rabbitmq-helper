@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Thycotic.SecretServerAgent2
+namespace Thycotic.Utility
 {
     public static class TypeHelper
     {

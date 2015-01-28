@@ -2,7 +2,7 @@
 {
     public interface IMessageBus
     {
-        TResponse Rpc<TResponse>(object request, int timeoutSeconds);
-        void Publish(object consumable, bool persistent = true);
+        TResponse Rpc<TResponse>(IConsumable request, int timeoutSeconds);
+        void Publish(IConsumable consumable, bool persistent = true);
     }
 }

@@ -6,14 +6,15 @@ using Thycotic.MessageQueueClient.RabbitMq;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
-    public class RpcConsumerWrapper<TMsg, TResponse, THandler> : ConsumerWrapperBase<TMsg, THandler>
-        where THandler : IConsumer<TMsg, TResponse>
+    public class RpcConsumerWrapper<TRequest, TResponse, THandler> : ConsumerWrapperBase<TRequest, THandler>
+        where TRequest: IConsumable
+        where THandler : IRpcConsumer<TRequest, TResponse>
     {
         //private readonly Func<Owned<IConsume<TMsg, TResponse>>> _handlerFactory;
         private readonly IMessageSerializer _serializer;
         private readonly IRabbitMqConnection _rmq;
         //private readonly IActivityMonitor _monitor;
-        private readonly ILogWriter _log = Log.Get(typeof (RpcConsumerWrapper<TMsg, TResponse, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof (RpcConsumerWrapper<TRequest, TResponse, THandler>));
 
         public RpcConsumerWrapper(IMessageSerializer serializer, IRabbitMqConnection rmq)
             : base(rmq)
@@ -35,7 +36,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             try
             {
 
-                var message = _serializer.BytesToMessage<TMsg>(body);
+                var message = _serializer.BytesToMessage<TRequest>(body);
                 var responseType = "success";
                 object response;
 
@@ -60,7 +61,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             }
             catch (Exception e)
             {
-                _log.Error("Failed to handle message " + typeof (TMsg).Name, e);
+                _log.Error("Failed to handle message " + typeof (TRequest).Name, e);
             }
             finally
             {

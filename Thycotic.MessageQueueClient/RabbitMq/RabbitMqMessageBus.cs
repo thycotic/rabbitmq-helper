@@ -21,7 +21,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
             _exchangeName = exchangeName;
         }
 
-        public TResponse Rpc<TResponse>(object request, int timeoutSeconds)
+        public TResponse Rpc<TResponse>(IConsumable request, int timeoutSeconds)
         {
             var body = _messageSerializer.MessageToBytes(request);
             var routingKey = request.GetRoutingKey();
@@ -72,7 +72,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
             }
         }
 
-        public void Publish(object request, bool persistent = true)
+        public void Publish(IConsumable request, bool persistent = true)
         {
             var body = _messageSerializer.MessageToBytes(request);
             var routingKey = request.GetRoutingKey();

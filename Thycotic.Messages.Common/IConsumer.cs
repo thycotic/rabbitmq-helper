@@ -1,11 +1,15 @@
 ﻿namespace Thycotic.MessageQueueClient
 {
-    public interface IConsumer<in TRequest>
+    public interface IConsumer
+    {
+    }
+
+    public interface IConsumer<in TRequest> : IConsumer
     {
         void Consume(TRequest request);
     }
 
-    public interface IConsumer<in TRequest, out TResponse>
+    public interface IConsumer<in TRequest, out TResponse> : IConsumer
     {
         TResponse Consume(TRequest request);
     }

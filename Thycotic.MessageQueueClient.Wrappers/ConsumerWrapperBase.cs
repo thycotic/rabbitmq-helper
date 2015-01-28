@@ -7,7 +7,8 @@ using Thycotic.MessageQueueClient.RabbitMq;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
-    public abstract class ConsumerWrapperBase<TRequest, THandler> : IBasicConsumer, IDisposable
+    public abstract class ConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase, IBasicConsumer
+        where TRequest : IConsumable
     {
         private readonly IRabbitMqConnection _connection;
         public IModel Model { get; private set; }
@@ -26,7 +27,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
         public void StartConsuming()
         {
-            var temp = default(TRequest);
+            var temp = Activator.CreateInstance<TRequest>();
 
             var routingKey = temp.GetRoutingKey();
 

@@ -6,14 +6,15 @@ using Thycotic.MessageQueueClient.RabbitMq;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
-    public class SimpleConsumerWrapper<TMsg, THandler> : ConsumerWrapperBase<TMsg, THandler>
-        where THandler : IConsumer<TMsg>
+    public class SimpleConsumerWrapper<TRequest, THandler> : ConsumerWrapperBase<TRequest, THandler>
+        where TRequest : IConsumable
+        where THandler : IConsumer<TRequest>
     {
         //private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IMessageSerializer _serializer;
         //private readonly IActivityMonitor _monitor;
         //private readonly IServiceBus _serviceBus;
-        private readonly ILogWriter _log = Log.Get(typeof (SimpleConsumerWrapper<TMsg, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof (SimpleConsumerWrapper<TRequest, THandler>));
         private readonly int _maxTries = 1;
 
         public SimpleConsumerWrapper(IMessageSerializer serializer,
@@ -57,7 +58,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
                 }
                 catch (Exception e)
                 {
-                    _log.Error("Failed to handle message " + typeof (TMsg).Name, e);
+                    _log.Error("Failed to handle message " + typeof (TRequest).Name, e);
 
                     success = false;
                 }
