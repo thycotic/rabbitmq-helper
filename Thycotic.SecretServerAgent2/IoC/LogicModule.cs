@@ -3,7 +3,6 @@ using System.Reflection;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
-using Thycotic.MessageQueueClient.Wrappers;
 using Thycotic.SecretServerAgent2.Logic.Areas.POC;
 using Thycotic.Utility;
 using Module = Autofac.Module;
