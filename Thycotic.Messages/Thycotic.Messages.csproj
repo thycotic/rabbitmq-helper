@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\POC\Request\ThrowingRpcMessage.cs" />
     <Compile Include="Areas\POC\Request\SlowRpcMessage.cs" />
     <Compile Include="Areas\POC\Request\HelloWorldMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
