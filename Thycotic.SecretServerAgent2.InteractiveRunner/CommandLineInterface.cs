@@ -20,13 +20,13 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
         public CommandLineInterface()
         {
-            _commandMappings.Add(new ConsoleCommand { Name = HelpCommandName }, parameters =>
+            _commandMappings.Add(new ConsoleCommand { Name = HelpCommandName, Description = "This screen" }, parameters =>
             {
                 Console.WriteLine("Available commands: ");
                 _commandMappings.Keys.ToList().ForEach(cm => Console.WriteLine(" - {0}", cm));
             });
 
-            _commandMappings.Add(new ConsoleCommand { Name = QuitCommandName }, parameters => _cts.Cancel());
+            _commandMappings.Add(new ConsoleCommand { Name = QuitCommandName, Description = "Quits/exists the application" }, parameters => _cts.Cancel());
         }
 
         public void AddCommand(ConsoleCommand command, Action<ConsoleCommandParameters> action)

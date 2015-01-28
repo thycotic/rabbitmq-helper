@@ -44,7 +44,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
         {
             var bus = container.Resolve<IMessageBus>();
 
-            cli.AddCommand(new ConsoleCommand { Name = "postmessage" }, parameters =>
+            cli.AddCommand(new ConsoleCommand { Name = "postmessage", Description = "Posts a hello world message to the exchange"}, parameters =>
             {
 
                 string content;
@@ -58,7 +58,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 bus.Publish(message);
             });
 
-            cli.AddCommand(new ConsoleCommand { Name = "floodo" }, parameters =>
+            cli.AddCommand(new ConsoleCommand { Name = "floodo", Description = "Floods the exchange in order"}, parameters =>
             {
                 string countString;
                 if (!parameters.TryGet("count", out countString)) return;
@@ -76,7 +76,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 }
             });
 
-            cli.AddCommand(new ConsoleCommand { Name = "floodr" }, parameters =>
+            cli.AddCommand(new ConsoleCommand { Name = "floodr", Description = "Floods the exchange out of order"}, parameters =>
             {
                 string countString;
                 if (!parameters.TryGet("count", out countString)) return;
