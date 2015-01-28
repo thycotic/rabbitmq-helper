@@ -2,7 +2,7 @@
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.MessageQueueClient;
-using Thycotic.Messages.Agent;
+using Thycotic.Messages.Areas.POC;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner
 {

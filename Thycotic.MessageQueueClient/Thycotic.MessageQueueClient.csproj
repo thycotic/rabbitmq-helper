@@ -55,10 +55,6 @@
     <Compile Include="IMessageBus.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RabbitMq\AutofacRpcConsumer.cs" />
-    <Compile Include="RabbitMq\AutofacConsumer.cs" />
-    <Compile Include="RabbitMq\ConsumerWrapperBase.cs" />
-    <Compile Include="RabbitMq\SimpleConsumerWrapper.cs" />
     <Compile Include="RabbitMq\IConsume.cs" />
     <Compile Include="RabbitMq\IRpcConsume.cs" />
     <Compile Include="RabbitMq\RabbitMqConnection.cs" />

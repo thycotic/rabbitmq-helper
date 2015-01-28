@@ -6,6 +6,7 @@ using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages;
+using Thycotic.SecretServerAgent2.Logic.Areas.POC;
 using Module = Autofac.Module;
 
 namespace Thycotic.SecretServerAgent2.IoC
@@ -34,9 +35,6 @@ namespace Thycotic.SecretServerAgent2.IoC
             LoadBasicConsumers(builder);
 
 
-            //builder.RegisterType<UnboundedChannelProvider>().As<IUnboundedChannelProvider>().SingleInstance();
-            //builder.RegisterType<ConfigurationManagerWrapper>().As<IConfigurationManager>().SingleInstance();
-            //builder.RegisterType<EventHandlerConfigProvider>().As<IEventHandlerConfigProvider>().SingleInstance();
             builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
             builder.Register(context => new RabbitMqConnection(connectionString))
                 .As<IRabbitMqConnection>()
@@ -52,15 +50,11 @@ namespace Thycotic.SecretServerAgent2.IoC
         private void LoadBasicConsumers(ContainerBuilder builder)
         {
 
-            var assembly = Assembly.GetExecutingAssembly();
+            var logicAssembly = Assembly.GetAssembly(typeof (HelloWorldConsume));
 
-            builder.RegisterAssemblyTypes(assembly).Where(t => typeof(IConsume<>).IsAssignableFrom(t)).InstancePerDependency();
-            builder.RegisterAssemblyTypes(assembly).Where(t => typeof(IConsume<,>).IsAssignableFrom(t)).InstancePerDependency();
-
-            var consumers = assembly
-                .GetTypes()
-                .Where(t => typeof(IConsume<>).IsAssignableFrom(t));
-
+            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(typeof(IConsume<>))).InstancePerDependency();
+            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(typeof(IConsume<,>))).InstancePerDependency();
+            builder.Register<ConsumerFactory>().SingleInstance();
 
             //_log.Debug("Found handler for " + mt.Request.Name + "(" + mt.HandlerType.Name + ")");
             //var consumerType = typeof(SimpleConsumerWrapper<,>).MakeGenericType(mt.Request, mt.HandlerType);

@@ -1,4 +1,4 @@
-﻿namespace Thycotic.Messages.Agent
+﻿namespace Thycotic.Messages.Areas.POC
 {
     public class HelloWorldMessage : IConsumable
     {
