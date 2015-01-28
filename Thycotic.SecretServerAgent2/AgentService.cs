@@ -36,6 +36,8 @@ namespace Thycotic.SecretServerAgent2
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();
 
+                builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
+
                 Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
 
                 builder.RegisterModule(new MessageQueueModule(configurationProvider));

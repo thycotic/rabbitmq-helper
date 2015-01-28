@@ -17,8 +17,6 @@ namespace Thycotic.SecretServerAgent2.IoC
         {
             base.Load(builder);
 
-            builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
-
             using (LogContext.Create("Initializing consumers..."))
             {
                 LoadConsumers(builder, typeof (IConsumer<>));
