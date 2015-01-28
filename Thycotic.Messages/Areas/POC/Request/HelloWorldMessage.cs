@@ -1,6 +1,6 @@
 ﻿using Thycotic.MessageQueueClient;
 
-namespace Thycotic.Messages.Areas.POC
+namespace Thycotic.Messages.Areas.POC.Request
 {
     public class HelloWorldMessage : IConsumable
     {

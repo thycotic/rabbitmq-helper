@@ -1,4 +1,4 @@
-﻿namespace Thycotic.MessageQueueClient.RabbitMq
+﻿namespace Thycotic.Messages.Common
 {
     public class RpcError
     {

@@ -20,19 +20,18 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
         public void Start()
         {
-            StartConsumers(typeof (IConsumer<>));
+            StartActionConsumers(typeof (IConsumer<>), typeof(SimpleConsumerWrapper<,>));
+            StartFunctionConsumers(typeof(IRpcConsumer<,>), typeof(RpcConsumerWrapper<,,>));
         }
 
-        private void StartConsumers(Type type)
+        private void StartActionConsumers(Type baseConsumertype, Type wrapperType)
         {
-            var wrapperType = typeof (SimpleConsumerWrapper<,>);
-
-            var consumerTypes = _context.ComponentRegistry.Registrations.Where(r => r.Activator.LimitType.IsAssignableToGenericType(type));
+            var consumerTypes = _context.ComponentRegistry.Registrations.Where(r => r.Activator.LimitType.IsAssignableToGenericType(baseConsumertype));
 
             consumerTypes.ToList().ForEach(ct =>
             {
                 var consumerType = ct.Activator.LimitType;
-                var targetInterface = consumerType.GetInterfaces().Single(t => t.IsAssignableToGenericType(type));
+                var targetInterface = consumerType.GetInterfaces().Single(t => t.IsAssignableToGenericType(baseConsumertype));
                 var messageType = targetInterface.GetGenericArguments()[0];
 
                 var consumerWrapperType = wrapperType.MakeGenericType(messageType, consumerType);
@@ -44,6 +43,27 @@ namespace Thycotic.MessageQueueClient.Wrappers
                 consumerWrapper.StartConsuming();
                 //consumer
 
+            });
+        }
+
+        private void StartFunctionConsumers(Type baseConsumertype, Type wrapperType)
+        {
+            var consumerTypes = _context.ComponentRegistry.Registrations.Where(r => r.Activator.LimitType.IsAssignableToGenericType(baseConsumertype));
+
+            consumerTypes.ToList().ForEach(ct =>
+            {
+                var consumerType = ct.Activator.LimitType;
+                var targetInterface = consumerType.GetInterfaces().Single(t => t.IsAssignableToGenericType(baseConsumertype));
+                var messageType = targetInterface.GetGenericArguments()[0];
+                var responseType = targetInterface.GetGenericArguments()[1];
+
+                var consumerWrapperType = wrapperType.MakeGenericType(messageType, responseType, consumerType);
+
+                var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
+
+                _consumerWrappers.Add(consumerWrapper);
+
+                consumerWrapper.StartConsuming();
             });
         }
     }

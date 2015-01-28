@@ -17,8 +17,9 @@ namespace Thycotic.MessageQueueClient.RabbitMq
 
             public class Publish
             {
+                public const bool NotMandatory = false;
                 public const bool Mandatory = true;
-                public const bool DeliverImmediatelyAndRequireAListener = true;
+                //public const bool DeliverImmediatelyAndRequireAListener = true;//deprecated in AMQP
                 public const bool DoNotDeliverImmediatelyOrRequireAListener = false;
                 
             }

@@ -52,7 +52,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
                         handler.Value.Consume(message);
                     }
 
-                    //_log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
+                    _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
 
                     Model.BasicAck(deliveryTag, multiple);
 

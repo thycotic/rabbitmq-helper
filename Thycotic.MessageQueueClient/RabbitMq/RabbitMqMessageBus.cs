@@ -40,7 +40,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
                         channel.ConfirmSelect();
                         channel.ExchangeDeclare(_exchangeName, DefaultConfigValues.ExchangeType);
 
-                        channel.BasicPublish(_exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DeliverImmediatelyAndRequireAListener, properties, body);
+                        channel.BasicPublish(_exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
 
                         channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
 

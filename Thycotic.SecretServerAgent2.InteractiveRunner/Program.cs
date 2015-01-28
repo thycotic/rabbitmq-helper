@@ -5,6 +5,8 @@ using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC;
+using Thycotic.Messages.Areas.POC.Request;
+using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner
 {
@@ -62,6 +64,23 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 };
 
                 bus.Publish(message);
+
+                LogCli.Info("Posting completed");
+            });
+
+            cli.AddCommand(new ConsoleCommand { Name = "postrpc", Description = "Posts a hello world message to the exchange" }, parameters =>
+            {
+                LogCli.Info("Posting message to change");
+
+                string content;
+                if (!parameters.TryGet("content", out content)) return;
+
+                var message = new SlowRpcMessage
+                {
+                    Items = Enumerable.Range(0,1).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
+                };
+
+                bus.Rpc<RpcResult>(message, 30*1000);
 
                 LogCli.Info("Posting completed");
             });
