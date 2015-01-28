@@ -1,8 +1,5 @@
-﻿using System;
-using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using Thycotic.Logging;
-using Thycotic.Utility;
 using Module = Autofac.Module;
 
 namespace Thycotic.MessageQueueClient.Wrappers.IoC
