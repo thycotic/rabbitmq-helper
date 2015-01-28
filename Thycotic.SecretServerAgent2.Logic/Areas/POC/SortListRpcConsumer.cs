@@ -24,6 +24,8 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         {
             _log.Info(string.Format("CONSUMER: Received \"{0}\" items", request.Items.Length));
 
+            request.Items.ToList().ForEach(Console.WriteLine);
+
             return new SortListResponse { Items = request.Items.OrderBy(i => i).ToArray() };
         }
     }

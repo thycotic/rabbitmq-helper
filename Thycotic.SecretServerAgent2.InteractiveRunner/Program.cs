@@ -5,6 +5,7 @@ using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;
+using Thycotic.Messages.Areas.POC.Response;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner
@@ -98,6 +99,22 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 }
 
                 LogCli.Info("Posting completed.");
+            });
+
+            cli.AddCommand(new ConsoleCommand { Name = "postrpcsort", Description = "Posts a sort list rpc message to the exchange" }, parameters =>
+            {
+                LogCli.Info("Posting message to exchange");
+
+                var message = new SortListRpcMessage
+                {
+                    Items = Enumerable.Range(0, 25).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
+                };
+                
+                var response = bus.Rpc<SortListResponse>(message, 30 * 1000);
+
+                LogCli.Info("Posting completed.");
+
+                response.Items.ToList().ForEach(Console.WriteLine);
             });
 
             cli.AddCommand(new ConsoleCommand { Name = "floodo", Description = "Floods the exchange in order"}, parameters =>
