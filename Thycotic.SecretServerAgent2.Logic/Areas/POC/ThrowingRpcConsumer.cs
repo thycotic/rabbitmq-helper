@@ -10,7 +10,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     public class ThrowingRpcConsumer : IRpcConsumer<ThrowingRpcMessage, RpcResult>
     {
         private readonly ILogWriter _log = Log.Get(typeof(ThrowingRpcConsumer));
-
+        
         public RpcResult Consume(ThrowingRpcMessage request)
         {
             _log.Error("Throwing!");

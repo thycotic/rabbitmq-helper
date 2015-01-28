@@ -6,6 +6,9 @@ using Thycotic.Logging;
 
 namespace Thycotic.MessageQueueClient.RabbitMq
 {
+    /// <summary>
+    /// Rabbit Mq Connection
+    /// </summary>
     public class RabbitMqConnection : IDisposable, IRabbitMqConnection
     {
         private readonly ConnectionFactory _connectionFactory;
@@ -14,6 +17,10 @@ namespace Thycotic.MessageQueueClient.RabbitMq
 
         private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConnection));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RabbitMqConnection"/> class.
+        /// </summary>
+        /// <param name="url">The URL.</param>
         public RabbitMqConnection(string url)
         {
             _connectionFactory = new ConnectionFactory { Uri = url, RequestedHeartbeat = 300 };
@@ -57,6 +64,14 @@ namespace Thycotic.MessageQueueClient.RabbitMq
 
         }
 
+        /// <summary>
+        /// Opens the channel with the specified retry attempts, retry delay and retry delay growth factor
+        /// </summary>
+        /// <param name="retryAttempts">The retry attempts.</param>
+        /// <param name="retryDelayMs">The retry delay ms.</param>
+        /// <param name="retryDelayGrowthFactor">The retry delay growth factor.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ApplicationException">Channel should have opened</exception>
         public IModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor)
         {
             var remainingRetryAttempts = retryAttempts;
