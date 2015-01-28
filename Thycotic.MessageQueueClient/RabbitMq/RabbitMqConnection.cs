@@ -31,7 +31,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
                 {
                     var cn = _connectionFactory.CreateConnection();
 
-                    _log.Info("Connection opened");
+                    _log.Info(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 
                     //if the connection closes recover it
                     cn.ConnectionShutdown += RecoverConnection;
