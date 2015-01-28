@@ -10,13 +10,15 @@ namespace Thycotic.SecretServerAgent2
 {
     public class AgentService : ServiceBase
     {
+        private readonly bool _autoConsume;
         public IContainer IoCContainer { get; set; }
 
         private readonly ILogWriter _log = Log.Get(typeof(AgentService));
         private LogCorrelation _correlation;
 
-        public AgentService()
+        public AgentService(bool autoConsume = true)
         {
+            _autoConsume = autoConsume;
             ConfigureLogging();
         }
 
@@ -37,8 +39,16 @@ namespace Thycotic.SecretServerAgent2
                 Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
 
                 builder.RegisterModule(new MessageQueueModule(configurationProvider));
-                builder.RegisterModule(new WrappersModule());
-                builder.RegisterModule(new LogicModule());
+
+                if (_autoConsume)
+                {
+                    builder.RegisterModule(new WrappersModule());
+                    builder.RegisterModule(new LogicModule());
+                }
+                else
+                {
+                    _log.Warn("Consumption disabled, your will only be able to issue requests");
+                }
 
                 // Build the container to finalize registrations and prepare for object resolution.
                 IoCContainer = builder.Build();
