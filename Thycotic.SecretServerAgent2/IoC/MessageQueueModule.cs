@@ -50,10 +50,10 @@ namespace Thycotic.SecretServerAgent2.IoC
         private void LoadBasicConsumers(ContainerBuilder builder)
         {
 
-            var logicAssembly = Assembly.GetAssembly(typeof (HelloWorldConsume));
+            var logicAssembly = Assembly.GetAssembly(typeof (HelloWorldConsumer));
 
-            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(typeof(IConsume<>))).InstancePerDependency();
-            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(typeof(IConsume<,>))).InstancePerDependency();
+            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(typeof(IConsumer<>))).InstancePerDependency();
+            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(typeof(IConsumer<,>))).InstancePerDependency();
             builder.Register<ConsumerFactory>().SingleInstance();
 
             //_log.Debug("Found handler for " + mt.Request.Name + "(" + mt.HandlerType.Name + ")");

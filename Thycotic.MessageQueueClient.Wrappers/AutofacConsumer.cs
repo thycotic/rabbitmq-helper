@@ -9,7 +9,7 @@ using Thycotic.Logging;
 namespace Thycotic.MessageQueueClient.RabbitMq
 {
     public class AutofacConsumer<TMsg, THandler> : ConsumerWrapperBase<TMsg, THandler>
-        where THandler : IConsume<TMsg>
+        where THandler : IConsumer<TMsg>
     {
         //private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IMessageSerializer _serializer;

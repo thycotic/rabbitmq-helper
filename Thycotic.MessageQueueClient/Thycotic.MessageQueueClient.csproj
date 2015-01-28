@@ -52,10 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IConsumable.cs" />
     <Compile Include="IMessageBus.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RabbitMq\IConsume.cs" />
+    <Compile Include="IConsumer.cs" />
     <Compile Include="RabbitMq\IRpcConsume.cs" />
     <Compile Include="RabbitMq\RabbitMqConnection.cs" />
     <Compile Include="RabbitMq\DefaultConfigValues.cs" />

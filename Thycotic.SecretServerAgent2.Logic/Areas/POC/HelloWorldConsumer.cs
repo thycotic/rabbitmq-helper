@@ -1,9 +1,9 @@
-﻿using Thycotic.MessageQueueClient.RabbitMq;
+﻿using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC;
 
 namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 {
-    public class HelloWorldConsume : IConsume<HelloWorldMessage>
+    public class HelloWorldConsumer : IConsumer<HelloWorldMessage>
     {
         public void Consume(HelloWorldMessage request)
         {

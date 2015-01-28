@@ -1,6 +1,6 @@
 ﻿namespace Thycotic.MessageQueueClient.RabbitMq
 {
-    public interface IRpcConsume<in TRequest> : IConsume<TRequest>
+    public interface IRpcConsumer<in TRequest> : IConsumer<TRequest>
     {
     }
 }
