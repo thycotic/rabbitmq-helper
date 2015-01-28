@@ -2,6 +2,7 @@
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.MessagePatterns;
 using Thycotic.Logging;
+using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.RabbitMq
 {
@@ -58,12 +59,10 @@ namespace Thycotic.MessageQueueClient.RabbitMq
                         {
                             throw new ApplicationException("CorrelationId mismatch");
                         }
-                        if (response.BasicProperties.Type == "error")
-                        {
-                            //var error = _messageSerializer.BytesToMessage<RpcError>(response.Body);
-                            throw new ApplicationException("RPC call failed: ");// + error.Message);
-                        }
-                        return _messageSerializer.BytesToMessage<TResponse>(response.Body);
+                        if (response.BasicProperties.Type != "error") return _messageSerializer.BytesToMessage<TResponse>(response.Body);
+
+                        var error = _messageSerializer.BytesToMessage<RpcError>(response.Body);
+                        throw new ApplicationException(error.Message);
                     }
                 }
             }

@@ -68,12 +68,9 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 LogCli.Info("Posting completed");
             });
 
-            cli.AddCommand(new ConsoleCommand { Name = "postrpc", Description = "Posts a hello world message to the exchange" }, parameters =>
+            cli.AddCommand(new ConsoleCommand { Name = "postrpc", Description = "Posts a slow rpc message to the exchange" }, parameters =>
             {
-                LogCli.Info("Posting message to change");
-
-                string content;
-                if (!parameters.TryGet("content", out content)) return;
+                LogCli.Info("Posting message to exchange");
 
                 var message = new SlowRpcMessage
                 {
@@ -83,6 +80,25 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 var response = bus.Rpc<RpcResult>(message, 30*1000);
 
                 LogCli.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
+            });
+
+            cli.AddCommand(new ConsoleCommand { Name = "postrpct", Description = "Posts a throwing rpc message to the exchange" }, parameters =>
+            {
+                LogCli.Info("Posting message to exchange");
+
+                var message = new ThrowingRpcMessage();
+
+                try
+                {
+                    bus.Rpc<RpcResult>(message, 30*1000);
+
+                }
+                catch (Exception ex)
+                {
+                    LogCli.Error(string.Format("Consumer failed by saying {0}", ex.Message));
+                }
+
+                LogCli.Info("Posting completed.");
             });
 
             cli.AddCommand(new ConsoleCommand { Name = "floodo", Description = "Floods the exchange in order"}, parameters =>
