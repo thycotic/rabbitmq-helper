@@ -55,7 +55,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 {
                     input = ConsumeInput();
                 }
-            
+
                 var command = ParseInput(input, out parameters);
                 HandleCommand(command, parameters);
 
@@ -111,14 +111,24 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
         {
             using (LogContext.Create(command.Name))
             {
-
-                if (!_commandMappings.ContainsKey(command))
+                try
                 {
-                    _log.Error(string.Format("Command {0} not found", command.Name));
-                    command = new ConsoleCommand {Name = DefaultCommandName};
+
+
+
+                    if (!_commandMappings.ContainsKey(command))
+                    {
+                        _log.Error(string.Format("Command {0} not found", command.Name));
+                        command = new ConsoleCommand { Name = DefaultCommandName };
+                    }
+
+                    _commandMappings[command].Invoke(parameters);
+                }
+                catch (Exception ex)
+                {
+                    _log.Error(string.Format("Command failed because {0}", ex.Message));
                 }
 
-                _commandMappings[command].Invoke(parameters);
             }
             Console.WriteLine();
         }
