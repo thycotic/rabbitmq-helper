@@ -54,6 +54,12 @@
       <Link>Thycotic.snk</Link>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
+      <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
+      <Name>Thycotic.Messages.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

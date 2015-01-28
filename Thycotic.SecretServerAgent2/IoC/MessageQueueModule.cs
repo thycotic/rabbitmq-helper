@@ -32,9 +32,6 @@ namespace Thycotic.SecretServerAgent2.IoC
             _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
 
-            LoadBasicConsumers(builder);
-
-
             builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
             builder.Register(context => new RabbitMqConnection(connectionString))
                 .As<IRabbitMqConnection>()
@@ -45,23 +42,19 @@ namespace Thycotic.SecretServerAgent2.IoC
             //builder.RegisterGeneric(typeof(AutofacConsumer<,>)).AsSelf().InstancePerDependency();
             //builder.RegisterGeneric(typeof(AutofacBatchConsumer<,>)).AsSelf().InstancePerDependency();
 
+            LoadConsumers(builder, typeof(IConsumer<>));
+            LoadConsumers(builder, typeof(IConsumer<,>));
+            LoadConsumers(builder, typeof(IRpcConsumer<,>));
+
+            //builder.Register<ConsumerFactory>().SingleInstance();
+
         }
 
-        private void LoadBasicConsumers(ContainerBuilder builder)
+        private void LoadConsumers(ContainerBuilder builder, Type type)
         {
-
             var logicAssembly = Assembly.GetAssembly(typeof (HelloWorldConsumer));
 
             builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(typeof(IConsumer<>))).InstancePerDependency();
-            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(typeof(IConsumer<,>))).InstancePerDependency();
-            builder.Register<ConsumerFactory>().SingleInstance();
-
-            //_log.Debug("Found handler for " + mt.Request.Name + "(" + mt.HandlerType.Name + ")");
-            //var consumerType = typeof(SimpleConsumerWrapper<,>).MakeGenericType(mt.Request, mt.HandlerType);
-            //_container.Resolve(consumerType);
-
-
-            //builder.RegisterGeneric(typeof(AutofacRpcConsumer<,,>)).AsSelf().InstancePerDependency();
         }
     }
 }

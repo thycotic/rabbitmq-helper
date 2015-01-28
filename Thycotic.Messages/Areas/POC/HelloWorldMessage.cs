@@ -1,4 +1,6 @@
-﻿namespace Thycotic.Messages.Areas.POC
+﻿using Thycotic.MessageQueueClient;
+
+namespace Thycotic.Messages.Areas.POC
 {
     public class HelloWorldMessage : IConsumable
     {
