@@ -1,8 +1,6 @@
-﻿using System;
-using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
-using Thycotic.Messages.Areas.POC;
+﻿using Thycotic.Logging;
 using Thycotic.Messages.Areas.POC.Request;
+using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 {

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using log4net.Appender;
@@ -14,7 +13,7 @@ namespace Thycotic.Logging
     public sealed class Log
     {
 
-        private static readonly ILogWriter _log = Get(typeof(Log));
+        private static readonly ILogWriter LogInternal = Get(typeof(Log));
 
         /// <summary>
         /// Configures this instance.
@@ -31,19 +30,19 @@ namespace Thycotic.Logging
         [DebuggerStepThrough]
         public static void Flush()
         {
-            _log.Debug(string.Format(CultureInfo.InvariantCulture, "Flushing logs"));
+            LogInternal.Debug(string.Format(CultureInfo.InvariantCulture, "Flushing logs"));
 
             GetAppenders().ToList().ForEach(a =>
             {
                 if (!(a is BufferingAppenderSkeleton)) return;
 
-                _log.Debug(string.Format(CultureInfo.InvariantCulture, "Flushing {0}", a));
+                LogInternal.Debug(string.Format(CultureInfo.InvariantCulture, "Flushing {0}", a));
 
                 var buffered = a as BufferingAppenderSkeleton;
                 buffered.Flush();
             });
 
-            _log.Debug(string.Format(CultureInfo.InvariantCulture, "Flushed successfully"));
+            LogInternal.Debug(string.Format(CultureInfo.InvariantCulture, "Flushed successfully"));
 
         }
 
@@ -68,12 +67,12 @@ namespace Thycotic.Logging
         /// </summary>
         private class GenericLogWriter : ILogWriter
         {
-            private readonly log4net.ILog _log;
+            private readonly log4net.ILog _log2;
 
             [DebuggerStepThrough]
             public GenericLogWriter(Type type)
             {
-                _log = log4net.LogManager.GetLogger(type);
+                _log2 = log4net.LogManager.GetLogger(type);
             }
 
             /// <summary>
@@ -83,7 +82,7 @@ namespace Thycotic.Logging
             [DebuggerStepThrough]
             public void Debug(string message)
             {
-                _log.Debug(message);
+                _log2.Debug(message);
             }
 
             /// <summary>
@@ -94,7 +93,7 @@ namespace Thycotic.Logging
             [DebuggerStepThrough]
             public void Debug(string message, Exception exception)
             {
-                _log.Debug(message, exception);
+                _log2.Debug(message, exception);
             }
 
             /// <summary>
@@ -104,7 +103,7 @@ namespace Thycotic.Logging
             [DebuggerStepThrough]
             public void Info(string message)
             {
-                _log.Info(message);
+                _log2.Info(message);
             }
 
             /// <summary>
@@ -115,7 +114,7 @@ namespace Thycotic.Logging
             [DebuggerStepThrough]
             public void Info(string message, Exception exception)
             {
-                _log.Info(message, exception);
+                _log2.Info(message, exception);
             }
 
             /// <summary>
@@ -125,7 +124,7 @@ namespace Thycotic.Logging
             [DebuggerStepThrough]
             public void Warn(string message)
             {
-                _log.Warn(message);
+                _log2.Warn(message);
             }
 
             /// <summary>
@@ -136,7 +135,7 @@ namespace Thycotic.Logging
             [DebuggerStepThrough]
             public void Warn(string message, Exception exception)
             {
-                _log.Warn(message, exception);
+                _log2.Warn(message, exception);
             }
 
             /// <summary>
@@ -146,7 +145,7 @@ namespace Thycotic.Logging
             [DebuggerStepThrough]
             public void Error(string message)
             {
-                _log.Error(message);
+                _log2.Error(message);
             }
 
             /// <summary>
@@ -157,7 +156,7 @@ namespace Thycotic.Logging
             [DebuggerStepThrough]
             public void Error(string message, Exception exception)
             {
-                _log.Error(message, exception);
+                _log2.Error(message, exception);
             }
         }
     }

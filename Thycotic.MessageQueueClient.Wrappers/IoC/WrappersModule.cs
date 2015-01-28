@@ -6,8 +6,6 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
 {
     public class WrappersModule : Module
     {
-        private readonly ILogWriter _log = Log.Get(typeof(WrappersModule));
-
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);

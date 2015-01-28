@@ -1,4 +1,4 @@
-﻿namespace Thycotic.MessageQueueClient
+﻿namespace Thycotic.Messages.Common
 {
     public interface IConsumer
     {

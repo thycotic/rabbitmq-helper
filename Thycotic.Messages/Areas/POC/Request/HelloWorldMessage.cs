@@ -1,4 +1,4 @@
-﻿using Thycotic.MessageQueueClient;
+﻿using Thycotic.Messages.Common;
 
 namespace Thycotic.Messages.Areas.POC.Request
 {

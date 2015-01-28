@@ -1,5 +1,6 @@
 ﻿using System;
 using RabbitMQ.Client;
+using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.RabbitMq
 {

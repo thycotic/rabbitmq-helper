@@ -17,14 +17,14 @@ namespace Thycotic.Logging
         /// <value>
         /// The identifier.
         /// </value>
-        public string ID { get; private set; }
+        public string Id { get; private set; }
 
         [DebuggerStepThrough]
         private LogCorrelation()
         {
-            ID = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
 
-            _context = log4net.ThreadContext.Stacks[ContextName].Push(ID);
+            _context = log4net.ThreadContext.Stacks[ContextName].Push(Id);
         }
 
         /// <summary>

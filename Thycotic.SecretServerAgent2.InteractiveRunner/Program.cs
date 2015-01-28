@@ -4,7 +4,6 @@ using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
-using Thycotic.Messages.Areas.POC;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 

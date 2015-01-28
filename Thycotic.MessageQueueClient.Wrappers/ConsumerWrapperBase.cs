@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.RabbitMq;
+using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
@@ -49,10 +49,10 @@ namespace Thycotic.MessageQueueClient.Wrappers
             model.QueueDeclare(queueName, true, false, false, null);
             model.QueueBind(queueName, DefaultConfigValues.Exchange, routingKey);
 
-            var noAck = false; //since this consumer will send an acknolegement
+            const bool noAck = false; //since this consumer will send an acknowledgement
             var consumer = this;
 
-            model.BasicConsume(queueName, false, consumer); //we will ack, hence no-ack=false
+            model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
 
             Model = model;
 

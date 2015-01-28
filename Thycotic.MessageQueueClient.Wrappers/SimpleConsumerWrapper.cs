@@ -4,6 +4,7 @@ using Autofac.Features.OwnedInstances;
 using RabbitMQ.Client;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.RabbitMq;
+using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
@@ -13,19 +14,13 @@ namespace Thycotic.MessageQueueClient.Wrappers
     {
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IMessageSerializer _serializer;
-        //private readonly IActivityMonitor _monitor;
-        //private readonly IServiceBus _serviceBus;
         private readonly ILogWriter _log = Log.Get(typeof (SimpleConsumerWrapper<TRequest, THandler>));
-        private readonly int _maxTries = 1;
 
-        public SimpleConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory) //, IServiceBus serviceBus)
+        public SimpleConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
             : base(rmq)
         {
             _handlerFactory = handlerFactory;
             _serializer = serializer;
-            //_monitor = monitor;
-            //_serviceBus = serviceBus;
-            //_maxTries = eventHandlerConfigProvider.GetMaxTries<THandler, TMsg>();
         }
 
 

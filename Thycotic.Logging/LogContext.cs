@@ -40,7 +40,7 @@ namespace Thycotic.Logging
         {
             _stopwatch.Stop();
 
-            var log = Logging.Log.Get(typeof(Stopwatch));
+            var log = Log.Get(typeof(Stopwatch));
 
             log.Debug(string.Format(CultureInfo.InvariantCulture, "[ElapsedMilliseconds: {0}]", _stopwatch.ElapsedMilliseconds));
 

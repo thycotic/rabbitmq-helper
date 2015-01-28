@@ -12,11 +12,9 @@ namespace Thycotic.MessageQueueClient.Wrappers
         where TRequest: IConsumable
         where THandler : IRpcConsumer<TRequest, TResponse>
     {
-        //private readonly Func<Owned<IConsume<TMsg, TResponse>>> _handlerFactory;
         private readonly IMessageSerializer _serializer;
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IRabbitMqConnection _rmq;
-        //private readonly IActivityMonitor _monitor;
         private readonly ILogWriter _log = Log.Get(typeof (RpcConsumerWrapper<TRequest, TResponse, THandler>));
 
         public RpcConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)

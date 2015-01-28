@@ -1,4 +1,6 @@
-﻿namespace Thycotic.MessageQueueClient
+﻿using Thycotic.Messages.Common;
+
+namespace Thycotic.MessageQueueClient
 {
     public interface IMessageBus
     {
