@@ -23,6 +23,8 @@ namespace Thycotic.MessageQueueClient.RabbitMq
 
         public TResponse Rpc<TResponse>(IConsumable request, int timeoutSeconds)
         {
+            _log.Debug(string.Format("Publishing RPC {0}", request));
+
             var body = _messageSerializer.MessageToBytes(request);
             var routingKey = request.GetRoutingKey();
 
@@ -74,6 +76,8 @@ namespace Thycotic.MessageQueueClient.RabbitMq
 
         public void Publish(IConsumable request, bool persistent = true)
         {
+            _log.Debug(string.Format("Publishing basic {0}", request));
+
             var body = _messageSerializer.MessageToBytes(request);
             var routingKey = request.GetRoutingKey();
 
