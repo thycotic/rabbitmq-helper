@@ -58,7 +58,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 bus.Publish(message);
             });
 
-            cli.AddCommand(new ConsoleCommand { Name = "flood" }, parameters =>
+            cli.AddCommand(new ConsoleCommand { Name = "floodo" }, parameters =>
             {
                 string countString;
                 if (!parameters.TryGet("count", out countString)) return;
@@ -74,6 +74,24 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                     bus.Publish(message);
                 }
+            });
+
+            cli.AddCommand(new ConsoleCommand { Name = "floodr" }, parameters =>
+            {
+                string countString;
+                if (!parameters.TryGet("count", out countString)) return;
+
+                var count = Convert.ToInt32(countString);
+
+                Enumerable.Range(0, count).AsParallel().ForAll(i =>
+                {
+                    var message = new HelloWorldMessage
+                    {
+                        Content = string.Format("{0} {1}", i, Guid.NewGuid())
+                    };
+
+                    bus.Publish(message);
+                });
             });
         }
     }
