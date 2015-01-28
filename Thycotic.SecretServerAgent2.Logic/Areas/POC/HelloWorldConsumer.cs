@@ -1,4 +1,5 @@
-﻿using Thycotic.Logging;
+﻿using System;
+using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC;
 
@@ -11,6 +12,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         public void Consume(HelloWorldMessage request)
         {
             _log.Debug(string.Format("Received message \"{0}\"", request.Content));
+            //throw new ApplicationException();
         }
     }
 }

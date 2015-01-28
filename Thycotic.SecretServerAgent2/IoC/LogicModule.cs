@@ -25,8 +25,6 @@ namespace Thycotic.SecretServerAgent2.IoC
                 LoadConsumers(builder, typeof (IConsumer<>));
                 LoadConsumers(builder, typeof (IConsumer<,>));
                 LoadConsumers(builder, typeof (IRpcConsumer<,>));
-
-                builder.RegisterType<ConsumerWrapperFactory>().As<IStartable>().SingleInstance();
             }
         }
 

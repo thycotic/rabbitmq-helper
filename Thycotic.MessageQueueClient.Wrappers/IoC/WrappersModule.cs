@@ -17,9 +17,9 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
 
             using (LogContext.Create("Initializing consumer wrappers..."))
             {
-
                 builder.RegisterGeneric(typeof (SimpleConsumerWrapper<,>)).InstancePerDependency();
                 builder.RegisterGeneric(typeof (RpcConsumerWrapper<,,>)).InstancePerDependency();
+
                 builder.RegisterType<ConsumerWrapperFactory>().As<IStartable>().SingleInstance();
             }
         }

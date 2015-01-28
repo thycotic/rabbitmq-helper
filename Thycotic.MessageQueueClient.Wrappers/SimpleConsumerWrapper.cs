@@ -37,15 +37,14 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
         public void ExecuteMessage(ulong deliveryTag, byte[] body)
         {
-            var triesLeft = _maxTries;
-            var success = false;
+            const bool multiple = false;
 
-            do
+            using (LogContext.Create("Processing message..."))
             {
-                --triesLeft;
+
                 try
                 {
-                    
+
                     var message = _serializer.BytesToMessage<TRequest>(body);
 
                     using (var handler = _handlerFactory())
@@ -53,27 +52,19 @@ namespace Thycotic.MessageQueueClient.Wrappers
                         handler.Value.Consume(message);
                     }
 
-                    //success = true;
-                    //triesLeft = 0;
+                    //_log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
+
+                    Model.BasicAck(deliveryTag, multiple);
+
                 }
                 catch (Exception e)
                 {
-                    _log.Error("Failed to handle message " + typeof (TRequest).Name, e);
+                    _log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof (TRequest))), e);
 
-                    success = false;
+                    Model.BasicNack(deliveryTag, multiple, requeue: true);
                 }
-                finally
-                {
-                    //_monitor.Quit<TMsg>();
-                }
-            } while (triesLeft > 0);
+            }
 
-            //ack/nack the message
-            //TODO ??
-            if (success) lock (Model) Model.BasicAck(deliveryTag, multiple: false);
-            else lock (Model) Model.BasicNack(deliveryTag, multiple: false, requeue: false);
         }
-
-     
     }
 }
