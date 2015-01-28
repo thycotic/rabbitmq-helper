@@ -13,7 +13,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 
         public RpcResult Consume(SlowRpcMessage request)
         {
-            _log.Debug(string.Format("CONSUMER: Received \"{0}\" items", request.Items.Length));
+            _log.Info(string.Format("CONSUMER: Received \"{0}\" items", request.Items.Length));
             //throw new ApplicationException();
 
             //do something silly here
