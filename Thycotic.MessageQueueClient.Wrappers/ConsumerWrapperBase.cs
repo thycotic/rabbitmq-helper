@@ -27,11 +27,9 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
         public void StartConsuming()
         {
-            var temp = Activator.CreateInstance<TRequest>();
+            var routingKey = this.GetRoutingKey(typeof (TRequest));
 
-            var routingKey = temp.GetRoutingKey();
-
-            var queueName = string.Format("{0}:{1}", typeof(THandler).FullName, routingKey);
+            var queueName =  this.GetQueueName(typeof(THandler), typeof(TRequest));
             _log.Info(string.Format("Channel opened for {0}", queueName));
 
             const int retryAttempts = -1; //forever

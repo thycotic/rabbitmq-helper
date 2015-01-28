@@ -1,4 +1,7 @@
-﻿namespace Thycotic.MessageQueueClient.RabbitMq
+﻿using System;
+using RabbitMQ.Client;
+
+namespace Thycotic.MessageQueueClient.RabbitMq
 {
     public static class RoutingHelpers
     {
@@ -7,9 +10,14 @@
             return obj.GetType().FullName;
         }
 
-        public static string GetQueueName(this IConsumer consumer, IConsumable consumable)
+        public static string GetRoutingKey(this IBasicConsumer consumer, Type consuableType)
         {
-            return string.Format("{0}:{1}", consumer.GetType().FullName, consumable.GetRoutingKey());
+            return consuableType.FullName;
+        }
+
+        public static string GetQueueName(this IBasicConsumer consumer, Type consumerType, Type consumableType)
+        {
+            return string.Format("{0}:{1}", consumerType.FullName, consumer.GetRoutingKey(consumableType));
         }
 
     }
