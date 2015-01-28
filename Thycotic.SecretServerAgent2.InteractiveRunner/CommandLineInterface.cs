@@ -47,6 +47,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                     //escape quotes
                     input = initialCommand.Replace("&quot;", "\"");
 
+                    Console.WriteLine();
                     Console.Write("# ");
                     Console.WriteLine(input);
                 }
@@ -69,6 +70,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
         private static string ConsumeInput()
         {
+            Console.WriteLine();
             Console.Write("# ");
             return Console.ReadLine();
         }
