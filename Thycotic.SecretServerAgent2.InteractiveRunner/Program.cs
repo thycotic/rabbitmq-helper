@@ -62,6 +62,8 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 };
 
                 bus.Publish(message);
+
+                LogCli.Info("Posting completed");
             });
 
             cli.AddCommand(new ConsoleCommand { Name = "floodo", Description = "Floods the exchange in order"}, parameters =>
@@ -71,7 +73,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                 var count = Convert.ToInt32(countString);
 
-                LogCli.Info(string.Format("Flooding exchange in order with {0} request(s)", count));
+                LogCli.Info(string.Format("Flooding exchange in order with {0} request(s). Please wait...", count));
 
                 for (var loop = 0; loop < count; loop++)
                 {
@@ -82,6 +84,8 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                     bus.Publish(message);
                 }
+
+                LogCli.Info("Flooding completed");
             });
 
             cli.AddCommand(new ConsoleCommand { Name = "floodp", Description = "Floods the exchange in parallel (or out of order)"}, parameters =>
@@ -91,7 +95,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                 var count = Convert.ToInt32(countString);
 
-                LogCli.Info(string.Format("Flooding exchange in parallel with {0} request(s)", count));
+                LogCli.Info(string.Format("Flooding exchange in parallel with {0} request(s). Please wait...", count));
 
                 Enumerable.Range(0, count).AsParallel().ForAll(i =>
                 {
@@ -102,6 +106,8 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                     bus.Publish(message);
                 });
+
+                LogCli.Info("Flooding completed");
             });
         }
     }
