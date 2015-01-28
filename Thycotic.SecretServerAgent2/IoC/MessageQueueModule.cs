@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Thycotic.Logging;
@@ -25,10 +26,13 @@ namespace Thycotic.SecretServerAgent2.IoC
             base.Load(builder);
 
             var messageAssembly = Assembly.GetAssembly(typeof (IConsumable));
-            builder.RegisterAssemblyTypes(messageAssembly).Where(t => typeof (IConsumable).IsAssignableFrom(t)).InstancePerDependency();
 
             var connectionString = _configurationProvider("RabbitMq.ConnectionString");
             _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
+
+
+            LoadBasicConsumers(builder);
+
 
             //builder.RegisterType<UnboundedChannelProvider>().As<IUnboundedChannelProvider>().SingleInstance();
             //builder.RegisterType<ConfigurationManagerWrapper>().As<IConfigurationManager>().SingleInstance();
@@ -43,6 +47,27 @@ namespace Thycotic.SecretServerAgent2.IoC
             //builder.RegisterGeneric(typeof(AutofacConsumer<,>)).AsSelf().InstancePerDependency();
             //builder.RegisterGeneric(typeof(AutofacBatchConsumer<,>)).AsSelf().InstancePerDependency();
 
+        }
+
+        private void LoadBasicConsumers(ContainerBuilder builder)
+        {
+
+            var assembly = Assembly.GetExecutingAssembly();
+
+            builder.RegisterAssemblyTypes(assembly).Where(t => typeof(IConsume<>).IsAssignableFrom(t)).InstancePerDependency();
+            builder.RegisterAssemblyTypes(assembly).Where(t => typeof(IConsume<,>).IsAssignableFrom(t)).InstancePerDependency();
+
+            var consumers = assembly
+                .GetTypes()
+                .Where(t => typeof(IConsume<>).IsAssignableFrom(t));
+
+
+            //_log.Debug("Found handler for " + mt.Request.Name + "(" + mt.HandlerType.Name + ")");
+            //var consumerType = typeof(SimpleConsumerWrapper<,>).MakeGenericType(mt.Request, mt.HandlerType);
+            //_container.Resolve(consumerType);
+
+
+            //builder.RegisterGeneric(typeof(AutofacRpcConsumer<,,>)).AsSelf().InstancePerDependency();
         }
     }
 }

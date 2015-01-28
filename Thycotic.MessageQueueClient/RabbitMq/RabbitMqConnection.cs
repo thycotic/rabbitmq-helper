@@ -100,8 +100,9 @@ namespace Thycotic.MessageQueueClient.RabbitMq
 
             if (!_connection.IsValueCreated || !_connection.Value.IsOpen) return;
 
-            _log.Debug("Closing connection");
+            _log.Debug("Closing connection...");
             _connection.Value.Close(2 * 1000);
+            _log.Debug("Connection closed");
         }
 
         public void Dispose()

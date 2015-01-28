@@ -24,7 +24,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
         public TResponse Rpc<TResponse>(object request, int timeoutSeconds)
         {
             var body = _messageSerializer.MessageToBytes(request);
-            var routingKey = GetRoutingKey(request.GetType());
+            var routingKey = request.GetRoutingKey();
 
             try
             {
@@ -72,15 +72,10 @@ namespace Thycotic.MessageQueueClient.RabbitMq
             }
         }
 
-        private static string GetRoutingKey(Type type)
-        {
-            return type.FullName;
-        }
-
         public void Publish(object request, bool persistent = true)
         {
             var body = _messageSerializer.MessageToBytes(request);
-            var routingKey = GetRoutingKey(request.GetType());
+            var routingKey = request.GetRoutingKey();
 
             try
             {
