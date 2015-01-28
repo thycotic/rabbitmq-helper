@@ -91,7 +91,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 command.Name = commandMatches[0].Groups[0].Value;
             }
 
-            var regexParameters = new Regex(@"-([\w]+)=\""?([\w\s.]{2,})\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            var regexParameters = new Regex(@"-([\w]+)=\""?([\d\w\s.]{2,})\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             var parameterMatches = regexParameters.Matches(input);
 
@@ -107,14 +107,17 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
         private void HandleCommand(ConsoleCommand command, ConsoleCommandParameters parameters)
         {
-            if (!_commandMappings.ContainsKey(command))
+            using (LogContext.Create(command.Name))
             {
-                _log.Error(string.Format("Command {0} not found", command.Name));
-                command = new ConsoleCommand { Name = DefaultCommandName };
+
+                if (!_commandMappings.ContainsKey(command))
+                {
+                    _log.Error(string.Format("Command {0} not found", command.Name));
+                    command = new ConsoleCommand {Name = DefaultCommandName};
+                }
+
+                _commandMappings[command].Invoke(parameters);
             }
-
-            _commandMappings[command].Invoke(parameters);
-
             Console.WriteLine();
         }
 
