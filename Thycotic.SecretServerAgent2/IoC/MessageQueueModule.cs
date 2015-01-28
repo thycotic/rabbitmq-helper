@@ -5,6 +5,7 @@ using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.RabbitMq;
+using Thycotic.MessageQueueClient.Wrappers;
 using Thycotic.Messages;
 using Thycotic.SecretServerAgent2.Logic.Areas.POC;
 using Module = Autofac.Module;
@@ -26,27 +27,20 @@ namespace Thycotic.SecretServerAgent2.IoC
         {
             base.Load(builder);
 
-            var messageAssembly = Assembly.GetAssembly(typeof (IConsumable));
-
             var connectionString = _configurationProvider("RabbitMq.ConnectionString");
             _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
-
 
             builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
             builder.Register(context => new RabbitMqConnection(connectionString))
                 .As<IRabbitMqConnection>()
                 .SingleInstance();
             builder.RegisterType<RabbitMqMessageBus>().AsImplementedInterfaces().SingleInstance();
-            //builder.RegisterType<RabbitMqConsumersSetup>().AsImplementedInterfaces().SingleInstance();
-            //builder.RegisterGeneric(typeof(AutofacRpcConsumer<,,>)).AsSelf().InstancePerDependency();
-            //builder.RegisterGeneric(typeof(AutofacConsumer<,>)).AsSelf().InstancePerDependency();
-            //builder.RegisterGeneric(typeof(AutofacBatchConsumer<,>)).AsSelf().InstancePerDependency();
 
             LoadConsumers(builder, typeof(IConsumer<>));
             LoadConsumers(builder, typeof(IConsumer<,>));
             LoadConsumers(builder, typeof(IRpcConsumer<,>));
 
-            //builder.Register<ConsumerFactory>().SingleInstance();
+            builder.RegisterType<ConsumerWrapperFactory>().SingleInstance();
 
         }
 

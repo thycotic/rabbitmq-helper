@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using RabbitMQ.Client;
 using Thycotic.Logging;
+using Thycotic.MessageQueueClient.RabbitMq;
 
-namespace Thycotic.MessageQueueClient.RabbitMq
+namespace Thycotic.MessageQueueClient.Wrappers
 {
     public class AutofacRpcConsumer<TMsg, TResponse, THandler> : ConsumerWrapperBase<TMsg, THandler>
         where THandler : IConsumer<TMsg, TResponse>

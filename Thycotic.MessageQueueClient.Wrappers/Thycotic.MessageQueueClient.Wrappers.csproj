@@ -37,6 +37,9 @@
     <AssemblyOriginatorKeyFile>..\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client">
       <HintPath>..\packages\RabbitMQ.Client.3.4.3\lib\net35\RabbitMQ.Client.dll</HintPath>
     </Reference>
@@ -49,11 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutofacConsumer.cs" />
-    <Compile Include="AutofacRpcConsumer.cs" />
+    <Compile Include="ConsumerWrapperFactory.cs" />
+    <Compile Include="IConsumerWrapperFactory.cs" />
+    <Compile Include="SimpleConsumerWrapper.cs" />
+    <Compile Include="RpcConsumerWrapper.cs" />
     <Compile Include="ConsumerWrapperBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleConsumerWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">
