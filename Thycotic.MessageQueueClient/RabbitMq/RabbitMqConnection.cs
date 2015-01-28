@@ -45,10 +45,16 @@ namespace Thycotic.MessageQueueClient.RabbitMq
 
                     return cn;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     //if there is an issue opening the channel, clean up and rethrow
-                    CloseCurrentConnection();
+                    _log.Error(string.Format("Failed to re-connect because {0}", ex.Message));
+                    //TODO: Make this configurable?
+                    var delay = 5*1000;
+                    _log.Info(string.Format("Sleeping {0} second(s) before reconnecting", delay));
+                    Thread.Sleep(delay);
+                    ResetConnection();
+                    
                     throw;
                 }
             });
