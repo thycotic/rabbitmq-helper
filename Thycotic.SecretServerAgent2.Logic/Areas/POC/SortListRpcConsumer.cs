@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.POC.Request;
+using Thycotic.Messages.Areas.POC.Response;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 {
     /// <summary>
-    /// Slow RPC consumer
+    /// Sort list RPC consumer
     /// </summary>
-    public class SlowRpcConsumer : IRpcConsumer<SlowRpcMessage, RpcResult>
+    public class SortListRpcConsumer : IRpcConsumer<SortListRpcMessage, SortListResponse>
     {
         private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 
@@ -18,21 +20,11 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public RpcResult Consume(SlowRpcMessage request)
+        public SortListResponse Consume(SortListRpcMessage request)
         {
             _log.Info(string.Format("CONSUMER: Received \"{0}\" items", request.Items.Length));
 
-            //do something silly here
-            var c = 5;
-
-            while (c > 0)
-            {
-                Console.Write(".");
-                Thread.Sleep(1000);
-                c--;
-            }
-
-            return new RpcResult {Status = true, StatusText = "Wow that took a while"};
+            return new SortListResponse { Items = request.Items.OrderBy(i => i).ToArray() };
         }
     }
 }

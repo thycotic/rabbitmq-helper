@@ -56,9 +56,11 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\POC\Request\SortListRpcMessage.cs" />
     <Compile Include="Areas\POC\Request\ThrowingRpcMessage.cs" />
     <Compile Include="Areas\POC\Request\SlowRpcMessage.cs" />
     <Compile Include="Areas\POC\Request\HelloWorldMessage.cs" />
+    <Compile Include="Areas\POC\Response\SortListResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,9 +74,7 @@
       <Name>Thycotic.Messages.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\POC\Response\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
