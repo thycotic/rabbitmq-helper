@@ -12,7 +12,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 
         public void Consume(HelloWorldMessage request)
         {
-            _log.Debug(string.Format("Received message \"{0}\"", request.Content));
+            _log.Debug(string.Format("CONSUMER: Received message \"{0}\"", request.Content));
             //throw new ApplicationException();
         }
     }

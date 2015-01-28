@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;
@@ -12,11 +13,18 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 
         public RpcResult Consume(SlowRpcMessage request)
         {
-            _log.Debug(string.Format("Received \"{0}\" items", request.Items.Length));
+            _log.Debug(string.Format("CONSUMER: Received \"{0}\" items", request.Items.Length));
             //throw new ApplicationException();
 
             //do something silly here
-            Thread.Sleep(5*1000);
+            var c = 5;
+
+            while (c > 0)
+            {
+                Console.Write(".");
+                Thread.Sleep(1000);
+                c--;
+            }
 
             return new RpcResult {Status = true};
         }
