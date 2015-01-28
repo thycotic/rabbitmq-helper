@@ -46,7 +46,8 @@ namespace Thycotic.SecretServerAgent2
 #                                                                                                                                       
 #                                                                 
 ";
-            _log.Info(logo);
+            //don't use the log since it just spams the table
+            Console.WriteLine(logo);
 
             _log.Info("Application is starting...");
         }
