@@ -51,7 +51,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
             cli.AddCommand(new ConsoleCommand { Name = "postmessage", Description = "Posts a hello world message to the exchange"}, parameters =>
             {
-                LogCli.Debug("Posting message to change");
+                LogCli.Info("Posting message to change");
 
                 string content;
                 if (!parameters.TryGet("content", out content)) return;
@@ -71,7 +71,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                 var count = Convert.ToInt32(countString);
 
-                LogCli.Debug(string.Format("Flooding exchange in order with {0} request(s)", count));
+                LogCli.Info(string.Format("Flooding exchange in order with {0} request(s)", count));
 
                 for (var loop = 0; loop < count; loop++)
                 {
@@ -91,7 +91,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                 var count = Convert.ToInt32(countString);
 
-                LogCli.Debug(string.Format("Flooding exchange in parallel with {0} request(s)", count));
+                LogCli.Info(string.Format("Flooding exchange in parallel with {0} request(s)", count));
 
                 Enumerable.Range(0, count).AsParallel().ForAll(i =>
                 {
