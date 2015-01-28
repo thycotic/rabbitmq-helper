@@ -72,7 +72,9 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
         {
             Console.WriteLine();
             Console.Write("{0}@{1} # ", Environment.UserName, Environment.MachineName);
-            return Console.ReadLine();
+            var input = Console.ReadLine();
+
+            return !string.IsNullOrWhiteSpace(input) ? input.Trim() : string.Empty;
         }
 
         private static ConsoleCommand ParseInput(string input, out ConsoleCommandParameters parameters)

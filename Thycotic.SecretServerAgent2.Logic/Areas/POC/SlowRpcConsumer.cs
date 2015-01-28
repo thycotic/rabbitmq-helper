@@ -26,7 +26,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
                 c--;
             }
 
-            return new RpcResult {Status = true};
+            return new RpcResult {Status = true, StatusText = "Wow that took a while"};
         }
     }
 }

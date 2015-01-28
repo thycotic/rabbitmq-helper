@@ -80,9 +80,9 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                     Items = Enumerable.Range(0,1).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
                 };
 
-                bus.Rpc<RpcResult>(message, 30*1000);
+                var response = bus.Rpc<RpcResult>(message, 30*1000);
 
-                LogCli.Info("Posting completed");
+                LogCli.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
             });
 
             cli.AddCommand(new ConsoleCommand { Name = "floodo", Description = "Floods the exchange in order"}, parameters =>
