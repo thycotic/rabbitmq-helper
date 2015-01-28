@@ -13,6 +13,7 @@ namespace Thycotic.SecretServerAgent2
         public IContainer IoCContainer { get; set; }
 
         private readonly ILogWriter _log = Log.Get(typeof(AgentService));
+        private LogCorrelation _correlation;
 
         public AgentService()
         {
@@ -32,7 +33,7 @@ namespace Thycotic.SecretServerAgent2
 
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();
-                
+
                 Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
 
                 builder.RegisterModule(new MessageQueueModule(configurationProvider));
@@ -53,6 +54,20 @@ namespace Thycotic.SecretServerAgent2
             IoCContainer.Dispose();
         }
 
+        private void BringUp()
+        {
+            _correlation = LogCorrelation.Create();
+
+            ConfigureIoC();
+        }
+
+        private void TearDown()
+        {
+            ResetIoCContainer();
+
+            _correlation.Dispose();
+        }
+
         public void Start(string[] args)
         {
             OnStart(args);
@@ -63,8 +78,8 @@ namespace Thycotic.SecretServerAgent2
             using (LogContext.Create("Starting"))
             {
                 base.OnStart(args);
-                
-                ConfigureIoC();
+
+                BringUp();
             }
         }
 
@@ -74,7 +89,7 @@ namespace Thycotic.SecretServerAgent2
             {
                 base.OnStop();
 
-                ResetIoCContainer();
+                TearDown();
             }
         }
     }
