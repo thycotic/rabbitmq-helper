@@ -4,8 +4,19 @@ using Module = Autofac.Module;
 
 namespace Thycotic.MessageQueueClient.Wrappers.IoC
 {
+    /// <summary>
+    /// Module to register wrappers and their factory
+    /// </summary>
     public class WrappersModule : Module
     {
+        /// <summary>
+        /// Loads wrappers.
+        /// </summary>
+        /// <param name="builder">The builder through which components can be
+        /// registered.</param>
+        /// <remarks>
+        /// Note that the ContainerBuilder parameter is unique to this module.
+        /// </remarks>
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);

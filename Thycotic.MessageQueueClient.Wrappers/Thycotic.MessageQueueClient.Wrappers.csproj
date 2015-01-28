@@ -23,6 +23,8 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>bin\Debug\Thycotic.MessageQueueClient.Wrappers.XML</DocumentationFile>
+    <NoWarn>
+    </NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -58,7 +60,6 @@
   <ItemGroup>
     <Compile Include="ConsumerWrapperFactory.cs" />
     <Compile Include="IConsumerWrapperBase.cs" />
-    <Compile Include="IConsumerWrapperFactory.cs" />
     <Compile Include="IoC\WrappersModule.cs" />
     <Compile Include="SimpleConsumerWrapper.cs" />
     <Compile Include="RpcConsumerWrapper.cs" />

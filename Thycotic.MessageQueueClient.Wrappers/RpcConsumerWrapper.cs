@@ -8,6 +8,12 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
+    /// <summary>
+    /// RPC consumer wrapper
+    /// </summary>
+    /// <typeparam name="TRequest">The type of the request.</typeparam>
+    /// <typeparam name="TResponse">The type of the response.</typeparam>
+    /// <typeparam name="THandler">The type of the handler.</typeparam>
     public class RpcConsumerWrapper<TRequest, TResponse, THandler> : ConsumerWrapperBase<TRequest, THandler>
         where TRequest: IConsumable
         where THandler : IRpcConsumer<TRequest, TResponse>
@@ -17,6 +23,12 @@ namespace Thycotic.MessageQueueClient.Wrappers
         private readonly IRabbitMqConnection _rmq;
         private readonly ILogWriter _log = Log.Get(typeof (RpcConsumerWrapper<TRequest, TResponse, THandler>));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RpcConsumerWrapper{TRequest, TResponse, THandler}"/> class.
+        /// </summary>
+        /// <param name="rmq">The RMQ.</param>
+        /// <param name="serializer">The serializer.</param>
+        /// <param name="handlerFactory">The handler factory.</param>
         public RpcConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
             : base(rmq)
         {
@@ -27,18 +39,37 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
         }
 
+        /// <summary>
+        /// Called each time a message arrives for this consumer.
+        /// </summary>
+        /// <param name="consumerTag"></param>
+        /// <param name="deliveryTag"></param>
+        /// <param name="redelivered"></param>
+        /// <param name="exchange"></param>
+        /// <param name="routingKey"></param>
+        /// <param name="properties"></param>
+        /// <param name="body"></param>
+        /// <remarks>
+        /// Be aware that acknowledgement may be required. See IModel.BasicAck.
+        /// </remarks>
          public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
             string routingKey, IBasicProperties properties, byte[] body)
         {
             Task.Run(() => ExecuteMessage(deliveryTag, properties, body));
         }
 
+         /// <summary>
+         /// Executes the message.
+         /// </summary>
+         /// <param name="deliveryTag">The delivery tag.</param>
+         /// <param name="properties">The properties.</param>
+         /// <param name="body">The body.</param>
         public void ExecuteMessage(ulong deliveryTag, IBasicProperties properties, byte[] body)
         {
             try
             {
 
-                var message = _serializer.BytesToMessage<TRequest>(body);
+                var message = _serializer.ToRequest<TRequest>(body);
                 var responseType = "success";
                 object response;
 
@@ -75,7 +106,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
         private void Respond(string replyTo, object response, string correlationId, string type)
         {
-            var body = _serializer.MessageToBytes(response);
+            var body = _serializer.ToBytes(response);
             var routingKey = replyTo;
 
             using (var channel = _rmq.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
@@ -87,7 +118,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
                 properties.CorrelationId = correlationId;
                 properties.Type = type;
 
-                //TODO: Shoudl this be empty or the default exchange
+                //TODO: Should this be empty or the default exchange
                 var exchange = string.Empty;
 
                 channel.BasicPublish(exchange, routingKey, DefaultConfigValues.Model.Publish.NotMandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);

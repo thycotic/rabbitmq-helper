@@ -6,6 +6,9 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.RabbitMq
 {
+    /// <summary>
+    /// Rabbit Mq message bus
+    /// </summary>
     public class RabbitMqMessageBus : IMessageBus
     {
         private readonly IRabbitMqConnection _connection;
@@ -14,6 +17,12 @@ namespace Thycotic.MessageQueueClient.RabbitMq
 
         private readonly ILogWriter _log = Log.Get(typeof(RabbitMqMessageBus));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RabbitMqMessageBus"/> class.
+        /// </summary>
+        /// <param name="connection">The connection.</param>
+        /// <param name="messageSerializer">The message serializer.</param>
+        /// <param name="exchangeName">Name of the exchange.</param>
         public RabbitMqMessageBus(IRabbitMqConnection connection, IMessageSerializer messageSerializer,
                                 string exchangeName = DefaultConfigValues.Exchange)
         {
@@ -22,11 +31,26 @@ namespace Thycotic.MessageQueueClient.RabbitMq
             _exchangeName = exchangeName;
         }
 
+        /// <summary>
+        /// Publishes the specified request as an RPC.
+        /// </summary>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <param name="timeoutSeconds">The timeout seconds.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ApplicationException">
+        /// RPC call timed out
+        /// or
+        /// RPC call was disconnected
+        /// or
+        /// CorrelationId mismatch
+        /// or
+        /// </exception>
         public TResponse Rpc<TResponse>(IConsumable request, int timeoutSeconds)
         {
             _log.Debug(string.Format("Publishing RPC {0}", request));
 
-            var body = _messageSerializer.MessageToBytes(request);
+            var body = _messageSerializer.ToBytes(request);
             var routingKey = request.GetRoutingKey();
 
             try
@@ -59,9 +83,9 @@ namespace Thycotic.MessageQueueClient.RabbitMq
                         {
                             throw new ApplicationException("CorrelationId mismatch");
                         }
-                        if (response.BasicProperties.Type != "error") return _messageSerializer.BytesToMessage<TResponse>(response.Body);
+                        if (response.BasicProperties.Type != "error") return _messageSerializer.ToRequest<TResponse>(response.Body);
 
-                        var error = _messageSerializer.BytesToMessage<RpcError>(response.Body);
+                        var error = _messageSerializer.ToRequest<RpcError>(response.Body);
                         throw new ApplicationException(error.Message);
                     }
                 }
@@ -73,11 +97,16 @@ namespace Thycotic.MessageQueueClient.RabbitMq
             }
         }
 
+        /// <summary>
+        /// Publishes the specified request as a fire-and-forget
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="persistent">if set to <c>true</c> [persistent].</param>
         public void Publish(IConsumable request, bool persistent = true)
         {
             _log.Debug(string.Format("Publishing basic {0}", request));
 
-            var body = _messageSerializer.MessageToBytes(request);
+            var body = _messageSerializer.ToBytes(request);
             var routingKey = request.GetRoutingKey();
 
             try

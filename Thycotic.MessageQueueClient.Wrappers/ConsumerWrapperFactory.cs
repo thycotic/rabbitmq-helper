@@ -7,17 +7,27 @@ using Thycotic.Utility;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
-    public class ConsumerWrapperFactory : IConsumerWrapperFactory, IStartable
+    /// <summary>
+    /// Consumer wrapper factory
+    /// </summary>
+    public class ConsumerWrapperFactory : IStartable
     {
         private readonly IComponentContext _context;
 
         private readonly HashSet<IConsumerWrapperBase> _consumerWrappers = new HashSet<IConsumerWrapperBase>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConsumerWrapperFactory"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public ConsumerWrapperFactory(IComponentContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Perform once-off startup processing.
+        /// </summary>
         public void Start()
         {
             StartActionConsumers(typeof (IConsumer<>), typeof(SimpleConsumerWrapper<,>));

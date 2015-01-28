@@ -7,24 +7,46 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
+    /// <summary>
+    /// Base consumer wrapper
+    /// </summary>
+    /// <typeparam name="TRequest">The type of the request.</typeparam>
+    /// <typeparam name="THandler">The type of the handler.</typeparam>
     public abstract class ConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase, IBasicConsumer
         where TRequest : IConsumable
     {
-        private readonly IRabbitMqConnection _connection;
+        /// <summary>
+        /// Retrieve the IModel this consumer is associated
+        /// with, for use in acknowledging received messages, for
+        /// instance.
+        /// </summary>
         public IModel Model { get; private set; }
-        
+
+        /// <summary>
+        /// Signaled when the consumer gets cancelled.
+        /// </summary>
+#pragma warning disable 0067 //disable never used warning
         public event ConsumerCancelledEventHandler ConsumerCancelled;
+#pragma warning restore 0067
+
+        private readonly IRabbitMqConnection _connection;
 
         private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TRequest, THandler>));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest, THandler}"/> class.
+        /// </summary>
+        /// <param name="connection">The connection.</param>
         protected ConsumerWrapperBase(IRabbitMqConnection connection)
         {
             _connection = connection;
-            
         }
 
+        /// <summary>
+        /// Starts the consuming process.
+        /// </summary>
         public void StartConsuming()
         {
             var routingKey = this.GetRoutingKey(typeof (TRequest));
@@ -74,30 +96,70 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
         }
 
+        #region Not implemented/needed
+        /// <summary>
+        /// Called upon successful registration of the
+        /// consumer with the broker.
+        /// </summary>
+        /// <param name="consumerTag"></param>
         public void HandleBasicConsumeOk(string consumerTag)
         {
-            //throw new NotImplementedException();
+            //not needed but forced by the interface
         }
 
+        /// <summary>
+        /// Called upon successful deregistration of the
+        /// consumer from the broker.
+        /// </summary>
+        /// <param name="consumerTag"></param>
         public void HandleBasicCancelOk(string consumerTag)
         {
-            //throw new NotImplementedException();
+            //not needed but forced by the interface
         }
 
+        /// <summary>
+        /// Called when the consumer is cancelled for reasons other than by a
+        /// basicCancel: e.g. the queue has been deleted (either by this channel or
+        /// by any other channel). See handleCancelOk for notification of consumer
+        /// cancellation due to basicCancel.
+        /// </summary>
+        /// <param name="consumerTag"></param>
         public void HandleBasicCancel(string consumerTag)
         {
-            //throw new NotImplementedException();
+            //not needed but forced by the interface
         }
 
+        /// <summary>
+        /// Called when the model shuts down.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="reason"></param>
         public void HandleModelShutdown(IModel model, ShutdownEventArgs reason)
         {
-            //throw new NotImplementedException();
+            //not needed but forced by the interface
         }
+        #endregion
 
+        /// <summary>
+        /// Called each time a message arrives for this consumer.
+        /// </summary>
+        /// <param name="consumerTag"></param>
+        /// <param name="deliveryTag"></param>
+        /// <param name="redelivered"></param>
+        /// <param name="exchange"></param>
+        /// <param name="routingKey"></param>
+        /// <param name="properties"></param>
+        /// <param name="body"></param>
+        /// <remarks>
+        /// Be aware that acknowledgement may be required. See IModel.BasicAck.
+        /// </remarks>
         public abstract void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
             string routingKey,
             IBasicProperties properties, byte[] body);
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             _terminated = true;

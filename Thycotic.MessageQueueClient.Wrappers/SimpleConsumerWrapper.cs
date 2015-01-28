@@ -8,14 +8,25 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
+    /// <summary>
+    /// Simple consumer wrapper
+    /// </summary>
+    /// <typeparam name="TRequest">The type of the request.</typeparam>
+    /// <typeparam name="THandler">The type of the handler.</typeparam>
     public class SimpleConsumerWrapper<TRequest, THandler> : ConsumerWrapperBase<TRequest, THandler>
         where TRequest : IConsumable
         where THandler : IConsumer<TRequest>
     {
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IMessageSerializer _serializer;
-        private readonly ILogWriter _log = Log.Get(typeof (SimpleConsumerWrapper<TRequest, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof(SimpleConsumerWrapper<TRequest, THandler>));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SimpleConsumerWrapper{TRequest, THandler}"/> class.
+        /// </summary>
+        /// <param name="rmq">The RMQ.</param>
+        /// <param name="serializer">The serializer.</param>
+        /// <param name="handlerFactory">The handler factory.</param>
         public SimpleConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
             : base(rmq)
         {
@@ -24,23 +35,39 @@ namespace Thycotic.MessageQueueClient.Wrappers
         }
 
 
+        /// <summary>
+        /// Called each time a message arrives for this consumer.
+        /// </summary>
+        /// <param name="consumerTag"></param>
+        /// <param name="deliveryTag"></param>
+        /// <param name="redelivered"></param>
+        /// <param name="exchange"></param>
+        /// <param name="routingKey"></param>
+        /// <param name="properties"></param>
+        /// <param name="body"></param>
+        /// <remarks>
+        /// Be aware that acknowledgement may be required. See IModel.BasicAck.
+        /// </remarks>
         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
             string routingKey, IBasicProperties properties, byte[] body)
         {
             Task.Run(() => ExecuteMessage(deliveryTag, body));
         }
 
+        /// <summary>
+        /// Executes the message.
+        /// </summary>
+        /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="body">The body.</param>
         public void ExecuteMessage(ulong deliveryTag, byte[] body)
         {
             const bool multiple = false;
 
             using (LogContext.Create("Processing message..."))
             {
-
                 try
                 {
-
-                    var message = _serializer.BytesToMessage<TRequest>(body);
+                    var message = _serializer.ToRequest<TRequest>(body);
 
                     using (var handler = _handlerFactory())
                     {
@@ -54,7 +81,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
                 }
                 catch (Exception e)
                 {
-                    _log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof (TRequest))), e);
+                    _log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof(TRequest))), e);
 
                     Model.BasicNack(deliveryTag, multiple, requeue: true);
                 }

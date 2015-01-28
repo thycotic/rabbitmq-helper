@@ -6,10 +6,18 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 {
+    /// <summary>
+    /// Slow RPC consumer
+    /// </summary>
     public class SlowRpcConsumer : IRpcConsumer<SlowRpcMessage, RpcResult>
     {
         private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 
+        /// <summary>
+        /// Consumes the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         public RpcResult Consume(SlowRpcMessage request)
         {
             _log.Info(string.Format("CONSUMER: Received \"{0}\" items", request.Items.Length));

@@ -120,6 +120,9 @@ namespace Thycotic.MessageQueueClient.RabbitMq
             _log.Debug("Connection closed");
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             _terminated = true;
