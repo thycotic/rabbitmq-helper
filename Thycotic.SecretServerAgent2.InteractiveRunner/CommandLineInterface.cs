@@ -23,7 +23,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
             _commandMappings.Add(new ConsoleCommand { Name = HelpCommandName, Description = "This screen" }, parameters =>
             {
                 Console.WriteLine("Available commands: ");
-                _commandMappings.Keys.ToList().ForEach(cm => Console.WriteLine(" - {0}", cm));
+                _commandMappings.Keys.OrderBy(cm => cm.Name).ToList().ForEach(cm => Console.WriteLine(" - {0}", cm));
             });
 
             _commandMappings.Add(new ConsoleCommand { Name = QuitCommandName, Description = "Quits/exists the application" }, parameters => _cts.Cancel());
@@ -48,7 +48,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                     input = initialCommand.Replace("&quot;", "\"");
 
                     Console.WriteLine();
-                    Console.Write("# ");
+                    Console.Write("{0}@{1} # ", Environment.UserName, Environment.MachineName);
                     Console.WriteLine(input);
                 }
                 else
@@ -71,7 +71,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
         private static string ConsumeInput()
         {
             Console.WriteLine();
-            Console.Write("# ");
+            Console.Write("{0}@{1} # ", Environment.UserName, Environment.MachineName);
             return Console.ReadLine();
         }
 
