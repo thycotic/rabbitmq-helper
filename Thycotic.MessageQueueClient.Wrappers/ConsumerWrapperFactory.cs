@@ -41,18 +41,19 @@ namespace Thycotic.MessageQueueClient.Wrappers
             consumerTypes.ToList().ForEach(ct =>
             {
                 var consumerType = ct.Activator.LimitType;
-                var targetInterface = consumerType.GetInterfaces().Single(t => t.IsAssignableToGenericType(baseConsumertype));
-                var messageType = targetInterface.GetGenericArguments()[0];
+                var targetInterfaces = consumerType.GetInterfaces().Where(t => t.IsAssignableToGenericType(baseConsumertype));
+                targetInterfaces.ToList().ForEach(ti =>
+                {
+                    var messageType = ti.GetGenericArguments()[0];
 
-                var consumerWrapperType = wrapperType.MakeGenericType(messageType, consumerType);
+                    var consumerWrapperType = wrapperType.MakeGenericType(messageType, consumerType);
 
-                var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
+                    var consumerWrapper = (IConsumerWrapperBase) _context.Resolve(consumerWrapperType);
 
-                _consumerWrappers.Add(consumerWrapper);
+                    _consumerWrappers.Add(consumerWrapper);
 
-                consumerWrapper.StartConsuming();
-                //consumer
-
+                    consumerWrapper.StartConsuming();
+                });
             });
         }
 
