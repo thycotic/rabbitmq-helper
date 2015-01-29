@@ -17,7 +17,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// <param name="request">The request.</param>
         public void Consume(HelloWorldMessage request)
         {
-            _log.Info(string.Format("CONSUMER: Received message \"{0}\"", request.Content));
+            ConsumerConsole.WriteLine(string.Format("Received message \"{0}\"", request.Content));
             //throw new ApplicationException();
         }
     }

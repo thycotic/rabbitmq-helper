@@ -20,6 +20,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// <exception cref="System.ApplicationException">Throw your hands up in the air!</exception>
         public RpcResult Consume(ThrowingRpcMessage request)
         {
+            ConsumerConsole.WriteLine("I got a messages but I will throw!");
             _log.Error("Throwing!");
             throw new ApplicationException("Throw your hands up in the air!");
         }

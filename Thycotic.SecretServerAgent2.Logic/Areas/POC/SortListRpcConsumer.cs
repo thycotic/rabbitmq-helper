@@ -21,9 +21,9 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// <returns></returns>
         public SortListResponse Consume(SortListRpcMessage request)
         {
-            _log.Info(string.Format("CONSUMER: Received \"{0}\" items", request.Items.Length));
+            ConsumerConsole.WriteLine(string.Format("Received \"{0}\" items", request.Items.Length));
 
-            request.Items.ToList().ForEach(Console.WriteLine);
+            request.Items.ToList().ForEach(ConsumerConsole.WriteLine);
 
             return new SortListResponse { Items = request.Items.OrderBy(i => i).ToArray() };
         }

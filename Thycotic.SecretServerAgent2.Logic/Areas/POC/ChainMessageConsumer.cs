@@ -29,14 +29,13 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// <param name="request">The request.</param>
         public void Consume(ChainMessage request)
         {
-            _log.Info("CONSUMER: Received chain message");
-            //throw new ApplicationException();
+            ConsumerConsole.WriteLine("Received chain message");
 
-            Console.WriteLine("Posting next message...");
+            ConsumerConsole.WriteLine("Posting next message...");
 
             _bus.BasicPublish(new HelloWorldMessage { Content = "Hello from the chain consumer!"});
 
-            Console.WriteLine("Posted");
+            ConsumerConsole.WriteLine("Posted");
         }
     }
 }

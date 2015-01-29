@@ -20,14 +20,14 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// <returns></returns>
         public RpcResult Consume(SlowRpcMessage request)
         {
-            _log.Info(string.Format("CONSUMER: Received \"{0}\" items", request.Items.Length));
+            ConsumerConsole.WriteLine(string.Format("Received \"{0}\" items", request.Items.Length));
 
             //do something silly here
             var c = 5;
 
             while (c > 0)
             {
-                Console.Write(".");
+                ConsumerConsole.Write(".");
                 Thread.Sleep(1000);
                 c--;
             }
