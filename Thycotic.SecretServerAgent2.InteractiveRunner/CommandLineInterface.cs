@@ -11,7 +11,6 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
     internal class CommandLineInterface
     {
         private const string HelpCommandName = "help";
-        private const string DefaultCommandName = HelpCommandName;
         private const string QuitCommandName = "quit";
 
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
@@ -24,10 +23,12 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
             var helpCommand = new SystemConsoleCommand
             {
                 Name = HelpCommandName,
+                Aliases = new[] { "man", "h"},
                 Description = "This screen",
                 Action = parameters =>
                 {
-                    Console.WriteLine("Available commands: ");
+                    Console.WriteLine();
+                    Console.WriteLine("Available commands: ".ToUpper());
 
                     var mappings = _commandMappings.OrderBy(c => c.Name).Select(c => c.ToString());
 
@@ -98,7 +99,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
         private static string ParseInput(string input, out ConsoleCommandParameters parameters)
         {
-            var commandName = DefaultCommandName;
+            var commandName = string.Empty;
             parameters = new ConsoleCommandParameters();
 
             //no command
@@ -128,18 +129,23 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
         private void HandleCommand(string commandName, ConsoleCommandParameters parameters)
         {
+            if (string.IsNullOrWhiteSpace(commandName)) return;
+
             using (LogContext.Create(commandName))
             {
                 try
                 {
                     var command =
-                        _commandMappings.SingleOrDefault(cm => (cm.Name == commandName) || ((cm.Aliases != null) && cm.Aliases.Any(ca => ca == commandName)));
+                        _commandMappings.SingleOrDefault(
+                            cm =>
+                                (cm.Name == commandName) ||
+                                ((cm.Aliases != null) && cm.Aliases.Any(ca => ca == commandName)));
 
                     if (command == null)
                     {
                         _log.Error(string.Format("Command {0} not found", commandName));
                         command = _commandMappings.Single(
-                            cm => cm.Name == DefaultCommandName);
+                            cm => cm.Name == HelpCommandName);
                     }
 
                     command.Action.Invoke(parameters);
@@ -150,7 +156,6 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 }
 
             }
-            Console.WriteLine();
         }
 
 
