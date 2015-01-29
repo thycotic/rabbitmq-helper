@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// <summary>
     /// Slow RPC message
     /// </summary>
-    public class SlowRpcMessage : IConsumable
+    public class SortListMessage : IConsumable
     {
         /// <summary>
         /// Gets or sets the items.
@@ -13,7 +13,7 @@ namespace Thycotic.Messages.Areas.POC.Request
         /// <value>
         /// The items.
         /// </value>
-        public int Steps { get; set; }
+        public string[] Items { get; set; }
 
         /// <summary>
         /// Gets the version.

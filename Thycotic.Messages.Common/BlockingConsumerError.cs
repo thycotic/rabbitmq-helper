@@ -1,9 +1,9 @@
 ﻿namespace Thycotic.Messages.Common
 {
     /// <summary>
-    /// RPC error container
+    /// Blocking consumer (remote procedure call) error container
     /// </summary>
-    public class RpcError
+    public class BlockingConsumerError
     {
         /// <summary>
         /// Gets or sets the message.

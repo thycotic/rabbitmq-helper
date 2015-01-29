@@ -59,9 +59,9 @@
     <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
     <Compile Include="Areas\POC\Request\ChainMessage.cs" />
-    <Compile Include="Areas\POC\Request\SortListRpcMessage.cs" />
-    <Compile Include="Areas\POC\Request\ThrowingRpcMessage.cs" />
-    <Compile Include="Areas\POC\Request\SlowRpcMessage.cs" />
+    <Compile Include="Areas\POC\Request\SortListMessage.cs" />
+    <Compile Include="Areas\POC\Request\ThrowTriggerMessage.cs" />
+    <Compile Include="Areas\POC\Request\StepMessage.cs" />
     <Compile Include="Areas\POC\Request\HelloWorldMessage.cs" />
     <Compile Include="Areas\POC\Response\SortListResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

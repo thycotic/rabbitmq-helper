@@ -6,33 +6,33 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
-    class PostRpcThrowingCommand : ConsoleCommandBase
+    class ThrowTriggerCommand : ConsoleCommandBase
     {
         private readonly IRequestBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(PostRpcThrowingCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(ThrowTriggerCommand));
 
         public override string Name
         {
-            get { return "postrpct"; }
+            get { return "throwtrigger"; }
         }
 
         public override string Description
         {
-            get { return "Posts a throwing rpc message to the exchange"; }
+            get { return "Posts a throwing blocking message to the exchange"; }
         }
 
-        public PostRpcThrowingCommand(IRequestBus bus)
+        public ThrowTriggerCommand(IRequestBus bus)
         {
             _bus = bus;
             Action = parameters =>
             {
                 _log.Info("Posting message to exchange");
 
-                var message = new ThrowingRpcMessage();
+                var message = new ThrowTriggerMessage();
 
                 try
                 {
-                    _bus.BlockingPublish<RpcResult>(message, 30*1000);
+                    _bus.BlockingPublish<BlockingConsumerResult>(message, 30*1000);
 
                 }
                 catch (Exception ex)

@@ -6,7 +6,7 @@ using Thycotic.Logging;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.Wrappers
+namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
 {
     /// <summary>
     /// Base consumer wrapper

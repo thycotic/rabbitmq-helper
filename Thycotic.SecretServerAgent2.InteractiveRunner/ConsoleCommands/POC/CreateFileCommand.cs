@@ -13,7 +13,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 
         public override string Name
         {
-            get { return "createtempfile"; }
+            get { return "createfile"; }
         }
 
         public override string Description

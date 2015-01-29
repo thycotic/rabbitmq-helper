@@ -7,22 +7,22 @@ using Thycotic.Messages.Areas.POC.Response;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
-    class PostRpcWithCustomResponseCommand : ConsoleCommandBase
+    class SortListCommand : ConsoleCommandBase
     {
         private readonly IRequestBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(PostRpcWithCustomResponseCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(SortListCommand));
 
         public override string Name
         {
-            get { return "postrpcsort"; }
+            get { return "sortlist"; }
         }
 
         public override string Description
         {
-            get { return "Posts a sort list rpc message to the exchange"; }
+            get { return "Posts a sort list blocking message to the exchange"; }
         }
 
-        public PostRpcWithCustomResponseCommand(IRequestBus bus)
+        public SortListCommand(IRequestBus bus)
         {
             _bus = bus;
 
@@ -30,7 +30,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             {
                 _log.Info("Posting message to exchange");
 
-                var message = new SortListRpcMessage
+                var message = new SortListMessage
                 {
                     Items = Enumerable.Range(0, 25).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
                 };

@@ -1,9 +1,9 @@
 ﻿namespace Thycotic.Messages.Common
 {
     /// <summary>
-    /// RPC result used for normal operations
+    /// Blocking consumer (remote procedure call) result used for normal operations
     /// </summary>
-    public class RpcResult
+    public class BlockingConsumerResult
     {
         /// <summary>
         /// Gets or sets a value indicating whether the RPC call succeeded or failed.

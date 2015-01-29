@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.MessageQueueClient.Wrappers
+namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
 {
     /// <summary>
     /// Interface for a consumer wrapper base class

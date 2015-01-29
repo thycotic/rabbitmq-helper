@@ -7,7 +7,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// <summary>
     /// Slow RPC consumer
     /// </summary>
-    public class SlowRpcConsumer : IRpcConsumer<SlowRpcMessage, RpcResult>
+    public class StepConsumer : IRpcConsumer<StepMessage, BlockingConsumerResult>
     {
         //private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 
@@ -16,11 +16,11 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public RpcResult Consume(SlowRpcMessage request)
+        public BlockingConsumerResult Consume(StepMessage request)
         {
-            ConsumerConsole.WriteLine(string.Format("Received \"{0}\" steps", request.Steps));
+            ConsumerConsole.WriteLine(string.Format("Received \"{0}\" steps", request.Count));
 
-            var c = request.Steps;
+            var c = request.Count;
 
             while (c > 0)
             {
@@ -29,7 +29,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
                 c--;
             }
 
-            return new RpcResult {Status = true, StatusText = "Done stepping!"};
+            return new BlockingConsumerResult {Status = true, StatusText = "Done stepping!"};
         }
     }
 }

@@ -64,12 +64,12 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
-    <Compile Include="ConsumerWrapperFactory.cs" />
-    <Compile Include="IConsumerWrapperBase.cs" />
+    <Compile Include="RabbitMq\ConsumerWrapperFactory.cs" />
+    <Compile Include="RabbitMq\IConsumerWrapperBase.cs" />
     <Compile Include="IoC\WrappersModule.cs" />
-    <Compile Include="SimpleConsumerWrapper.cs" />
-    <Compile Include="RpcConsumerWrapper.cs" />
-    <Compile Include="ConsumerWrapperBase.cs" />
+    <Compile Include="RabbitMq\BasicConsumerWrapper.cs" />
+    <Compile Include="RabbitMq\BlockingConsumerWrapper.cs" />
+    <Compile Include="RabbitMq\ConsumerWrapperBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

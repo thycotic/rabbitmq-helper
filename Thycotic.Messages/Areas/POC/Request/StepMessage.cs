@@ -3,10 +3,18 @@
 namespace Thycotic.Messages.Areas.POC.Request
 {
     /// <summary>
-    /// Throwing RPC message
+    /// Slow RPC message
     /// </summary>
-    public class ThrowingRpcMessage : IConsumable
+    public class StepMessage : IConsumable
     {
+        /// <summary>
+        /// Gets or sets the items.
+        /// </summary>
+        /// <value>
+        /// The items.
+        /// </value>
+        public int Count { get; set; }
+
         /// <summary>
         /// Gets the version.
         /// </summary>

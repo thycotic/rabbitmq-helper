@@ -12,7 +12,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 
         public override string Name
         {
-            get { return "floodo"; }
+            get { return "floodordered"; }
         }
 
         public override string Description

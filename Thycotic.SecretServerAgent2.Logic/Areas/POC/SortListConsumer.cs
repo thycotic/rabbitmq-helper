@@ -8,7 +8,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// <summary>
     /// Sort list RPC consumer
     /// </summary>
-    public class SortListRpcConsumer : IRpcConsumer<SortListRpcMessage, SortListResponse>
+    public class SortListConsumer : IRpcConsumer<SortListMessage, SortListResponse>
     {
         //private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 
@@ -17,7 +17,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public SortListResponse Consume(SortListRpcMessage request)
+        public SortListResponse Consume(SortListMessage request)
         {
             ConsumerConsole.WriteLine(string.Format("Received \"{0}\" item(s)", request.Items.Length));
 

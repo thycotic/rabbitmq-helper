@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Thycotic.Logging;
+using Thycotic.MessageQueueClient.Wrappers.RabbitMq;
 using Module = Autofac.Module;
 
 namespace Thycotic.MessageQueueClient.Wrappers.IoC
@@ -25,8 +26,8 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
 
             _log.Debug("Initializing consumer wrappers...");
 
-            builder.RegisterGeneric(typeof (SimpleConsumerWrapper<,>)).InstancePerDependency();
-            builder.RegisterGeneric(typeof (RpcConsumerWrapper<,,>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof (BasicConsumerWrapper<,>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof (BlockingConsumerWrapper<,,>)).InstancePerDependency();
 
             builder.RegisterType<ConsumerWrapperFactory>().As<IStartable>().SingleInstance();
 

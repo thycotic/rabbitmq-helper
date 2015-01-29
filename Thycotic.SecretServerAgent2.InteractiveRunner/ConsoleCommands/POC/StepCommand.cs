@@ -6,22 +6,22 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
-    class PostRpcCommand : ConsoleCommandBase
+    class StepCommand : ConsoleCommandBase
     {
         private readonly IRequestBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(PostRpcCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(StepCommand));
 
         public override string Name
         {
-            get { return "postrpc"; }
+            get { return "step"; }
         }
 
         public override string Description
         {
-            get { return "Posts a rpc message to the exchange"; }
+            get { return "Posts a blocking message to the exchange"; }
         }
 
-        public PostRpcCommand(IRequestBus bus)
+        public StepCommand(IRequestBus bus)
         {
             _bus = bus;
 
@@ -29,17 +29,17 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             {
                 _log.Info("Posting message to exchange");
 
-                string stepsString;
-                if (!parameters.TryGet("steps", out stepsString)) return;
+                string countString;
+                if (!parameters.TryGet("count", out countString)) return;
 
-                var steps = Convert.ToInt32(stepsString);
+                var count = Convert.ToInt32(countString);
 
-                var message = new SlowRpcMessage
+                var message = new StepMessage
                 {
-                    Steps = steps
+                    Count = count
                 };
 
-                var response = _bus.BlockingPublish<RpcResult>(message, (steps+5) * 1000);
+                var response = _bus.BlockingPublish<BlockingConsumerResult>(message, (count+5) * 1000);
 
                 _log.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
             };

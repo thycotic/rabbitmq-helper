@@ -85,7 +85,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
                         }
                         if (response.BasicProperties.Type != "error") return _messageSerializer.ToRequest<TResponse>(response.Body);
 
-                        var error = _messageSerializer.ToRequest<RpcError>(response.Body);
+                        var error = _messageSerializer.ToRequest<BlockingConsumerError>(response.Body);
                         throw new ApplicationException(error.Message);
                     }
                 }

@@ -59,8 +59,8 @@
     <Compile Include="IConsumable.cs" />
     <Compile Include="IConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RpcError.cs" />
-    <Compile Include="RpcResult.cs" />
+    <Compile Include="BlockingConsumerError.cs" />
+    <Compile Include="BlockingConsumerResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">

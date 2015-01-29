@@ -11,7 +11,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// </summary>
     public class CreateFileHandler :
         //IConsumer<CreateDirectoryMessage>,
-        IRpcConsumer<CreateDirectoryMessage, RpcResult>,
+        IRpcConsumer<CreateDirectoryMessage, BlockingConsumerResult>,
         IConsumer<CreateFileMessage>
     {
         private readonly IRequestBus _bus;
@@ -48,7 +48,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public RpcResult Consume(CreateDirectoryMessage request)
+        public BlockingConsumerResult Consume(CreateDirectoryMessage request)
         {
             ConsumerConsole.WriteLine("Received directory message but will wait 2 seconds");
 
@@ -59,7 +59,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
                 Directory.CreateDirectory(request.Path);
             }
 
-            return new RpcResult { Status = true };
+            return new BlockingConsumerResult { Status = true };
         }
 
 
@@ -75,7 +75,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 
             ConsumerConsole.WriteLine("Posting directory message...");
             //_bus.BasicPublish(new CreateDirectoryMessage {Path = path});
-            _bus.BlockingPublish<RpcResult>(new CreateDirectoryMessage { Path = path }, 30);
+            _bus.BlockingPublish<BlockingConsumerResult>(new CreateDirectoryMessage { Path = path }, 30);
 
             ConsumerConsole.WriteLine("Posted directory message...");
 

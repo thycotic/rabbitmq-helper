@@ -5,7 +5,7 @@ using Autofac;
 using Thycotic.Messages.Common;
 using Thycotic.Utility;
 
-namespace Thycotic.MessageQueueClient.Wrappers
+namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
 {
     /// <summary>
     /// Consumer wrapper factory
@@ -30,8 +30,8 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </summary>
         public void Start()
         {
-            StartActionConsumers(typeof (IConsumer<>), typeof(SimpleConsumerWrapper<,>));
-            StartFunctionConsumers(typeof(IRpcConsumer<,>), typeof(RpcConsumerWrapper<,,>));
+            StartActionConsumers(typeof (IConsumer<>), typeof(BasicConsumerWrapper<,>));
+            StartFunctionConsumers(typeof(IRpcConsumer<,>), typeof(BlockingConsumerWrapper<,,>));
         }
 
         private void StartActionConsumers(Type baseConsumertype, Type wrapperType)
