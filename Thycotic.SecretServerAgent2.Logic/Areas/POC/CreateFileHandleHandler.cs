@@ -12,8 +12,8 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// Simple Hello World consumer
     /// </summary>
     public class CreateFileHandler :
-        IConsumer<CreateDirectoryMessage>,
-        //IRpcConsumer<CreateDirectoryMessage, RpcResult>,
+        //IConsumer<CreateDirectoryMessage>,
+        IRpcConsumer<CreateDirectoryMessage, RpcResult>,
         IConsumer<CreateFileMessage>
     {
         private readonly IRequestBus _bus;
@@ -32,12 +32,14 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// Consumes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        public void Consume(CreateDirectoryMessage request)
+        public void ConsumeBasic(CreateDirectoryMessage request)
         {
+            ConsumerConsole.WriteLine("Received directory message but will wait 2 seconds");
+
             if (!Directory.Exists(request.Path))
             {
-                Thread.Sleep(1*1000);
-                ConsumerConsole.WriteLine(string.Format("Creating {0} in fire-and-forget", request.Path));
+                Thread.Sleep(2*1000);
+                ConsumerConsole.WriteLine(string.Format("Creating directory {0} in fire-and-forget", request.Path));
                 Directory.CreateDirectory(request.Path);
             }
 
@@ -48,12 +50,14 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public RpcResult ConsumeRpc(CreateDirectoryMessage request)
+        public RpcResult Consume(CreateDirectoryMessage request)
         {
+            ConsumerConsole.WriteLine("Received directory message but will wait 2 seconds");
+
             if (!Directory.Exists(request.Path))
             {
-                Thread.Sleep(1 * 1000);
-                ConsumerConsole.WriteLine(string.Format("Creating {0} in RPC", request.Path));
+                Thread.Sleep(2 * 1000);
+                ConsumerConsole.WriteLine(string.Format("Creating directory {0} in RPC", request.Path));
                 Directory.CreateDirectory(request.Path);
             }
 
@@ -69,16 +73,18 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         {
             ConsumerConsole.WriteLine("Received file message");
 
-            ConsumerConsole.WriteLine("Posting directory message...");
-
             var path = Path.GetDirectoryName(request.Path);
 
-            _bus.BasicPublish(new CreateDirectoryMessage {Path = path});
-            //_bus.RpcPublish<RpcResult>(new CreateDirectoryMessage { Path = path }, 30);
+            ConsumerConsole.WriteLine("Posting directory message...");
+            //_bus.BasicPublish(new CreateDirectoryMessage {Path = path});
+            _bus.RpcPublish<RpcResult>(new CreateDirectoryMessage { Path = path }, 30);
 
-            ConsumerConsole.WriteLine(string.Format("Creating {0}", request.Path));
+            ConsumerConsole.WriteLine("Posted directory message...");
 
+
+            ConsumerConsole.WriteLine(string.Format("Creating file {0}", request.Path));
             File.CreateText(request.Path);
+            ConsumerConsole.WriteLine("File created");
             
             
         }
