@@ -13,7 +13,7 @@ namespace Thycotic.Messages.Areas.POC.Request
         /// <value>
         /// The items.
         /// </value>
-        public string[] Items { get; set; }
+        public int Steps { get; set; }
 
         /// <summary>
         /// Gets the version.

@@ -30,12 +30,17 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             {
                 _log.Info("Posting message to exchange");
 
+                string stepsString;
+                if (!parameters.TryGet("steps", out stepsString)) return;
+
+                var steps = Convert.ToInt32(stepsString);
+
                 var message = new SlowRpcMessage
                 {
-                    Items = Enumerable.Range(0, 1).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
+                    Steps = steps
                 };
 
-                var response = _bus.RpcPublish<RpcResult>(message, 30*1000);
+                var response = _bus.RpcPublish<RpcResult>(message, (steps+5) * 1000);
 
                 _log.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
             };

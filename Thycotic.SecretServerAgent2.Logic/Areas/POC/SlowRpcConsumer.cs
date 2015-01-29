@@ -20,19 +20,18 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
         /// <returns></returns>
         public RpcResult Consume(SlowRpcMessage request)
         {
-            ConsumerConsole.WriteLine(string.Format("Received \"{0}\" items", request.Items.Length));
+            ConsumerConsole.WriteLine(string.Format("Received \"{0}\" steps", request.Steps));
 
-            //do something silly here
-            var c = 5;
+            var c = request.Steps;
 
             while (c > 0)
             {
-                ConsumerConsole.Write(".");
+                ConsumerConsole.Write(". ");
                 Thread.Sleep(1000);
                 c--;
             }
 
-            return new RpcResult {Status = true, StatusText = "Wow that took a while"};
+            return new RpcResult {Status = true, StatusText = "Done stepping!"};
         }
     }
 }

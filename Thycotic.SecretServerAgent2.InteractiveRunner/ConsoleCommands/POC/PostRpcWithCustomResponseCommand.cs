@@ -39,6 +39,8 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 
                 _log.Info("Posting completed.");
 
+                Console.WriteLine("Consumer returned {0} item(s)", response.Items.Length);
+
                 response.Items.ToList().ForEach(Console.WriteLine);
             };
         }
