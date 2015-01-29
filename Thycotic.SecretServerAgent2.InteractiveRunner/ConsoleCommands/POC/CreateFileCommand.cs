@@ -1,0 +1,44 @@
+﻿using System;
+using System.IO;
+using Thycotic.Logging;
+using Thycotic.MessageQueueClient;
+using Thycotic.Messages.Areas.POC.Request;
+
+namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
+{
+    class CreateFileCommand : ConsoleCommandBase
+    {
+        private readonly IRequestBus _bus;
+        private readonly ILogWriter _log = Log.Get(typeof(CreateFileCommand));
+
+        public override string Name
+        {
+            get { return "createtempfile"; }
+        }
+
+        public override string Description
+        {
+            get { return "Posts a create temp file message to the exchange"; }
+        }
+
+        public CreateFileCommand(IRequestBus bus)
+        {
+            _bus = bus;
+
+            Action = parameters =>
+            {
+                _log.Info("Posting message to exchange");
+
+                var message = new CreateFileMessage
+                {
+                    Path = Path.Combine(Path.GetTempPath(), "SSEPOC", Guid.NewGuid().ToString(), "file.txt")
+                };
+
+                _bus.BasicPublish(message);
+
+                _log.Info("Posting completed");
+
+            };
+        }
+    }
+}

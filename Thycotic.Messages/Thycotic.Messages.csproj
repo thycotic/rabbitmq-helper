@@ -56,6 +56,8 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
+    <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
     <Compile Include="Areas\POC\Request\ChainMessage.cs" />
     <Compile Include="Areas\POC\Request\SortListRpcMessage.cs" />
     <Compile Include="Areas\POC\Request\ThrowingRpcMessage.cs" />
