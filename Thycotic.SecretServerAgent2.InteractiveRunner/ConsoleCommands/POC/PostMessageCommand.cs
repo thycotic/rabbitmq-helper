@@ -9,10 +9,10 @@ using Thycotic.Messages.Areas.POC.Request;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
-    class PostMessageCommandBase : ConsoleCommandBase
+    class PostMessageCommand : ConsoleCommandBase
     {
         private readonly IMessageBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(PostMessageCommandBase));
+        private readonly ILogWriter _log = Log.Get(typeof(PostMessageCommand));
 
         public override string Name
         {
@@ -24,7 +24,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a hello world message to the exchange"; }
         }
 
-        public PostMessageCommandBase(IMessageBus bus)
+        public PostMessageCommand(IMessageBus bus)
         {
             _bus = bus;
 

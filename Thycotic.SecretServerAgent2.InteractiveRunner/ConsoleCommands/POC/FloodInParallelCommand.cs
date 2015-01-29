@@ -9,10 +9,10 @@ using Thycotic.Messages.Areas.POC.Request;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
-    class FloodInParallelCommandBase : ConsoleCommandBase
+    class FloodInParallelCommand : ConsoleCommandBase
     {
         private readonly IMessageBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(FloodInParallelCommandBase));
+        private readonly ILogWriter _log = Log.Get(typeof(FloodInParallelCommand));
 
         public override string Name
         {
@@ -24,7 +24,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Floods the exchange in parallel (or out of order)"; }
         }
 
-        public FloodInParallelCommandBase(IMessageBus bus)
+        public FloodInParallelCommand(IMessageBus bus)
         {
             _bus = bus;
 

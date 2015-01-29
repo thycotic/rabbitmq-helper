@@ -10,10 +10,10 @@ using Thycotic.Messages.Areas.POC.Response;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
-    class PostRpcWithCustomResponseCommandBase : ConsoleCommandBase
+    class PostRpcWithCustomResponseCommand : ConsoleCommandBase
     {
         private readonly IMessageBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(PostRpcWithCustomResponseCommandBase));
+        private readonly ILogWriter _log = Log.Get(typeof(PostRpcWithCustomResponseCommand));
 
         public override string Name
         {
@@ -25,7 +25,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a sort list rpc message to the exchange"; }
         }
 
-        public PostRpcWithCustomResponseCommandBase(IMessageBus bus)
+        public PostRpcWithCustomResponseCommand(IMessageBus bus)
         {
             _bus = bus;
 

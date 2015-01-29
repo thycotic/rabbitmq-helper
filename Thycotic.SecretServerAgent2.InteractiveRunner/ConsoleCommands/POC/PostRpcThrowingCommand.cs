@@ -10,10 +10,10 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
-    class PostRpcThrowingCommandBase : ConsoleCommandBase
+    class PostRpcThrowingCommand : ConsoleCommandBase
     {
         private readonly IMessageBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(PostRpcThrowingCommandBase));
+        private readonly ILogWriter _log = Log.Get(typeof(PostRpcThrowingCommand));
 
         public override string Name
         {
@@ -25,7 +25,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a throwing rpc message to the exchange"; }
         }
 
-        public PostRpcThrowingCommandBase(IMessageBus bus)
+        public PostRpcThrowingCommand(IMessageBus bus)
         {
             _bus = bus;
             Action = parameters =>
