@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 using Thycotic.Logging;
@@ -11,6 +12,11 @@ namespace Thycotic.MessageQueueClient.RabbitMq
     /// </summary>
     public class RabbitMqConnection : IDisposable, IRabbitMqConnection
     {
+        /// <summary>
+        /// Occurs when a connection is created.
+        /// </summary>
+        public event EventHandler ConnectionCreated;
+
         private readonly ConnectionFactory _connectionFactory;
         private Lazy<IConnection> _connection;
         private bool _terminated;
@@ -43,17 +49,23 @@ namespace Thycotic.MessageQueueClient.RabbitMq
                     //if the connection closes recover it
                     cn.ConnectionShutdown += RecoverConnection;
 
+                    //if there are subscribers that care to know when a connection is created, notify them
+                    if (ConnectionCreated != null)
+                    {
+                        Task.Delay(TimeSpan.FromMilliseconds(500))
+                            .ContinueWith(task => ConnectionCreated(this, new EventArgs()));
+                    }
+
                     return cn;
                 }
                 catch (Exception ex)
                 {
                     //if there is an issue opening the channel, clean up and rethrow
-                    _log.Error(string.Format("Failed to re-connect because {0}", ex.Message));
-                    //TODO: Make this configurable?
-                    var delay = 5*1000;
-                    _log.Info(string.Format("Sleeping {0} second(s) before reconnecting", delay));
-                    Thread.Sleep(delay);
-                    ResetConnection();
+                    _log.Error(string.Format("Failed to connect because {0}", ex.Message));
+                    
+                    _log.Info("Sleeping before reconnecting");
+
+                    Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
                     
                     throw;
                 }
@@ -68,6 +80,15 @@ namespace Thycotic.MessageQueueClient.RabbitMq
             _log.Warn(string.Format("Connection closed because {0}", reason));
             ResetConnection();
 
+        }
+
+        /// <summary>
+        /// Forces the initialization.
+        /// </summary>
+        /// <returns></returns>
+        public bool ForceInitialize()
+        {
+            return _connection.Value != null;
         }
 
         /// <summary>

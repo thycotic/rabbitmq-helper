@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using System;
+using RabbitMQ.Client;
 
 namespace Thycotic.MessageQueueClient.RabbitMq
 {
@@ -7,6 +8,16 @@ namespace Thycotic.MessageQueueClient.RabbitMq
     /// </summary>
     public interface IRabbitMqConnection
     {
+        /// <summary>
+        /// Occurs when a connection is created.
+        /// </summary>
+        event EventHandler ConnectionCreated;
+
+        /// <summary>
+        /// Forces the initialization.
+        /// </summary>
+        bool ForceInitialize();
+
         /// <summary>
         /// Opens the channel with the specified retry attempts, retry delay and retry delay growth factor
         /// </summary>

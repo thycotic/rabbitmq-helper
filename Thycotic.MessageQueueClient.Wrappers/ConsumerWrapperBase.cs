@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Thycotic.Logging;
@@ -42,16 +43,14 @@ namespace Thycotic.MessageQueueClient.Wrappers
         protected ConsumerWrapperBase(IRabbitMqConnection connection)
         {
             _connection = connection;
+            _connection.ConnectionCreated += (sender, args) => CreateModel();
         }
 
-        /// <summary>
-        /// Starts the consuming process.
-        /// </summary>
-        public void StartConsuming()
+        private void CreateModel()
         {
-            var routingKey = this.GetRoutingKey(typeof (TRequest));
+            var routingKey = this.GetRoutingKey(typeof(TRequest));
 
-            var queueName =  this.GetQueueName(typeof(THandler), typeof(TRequest));
+            var queueName = this.GetQueueName(typeof(THandler), typeof(TRequest));
             _log.Debug(string.Format("Channel opened for {0}", queueName));
 
             const int retryAttempts = -1; //forever
@@ -62,7 +61,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             const int prefetchSize = 0;
             const int prefetchCount = 1;
             const bool global = false;
-            
+
             model.BasicQos(prefetchSize, prefetchCount, global);
 
             model.ModelShutdown += RecoverConnection;
@@ -77,23 +76,43 @@ namespace Thycotic.MessageQueueClient.Wrappers
             model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
 
             Model = model;
+        }
 
+
+
+        /// <summary>
+        /// Starts the consuming process.
+        /// </summary>
+        public void StartConsuming()
+        {
+            try
+            {
+                //forcing the connection to initialized causes the 
+                //ConnectionCreated to fire and as a results the model will be recreated
+                _connection.ForceInitialize();
+            }
+            catch (Exception ex)
+            {
+                //if there is an issue opening the channel, clean up and rethrow
+                _log.Error(string.Format("Failed to connect because {0}", ex.Message));
+
+                _log.Info("Sleeping before reconnecting");
+
+                Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => StartConsuming());
+            }
         }
 
         private void RecoverConnection(IModel model, ShutdownEventArgs reason)
         {
             if (_terminated) return;
 
-            _log.Warn(string.Format("Channel closed because {0}", reason));
+            _log.Warn(string.Format("Channel closed because {0}", reason.ReplyText));
 
-            _log.Debug(string.Format("Will reopen in {0}(s)", DefaultConfigValues.ReOpenDelay/1000));
-
-            Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(_ =>
+            Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task =>
             {
                 _log.Debug("Reopenning channel...");
                 StartConsuming();
             });
-
         }
 
         #region Not implemented/needed
