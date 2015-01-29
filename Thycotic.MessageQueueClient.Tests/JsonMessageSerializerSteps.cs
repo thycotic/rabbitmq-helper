@@ -39,6 +39,16 @@ namespace Thycotic.MessageQueueClient.Tests
 
         }
 
+        [Given(@"the scenario object (\w+) byte equivalent is stored in scenario object (\w+)")]
+        public void GivenTheScenarioObjectByteEquivalentIsStored(string testObjectNameInContext, string expectedSerializationResultInContext)
+        {
+            var obj = ScenarioContext.Current[testObjectNameInContext];
+
+            var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj, Formatting.None, _serializerSettings));
+
+            ScenarioContext.Current[expectedSerializationResultInContext] = bytes;
+        }
+
         [When(@"the scenario object (\w+) is turned into bytes and stored in the scenario as (\w+)")]
         public void WhenTheScenarioObjectIsTurnedIntoBytesAndStoredInTheScenario(string testObjectNameInContext, string resultObjectNameInContext)
         {
@@ -48,6 +58,24 @@ namespace Thycotic.MessageQueueClient.Tests
 
             ScenarioContext.Current[resultObjectNameInContext] = serializer.ToBytes(obj);
         }
+
+        [When(@"the scenario object (\w+) is turned into an object of type ""(.+)"" and stored in the scenario as (\w+)")]
+        public void WhenTheScenarioObjectIsTurnedIntoAnObjectAndStored(string expectedSerializationResultInContext, string typeName, string testObjectNameInContext)
+        {
+            var bytes = (byte[])ScenarioContext.Current[expectedSerializationResultInContext];
+
+            var type = Type.GetType(typeName);
+
+            if (type == null)
+            {
+                throw new TypeLoadException(string.Format("Type {0} does not exist", typeName));
+            }
+
+            var obj = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(bytes), type, _serializerSettings);
+
+            ScenarioContext.Current[testObjectNameInContext] = obj;
+        }
+
 
         [Then(@"the scenario object (\w+) should be the byte equivalent of scenario object (\w+)")]
         public void ThenTheScenarioObjectShouldBeTheByteEquivalentOf(string resultObjectNameInContext, string testObjectNameInContext)
@@ -62,5 +90,17 @@ namespace Thycotic.MessageQueueClient.Tests
 
         }
 
+        [Then(@"the scenario object (\w+) should be equivalent of scenario object (\w+)")]
+        public void ThenTheScenarioObjectMessageSerializerResultShouldBeEquivalentOfScenarioObjectMessageSerializerTestObject(string objectNameInContext1, string objectNameInContext2)
+        {
+            var object1 = ScenarioContext.Current[objectNameInContext1];
+
+            var object2 = ScenarioContext.Current[objectNameInContext2];
+
+            var objectString1 = JsonConvert.SerializeObject(object1, Formatting.None, _serializerSettings);
+            var objectString2 = JsonConvert.SerializeObject(object2, Formatting.None, _serializerSettings);
+
+            objectString1.Should().Be(objectString2);
+        }
     }
 }

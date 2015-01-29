@@ -89,6 +89,33 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Deserialize object")]
+        public virtual void DeserializeObject()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Deserialize object", ((string[])(null)));
+#line 12
+this.ScenarioSetup(scenarioInfo);
+#line 13
+ testRunner.Given("there exists an object of type \"Thycotic.Messages.Common.RpcResult, Thycotic.Mess" +
+                    "ages.Common\" stored in the scenario as MessageSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 14
+ testRunner.And("the property StatusText in the scenario object MessageSerializerTestObject is set" +
+                    " to \"Mary had a large lamb\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
+ testRunner.And("the scenario object MessageSerializerTestObject byte equivalent is stored in scen" +
+                    "ario object MessageSerializerTestObjectBytes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.When("the scenario object MessageSerializerTestObjectBytes is turned into an object of " +
+                    "type \"Thycotic.Messages.Common.RpcResult, Thycotic.Messages.Common\" and stored i" +
+                    "n the scenario as MessageSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
+ testRunner.Then("the scenario object MessageSerializerTestObject should be equivalent of scenario " +
+                    "object MessageSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
