@@ -40,7 +40,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
                         Content = string.Format("{0} {1}", loop, Guid.NewGuid())
                     };
 
-                    _bus.Publish(message);
+                    _bus.BasicPublish(message);
                 }
 
                 _log.Info("Flooding completed");

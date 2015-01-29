@@ -34,7 +34,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 
             Console.WriteLine("Posting next message...");
 
-            _bus.Publish(new HelloWorldMessage { Content = "Hello from the chain consumer!"});
+            _bus.BasicPublish(new HelloWorldMessage { Content = "Hello from the chain consumer!"});
 
             Console.WriteLine("Posted");
         }

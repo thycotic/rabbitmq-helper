@@ -29,7 +29,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 
                 var message = new ChainMessage();
 
-                _bus.Publish(message);
+                _bus.BasicPublish(message);
 
                 _log.Info("Posting completed");
 

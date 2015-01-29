@@ -46,7 +46,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
         /// CorrelationId mismatch
         /// or
         /// </exception>
-        public TResponse Rpc<TResponse>(IConsumable request, int timeoutSeconds)
+        public TResponse RpcPublish<TResponse>(IConsumable request, int timeoutSeconds)
         {
             _log.Debug(string.Format("Publishing RPC {0}", request));
 
@@ -102,7 +102,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="persistent">if set to <c>true</c> [persistent].</param>
-        public void Publish(IConsumable request, bool persistent = true)
+        public void BasicPublish(IConsumable request, bool persistent = true)
         {
             _log.Debug(string.Format("Publishing basic {0}", request));
 

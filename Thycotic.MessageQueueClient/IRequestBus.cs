@@ -14,13 +14,13 @@ namespace Thycotic.MessageQueueClient
         /// <param name="request">The request.</param>
         /// <param name="timeoutSeconds">The timeout seconds.</param>
         /// <returns></returns>
-        TResponse Rpc<TResponse>(IConsumable request, int timeoutSeconds);
+        TResponse RpcPublish<TResponse>(IConsumable request, int timeoutSeconds);
 
         /// <summary>
         /// Publishes the specified request as a fire-and-forget
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="persistent">if set to <c>true</c> [persistent].</param>
-        void Publish(IConsumable request, bool persistent = true);
+        void BasicPublish(IConsumable request, bool persistent = true);
     }
 }

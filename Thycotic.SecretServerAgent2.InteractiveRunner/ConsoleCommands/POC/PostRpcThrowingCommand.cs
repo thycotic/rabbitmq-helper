@@ -32,7 +32,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 
                 try
                 {
-                    _bus.Rpc<RpcResult>(message, 30*1000);
+                    _bus.RpcPublish<RpcResult>(message, 30*1000);
 
                 }
                 catch (Exception ex)

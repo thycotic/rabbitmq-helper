@@ -48,7 +48,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
             public const int RetryDelayGrowthFactor = 2;
 
             /// <summary>
-            /// Publish specific defaults
+            /// BasicPublish specific defaults
             /// </summary>
             public class Publish
             {

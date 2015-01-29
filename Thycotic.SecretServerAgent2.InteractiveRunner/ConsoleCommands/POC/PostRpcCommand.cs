@@ -35,7 +35,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
                     Items = Enumerable.Range(0, 1).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
                 };
 
-                var response = _bus.Rpc<RpcResult>(message, 30*1000);
+                var response = _bus.RpcPublish<RpcResult>(message, 30*1000);
 
                 _log.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
             };
