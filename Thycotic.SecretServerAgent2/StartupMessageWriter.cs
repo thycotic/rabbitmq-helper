@@ -6,7 +6,7 @@ using Thycotic.Logging;
 
 namespace Thycotic.SecretServerAgent2
 {
-    public class StartupMessageWriter : IStartable
+    public class StartupMessageWriter : IStartable, IDisposable
     {
         private readonly ILogWriter _log = Log.Get(typeof(StartupMessageWriter));
 
@@ -28,6 +28,11 @@ namespace Thycotic.SecretServerAgent2
             {
                 _log.Warn("Could not locate terminal logo");
             }
+        }
+
+        public void Dispose()
+        {
+            _log.Info("Application is stopping...");
         }
     }
 }
