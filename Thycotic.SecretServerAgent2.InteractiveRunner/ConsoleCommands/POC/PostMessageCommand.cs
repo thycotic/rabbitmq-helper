@@ -25,7 +25,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 
             Action = parameters =>
             {
-                _log.Info("Posting message to change");
+                _log.Info("Posting message to exchange");
 
                 string content;
                 if (!parameters.TryGet("content", out content)) return;
