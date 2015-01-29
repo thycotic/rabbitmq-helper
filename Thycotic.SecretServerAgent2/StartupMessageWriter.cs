@@ -12,6 +12,8 @@ namespace Thycotic.SecretServerAgent2
 
         public void Start()
         {
+            _log.Info("Application is starting...");
+
             var logoStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.SecretServerAgent2.logo.txt");
 
             if (logoStream != null)
@@ -26,8 +28,6 @@ namespace Thycotic.SecretServerAgent2
             {
                 _log.Warn("Could not locate terminal logo");
             }
-
-            _log.Info("Application is starting...");
         }
     }
 }
