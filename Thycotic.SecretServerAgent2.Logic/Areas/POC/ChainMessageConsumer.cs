@@ -7,7 +7,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// <summary>
     /// Simple Hello World consumer
     /// </summary>
-    public class ChainMessageConsumer : IConsumer<ChainMessage>
+    public class ChainMessageConsumer : IBasicConsumer<ChainMessage>
     {
         private readonly IRequestBus _bus;
         //private readonly ILogWriter _log = Log.Get(typeof(ChainMessage));

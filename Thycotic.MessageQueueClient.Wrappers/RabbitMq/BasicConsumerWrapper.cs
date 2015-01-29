@@ -15,7 +15,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
     /// <typeparam name="THandler">The type of the handler.</typeparam>
     public class BasicConsumerWrapper<TRequest, THandler> : ConsumerWrapperBase<TRequest, THandler>
         where TRequest : IConsumable
-        where THandler : IConsumer<TRequest>
+        where THandler : IBasicConsumer<TRequest>
     {
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IMessageSerializer _serializer;

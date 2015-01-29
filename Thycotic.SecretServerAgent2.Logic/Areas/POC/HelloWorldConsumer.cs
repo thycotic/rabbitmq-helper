@@ -6,7 +6,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// <summary>
     /// Simple Hello World consumer
     /// </summary>
-    public class HelloWorldConsumer : IConsumer<HelloWorldMessage>
+    public class HelloWorldConsumer : IBasicConsumer<HelloWorldMessage>
     {
         //private readonly ILogWriter _log = Log.Get(typeof(HelloWorldConsumer));
 

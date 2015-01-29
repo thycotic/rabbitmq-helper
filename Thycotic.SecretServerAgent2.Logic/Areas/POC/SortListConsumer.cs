@@ -8,7 +8,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// <summary>
     /// Sort list RPC consumer
     /// </summary>
-    public class SortListConsumer : IRpcConsumer<SortListMessage, SortListResponse>
+    public class SortListConsumer : IBlockingConsumer<SortListMessage, SortListResponse>
     {
         //private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 

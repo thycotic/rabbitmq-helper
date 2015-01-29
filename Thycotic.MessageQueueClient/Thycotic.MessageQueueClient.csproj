@@ -67,7 +67,6 @@
     <Compile Include="MemoryMq\MemoryMqRequestBus.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RabbitMq\IRpcConsume.cs" />
     <Compile Include="RabbitMq\RabbitMqConnection.cs" />
     <Compile Include="RabbitMq\DefaultConfigValues.cs" />
     <Compile Include="RabbitMq\IRabbitMqConnection.cs" />

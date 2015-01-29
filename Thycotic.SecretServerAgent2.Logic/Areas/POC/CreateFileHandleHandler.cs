@@ -11,8 +11,8 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// </summary>
     public class CreateFileHandler :
         //IConsumer<CreateDirectoryMessage>,
-        IRpcConsumer<CreateDirectoryMessage, BlockingConsumerResult>,
-        IConsumer<CreateFileMessage>
+        IBlockingConsumer<CreateDirectoryMessage, BlockingConsumerResult>,
+        IBasicConsumer<CreateFileMessage>
     {
         private readonly IRequestBus _bus;
         //private readonly ILogWriter _log = Log.Get(typeof(ChainMessage));

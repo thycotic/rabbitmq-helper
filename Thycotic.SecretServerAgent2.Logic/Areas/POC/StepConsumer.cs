@@ -7,7 +7,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// <summary>
     /// Slow RPC consumer
     /// </summary>
-    public class StepConsumer : IRpcConsumer<StepMessage, BlockingConsumerResult>
+    public class StepConsumer : IBlockingConsumer<StepMessage, BlockingConsumerResult>
     {
         //private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 

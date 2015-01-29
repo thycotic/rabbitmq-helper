@@ -8,7 +8,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// <summary>
     /// Consumer that just throws an exception
     /// </summary>
-    public class ThrowTriggerConsumer : IRpcConsumer<ThrowTriggerMessage, BlockingConsumerResult>
+    public class ThrowTriggerConsumer : IBlockingConsumer<ThrowTriggerMessage, BlockingConsumerResult>
     {
         private readonly ILogWriter _log = Log.Get(typeof(ThrowTriggerConsumer));
 
