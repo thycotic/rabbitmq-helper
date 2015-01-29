@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Areas.POC.Response;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Thycotic.Logging;
+﻿using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 

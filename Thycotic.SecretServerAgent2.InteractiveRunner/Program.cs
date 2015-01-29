@@ -1,21 +1,14 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using Autofac;
-using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
-using Thycotic.Messages.Areas.POC.Request;
-using Thycotic.Messages.Areas.POC.Response;
-using Thycotic.Messages.Common;
 using Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner
 {
     internal static class Program
     {
-        private static readonly ILogWriter LogCli = Log.Get(typeof(CommandLineInterface));
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
