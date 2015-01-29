@@ -1,5 +1,4 @@
-﻿using Thycotic.Logging;
-using Thycotic.Messages.Areas.POC.Request;
+﻿using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
@@ -9,7 +8,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// </summary>
     public class HelloWorldConsumer : IConsumer<HelloWorldMessage>
     {
-        private readonly ILogWriter _log = Log.Get(typeof(HelloWorldConsumer));
+        //private readonly ILogWriter _log = Log.Get(typeof(HelloWorldConsumer));
 
         /// <summary>
         /// Consumes the specified request.

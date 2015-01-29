@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Thycotic.Logging;
+﻿using System.Linq;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Areas.POC.Response;
 using Thycotic.Messages.Common;
@@ -12,7 +10,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// </summary>
     public class SortListRpcConsumer : IRpcConsumer<SortListRpcMessage, SortListResponse>
     {
-        private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
+        //private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 
         /// <summary>
         /// Consumes the specified request.

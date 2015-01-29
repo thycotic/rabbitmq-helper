@@ -1,6 +1,4 @@
-﻿using System;
-using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
+﻿using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
@@ -12,7 +10,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     public class ChainMessageConsumer : IConsumer<ChainMessage>
     {
         private readonly IRequestBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(ChainMessage));
+        //private readonly ILogWriter _log = Log.Get(typeof(ChainMessage));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChainMessageConsumer"/> class.

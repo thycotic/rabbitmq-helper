@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;

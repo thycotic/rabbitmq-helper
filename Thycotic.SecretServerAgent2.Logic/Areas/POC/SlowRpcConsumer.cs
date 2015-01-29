@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Thycotic.Logging;
+﻿using System.Threading;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
@@ -11,7 +9,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
     /// </summary>
     public class SlowRpcConsumer : IRpcConsumer<SlowRpcMessage, RpcResult>
     {
-        private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
+        //private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 
         /// <summary>
         /// Consumes the specified request.
