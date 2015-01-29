@@ -2,6 +2,7 @@
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Module = Autofac.Module;
 
@@ -23,15 +24,26 @@ namespace Thycotic.SecretServerAgent2.IoC
             base.Load(builder);
 
             _log.Debug("Initializing message queue dependencies...");
-            
-            var connectionString = _configurationProvider("RabbitMq.ConnectionString");
-            _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-            builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
-            builder.Register(context => new RabbitMqConnection(connectionString))
-                .As<IRabbitMqConnection>()
-                .SingleInstance();
-            builder.RegisterType<RabbitMqRequestBus>().AsImplementedInterfaces().SingleInstance();
+            var queueType = _configurationProvider("Queue.Type");
+
+            if (queueType == SupportedMessageQueues.RabbitMq)
+            {
+                _log.Info("Using RabbitMq");
+                var connectionString = _configurationProvider("RabbitMq.ConnectionString");
+                _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
+
+                builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
+                builder.Register(context => new RabbitMqConnection(connectionString))
+                    .As<IRabbitMqConnection>()
+                    .SingleInstance();
+                builder.RegisterType<RabbitMqRequestBus>().AsImplementedInterfaces().SingleInstance();
+            }
+            else
+            {
+                _log.Info("Using MemoryMq");
+                builder.RegisterType<MemoryMqRequestBus>().AsImplementedInterfaces().SingleInstance();
+            }
         }
     }
 }

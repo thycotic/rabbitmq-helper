@@ -72,6 +72,7 @@
     <Compile Include="RabbitMq\IRabbitMqConnection.cs" />
     <Compile Include="RabbitMq\RabbitMqRequestBus.cs" />
     <Compile Include="RabbitMq\RoutingHelpers.cs" />
+    <Compile Include="SupportedMessageQueues.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">
