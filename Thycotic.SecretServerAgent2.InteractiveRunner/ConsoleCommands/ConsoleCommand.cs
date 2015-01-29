@@ -1,9 +1,13 @@
-﻿namespace Thycotic.SecretServerAgent2.InteractiveRunner
+﻿namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands
 {
-    internal class ConsoleCommand
+    internal class ConsoleCommand : IConsoleCommand
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
+
+        public virtual void Execute(ConsoleCommandParameters parameters)
+        {
+        }
 
         public override int GetHashCode()
         {
