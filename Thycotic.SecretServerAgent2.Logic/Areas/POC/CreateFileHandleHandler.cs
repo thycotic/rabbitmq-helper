@@ -75,7 +75,7 @@ namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
 
             ConsumerConsole.WriteLine("Posting directory message...");
             //_bus.BasicPublish(new CreateDirectoryMessage {Path = path});
-            _bus.RpcPublish<RpcResult>(new CreateDirectoryMessage { Path = path }, 30);
+            _bus.BlockingPublish<RpcResult>(new CreateDirectoryMessage { Path = path }, 30);
 
             ConsumerConsole.WriteLine("Posted directory message...");
 

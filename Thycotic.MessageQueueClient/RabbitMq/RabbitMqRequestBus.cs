@@ -46,7 +46,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
         /// CorrelationId mismatch
         /// or
         /// </exception>
-        public TResponse RpcPublish<TResponse>(IConsumable request, int timeoutSeconds)
+        public TResponse BlockingPublish<TResponse>(IConsumable request, int timeoutSeconds)
         {
             _log.Debug(string.Format("Publishing RPC {0}", request));
 

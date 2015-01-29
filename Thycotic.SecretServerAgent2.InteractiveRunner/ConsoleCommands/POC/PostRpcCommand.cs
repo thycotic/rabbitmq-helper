@@ -39,7 +39,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
                     Steps = steps
                 };
 
-                var response = _bus.RpcPublish<RpcResult>(message, (steps+5) * 1000);
+                var response = _bus.BlockingPublish<RpcResult>(message, (steps+5) * 1000);
 
                 _log.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
             };
