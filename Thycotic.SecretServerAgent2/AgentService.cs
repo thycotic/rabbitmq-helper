@@ -29,32 +29,33 @@ namespace Thycotic.SecretServerAgent2
 
         public void ConfigureIoC()
         {
-            using (LogContext.Create("Configuring IoC"))
+            _log.Debug("Configuring IoC...");
+
+            ResetIoCContainer();
+
+            // Create the builder with which components/services are registered.
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
+
+            Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
+
+            builder.RegisterModule(new MessageQueueModule(configurationProvider));
+
+            if (_autoConsume)
             {
-                ResetIoCContainer();
-
-                // Create the builder with which components/services are registered.
-                var builder = new ContainerBuilder();
-
-                builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
-
-                Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
-
-                builder.RegisterModule(new MessageQueueModule(configurationProvider));
-
-                if (_autoConsume)
-                {
-                    builder.RegisterModule(new WrappersModule());
-                    builder.RegisterModule(new LogicModule());
-                }
-                else
-                {
-                    _log.Warn("Consumption disabled, your will only be able to issue requests");
-                }
-
-                // Build the container to finalize registrations and prepare for object resolution.
-                IoCContainer = builder.Build();
+                builder.RegisterModule(new WrappersModule());
+                builder.RegisterModule(new LogicModule());
             }
+            else
+            {
+                _log.Warn("Consumption disabled, your will only be able to issue requests");
+            }
+
+            // Build the container to finalize registrations and prepare for object resolution.
+            IoCContainer = builder.Build();
+
+            _log.Debug("Configuring IoC complete");
         }
 
         private void ResetIoCContainer()

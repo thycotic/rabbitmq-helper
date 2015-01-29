@@ -22,19 +22,16 @@ namespace Thycotic.SecretServerAgent2.IoC
         {
             base.Load(builder);
 
-            using (LogContext.Create("Initializing message queue dependencies..."))
-            {
-                var connectionString = _configurationProvider("RabbitMq.ConnectionString");
-                _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
+            _log.Debug("Initializing message queue dependencies...");
+            
+            var connectionString = _configurationProvider("RabbitMq.ConnectionString");
+            _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-                builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
-                builder.Register(context => new RabbitMqConnection(connectionString))
-                    .As<IRabbitMqConnection>()
-                    .SingleInstance();
-                builder.RegisterType<RabbitMqMessageBus>().AsImplementedInterfaces().SingleInstance();
-
-            }
-
+            builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
+            builder.Register(context => new RabbitMqConnection(connectionString))
+                .As<IRabbitMqConnection>()
+                .SingleInstance();
+            builder.RegisterType<RabbitMqMessageBus>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }

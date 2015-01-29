@@ -9,6 +9,8 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
     /// </summary>
     public class WrappersModule : Module
     {
+        private readonly ILogWriter _log = Log.Get(typeof(WrappersModule));
+
         /// <summary>
         /// Loads wrappers.
         /// </summary>
@@ -21,14 +23,13 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
         {
             base.Load(builder);
 
-            using (LogContext.Create("Initializing consumer wrappers..."))
-            {
-                builder.RegisterGeneric(typeof (SimpleConsumerWrapper<,>)).InstancePerDependency();
-                builder.RegisterGeneric(typeof (RpcConsumerWrapper<,,>)).InstancePerDependency();
+            _log.Debug("Initializing consumer wrappers...");
 
-                builder.RegisterType<ConsumerWrapperFactory>().As<IStartable>().SingleInstance();
-            }
+            builder.RegisterGeneric(typeof (SimpleConsumerWrapper<,>)).InstancePerDependency();
+            builder.RegisterGeneric(typeof (RpcConsumerWrapper<,,>)).InstancePerDependency();
+
+            builder.RegisterType<ConsumerWrapperFactory>().As<IStartable>().SingleInstance();
+
         }
-
     }
 }

@@ -17,11 +17,10 @@ namespace Thycotic.SecretServerAgent2.IoC
         {
             base.Load(builder);
 
-            using (LogContext.Create("Initializing consumers..."))
-            {
-                LoadConsumers(builder, typeof (IConsumer<>));
-                LoadConsumers(builder, typeof (IRpcConsumer<,>));
-            }
+            _log.Debug("Initializing consumers...");
+
+            LoadConsumers(builder, typeof (IConsumer<>));
+            LoadConsumers(builder, typeof (IRpcConsumer<,>));
         }
 
         private void LoadConsumers(ContainerBuilder builder, Type type)
