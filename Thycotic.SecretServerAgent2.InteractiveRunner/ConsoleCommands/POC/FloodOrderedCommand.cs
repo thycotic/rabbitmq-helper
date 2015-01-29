@@ -7,7 +7,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
     class FloodOrderedCommand : ConsoleCommandBase
     {
-        private readonly IMessageBus _bus;
+        private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(FloodOrderedCommand));
 
         public override string Name
@@ -20,7 +20,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Floods the exchange in order"; }
         }
 
-        public FloodOrderedCommand(IMessageBus bus)
+        public FloodOrderedCommand(IRequestBus bus)
         {
             _bus = bus;
 

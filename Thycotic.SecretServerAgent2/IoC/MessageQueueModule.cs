@@ -31,7 +31,7 @@ namespace Thycotic.SecretServerAgent2.IoC
             builder.Register(context => new RabbitMqConnection(connectionString))
                 .As<IRabbitMqConnection>()
                 .SingleInstance();
-            builder.RegisterType<RabbitMqMessageBus>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<RabbitMqRequestBus>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }

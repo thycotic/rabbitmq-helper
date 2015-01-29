@@ -62,14 +62,14 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
-    <Compile Include="IMessageBus.cs" />
+    <Compile Include="IRequestBus.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMq\IRpcConsume.cs" />
     <Compile Include="RabbitMq\RabbitMqConnection.cs" />
     <Compile Include="RabbitMq\DefaultConfigValues.cs" />
     <Compile Include="RabbitMq\IRabbitMqConnection.cs" />
-    <Compile Include="RabbitMq\RabbitMqMessageBus.cs" />
+    <Compile Include="RabbitMq\RabbitMqRequestBus.cs" />
     <Compile Include="RabbitMq\RoutingHelpers.cs" />
   </ItemGroup>
   <ItemGroup>

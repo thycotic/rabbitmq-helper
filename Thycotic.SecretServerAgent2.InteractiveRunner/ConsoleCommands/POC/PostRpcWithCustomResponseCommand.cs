@@ -9,7 +9,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
     class PostRpcWithCustomResponseCommand : ConsoleCommandBase
     {
-        private readonly IMessageBus _bus;
+        private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(PostRpcWithCustomResponseCommand));
 
         public override string Name
@@ -22,7 +22,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a sort list rpc message to the exchange"; }
         }
 
-        public PostRpcWithCustomResponseCommand(IMessageBus bus)
+        public PostRpcWithCustomResponseCommand(IRequestBus bus)
         {
             _bus = bus;
 

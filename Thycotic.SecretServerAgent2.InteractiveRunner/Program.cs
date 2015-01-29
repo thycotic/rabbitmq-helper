@@ -44,14 +44,14 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
         private static void ConfigureCli(CommandLineInterface cli, IContainer parentContainer)
         {
-            var bus = parentContainer.Resolve<IMessageBus>();
+            var bus = parentContainer.Resolve<IRequestBus>();
 
             var currentAssembly = Assembly.GetExecutingAssembly();
 
             // Create the builder with which components/services are registered.
             var builder = new ContainerBuilder();
 
-            builder.Register(container => bus).As<IMessageBus>();
+            builder.Register(container => bus).As<IRequestBus>();
             builder.RegisterAssemblyTypes(currentAssembly)
                 .Where(t => !t.IsAbstract)
                 .Where(t => typeof (IConsoleCommand).IsAssignableFrom(t))

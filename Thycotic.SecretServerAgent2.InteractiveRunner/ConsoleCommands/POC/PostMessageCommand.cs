@@ -6,7 +6,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
     class PostMessageCommand : ConsoleCommandBase
     {
-        private readonly IMessageBus _bus;
+        private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(PostMessageCommand));
 
         public override string Name
@@ -19,7 +19,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a hello world message to the exchange"; }
         }
 
-        public PostMessageCommand(IMessageBus bus)
+        public PostMessageCommand(IRequestBus bus)
         {
             _bus = bus;
 

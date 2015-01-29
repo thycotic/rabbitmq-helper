@@ -5,7 +5,7 @@ namespace Thycotic.MessageQueueClient
     /// <summary>
     /// Interface for a message bus
     /// </summary>
-    public interface IMessageBus
+    public interface IRequestBus
     {
         /// <summary>
         /// Publishes the specified request as an RPC.

@@ -8,7 +8,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
     class PostRpcThrowingCommand : ConsoleCommandBase
     {
-        private readonly IMessageBus _bus;
+        private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(PostRpcThrowingCommand));
 
         public override string Name
@@ -21,7 +21,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a throwing rpc message to the exchange"; }
         }
 
-        public PostRpcThrowingCommand(IMessageBus bus)
+        public PostRpcThrowingCommand(IRequestBus bus)
         {
             _bus = bus;
             Action = parameters =>

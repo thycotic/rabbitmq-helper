@@ -9,21 +9,21 @@ namespace Thycotic.MessageQueueClient.RabbitMq
     /// <summary>
     /// Rabbit Mq message bus
     /// </summary>
-    public class RabbitMqMessageBus : IMessageBus
+    public class RabbitMqRequestBus : IRequestBus
     {
         private readonly IRabbitMqConnection _connection;
         private readonly IMessageSerializer _messageSerializer;
         private readonly string _exchangeName;
 
-        private readonly ILogWriter _log = Log.Get(typeof(RabbitMqMessageBus));
+        private readonly ILogWriter _log = Log.Get(typeof(RabbitMqRequestBus));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RabbitMqMessageBus"/> class.
+        /// Initializes a new instance of the <see cref="RabbitMqRequestBus"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <param name="messageSerializer">The message serializer.</param>
         /// <param name="exchangeName">Name of the exchange.</param>
-        public RabbitMqMessageBus(IRabbitMqConnection connection, IMessageSerializer messageSerializer,
+        public RabbitMqRequestBus(IRabbitMqConnection connection, IMessageSerializer messageSerializer,
                                 string exchangeName = DefaultConfigValues.Exchange)
         {
             _connection = connection;

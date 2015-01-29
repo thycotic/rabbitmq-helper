@@ -6,7 +6,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
     class ChainMessageCommand : ConsoleCommandBase
     {
-        private readonly IMessageBus _bus;
+        private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(ChainMessageCommand));
 
         public override string Name
@@ -19,7 +19,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a chain message to the exchange"; }
         }
 
-        public ChainMessageCommand(IMessageBus bus)
+        public ChainMessageCommand(IRequestBus bus)
         {
             _bus = bus;
 

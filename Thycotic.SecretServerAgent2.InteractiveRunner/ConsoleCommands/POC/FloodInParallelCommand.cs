@@ -8,7 +8,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
     class FloodInParallelCommand : ConsoleCommandBase
     {
-        private readonly IMessageBus _bus;
+        private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(FloodInParallelCommand));
 
         public override string Name
@@ -21,7 +21,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Floods the exchange in parallel (or out of order)"; }
         }
 
-        public FloodInParallelCommand(IMessageBus bus)
+        public FloodInParallelCommand(IRequestBus bus)
         {
             _bus = bus;
 
