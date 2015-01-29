@@ -63,6 +63,7 @@
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
     <Compile Include="IRequestBus.cs" />
+    <Compile Include="JsonMessageSerializer.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMq\IRpcConsume.cs" />
