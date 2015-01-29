@@ -79,7 +79,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
                     {
                         response = handler.Value.Consume(message);
 
-                        //_log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
+                        _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
                     }
                     catch (Exception e)
                     {
