@@ -10,9 +10,6 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 {
     internal class CommandLineInterface
     {
-        private const string HelpCommandName = "help";
-        private const string QuitCommandName = "quit";
-
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
         private readonly HashSet<IConsoleCommand> _commandMappings = new HashSet<IConsoleCommand>();
 
@@ -20,9 +17,18 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
         public CommandLineInterface()
         {
-            var helpCommand = new SystemConsoleCommand
+            #region Build-in system commands
+            _commandMappings.Add(new SystemConsoleCommand
             {
-                Name = HelpCommandName,
+                Name = "clear",
+                Aliases = new[] { "cls" },
+                Description = "Clears the terminal screen",
+                Action = parameters => Console.Clear()
+            });
+
+            _commandMappings.Add(new SystemConsoleCommand
+            {
+                Name = "help",
                 Aliases = new[] { "man", "h"},
                 Description = "This screen",
                 Action = parameters =>
@@ -34,19 +40,17 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                     mappings.ToList().ForEach(m => Console.WriteLine(" - {0}", m));
                 }
-            };
+            });
 
-            _commandMappings.Add(helpCommand);
-
-            var quitCommand = new SystemConsoleCommand
+            _commandMappings.Add(new SystemConsoleCommand
             {
-                Name = QuitCommandName,
+                Name = "quit",
                 Aliases = new [] {"exit", "q" },
                 Description = "Quits/exists the application",
                 Action = parameters => _cts.Cancel()
-            };
+            });
+            #endregion
 
-            _commandMappings.Add(quitCommand);
         }
 
         public void AddCommand(IConsoleCommand command)
@@ -145,7 +149,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                     {
                         _log.Error(string.Format("Command {0} not found", commandName));
                         command = _commandMappings.Single(
-                            cm => cm.Name == HelpCommandName);
+                            cm => cm.Name == "help");
                     }
 
                     command.Action.Invoke(parameters);
