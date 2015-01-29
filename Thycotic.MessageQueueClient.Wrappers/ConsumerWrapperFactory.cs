@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
+using Thycotic.MessageQueueClient.Wrappers.RabbitMq;
 using Thycotic.Messages.Common;
 using Thycotic.Utility;
 
-namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
+namespace Thycotic.MessageQueueClient.Wrappers
 {
     /// <summary>
     /// Consumer wrapper factory
