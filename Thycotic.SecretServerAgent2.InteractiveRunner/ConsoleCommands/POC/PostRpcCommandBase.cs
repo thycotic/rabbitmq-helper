@@ -10,10 +10,10 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
-    class PostRpcCommand : ConsoleCommand
+    class PostRpcCommandBase : ConsoleCommandBase
     {
         private readonly IMessageBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(PostRpcCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(PostRpcCommandBase));
 
         public override string Name
         {
@@ -25,23 +25,23 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a rpc message to the exchange"; }
         }
 
-        public PostRpcCommand(IMessageBus bus)
+        public PostRpcCommandBase(IMessageBus bus)
         {
             _bus = bus;
-        }
 
-        public override void Execute(ConsoleCommandParameters parameters)
-        {
-            _log.Info("Posting message to exchange");
-
-            var message = new SlowRpcMessage
+            Action = parameters =>
             {
-                Items = Enumerable.Range(0, 1).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
+                _log.Info("Posting message to exchange");
+
+                var message = new SlowRpcMessage
+                {
+                    Items = Enumerable.Range(0, 1).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
+                };
+
+                var response = _bus.Rpc<RpcResult>(message, 30*1000);
+
+                _log.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
             };
-
-            var response = _bus.Rpc<RpcResult>(message, 30 * 1000);
-
-            _log.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
         }
     }
 }

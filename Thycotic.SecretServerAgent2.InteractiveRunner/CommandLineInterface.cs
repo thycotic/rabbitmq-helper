@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -15,24 +16,42 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
         private const string QuitCommandName = "quit";
 
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-        private readonly Dictionary<ConsoleCommand, Action<ConsoleCommandParameters>> _commandMappings = new Dictionary<ConsoleCommand, Action<ConsoleCommandParameters>>();
+        private readonly HashSet<IConsoleCommand> _commandMappings = new HashSet<IConsoleCommand>();
 
         private readonly ILogWriter _log = Log.Get(typeof(CommandLineInterface));
 
         public CommandLineInterface()
         {
-            _commandMappings.Add(new ConsoleCommand { Name = HelpCommandName, Description = "This screen" }, parameters =>
+            var helpCommand = new SystemConsoleCommand
             {
-                Console.WriteLine("Available commands: ");
-                _commandMappings.Keys.OrderBy(cm => cm.Name).ToList().ForEach(cm => Console.WriteLine(" - {0}", cm));
-            });
+                Name = HelpCommandName,
+                Description = "This screen",
+                Action = parameters =>
+                {
+                    Console.WriteLine("Available commands: ");
 
-            _commandMappings.Add(new ConsoleCommand { Name = QuitCommandName, Description = "Quits/exists the application" }, parameters => _cts.Cancel());
+                    var mappings = _commandMappings.OrderBy(c => c.Name).Select(c => c.ToString());
+
+                    mappings.ToList().ForEach(m => Console.WriteLine(" - {0}", m));
+                }
+            };
+
+            _commandMappings.Add(helpCommand);
+
+            var quitCommand = new SystemConsoleCommand
+            {
+                Name = QuitCommandName,
+                Aliases = new [] {"exit", "q" },
+                Description = "Quits/exists the application",
+                Action = parameters => _cts.Cancel()
+            };
+
+            _commandMappings.Add(quitCommand);
         }
 
-        public void AddCommand(ConsoleCommand command, Action<ConsoleCommandParameters> action)
+        public void AddCommand(IConsoleCommand command)
         {
-            _commandMappings.Add(command, action);
+            _commandMappings.Add(command);
         }
 
         public void BeginInputLoop(string initialCommand)
@@ -57,8 +76,8 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                     input = ConsumeInput();
                 }
 
-                var command = ParseInput(input, out parameters);
-                HandleCommand(command, parameters);
+                var commandName = ParseInput(input, out parameters);
+                HandleCommand(commandName, parameters);
 
                 //reset so there is no initial input
                 if (!string.IsNullOrWhiteSpace(initialCommand))
@@ -78,20 +97,20 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
             return !string.IsNullOrWhiteSpace(input) ? input.Trim() : string.Empty;
         }
 
-        private static ConsoleCommand ParseInput(string input, out ConsoleCommandParameters parameters)
+        private static string ParseInput(string input, out ConsoleCommandParameters parameters)
         {
-            var command = new ConsoleCommand { Name = DefaultCommandName };
+            var commandName = DefaultCommandName;
             parameters = new ConsoleCommandParameters();
 
             //no command
-            if (string.IsNullOrWhiteSpace(input)) return command;
+            if (string.IsNullOrWhiteSpace(input)) return commandName;
 
             var regexCommand = new Regex(@"^([\w]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             var commandMatches = regexCommand.Matches(input);
             if (commandMatches.Count == 1)
             {
-                command.Name = commandMatches[0].Groups[0].Value;
+                commandName = commandMatches[0].Groups[0].Value;
             }
 
             var regexParameters = new Regex(@"-([\w]+)=\""?([\d\w\s.]+)\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
@@ -104,26 +123,27 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 parameters.Add(parameterMatch.Groups[1].Value, parameterMatch.Groups[2].Value);
             }
 
-            return command;
+            return commandName;
 
         }
 
-        private void HandleCommand(ConsoleCommand command, ConsoleCommandParameters parameters)
+        private void HandleCommand(string commandName, ConsoleCommandParameters parameters)
         {
-            using (LogContext.Create(command.Name))
+            using (LogContext.Create(commandName))
             {
                 try
                 {
+                    var command =
+                        _commandMappings.SingleOrDefault(cm => (cm.Name == commandName) || ((cm.Aliases != null) && cm.Aliases.Any(ca => ca == commandName)));
 
-
-
-                    if (!_commandMappings.ContainsKey(command))
+                    if (command == null)
                     {
-                        _log.Error(string.Format("Command {0} not found", command.Name));
-                        command = new ConsoleCommand { Name = DefaultCommandName };
+                        _log.Error(string.Format("Command {0} not found", commandName));
+                        command = _commandMappings.Single(
+                            cm => cm.Name == DefaultCommandName);
                     }
 
-                    _commandMappings[command].Invoke(parameters);
+                    command.Action.Invoke(parameters);
                 }
                 catch (Exception ex)
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
@@ -48,9 +49,28 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
             }
         }
 
-        private static void ConfigureCli(CommandLineInterface cli, IContainer container)
+        private static void ConfigureCli(CommandLineInterface cli, IContainer parentContainer)
         {
+            var bus = parentContainer.Resolve<IMessageBus>();
 
+            var currentAssembly = Assembly.GetExecutingAssembly();
+
+            // Create the builder with which components/services are registered.
+            var builder = new ContainerBuilder();
+
+            builder.Register(container => bus).As<IMessageBus>();
+            builder.RegisterAssemblyTypes(currentAssembly)
+                .Where(t => !t.IsAbstract)
+                .Where(t => typeof (IConsoleCommand).IsAssignableFrom(t))
+                .Where(t => t != typeof(SystemConsoleCommand));
+
+            var tempContainer = builder.Build();
+
+            var commands =
+                tempContainer.ComponentRegistry.Registrations.Where(
+                    r => typeof (IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
+
+            commands.ToList().ForEach(c => cli.AddCommand((IConsoleCommand)tempContainer.Resolve(c.Activator.LimitType)));
         }
     }
 }
