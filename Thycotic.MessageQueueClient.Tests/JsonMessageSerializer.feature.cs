@@ -75,8 +75,8 @@ namespace Thycotic.MessageQueueClient.Tests
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("there exists an object of type \"Thycotic.Messages.Common.RpcResult, Thycotic.Mess" +
-                    "ages.Common\" stored in the scenario as MessageSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists an object of type \"Thycotic.Messages.Common.BlockingConsumerResult, " +
+                    "Thycotic.Messages.Common\" stored in the scenario as MessageSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
  testRunner.And("the property StatusText in the scenario object MessageSerializerTestObject is set" +
                     " to \"Mary had a little lamb\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -98,8 +98,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 12
 this.ScenarioSetup(scenarioInfo);
 #line 13
- testRunner.Given("there exists an object of type \"Thycotic.Messages.Common.RpcResult, Thycotic.Mess" +
-                    "ages.Common\" stored in the scenario as MessageSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists an object of type \"Thycotic.Messages.Common.BlockingConsumerResult, " +
+                    "Thycotic.Messages.Common\" stored in the scenario as MessageSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
  testRunner.And("the property StatusText in the scenario object MessageSerializerTestObject is set" +
                     " to \"Mary had a large lamb\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -108,8 +108,8 @@ this.ScenarioSetup(scenarioInfo);
                     "ario object MessageSerializerTestObjectBytes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
  testRunner.When("the scenario object MessageSerializerTestObjectBytes is turned into an object of " +
-                    "type \"Thycotic.Messages.Common.RpcResult, Thycotic.Messages.Common\" and stored i" +
-                    "n the scenario as MessageSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                    "type \"Thycotic.Messages.Common.BlockingConsumerResult, Thycotic.Messages.Common\"" +
+                    " and stored in the scenario as MessageSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
  testRunner.Then("the scenario object MessageSerializerTestObject should be equivalent of scenario " +
                     "object MessageSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
