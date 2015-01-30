@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Messages.Common;
@@ -14,8 +12,10 @@ namespace Thycotic.MessageQueueClient.MemoryMq
     {
         private readonly IConsumerInvoker _consumerInvoker;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-        private readonly TaskSet _runningTasks = new TaskSet();
-        private readonly Task _pruningTask;
+
+        private readonly object _syncRoot = new object();
+
+        private Task _lastTask;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqRequestBus"/> class.
@@ -23,16 +23,7 @@ namespace Thycotic.MessageQueueClient.MemoryMq
         public MemoryMqRequestBus(IConsumerInvoker consumerInvoker)
         {
             _consumerInvoker = consumerInvoker;
-            _pruningTask = Task.Factory.StartNew(() =>
-            {
-                while (!_cts.IsCancellationRequested)
-                {
-                    Task.Factory.StartNew(() => _runningTasks.PruneCompleted());
-                    Thread.Sleep(1000);
-                }
-            });
         }
-
 
         /// <summary>
         /// Publishes the specified request as remote procedure call. The client will hold until the call succeeds or cails
@@ -44,14 +35,18 @@ namespace Thycotic.MessageQueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public TResponse BlockingPublish<TResponse>(IConsumable request, int timeoutSeconds)
         {
+            var cts = new CancellationTokenSource(timeoutSeconds);
+
             var task =
-                Task.Factory.StartNew(() => _consumerInvoker.Consume<TResponse>(request));
+                Task.Factory.StartNew(() => _consumerInvoker.Consume<TResponse>(request), cts.Token);
 
             task.Wait(TimeSpan.FromSeconds(timeoutSeconds));
 
+            //if the task is done at this point, return the result
             if (task.IsCompleted) return task.Result;
-
-            throw new TimeoutException("Operation timeout");
+            
+            //otherwise throw time-out
+            throw new TimeoutException();
         }
 
         /// <summary>
@@ -62,7 +57,14 @@ namespace Thycotic.MessageQueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicPublish(IConsumable request, bool persistent = true)
         {
-            _runningTasks.Add(Task.Factory.StartNew(() => _consumerInvoker.Consume(request)));
+            lock (_syncRoot)
+            {
+                _lastTask = _lastTask == null
+                    //the very first task
+                    ? Task.Factory.StartNew(() => _consumerInvoker.Consume(request), _cts.Token)
+                    //all other tasks coming in after
+                    : _lastTask.ContinueWith(task => _consumerInvoker.Consume(request), _cts.Token);
+            }
         }
 
         /// <summary>
@@ -72,41 +74,9 @@ namespace Thycotic.MessageQueueClient.MemoryMq
         {
             _cts.Cancel();
 
-            _pruningTask.Wait();
-
-            _runningTasks.WaitAll();
-        }
-
-        private class TaskSet
-        {
-            private readonly HashSet<Task> _tasks = new HashSet<Task>();
-
-            public void Add(Task task)
+            if (_lastTask != null)
             {
-                lock (_tasks) _tasks.Add(task);
-            }
-
-            public void Remove(Task task)
-            {
-                lock (_tasks) _tasks.Remove(task);
-            }
-
-            public void PruneCompleted()
-            {
-                lock (_tasks)
-                {
-                    _tasks.RemoveWhere(task => task.Status == TaskStatus.Canceled ||
-                                               task.Status == TaskStatus.RanToCompletion ||
-                                               task.Status == TaskStatus.Faulted);
-                }
-            }
-
-            public void WaitAll()
-            {
-                lock (_tasks)
-                {
-                    Task.WaitAll(_tasks.ToArray());
-                }
+                _lastTask.Wait();
             }
         }
     }
