@@ -65,7 +65,6 @@
     <Compile Include="IRequestBus.cs" />
     <Compile Include="JsonMessageSerializer.cs" />
     <Compile Include="MemoryMq\IMemoryMqConnection.cs" />
-    <Compile Include="MemoryMq\MemoryMqConnection.cs" />
     <Compile Include="MemoryMq\MemoryMqRequestBus.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

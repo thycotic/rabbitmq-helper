@@ -25,8 +25,6 @@ namespace Thycotic.SecretServerAgent2.IoC
 
             _log.Debug("Initializing message queue dependencies...");
 
-            builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().InstancePerDependency();
-
             var queueType = _configurationProvider("Queue.Type");
 
             if (queueType == SupportedMessageQueues.RabbitMq)
@@ -35,16 +33,15 @@ namespace Thycotic.SecretServerAgent2.IoC
                 var connectionString = _configurationProvider("RabbitMq.ConnectionString");
                 _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
+                builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
                 builder.Register(context => new RabbitMqConnection(connectionString))
                     .As<IRabbitMqConnection>()
-                    .InstancePerDependency();
+                    .SingleInstance();
                 builder.RegisterType<RabbitMqRequestBus>().AsImplementedInterfaces().SingleInstance();
             }
             else
             {
                 _log.Info("Using MemoryMq");
-
-                builder.RegisterType<MemoryMqConnection>().AsImplementedInterfaces().SingleInstance();
                 builder.RegisterType<MemoryMqRequestBus>().AsImplementedInterfaces().SingleInstance();
             }
         }

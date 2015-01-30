@@ -1,8 +1,7 @@
 ﻿using System;
 using Autofac;
-using Autofac.Core;
 using Thycotic.Logging;
-using Thycotic.Messages.Common;
+using Thycotic.MessageQueueClient.Wrappers.RabbitMq;
 using Module = Autofac.Module;
 
 namespace Thycotic.MessageQueueClient.Wrappers.IoC
@@ -38,40 +37,23 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
             base.Load(builder);
 
             _log.Debug("Initializing consumer wrappers...");
-
+            
             var queueType = _configurationProvider("Queue.Type");
-
-            Type typeBasicConsumer;
-            Type typeBlockingConsumer;
 
             if (queueType == SupportedMessageQueues.RabbitMq)
             {
                 _log.Info("Using RabbitMq wrappers");
+                builder.RegisterGeneric(typeof (BasicConsumerWrapper<,>)).InstancePerDependency();
+                builder.RegisterGeneric(typeof (BlockingConsumerWrapper<,,>)).InstancePerDependency();
 
-                typeBasicConsumer = typeof(RabbitMq.BasicConsumerWrapper<,>);
-                typeBlockingConsumer = typeof(RabbitMq.BlockingConsumerWrapper<,,>);
+                builder.RegisterType<ConsumerWrapperFactory>().As<IStartable>().SingleInstance();
             }
             else
             {
                 _log.Info("Using MemoryMq wrappers");
-
-                typeBasicConsumer = typeof(MemoryMq.BasicConsumerWrapper<,>);
-                typeBlockingConsumer = typeof(MemoryMq.BlockingConsumerWrapper<,,>);
+                
             }
 
-            builder.RegisterGeneric(typeBasicConsumer).InstancePerDependency();
-            builder.RegisterGeneric(typeBlockingConsumer).InstancePerDependency();
-
-            builder.RegisterType<ConsumerWrapperFactory>().WithParameters(new[]
-                {
-                    new ResolvedParameter(
-                        (pi, ctx) => pi.Name == ConsumerWrapperFactory.BasicConsumerTypeParameterName,
-                        (pi, ctx) => typeBasicConsumer),
-                    new ResolvedParameter(
-                        (pi, ctx) => pi.Name == ConsumerWrapperFactory.BlockingConsumerTypeParameterName,
-                        (pi, ctx) => typeBlockingConsumer)
-
-                }).As<IStartable>().SingleInstance();
         }
     }
 }

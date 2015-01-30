@@ -13,19 +13,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
     /// </summary>
     public class ConsumerWrapperFactory : IStartable
     {
-        /// <summary>
-        /// The basic consumer type parameter name
-        /// </summary>
-        public const string BasicConsumerTypeParameterName = "basicConsumerType";
-
-        /// <summary>
-        /// The blocking consumer type parameter name
-        /// </summary>
-        public const string BlockingConsumerTypeParameterName = "blockingConsumerType";
-
         private readonly IComponentContext _context;
-        private readonly Type _basicConsumerType;
-        private readonly Type _blockingConsumerType;
 
         private readonly HashSet<IConsumerWrapperBase> _consumerWrappers = new HashSet<IConsumerWrapperBase>();
 
@@ -33,13 +21,9 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Initializes a new instance of the <see cref="ConsumerWrapperFactory"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="basicConsumerType"></param>
-        /// <param name="blockingConsumerType"></param>
-        public ConsumerWrapperFactory(IComponentContext context, Type basicConsumerType, Type blockingConsumerType)
+        public ConsumerWrapperFactory(IComponentContext context)
         {
             _context = context;
-            _basicConsumerType = basicConsumerType;
-            _blockingConsumerType = blockingConsumerType;
         }
 
         /// <summary>
@@ -47,11 +31,11 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </summary>
         public void Start()
         {
-            StartBasicConsumers(typeof (IBasicConsumer<>), _basicConsumerType);
-            StartBlockingConsumers(typeof(IBlockingConsumer<,>), _blockingConsumerType);
+            StartActionConsumers(typeof (IBasicConsumer<>), typeof(BasicConsumerWrapper<,>));
+            StartFunctionConsumers(typeof(IBlockingConsumer<,>), typeof(BlockingConsumerWrapper<,,>));
         }
 
-        private void StartBasicConsumers(Type baseConsumertype, Type wrapperType)
+        private void StartActionConsumers(Type baseConsumertype, Type wrapperType)
         {
             var consumerTypes = _context.ComponentRegistry.Registrations.Where(r => r.Activator.LimitType.IsAssignableToGenericType(baseConsumertype));
 
@@ -74,7 +58,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             });
         }
 
-        private void StartBlockingConsumers(Type baseConsumertype, Type wrapperType)
+        private void StartFunctionConsumers(Type baseConsumertype, Type wrapperType)
         {
             var consumerTypes = _context.ComponentRegistry.Registrations.Where(r => r.Activator.LimitType.IsAssignableToGenericType(baseConsumertype));
 
