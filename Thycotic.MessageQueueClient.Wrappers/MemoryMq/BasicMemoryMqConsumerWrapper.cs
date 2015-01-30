@@ -35,58 +35,21 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
         }
 
 
-        /// <summary>
-        /// Called each time a message arrives for this consumer.
-        /// </summary>
-        /// <param name="consumerTag"></param>
-        /// <param name="deliveryTag"></param>
-        /// <param name="redelivered"></param>
-        /// <param name="exchange"></param>
-        /// <param name="routingKey"></param>
-        /// <param name="properties"></param>
-        /// <param name="body"></param>
-        /// <remarks>
-        /// Be aware that acknowledgement may be required. See IModel.BasicAck.
-        /// </remarks>
-        public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
-            string routingKey, IBasicProperties properties, byte[] body)
-        {
-            Task.Run(() => ExecuteMessage(deliveryTag, body));
-        }
+        ///// <summary>
+        ///// Consumes the specified body.
+        ///// </summary>
+        ///// <param name="body">The body.</param>
+        //public override void Consume(byte[] body)
+        //{
+        //    using (LogContext.Create("Processing message..."))
+        //    {
+        //        var message = _serializer.ToRequest<TRequest>(body);
 
-        /// <summary>
-        /// Executes the message.
-        /// </summary>
-        /// <param name="deliveryTag">The delivery tag.</param>
-        /// <param name="body">The body.</param>
-        public void ExecuteMessage(ulong deliveryTag, byte[] body)
-        {
-            //const bool multiple = false;
-
-            using (LogContext.Create("Processing message..."))
-            {
-                try
-                {
-                    var message = _serializer.ToRequest<TRequest>(body);
-
-                    using (var handler = _handlerFactory())
-                    {
-                        handler.Value.Consume(message);
-                    }
-
-                    //_log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
-
-                    //Model.BasicAck(deliveryTag, multiple);
-
-                }
-                catch (Exception)
-                {
-                    //_log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof(TRequest))), e);
-
-                    //Model.BasicNack(deliveryTag, multiple, requeue: true);
-                }
-            }
-
-        }
+        //        using (var handler = _handlerFactory())
+        //        {
+        //            handler.Value.Consume(message);
+        //        }
+        //    }
+        //}
     }
 }

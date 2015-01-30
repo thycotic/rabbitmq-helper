@@ -53,7 +53,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
                 typeBasicConsumer = typeof(BasicRabbitMqConsumerWrapper<,>);
                 typeBlockingConsumer = typeof(BlockingRabbitMqConsumerWrapper<,,>);
             }
-            else
+            else //MemoryMq or something unsupported
             {
                 _log.Info("Using MemoryMq wrappers");
 

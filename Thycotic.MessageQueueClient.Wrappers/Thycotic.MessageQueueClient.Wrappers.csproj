@@ -65,7 +65,6 @@
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
     <Compile Include="ConsumerWrapperFactory.cs" />
-    <Compile Include="IConsumerWrapperBase.cs" />
     <Compile Include="IoC\WrappersModule.cs" />
     <Compile Include="MemoryMq\BasicMemoryMqConsumerWrapper.cs" />
     <Compile Include="MemoryMq\BlockingMemoryMqConsumerWrapper.cs" />
