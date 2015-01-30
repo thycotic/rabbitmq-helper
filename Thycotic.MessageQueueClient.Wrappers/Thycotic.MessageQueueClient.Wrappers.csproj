@@ -64,6 +64,7 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="MemoryMq\ConsumerInvoker.cs" />
     <Compile Include="ConsumerWrapperFactory.cs" />
     <Compile Include="IConsumerWrapperBase.cs" />
     <Compile Include="IoC\WrappersModule.cs" />

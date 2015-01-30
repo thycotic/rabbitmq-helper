@@ -29,7 +29,11 @@ namespace Thycotic.SecretServerAgent2.IoC
 
             _log.Debug(string.Format("Registering consumers of type {0}", type));
 
-            builder.RegisterAssemblyTypes(logicAssembly).Where(t => t.IsAssignableToGenericType(type)).InstancePerDependency();
+            builder.RegisterAssemblyTypes(logicAssembly)
+                .Where(t => t.IsAssignableToGenericType(type))
+                .AsSelf() //wrappers use explicit names through constructor types
+                .AsImplementedInterfaces() //all other resolution
+                .InstancePerDependency();
         }
     }
 }
