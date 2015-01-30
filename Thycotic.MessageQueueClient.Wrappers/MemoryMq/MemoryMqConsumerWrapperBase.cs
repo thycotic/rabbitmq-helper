@@ -1,7 +1,6 @@
 ﻿using RabbitMQ.Client;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.MemoryMq;
-using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
@@ -14,24 +13,14 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
     public abstract class MemoryMqConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase
         where TRequest : IConsumable
     {
-        
-        /// <summary>
-        /// Retrieve the IModel this consumer is associated
-        /// with, for use in acknowledging received messages, for
-        /// instance.
-        /// </summary>
-        public IMemoryMqModel Model { get; set; }
-
-        private readonly IMemoryMqConnection _connection;
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqConsumerWrapperBase<TRequest, THandler>));
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqConsumerWrapperBase{TRequest,THandler}"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
         protected MemoryMqConsumerWrapperBase(IMemoryMqConnection connection)
         {
-            _connection = connection;
         }
 
         /// <summary>
@@ -39,22 +28,22 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
         /// </summary>
         public void StartConsuming()
         {
-            var queueName = this.GetQueueName(typeof(THandler), typeof(TRequest));
-
-            var model = _connection.OpenChannel();
-
-            _log.Debug(string.Format("Channel opened for {0}", queueName));
-
-            model.QueueDeclare(queueName);
-            model.QueueBind(queueName);
-
-            const bool noAck = false; //since this consumer will send an acknowledgement
-            var consumer = this;
-
-            model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
-
-            Model = model;
         }
+
+
+        /// <summary>
+        /// Handles the basic deliver.
+        /// </summary>
+        /// <param name="consumerTag">The consumer tag.</param>
+        /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="redelivered">if set to <c>true</c> [redelivered].</param>
+        /// <param name="exchange">The exchange.</param>
+        /// <param name="routingKey">The routing key.</param>
+        /// <param name="properties">The properties.</param>
+        /// <param name="body">The body.</param>
+        public abstract void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
+            string routingKey,
+            IBasicProperties properties, byte[] body);
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

@@ -1,29 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Thycotic.MessageQueueClient.MemoryMq
 {
     /// <summary>
     /// Interface for a memory message queue connection
     /// </summary>
-    public interface IMemoryMqConnection : IDisposable
+    public interface IMemoryMqConnection
     {
-        /// <summary>
-        /// Opens the channel.
-        /// </summary>
-        /// <returns></returns>
-        IMemoryMqModel OpenChannel();
-
-        /// <summary>
-        /// Creates the queue.
-        /// </summary>
-        /// <param name="queueName">Name of the queue.</param>
-        void CreateQueue(string queueName);
-
-        /// <summary>
-        /// Gets the queue.
-        /// </summary>
-        /// <param name="queueName">Name of the queue.</param>
-        /// <returns></returns>
-        IMemoryMqVolatileQueue GetQueue(string queueName);
     }
 }

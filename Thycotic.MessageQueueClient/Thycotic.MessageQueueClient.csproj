@@ -62,18 +62,10 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
-    <Compile Include="IConsumerWrapperBase.cs" />
-    <Compile Include="MemoryMq\IMemoryMqConsumerWrapperBase.cs" />
-    <Compile Include="MemoryMq\MemoryMqVolatileQueue.cs" />
-    <Compile Include="RabbitMq\IRabbitMqConsumerWrapperBase.cs" />
     <Compile Include="IRequestBus.cs" />
     <Compile Include="JsonMessageSerializer.cs" />
     <Compile Include="MemoryMq\IMemoryMqConnection.cs" />
-    <Compile Include="MemoryMq\IMemoryMqModel.cs" />
-    <Compile Include="MemoryMq\IMemoryMqVolatileQueue.cs" />
-    <Compile Include="MemoryMq\MemoryMqBinding.cs" />
     <Compile Include="MemoryMq\MemoryMqConnection.cs" />
-    <Compile Include="MemoryMq\MemoryMqModel.cs" />
     <Compile Include="MemoryMq\MemoryMqRequestBus.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,7 +73,7 @@
     <Compile Include="RabbitMq\DefaultConfigValues.cs" />
     <Compile Include="RabbitMq\IRabbitMqConnection.cs" />
     <Compile Include="RabbitMq\RabbitMqRequestBus.cs" />
-    <Compile Include="RoutingHelpers.cs" />
+    <Compile Include="RabbitMq\RoutingHelpers.cs" />
     <Compile Include="SupportedMessageQueues.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
 ﻿using System;
-using Thycotic.MessageQueueClient.RabbitMq;
+using RabbitMQ.Client;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient
+namespace Thycotic.MessageQueueClient.RabbitMq
 {
     /// <summary>
     /// Routing helpers
@@ -25,7 +25,7 @@ namespace Thycotic.MessageQueueClient
         /// <param name="consumer">The consumer.</param>
         /// <param name="consumableType">Type of the consumable.</param>
         /// <returns></returns>
-        public static string GetRoutingKey(this IConsumerWrapperBase consumer, Type consumableType)
+        public static string GetRoutingKey(this IBasicConsumer consumer, Type consumableType)
         {
             return consumableType.FullName;
         }
@@ -37,7 +37,7 @@ namespace Thycotic.MessageQueueClient
         /// <param name="consumerType">Type of the consumer.</param>
         /// <param name="consumableType">Type of the consumable.</param>
         /// <returns></returns>
-        public static string GetQueueName(this IConsumerWrapperBase consumer, Type consumerType, Type consumableType)
+        public static string GetQueueName(this IBasicConsumer consumer, Type consumerType, Type consumableType)
         {
             return string.Format("{0}:{1}", consumerType.FullName, consumer.GetRoutingKey(consumableType));
         }
