@@ -43,7 +43,10 @@ namespace Thycotic.MessageQueueClient.MemoryMq
             task.Wait(TimeSpan.FromSeconds(timeoutSeconds));
 
             //if the task is done at this point, return the result
-            if (task.IsCompleted) return task.Result;
+            if (task.IsCompleted)
+            {
+                return task.Result;
+            }
             
             //otherwise throw time-out
             throw new TimeoutException();
