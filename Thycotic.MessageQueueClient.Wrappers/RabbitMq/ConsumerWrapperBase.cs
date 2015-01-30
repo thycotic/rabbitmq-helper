@@ -13,7 +13,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
     /// </summary>
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public abstract class RabbitMqConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase, IBasicConsumer
+    public abstract class ConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase, IBasicConsumer
         where TRequest : IConsumable
     {
         /// <summary>
@@ -34,13 +34,13 @@ namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
 
         private bool _terminated;
 
-        private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConsumerWrapperBase<TRequest, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TRequest, THandler>));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RabbitMqConsumerWrapperBase{TRequest, THandler}"/> class.
+        /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest, THandler}"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        protected RabbitMqConsumerWrapperBase(IRabbitMqConnection connection)
+        protected ConsumerWrapperBase(IRabbitMqConnection connection)
         {
             _connection = connection;
             _connection.ConnectionCreated += (sender, args) => CreateModel();

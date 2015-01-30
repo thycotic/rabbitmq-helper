@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
 using RabbitMQ.Client;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient.MemoryMq;
+using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
+namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
 {
     /// <summary>
     /// RPC consumer wrapper
@@ -14,22 +14,22 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public class BlockingMemoryMqConsumerWrapper<TRequest, TResponse, THandler> : MemoryMqConsumerWrapperBase<TRequest, THandler>
+    public class BlockingConsumerWrapper<TRequest, TResponse, THandler> : ConsumerWrapperBase<TRequest, THandler>
         where TRequest: IConsumable
         where THandler : IBlockingConsumer<TRequest, TResponse>
     {
         private readonly IMessageSerializer _serializer;
         private readonly Func<Owned<THandler>> _handlerFactory;
-        private readonly IMemoryMqConnection _rmq;
-        private readonly ILogWriter _log = Log.Get(typeof (BlockingMemoryMqConsumerWrapper<TRequest, TResponse, THandler>));
+        private readonly IRabbitMqConnection _rmq;
+        private readonly ILogWriter _log = Log.Get(typeof (BlockingConsumerWrapper<TRequest, TResponse, THandler>));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlockingMemoryMqConsumerWrapper{TRequest,TResponse,THandler}"/> class.
+        /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TRequest,TResponse,THandler}"/> class.
         /// </summary>
         /// <param name="rmq">The RMQ.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BlockingMemoryMqConsumerWrapper(IMemoryMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+        public BlockingConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
             : base(rmq)
         {
 
@@ -79,7 +79,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
                     {
                         response = handler.Value.Consume(message);
 
-                        //_log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
+                        _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
                     }
                     catch (Exception e)
                     {
@@ -94,13 +94,13 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
                     Respond(properties.ReplyTo, response, properties.CorrelationId, responseType);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                //_log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof(TRequest))), e);
+                _log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof(TRequest))), e);
             }
             finally
             {
-                //Model.BasicAck(deliveryTag, false);
+                Model.BasicAck(deliveryTag, false);
             }
         }
 
@@ -109,22 +109,22 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
             var body = _serializer.ToBytes(response);
             var routingKey = replyTo;
 
-            //using (var channel = _rmq.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
-            //{
-            //    channel.ConfirmSelect();
+            using (var channel = _rmq.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
+            {
+                channel.ConfirmSelect();
 
-            //    var properties = channel.CreateBasicProperties();
+                var properties = channel.CreateBasicProperties();
 
-            //    properties.CorrelationId = correlationId;
-            //    properties.Type = type;
+                properties.CorrelationId = correlationId;
+                properties.Type = type;
 
-            //    //TODO: Should this be empty or the default exchange
-            //    var exchange = string.Empty;
+                //TODO: Should this be empty or the default exchange
+                var exchange = string.Empty;
 
-            //    channel.BasicPublish(exchange, routingKey, DefaultConfigValues.Model.Publish.NotMandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
+                channel.BasicPublish(exchange, routingKey, DefaultConfigValues.Model.Publish.NotMandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
                 
-            //    channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
-            //}
+                channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
+            }
         }
     }
 }
