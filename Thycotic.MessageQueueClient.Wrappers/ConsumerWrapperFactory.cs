@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using Thycotic.MessageQueueClient.Wrappers.RabbitMq;
+using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 using Thycotic.Utility;
 
@@ -87,7 +87,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
                 var consumerWrapperType = wrapperType.MakeGenericType(messageType, responseType, consumerType);
 
-                var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
+                var consumerWrapper = (IRabbitMqConsumerWrapperBase)_context.Resolve(consumerWrapperType);
 
                 _consumerWrappers.Add(consumerWrapper);
 
