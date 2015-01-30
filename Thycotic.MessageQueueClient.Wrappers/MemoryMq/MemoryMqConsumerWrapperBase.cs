@@ -10,16 +10,16 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
     /// </summary>
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public abstract class ConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase
+    public abstract class MemoryMqConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase
         where TRequest : IConsumable
     {
-        private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TRequest, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqConsumerWrapperBase<TRequest, THandler>));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest, THandler}"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqConsumerWrapperBase{TRequest,THandler}"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        protected ConsumerWrapperBase(IMemoryMqConnection connection)
+        protected MemoryMqConsumerWrapperBase(IMemoryMqConnection connection)
         {
         }
 

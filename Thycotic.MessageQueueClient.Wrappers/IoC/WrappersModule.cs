@@ -2,6 +2,8 @@
 using Autofac;
 using Autofac.Core;
 using Thycotic.Logging;
+using Thycotic.MessageQueueClient.Wrappers.MemoryMq;
+using Thycotic.MessageQueueClient.Wrappers.RabbitMq;
 using Thycotic.Messages.Common;
 using Module = Autofac.Module;
 
@@ -48,15 +50,15 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
             {
                 _log.Info("Using RabbitMq wrappers");
 
-                typeBasicConsumer = typeof(RabbitMq.BasicConsumerWrapper<,>);
-                typeBlockingConsumer = typeof(RabbitMq.BlockingConsumerWrapper<,,>);
+                typeBasicConsumer = typeof(BasicRabbitMqConsumerWrapper<,>);
+                typeBlockingConsumer = typeof(BlockingRabbitMqConsumerWrapper<,,>);
             }
             else
             {
                 _log.Info("Using MemoryMq wrappers");
 
-                typeBasicConsumer = typeof(MemoryMq.BasicConsumerWrapper<,>);
-                typeBlockingConsumer = typeof(MemoryMq.BlockingConsumerWrapper<,,>);
+                typeBasicConsumer = typeof(BasicMemoryMqConsumerWrapper<,>);
+                typeBlockingConsumer = typeof(BlockingMemoryMqConsumerWrapper<,,>);
             }
 
             builder.RegisterGeneric(typeBasicConsumer).InstancePerDependency();
