@@ -13,7 +13,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
     /// </summary>
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public abstract class RabbitMqConsumerWrapperBase<TRequest, THandler> : IRabbitMqConsumerWrapperBase
+    public abstract class RabbitMqConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase, IBasicConsumer
         where TRequest : IConsumable
     {
         /// <summary>
@@ -51,13 +51,12 @@ namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
             var routingKey = this.GetRoutingKey(typeof(TRequest));
 
             var queueName = this.GetQueueName(typeof(THandler), typeof(TRequest));
+            _log.Debug(string.Format("Channel opened for {0}", queueName));
 
             const int retryAttempts = -1; //forever
             const int retryDelayGrowthFactor = 1;
 
             var model = _connection.OpenChannel(retryAttempts, DefaultConfigValues.ReOpenDelay, retryDelayGrowthFactor);
-
-            _log.Debug(string.Format("Channel opened for {0}", queueName));
 
             const int prefetchSize = 0;
             const int prefetchCount = 1;

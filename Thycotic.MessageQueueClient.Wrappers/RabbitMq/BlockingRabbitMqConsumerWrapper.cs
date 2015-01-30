@@ -20,22 +20,22 @@ namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
     {
         private readonly IMessageSerializer _serializer;
         private readonly Func<Owned<THandler>> _handlerFactory;
-        private readonly IRabbitMqConnection _connection;
+        private readonly IRabbitMqConnection _rmq;
         private readonly ILogWriter _log = Log.Get(typeof (BlockingRabbitMqConsumerWrapper<TRequest, TResponse, THandler>));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockingRabbitMqConsumerWrapper{TRequest,TResponse,THandler}"/> class.
         /// </summary>
-        /// <param name="connection">The RMQ.</param>
+        /// <param name="rmq">The RMQ.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BlockingRabbitMqConsumerWrapper(IRabbitMqConnection connection, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
-            : base(connection)
+        public BlockingRabbitMqConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+            : base(rmq)
         {
 
             _serializer = serializer;
             _handlerFactory = handlerFactory;
-            _connection = connection;
+            _rmq = rmq;
 
         }
 
@@ -109,7 +109,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
             var body = _serializer.ToBytes(response);
             var routingKey = replyTo;
 
-            using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
+            using (var channel = _rmq.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
             {
                 channel.ConfirmSelect();
 
