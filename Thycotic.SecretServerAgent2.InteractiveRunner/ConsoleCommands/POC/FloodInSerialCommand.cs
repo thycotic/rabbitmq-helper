@@ -5,22 +5,22 @@ using Thycotic.Messages.Areas.POC.Request;
 
 namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 {
-    class FloodOrderedCommand : ConsoleCommandBase
+    class FloodInSerialCommand : ConsoleCommandBase
     {
         private readonly IRequestBus _bus;
-        private readonly ILogWriter _log = Log.Get(typeof(FloodOrderedCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(FloodInSerialCommand));
 
         public override string Name
         {
-            get { return "floodordered"; }
+            get { return "floodinserial"; }
         }
 
         public override string Description
         {
-            get { return "Floods the exchange in order"; }
+            get { return "Floods the exchange in serial"; }
         }
 
-        public FloodOrderedCommand(IRequestBus bus)
+        public FloodInSerialCommand(IRequestBus bus)
         {
             _bus = bus;
 
@@ -31,7 +31,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
 
                 var count = Convert.ToInt32(countString);
 
-                _log.Info(string.Format("Flooding exchange in order with {0} request(s). Please wait...", count));
+                _log.Info(string.Format("Flooding exchange in serial with {0} request(s). Please wait...", count));
 
                 for (var loop = 0; loop < count; loop++)
                 {
