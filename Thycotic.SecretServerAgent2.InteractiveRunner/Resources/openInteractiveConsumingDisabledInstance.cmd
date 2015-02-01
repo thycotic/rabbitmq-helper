@@ -1,0 +1,1 @@
+start cmd /k ..\Thycotic.SecretServerAgent2.InteractiveRunner.exe icd
