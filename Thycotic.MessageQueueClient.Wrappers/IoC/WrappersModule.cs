@@ -53,7 +53,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
             {
                 _log.Info("Using MemoryMq wrappers");
 
-                builder.RegisterType<ConsumerInvoker>().AsImplementedInterfaces().SingleInstance();
+                //builder.RegisterType<ConsumerInvoker>().AsImplementedInterfaces().SingleInstance();
             }
         }
     }

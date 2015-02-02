@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
@@ -6,6 +7,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
     /// <summary>
     /// Consumer wrapper factory
     /// </summary>
+    [Obsolete("Do not use")]
     public class ConsumerInvoker : IConsumerInvoker
     {
         private readonly IComponentContext _context;
