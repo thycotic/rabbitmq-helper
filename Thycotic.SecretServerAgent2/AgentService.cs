@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.ServiceProcess;
+using System.Diagnostics;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.Wrappers.IoC;
@@ -44,8 +45,8 @@ namespace Thycotic.SecretServerAgent2
 
             if (_autoConsume)
             {
-                builder.RegisterModule(new WrappersModule(configurationProvider));
                 builder.RegisterModule(new LogicModule());
+                builder.RegisterModule(new WrappersModule(configurationProvider));
             }
             else
             {
