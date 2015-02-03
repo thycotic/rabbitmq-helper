@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 
 namespace Thycotic.MessageQueueClient.Wrappers.Proxies
 {
@@ -83,6 +84,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.Proxies
         {
             throw new NotImplementedException();
         }
+        #endregion
 
         /// <summary>
         /// Called each time a message arrives for this consumer.
@@ -101,8 +103,8 @@ namespace Thycotic.MessageQueueClient.Wrappers.Proxies
         public void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties,
             byte[] body)
         {
-            throw new NotImplementedException();
+            Target.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, exchange, routingKey, new RabbitMqModelProperties(properties), body);
         }
-        #endregion
+
     }
 }

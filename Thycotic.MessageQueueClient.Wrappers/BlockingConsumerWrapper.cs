@@ -16,13 +16,13 @@ namespace Thycotic.MessageQueueClient.Wrappers
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
     public class BlockingConsumerWrapper<TRequest, TResponse, THandler> : ConsumerWrapperBase<TRequest, THandler>
-        where TRequest: IConsumable
+        where TRequest : IConsumable
         where THandler : IBlockingConsumer<TRequest, TResponse>
     {
         private readonly IMessageSerializer _serializer;
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly ICommonConnection _rmq;
-        private readonly ILogWriter _log = Log.Get(typeof (BlockingConsumerWrapper<TRequest, TResponse, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof(BlockingConsumerWrapper<TRequest, TResponse, THandler>));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TRequest,TResponse,THandler}"/> class.
@@ -53,19 +53,19 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
-         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
-            string routingKey, ICommonModelProperties properties, byte[] body)
+        public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
+           string routingKey, ICommonModelProperties properties, byte[] body)
         {
             Task.Run(() => ExecuteMessage(deliveryTag, properties, body));
         }
 
-         /// <summary>
-         /// Executes the message.
-         /// </summary>
-         /// <param name="deliveryTag">The delivery tag.</param>
-         /// <param name="properties">The properties.</param>
-         /// <param name="body">The body.</param>
-        public void ExecuteMessage(ulong deliveryTag, ICommonModelProperties properties, byte[] body)
+        /// <summary>
+        /// Executes the message.
+        /// </summary>
+        /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="properties">The properties.</param>
+        /// <param name="body">The body.</param>
+        private void ExecuteMessage(ulong deliveryTag, ICommonModelProperties properties, byte[] body)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
                 var exchange = string.Empty;
 
                 channel.BasicPublish(exchange, routingKey, DefaultConfigValues.Model.Publish.NotMandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
-                
+
                 channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
             }
         }

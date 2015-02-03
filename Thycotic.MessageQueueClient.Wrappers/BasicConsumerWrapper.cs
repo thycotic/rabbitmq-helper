@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.QueueClient;
-using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
@@ -60,7 +59,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
         /// <param name="body">The body.</param>
-        public void ExecuteMessage(ulong deliveryTag, byte[] body)
+        private void ExecuteMessage(ulong deliveryTag, byte[] body)
         {
             const bool multiple = false;
 
@@ -87,7 +86,6 @@ namespace Thycotic.MessageQueueClient.Wrappers
                     CommonModel.BasicNack(deliveryTag, multiple, requeue: true);
                 }
             }
-
         }
     }
 }

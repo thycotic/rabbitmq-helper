@@ -40,6 +40,25 @@ namespace Thycotic.MessageQueueClient.Wrappers.Proxies
         }
 
         /// <summary>
+        /// Called each time a message arrives for this consumer.
+        /// </summary>
+        /// <param name="consumerTag"></param>
+        /// <param name="deliveryTag"></param>
+        /// <param name="redelivered"></param>
+        /// <param name="exchange"></param>
+        /// <param name="routingKey"></param>
+        /// <param name="properties"></param>
+        /// <param name="body"></param>
+        /// <remarks>
+        /// Be aware that acknowledgement may be required. See IModel.BasicAck.
+        /// </remarks>
+        public void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, ICommonModelProperties properties,
+            byte[] body)
+        {
+            Target.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, exchange, routingKey, properties, body);
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()

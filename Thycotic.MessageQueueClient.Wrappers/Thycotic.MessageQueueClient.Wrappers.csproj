@@ -71,8 +71,6 @@
     <Compile Include="BlockingConsumerWrapper.cs" />
     <Compile Include="ConsumerWrapperBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RabbitMq\BlockingRabbitMqConsumerWrapper.cs" />
-    <Compile Include="RabbitMq\BasicRabbitMqConsumerWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">
