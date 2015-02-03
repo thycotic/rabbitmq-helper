@@ -6,7 +6,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     {
         ICommonModel CreateModel();
 
-        bool IsOpen { get; set; }
+        bool IsOpen { get; }
 
         EventHandler ConnectionShutdown { get; set; }
 

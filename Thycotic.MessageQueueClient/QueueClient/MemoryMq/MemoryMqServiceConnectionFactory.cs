@@ -19,7 +19,10 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
             var microwaveCallback = new MemoryMqServiceCallback();
 
             var channelFactory = new DuplexChannelFactory<IMemoryMqServiceClient>(microwaveCallback, clientBinding, Uri);
-
+            //channelFactory.Closed += new EventHandler(DuplexChannelFactory_Closed);
+            //channelFactory.Closing += new EventHandler(DuplexChannelFactory_Closing);
+            //channelFactory.Faulted += new EventHandler(DuplexChannelFactory_Faulted);
+            
             var credentials = channelFactory.Credentials;
 
             if (credentials == null)
