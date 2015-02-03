@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using RabbitMQ.Client;
 using Thycotic.MessageQueueClient.Wrappers;
+using Thycotic.MessageQueueClient.Wrappers.Proxies;
 
 namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
 {
@@ -109,8 +110,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
 
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            //HACK: Just to compile
-            _rawModel.BasicConsume(queueName, noAck, null);
+            _rawModel.BasicConsume(queueName, noAck, new RabbitMqConsumerWrapperProxy(consumer));
         }
 
         public void Close()

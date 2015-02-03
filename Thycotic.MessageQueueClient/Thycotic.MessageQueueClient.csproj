@@ -88,6 +88,8 @@
     <Compile Include="QueueClient\RoutingHelpers.cs" />
     <Compile Include="SupportedMessageQueues.cs" />
     <Compile Include="Wrappers\IConsumerWrapperBase.cs" />
+    <Compile Include="Wrappers\Proxies\CommonConsumerWrapperProxy.cs" />
+    <Compile Include="Wrappers\Proxies\RabbitMqConsumerWrapperProxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">

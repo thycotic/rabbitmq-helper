@@ -1,4 +1,5 @@
 ﻿using System;
+using Thycotic.MessageQueueClient.QueueClient;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {
@@ -7,6 +8,13 @@ namespace Thycotic.MessageQueueClient.Wrappers
     /// </summary>
     public interface IConsumerWrapperBase : IDisposable
     {
+        /// <summary>
+        /// Retrieve the IModel this consumer is associated
+        /// with, for use in acknowledging received messages, for
+        /// instance.
+        /// </summary>
+        ICommonModel CommonModel { get; }
+
         /// <summary>
         /// Starts the consuming.
         /// </summary>
