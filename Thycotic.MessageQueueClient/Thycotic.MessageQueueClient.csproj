@@ -65,7 +65,6 @@
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="IRequestBus.cs" />
     <Compile Include="JsonMessageSerializer.cs" />
-    <Compile Include="IConsumerInvoker.cs" />
     <Compile Include="MemoryMq\MemoryMqequestBus.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

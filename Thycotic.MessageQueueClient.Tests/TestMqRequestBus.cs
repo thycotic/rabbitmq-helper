@@ -10,7 +10,7 @@ namespace Thycotic.MessageQueueClient.Tests
     /// </summary>
     public class TestMqRequestBus : IRequestBus, IDisposable
     {
-        private readonly IConsumerInvoker _consumerInvoker;
+        private readonly ITestConsumerInvoker _consumerInvoker;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly object _syncRoot = new object();
@@ -18,9 +18,9 @@ namespace Thycotic.MessageQueueClient.Tests
         private Task _lastTask;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqRequestBus"/> class.
+        /// Initializes a new instance of the <see cref="TestMqRequestBus"/> class.
         /// </summary>
-        public TestMqRequestBus(IConsumerInvoker consumerInvoker)
+        public TestMqRequestBus(ITestConsumerInvoker consumerInvoker)
         {
             _consumerInvoker = consumerInvoker;
         }

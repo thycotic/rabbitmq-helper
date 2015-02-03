@@ -2,21 +2,20 @@
 using Autofac;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
+namespace Thycotic.MessageQueueClient.Tests
 {
     /// <summary>
     /// Consumer wrapper factory
     /// </summary>
-    [Obsolete("Do not use")]
-    public class ConsumerInvoker : IConsumerInvoker
+    public class TestConsumerInvoker : ITestConsumerInvoker
     {
         private readonly IComponentContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConsumerInvoker"/> class.
+        /// Initializes a new instance of the <see cref="TestConsumerInvoker"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public ConsumerInvoker(IComponentContext context)
+        public TestConsumerInvoker(IComponentContext context)
         {
             _context = context;
         }

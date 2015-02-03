@@ -1,12 +1,11 @@
-﻿using System;
-using Thycotic.Messages.Common;
+﻿using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient
+namespace Thycotic.MessageQueueClient.Tests
 {
     /// <summary>
     /// Interface for a handler resolved
     /// </summary>
-    public interface IConsumerInvoker
+    public interface ITestConsumerInvoker
     {
         /// <summary>
         /// Consumes the specified consumable.
