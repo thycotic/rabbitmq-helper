@@ -1,7 +1,6 @@
 ﻿using System;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient.Wrappers.RabbitMq;
 using Module = Autofac.Module;
 
 namespace Thycotic.MessageQueueClient.Wrappers.IoC
@@ -43,8 +42,8 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
             if (queueType == SupportedMessageQueues.RabbitMq)
             {
                 _log.Info("Using RabbitMq wrappers");
-                builder.RegisterGeneric(typeof (BasicRabbitMqConsumerWrapper<,>)).InstancePerDependency();
-                builder.RegisterGeneric(typeof (BlockingRabbitMqConsumerWrapper<,,>)).InstancePerDependency();
+                builder.RegisterGeneric(typeof (BasicConsumerWrapper<,>)).InstancePerDependency();
+                builder.RegisterGeneric(typeof (BlockingConsumerWrapper<,,>)).InstancePerDependency();
 
             }
             else

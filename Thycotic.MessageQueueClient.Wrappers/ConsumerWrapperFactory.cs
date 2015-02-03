@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using Thycotic.MessageQueueClient.Wrappers.RabbitMq;
 using Thycotic.Messages.Common;
 using Thycotic.Utility;
 
@@ -31,8 +30,8 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </summary>
         public void Start()
         {
-            StartActionConsumers(typeof (IBasicConsumer<>), typeof(BasicRabbitMqConsumerWrapper<,>));
-            StartFunctionConsumers(typeof(IBlockingConsumer<,>), typeof(BlockingRabbitMqConsumerWrapper<,,>));
+            StartActionConsumers(typeof (IBasicConsumer<>), typeof(BasicConsumerWrapper<,>));
+            StartFunctionConsumers(typeof(IBlockingConsumer<,>), typeof(BlockingConsumerWrapper<,,>));
         }
 
         private void StartActionConsumers(Type baseConsumertype, Type wrapperType)

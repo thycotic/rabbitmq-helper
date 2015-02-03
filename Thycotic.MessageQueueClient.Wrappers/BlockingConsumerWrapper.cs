@@ -6,7 +6,7 @@ using Thycotic.Logging;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
+namespace Thycotic.MessageQueueClient.Wrappers
 {
     /// <summary>
     /// RPC consumer wrapper
@@ -14,22 +14,22 @@ namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public class BlockingRabbitMqConsumerWrapper<TRequest, TResponse, THandler> : RabbitMqConsumerWrapperBase<TRequest, THandler>
+    public class BlockingConsumerWrapper<TRequest, TResponse, THandler> : ConsumerWrapperBase<TRequest, THandler>
         where TRequest: IConsumable
         where THandler : IBlockingConsumer<TRequest, TResponse>
     {
         private readonly IMessageSerializer _serializer;
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IRabbitMqConnection _rmq;
-        private readonly ILogWriter _log = Log.Get(typeof (BlockingRabbitMqConsumerWrapper<TRequest, TResponse, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof (BlockingConsumerWrapper<TRequest, TResponse, THandler>));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlockingRabbitMqConsumerWrapper{TRequest,TResponse,THandler}"/> class.
+        /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TRequest,TResponse,THandler}"/> class.
         /// </summary>
         /// <param name="rmq">The RMQ.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BlockingRabbitMqConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+        public BlockingConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
             : base(rmq)
         {
 

@@ -3,19 +3,17 @@ using System.Threading.Tasks;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.RabbitMq;
-using Thycotic.MessageQueueClient.Wrappers.RabbitMq;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
+namespace Thycotic.MessageQueueClient.Wrappers
 {
     /// <summary>
     /// Base consumer wrapper
     /// </summary>
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public abstract class MemoryConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase
+    public abstract class ConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase, IBasicConsumer
         where TRequest : IConsumable
     {
         /// <summary>
@@ -23,7 +21,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
         /// with, for use in acknowledging received messages, for
         /// instance.
         /// </summary>
-        public IMemoryMqModel Model { get; private set; }
+        public IModel Model { get; private set; }
 
         /// <summary>
         /// Signaled when the consumer gets cancelled.
@@ -32,17 +30,17 @@ namespace Thycotic.MessageQueueClient.Wrappers.MemoryMq
         public event ConsumerCancelledEventHandler ConsumerCancelled;
 #pragma warning restore 0067
 
-        private readonly IMemoryMqConnection _connection;
+        private readonly IRabbitMqConnection _connection;
 
         private bool _terminated;
 
-        private readonly ILogWriter _log = Log.Get(typeof(MemoryConsumerWrapperBase<TRequest, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TRequest, THandler>));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RabbitMqConsumerWrapperBase{TRequest,THandler}"/> class.
+        /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest,THandler}"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        protected MemoryConsumerWrapperBase(IMemoryMqConnection connection)
+        protected ConsumerWrapperBase(IRabbitMqConnection connection)
         {
             _connection = connection;
             _connection.ConnectionCreated += (sender, args) => CreateModel();
