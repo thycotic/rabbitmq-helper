@@ -30,6 +30,11 @@
             /// The connection string
             /// </summary>
             public const string ConnectionString = "MemoryMq.ConnectionString";
+
+            /// <summary>
+            /// The thumb print
+            /// </summary>
+            public const string Thumbprint = "MemoryMq.Thumbprint";
         }
     }
 }

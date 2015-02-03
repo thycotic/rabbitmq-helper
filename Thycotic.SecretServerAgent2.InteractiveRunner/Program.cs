@@ -23,16 +23,12 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                 Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
 
-                var queueType = configurationProvider(ConfigurationKeys.QueueType);
-
-
-
                 var agent = new AgentService(autoConsume);
                 agent.Start(new string[] { });
 
                 var cli = new CommandLineInterface();
 
-                ConfigureCli(cli, agent.IoCContainer);
+                //ConfigureCli(cli, agent.IoCContainer);
 
                 cli.BeginInputLoop(string.Join(" ", args.Skip(1)));
 

@@ -4,6 +4,7 @@ using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.RabbitMq;
+using Thycotic.SecretServerAgent2.MemoryQueueServer;
 using Module = Autofac.Module;
 
 namespace Thycotic.SecretServerAgent2.IoC
@@ -42,6 +43,15 @@ namespace Thycotic.SecretServerAgent2.IoC
             else
             {
                 _log.Info("Using MemoryMq");
+
+                var connectionString = _configurationProvider(ConfigurationKeys.MemoryMq.ConnectionString);
+                _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
+
+                var thumbprint = _configurationProvider(ConfigurationKeys.MemoryMq.Thumbprint);
+                _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
+
+                builder.Register(context => new MemoryMqServer(connectionString, thumbprint)).As<IStartable>().SingleInstance();
+
                 builder.RegisterType<MemoryMqRequestBus>().AsImplementedInterfaces().SingleInstance();
             }
         }
