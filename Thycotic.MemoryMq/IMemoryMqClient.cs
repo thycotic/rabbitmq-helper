@@ -1,9 +1,9 @@
 ﻿using System.ServiceModel;
 
-namespace Thycotic.SecretServerAgent2.MemoryQueueServer
+namespace Thycotic.MemoryMq
 {
     [ServiceContract(Namespace = "http://www.thycotic.com/services", CallbackContract = typeof(IMemoryMqCallback))]
-    public interface IMemoryMqService
+    public interface IMemoryMqClient
     {
         [OperationContract(IsOneWay = true)]
         void BasicPublish(string meal);

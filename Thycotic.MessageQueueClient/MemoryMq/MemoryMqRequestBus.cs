@@ -1,4 +1,5 @@
 ﻿using System;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.MessagePatterns;
 using Thycotic.Logging;
@@ -12,11 +13,11 @@ namespace Thycotic.MessageQueueClient.MemoryMq
     /// </summary>
     public class MemoryMqRequestBus : IRequestBus
     {
-        private readonly IRabbitMqConnection _connection;
+        private readonly IMemoryMqConnection _connection;
         private readonly IMessageSerializer _messageSerializer;
         private readonly string _exchangeName;
 
-        private readonly ILogWriter _log = Log.Get(typeof(RabbitMqRequestBus));
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqRequestBus));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RabbitMqRequestBus"/> class.
@@ -24,7 +25,7 @@ namespace Thycotic.MessageQueueClient.MemoryMq
         /// <param name="connection">The connection.</param>
         /// <param name="messageSerializer">The message serializer.</param>
         /// <param name="exchangeName">Name of the exchange.</param>
-        public MemoryMqRequestBus(IRabbitMqConnection connection, IMessageSerializer messageSerializer,
+        public MemoryMqRequestBus(IMemoryMqConnection connection, IMessageSerializer messageSerializer,
                                 string exchangeName = DefaultConfigValues.Exchange)
         {
             _connection = connection;
@@ -58,7 +59,7 @@ namespace Thycotic.MessageQueueClient.MemoryMq
             {
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
-                    using (var subscription = new Subscription(channel, channel.QueueDeclare().QueueName))
+                    using (var subscription = new MemoryMqSubscription(channel, channel.QueueDeclare().QueueName))
                     {
                         var properties = channel.CreateBasicProperties();
                         properties.CorrelationId = Guid.NewGuid().ToString();

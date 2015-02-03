@@ -1,8 +1,8 @@
 ﻿using System.ServiceModel;
 
-namespace Thycotic.SecretServerAgent2.MemoryQueueServer
+namespace Thycotic.MemoryMq
 {
-    [ServiceContract(Namespace = "http://remondo.net/services")]
+    [ServiceContract(Namespace = "http://www.thycotic.com/services")]
     public interface IMemoryMqCallback
     {
         [OperationContract(IsOneWay = true)]

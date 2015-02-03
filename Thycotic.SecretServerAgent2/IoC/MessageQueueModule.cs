@@ -4,7 +4,7 @@ using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.RabbitMq;
-using Thycotic.SecretServerAgent2.MemoryQueueServer;
+using Thycotic.SecretServerAgent2.MemoryMq;
 using Module = Autofac.Module;
 
 namespace Thycotic.SecretServerAgent2.IoC

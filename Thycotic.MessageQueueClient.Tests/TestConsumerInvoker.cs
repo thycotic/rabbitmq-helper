@@ -26,15 +26,17 @@ namespace Thycotic.MessageQueueClient.Tests
         /// <param name="consumable">The consumable.</param>
         public void Consume(IConsumable consumable)
         {
-            var requestType = consumable.GetType();
-            var baseConsumerType = typeof (IBasicConsumer<>);
-            var consumerType = baseConsumerType.MakeGenericType(requestType);
+            //var requestType = consumable.GetType();
+            //var baseConsumerType = typeof (IBasicConsumer<>);
+            //var consumerType = baseConsumerType.MakeGenericType(requestType);
 
-            //HACK: I don't like this -dkk
-            dynamic consumer = _context.Resolve(consumerType);
+            ////HACK: I don't like this -dkk
+            //dynamic consumer = _context.Resolve(consumerType);
 
-            //HACK: I don't like this -dkk
-            consumer.Consume((dynamic)consumable);
+            ////HACK: I don't like this -dkk
+            //consumer.Consume((dynamic)consumable);
+
+            throw new NotImplementedException();
 
         }
 
@@ -46,16 +48,18 @@ namespace Thycotic.MessageQueueClient.Tests
         /// <returns></returns>
         public TResponse Consume<TResponse>(IConsumable consumable)
         {
-            var requestType = consumable.GetType();
-            var responseType = typeof (TResponse);
-            var baseConsumerType = typeof(IBlockingConsumer<,>);
-            var consumerType = baseConsumerType.MakeGenericType(requestType, responseType);
+            //var requestType = consumable.GetType();
+            //var responseType = typeof (TResponse);
+            //var baseConsumerType = typeof(IBlockingConsumer<,>);
+            //var consumerType = baseConsumerType.MakeGenericType(requestType, responseType);
 
-            //HACK: I don't like this -dkk
-            dynamic consumer = _context.Resolve(consumerType);
+            ////HACK: I don't like this -dkk
+            //dynamic consumer = _context.Resolve(consumerType);
 
-            //HACK: I don't like this -dkk
-            return consumer.Consume((dynamic)consumable);
+            ////HACK: I don't like this -dkk
+            //return consumer.Consume((dynamic)consumable);
+
+            throw new NotImplementedException();
         }
     }
 }

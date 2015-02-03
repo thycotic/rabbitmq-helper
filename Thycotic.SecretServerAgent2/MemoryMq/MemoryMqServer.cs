@@ -4,8 +4,9 @@ using System.ServiceModel;
 using System.ServiceModel.Security;
 using System.Threading.Tasks;
 using Autofac;
+using Thycotic.MemoryMq;
 
-namespace Thycotic.SecretServerAgent2.MemoryQueueServer
+namespace Thycotic.SecretServerAgent2.MemoryMq
 {
     public class MemoryMqServer : IStartable
     {
@@ -33,8 +34,8 @@ namespace Thycotic.SecretServerAgent2.MemoryQueueServer
                 serviceBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
                 serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
 
-                _host = new ServiceHost(typeof(MemoryMqService));
-                _host.AddServiceEndpoint(typeof(IMemoryMqService), serviceBinding, _connectionString);
+                _host = new ServiceHost(typeof(MemoryMqClient));
+                _host.AddServiceEndpoint(typeof(IMemoryMqClient), serviceBinding, _connectionString);
                 _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new AgentVerifier();
                 _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
 

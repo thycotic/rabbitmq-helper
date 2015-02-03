@@ -2,15 +2,13 @@
 using System.ServiceModel;
 using System.Threading;
 
-namespace Thycotic.SecretServerAgent2.MemoryQueueServer
+namespace Thycotic.MemoryMq
 {
-    public class MemoryMqService : IMemoryMqService
+    public class MemoryMqClient : IMemoryMqClient
     {
         private IMemoryMqCallback _callbackChannel;
         private int _counter;
         private Timer _timer;
-
-        #region IMicrowaveService Members
 
         public void BasicPublish(string meal)
         {
@@ -35,8 +33,6 @@ namespace Thycotic.SecretServerAgent2.MemoryQueueServer
             _counter = 999;
             _timer = new Timer(BasicAck, null, 500, 500);
         }
-
-        #endregion
 
         public void BasicAck(Object stateInfo)
         {

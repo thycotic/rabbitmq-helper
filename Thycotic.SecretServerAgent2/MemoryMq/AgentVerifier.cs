@@ -1,6 +1,6 @@
 ﻿using System.IdentityModel.Selectors;
 
-namespace Thycotic.SecretServerAgent2.MemoryQueueServer
+namespace Thycotic.SecretServerAgent2.MemoryMq
 {
     internal class AgentVerifier : UserNamePasswordValidator
     {
