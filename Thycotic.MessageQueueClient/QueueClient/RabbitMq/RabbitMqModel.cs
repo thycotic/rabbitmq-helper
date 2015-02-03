@@ -8,6 +8,8 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
     internal class RabbitMqModel : ICommonModel
     {
         private readonly IModel _rawModel;
+        
+        public object RawValue { get { return _rawModel; } }
 
         public EventHandler<ModelShutdownEventArgs> ModelShutdown { get; set; }
 
@@ -115,5 +117,6 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
         {
             _rawModel.Close();
         }
+
     }
 }

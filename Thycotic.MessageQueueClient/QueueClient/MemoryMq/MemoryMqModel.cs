@@ -10,6 +10,14 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     public class MemoryMqModel : ICommonModel
     {
         /// <summary>
+        /// Gets the raw value.
+        /// </summary>
+        /// <value>
+        /// The raw value.
+        /// </value>
+        public object RawValue { get { return null; } }
+
+        /// <summary>
         /// Queues the declare.
         /// </summary>
         /// <returns></returns>
@@ -174,5 +182,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

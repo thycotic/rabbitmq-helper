@@ -10,7 +10,7 @@ using Thycotic.Messages.Common;
 namespace Thycotic.MessageQueueClient.Wrappers
 {
     /// <summary>
-    /// Simple consumer wrapper
+    /// Basic consumer wrapper
     /// </summary>
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
@@ -77,14 +77,14 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
                     _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
 
-                    Model.BasicAck(deliveryTag, multiple);
+                    CommonModel.BasicAck(deliveryTag, multiple);
 
                 }
                 catch (Exception e)
                 {
                     _log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof(TRequest))), e);
 
-                    Model.BasicNack(deliveryTag, multiple, requeue: true);
+                    CommonModel.BasicNack(deliveryTag, multiple, requeue: true);
                 }
             }
 

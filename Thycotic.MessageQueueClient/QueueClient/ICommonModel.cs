@@ -7,7 +7,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
     /// <summary>
     /// Interface for a Memory Mq model
     /// </summary>
-    public interface ICommonModel : IDisposable
+    public interface ICommonModel : IHasRawValue, IDisposable
     {
         /// <summary>
         /// Queues the declare.

@@ -101,7 +101,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             }
             finally
             {
-                Model.BasicAck(deliveryTag, false);
+                CommonModel.BasicAck(deliveryTag, false);
             }
         }
 

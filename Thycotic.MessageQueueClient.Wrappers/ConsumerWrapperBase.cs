@@ -21,14 +21,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// with, for use in acknowledging received messages, for
         /// instance.
         /// </summary>
-        public ICommonModel Model { get; private set; }
-
-//        /// <summary>
-//        /// Signaled when the consumer gets cancelled.
-//        /// </summary>
-//#pragma warning disable 0067 //disable never used warning
-//        public event ConsumerCancelledEventHandler ConsumerCancelled;
-//#pragma warning restore 0067
+        public ICommonModel CommonModel { get; private set; }
 
         private readonly ICommonConnection _connection;
 
@@ -76,7 +69,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
             model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
 
-            Model = model;
+            CommonModel = model;
       
         }
 
@@ -139,10 +132,10 @@ namespace Thycotic.MessageQueueClient.Wrappers
         {
             _terminated = true;
 
-            if (Model == null || !Model.IsOpen) return;
+            if (CommonModel == null || !CommonModel.IsOpen) return;
 
             _log.Debug("Closing channel...");
-            Model.Close();
+            CommonModel.Close();
             _log.Debug("Channel closed");
         }
     }
