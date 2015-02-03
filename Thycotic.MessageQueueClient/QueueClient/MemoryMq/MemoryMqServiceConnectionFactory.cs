@@ -19,6 +19,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
             var microwaveCallback = new MemoryMqServiceCallback();
 
             var channelFactory = new DuplexChannelFactory<IMemoryMqServiceClient>(microwaveCallback, clientBinding, Uri);
+            //TODO: Do i need to worry about that since this is ephemeral? -dkk
             //channelFactory.Closed += new EventHandler(DuplexChannelFactory_Closed);
             //channelFactory.Closing += new EventHandler(DuplexChannelFactory_Closing);
             //channelFactory.Faulted += new EventHandler(DuplexChannelFactory_Faulted);
