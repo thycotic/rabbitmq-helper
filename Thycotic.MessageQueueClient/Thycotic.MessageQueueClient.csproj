@@ -65,7 +65,7 @@
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="IRequestBus.cs" />
     <Compile Include="JsonMessageSerializer.cs" />
-    <Compile Include="QueueClient\DeliverEventArgs.cs" />
+    <Compile Include="QueueClient\CommonDeliveryEventArgs.cs" />
     <Compile Include="QueueClient\ICommonConnection.cs" />
     <Compile Include="QueueClient\IHasRawValue.cs" />
     <Compile Include="QueueClient\ICommonModel.cs" />
@@ -75,9 +75,10 @@
     <Compile Include="QueueClient\RabbitMq\RabbitMqModel.cs" />
     <Compile Include="QueueClient\RabbitMq\RabbitMqModelProperties.cs" />
     <Compile Include="QueueClient\RabbitMq\RabbitMqQueue.cs" />
+    <Compile Include="QueueClient\RabbitMq\RabbitMqSubscription.cs" />
     <Compile Include="QueueClient\RawValueExtensions.cs" />
     <Compile Include="QueueClient\RequestBus.cs" />
-    <Compile Include="QueueClient\Subscription.cs" />
+    <Compile Include="QueueClient\ISubscription.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqConnection.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqModel.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqModelProperties.cs" />

@@ -108,6 +108,11 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
             _rawModel.QueueBind(queueName, exchangeName, routingKey);
         }
 
+        public ISubscription CreateSubscription(string queueName)
+        {
+            return new RabbitMqSubscription(this, queueName);
+        }
+
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
             _rawModel.BasicConsume(queueName, noAck, new RabbitMqConsumerWrapperProxy(consumer));

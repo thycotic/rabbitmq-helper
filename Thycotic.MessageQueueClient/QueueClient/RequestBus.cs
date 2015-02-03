@@ -57,7 +57,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
             {
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
-                    using (var subscription = new Subscription(channel, channel.QueueDeclare().QueueName))
+                    using (var subscription = channel.CreateSubscription(channel.QueueDeclare().QueueName))
                     {
                         var properties = channel.CreateBasicProperties();
                         properties.CorrelationId = Guid.NewGuid().ToString();
@@ -69,7 +69,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
                         channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
 
-                        DeliverEventArgs response;
+                        CommonDeliveryEventArgs response;
                         if (!subscription.Next(timeoutSeconds * 1000, out response))
                         {
                             throw new ApplicationException("RPC call timed out");

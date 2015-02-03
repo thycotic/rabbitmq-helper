@@ -11,7 +11,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
             _rawQueue = rawQueue;
         }
 
-        public object QueueName {
+        public string QueueName {
             get { return _rawQueue.QueueName; }
         }
     }

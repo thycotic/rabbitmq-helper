@@ -11,6 +11,6 @@
         /// <value>
         /// The name of the queue.
         /// </value>
-        object QueueName { get;  }
+        string QueueName { get;  }
     }
 }

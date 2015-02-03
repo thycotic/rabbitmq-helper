@@ -108,6 +108,13 @@ namespace Thycotic.MessageQueueClient.QueueClient
         void QueueBind(string queueName, string exchangeName, string routingKey);
 
         /// <summary>
+        /// Creates the subscription to the model.
+        /// </summary>
+        /// <param name="queueName"></param>
+        /// <returns></returns>
+        ISubscription CreateSubscription(string queueName);
+
+        /// <summary>
         /// Basics the consume.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
@@ -119,5 +126,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// Closes this instance.
         /// </summary>
         void Close();
+
+        
     }
 }

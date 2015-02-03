@@ -155,6 +155,17 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         }
 
         /// <summary>
+        /// Creates the subscription to the model.
+        /// </summary>
+        /// <param name="queueName"></param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public ISubscription CreateSubscription(string queueName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Basics the consume.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
