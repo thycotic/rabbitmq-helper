@@ -1,29 +1,29 @@
 ﻿using System;
-using RabbitMQ.Client.Events;
-using RabbitMQ.Client.MessagePatterns;
 using Thycotic.Logging;
+using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
+using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.RabbitMq
+namespace Thycotic.MessageQueueClient.QueueClient
 {
     /// <summary>
     /// Rabbit Mq message bus
     /// </summary>
-    public class RabbitMqRequestBus : IRequestBus
+    public class RequestBus : IRequestBus
     {
-        private readonly IRabbitMqConnection _connection;
+        private readonly IConnection _connection;
         private readonly IMessageSerializer _messageSerializer;
         private readonly string _exchangeName;
 
-        private readonly ILogWriter _log = Log.Get(typeof(RabbitMqRequestBus));
+        private readonly ILogWriter _log = Log.Get(typeof(RequestBus));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RabbitMqRequestBus"/> class.
+        /// Initializes a new instance of the <see cref="RequestBus"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <param name="messageSerializer">The message serializer.</param>
         /// <param name="exchangeName">Name of the exchange.</param>
-        public RabbitMqRequestBus(IRabbitMqConnection connection, IMessageSerializer messageSerializer,
+        public RequestBus(IConnection connection, IMessageSerializer messageSerializer,
                                 string exchangeName = DefaultConfigValues.Exchange)
         {
             _connection = connection;
@@ -69,7 +69,7 @@ namespace Thycotic.MessageQueueClient.RabbitMq
 
                         channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
 
-                        BasicDeliverEventArgs response;
+                        DeliverEventArgs response;
                         if (!subscription.Next(timeoutSeconds * 1000, out response))
                         {
                             throw new ApplicationException("RPC call timed out");

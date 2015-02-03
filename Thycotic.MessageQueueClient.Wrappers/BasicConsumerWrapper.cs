@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
-using RabbitMQ.Client;
 using Thycotic.Logging;
+using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
@@ -24,11 +25,11 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// <summary>
         /// Initializes a new instance of the <see cref="BasicConsumerWrapper{TRequest,THandler}"/> class.
         /// </summary>
-        /// <param name="rmq">The RMQ.</param>
+        /// <param name="connection">The RMQ.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BasicConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
-            : base(rmq)
+        public BasicConsumerWrapper(IConnection connection, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+            : base(connection)
         {
             _handlerFactory = handlerFactory;
             _serializer = serializer;
@@ -49,7 +50,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
-            string routingKey, IBasicProperties properties, byte[] body)
+            string routingKey, IModelProperties properties, byte[] body)
         {
             Task.Run(() => ExecuteMessage(deliveryTag, body));
         }

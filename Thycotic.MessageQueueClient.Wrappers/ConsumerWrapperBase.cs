@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using Thycotic.Logging;
+using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers
-{
+{   
     /// <summary>
     /// Base consumer wrapper
     /// </summary>
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public abstract class ConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase, IBasicConsumer
+    public abstract class ConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase
         where TRequest : IConsumable
     {
         /// <summary>
@@ -23,14 +23,14 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </summary>
         public IModel Model { get; private set; }
 
-        /// <summary>
-        /// Signaled when the consumer gets cancelled.
-        /// </summary>
-#pragma warning disable 0067 //disable never used warning
-        public event ConsumerCancelledEventHandler ConsumerCancelled;
-#pragma warning restore 0067
+//        /// <summary>
+//        /// Signaled when the consumer gets cancelled.
+//        /// </summary>
+//#pragma warning disable 0067 //disable never used warning
+//        public event ConsumerCancelledEventHandler ConsumerCancelled;
+//#pragma warning restore 0067
 
-        private readonly IRabbitMqConnection _connection;
+        private readonly IConnection _connection;
 
         private bool _terminated;
 
@@ -40,7 +40,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest,THandler}"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        protected ConsumerWrapperBase(IRabbitMqConnection connection)
+        protected ConsumerWrapperBase(IConnection connection)
         {
             _connection = connection;
             _connection.ConnectionCreated += (sender, args) => CreateModel();
@@ -67,6 +67,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             model.ModelShutdown += RecoverConnection;
 
             model.ExchangeDeclare(DefaultConfigValues.Exchange, DefaultConfigValues.ExchangeType);
+
             model.QueueDeclare(queueName, true, false, false, null);
             model.QueueBind(queueName, DefaultConfigValues.Exchange, routingKey);
 
@@ -76,9 +77,8 @@ namespace Thycotic.MessageQueueClient.Wrappers
             model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
 
             Model = model;
+      
         }
-
-
 
         /// <summary>
         /// Starts the consuming process.
@@ -102,7 +102,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             }
         }
 
-        private void RecoverConnection(IModel model, ShutdownEventArgs reason)
+        private void RecoverConnection(object model, ModelShutdownEventArgs reason)
         {
             if (_terminated) return;
 
@@ -114,51 +114,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
                 StartConsuming();
             });
         }
-
-        #region Not implemented/needed
-        /// <summary>
-        /// Called upon successful registration of the
-        /// consumer with the broker.
-        /// </summary>
-        /// <param name="consumerTag"></param>
-        public void HandleBasicConsumeOk(string consumerTag)
-        {
-            //not needed but forced by the interface
-        }
-
-        /// <summary>
-        /// Called upon successful deregistration of the
-        /// consumer from the broker.
-        /// </summary>
-        /// <param name="consumerTag"></param>
-        public void HandleBasicCancelOk(string consumerTag)
-        {
-            //not needed but forced by the interface
-        }
-
-        /// <summary>
-        /// Called when the consumer is cancelled for reasons other than by a
-        /// basicCancel: e.g. the queue has been deleted (either by this channel or
-        /// by any other channel). See handleCancelOk for notification of consumer
-        /// cancellation due to basicCancel.
-        /// </summary>
-        /// <param name="consumerTag"></param>
-        public void HandleBasicCancel(string consumerTag)
-        {
-            //not needed but forced by the interface
-        }
-
-        /// <summary>
-        /// Called when the model shuts down.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="reason"></param>
-        public void HandleModelShutdown(IModel model, ShutdownEventArgs reason)
-        {
-            //not needed but forced by the interface
-        }
-        #endregion
-
+        
         /// <summary>
         /// Called each time a message arrives for this consumer.
         /// </summary>
@@ -174,7 +130,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </remarks>
         public abstract void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
             string routingKey,
-            IBasicProperties properties, byte[] body);
+            IModelProperties properties, byte[] body);
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

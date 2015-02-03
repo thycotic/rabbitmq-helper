@@ -1,19 +1,19 @@
 using System;
-using RabbitMQ.Client.Events;
+using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
 
-namespace Thycotic.MessageQueueClient.MemoryMq
+namespace Thycotic.MessageQueueClient.QueueClient
 {
     /// <summary>
     /// Memory Mq subscription
     /// </summary>
-    public class MemoryMqSubscription : IDisposable
+    public class Subscription : IDisposable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqSubscription"/> class.
+        /// Initializes a new instance of the <see cref="Subscription"/> class.
         /// </summary>
         /// <param name="channel">The channel.</param>
         /// <param name="queueName">Name of the queue.</param>
-        public MemoryMqSubscription(IMemoryMqModel channel, object queueName)
+        public Subscription(IModel channel, object queueName)
         {
 
         }
@@ -30,9 +30,9 @@ namespace Thycotic.MessageQueueClient.MemoryMq
         /// Nexts the specified i.
         /// </summary>
         /// <param name="timeoutMilliseconds">The timeout milliseconds.</param>
-        /// <param name="response">The <see cref="BasicDeliverEventArgs" /> instance containing the event data.</param>
+        /// <param name="response">The <see cref="DeliverEventArgs" /> instance containing the event data.</param>
         /// <returns></returns>
-        public bool Next(int timeoutMilliseconds, out BasicDeliverEventArgs response)
+        public bool Next(int timeoutMilliseconds, out DeliverEventArgs response)
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.MessageQueueClient.RabbitMq
+namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
 {
     /// <summary>
     /// Default configuration values for the system

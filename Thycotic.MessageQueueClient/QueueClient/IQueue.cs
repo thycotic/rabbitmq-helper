@@ -1,9 +1,9 @@
-﻿namespace Thycotic.MessageQueueClient.MemoryMq
+﻿namespace Thycotic.MessageQueueClient.QueueClient
 {
     /// <summary>
     /// Interface for a Memory Mq queue
     /// </summary>
-    public interface IMemoryMqQueue
+    public interface IQueue
     {
         /// <summary>
         /// Gets or sets the name of the queue.

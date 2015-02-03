@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
-using RabbitMQ.Client;
 using Thycotic.Logging;
+using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
@@ -20,7 +21,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
     {
         private readonly IMessageSerializer _serializer;
         private readonly Func<Owned<THandler>> _handlerFactory;
-        private readonly IRabbitMqConnection _rmq;
+        private readonly IConnection _rmq;
         private readonly ILogWriter _log = Log.Get(typeof (BlockingConsumerWrapper<TRequest, TResponse, THandler>));
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// <param name="rmq">The RMQ.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BlockingConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+        public BlockingConsumerWrapper(IConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
             : base(rmq)
         {
 
@@ -53,7 +54,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
          public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
-            string routingKey, IBasicProperties properties, byte[] body)
+            string routingKey, IModelProperties properties, byte[] body)
         {
             Task.Run(() => ExecuteMessage(deliveryTag, properties, body));
         }
@@ -64,7 +65,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
          /// <param name="deliveryTag">The delivery tag.</param>
          /// <param name="properties">The properties.</param>
          /// <param name="body">The body.</param>
-        public void ExecuteMessage(ulong deliveryTag, IBasicProperties properties, byte[] body)
+        public void ExecuteMessage(ulong deliveryTag, IModelProperties properties, byte[] body)
         {
             try
             {

@@ -2,7 +2,9 @@
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
-using Thycotic.MessageQueueClient.MemoryMq;
+using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
+using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.SecretServerAgent2.MemoryMq;
 using Module = Autofac.Module;
@@ -26,19 +28,19 @@ namespace Thycotic.SecretServerAgent2.IoC
 
             _log.Debug("Initializing message queue dependencies...");
 
-            var queueType = _configurationProvider(ConfigurationKeys.QueueType);
+            builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
 
+            var queueType = _configurationProvider(ConfigurationKeys.QueueType);
+            
             if (queueType == SupportedMessageQueues.RabbitMq)
             {
                 _log.Info("Using RabbitMq");
                 var connectionString = _configurationProvider(ConfigurationKeys.RabbitMq.ConnectionString);
                 _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-                builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
                 builder.Register(context => new RabbitMqConnection(connectionString))
-                    .As<IRabbitMqConnection>()
-                    .SingleInstance();
-                builder.RegisterType<RabbitMqRequestBus>().AsImplementedInterfaces().SingleInstance();
+                    .As<IConnection>().InstancePerDependency();
+
             }
             else
             {
@@ -52,8 +54,12 @@ namespace Thycotic.SecretServerAgent2.IoC
 
                 builder.Register(context => new MemoryMqServer(connectionString, thumbprint)).As<IStartable>().SingleInstance();
 
-                builder.RegisterType<MemoryMqRequestBus>().AsImplementedInterfaces().SingleInstance();
+                builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
+                builder.Register(context => new MemoryMqConnection(connectionString))
+                    .As<IConnection>().InstancePerDependency();
             }
+
+            builder.RegisterType<RequestBus>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }
