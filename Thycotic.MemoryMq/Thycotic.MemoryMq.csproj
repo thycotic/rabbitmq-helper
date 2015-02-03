@@ -39,6 +39,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,16 +54,24 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Collections\ConcurrentHashSet.cs" />
     <Compile Include="IMemoryMqServiceCallback.cs" />
     <Compile Include="IMemoryMqServiceClient.cs" />
     <Compile Include="MemoryMqServiceCallback.cs" />
     <Compile Include="MemoryMqServiceClient.cs" />
+    <Compile Include="MemoryQueueDeliveryEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Thycotic.Logging\Thycotic.Logging.csproj">
+      <Project>{fe8be3ea-3f69-488e-8ac8-cfe47525d93f}</Project>
+      <Name>Thycotic.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

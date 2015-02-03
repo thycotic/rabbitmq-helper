@@ -1,28 +1,38 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Threading;
+using Thycotic.Logging;
+using Thycotic.MemoryMq.Collections;
 
 namespace Thycotic.MemoryMq
 {
     public class MemoryMqServiceClient : IMemoryMqServiceClient
     {
-        private ConcurrentDictionary<string, ConcurrentQueue<byte[]>> _messages = new ConcurrentDictionary<string, ConcurrentQueue<byte[]>>();
-        
-        private IMemoryMqServiceCallback _callbackChannel;
-        private int _counter;
-        private Timer _timer;
+        private readonly ConcurrentHashSet<IContextChannel> _consumers = new ConcurrentHashSet<IContextChannel>();
+        private readonly ConcurrentDictionary<string, string> _bindings = new ConcurrentDictionary<string, string>();
+        private readonly ConcurrentDictionary<string, ConcurrentQueue<byte[]>> _messages = new ConcurrentDictionary<string, ConcurrentQueue<byte[]>>();
+
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServiceClient));
+
+        public void AttachConsumer()
+        {
+            _log.Debug("Attaching consumer");
+
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var callbackChannel = (IContextChannel)OperationContext.Current.GetCallbackChannel<IMemoryMqServiceCallback>();
+
+            //have the consumer remove itself when it disconnects
+            callbackChannel.Closed += (sender, args) =>
+            {
+                _log.Debug("Detaching consumer");
+                _consumers.Remove(callbackChannel);
+            };
+            _consumers.Add(callbackChannel);
+        }
 
         private static string GetFullRoutingSlip(string exchange, string routingKey)
         {
             return string.Format("{0}:{1}", exchange, routingKey);
-        }
-
-        public void ConfirmSelect()
-        {
-            
         }
 
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, byte[] body)
@@ -33,29 +43,44 @@ namespace Thycotic.MemoryMq
             _messages[fullRoutingSlip].Enqueue(body);
         }
 
-        public void WaitForConfirmsOrDie(TimeSpan confirmationTimeout)
+        public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
-            
+            _bindings.TryAdd(queueName, GetFullRoutingSlip(exchangeName, routingKey));
         }
 
-        public void ExchangeDeclare(string exchangeName, string exchangeType)
+        public MemoryQueueDeliveryEventArgs BasicConsume(string queueName)
         {
-            
-        }
+            var fullRoutingSplip = _bindings[queueName];
 
-        public void QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete)
-        {
-            
+            ConcurrentQueue<byte[]> queue;
+            if (!_messages.TryGetValue(fullRoutingSplip, out queue))
+            {
+                return null;
+            }
+
+            byte[] body;
+            if (queue.TryDequeue(out body))
+            {
+                string consumerTag = string.Empty;
+                ulong deliveryTag = 1;
+                bool redelivered = false;
+                string exchange = string.Empty;
+                string routingKey = string.Empty;
+                return new MemoryQueueDeliveryEventArgs(consumerTag, deliveryTag, redelivered, exchange, routingKey, body);
+            }
+
+            return null;
+
         }
 
         public void BasicNack(ulong deliveryTag, bool multiple)
         {
-            
+
         }
 
         public void BasicAck(ulong deliveryTag, bool multiple)
         {
-            
+
         }
 
         //public void BasicPublish(string meal)
@@ -96,9 +121,5 @@ namespace Thycotic.MemoryMq
         //        _counter--;
         //    }
         //}
-    }
-
-    internal class MemoryMqHash
-    {
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Thycotic.MemoryMq;
 using Thycotic.MessageQueueClient.Wrappers;
 
@@ -10,6 +11,8 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqModel : ICommonModel
     {
+        private CancellationTokenSource _cts = new CancellationTokenSource();
+
         private readonly IMemoryMqServiceClient _serviceClient;
 
         /// <summary>
@@ -165,7 +168,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
-            
+            _serviceClient.QueueBind(queueName, exchangeName, routingKey);
         }
 
         /// <summary>
@@ -188,7 +191,21 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            throw new NotImplementedException();
+            _serviceClient.AttachConsumer();
+            
+            do
+            {
+                var deliveryArgs = _serviceClient.BasicConsume(queueName);
+
+                if (deliveryArgs != null)
+                {
+                    consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag, deliveryArgs.Redelivered, deliveryArgs.Exchange,
+                        deliveryArgs.RoutingKey, new MemoryMqModelProperties(), deliveryArgs.Body);
+                }
+
+
+            } while (!_cts.IsCancellationRequested);
+            
         }
 
         /// <summary>
@@ -197,7 +214,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void Close()
         {
-            throw new NotImplementedException();
+            _cts.Cancel();
         }
 
         /// <summary>
@@ -205,7 +222,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// </summary>
         public void Dispose()
         {
-            //TODO: Implement
+            Close();
         }
     }
 }
