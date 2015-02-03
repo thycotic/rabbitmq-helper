@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Thycotic.MemoryMq;
 using Thycotic.MessageQueueClient.Wrappers;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
@@ -9,6 +10,17 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqModel : ICommonModel
     {
+        private readonly IMemoryMqServiceClient _serviceClient;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryMqModel"/> class.
+        /// </summary>
+        /// <param name="serviceClient">The create channel.</param>
+        public MemoryMqModel(IMemoryMqServiceClient serviceClient)
+        {
+            _serviceClient = serviceClient;
+        }
+
         /// <summary>
         /// Gets the raw value.
         /// </summary>
@@ -17,22 +29,14 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// </value>
         public object RawValue { get { return null; } }
 
-        /// <summary>
-        /// Queues the declare.
-        /// </summary>
-        /// <returns></returns>
-        public ICommonQueue QueueDeclare()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         /// <summary>
         /// Creates the basic properties.
         /// </summary>
         /// <returns></returns>
         public ICommonModelProperties CreateBasicProperties()
         {
-            throw new NotImplementedException();
+            return new MemoryMqModelProperties();
         }
 
         /// <summary>
@@ -40,7 +44,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// </summary>
         public void ConfirmSelect()
         {
-            throw new NotImplementedException();
+            //nothing here
         }
 
         /// <summary>
@@ -50,7 +54,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <param name="exchangeType">Type of the exchange.</param>
         public void ExchangeDeclare(string exchangeName, string exchangeType)
         {
-            throw new NotImplementedException();
+            //nothing here
         }
 
         /// <summary>
@@ -65,7 +69,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate,
             ICommonModelProperties properties, byte[] body)
         {
-            throw new NotImplementedException();
+            _serviceClient.BasicPublish(exchangeName, routingKey, mandatory, immediate, body);
         }
 
         /// <summary>
@@ -74,7 +78,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <param name="confirmationTimeout">The confirmation timeout.</param>
         public void WaitForConfirmsOrDie(TimeSpan confirmationTimeout)
         {
-            throw new NotImplementedException();
+            //nothing here
         }
 
         /// <summary>
@@ -86,7 +90,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicQos(uint prefetchSize, ushort prefetchCount, bool global)
         {
-            throw new NotImplementedException();
+            //nothing here
         }
 
         /// <summary>
@@ -113,7 +117,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicAck(ulong deliveryTag, bool multiple)
         {
-            throw new NotImplementedException();
+            _serviceClient.BasicAck(deliveryTag, multiple);
         }
 
         /// <summary>
@@ -125,7 +129,17 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicNack(ulong deliveryTag, bool multiple, bool requeue)
         {
-            throw new NotImplementedException();
+            _serviceClient.BasicNack(deliveryTag, multiple);
+        }
+
+        /// <summary>
+        /// Queues the declare.
+        /// </summary>
+        /// <returns></returns>
+        public ICommonQueue QueueDeclare()
+        {
+            var queueName = Guid.NewGuid().ToString();
+            return new MemoryMqQueue(_serviceClient, queueName);
         }
 
         /// <summary>
@@ -137,9 +151,9 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <param name="autoDelete">if set to <c>true</c> [automatic delete].</param>
         /// <param name="arguments">The arguments.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
+        public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
-            throw new NotImplementedException();
+            return new MemoryMqQueue(_serviceClient, queueName);
         }
 
         /// <summary>
@@ -151,7 +165,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>
@@ -162,7 +176,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public ISubscription CreateSubscription(string queueName)
         {
-            throw new NotImplementedException();
+            return new MemoryMqSubscription();
         }
 
         /// <summary>
@@ -191,9 +205,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// </summary>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //TODO: Implement
         }
-
-
     }
 }

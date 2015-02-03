@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,7 +72,10 @@
     <Compile Include="QueueClient\ICommonModel.cs" />
     <Compile Include="QueueClient\ICommonModelProperties.cs" />
     <Compile Include="QueueClient\MemoryMq\IMemoryMqServiceConnection.cs" />
+    <Compile Include="QueueClient\MemoryMq\MemoryMqQueue.cs" />
+    <Compile Include="QueueClient\MemoryMq\MemoryMqServiceConnection.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqServiceConnectionFactory.cs" />
+    <Compile Include="QueueClient\MemoryMq\MemoryMqSubscription.cs" />
     <Compile Include="QueueClient\ModelShutdownEventArgs.cs" />
     <Compile Include="QueueClient\ICommonQueue.cs" />
     <Compile Include="QueueClient\RabbitMq\RabbitMqModel.cs" />

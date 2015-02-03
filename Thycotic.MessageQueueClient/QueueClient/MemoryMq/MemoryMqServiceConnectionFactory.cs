@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ServiceModel;
+using Thycotic.MemoryMq;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 {
@@ -10,7 +12,25 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 
         public IMemoryMqServiceConnection CreateConnection()
         {
-            throw new NotImplementedException();
+            var clientBinding = new NetTcpBinding(SecurityMode.TransportWithMessageCredential);
+            clientBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+            clientBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
+
+            var microwaveCallback = new MemoryMqServiceCallback();
+
+            var channelFactory = new DuplexChannelFactory<IMemoryMqServiceClient>(microwaveCallback, clientBinding, Uri);
+
+            var credentials = channelFactory.Credentials;
+
+            if (credentials == null)
+            {
+                throw new ApplicationException("No credentials object");
+            }
+
+            credentials.UserName.UserName = Guid.NewGuid().ToString();
+            credentials.UserName.Password = string.Empty;
+
+            return new MemoryMqServiceConnection(channelFactory.CreateChannel());
         }
     }
 }

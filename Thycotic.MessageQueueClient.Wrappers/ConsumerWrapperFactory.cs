@@ -31,7 +31,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         public void Start()
         {
             StartActionConsumers(typeof (IBasicConsumer<>), typeof(BasicConsumerWrapper<,>));
-            StartFunctionConsumers(typeof(IBlockingConsumer<,>), typeof(BlockingConsumerWrapper<,,>));
+            //StartFunctionConsumers(typeof(IBlockingConsumer<,>), typeof(BlockingConsumerWrapper<,,>));
         }
 
         private void StartActionConsumers(Type baseConsumertype, Type wrapperType)

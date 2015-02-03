@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 
 namespace Thycotic.MemoryMq
 {
@@ -6,9 +7,15 @@ namespace Thycotic.MemoryMq
     public interface IMemoryMqServiceClient
     {
         [OperationContract(IsOneWay = true)]
-        void BasicPublish(string meal);
+        void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, byte[] body);
 
         [OperationContract(IsOneWay = true)]
-        void BlockingPublish(string meal);
+        void BasicNack(ulong deliveryTag, bool multiple);
+
+        [OperationContract(IsOneWay = true)]
+        void BasicAck(ulong deliveryTag, bool multiple);
+
+
+
     }
 }

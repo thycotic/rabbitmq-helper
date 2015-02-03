@@ -9,11 +9,6 @@ namespace Thycotic.MessageQueueClient.QueueClient
     /// </summary>
     public interface ICommonModel : IHasRawValue, IDisposable
     {
-        /// <summary>
-        /// Queues the declare.
-        /// </summary>
-        /// <returns></returns>
-        ICommonQueue QueueDeclare();
 
         /// <summary>
         /// Creates the basic properties.
@@ -22,7 +17,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         ICommonModelProperties CreateBasicProperties();
 
         /// <summary>
-        /// Confirms the select.
+        /// Enable publisher acknowledgements.
         /// </summary>
         void ConfirmSelect();
 
@@ -45,7 +40,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, ICommonModelProperties properties, byte[] body);
 
         /// <summary>
-        /// Waits for confirms or die.
+        /// Wait until all published messages have been confirmed.
         /// </summary>
         /// <param name="confirmationTimeout">The confirmation timeout.</param>
         void WaitForConfirmsOrDie(TimeSpan confirmationTimeout);
@@ -92,12 +87,18 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// <summary>
         /// Queues the declare.
         /// </summary>
+        /// <returns></returns>
+        ICommonQueue QueueDeclare();
+
+        /// <summary>
+        /// Queues the declare.
+        /// </summary>
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="durable">if set to <c>true</c> durable.</param>
         /// <param name="exclusive">if set to <c>true</c> exclusive.</param>
         /// <param name="autoDelete">if set to <c>true</c> auto delete.</param>
         /// <param name="arguments">The arguments.</param>
-        void QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments);
+        ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments);
 
         /// <summary>
         /// Queues the bind.
