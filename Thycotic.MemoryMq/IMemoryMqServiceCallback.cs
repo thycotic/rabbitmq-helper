@@ -3,7 +3,7 @@
 namespace Thycotic.MemoryMq
 {
     [ServiceContract(Namespace = "http://www.thycotic.com/services")]
-    public interface IMemoryMqCallback
+    public interface IMemoryMqServiceCallback
     {
         [OperationContract(IsOneWay = true)]
         void UpdateStatus(string statusMessage);

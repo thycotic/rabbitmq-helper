@@ -4,16 +4,16 @@ using System.Threading;
 
 namespace Thycotic.MemoryMq
 {
-    public class MemoryMqClient : IMemoryMqClient
+    public class MemoryMqServiceClient : IMemoryMqServiceClient
     {
-        private IMemoryMqCallback _callbackChannel;
+        private IMemoryMqServiceCallback _callbackChannel;
         private int _counter;
         private Timer _timer;
 
         public void BasicPublish(string meal)
         {
             _callbackChannel = OperationContext.Current
-                .GetCallbackChannel<IMemoryMqCallback>();
+                .GetCallbackChannel<IMemoryMqServiceCallback>();
 
             Console.WriteLine("Microwave Service");
             Console.WriteLine("Let's prepare us some {0}", meal);
@@ -25,7 +25,7 @@ namespace Thycotic.MemoryMq
         public void BlockingPublish(string meal)
         {
             _callbackChannel = OperationContext.Current
-                .GetCallbackChannel<IMemoryMqCallback>();
+                .GetCallbackChannel<IMemoryMqServiceCallback>();
 
             Console.WriteLine("Microwave Service");
             Console.WriteLine("Let's prepare us some {0}", meal);

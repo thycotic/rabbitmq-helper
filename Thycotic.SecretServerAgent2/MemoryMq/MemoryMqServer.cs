@@ -34,8 +34,8 @@ namespace Thycotic.SecretServerAgent2.MemoryMq
                 serviceBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
                 serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
 
-                _host = new ServiceHost(typeof(MemoryMqClient));
-                _host.AddServiceEndpoint(typeof(IMemoryMqClient), serviceBinding, _connectionString);
+                _host = new ServiceHost(typeof(MemoryMqServiceClient));
+                _host.AddServiceEndpoint(typeof(IMemoryMqServiceClient), serviceBinding, _connectionString);
                 _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new AgentVerifier();
                 _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
 

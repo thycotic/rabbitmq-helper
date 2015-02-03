@@ -53,10 +53,10 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
-    <Compile Include="IMemoryMqCallback.cs" />
-    <Compile Include="IMemoryMqClient.cs" />
-    <Compile Include="MemoryMqCallback.cs" />
-    <Compile Include="MemoryMqClient.cs" />
+    <Compile Include="IMemoryMqServiceCallback.cs" />
+    <Compile Include="IMemoryMqServiceClient.cs" />
+    <Compile Include="MemoryMqServiceCallback.cs" />
+    <Compile Include="MemoryMqServiceClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

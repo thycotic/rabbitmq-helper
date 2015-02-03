@@ -2,7 +2,7 @@
 
 namespace Thycotic.MemoryMq
 {
-    public class MemoryMqCallback : IMemoryMqCallback
+    public class MemoryMqServiceCallback : IMemoryMqServiceCallback
     {
         public void UpdateStatus(string statusMessage)
         {
