@@ -13,21 +13,21 @@ namespace Thycotic.MessageQueueClient.Wrappers.RabbitMq
     /// </summary>
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public class BasicConsumerWrapper<TRequest, THandler> : ConsumerWrapperBase<TRequest, THandler>
+    public class BasicRabbitMqConsumerWrapper<TRequest, THandler> : RabbitMqConsumerWrapperBase<TRequest, THandler>
         where TRequest : IConsumable
         where THandler : IBasicConsumer<TRequest>
     {
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IMessageSerializer _serializer;
-        private readonly ILogWriter _log = Log.Get(typeof(BasicConsumerWrapper<TRequest, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof(BasicRabbitMqConsumerWrapper<TRequest, THandler>));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BasicConsumerWrapper{TRequest,THandler}"/> class.
+        /// Initializes a new instance of the <see cref="BasicRabbitMqConsumerWrapper{TRequest,THandler}"/> class.
         /// </summary>
         /// <param name="rmq">The RMQ.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BasicConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+        public BasicRabbitMqConsumerWrapper(IRabbitMqConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
             : base(rmq)
         {
             _handlerFactory = handlerFactory;

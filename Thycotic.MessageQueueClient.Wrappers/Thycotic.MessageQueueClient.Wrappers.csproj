@@ -68,9 +68,9 @@
     <Compile Include="ConsumerWrapperFactory.cs" />
     <Compile Include="IConsumerWrapperBase.cs" />
     <Compile Include="IoC\WrappersModule.cs" />
-    <Compile Include="RabbitMq\BasicConsumerWrapper.cs" />
-    <Compile Include="RabbitMq\BlockingConsumerWrapper.cs" />
-    <Compile Include="RabbitMq\ConsumerWrapperBase.cs" />
+    <Compile Include="RabbitMq\BasicRabbitMqConsumerWrapper.cs" />
+    <Compile Include="RabbitMq\BlockingRabbitMqConsumerWrapper.cs" />
+    <Compile Include="RabbitMq\RabbitMqConsumerWrapperBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -44,8 +44,8 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
             if (queueType == SupportedMessageQueues.RabbitMq)
             {
                 _log.Info("Using RabbitMq wrappers");
-                builder.RegisterGeneric(typeof (BasicConsumerWrapper<,>)).InstancePerDependency();
-                builder.RegisterGeneric(typeof (BlockingConsumerWrapper<,,>)).InstancePerDependency();
+                builder.RegisterGeneric(typeof (BasicRabbitMqConsumerWrapper<,>)).InstancePerDependency();
+                builder.RegisterGeneric(typeof (BlockingRabbitMqConsumerWrapper<,,>)).InstancePerDependency();
 
                 builder.RegisterType<ConsumerWrapperFactory>().As<IStartable>().SingleInstance();
             }
