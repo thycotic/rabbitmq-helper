@@ -11,7 +11,7 @@
         /// <value>
         /// The basic properties.
         /// </value>
-        public IModelProperties BasicProperties { get; set; }
+        public ICommonModelProperties BasicProperties { get; set; }
         /// <summary>
         /// Gets or sets the body.
         /// </summary>

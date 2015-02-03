@@ -10,7 +10,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
     /// <summary>
     /// Rabbit Mq Connection
     /// </summary>
-    public class RabbitMqConnection : IConnection
+    public class RabbitMqConnection : ICommonConnection
     {
         /// <summary>
         /// Gets or sets the connection created.
@@ -21,7 +21,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
         public EventHandler ConnectionCreated { get; set; }
 
         private readonly ConnectionFactory _connectionFactory;
-        private Lazy<RabbitMQ.Client.IConnection> _connection;
+        private Lazy<IConnection> _connection;
         private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConnection));
@@ -40,7 +40,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
         {
             CloseCurrentConnection();
 
-            _connection = new Lazy<RabbitMQ.Client.IConnection>(() =>
+            _connection = new Lazy<IConnection>(() =>
             {
                 _log.Debug("Opening connection...");
                 try
@@ -75,7 +75,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
             });
         }
 
-        private void RecoverConnection(RabbitMQ.Client.IConnection connection, ShutdownEventArgs reason)
+        private void RecoverConnection(IConnection connection, ShutdownEventArgs reason)
         {
             //if this was actually requested, don't recover the connection and let it die
             if (_terminated) return;
@@ -102,7 +102,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
         /// <param name="retryDelayGrowthFactor">The retry delay growth factor.</param>
         /// <returns></returns>
         /// <exception cref="System.ApplicationException">Channel should have opened</exception>
-        public IModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor)
+        public ICommonModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor)
         {
             var remainingRetryAttempts = retryAttempts;
             float retryDelay = retryDelayMs;
@@ -111,7 +111,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
             {
                 try
                 {
-                    return null;// _connection.Value.CreateModel();
+                    return Map(_connection.Value.CreateModel());
                 }
                 catch (OperationInterruptedException ex)
                 {
@@ -134,6 +134,11 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
             } while (remainingRetryAttempts > 0);
 
             throw new ApplicationException("Channel should have opened");
+        }
+
+        private ICommonModel Map(RabbitMQ.Client.IModel createModel)
+        {
+            return new RabbitMqModel(createModel);
         }
 
         private void CloseCurrentConnection()
@@ -159,20 +164,5 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
 
             CloseCurrentConnection();
         }
-
-        /// <summary>
-        /// Opens the channel.
-        /// </summary>
-        /// <param name="retryAttempts">The retry attempts.</param>
-        /// <param name="retryDelayMs">The retry delay ms.</param>
-        /// <param name="retryDelayGrowthFactor">The retry delay growth factor.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public IModel OpenChannel(int retryAttempts, int retryDelayMs, int retryDelayGrowthFactor)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Interface for a Memory Mq queue
     /// </summary>
-    public interface IQueue
+    public interface ICommonQueue
     {
         /// <summary>
         /// Gets or sets the name of the queue.
@@ -11,6 +11,6 @@
         /// <value>
         /// The name of the queue.
         /// </value>
-        object QueueName { get; set; }
+        object QueueName { get;  }
     }
 }

@@ -39,7 +39,7 @@ namespace Thycotic.SecretServerAgent2.IoC
                 _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
                 builder.Register(context => new RabbitMqConnection(connectionString))
-                    .As<IConnection>().InstancePerDependency();
+                    .As<ICommonConnection>().InstancePerDependency();
 
             }
             else
@@ -56,7 +56,7 @@ namespace Thycotic.SecretServerAgent2.IoC
 
                 builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
                 builder.Register(context => new MemoryMqConnection(connectionString))
-                    .As<IConnection>().InstancePerDependency();
+                    .As<ICommonConnection>().InstancePerDependency();
             }
 
             builder.RegisterType<RequestBus>().AsImplementedInterfaces().SingleInstance();

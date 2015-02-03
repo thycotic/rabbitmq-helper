@@ -5,7 +5,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
     /// <summary>
     /// Interface for a Memory Mq connection
     /// </summary>
-    public interface IConnection : IDisposable
+    public interface ICommonConnection : IDisposable
     {
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// <param name="retryDelayMs">The retry delay ms.</param>
         /// <param name="retryDelayGrowthFactor">The retry delay growth factor.</param>
         /// <returns></returns>
-        IModel OpenChannel(int retryAttempts, int retryDelayMs, int retryDelayGrowthFactor);
+        ICommonModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor);
 
         /// <summary>
         /// Gets or sets the connection created.

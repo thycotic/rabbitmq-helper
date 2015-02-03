@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Thycotic.MessageQueueClient.Wrappers;
 
 namespace Thycotic.MessageQueueClient.QueueClient
@@ -6,19 +7,19 @@ namespace Thycotic.MessageQueueClient.QueueClient
     /// <summary>
     /// Interface for a Memory Mq model
     /// </summary>
-    public interface IModel : IDisposable
+    public interface ICommonModel : IDisposable
     {
         /// <summary>
         /// Queues the declare.
         /// </summary>
         /// <returns></returns>
-        IQueue QueueDeclare();
+        ICommonQueue QueueDeclare();
 
         /// <summary>
         /// Creates the basic properties.
         /// </summary>
         /// <returns></returns>
-        IModelProperties CreateBasicProperties();
+        ICommonModelProperties CreateBasicProperties();
 
         /// <summary>
         /// Confirms the select.
@@ -38,10 +39,10 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// <param name="exchangeName">Name of the exchange.</param>
         /// <param name="routingKey">The routing key.</param>
         /// <param name="mandatory">if set to <c>true</c> [mandatory].</param>
-        /// <param name="doNotDeliverImmediatelyOrRequireAListener">if set to <c>true</c> [do not deliver immediately or require a listener].</param>
+        /// <param name="immediate">if set to <c>true</c> [do not deliver immediately or require a listener].</param>
         /// <param name="properties">The properties.</param>
         /// <param name="body">The body.</param>
-        void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool doNotDeliverImmediatelyOrRequireAListener, IModelProperties properties, byte[] body);
+        void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, ICommonModelProperties properties, byte[] body);
 
         /// <summary>
         /// Waits for confirms or die.
@@ -55,7 +56,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// <param name="prefetchSize">Size of the prefetch.</param>
         /// <param name="prefetchCount">The prefetch count.</param>
         /// <param name="global">if set to <c>true</c> global.</param>
-        void BasicQos(int prefetchSize, int prefetchCount, bool global);
+        void BasicQos(uint prefetchSize, ushort prefetchCount, bool global);
 
         /// <summary>
         /// Gets or sets the model shutdown.
@@ -66,12 +67,12 @@ namespace Thycotic.MessageQueueClient.QueueClient
         EventHandler<ModelShutdownEventArgs> ModelShutdown { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is open.
+        /// Gets a value indicating whether this instance is open.
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is open; otherwise, <c>false</c>.
         /// </value>
-        bool IsOpen { get; set; }
+        bool IsOpen { get; }
 
         /// <summary>
         /// Basics the ack.
@@ -92,19 +93,19 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// Queues the declare.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
-        /// <param name="b">if set to <c>true</c> [b].</param>
-        /// <param name="b1">if set to <c>true</c> [b1].</param>
-        /// <param name="b2">if set to <c>true</c> [b2].</param>
-        /// <param name="o">The o.</param>
-        void QueueDeclare(string queueName, bool b, bool b1, bool b2, object o);
+        /// <param name="durable">if set to <c>true</c> durable.</param>
+        /// <param name="exclusive">if set to <c>true</c> exclusive.</param>
+        /// <param name="autoDelete">if set to <c>true</c> auto delete.</param>
+        /// <param name="arguments">The arguments.</param>
+        void QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments);
 
         /// <summary>
         /// Queues the bind.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
-        /// <param name="exchange">The exchange.</param>
+        /// <param name="exchangeName">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
-        void QueueBind(string queueName, string exchange, string routingKey);
+        void QueueBind(string queueName, string exchangeName, string routingKey);
 
         /// <summary>
         /// Basics the consume.

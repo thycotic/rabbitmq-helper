@@ -28,7 +28,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// <param name="connection">The RMQ.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BasicConsumerWrapper(IConnection connection, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+        public BasicConsumerWrapper(ICommonConnection connection, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
             : base(connection)
         {
             _handlerFactory = handlerFactory;
@@ -50,7 +50,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
-            string routingKey, IModelProperties properties, byte[] body)
+            string routingKey, ICommonModelProperties properties, byte[] body)
         {
             Task.Run(() => ExecuteMessage(deliveryTag, body));
         }

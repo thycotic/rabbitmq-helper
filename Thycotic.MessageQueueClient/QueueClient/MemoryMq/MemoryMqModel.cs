@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Thycotic.MessageQueueClient.Wrappers;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
@@ -6,13 +7,13 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     /// <summary>
     /// Memory Mq model
     /// </summary>
-    public class MemoryMqModel : IModel
+    public class MemoryMqModel : ICommonModel
     {
         /// <summary>
         /// Queues the declare.
         /// </summary>
         /// <returns></returns>
-        public IQueue QueueDeclare()
+        public ICommonQueue QueueDeclare()
         {
             throw new NotImplementedException();
         }
@@ -21,7 +22,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// Creates the basic properties.
         /// </summary>
         /// <returns></returns>
-        public IModelProperties CreateBasicProperties()
+        public ICommonModelProperties CreateBasicProperties()
         {
             throw new NotImplementedException();
         }
@@ -50,11 +51,11 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <param name="exchangeName">Name of the exchange.</param>
         /// <param name="routingKey">The routing key.</param>
         /// <param name="mandatory">if set to <c>true</c> [mandatory].</param>
-        /// <param name="doNotDeliverImmediatelyOrRequireAListener">if set to <c>true</c> [do not deliver immediately or require a listener].</param>
+        /// <param name="immediate">if set to <c>true</c> [do not deliver immediately or require a listener].</param>
         /// <param name="properties">The properties.</param>
         /// <param name="body">The body.</param>
-        public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool doNotDeliverImmediatelyOrRequireAListener,
-            IModelProperties properties, byte[] body)
+        public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate,
+            ICommonModelProperties properties, byte[] body)
         {
             throw new NotImplementedException();
         }
@@ -75,7 +76,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <param name="prefetchCount">The prefetch count.</param>
         /// <param name="global">if set to <c>true</c> global.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void BasicQos(int prefetchSize, int prefetchCount, bool global)
+        public void BasicQos(uint prefetchSize, ushort prefetchCount, bool global)
         {
             throw new NotImplementedException();
         }
@@ -123,12 +124,12 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// Queues the declare.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
-        /// <param name="b">if set to <c>true</c> [b].</param>
-        /// <param name="b1">if set to <c>true</c> [b1].</param>
-        /// <param name="b2">if set to <c>true</c> [b2].</param>
-        /// <param name="o">The o.</param>
+        /// <param name="durable">if set to <c>true</c> [durable].</param>
+        /// <param name="exclusive">if set to <c>true</c> [exclusive].</param>
+        /// <param name="autoDelete">if set to <c>true</c> [automatic delete].</param>
+        /// <param name="arguments">The arguments.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void QueueDeclare(string queueName, bool b, bool b1, bool b2, object o)
+        public void QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
             throw new NotImplementedException();
         }
@@ -137,10 +138,10 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// Queues the bind.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
-        /// <param name="exchange">The exchange.</param>
+        /// <param name="exchangeName">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void QueueBind(string queueName, string exchange, string routingKey)
+        public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
             throw new NotImplementedException();
         }

@@ -11,7 +11,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
     /// </summary>
     public class RequestBus : IRequestBus
     {
-        private readonly IConnection _connection;
+        private readonly ICommonConnection _connection;
         private readonly IMessageSerializer _messageSerializer;
         private readonly string _exchangeName;
 
@@ -23,7 +23,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// <param name="connection">The connection.</param>
         /// <param name="messageSerializer">The message serializer.</param>
         /// <param name="exchangeName">Name of the exchange.</param>
-        public RequestBus(IConnection connection, IMessageSerializer messageSerializer,
+        public RequestBus(ICommonConnection connection, IMessageSerializer messageSerializer,
                                 string exchangeName = DefaultConfigValues.Exchange)
         {
             _connection = connection;

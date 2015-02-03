@@ -28,7 +28,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
 
                 var cli = new CommandLineInterface();
 
-                //ConfigureCli(cli, agent.IoCContainer);
+                ConfigureCli(cli, agent.IoCContainer);
 
                 cli.BeginInputLoop(string.Join(" ", args.Skip(1)));
 

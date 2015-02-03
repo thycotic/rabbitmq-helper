@@ -21,7 +21,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
     {
         private readonly IMessageSerializer _serializer;
         private readonly Func<Owned<THandler>> _handlerFactory;
-        private readonly IConnection _rmq;
+        private readonly ICommonConnection _rmq;
         private readonly ILogWriter _log = Log.Get(typeof (BlockingConsumerWrapper<TRequest, TResponse, THandler>));
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// <param name="rmq">The RMQ.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BlockingConsumerWrapper(IConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+        public BlockingConsumerWrapper(ICommonConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
             : base(rmq)
         {
 
@@ -54,7 +54,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
          public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
-            string routingKey, IModelProperties properties, byte[] body)
+            string routingKey, ICommonModelProperties properties, byte[] body)
         {
             Task.Run(() => ExecuteMessage(deliveryTag, properties, body));
         }
@@ -65,7 +65,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
          /// <param name="deliveryTag">The delivery tag.</param>
          /// <param name="properties">The properties.</param>
          /// <param name="body">The body.</param>
-        public void ExecuteMessage(ulong deliveryTag, IModelProperties properties, byte[] body)
+        public void ExecuteMessage(ulong deliveryTag, ICommonModelProperties properties, byte[] body)
         {
             try
             {

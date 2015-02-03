@@ -13,7 +13,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// </summary>
         /// <param name="channel">The channel.</param>
         /// <param name="queueName">Name of the queue.</param>
-        public Subscription(IModel channel, object queueName)
+        public Subscription(ICommonModel channel, object queueName)
         {
 
         }

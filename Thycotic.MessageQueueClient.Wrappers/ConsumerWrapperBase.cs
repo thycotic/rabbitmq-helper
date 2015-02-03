@@ -21,7 +21,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// with, for use in acknowledging received messages, for
         /// instance.
         /// </summary>
-        public IModel Model { get; private set; }
+        public ICommonModel Model { get; private set; }
 
 //        /// <summary>
 //        /// Signaled when the consumer gets cancelled.
@@ -30,7 +30,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
 //        public event ConsumerCancelledEventHandler ConsumerCancelled;
 //#pragma warning restore 0067
 
-        private readonly IConnection _connection;
+        private readonly ICommonConnection _connection;
 
         private bool _terminated;
 
@@ -40,7 +40,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest,THandler}"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        protected ConsumerWrapperBase(IConnection connection)
+        protected ConsumerWrapperBase(ICommonConnection connection)
         {
             _connection = connection;
             _connection.ConnectionCreated += (sender, args) => CreateModel();
@@ -130,7 +130,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </remarks>
         public abstract void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
             string routingKey,
-            IModelProperties properties, byte[] body);
+            ICommonModelProperties properties, byte[] body);
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Thycotic.MessageQueueClient.QueueClient
+﻿namespace Thycotic.MessageQueueClient.QueueClient
 {
     /// <summary>
     /// Inte3rface for model properties
     /// </summary>
-    public interface IModelProperties
+    public interface ICommonModelProperties : IHasRawValue
     {
         /// <summary>
         /// Gets if there is a ReplyTo in the properties

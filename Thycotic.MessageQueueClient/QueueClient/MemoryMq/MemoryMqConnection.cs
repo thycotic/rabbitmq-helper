@@ -1,11 +1,12 @@
 ﻿using System;
+using Thycotic.MessageQueueClient.Wrappers;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 {
     /// <summary>
     /// Memory Mq connection
     /// </summary>
-    public class MemoryMqConnection : IConnection
+    public class MemoryMqConnection : ICommonConnection
     {
         /// <summary>
         /// Gets or sets the connection created.
@@ -42,7 +43,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <param name="retryDelayMs">The retry delay ms.</param>
         /// <param name="retryDelayGrowthFactor">The retry delay growth factor.</param>
         /// <returns></returns>
-        public IModel OpenChannel(int retryAttempts, int retryDelayMs, int retryDelayGrowthFactor)
+        public ICommonModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor)
         {
             return new MemoryMqModel();
         }
