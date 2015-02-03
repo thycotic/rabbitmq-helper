@@ -3,12 +3,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.MemoryMq
+namespace Thycotic.MessageQueueClient.Tests
 {
     /// <summary>
     /// Memory message queue that is volatile and non-persistent
     /// </summary>
-    public class MemoryMqRequestBus : IRequestBus, IDisposable
+    public class TestMqRequestBus : IRequestBus, IDisposable
     {
         private readonly IConsumerInvoker _consumerInvoker;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
@@ -20,7 +20,7 @@ namespace Thycotic.MessageQueueClient.MemoryMq
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqRequestBus"/> class.
         /// </summary>
-        public MemoryMqRequestBus(IConsumerInvoker consumerInvoker)
+        public TestMqRequestBus(IConsumerInvoker consumerInvoker)
         {
             _consumerInvoker = consumerInvoker;
         }

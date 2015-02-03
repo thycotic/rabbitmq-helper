@@ -38,8 +38,8 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
             base.Load(builder);
 
             _log.Debug("Initializing consumer wrappers...");
-            
-            var queueType = _configurationProvider("Queue.Type");
+
+            var queueType = _configurationProvider(ConfigurationKeys.QueueType);
 
             if (queueType == SupportedMessageQueues.RabbitMq)
             {
@@ -53,7 +53,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.IoC
             {
                 _log.Info("Using MemoryMq wrappers");
 
-                builder.RegisterType<ConsumerInvoker>().AsImplementedInterfaces().SingleInstance();
+                //builder.RegisterType<ConsumerInvoker>().AsImplementedInterfaces().SingleInstance();
             }
         }
     }

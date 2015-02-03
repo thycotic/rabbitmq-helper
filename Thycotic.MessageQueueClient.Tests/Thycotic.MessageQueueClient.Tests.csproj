@@ -84,6 +84,7 @@
       <DependentUpon>JsonMessageSerializer.feature</DependentUpon>
     </Compile>
     <Compile Include="JsonMessageSerializerSteps.cs" />
+    <Compile Include="TestMqRequestBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
