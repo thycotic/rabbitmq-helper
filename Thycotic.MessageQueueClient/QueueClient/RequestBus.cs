@@ -1,7 +1,6 @@
 ﻿using System;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
-using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.QueueClient

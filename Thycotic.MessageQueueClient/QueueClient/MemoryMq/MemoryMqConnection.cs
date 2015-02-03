@@ -1,5 +1,4 @@
 ﻿using System;
-using Thycotic.MessageQueueClient.Wrappers;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 {
@@ -8,6 +7,8 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqConnection : ICommonConnection
     {
+        private readonly string _url;
+
         /// <summary>
         /// Gets or sets the connection created.
         /// </summary>
@@ -22,7 +23,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <param name="url">The URL.</param>
         public MemoryMqConnection(string url)
         {
-
+            _url = url;
         }
 
 

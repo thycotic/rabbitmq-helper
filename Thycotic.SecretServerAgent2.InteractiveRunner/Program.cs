@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using Autofac;
@@ -20,8 +18,6 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
             if (args.Any() && ((args.First() == "i") || (args.First() == "icd")))
             {
                 var autoConsume = args.First() != "icd"; //the first argument is not icd (Interactive with Consumption Disabled)
-
-                Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
 
                 var agent = new AgentService(autoConsume);
                 agent.Start(new string[] { });

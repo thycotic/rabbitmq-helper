@@ -5,7 +5,6 @@ using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
-using Thycotic.MessageQueueClient.RabbitMq;
 using Thycotic.SecretServerAgent2.MemoryMq;
 using Module = Autofac.Module;
 

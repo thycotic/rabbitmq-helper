@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using Thycotic.Logging;
 using Module = Autofac.Module;
 

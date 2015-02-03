@@ -1,9 +1,8 @@
 ﻿using System;
-using RabbitMQ.Client;
 using Thycotic.MessageQueueClient.Wrappers;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.RabbitMq
+namespace Thycotic.MessageQueueClient.QueueClient
 {
     /// <summary>
     /// Routing helpers

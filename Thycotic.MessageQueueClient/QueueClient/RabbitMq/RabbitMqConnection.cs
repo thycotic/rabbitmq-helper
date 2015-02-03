@@ -36,6 +36,13 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
             ResetConnection();
         }
 
+        #region Mapping
+        private static ICommonModel Map(IModel createModel)
+        {
+            return new RabbitMqModel(createModel);
+        }
+        #endregion
+
         private void ResetConnection()
         {
             CloseCurrentConnection();
@@ -47,7 +54,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
                 {
                     var cn = _connectionFactory.CreateConnection();
 
-                    _log.Info(string.Format("Connection opened to {0}", _connectionFactory.HostName));
+                    _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 
                     //if the connection closes recover it
                     cn.ConnectionShutdown += RecoverConnection;
@@ -134,11 +141,6 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
             } while (remainingRetryAttempts > 0);
 
             throw new ApplicationException("Channel should have opened");
-        }
-
-        private ICommonModel Map(RabbitMQ.Client.IModel createModel)
-        {
-            return new RabbitMqModel(createModel);
         }
 
         private void CloseCurrentConnection()

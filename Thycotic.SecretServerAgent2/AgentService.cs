@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Configuration;
 using System.ServiceProcess;
-using System.Diagnostics;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.Wrappers.IoC;

@@ -1,5 +1,4 @@
-﻿using System;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 
 namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
 {
