@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Thycotic.MessageQueueClient.QueueClient;
@@ -25,7 +21,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.Proxies
 
 #pragma warning disable 0067
         /// <summary>
-        /// Signalled when the consumer gets cancelled.
+        /// Signaled when the consumer gets cancelled.
         /// </summary>
         public event ConsumerCancelledEventHandler ConsumerCancelled;
 #pragma warning restore 0067
