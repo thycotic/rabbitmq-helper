@@ -17,20 +17,26 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
             //interactive mode (first argument is i or icd
             if (args.Any() && ((args.First() == "i") || (args.First() == "icd")))
             {
+                #region Start server
                 var autoConsume = args.First() != "icd"; //the first argument is not icd (Interactive with Consumption Disabled)
 
                 var agent = new AgentService(autoConsume);
                 agent.Start(new string[] { });
+                #endregion
 
+                #region Start client
                 var cli = new CommandLineInterface();
 
                 ConfigureCli(cli, agent.IoCContainer);
 
                 cli.BeginInputLoop(string.Join(" ", args.Skip(1)));
+                #endregion
 
+                #region Clean up
                 cli.Wait();
 
                 agent.Stop();
+                #endregion
             }
             else
             {
