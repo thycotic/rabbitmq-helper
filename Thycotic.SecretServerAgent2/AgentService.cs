@@ -46,7 +46,7 @@ namespace Thycotic.SecretServerAgent2
             if (_autoConsume)
             {
                 builder.RegisterModule(new LogicModule());
-                builder.RegisterModule(new WrappersModule(configurationProvider));
+                builder.RegisterModule(new WrappersModule());
             }
             else
             {
