@@ -46,7 +46,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// </exception>
         public TResponse BlockingPublish<TResponse>(IConsumable request, int timeoutSeconds)
         {
-            _log.Debug(string.Format("Publishing RPC {0}", request));
+            _log.Debug(string.Format("Publishing blocking {0}", request));
 
             var body = _messageSerializer.ToBytes(request);
             var routingKey = request.GetRoutingKey();
@@ -102,7 +102,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// <param name="persistent">if set to <c>true</c> [persistent].</param>
         public void BasicPublish(IConsumable request, bool persistent = true)
         {
-            _log.Debug(string.Format("Publishing basic {0}", request));
+            _log.Debug(string.Format("Publishing basic (fire and forget) {0}", request));
 
             var body = _messageSerializer.ToBytes(request);
             var routingKey = request.GetRoutingKey();
