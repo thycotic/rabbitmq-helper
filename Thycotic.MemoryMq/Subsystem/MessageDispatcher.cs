@@ -54,15 +54,14 @@ namespace Thycotic.MemoryMq.Subsystem
                     }
 
 
-                    byte[] body;
+                    MemoryQueueDeliveryEventArgs body;
                     if (!mailbox.Queue.TryDequeue(out body))
                     {
                         //nothing in the queue
                         return;
                     }
 
-                    clientProxy.Callback.SendMessage(new MemoryQueueDeliveryEventArgs(Guid.NewGuid().ToString(), 1, false, mailbox.RoutingSlip.Exchange,
-                        mailbox.RoutingSlip.RoutingKey, new MemoryMqProperties(), body));
+                    clientProxy.Callback.SendMessage(body);
                 });
 
             } while (!_cts.IsCancellationRequested);

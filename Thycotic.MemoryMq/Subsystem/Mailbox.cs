@@ -28,7 +28,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         /// <param name="routingSlip">The routing slip.</param>
         /// <param name="queue">The queue.</param>
-        public Mailbox(RoutingSlip routingSlip, ConcurrentQueue<byte[]> queue)
+        public Mailbox(RoutingSlip routingSlip, ConcurrentQueue<MemoryQueueDeliveryEventArgs> queue)
         {
             RoutingSlip = routingSlip;
             Queue = new QueueProxy(queue);

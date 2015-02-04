@@ -71,6 +71,22 @@ namespace Thycotic.MemoryMq
         [DataMember]
         public MemoryMqProperties Properties { get; set; }
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryQueueDeliveryEventArgs"/> class.
+        /// </summary>
+        /// <param name="exchange">The exchange.</param>
+        /// <param name="routingKey">The routing key.</param>
+        /// <param name="properties">The properties.</param>
+        /// <param name="body">The body.</param>
+        public MemoryQueueDeliveryEventArgs(string exchange, string routingKey, MemoryMqProperties properties, byte[] body)
+        {
+            Exchange = exchange;
+            RoutingKey = routingKey;
+            Properties = properties;
+            Body = body;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryQueueDeliveryEventArgs" /> class.
         /// </summary>

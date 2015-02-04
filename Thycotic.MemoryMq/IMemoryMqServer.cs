@@ -15,10 +15,10 @@ namespace Thycotic.MemoryMq
         /// <param name="routingKey">The routing key.</param>
         /// <param name="mandatory">if set to <c>true</c> [mandatory].</param>
         /// <param name="immediate">if set to <c>true</c> [immediate].</param>
-        /// <param name="getRawValue"></param>
+        /// <param name="properties"></param>
         /// <param name="body">The body.</param>
         [OperationContract(IsOneWay = true)]
-        void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, MemoryMqProperties getRawValue, byte[] body);
+        void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, MemoryMqProperties properties, byte[] body);
 
         /// <summary>
         /// Binds a queue to an exchange and a routing key

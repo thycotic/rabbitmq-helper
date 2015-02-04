@@ -34,11 +34,11 @@ namespace Thycotic.MemoryMq
         /// <param name="routingKey">The routing key.</param>
         /// <param name="mandatory">if set to <c>true</c> [mandatory].</param>
         /// <param name="immediate">if set to <c>true</c> [immediate].</param>
-        /// <param name="getRawValue"></param>
+        /// <param name="properties"></param>
         /// <param name="body">The body.</param>
-        public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, MemoryMqProperties getRawValue, byte[] body)
+        public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, MemoryMqProperties properties, byte[] body)
         {
-            _messages.Publish(new RoutingSlip(exchangeName, routingKey), body);
+            _messages.Publish(new RoutingSlip(exchangeName, routingKey), new MemoryQueueDeliveryEventArgs(exchangeName, routingKey, properties, body));
         }
 
         /// <summary>

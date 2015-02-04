@@ -10,7 +10,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class ExchangeDictionary 
     {
-        private readonly ConcurrentDictionary<RoutingSlip, ConcurrentQueue<byte[]>> _data = new ConcurrentDictionary<RoutingSlip, ConcurrentQueue<byte[]>>();
+        private readonly ConcurrentDictionary<RoutingSlip, ConcurrentQueue<MemoryQueueDeliveryEventArgs>> _data = new ConcurrentDictionary<RoutingSlip, ConcurrentQueue<MemoryQueueDeliveryEventArgs>>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ExchangeDictionary));
 
@@ -30,11 +30,11 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         /// <param name="routingSlip">The routing slip.</param>
         /// <param name="body">The body.</param>
-        public void Publish(RoutingSlip routingSlip, byte[] body)
+        public void Publish(RoutingSlip routingSlip, MemoryQueueDeliveryEventArgs body)
         {
             _log.Debug(string.Format("Publishing message to {0}", routingSlip));
 
-            _data.GetOrAdd(routingSlip, s => new ConcurrentQueue<byte[]>());
+            _data.GetOrAdd(routingSlip, s => new ConcurrentQueue<MemoryQueueDeliveryEventArgs>());
 
             _data[routingSlip].Enqueue(body);
         }
