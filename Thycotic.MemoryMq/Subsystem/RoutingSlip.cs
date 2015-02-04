@@ -11,23 +11,34 @@ namespace Thycotic.MemoryMq.Subsystem
             RoutingKey = routingKey;
         }
 
+        protected bool Equals(RoutingSlip other)
+        {
+            return string.Equals(RoutingKey, other.RoutingKey) && string.Equals(Exchange, other.Exchange);
+        }
+
         public override bool Equals(object obj)
         {
-            if (obj == null)
-                return false;
-
-            if (obj.GetType() != GetType())
-                return false;
-
-            
-            var other = (RoutingSlip)obj;
-            return Exchange == other.Exchange && RoutingKey == other.RoutingKey;
-
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == GetType() && Equals((RoutingSlip)obj);
         }
 
         public override int GetHashCode()
         {
-            return Exchange.GetHashCode() ^ RoutingKey.GetHashCode();
+            unchecked
+            {
+                return ((RoutingKey != null ? RoutingKey.GetHashCode() : 0) * 397) ^ (Exchange != null ? Exchange.GetHashCode() : 0);
+            }
+        }
+
+        public static bool operator ==(RoutingSlip left, RoutingSlip right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(RoutingSlip left, RoutingSlip right)
+        {
+            return !Equals(left, right);
         }
     }
 }

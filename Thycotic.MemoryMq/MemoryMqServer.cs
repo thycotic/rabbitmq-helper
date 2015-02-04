@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Subsystem;
 
 namespace Thycotic.MemoryMq
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
-    public class MemoryMqServer : IMemoryMqServer
+    public class MemoryMqServer : IMemoryMqServer, IDisposable
     {
         private readonly Exchange _messages = new Exchange();
         private readonly Bindings _bindings = new Bindings();
@@ -22,6 +18,7 @@ namespace Thycotic.MemoryMq
         public MemoryMqServer()
         {
             _messageDispatcher = new MessageDispatcher(_messages, _bindings, _clients);
+            _messageDispatcher.Start();
         }
 
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, byte[] body)
@@ -43,52 +40,17 @@ namespace Thycotic.MemoryMq
 
         public void BasicNack(ulong deliveryTag, bool multiple)
         {
-
+            //TODO: Implement
         }
 
         public void BasicAck(ulong deliveryTag, bool multiple)
         {
-
+            //TODO: Implement
         }
 
-        //public void BasicPublish(string meal)
-        //{
-        //    _callbackChannel = OperationContext.Current
-        //        .GetCallbackChannel<IMemoryMqServiceCallback>();
-
-        //    Console.WriteLine("Microwave Service");
-        //    Console.WriteLine("Let's prepare us some {0}", meal);
-
-        //    _counter = 999;
-        //    _timer = new Timer(BasicAck, null, 500, 500);
-        //}
-
-        //public void BlockingPublish(string meal)
-        //{
-        //    _callbackChannel = OperationContext.Current
-        //        .GetCallbackChannel<IMemoryMqServiceCallback>();
-
-        //    Console.WriteLine("Microwave Service");
-        //    Console.WriteLine("Let's prepare us some {0}", meal);
-
-        //    _counter = 999;
-        //    _timer = new Timer(BasicAck, null, 500, 500);
-        //}
-
-        //public void BasicAck(Object stateInfo)
-        //{
-        //    if (_counter <= 0)
-        //    {
-        //        _callbackChannel.UpdateStatus("* Ping *");
-        //        _callbackChannel.UpdateStatus("Bon appÃ©tit");
-        //        _timer.Dispose();
-        //    }
-        //    else
-        //    {
-        //        _callbackChannel.UpdateStatus(_counter.ToString());
-        //        _counter--;
-        //    }
-        //}
-        
+        public void Dispose()
+        {
+            _messageDispatcher.Stop();
+        }
     }
 }

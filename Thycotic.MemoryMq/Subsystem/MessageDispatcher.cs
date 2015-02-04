@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO.Ports;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
@@ -11,9 +13,9 @@ namespace Thycotic.MemoryMq.Subsystem
         private readonly Exchange _exchange;
         private readonly Bindings _bindings;
         private readonly Clients _clients;
-        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-        private readonly Task _monitoringTask;
-        
+        private CancellationTokenSource _cts;
+        private Task _monitoringTask;
+
         private readonly ILogWriter _log = Log.Get(typeof(MessageDispatcher));
 
         public MessageDispatcher(Exchange exchange, Bindings bindings, Clients clients)
@@ -22,7 +24,6 @@ namespace Thycotic.MemoryMq.Subsystem
             _bindings = bindings;
             _clients = clients;
 
-            _monitoringTask = Task.Factory.StartNew(MonitorAndDispatch);
         }
 
         private void MonitorAndDispatch()
@@ -60,11 +61,30 @@ namespace Thycotic.MemoryMq.Subsystem
             } while (!_cts.IsCancellationRequested);
         }
 
+        public void Start()
+        {
+            Stop();
+
+            _cts = new CancellationTokenSource();
+            _monitoringTask = Task.Factory.StartNew(MonitorAndDispatch);
+        }
+
+        public void Stop()
+        {
+            if (_cts != null)
+            {
+                _cts.Cancel();
+            }
+
+            if (_monitoringTask != null)
+            {
+                _monitoringTask.Wait();
+            }
+        }
+
         public void Dispose()
         {
-            _cts.Cancel();
-
-            _monitoringTask.Wait();
+            Stop();
         }
     }
 }
