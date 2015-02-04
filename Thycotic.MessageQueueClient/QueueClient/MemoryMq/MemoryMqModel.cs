@@ -187,7 +187,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public ISubscription CreateSubscription(string queueName)
         {
-            return new MemoryMqSubscription(queueName);
+            return new MemoryMqSubscription(queueName, _server, _callback);
         }
 
         /// <summary>

@@ -1,4 +1,7 @@
 using System;
+using RabbitMQ.Client.Events;
+using Thycotic.MemoryMq;
+using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 {
@@ -7,42 +10,58 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqSubscription : ISubscription
     {
+        private readonly IMemoryMqServer _server;
+        private readonly MemoryMqServiceCallback _callback;
+        private readonly string _queueName;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqSubscription"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqSubscription" /> class.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
-        public MemoryMqSubscription(string queueName)
+        /// <param name="server">The model.</param>
+        /// <param name="callback">The callback.</param>
+         public MemoryMqSubscription(string queueName, IMemoryMqServer server, MemoryMqServiceCallback callback)
         {
-            QueueName = queueName;
+            _server = server;
+            _callback = callback;
+            _queueName = queueName;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the queue.
-        /// </summary>
-        /// <value>
-        /// The name of the queue.
-        /// </value>
-        public string QueueName { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="timeoutMilliseconds">The timeout milliseconds.</param>
-        /// <param name="response">The <see cref="CommonDeliveryEventArgs" /> instance containing the event data.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public bool Next(int timeoutMilliseconds, out CommonDeliveryEventArgs response)
-        {
-            response = null;
-            return false;
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void Dispose()
         {
-            
+        }
+
+        public string QueueName {get { return _queueName; }
+        }
+        public bool Next(int timeoutMilliseconds, out CommonDeliveryEventArgs response)
+        {
+            _server.QueueBind(_queueName, string.Empty, string.Empty);
+
+            _server.BasicConsume(_queueName);
+
+            //TODO: Keep working on this.
+
+            //var received = false;
+
+            ////when the server sends us something, process it
+            //_callback.BytesReceived += (sender, deliveryArgs) =>
+            //{
+                
+            //};
+
+            //response = null;
+            //MemoryQueueDeliveryEventArgs eventArgs;
+
+            //_server.
+            //if (!_subscription.Next(timeoutMilliseconds, out eventArgs))
+            //{
+            //    return false;
+            //}
+
+            //response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, eventArgs.DeliveryTag, eventArgs.Redelivered, eventArgs.Exchange,
+            //    eventArgs.RoutingKey, new MemoryMqModelProperties(eventArgs.Properties), eventArgs.Body);
+            return true;
+        }
         }
     }
 }
