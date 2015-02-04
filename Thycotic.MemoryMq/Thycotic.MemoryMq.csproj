@@ -66,6 +66,7 @@
     <Compile Include="Subsystem\Mailbox.cs" />
     <Compile Include="Subsystem\MessageDispatcher.cs" />
     <Compile Include="Subsystem\QueueProxy.cs" />
+    <Compile Include="Subsystem\RoutingSlip.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">

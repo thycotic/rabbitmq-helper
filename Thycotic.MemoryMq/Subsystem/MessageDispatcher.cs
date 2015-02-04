@@ -53,8 +53,8 @@ namespace Thycotic.MemoryMq.Subsystem
                         return;
                     }
 
-                    client.Callback.SendMessage(new MemoryQueueDeliveryEventArgs(Guid.NewGuid().ToString(), 1, false, mailbox.RoutingSlip,
-                        mailbox.RoutingSlip, body));
+                    client.Callback.SendMessage(new MemoryQueueDeliveryEventArgs(Guid.NewGuid().ToString(), 1, false, mailbox.RoutingSlip.Exchange,
+                        mailbox.RoutingSlip.RoutingKey, body));
                 });
 
             } while (!_cts.IsCancellationRequested);

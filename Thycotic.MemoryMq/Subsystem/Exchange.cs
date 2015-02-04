@@ -13,7 +13,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class Exchange 
     {
-        private readonly ConcurrentDictionary<string, ConcurrentQueue<byte[]>> _data = new ConcurrentDictionary<string, ConcurrentQueue<byte[]>>();
+        private readonly ConcurrentDictionary<RoutingSlip, ConcurrentQueue<byte[]>> _data = new ConcurrentDictionary<RoutingSlip, ConcurrentQueue<byte[]>>();
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly ILogWriter _log = Log.Get(typeof(Exchange));
@@ -28,7 +28,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         /// <param name="routingSlip">The routing slip.</param>
         /// <param name="body">The body.</param>
-        public void Publish(string routingSlip, byte[] body)
+        public void Publish(RoutingSlip routingSlip, byte[] body)
         {
             _data.GetOrAdd(routingSlip, s => new ConcurrentQueue<byte[]>());
 

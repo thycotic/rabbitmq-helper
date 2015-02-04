@@ -24,20 +24,14 @@ namespace Thycotic.MemoryMq
             _messageDispatcher = new MessageDispatcher(_messages, _bindings, _clients);
         }
 
-        private static string GetFullRoutingSlip(string exchange, string routingKey)
-        {
-            return string.Format("{0}:{1}", exchange, routingKey);
-        }
-
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, byte[] body)
         {
-            var fullRoutingSlip = GetFullRoutingSlip(exchangeName, routingKey);
-            _messages.Publish(fullRoutingSlip, body);
+            _messages.Publish(new RoutingSlip(exchangeName, routingKey), body);
         }
 
         public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
-            _bindings.AddBinding(GetFullRoutingSlip(exchangeName, routingKey), queueName);
+            _bindings.AddBinding(new RoutingSlip(exchangeName, routingKey), queueName);
         }
 
         public void BasicConsume(string queueName)
