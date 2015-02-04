@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 {

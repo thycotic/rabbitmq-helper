@@ -8,6 +8,15 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     public class MemoryMqSubscription : ISubscription
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryMqSubscription"/> class.
+        /// </summary>
+        /// <param name="queueName">Name of the queue.</param>
+        public MemoryMqSubscription(string queueName)
+        {
+            QueueName = queueName;
+        }
+
+        /// <summary>
         /// Gets or sets the name of the queue.
         /// </summary>
         /// <value>

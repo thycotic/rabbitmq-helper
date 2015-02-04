@@ -5,10 +5,9 @@ using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
-using Thycotic.SecretServerAgent2.MemoryMq;
-using Module = Autofac.Module;
+using Thycotic.SecretServerEngine2.MemoryMq;
 
-namespace Thycotic.SecretServerAgent2.IoC
+namespace Thycotic.SecretServerEngine2.IoC
 {
     class MessageQueueModule : Module
     {

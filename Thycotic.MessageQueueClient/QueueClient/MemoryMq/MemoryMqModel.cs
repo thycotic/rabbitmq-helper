@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Thycotic.MemoryMq;
 using Thycotic.MessageQueueClient.Wrappers;
 
@@ -144,7 +143,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         public ICommonQueue QueueDeclare()
         {
             var queueName = Guid.NewGuid().ToString();
-            return new MemoryMqQueue(_server, queueName);
+            return new MemoryMqQueue(queueName);
         }
 
         /// <summary>
@@ -158,7 +157,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
-            return new MemoryMqQueue(_server, queueName);
+            return new MemoryMqQueue(queueName);
         }
 
         /// <summary>
@@ -181,7 +180,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public ISubscription CreateSubscription(string queueName)
         {
-            return new MemoryMqSubscription();
+            return new MemoryMqSubscription(queueName);
         }
 
         /// <summary>

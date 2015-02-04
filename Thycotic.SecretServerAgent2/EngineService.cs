@@ -4,19 +4,19 @@ using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.Wrappers.IoC;
-using Thycotic.SecretServerAgent2.IoC;
+using Thycotic.SecretServerEngine2.IoC;
 
-namespace Thycotic.SecretServerAgent2
+namespace Thycotic.SecretServerEngine2
 {
-    public class AgentService : ServiceBase
+    public class EngineService : ServiceBase
     {
         private readonly bool _autoConsume;
         public IContainer IoCContainer { get; set; }
 
-        private readonly ILogWriter _log = Log.Get(typeof(AgentService));
+        private readonly ILogWriter _log = Log.Get(typeof(EngineService));
         private LogCorrelation _correlation;
 
-        public AgentService(bool autoConsume = true)
+        public EngineService(bool autoConsume = true)
         {
             _autoConsume = autoConsume;
             ConfigureLogging();

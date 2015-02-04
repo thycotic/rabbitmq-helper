@@ -3,7 +3,7 @@ using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 
-namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
+namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
 {
     class FloodInSerialCommand : ConsoleCommandBase
     {

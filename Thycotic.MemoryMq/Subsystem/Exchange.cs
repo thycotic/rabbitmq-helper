@@ -1,7 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Thycotic.Logging;
 
 namespace Thycotic.MemoryMq.Subsystem
@@ -12,7 +11,6 @@ namespace Thycotic.MemoryMq.Subsystem
     public class Exchange 
     {
         private readonly ConcurrentDictionary<RoutingSlip, ConcurrentQueue<byte[]>> _data = new ConcurrentDictionary<RoutingSlip, ConcurrentQueue<byte[]>>();
-        private CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly ILogWriter _log = Log.Get(typeof(Exchange));
 
@@ -28,6 +26,8 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="body">The body.</param>
         public void Publish(RoutingSlip routingSlip, byte[] body)
         {
+            _log.Debug(string.Format("Publishing message to {0}", routingSlip));
+
             _data.GetOrAdd(routingSlip, s => new ConcurrentQueue<byte[]>());
 
             _data[routingSlip].Enqueue(body);

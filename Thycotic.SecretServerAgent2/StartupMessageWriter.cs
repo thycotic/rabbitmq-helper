@@ -4,7 +4,7 @@ using System.Reflection;
 using Autofac;
 using Thycotic.Logging;
 
-namespace Thycotic.SecretServerAgent2
+namespace Thycotic.SecretServerEngine2
 {
     public class StartupMessageWriter : IStartable, IDisposable
     {
@@ -14,7 +14,7 @@ namespace Thycotic.SecretServerAgent2
         {
             _log.Info("Application is starting...");
 
-            var logoStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.SecretServerAgent2.logo.txt");
+            var logoStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.SecretServerEngine2.logo.txt");
 
             if (logoStream != null)
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using Autofac;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Tests
@@ -9,16 +8,16 @@ namespace Thycotic.MessageQueueClient.Tests
     /// </summary>
     public class TestConsumerInvoker : ITestConsumerInvoker
     {
-        private readonly IComponentContext _context;
+        //private readonly IComponentContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TestConsumerInvoker"/> class.
         /// </summary>
-        /// <param name="context">The context.</param>
-        public TestConsumerInvoker(IComponentContext context)
-        {
-            _context = context;
-        }
+        ///// <param name="context">The context.</param>
+        //public TestConsumerInvoker(IComponentContext context)
+        //{
+        //    _context = context;
+        //}
 
         /// <summary>
         /// Consumes the specified consumable.

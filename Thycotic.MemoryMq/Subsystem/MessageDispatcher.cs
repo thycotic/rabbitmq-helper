@@ -63,21 +63,24 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             Stop();
 
+            _log.Debug("Staring message monitoring");
+
             _cts = new CancellationTokenSource();
             _monitoringTask = Task.Factory.StartNew(MonitorAndDispatch);
         }
 
         public void Stop()
         {
-            if (_cts != null)
+            if ((_cts == null) || (_monitoringTask == null))
             {
-                _cts.Cancel();
+                return;
             }
 
-            if (_monitoringTask != null)
-            {
-                _monitoringTask.Wait();
-            }
+            _log.Debug("Stopping message monitoring");
+
+            _cts.Cancel();
+
+            _monitoringTask.Wait();
         }
 
         public void Dispose()

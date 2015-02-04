@@ -1,5 +1,4 @@
 using System.Collections.Concurrent;
-using System.Dynamic;
 using Thycotic.Logging;
 
 namespace Thycotic.MemoryMq.Subsystem
@@ -20,6 +19,8 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queueName">Name of the queue.</param>
         public void AddBinding(RoutingSlip routingSlip, string queueName)
         {
+            _log.Debug(string.Format("Adding binding for routing slip {0} to {1} queue", routingSlip, queueName));
+
             _data.TryAdd(routingSlip, queueName);
         }
 

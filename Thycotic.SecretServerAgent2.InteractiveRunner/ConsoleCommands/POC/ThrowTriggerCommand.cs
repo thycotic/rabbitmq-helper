@@ -4,7 +4,7 @@ using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands.POC
+namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
 {
     class ThrowTriggerCommand : ConsoleCommandBase
     {

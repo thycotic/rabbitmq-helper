@@ -1,7 +1,6 @@
 ﻿using System.ServiceProcess;
 
-
-namespace Thycotic.SecretServerAgent2
+namespace Thycotic.SecretServerEngine2
 {
     internal static class Program
     {
@@ -12,7 +11,7 @@ namespace Thycotic.SecretServerAgent2
         {
             var servicesToRun = new ServiceBase[]
             {
-                new AgentService()
+                new EngineService()
             };
             ServiceBase.Run(servicesToRun);
         }

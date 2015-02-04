@@ -48,32 +48,34 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             private readonly ConcurrentDictionary<string, MemoryMqServerClient> _data = new ConcurrentDictionary<string, MemoryMqServerClient>();
 
-            private int robin = 0;
+            private int _robin;
 
             private readonly ILogWriter _log = Log.Get(typeof(ClientList));
 
             public void AddConsumer(MemoryMqServerClient client)
             {
+                _log.Debug(string.Format("Adding consumer with session ID {0}", client.Channel.SessionId));
+
                 _data.TryAdd(client.Channel.SessionId, client);
             }
 
-            public void RemoveConsumer(MemoryMqServerClient consumer)
+            public void RemoveConsumer(MemoryMqServerClient client)
             {
                 MemoryMqServerClient temp;
-                _data.TryRemove(consumer.Channel.SessionId, out temp);
+                _data.TryRemove(client.Channel.SessionId, out temp);
             }
 
             public bool TryGetConsumer(out MemoryMqServerClient client)
             {
                 if (_data.Any())
                 {
-                    robin = robin % _data.Count;
-                    client = _data.Values.Skip(robin).Single();
+                    _robin = _robin % _data.Count;
+                    client = _data.Values.Skip(_robin).Single();
                     return true;
                 }
                 
                 client = null;
-                robin = 0;
+                _robin = 0;
                 return false;
             }
         }

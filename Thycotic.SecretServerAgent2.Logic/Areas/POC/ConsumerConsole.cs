@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
+namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
 {
     static class ConsumerConsole
     {

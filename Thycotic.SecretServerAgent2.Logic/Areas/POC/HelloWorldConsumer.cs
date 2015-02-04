@@ -1,7 +1,7 @@
 ﻿using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.SecretServerAgent2.Logic.Areas.POC
+namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
 {
     /// <summary>
     /// Simple Hello World consumer

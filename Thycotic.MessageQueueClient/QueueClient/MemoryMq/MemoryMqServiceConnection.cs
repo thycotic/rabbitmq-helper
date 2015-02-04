@@ -9,7 +9,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         private readonly IMemoryMqServer _server;
 
         private readonly ICommunicationObject _communicationObject;
-        private MemoryMqServiceCallback _callback;
+        private readonly MemoryMqServiceCallback _callback;
 
         public bool IsOpen
         {

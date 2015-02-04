@@ -1,5 +1,3 @@
-using Thycotic.MemoryMq;
-
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 {
     /// <summary>
@@ -7,17 +5,14 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqQueue : ICommonQueue
     {
-        private readonly IMemoryMqServer _server;
         private readonly string _queueName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqQueue"/> class.
         /// </summary>
-        /// <param name="server">The service client.</param>
         /// <param name="queueName">Name of the queue.</param>
-        public MemoryMqQueue(IMemoryMqServer server, string queueName)
+        public MemoryMqQueue(string queueName)
         {
-            _server = server;
             _queueName = queueName;
         }
 

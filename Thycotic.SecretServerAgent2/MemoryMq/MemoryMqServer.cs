@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Thycotic.MemoryMq;
 
-namespace Thycotic.SecretServerAgent2.MemoryMq
+namespace Thycotic.SecretServerEngine2.MemoryMq
 {
     public class MemoryMqServer : IStartable
     {

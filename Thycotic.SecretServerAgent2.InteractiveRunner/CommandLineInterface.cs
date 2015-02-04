@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Thycotic.Logging;
-using Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands;
+using Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands;
 
-namespace Thycotic.SecretServerAgent2.InteractiveRunner
+namespace Thycotic.SecretServerEngine2.InteractiveRunner
 {
     internal class CommandLineInterface
     {

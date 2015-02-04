@@ -3,9 +3,9 @@ using System.Reflection;
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.MessageQueueClient;
-using Thycotic.SecretServerAgent2.InteractiveRunner.ConsoleCommands;
+using Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands;
 
-namespace Thycotic.SecretServerAgent2.InteractiveRunner
+namespace Thycotic.SecretServerEngine2.InteractiveRunner
 {
     internal static class Program
     {
@@ -20,7 +20,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
                 #region Start server
                 var autoConsume = args.First() != "icd"; //the first argument is not icd (Interactive with Consumption Disabled)
 
-                var agent = new AgentService(autoConsume);
+                var agent = new EngineService(autoConsume);
                 agent.Start(new string[] { });
                 #endregion
 
@@ -42,7 +42,7 @@ namespace Thycotic.SecretServerAgent2.InteractiveRunner
             {
                 var servicesToRun = new ServiceBase[]
                 {
-                    new AgentService()
+                    new EngineService()
                 };
                 ServiceBase.Run(servicesToRun);
             }

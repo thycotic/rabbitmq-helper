@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.QueueClient;
-using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers
