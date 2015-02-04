@@ -6,21 +6,30 @@ using Thycotic.Logging;
 
 namespace Thycotic.MemoryMq.Subsystem
 {
+    /// <summary>
+    /// Message dispatcher
+    /// </summary>
     public class MessageDispatcher : IDisposable
     {
-        private readonly Exchange _exchange;
-        private readonly Bindings _bindings;
-        private readonly Clients _clients;
+        private readonly ExchangeDictionary _exchangeDictionary;
+        private readonly BindingDictionary _bindings;
+        private readonly ClientDictionary _clientDictionary;
         private CancellationTokenSource _cts;
         private Task _monitoringTask;
 
         private readonly ILogWriter _log = Log.Get(typeof(MessageDispatcher));
 
-        public MessageDispatcher(Exchange exchange, Bindings bindings, Clients clients)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MessageDispatcher"/> class.
+        /// </summary>
+        /// <param name="exchangeDictionary">The exchange dictionary.</param>
+        /// <param name="bindings">The bindings.</param>
+        /// <param name="clientDictionary">The client dictionary.</param>
+        public MessageDispatcher(ExchangeDictionary exchangeDictionary, BindingDictionary bindings, ClientDictionary clientDictionary)
         {
-            _exchange = exchange;
+            _exchangeDictionary = exchangeDictionary;
             _bindings = bindings;
-            _clients = clients;
+            _clientDictionary = clientDictionary;
 
         }
 
@@ -28,7 +37,7 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             do
             {
-                _exchange.Mailboxes.ToList().ForEach(mailbox =>
+                _exchangeDictionary.Mailboxes.ToList().ForEach(mailbox =>
                 {
                     string queueName;
                     if (!_bindings.TryGetBinding(mailbox.RoutingSlip, out queueName))
@@ -37,8 +46,8 @@ namespace Thycotic.MemoryMq.Subsystem
                         return;
                     }
 
-                    MemoryMqServerClient client;
-                    if (!_clients.TryGetClient(queueName, out client))
+                    MemoryMqServerClientProxy clientProxy;
+                    if (!_clientDictionary.TryGetClient(queueName, out clientProxy))
                     {
                         //no client for the queue
                         return;
@@ -52,13 +61,16 @@ namespace Thycotic.MemoryMq.Subsystem
                         return;
                     }
 
-                    client.Callback.SendMessage(new MemoryQueueDeliveryEventArgs(Guid.NewGuid().ToString(), 1, false, mailbox.RoutingSlip.Exchange,
+                    clientProxy.Callback.SendMessage(new MemoryQueueDeliveryEventArgs(Guid.NewGuid().ToString(), 1, false, mailbox.RoutingSlip.Exchange,
                         mailbox.RoutingSlip.RoutingKey, body));
                 });
 
             } while (!_cts.IsCancellationRequested);
         }
 
+        /// <summary>
+        /// Starts this instance.
+        /// </summary>
         public void Start()
         {
             Stop();
@@ -69,6 +81,9 @@ namespace Thycotic.MemoryMq.Subsystem
             _monitoringTask = Task.Factory.StartNew(MonitorAndDispatch);
         }
 
+        /// <summary>
+        /// Stops this instance.
+        /// </summary>
         public void Stop()
         {
             if ((_cts == null) || (_monitoringTask == null))
@@ -83,6 +98,9 @@ namespace Thycotic.MemoryMq.Subsystem
             _monitoringTask.Wait();
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             Stop();

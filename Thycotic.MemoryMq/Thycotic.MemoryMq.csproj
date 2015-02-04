@@ -21,6 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Thycotic.MemoryMq.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Thycotic.MemoryMq.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -54,9 +58,10 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
-    <Compile Include="Subsystem\Bindings.cs" />
-    <Compile Include="Subsystem\Clients.cs" />
-    <Compile Include="Subsystem\Exchange.cs" />
+    <Compile Include="Subsystem\BindingDictionary.cs" />
+    <Compile Include="WcfHelpers.cs" />
+    <Compile Include="Subsystem\ClientDictionary.cs" />
+    <Compile Include="Subsystem\ExchangeDictionary.cs" />
     <Compile Include="IMemoryMqServerCallback.cs" />
     <Compile Include="IMemoryMqServer.cs" />
     <Compile Include="MemoryMqServer.cs" />

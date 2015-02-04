@@ -4,13 +4,13 @@ using Thycotic.Logging;
 namespace Thycotic.MemoryMq.Subsystem
 {
     /// <summary>
-    /// Bindings which bind queues, to topics
+    /// Bindings dictionary 
     /// </summary>
-    public class Bindings
+    public class BindingDictionary
     {
         private readonly ConcurrentDictionary<RoutingSlip, string> _data = new ConcurrentDictionary<RoutingSlip, string>();
 
-        private readonly ILogWriter _log = Log.Get(typeof(Bindings));
+        private readonly ILogWriter _log = Log.Get(typeof(BindingDictionary));
 
         /// <summary>
         /// Binds a queue to a routing slip
@@ -24,6 +24,12 @@ namespace Thycotic.MemoryMq.Subsystem
             _data.TryAdd(routingSlip, queueName);
         }
 
+        /// <summary>
+        /// Tries to get a binding.
+        /// </summary>
+        /// <param name="routingSlip">The routing slip.</param>
+        /// <param name="queueName">Name of the queue.</param>
+        /// <returns></returns>
         public bool TryGetBinding(RoutingSlip routingSlip, out string queueName)
         {
             return _data.TryGetValue(routingSlip, out queueName);

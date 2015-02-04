@@ -2,6 +2,9 @@
 
 namespace Thycotic.MemoryMq
 {
+    /// <summary>
+    /// Memory mq delivery event arguments.
+    /// </summary>
     [DataContract]
     public class MemoryQueueDeliveryEventArgs
     {

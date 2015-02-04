@@ -8,12 +8,18 @@ namespace Thycotic.MemoryMq.Subsystem
     /// <summary>
     /// Exchange that binds topics to queues
     /// </summary>
-    public class Exchange 
+    public class ExchangeDictionary 
     {
         private readonly ConcurrentDictionary<RoutingSlip, ConcurrentQueue<byte[]>> _data = new ConcurrentDictionary<RoutingSlip, ConcurrentQueue<byte[]>>();
 
-        private readonly ILogWriter _log = Log.Get(typeof(Exchange));
+        private readonly ILogWriter _log = Log.Get(typeof(ExchangeDictionary));
 
+        /// <summary>
+        /// Gets the mailboxes in the exchange
+        /// </summary>
+        /// <value>
+        /// The mailboxes.
+        /// </value>
         public IList<Mailbox> Mailboxes 
         {
             get { return _data.Select(kvp => new Mailbox(kvp.Key, kvp.Value)).ToList(); }

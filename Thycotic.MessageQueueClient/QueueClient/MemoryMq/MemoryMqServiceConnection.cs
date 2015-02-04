@@ -22,8 +22,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         {
             _server = server;
             _callback = callback;
-// ReSharper disable once SuspiciousTypeConversion.Global
-            _communicationObject = (ICommunicationObject)server;
+            _communicationObject = server.GetCommunicationObject();
 
             Action<object, EventArgs> connectionShutdownHandler = (sender, args) =>
             {
