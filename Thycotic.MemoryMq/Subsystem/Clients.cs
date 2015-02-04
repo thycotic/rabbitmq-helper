@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Linq;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using Thycotic.Logging;
 
 namespace Thycotic.MemoryMq.Subsystem

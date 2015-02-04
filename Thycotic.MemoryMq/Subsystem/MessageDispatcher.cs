@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO.Ports;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
