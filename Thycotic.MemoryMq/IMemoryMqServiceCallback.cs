@@ -6,6 +6,6 @@ namespace Thycotic.MemoryMq
     public interface IMemoryMqServiceCallback
     {
         [OperationContract(IsOneWay = true)]
-        void UpdateStatus(string statusMessage);
+        void SendMessage(byte[] body);
     }
 }

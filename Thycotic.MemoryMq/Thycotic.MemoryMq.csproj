@@ -54,7 +54,6 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
-    <Compile Include="Collections\ConcurrentHashSet.cs" />
     <Compile Include="IMemoryMqServiceCallback.cs" />
     <Compile Include="IMemoryMqServiceClient.cs" />
     <Compile Include="MemoryMqServiceCallback.cs" />

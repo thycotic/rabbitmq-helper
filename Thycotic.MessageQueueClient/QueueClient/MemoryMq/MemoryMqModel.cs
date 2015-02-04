@@ -191,20 +191,20 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            _serviceClient.AttachConsumer();
-            
-            do
-            {
-                var deliveryArgs = _serviceClient.BasicConsume(queueName);
-
-                if (deliveryArgs != null)
-                {
-                    consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag, deliveryArgs.Redelivered, deliveryArgs.Exchange,
-                        deliveryArgs.RoutingKey, new MemoryMqModelProperties(), deliveryArgs.Body);
-                }
+            _serviceClient.BasicConsume(queueName);
+          
+            //do
+            //{
 
 
-            } while (!_cts.IsCancellationRequested);
+            //    if (deliveryArgs != null)
+            //    {
+            //        consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag, deliveryArgs.Redelivered, deliveryArgs.Exchange,
+            //            deliveryArgs.RoutingKey, new MemoryMqModelProperties(), deliveryArgs.Body);
+            //    }
+
+
+            //} while (!_cts.IsCancellationRequested);
             
         }
 

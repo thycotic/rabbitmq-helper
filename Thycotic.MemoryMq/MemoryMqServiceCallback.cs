@@ -4,11 +4,9 @@ namespace Thycotic.MemoryMq
 {
     public class MemoryMqServiceCallback : IMemoryMqServiceCallback
     {
-        public void UpdateStatus(string statusMessage)
+        public void SendMessage(byte[] body)
         {
-            Console.WriteLine(statusMessage);
+        
         }
-
-
     }
 }

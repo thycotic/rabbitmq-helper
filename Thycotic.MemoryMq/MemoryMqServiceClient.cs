@@ -2,33 +2,94 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using Thycotic.Logging;
-using Thycotic.MemoryMq.Collections;
 
 namespace Thycotic.MemoryMq
 {
-    public class MemoryMqServiceClient : IMemoryMqServiceClient
+    /// <summary>
+    /// Exchange that binds topics to queues
+    /// </summary>
+    public class Exchange 
     {
-        private readonly ConcurrentHashSet<IContextChannel> _consumers = new ConcurrentHashSet<IContextChannel>();
-        private readonly ConcurrentDictionary<string, string> _bindings = new ConcurrentDictionary<string, string>();
-        private readonly ConcurrentDictionary<string, ConcurrentQueue<byte[]>> _messages = new ConcurrentDictionary<string, ConcurrentQueue<byte[]>>();
+        private readonly ConcurrentDictionary<string, ConcurrentQueue<byte[]>> _data = new ConcurrentDictionary<string, ConcurrentQueue<byte[]>>();
 
-        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServiceClient));
+        private readonly ILogWriter _log = Log.Get(typeof(Exchange));
 
-        public void AttachConsumer()
+        public void Publish(string routingSlip, byte[] body)
         {
-            _log.Debug("Attaching consumer");
+            _data.GetOrAdd(routingSlip, s => new ConcurrentQueue<byte[]>());
 
-            // ReSharper disable once SuspiciousTypeConversion.Global
+            _data[routingSlip].Enqueue(body);
+        }
+    }
+
+    /// <summary>
+    /// Bindings which bind queues, to topics
+    /// </summary>
+    public class Bindings
+    {
+        private readonly  ConcurrentDictionary<string, string> _data= new ConcurrentDictionary<string, string>();
+
+        private readonly ILogWriter _log = Log.Get(typeof(Bindings));
+
+        public void AddBinding(string queueName, string routingSlip)
+        {
+            _data.TryAdd(queueName, routingSlip);
+        }
+    }
+
+    public class Consumers
+    {
+        private readonly ConcurrentDictionary<string, ConsumerList> _data =
+            new ConcurrentDictionary<string, ConsumerList>();
+
+        private readonly ILogWriter _log = Log.Get(typeof(Consumers));
+
+        public void AddConsumer(string queueName)
+        {
+// ReSharper disable once SuspiciousTypeConversion.Global
             var callbackChannel = (IContextChannel)OperationContext.Current.GetCallbackChannel<IMemoryMqServiceCallback>();
 
             //have the consumer remove itself when it disconnects
             callbackChannel.Closed += (sender, args) =>
             {
                 _log.Debug("Detaching consumer");
-                _consumers.Remove(callbackChannel);
+                GetConsumerList(queueName).RemoveConsumer(callbackChannel);
             };
-            _consumers.Add(callbackChannel);
+
+            GetConsumerList(queueName).AddConsumer(callbackChannel);
         }
+
+        private ConsumerList GetConsumerList(string queueName)
+        {
+            return _data.GetOrAdd(queueName, s => new ConsumerList());
+        }
+
+
+        private class ConsumerList
+        {
+            private readonly ConcurrentQueue<IContextChannel> _data = new ConcurrentQueue<IContextChannel>();
+
+            private readonly ILogWriter _log = Log.Get(typeof(ConsumerList));
+
+            public void AddConsumer(IContextChannel consumer)
+            {
+                _data.Enqueue(consumer);
+            }
+
+            public void RemoveConsumer(IContextChannel consumer)
+            {
+                //_data.
+            }
+        }
+    }
+
+    public class MemoryMqServiceClient : IMemoryMqServiceClient
+    {
+        private readonly Exchange _messages = new Exchange();
+        private readonly Bindings _bindings = new Bindings();
+        private readonly Consumers _consumers = new Consumers();
+
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServiceClient));
 
         private static string GetFullRoutingSlip(string exchange, string routingKey)
         {
@@ -38,38 +99,41 @@ namespace Thycotic.MemoryMq
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, byte[] body)
         {
             var fullRoutingSlip = GetFullRoutingSlip(exchangeName, routingKey);
-            _messages.GetOrAdd(fullRoutingSlip, s => new ConcurrentQueue<byte[]>());
-
-            _messages[fullRoutingSlip].Enqueue(body);
+            _messages.Publish(fullRoutingSlip, body);
         }
 
         public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
-            _bindings.TryAdd(queueName, GetFullRoutingSlip(exchangeName, routingKey));
+            _bindings.AddBinding(queueName, GetFullRoutingSlip(exchangeName, routingKey));
         }
 
-        public MemoryQueueDeliveryEventArgs BasicConsume(string queueName)
+        public void BasicConsume(string queueName)
         {
-            var fullRoutingSplip = _bindings[queueName];
+            _log.Debug("Attaching consumer");
+            
+               _consumers.AddConsumer(queueName);
 
-            ConcurrentQueue<byte[]> queue;
-            if (!_messages.TryGetValue(fullRoutingSplip, out queue))
-            {
-                return null;
-            }
 
-            byte[] body;
-            if (queue.TryDequeue(out body))
-            {
-                string consumerTag = string.Empty;
-                ulong deliveryTag = 1;
-                bool redelivered = false;
-                string exchange = string.Empty;
-                string routingKey = string.Empty;
-                return new MemoryQueueDeliveryEventArgs(consumerTag, deliveryTag, redelivered, exchange, routingKey, body);
-            }
+            //var fullRoutingSplip = _bindings[queueName];
 
-            return null;
+            //ConcurrentQueue<byte[]> queue;
+            //if (!_messages.TryGetValue(fullRoutingSplip, out queue))
+            //{
+            //    return null;
+            //}
+
+            //byte[] body;
+            //if (queue.TryDequeue(out body))
+            //{
+            //    string consumerTag = string.Empty;
+            //    ulong deliveryTag = 1;
+            //    bool redelivered = false;
+            //    string exchange = string.Empty;
+            //    string routingKey = string.Empty;
+            //    return new MemoryQueueDeliveryEventArgs(consumerTag, deliveryTag, redelivered, exchange, routingKey, body);
+            //}
+
+            //return null;
 
         }
 
