@@ -81,7 +81,11 @@ namespace Thycotic.MessageQueueClient.QueueClient
                         {
                             throw new ApplicationException("CorrelationId mismatch");
                         }
-                        if (response.BasicProperties.Type != "error") return _messageSerializer.ToRequest<TResponse>(response.Body);
+
+                        if (response.BasicProperties.Type != "error")
+                        {
+                            return _messageSerializer.ToRequest<TResponse>(response.Body);
+                        }
 
                         var error = _messageSerializer.ToRequest<BlockingConsumerError>(response.Body);
                         throw new ApplicationException(error.Message);
