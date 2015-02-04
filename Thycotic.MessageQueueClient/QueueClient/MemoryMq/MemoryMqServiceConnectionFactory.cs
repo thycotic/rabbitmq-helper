@@ -16,9 +16,9 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
             clientBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
             clientBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
 
-            var microwaveCallback = new MemoryMqServiceCallback();
+            var callback = new MemoryMqServiceCallback();
 
-            var channelFactory = new DuplexChannelFactory<IMemoryMqServiceClient>(microwaveCallback, clientBinding, Uri);
+            var channelFactory = new DuplexChannelFactory<IMemoryMqServer>(callback, clientBinding, Uri);
             //TODO: Do i need to worry about that since this is ephemeral? -dkk
             //channelFactory.Closed += new EventHandler(DuplexChannelFactory_Closed);
             //channelFactory.Closing += new EventHandler(DuplexChannelFactory_Closing);
@@ -34,7 +34,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
             credentials.UserName.UserName = Guid.NewGuid().ToString();
             credentials.UserName.Password = string.Empty;
 
-            return new MemoryMqServiceConnection(channelFactory.CreateChannel());
+            return new MemoryMqServiceConnection(channelFactory.CreateChannel(), callback);
         }
     }
 }

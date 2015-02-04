@@ -6,9 +6,11 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 {
     internal class MemoryMqServiceConnection : IMemoryMqServiceConnection
     {
-        private readonly IMemoryMqServiceClient _serviceClient;
+        private readonly IMemoryMqServer _server;
+
         private readonly ICommunicationObject _communicationObject;
-        
+        private MemoryMqServiceCallback _callback;
+
         public bool IsOpen
         {
             get { return _communicationObject.State == CommunicationState.Opened; }
@@ -16,11 +18,12 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 
         public EventHandler ConnectionShutdown { get; set; }
 
-        public MemoryMqServiceConnection(IMemoryMqServiceClient serviceClient)
+        public MemoryMqServiceConnection(IMemoryMqServer server, MemoryMqServiceCallback callback)
         {
-            _serviceClient = serviceClient;
+            _server = server;
+            _callback = callback;
 // ReSharper disable once SuspiciousTypeConversion.Global
-            _communicationObject = (ICommunicationObject)serviceClient;
+            _communicationObject = (ICommunicationObject)server;
 
             Action<object, EventArgs> connectionShutdownHandler = (sender, args) =>
             {
@@ -38,7 +41,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 
         public ICommonModel CreateModel()
         {
-            return new MemoryMqModel(_serviceClient);
+            return new MemoryMqModel(_server, _callback);
         }
 
         public void Close(int timeoutMilliseconds)

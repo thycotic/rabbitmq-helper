@@ -11,17 +11,18 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqModel : ICommonModel
     {
-        private CancellationTokenSource _cts = new CancellationTokenSource();
-
-        private readonly IMemoryMqServiceClient _serviceClient;
+        private readonly IMemoryMqServer _server;
+        private readonly MemoryMqServiceCallback _callback;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqModel"/> class.
         /// </summary>
-        /// <param name="serviceClient">The create channel.</param>
-        public MemoryMqModel(IMemoryMqServiceClient serviceClient)
+        /// <param name="server">The create channel.</param>
+        /// <param name="callback"></param>
+        public MemoryMqModel(IMemoryMqServer server, MemoryMqServiceCallback callback)
         {
-            _serviceClient = serviceClient;
+            _server = server;
+            _callback = callback;
         }
 
         /// <summary>
@@ -72,7 +73,8 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate,
             ICommonModelProperties properties, byte[] body)
         {
-            _serviceClient.BasicPublish(exchangeName, routingKey, mandatory, immediate, body);
+            _server.BasicPublish(exchangeName, routingKey, mandatory, immediate, body);
+
         }
 
         /// <summary>
@@ -120,7 +122,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicAck(ulong deliveryTag, bool multiple)
         {
-            _serviceClient.BasicAck(deliveryTag, multiple);
+            _server.BasicAck(deliveryTag, multiple);
         }
 
         /// <summary>
@@ -132,7 +134,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicNack(ulong deliveryTag, bool multiple, bool requeue)
         {
-            _serviceClient.BasicNack(deliveryTag, multiple);
+            _server.BasicNack(deliveryTag, multiple);
         }
 
         /// <summary>
@@ -142,7 +144,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         public ICommonQueue QueueDeclare()
         {
             var queueName = Guid.NewGuid().ToString();
-            return new MemoryMqQueue(_serviceClient, queueName);
+            return new MemoryMqQueue(_server, queueName);
         }
 
         /// <summary>
@@ -156,7 +158,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
-            return new MemoryMqQueue(_serviceClient, queueName);
+            return new MemoryMqQueue(_server, queueName);
         }
 
         /// <summary>
@@ -168,7 +170,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
-            _serviceClient.QueueBind(queueName, exchangeName, routingKey);
+            _server.QueueBind(queueName, exchangeName, routingKey);
         }
 
         /// <summary>
@@ -191,21 +193,15 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            _serviceClient.BasicConsume(queueName);
-          
-            //do
-            //{
+            //tell the server we want to consume
+            _server.BasicConsume(queueName);
 
+            //when the server sends us something, process it
+            _callback.BytesReceived +=
+                (sender, deliveryArgs) =>
+                    consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag, deliveryArgs.Redelivered, deliveryArgs.Exchange,
+                        deliveryArgs.RoutingKey, new MemoryMqModelProperties(), deliveryArgs.Body);
 
-            //    if (deliveryArgs != null)
-            //    {
-            //        consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag, deliveryArgs.Redelivered, deliveryArgs.Exchange,
-            //            deliveryArgs.RoutingKey, new MemoryMqModelProperties(), deliveryArgs.Body);
-            //    }
-
-
-            //} while (!_cts.IsCancellationRequested);
-            
         }
 
         /// <summary>
@@ -214,7 +210,6 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void Close()
         {
-            _cts.Cancel();
         }
 
         /// <summary>

@@ -54,12 +54,18 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
-    <Compile Include="IMemoryMqServiceCallback.cs" />
-    <Compile Include="IMemoryMqServiceClient.cs" />
-    <Compile Include="MemoryMqServiceCallback.cs" />
-    <Compile Include="MemoryMqServiceClient.cs" />
+    <Compile Include="Subsystem\Bindings.cs" />
+    <Compile Include="Subsystem\Clients.cs" />
+    <Compile Include="Subsystem\Exchange.cs" />
+    <Compile Include="IMemoryMqServerCallback.cs" />
+    <Compile Include="IMemoryMqServer.cs" />
+    <Compile Include="MemoryMqServer.cs" />
     <Compile Include="MemoryQueueDeliveryEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subsystem\IMemoryMqServerClient.cs" />
+    <Compile Include="Subsystem\Mailbox.cs" />
+    <Compile Include="Subsystem\MessageDispatcher.cs" />
+    <Compile Include="Subsystem\QueueProxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">

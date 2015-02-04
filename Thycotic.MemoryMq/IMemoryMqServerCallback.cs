@@ -3,9 +3,9 @@
 namespace Thycotic.MemoryMq
 {
     [ServiceContract(Namespace = "http://www.thycotic.com/services")]
-    public interface IMemoryMqServiceCallback
+    public interface IMemoryMqServerCallback
     {
         [OperationContract(IsOneWay = true)]
-        void SendMessage(byte[] body);
+        void SendMessage(MemoryQueueDeliveryEventArgs deliveryArgs);
     }
 }

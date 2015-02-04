@@ -73,6 +73,7 @@
     <Compile Include="QueueClient\ICommonModelProperties.cs" />
     <Compile Include="QueueClient\MemoryMq\IMemoryMqServiceConnection.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqQueue.cs" />
+    <Compile Include="QueueClient\MemoryMq\MemoryMqServiceCallback.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqServiceConnection.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqServiceConnectionFactory.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqSubscription.cs" />

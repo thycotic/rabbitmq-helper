@@ -7,17 +7,17 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqQueue : ICommonQueue
     {
-        private readonly IMemoryMqServiceClient _serviceClient;
+        private readonly IMemoryMqServer _server;
         private readonly string _queueName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqQueue"/> class.
         /// </summary>
-        /// <param name="serviceClient">The service client.</param>
+        /// <param name="server">The service client.</param>
         /// <param name="queueName">Name of the queue.</param>
-        public MemoryMqQueue(IMemoryMqServiceClient serviceClient, string queueName)
+        public MemoryMqQueue(IMemoryMqServer server, string queueName)
         {
-            _serviceClient = serviceClient;
+            _server = server;
             _queueName = queueName;
         }
 

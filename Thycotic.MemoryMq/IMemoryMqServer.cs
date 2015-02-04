@@ -2,8 +2,8 @@
 
 namespace Thycotic.MemoryMq
 {
-    [ServiceContract(Namespace = "http://www.thycotic.com/services", CallbackContract = typeof(IMemoryMqServiceCallback))]
-    public interface IMemoryMqServiceClient
+    [ServiceContract(Namespace = "http://www.thycotic.com/services", SessionMode = SessionMode.Required, CallbackContract = typeof(IMemoryMqServerCallback))]
+    public interface IMemoryMqServer
     {
         [OperationContract(IsOneWay = true)]
         void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, byte[] body);
