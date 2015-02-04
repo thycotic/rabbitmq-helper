@@ -32,7 +32,8 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public bool Next(int timeoutMilliseconds, out CommonDeliveryEventArgs response)
         {
-            throw new NotImplementedException();
+            response = null;
+            return false;
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

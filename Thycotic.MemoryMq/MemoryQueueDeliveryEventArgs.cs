@@ -63,6 +63,15 @@ namespace Thycotic.MemoryMq
         public byte[] Body { get; set; }
 
         /// <summary>
+        /// Gets or sets the properties.
+        /// </summary>
+        /// <value>
+        /// The properties.
+        /// </value>
+        [DataMember]
+        public MemoryMqProperties Properties { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MemoryQueueDeliveryEventArgs" /> class.
         /// </summary>
         /// <param name="consumerTag">The consumer tag.</param>
@@ -70,14 +79,16 @@ namespace Thycotic.MemoryMq
         /// <param name="redelivered">if set to <c>true</c> [redelivered].</param>
         /// <param name="exchange">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
+        /// <param name="properties">The properties.</param>
         /// <param name="body">The body.</param>
-        public MemoryQueueDeliveryEventArgs(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, byte[] body)
+        public MemoryQueueDeliveryEventArgs(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, MemoryMqProperties properties, byte[] body)
         {
             ConsumerTag = consumerTag;
             DeliveryTag = deliveryTag;
             Redelivered = redelivered;
             Exchange = exchange;
             RoutingKey = routingKey;
+            Properties = properties;
             Body = body;
         }
     }

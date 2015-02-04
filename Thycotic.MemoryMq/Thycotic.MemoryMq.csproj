@@ -58,6 +58,7 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="MemoryMqProperties.cs" />
     <Compile Include="Subsystem\BindingDictionary.cs" />
     <Compile Include="WcfHelpers.cs" />
     <Compile Include="Subsystem\ClientDictionary.cs" />

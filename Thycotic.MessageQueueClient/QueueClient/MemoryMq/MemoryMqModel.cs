@@ -32,14 +32,21 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// </value>
         public object RawValue { get { return null; } }
 
-        
+
+        #region Mapping
+        private ICommonModelProperties Map(MemoryMqProperties properties)
+        {
+            return new MemoryMqModelProperties(properties);
+        }
+        #endregion
+
         /// <summary>
         /// Creates the basic properties.
         /// </summary>
         /// <returns></returns>
         public ICommonModelProperties CreateBasicProperties()
         {
-            return new MemoryMqModelProperties();
+            return new MemoryMqModelProperties(new MemoryMqProperties());
         }
 
         /// <summary>
@@ -72,7 +79,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate,
             ICommonModelProperties properties, byte[] body)
         {
-            _server.BasicPublish(exchangeName, routingKey, mandatory, immediate, body);
+            _server.BasicPublish(exchangeName, routingKey, mandatory, immediate, properties.GetRawValue<MemoryMqProperties>(), body);
 
         }
 
@@ -199,7 +206,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
             _callback.BytesReceived +=
                 (sender, deliveryArgs) =>
                     consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag, deliveryArgs.Redelivered, deliveryArgs.Exchange,
-                        deliveryArgs.RoutingKey, new MemoryMqModelProperties(), deliveryArgs.Body);
+                        deliveryArgs.RoutingKey, Map(deliveryArgs.Properties), deliveryArgs.Body);
 
         }
 
