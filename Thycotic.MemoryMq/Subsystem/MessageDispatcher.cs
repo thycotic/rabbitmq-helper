@@ -46,6 +46,12 @@ namespace Thycotic.MemoryMq.Subsystem
                         return;
                     }
 
+                    if (mailbox.Queue.IsEmpty)
+                    {
+                        //nothing in the queue
+                        return;
+                    }
+
                     MemoryMqServerClientProxy clientProxy;
                     if (!_clientDictionary.TryGetClient(queueName, out clientProxy))
                     {
