@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.ServiceModel.Security;
 using System.Threading.Tasks;
 using Autofac;
+using Thycotic.Logging;
 using Thycotic.MemoryMq;
 
 namespace Thycotic.SecretServerEngine2.MemoryMq
@@ -14,6 +15,8 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
         private readonly string _thumbprint;
         private Task _serverTask;
         private ServiceHost _host;
+
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServer));
 
         public MemoryMqServer(string connectionString, string thumbprint)
         {
@@ -36,7 +39,7 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
 
                 _host = new ServiceHost(typeof(Thycotic.MemoryMq.MemoryMqServer));
                 _host.AddServiceEndpoint(typeof(IMemoryMqServer), serviceBinding, _connectionString);
-                _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new AgentVerifier();
+                _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new EngineVerifier();
                 _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
 
                 _host.Credentials.ServiceCertificate.SetCertificate(
@@ -45,12 +48,23 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
                     X509FindType.FindByThumbprint,
                     _thumbprint);
 
-                _host.Open();
+                try
+                {
+                    _host.Open();
+
+                    _log.Info("Server running...");
+                }
+                catch (Exception ex)
+                {
+                    _log.Error(string.Format("Server could not start because {0}", ex.Message), ex);    
+                }
             });
         }
 
         public void Stop()
         {
+            _log.Info("Server stopping...");
+
             _host.Close();
             _serverTask.Wait();
 
