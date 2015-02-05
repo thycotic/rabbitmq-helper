@@ -38,7 +38,7 @@ namespace Thycotic.MemoryMq
         /// <param name="body">The body.</param>
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, MemoryMqProperties properties, byte[] body)
         {
-            _messages.Publish(new RoutingSlip(exchangeName, routingKey), new MemoryQueueDeliveryEventArgs(exchangeName, routingKey, properties, body));
+            _messages.Publish(new RoutingSlip(exchangeName, routingKey), new MemoryMqDeliveryEventArgs(exchangeName, routingKey, properties, body));
         }
 
         /// <summary>

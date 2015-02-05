@@ -12,14 +12,14 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// <summary>
         /// Event fired when bytes are received
         /// </summary>
-        public EventHandler<MemoryQueueDeliveryEventArgs> BytesReceived;
+        public EventHandler<MemoryMqDeliveryEventArgs> BytesReceived;
 
         /// <summary>
         /// Sends the message.
         /// </summary>
-        /// <param name="deliveryArgs">The <see cref="MemoryQueueDeliveryEventArgs"/> instance containing the event data.</param>
+        /// <param name="deliveryArgs">The <see cref="MemoryMqDeliveryEventArgs"/> instance containing the event data.</param>
         /// <exception cref="System.ApplicationException">There is no one listening</exception>
-        public void SendMessage(MemoryQueueDeliveryEventArgs deliveryArgs)
+        public void SendMessage(MemoryMqDeliveryEventArgs deliveryArgs)
         {
             if (BytesReceived != null)
             {

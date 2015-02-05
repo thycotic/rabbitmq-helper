@@ -55,7 +55,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 
             _server.QueueBind(_queueName, string.Empty, routingKey);
 
-            MemoryQueueDeliveryEventArgs eventArgs = null;
+            MemoryMqDeliveryEventArgs eventArgs = null;
 
             var cts = new CancellationTokenSource();
 

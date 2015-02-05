@@ -11,8 +11,8 @@ namespace Thycotic.MemoryMq
         /// <summary>
         /// Sends the message.
         /// </summary>
-        /// <param name="deliveryArgs">The <see cref="MemoryQueueDeliveryEventArgs"/> instance containing the event data.</param>
+        /// <param name="deliveryArgs">The <see cref="MemoryMqDeliveryEventArgs"/> instance containing the event data.</param>
         [OperationContract(IsOneWay = true)]
-        void SendMessage(MemoryQueueDeliveryEventArgs deliveryArgs);
+        void SendMessage(MemoryMqDeliveryEventArgs deliveryArgs);
     }
 }

@@ -60,7 +60,7 @@ namespace Thycotic.MemoryMq.Subsystem
                     }
 
 
-                    MemoryQueueDeliveryEventArgs body;
+                    MemoryMqDeliveryEventArgs body;
                     if (!mailbox.Queue.TryDequeue(out body))
                     {
                         //nothing in the queue

@@ -7,7 +7,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class QueueProxy
     {
-        private readonly ConcurrentQueue<MemoryQueueDeliveryEventArgs> _queue;
+        private readonly ConcurrentQueue<MemoryMqDeliveryEventArgs> _queue;
 
         /// <summary>
         /// Gets a value indicating whether this instance is empty.
@@ -27,7 +27,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// Initializes a new instance of the <see cref="QueueProxy"/> class.
         /// </summary>
         /// <param name="queue">The queue.</param>
-        public QueueProxy(ConcurrentQueue<MemoryQueueDeliveryEventArgs> queue)
+        public QueueProxy(ConcurrentQueue<MemoryMqDeliveryEventArgs> queue)
         {
             _queue = queue;
         }
@@ -37,7 +37,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         /// <param name="body">The body.</param>
         /// <returns></returns>
-        public bool TryDequeue(out MemoryQueueDeliveryEventArgs body)
+        public bool TryDequeue(out MemoryMqDeliveryEventArgs body)
         {
             return _queue.TryDequeue(out body);
         }
