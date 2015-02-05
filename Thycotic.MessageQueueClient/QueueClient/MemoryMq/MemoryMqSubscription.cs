@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using RabbitMQ.Client.Events;
 using Thycotic.MemoryMq;
 using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
@@ -27,41 +29,64 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
             _queueName = queueName;
         }
 
+         /// <summary>
+         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+         /// </summary>
         public void Dispose()
         {
         }
 
+        /// <summary>
+        /// Gets or sets the name of the queue.
+        /// </summary>
+        /// <value>
+        /// The name of the queue.
+        /// </value>
         public string QueueName {get { return _queueName; }
         }
+        /// <summary>
+        /// </summary>
+        /// <param name="timeoutMilliseconds">The timeout milliseconds.</param>
+        /// <param name="response">The <see cref="CommonDeliveryEventArgs" /> instance containing the event data.</param>
+        /// <returns></returns>
         public bool Next(int timeoutMilliseconds, out CommonDeliveryEventArgs response)
         {
-            _server.QueueBind(_queueName, string.Empty, string.Empty);
+            var routingKey = _queueName;
 
-            _server.BasicConsume(_queueName);
+            _server.QueueBind(_queueName, string.Empty, routingKey);
 
-            //TODO: Keep working on this.
+            MemoryQueueDeliveryEventArgs eventArgs = null;
 
-            //var received = false;
+            var cts = new CancellationTokenSource();
 
-            ////when the server sends us something, process it
-            //_callback.BytesReceived += (sender, deliveryArgs) =>
-            //{
-                
-            //};
+            //when the server sends us something, process it
+            _callback.BytesReceived += (sender, deliveryArgs) =>
+            {
+                eventArgs = deliveryArgs;
+                cts.Cancel();
+            };
 
-            //response = null;
-            //MemoryQueueDeliveryEventArgs eventArgs;
+            var task = Task.Factory.StartNew(() =>
+            {
+                _server.BasicConsume(_queueName);
 
-            //_server.
-            //if (!_subscription.Next(timeoutMilliseconds, out eventArgs))
-            //{
-            //    return false;
-            //}
+                cts.Token.WaitHandle.WaitOne(TimeSpan.FromMilliseconds(timeoutMilliseconds));
 
-            //response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, eventArgs.DeliveryTag, eventArgs.Redelivered, eventArgs.Exchange,
-            //    eventArgs.RoutingKey, new MemoryMqModelProperties(eventArgs.Properties), eventArgs.Body);
+            }, cts.Token);
+
+            task.Wait(TimeSpan.FromMilliseconds(timeoutMilliseconds));
+
+            if (!task.IsCompleted || eventArgs == null)
+            {
+                response = null;
+                return false;
+            }
+
+            response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, eventArgs.DeliveryTag, eventArgs.Redelivered, eventArgs.Exchange,
+                eventArgs.RoutingKey, new MemoryMqModelProperties(eventArgs.Properties), eventArgs.Body);
+            
             return true;
-        }
+        
         }
     }
 }
