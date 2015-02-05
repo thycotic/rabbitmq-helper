@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 
 namespace Thycotic.MemoryMq
 {
@@ -6,7 +7,7 @@ namespace Thycotic.MemoryMq
     /// Interface for a memory mq server
     /// </summary>
     [ServiceContract(Namespace = "http://www.thycotic.com/services", SessionMode = SessionMode.Required, CallbackContract = typeof(IMemoryMqServerCallback))]
-    public interface IMemoryMqServer
+    public interface IMemoryMqServer : IDisposable
     {
         /// <summary>
         /// Basic publish.

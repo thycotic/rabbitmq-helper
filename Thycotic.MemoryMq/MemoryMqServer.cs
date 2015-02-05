@@ -8,8 +8,8 @@ namespace Thycotic.MemoryMq
     /// <summary>
     /// Memory mq server
     /// </summary>
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
-    public class MemoryMqServer : IMemoryMqServer, IDisposable
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
+    public class MemoryMqServer : IMemoryMqServer
     {
         private readonly ExchangeDictionary _messages = new ExchangeDictionary();
         private readonly BindingDictionary _bindings = new BindingDictionary();
