@@ -34,8 +34,6 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 
             _communicationObject.Faulted += (sender, args) => connectionShutdownHandler(sender, args);
             _communicationObject.Closed += (sender, args) => connectionShutdownHandler(sender, args);
-            _communicationObject.Closing += (sender, args) => connectionShutdownHandler(sender, args);
-
         }
 
         public ICommonModel CreateModel()

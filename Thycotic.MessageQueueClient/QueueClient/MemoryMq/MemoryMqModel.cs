@@ -22,6 +22,23 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         {
             _server = server;
             _callback = callback;
+
+            var communicationObject = _server.GetCommunicationObject();
+            
+            Action<object, EventArgs> connectionShutdownHandler = (model, reason) =>
+            {
+                if (ModelShutdown != null)
+                {
+                    ModelShutdown(model, new ModelShutdownEventArgs
+                    {
+                        ReplyText = string.Empty
+                    });
+                }
+            };
+
+            communicationObject.Faulted += (sender, args) => connectionShutdownHandler(sender, args);
+            communicationObject.Closed += (sender, args) => connectionShutdownHandler(sender, args);
+
         }
 
         /// <summary>
