@@ -65,9 +65,14 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
         {
             _log.Info("Server stopping...");
 
-            _host.Close();
-            _serverTask.Wait();
+            if ((_host == null) || (_serverTask == null)) return;
 
+            if (_host.State == CommunicationState.Opened)
+            {
+                _host.Close();
+            }
+            _serverTask.Wait();
+                
             _host = null;
             _serverTask = null;
         }
