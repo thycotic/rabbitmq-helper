@@ -9,7 +9,7 @@ using Thycotic.MemoryMq;
 
 namespace Thycotic.SecretServerEngine2.MemoryMq
 {
-    public class MemoryMqServer : IStartable
+    public class MemoryMqServer : IStartable, IDisposable
     {
         private readonly string _connectionString;
         private readonly string _thumbprint;
