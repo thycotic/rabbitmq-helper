@@ -29,7 +29,7 @@ namespace Thycotic.MemoryMq.Subsystem
             client.Channel.Closed += (sender, args) =>
             {
                 _log.Debug("Detaching consumer");
-                GetConsumerList(queueName).RemoveConsumer(client);
+                GetConsumerList(queueName).RemoveClient(client);
             };
 
             GetConsumerList(queueName).AddConsumer(client);
@@ -43,7 +43,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <returns></returns>
         public bool TryGetClient(string queueName, out MemoryMqServerClientProxy clientProxy)
         {
-            return GetConsumerList(queueName).TryGetConsumer(out clientProxy);
+            return GetConsumerList(queueName).TryGetClient(out clientProxy);
         }
 
         private ClientList GetConsumerList(string queueName)
@@ -67,13 +67,13 @@ namespace Thycotic.MemoryMq.Subsystem
                 _data.TryAdd(clientProxy.Channel.SessionId, clientProxy);
             }
 
-            public void RemoveConsumer(MemoryMqServerClientProxy clientProxy)
+            public void RemoveClient(MemoryMqServerClientProxy clientProxy)
             {
                 MemoryMqServerClientProxy temp;
                 _data.TryRemove(clientProxy.Channel.SessionId, out temp);
             }
 
-            public bool TryGetConsumer(out MemoryMqServerClientProxy clientProxy)
+            public bool TryGetClient(out MemoryMqServerClientProxy clientProxy)
             {
                 var count = _data.Count;
                 //simple round robin 
