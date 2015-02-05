@@ -52,7 +52,6 @@ namespace Thycotic.SecretServerEngine2.IoC
 
                 builder.Register(context => new MemoryMqServer(connectionString, thumbprint)).As<IStartable>().SingleInstance();
 
-                builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
                 builder.Register(context => new MemoryMqConnection(connectionString))
                     .As<ICommonConnection>().InstancePerDependency();
             }
