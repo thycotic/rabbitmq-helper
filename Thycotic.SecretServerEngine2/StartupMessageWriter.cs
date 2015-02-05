@@ -20,7 +20,10 @@ namespace Thycotic.SecretServerEngine2
             {
                 var sr = new StreamReader(logoStream);
                 var logoAscii = sr.ReadToEnd();
-            
+
+                logoAscii = logoAscii.Replace("{version}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                logoAscii = logoAscii.Replace("{architecture}", Assembly.GetExecutingAssembly().GetName().ProcessorArchitecture.ToString());
+
                 //don't use the log since it just spams the table
                 Console.WriteLine(logoAscii);
             }
