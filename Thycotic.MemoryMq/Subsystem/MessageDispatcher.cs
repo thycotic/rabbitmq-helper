@@ -72,10 +72,14 @@ namespace Thycotic.MemoryMq.Subsystem
                         }
 
                         clientProxy.Callback.SendMessage(body);
+
+                        //trip the processors to keep the order. 
+                        //otherwise, tasks are scheduled at exactly the same time and might fire out of order
+                        //Thread.Sleep(1);
                     });
 
                 }
-                Thread.Sleep(100);
+                
 
             } while (!_cts.IsCancellationRequested);
         }
