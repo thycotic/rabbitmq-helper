@@ -75,15 +75,14 @@ namespace Thycotic.MemoryMq.Subsystem
 
             public bool TryGetConsumer(out MemoryMqServerClientProxy clientProxy)
             {
-                lock (_data)
+                var count = _data.Count;
+                //simple round robin 
+                if (count > 0)
                 {
-                    //simple round robin 
-                    if (_data.Any())
-                    {
-                        _robin = _robin%_data.Count;
-                        clientProxy = _data.Values.Skip(_robin).Single();
-                        return true;
-                    }
+                    _robin = _robin % count;
+                    clientProxy = _data.Values.Skip(_robin).First();
+                    _robin++;
+                    return true;
                 }
 
                 clientProxy = null;
