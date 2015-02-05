@@ -26,6 +26,16 @@ namespace Thycotic.MemoryMq.Subsystem
         }
 
         /// <summary>
+        /// Gets a value indicating whether this exchange is empty. This empty mailboxes.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is empty; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsEmpty {
+            get { return _data.Values.All(q => q.IsEmpty); }
+        }
+
+        /// <summary>
         /// Publishes the body to the specified routing slip.
         /// </summary>
         /// <param name="routingSlip">The routing slip.</param>
