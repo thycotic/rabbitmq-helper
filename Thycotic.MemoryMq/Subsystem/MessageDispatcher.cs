@@ -91,6 +91,19 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public void Stop()
         {
+            var drainTask = Task.Factory.StartNew(() =>
+            {
+                _log.Info("Draining exchange...");
+
+                while (_exchangeDictionary.Mailboxes.Any(mb => !mb.Queue.IsEmpty))
+                {
+                    _log.Info("Waiting for queues to drain...");
+                    Thread.Sleep(1000);
+                }
+            });
+
+            drainTask.Wait(TimeSpan.FromSeconds(30));
+
             if ((_cts == null) || (_monitoringTask == null))
             {
                 return;
