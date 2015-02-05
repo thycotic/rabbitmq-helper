@@ -72,8 +72,6 @@ namespace Thycotic.MemoryMq.Subsystem
                         }
 
                         clientProxy.Callback.SendMessage(body);
-
-
                     });
 
                 }
@@ -109,13 +107,14 @@ namespace Thycotic.MemoryMq.Subsystem
             {
                 _log.Info("Draining exchange...");
 
-                while (_exchange.IsEmpty)
+                while (!_exchange.IsEmpty)
                 {
                     _log.Info("Waiting for queues to drain...");
                     Thread.Sleep(1000);
                 }
             });
 
+            //TODO: Make configurable
             drainTask.Wait(TimeSpan.FromSeconds(30));
 
             _log.Debug("Stopping message monitoring");
