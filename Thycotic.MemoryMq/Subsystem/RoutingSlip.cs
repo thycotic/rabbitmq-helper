@@ -104,7 +104,11 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </returns>
         public override string ToString()
         {
-            return string.Format("{0}:{1}", Exchange, RoutingKey);
+            if (!string.IsNullOrWhiteSpace(Exchange))
+            {
+                return string.Format("{0}:{1}", Exchange, RoutingKey);
+            }
+            return RoutingKey;
         }
     }
 }
