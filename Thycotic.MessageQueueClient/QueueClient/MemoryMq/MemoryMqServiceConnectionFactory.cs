@@ -7,9 +7,20 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 {
     internal class MemoryMqServiceConnectionFactory
     {
-        public string Uri { get; set; }
+        public string Uri
+        {
+            get { return _uri.AbsoluteUri; }
+            set { _uri = new Uri(value); }
+        }
+
         public int RequestedHeartbeat { get; set; }
-        public object HostName { get; set; }
+
+        public object HostName
+        {
+            get { return _uri.Host; }
+        }
+
+        private Uri _uri;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServiceConnectionFactory));
 
@@ -26,7 +37,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
             //channelFactory.Closed += new EventHandler(DuplexChannelFactory_Closed);
             //channelFactory.Closing += new EventHandler(DuplexChannelFactory_Closing);
             //channelFactory.Faulted += new EventHandler(DuplexChannelFactory_Faulted);
-            
+
             var credentials = channelFactory.Credentials;
 
             if (credentials == null)
