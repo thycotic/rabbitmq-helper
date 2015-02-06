@@ -42,12 +42,13 @@ namespace Thycotic.MessageQueueClient.Wrappers
             var routingKey = this.GetRoutingKey(typeof(TRequest));
 
             var queueName = this.GetQueueName(typeof(THandler), typeof(TRequest));
-            _log.Debug(string.Format("Channel opened for {0}", queueName));
 
             const int retryAttempts = -1; //forever
             const int retryDelayGrowthFactor = 1;
 
             var model = _connection.OpenChannel(retryAttempts, DefaultConfigValues.ReOpenDelay, retryDelayGrowthFactor);
+
+            _log.Debug(string.Format("Channel opened for {0}", queueName));
 
             const int prefetchSize = 0;
             const int prefetchCount = 1;
