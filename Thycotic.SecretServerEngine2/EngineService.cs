@@ -10,15 +10,15 @@ namespace Thycotic.SecretServerEngine2
 {
     public class EngineService : ServiceBase
     {
-        private readonly bool _autoConsume;
+        private readonly bool _startConsuming;
         public IContainer IoCContainer { get; set; }
 
         private readonly ILogWriter _log = Log.Get(typeof(EngineService));
         private LogCorrelation _correlation;
 
-        public EngineService(bool autoConsume = true)
+        public EngineService(bool startConsuming = true)
         {
-            _autoConsume = autoConsume;
+            _startConsuming = startConsuming;
             ConfigureLogging();
         }
 
@@ -41,7 +41,8 @@ namespace Thycotic.SecretServerEngine2
             Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
 
             builder.RegisterModule(new MessageQueueModule(configurationProvider));
-            if (_autoConsume)
+
+            if (_startConsuming)
             {
                 builder.RegisterModule(new LogicModule());
                 builder.RegisterModule(new WrappersModule());

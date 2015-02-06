@@ -18,9 +18,9 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
             if (args.Any() && ((args.First() == "i") || (args.First() == "icd")))
             {
                 #region Start server
-                var autoConsume = args.First() != "icd"; //the first argument is not icd (Interactive with Consumption Disabled)
+                var startConsuming = args.First() != "icd"; //the first argument is not icd (Interactive with Consumption Disabled)
 
-                var agent = new EngineService(autoConsume);
+                var agent = new EngineService(startConsuming);
                 agent.Start(new string[] { });
                 #endregion
 
