@@ -31,7 +31,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
                 {
                     ModelShutdown(model, new ModelShutdownEventArgs
                     {
-                        ReplyText = "No shutdown available"
+                        ReplyText = "No shutdown information available"
                     });
                 }
             };
