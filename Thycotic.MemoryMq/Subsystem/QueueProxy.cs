@@ -42,6 +42,15 @@ namespace Thycotic.MemoryMq.Subsystem
             return _queue.TryDequeue(out body);
         }
 
-        
+
+        /// <summary>
+        /// Retries the specified body.
+        /// </summary>
+        /// <param name="body">The <see cref="MemoryMqDeliveryEventArgs"/> instance containing the event data.</param>
+        public void Retry(MemoryMqDeliveryEventArgs body)
+        {
+            //TODO: use an implementation where the message is put at the front.
+            _queue.Enqueue(body);
+        }
     }
 }

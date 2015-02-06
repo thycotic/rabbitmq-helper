@@ -71,7 +71,17 @@ namespace Thycotic.MemoryMq.Subsystem
                             return;
                         }
 
-                        clientProxy.Callback.SendMessage(body);
+                        try
+                        {
+                            clientProxy.Callback.SendMessage(body);
+                        }
+                        catch (Exception ex)
+                        {
+                            _log.Error("Failed to send message to client. Requeing message", ex);
+
+                            mailbox.Queue.Retry(body);
+                        }
+                        
 
                         //trip the processors to keep the order. 
                         //otherwise, tasks are scheduled at exactly the same time and might fire out of order
