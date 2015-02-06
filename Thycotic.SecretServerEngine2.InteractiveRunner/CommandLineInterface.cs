@@ -51,6 +51,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
             });
             #endregion
 
+            Console.SetWindowSize(200, 40);
         }
 
         public void AddCommand(IConsoleCommand command)

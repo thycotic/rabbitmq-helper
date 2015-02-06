@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using Autofac;
@@ -17,6 +18,10 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
             //interactive mode (first argument is i or icd
             if (args.Any() && ((args.First() == "i") || (args.First() == "icd")))
             {
+                Console.WriteLine("Starting interactive mode...");
+
+                var cli = new CommandLineInterface();
+
                 #region Start server
                 var startConsuming = args.First() != "icd"; //the first argument is not icd (Interactive with Consumption Disabled)
 
@@ -25,8 +30,6 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
                 #endregion
 
                 #region Start client
-                var cli = new CommandLineInterface();
-
                 ConfigureCli(cli, agent.IoCContainer);
 
                 cli.BeginInputLoop(string.Join(" ", args.Skip(1)));
