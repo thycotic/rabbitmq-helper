@@ -6,10 +6,16 @@ using Thycotic.Logging;
 
 namespace Thycotic.SecretServerEngine2
 {
+    /// <summary>
+    /// Startup message writer. Mostly to ensure Autofac is working properly.
+    /// </summary>
     public class StartupMessageWriter : IStartable, IDisposable
     {
         private readonly ILogWriter _log = Log.Get(typeof(StartupMessageWriter));
 
+        /// <summary>
+        /// Perform once-off startup processing.
+        /// </summary>
         public void Start()
         {
             _log.Info("Application is starting...");
@@ -33,6 +39,9 @@ namespace Thycotic.SecretServerEngine2
             }
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             _log.Info("Application is stopping...");

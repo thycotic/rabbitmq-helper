@@ -9,6 +9,9 @@ using Thycotic.MemoryMq;
 
 namespace Thycotic.SecretServerEngine2.MemoryMq
 {
+    /// <summary>
+    /// Memory mq WCF server wrapper.
+    /// </summary>
     public class MemoryMqServer : IStartable, IDisposable
     {
         private readonly string _connectionString;
@@ -18,12 +21,21 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServer));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryMqServer"/> class.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
+        /// <param name="thumbprint">The thumbprint.</param>
         public MemoryMqServer(string connectionString, string thumbprint)
         {
             _connectionString = connectionString;
             _thumbprint = thumbprint;
         }
 
+        /// <summary>
+        /// Perform once-off startup processing.
+        /// </summary>
+        /// <exception cref="System.ApplicationException">Server already running</exception>
         public void Start()
         {
             if (_serverTask != null)
@@ -61,6 +73,9 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
             });
         }
 
+        /// <summary>
+        /// Stops this instance.
+        /// </summary>
         public void Stop()
         {
             _log.Info("Server stopping...");
@@ -77,6 +92,9 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
             _serverTask = null;
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             Stop();

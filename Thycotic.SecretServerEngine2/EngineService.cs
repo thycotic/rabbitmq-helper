@@ -8,14 +8,28 @@ using Thycotic.SecretServerEngine2.IoC;
 
 namespace Thycotic.SecretServerEngine2
 {
+    /// <summary>
+    /// Engine windows service
+    /// </summary>
     public class EngineService : ServiceBase
     {
+        /// <summary>
+        /// Gets or sets the io c container.
+        /// </summary>
+        /// <value>
+        /// The io c container.
+        /// </value>
+        public IContainer IoCContainer { get; private set; }
+
         private readonly bool _startConsuming;
-        public IContainer IoCContainer { get; set; }
 
         private readonly ILogWriter _log = Log.Get(typeof(EngineService));
         private LogCorrelation _correlation;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EngineService"/> class.
+        /// </summary>
+        /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
         public EngineService(bool startConsuming = true)
         {
             _startConsuming = startConsuming;
@@ -27,6 +41,9 @@ namespace Thycotic.SecretServerEngine2
             Log.Configure();
         }
 
+        /// <summary>
+        /// Configures inversion of control.
+        /// </summary>
         public void ConfigureIoC()
         {
             _log.Debug("Configuring IoC...");
@@ -81,11 +98,19 @@ namespace Thycotic.SecretServerEngine2
             _correlation.Dispose();
         }
 
+        /// <summary>
+        /// Starts the specified arguments.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
         public void Start(string[] args)
         {
             OnStart(args);
         }
 
+        /// <summary>
+        /// When implemented in a derived class, executes when a Start command is sent to the service by the Service Control Manager (SCM) or when the operating system starts (for a service that starts automatically). Specifies actions to take when the service starts.
+        /// </summary>
+        /// <param name="args">Data passed by the start command.</param>
         protected override void OnStart(string[] args)
         {
             using (LogContext.Create("Starting"))
@@ -96,6 +121,9 @@ namespace Thycotic.SecretServerEngine2
             }
         }
 
+        /// <summary>
+        /// When implemented in a derived class, executes when a Stop command is sent to the service by the Service Control Manager (SCM). Specifies actions to take when a service stops running.
+        /// </summary>
         protected override void OnStop()
         {
             using (LogContext.Create("Stopping"))
