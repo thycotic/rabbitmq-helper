@@ -1,4 +1,5 @@
-﻿using Thycotic.Logging;
+﻿using System;
+using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 
@@ -12,6 +13,10 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
         public override string Name
         {
             get { return "helloworld"; }
+        }
+
+        public override string Area {
+            get { return CommandAreas.Poc; }
         }
 
         public override string Description

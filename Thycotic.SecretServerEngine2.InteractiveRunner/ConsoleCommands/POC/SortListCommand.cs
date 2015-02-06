@@ -17,6 +17,11 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "sortlist"; }
         }
 
+        public override string Area
+        {
+            get { return CommandAreas.Poc; }
+        }
+
         public override string Description
         {
             get { return "Posts a sort list blocking message to the exchange"; }

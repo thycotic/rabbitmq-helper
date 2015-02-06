@@ -18,6 +18,11 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "multiplepublish"; }
         }
 
+        public override string Area
+        {
+            get { return CommandAreas.Poc; }
+        }
+
         public override string Description
         {
             get { return "Posts multiple messages to the exchange"; }

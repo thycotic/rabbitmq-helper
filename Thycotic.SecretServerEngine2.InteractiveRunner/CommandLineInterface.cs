@@ -16,13 +16,14 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
         private readonly HashSet<IConsoleCommand> _commandMappings = new HashSet<IConsoleCommand>();
 
         private readonly ILogWriter _log = Log.Get(typeof(CommandLineInterface));
-        
+
         public CommandLineInterface()
         {
             #region Build-in system commands
             _commandMappings.Add(new SystemConsoleCommand
             {
                 Name = "clear",
+                Area = CommandAreas.Core,
                 Aliases = new[] { "cls" },
                 Description = "Clears the terminal screen",
                 Action = parameters => Console.Clear()
@@ -31,23 +32,35 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
             _commandMappings.Add(new SystemConsoleCommand
             {
                 Name = "help",
-                Aliases = new[] { "man", "h"},
+                Area = CommandAreas.Core,
+                Aliases = new[] { "man", "h" },
                 Description = "This screen",
                 Action = parameters =>
                 {
                     Console.WriteLine();
                     Console.WriteLine("Available commands: ".ToUpper());
 
-                    var mappings = _commandMappings.OrderBy(c => c.Name).Select(c => c.ToString());
+                    _commandMappings.Select(c => !string.IsNullOrWhiteSpace(c.Area) ? c.Area : CommandAreas.Uncategorized).Distinct().OrderBy(a => a).ToList().ForEach(a =>
+                    {
+                        Console.WriteLine("{0} command area", a);
 
-                    mappings.ToList().ForEach(m => Console.WriteLine(" - {0}", m));
+                        if (a == CommandAreas.Uncategorized) a = null;
+
+                        var mappings =
+                            _commandMappings.Where(c => c.Area == a).OrderBy(c => c.Name).Select(c => c.ToString());
+
+                        mappings.ToList().ForEach(m => Console.WriteLine(" - {0}", m));
+
+                        Console.WriteLine();
+                    });
                 }
             });
 
             _commandMappings.Add(new SystemConsoleCommand
             {
                 Name = "quit",
-                Aliases = new [] {"exit", "q" },
+                Area = CommandAreas.Core,
+                Aliases = new[] { "exit", "q" },
                 Description = "Quits/exists the application",
                 Action = parameters => _cts.Cancel()
             });
@@ -189,7 +202,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
 
             [DllImport("user32.dll")]
             private static extern bool ShowWindow(IntPtr hWnd, int cmdShow);
-            
+
             [DllImport("user32.dll")]
             private static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
 

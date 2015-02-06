@@ -16,6 +16,11 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "flood"; }
         }
 
+        public override string Area
+        {
+            get { return CommandAreas.Poc; }
+        }
+
         public override string Description
         {
             get { return "Floods the exchange with messages"; }
