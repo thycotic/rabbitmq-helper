@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Thycotic.Logging;
@@ -14,7 +16,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
         private readonly HashSet<IConsoleCommand> _commandMappings = new HashSet<IConsoleCommand>();
 
         private readonly ILogWriter _log = Log.Get(typeof(CommandLineInterface));
-
+        
         public CommandLineInterface()
         {
             #region Build-in system commands
@@ -51,7 +53,16 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
             });
             #endregion
 
-            Console.SetWindowSize(200, 40);
+            ConfigureConsoleWindow();
+        }
+
+        private static void ConfigureConsoleWindow()
+        {
+            Console.Title = string.Format("Secret Server Agent in interactive mode v.{0} ({1})", ReleaseInformationHelper.Version, ReleaseInformationHelper.Architecture);
+
+            InteropHelper.DisableCloseMenuItem();
+
+            InteropHelper.Maximize();
         }
 
         public void AddCommand(IConsoleCommand command)
@@ -167,6 +178,45 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
         public void Wait()
         {
             _cts.Token.WaitHandle.WaitOne();
+        }
+
+        private static class InteropHelper
+        {
+            #region Close window related imports
+            private const int MfBycommand = 0x00000000;
+
+            private const int ScClose = 0xF060;
+
+            [DllImport("user32.dll")]
+            private static extern bool ShowWindow(IntPtr hWnd, int cmdShow);
+            
+            [DllImport("user32.dll")]
+            private static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
+
+            [DllImport("user32.dll")]
+            private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+            #endregion
+
+            #region Maximize related imports
+            [DllImport("kernel32.dll", ExactSpelling = true)]
+            private static extern IntPtr GetConsoleWindow();
+            #endregion
+
+            public static void DisableCloseMenuItem()
+            {
+                //prevent users from using Ctrl-C
+                Console.CancelKeyPress += (sender, args) => { args.Cancel = true; };
+
+                DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), ScClose, MfBycommand);
+            }
+
+            public static void Maximize()
+            {
+                Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+
+                var p = Process.GetCurrentProcess();
+                ShowWindow(p.MainWindowHandle, 3); //SW_MAXIMIZE = 3
+            }
         }
     }
 }

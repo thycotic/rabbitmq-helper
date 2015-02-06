@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+using Thycotic.Logging;
 using Thycotic.MemoryMq;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
@@ -10,6 +11,8 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 
         private readonly ICommunicationObject _communicationObject;
         private readonly MemoryMqServiceCallback _callback;
+
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServiceConnection));
 
         public bool IsOpen
         {
@@ -43,7 +46,14 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 
         public void Close(int timeoutMilliseconds)
         {
-            _communicationObject.Close(TimeSpan.FromMilliseconds(timeoutMilliseconds));
+            try
+            {
+                _communicationObject.Close(TimeSpan.FromMilliseconds(timeoutMilliseconds));
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Failed to close connection", ex);
+            }
         }
     }
 }
