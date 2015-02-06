@@ -33,6 +33,7 @@ namespace Thycotic.SecretServerEngine2.IoC
             if (queueType == SupportedMessageQueues.RabbitMq)
             {
                 _log.Info("Using RabbitMq");
+
                 var connectionString = _configurationProvider(ConfigurationKeys.RabbitMq.ConnectionString);
                 _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
@@ -44,13 +45,11 @@ namespace Thycotic.SecretServerEngine2.IoC
             {
                 _log.Info("Using MemoryMq");
 
+                //initialize if necessary server 
+                builder.RegisterModule(new MemoryMqServerModule(_configurationProvider));
+
                 var connectionString = _configurationProvider(ConfigurationKeys.MemoryMq.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
-
-                var thumbprint = _configurationProvider(ConfigurationKeys.MemoryMq.Thumbprint);
-                _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
-
-                builder.Register(context => new MemoryMqServer(connectionString, thumbprint)).As<IStartable>().SingleInstance();
 
                 builder.Register(context => new MemoryMqConnection(connectionString))
                     .As<ICommonConnection>().InstancePerDependency();

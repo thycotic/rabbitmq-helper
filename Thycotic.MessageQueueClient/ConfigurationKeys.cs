@@ -35,6 +35,11 @@
             /// The thumb print
             /// </summary>
             public const string Thumbprint = "MemoryMq.Thumbprint";
+
+            /// <summary>
+            /// The start server
+            /// </summary>
+            public const string StartServer = "MemoryMq.StartServer";
         }
     }
 }

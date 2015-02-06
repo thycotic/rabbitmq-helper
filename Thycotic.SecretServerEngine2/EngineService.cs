@@ -41,7 +41,6 @@ namespace Thycotic.SecretServerEngine2
             Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
 
             builder.RegisterModule(new MessageQueueModule(configurationProvider));
-
             if (_autoConsume)
             {
                 builder.RegisterModule(new LogicModule());
