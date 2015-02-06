@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,28 @@ namespace Thycotic.SecretServerEngine2.LogViewer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ObservableCollection<LogEntry> _entries = new ObservableCollection<LogEntry>();
+
+        public ObservableCollection<LogEntry> LogEntries
+        {
+            get { return _entries; }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        private void LastNameCM_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class LogEntry
+    {
+        public DateTime Date { get; set; }
+        public string Level { get; set; }
+        public string Message { get; set; }
     }
 }
