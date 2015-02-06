@@ -3,9 +3,9 @@ using Thycotic.Logging;
 
 namespace Thycotic.SecretServerEngine2.MemoryMq
 {
-    internal class EngineVerifier : UserNamePasswordValidator
+    public class EngineClientVerifier : UserNamePasswordValidator, IEngineClientVerifier
     {
-        private readonly ILogWriter _log = Log.Get(typeof(EngineVerifier));
+        private readonly ILogWriter _log = Log.Get(typeof(EngineClientVerifier));
 
         public override void Validate(string agentkey, string ignored)
         {

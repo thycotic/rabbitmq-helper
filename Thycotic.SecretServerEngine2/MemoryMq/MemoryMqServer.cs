@@ -39,7 +39,7 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
 
                 _host = new ServiceHost(typeof(Thycotic.MemoryMq.MemoryMqServer));
                 _host.AddServiceEndpoint(typeof(IMemoryMqServer), serviceBinding, _connectionString);
-                _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new EngineVerifier();
+                _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new EngineClientVerifier();
                 _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
 
                 _host.Credentials.ServiceCertificate.SetCertificate(
