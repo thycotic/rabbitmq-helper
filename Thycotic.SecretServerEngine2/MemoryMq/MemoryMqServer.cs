@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IdentityModel.Selectors;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.ServiceModel.Security;
@@ -20,16 +21,19 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
         private ServiceHost _host;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServer));
+        private readonly UserNamePasswordValidator _engineClientVerifier;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqServer"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqServer" /> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
         /// <param name="thumbprint">The thumbprint.</param>
-        public MemoryMqServer(string connectionString, string thumbprint)
+        /// <param name="engineClientVerifier">The engine client verifier.</param>
+        public MemoryMqServer(string connectionString, string thumbprint, UserNamePasswordValidator engineClientVerifier)
         {
             _connectionString = connectionString;
             _thumbprint = thumbprint;
+            _engineClientVerifier = engineClientVerifier;
         }
 
         /// <summary>
@@ -51,7 +55,7 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
 
                 _host = new ServiceHost(typeof(Thycotic.MemoryMq.MemoryMqServer));
                 _host.AddServiceEndpoint(typeof(IMemoryMqServer), serviceBinding, _connectionString);
-                _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new EngineClientVerifier();
+                _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = _engineClientVerifier;
                 _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
 
                 _host.Credentials.ServiceCertificate.SetCertificate(

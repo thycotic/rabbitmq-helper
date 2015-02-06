@@ -6,9 +6,9 @@
     public interface IEngineClientVerifier
     {
         /// <summary>
-        /// Validates the specified agentkey.
+        /// Validates the specified clientKey.
         /// </summary>
-        /// <param name="agentkey">The agentkey.</param>
-        void Validate(string agentkey);
+        /// <param name="clientKey">The clientKey.</param>
+        void Validate(string clientKey);
     }
 }

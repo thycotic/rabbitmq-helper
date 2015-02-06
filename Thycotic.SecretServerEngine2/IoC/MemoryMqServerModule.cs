@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IdentityModel.Selectors;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
@@ -42,7 +43,12 @@ namespace Thycotic.SecretServerEngine2.IoC
             var thumbprint = _configurationProvider(ConfigurationKeys.MemoryMq.Thumbprint);
             _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
 
-            builder.Register(context => new MemoryMqServer(connectionString, thumbprint)).As<IStartable>().SingleInstance();
+            builder.RegisterType<EngineClientVerifier>()
+                .AsImplementedInterfaces()
+                .As<UserNamePasswordValidator>()
+                .InstancePerDependency();
+
+            builder.Register(context => new MemoryMqServer(connectionString, thumbprint, context.Resolve<UserNamePasswordValidator>())).As<IStartable>().SingleInstance();
         }
     }
 }
