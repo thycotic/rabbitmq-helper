@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+using Thycotic.Logging;
 using Thycotic.MemoryMq;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
@@ -9,6 +10,8 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         public string Uri { get; set; }
         public int RequestedHeartbeat { get; set; }
         public object HostName { get; set; }
+
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServiceConnectionFactory));
 
         public IMemoryMqServiceConnection CreateConnection()
         {
@@ -34,7 +37,18 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
             credentials.UserName.UserName = Guid.NewGuid().ToString();
             credentials.UserName.Password = string.Empty;
 
-            return new MemoryMqServiceConnection(channelFactory.CreateChannel(), callback);
+            try
+            {
+                var channel = channelFactory.CreateChannel();
+
+                return new MemoryMqServiceConnection(channel, callback);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(string.Format("Connection failed to open because {0} ", ex.Message), ex);
+
+                throw;
+            }
         }
     }
 }
