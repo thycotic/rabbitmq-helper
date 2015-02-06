@@ -1,4 +1,6 @@
-﻿using System.IdentityModel.Selectors;
+﻿using System;
+using System.IdentityModel.Selectors;
+using System.Runtime.Remoting.Channels;
 using System.Security;
 using Thycotic.Logging;
 
@@ -28,9 +30,27 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
         /// <param name="clientKey">The clientKey.</param>
         public void Validate(string clientKey)
         {
-            _log.Info(string.Format("Engine with key {0} connected", clientKey));
-            //_log.Warn("Engine validation is inactive");
-            throw new SecurityException("Client is not allowed");
+            _log.Info(string.Format("Engine client with key {0} connected", clientKey));
+
+            try
+            {
+                EnsureClientIsEnabled(clientKey);
+
+                _log.Info("Client is enabled and will be accepted.");
+            }
+            catch (Exception ex)
+            {
+                _log.Error(string.Format("Engine client with key {0} is not enabled. Client will be rejected.", clientKey), ex);
+                throw;
+            }
+        }
+
+        private void EnsureClientIsEnabled(string clientKey)
+        {
+            _log.Info(string.Format("Validating whether the engine client with key {0} is enabled.", clientKey));
+
+            _log.Warn("Engine validation is not live. Allowing all clients.");
+            //throw new SecurityException("Client is not allowed");
         }
     }
 }
