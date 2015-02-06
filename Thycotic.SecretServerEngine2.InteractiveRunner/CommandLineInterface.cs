@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands;
 
@@ -177,7 +178,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
                             cm => cm.Name == "help");
                     }
 
-                    command.Action.Invoke(parameters);
+                    Task.Factory.StartNew(() => command.Action.Invoke(parameters));
                 }
                 catch (Exception ex)
                 {
