@@ -36,10 +36,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
 
                 Enumerable.Range(0, count).AsParallel().ForAll(i =>
                 {
-                    var message = new HelloWorldMessage
-                    {
-                        Content = string.Format("{0} {1}", i, Guid.NewGuid())
-                    };
+                    var message = new PingMessage();
 
                     _bus.BasicPublish(message);
                 });

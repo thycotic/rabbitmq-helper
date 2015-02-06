@@ -12,7 +12,7 @@ namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
             lock (_syncRoot)
             {
                 var oldColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 writeAction.Invoke();
                 Console.ForegroundColor = oldColor;
             }
@@ -26,6 +26,11 @@ namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
         public static void WriteLine(string value)
         {
             WriteHelper(() => Console.WriteLine(value));
+        }
+
+        public static void Write(char value)
+        {
+            WriteHelper(() => Console.Write(value));
         }
     }
 }

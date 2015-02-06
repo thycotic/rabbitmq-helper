@@ -59,6 +59,7 @@
     <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
     <Compile Include="Areas\POC\Request\ChainMessage.cs" />
+    <Compile Include="Areas\POC\Request\PingMessage.cs" />
     <Compile Include="Areas\POC\Request\SortListMessage.cs" />
     <Compile Include="Areas\POC\Request\ThrowTriggerMessage.cs" />
     <Compile Include="Areas\POC\Request\StepMessage.cs" />
