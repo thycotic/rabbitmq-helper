@@ -5,7 +5,7 @@ using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueueClient.Wrappers
-{   
+{
     /// <summary>
     /// Base consumer wrapper
     /// </summary>
@@ -39,37 +39,44 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
         private void CreateModel()
         {
-            var routingKey = this.GetRoutingKey(typeof(TRequest));
+            try
+            {
+                var routingKey = this.GetRoutingKey(typeof(TRequest));
 
-            var queueName = this.GetQueueName(typeof(THandler), typeof(TRequest));
+                var queueName = this.GetQueueName(typeof(THandler), typeof(TRequest));
 
-            const int retryAttempts = -1; //forever
-            const int retryDelayGrowthFactor = 1;
+                const int retryAttempts = -1; //forever
+                const int retryDelayGrowthFactor = 1;
 
-            var model = _connection.OpenChannel(retryAttempts, DefaultConfigValues.ReOpenDelay, retryDelayGrowthFactor);
+                var model = _connection.OpenChannel(retryAttempts, DefaultConfigValues.ReOpenDelay, retryDelayGrowthFactor);
 
-            _log.Debug(string.Format("Channel opened for {0}", queueName));
+                _log.Debug(string.Format("Channel opened for {0}", queueName));
 
-            const int prefetchSize = 0;
-            const int prefetchCount = 1;
-            const bool global = false;
+                const int prefetchSize = 0;
+                const int prefetchCount = 1;
+                const bool global = false;
 
-            model.BasicQos(prefetchSize, prefetchCount, global);
+                model.BasicQos(prefetchSize, prefetchCount, global);
 
-            model.ModelShutdown += RecoverConnection;
+                model.ModelShutdown += RecoverConnection;
 
-            model.ExchangeDeclare(DefaultConfigValues.Exchange, DefaultConfigValues.ExchangeType);
+                model.ExchangeDeclare(DefaultConfigValues.Exchange, DefaultConfigValues.ExchangeType);
 
-            model.QueueDeclare(queueName, true, false, false, null);
-            model.QueueBind(queueName, DefaultConfigValues.Exchange, routingKey);
+                model.QueueDeclare(queueName, true, false, false, null);
+                model.QueueBind(queueName, DefaultConfigValues.Exchange, routingKey);
 
-            const bool noAck = false; //since this consumer will send an acknowledgement
-            var consumer = this;
+                const bool noAck = false; //since this consumer will send an acknowledgement
+                var consumer = this;
 
-            model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
+                model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
 
-            CommonModel = model;
-      
+                CommonModel = model;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(string.Format("Could not create model because {0}", ex.Message), ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -106,7 +113,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
                 StartConsuming();
             });
         }
-        
+
         /// <summary>
         /// Called each time a message arrives for this consumer.
         /// </summary>
