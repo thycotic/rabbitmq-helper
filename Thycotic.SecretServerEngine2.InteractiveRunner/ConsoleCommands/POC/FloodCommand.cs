@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Messages.Areas.POC.Request;
@@ -35,16 +36,19 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
                 string countString;
                 if (!parameters.TryGet("count", out countString)) return;
 
-                var count = Convert.ToInt32(countString);
+                var count = Math.Max(0, Convert.ToInt32(countString));
 
                 _log.Info(string.Format("Flooding exchange with {0} request(s). Please wait...", count));
 
-                Enumerable.Range(0, count).AsParallel().ForAll(i =>
+                var i = 0;
+                while (i < count)
                 {
                     var message = new PingMessage();
 
                     _bus.BasicPublish(message);
-                });
+
+                    i++;
+                };
 
                 _log.Info("Flooding completed");
             };
