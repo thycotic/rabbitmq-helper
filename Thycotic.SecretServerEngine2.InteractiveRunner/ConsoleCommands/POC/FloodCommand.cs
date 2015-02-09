@@ -40,15 +40,12 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
 
                 _log.Info(string.Format("Flooding exchange with {0} request(s). Please wait...", count));
 
-                var i = 0;
-                while (i < count)
+                Enumerable.Range(0, count).AsParallel().ForAll(i =>
                 {
                     var message = new PingMessage();
 
                     _bus.BasicPublish(message);
-
-                    i++;
-                };
+                });
 
                 _log.Info("Flooding completed");
             };
