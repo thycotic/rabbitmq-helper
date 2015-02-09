@@ -43,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="RabbitMq\AddUser.ps1" />
+    <None Include="RabbitMq\TestCertificates\ssa2.pfx" />
+    <None Include="RabbitMq\TestCertificates\ssa2.pfx.key" />
+    <None Include="RabbitMq\TestCertificates\ssa2.pfx.pem" />
     <None Include="RabbitMq\Modules\RabbitMQTools\AddExchange.ps1" />
     <None Include="RabbitMq\Modules\RabbitMQTools\AddMessage.ps1" />
     <None Include="RabbitMq\Modules\RabbitMQTools\AddPermission.ps1" />
