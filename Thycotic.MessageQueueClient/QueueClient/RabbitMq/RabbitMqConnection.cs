@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using RabbitMQ.Client;
@@ -34,9 +35,23 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
         /// <param name="password">The password.</param>
         public RabbitMqConnection(string url, string userName, string password)
         {
+            var hostName2 = "THYCOPAIR24.testparent.thycotic.com";
+
             _connectionFactory = new ConnectionFactory
             {
-                Uri = url,
+                HostName = hostName2,//new Uri(url).Host,
+
+                VirtualHost = "/",
+                Port = 5671,
+
+                Ssl = new SslOption
+                {
+                    Enabled = true,
+                    ServerName = hostName2,// new Uri(url).Host,
+                    AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch |
+                                             SslPolicyErrors.RemoteCertificateChainErrors,
+                },
+                //Uri = url,
                 RequestedHeartbeat = 300,
                 UserName = userName,
                 Password = password
