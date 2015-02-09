@@ -19,6 +19,16 @@
             /// The connection string
             /// </summary>
             public const string ConnectionString = "RabbitMq.ConnectionString";
+
+            /// <summary>
+            /// The user name
+            /// </summary>
+            public const string UserName = "RabbitMq.UserName";
+
+            /// <summary>
+            /// The password
+            /// </summary>
+            public const string Password = "RabbitMq.Password";
         }
 
         /// <summary>

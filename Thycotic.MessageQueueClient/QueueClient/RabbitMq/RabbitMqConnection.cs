@@ -27,12 +27,20 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
         private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConnection));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RabbitMqConnection"/> class.
+        /// Initializes a new instance of the <see cref="RabbitMqConnection" /> class.
         /// </summary>
         /// <param name="url">The URL.</param>
-        public RabbitMqConnection(string url)
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        public RabbitMqConnection(string url, string userName, string password)
         {
-            _connectionFactory = new ConnectionFactory { Uri = url, RequestedHeartbeat = 300 };
+            _connectionFactory = new ConnectionFactory
+            {
+                Uri = url,
+                RequestedHeartbeat = 300,
+                UserName = userName,
+                Password = password
+            };
             ResetConnection();
         }
 

@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Linq;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
-using Thycotic.SecretServerEngine2.MemoryMq;
 
 namespace Thycotic.SecretServerEngine2.IoC
 {
@@ -37,7 +37,13 @@ namespace Thycotic.SecretServerEngine2.IoC
                 var connectionString = _configurationProvider(ConfigurationKeys.RabbitMq.ConnectionString);
                 _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-                builder.Register(context => new RabbitMqConnection(connectionString))
+                var userName = _configurationProvider(ConfigurationKeys.RabbitMq.UserName);
+                _log.Info(string.Format("RabbitMq username is {0}", userName));
+
+                var password = _configurationProvider(ConfigurationKeys.RabbitMq.Password);
+                _log.Info(string.Format("RabbitMq password is {0}", string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
+
+                builder.Register(context => new RabbitMqConnection(connectionString, userName, password))
                     .As<ICommonConnection>().InstancePerDependency();
 
             }
