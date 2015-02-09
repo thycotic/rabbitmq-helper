@@ -91,6 +91,11 @@
     <None Include="RabbitMq\Modules\RabbitMQTools\TabExpansions.ps1" />
     <None Include="RabbitMq\Modules\RabbitMQTools\UnregisterServer.ps1" />
     <None Include="RabbitMq\Modules\_InstallModules.ps1" />
+    <None Include="RabbitMq\Sample\3.4.3\rabbitmq.config" />
+    <None Include="RabbitMq\Sample\3.4.3\rabbitmq.config.example" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
