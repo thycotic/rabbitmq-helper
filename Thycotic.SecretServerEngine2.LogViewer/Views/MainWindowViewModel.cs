@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -46,17 +47,18 @@ namespace Thycotic.SecretServerEngine2.LogViewer.Views
         private LogLevelViewModel _logLevel;
         private bool _autoRefresh;
         private int _refreshIntervalSeconds;
+        private string _selectedCorrelation;
+        private LogEntry _selectedLogEntry { get; set; }
 
         private readonly RoutedEventHandler _onLogLevelChange;
         private readonly RoutedEventHandler _onAutoRefreshChange;
         private readonly RoutedEventHandler _onRefreshIntervalChange;
+        private readonly RoutedEventHandler _onSelectedCorrelationChange;
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
         public ObservableCollection<LogEntry> LogEntries { get; private set; }
-        public LogEntry SelectedCorrelation { get; private set; }
-
         public ObservableCollection<LogEntry> LogItemsInCorrelation { get; private set; }
-        public LogEntry SelectedLogEntry { get; private set; }
+        
         
         public LogLevelViewModel LogLevel
         {
@@ -112,13 +114,43 @@ namespace Thycotic.SecretServerEngine2.LogViewer.Views
             }
         }
 
-       
+        public string SelectedCorrelation
+        {
+            get { return _selectedCorrelation; }
+            set
+            {
+                if (value == _selectedCorrelation)
+                {
+                    return;
+                }
+
+                _selectedCorrelation = value;
+                OnPropertyChanged("SelectedCorrelation");
+                _onSelectedCorrelationChange(this, new RoutedEventArgs());
+            }
+        }
+
+        public LogEntry SelectedLogEntry
+        {
+            get { return _selectedLogEntry; }
+            set
+            {
+                if (value == _selectedLogEntry)
+                {
+                    return;
+                }
+
+                _selectedLogEntry = value;
+                OnPropertyChanged("SelectedLogEntry");
+            }
+        }
+        
         public MainWindowViewModel()
         {
             _onLogLevelChange += (sender, args) => ReactToAutoRefresh();
             _onAutoRefreshChange += (sender, args) => ReactToAutoRefresh();
             _onRefreshIntervalChange += (sender, args) => ReactToAutoRefresh();
-
+            _onSelectedCorrelationChange += (sender, args) => GetLatestLogEntries();
         }
 
         public void Initialize(LogDataProvider dataProvider)
@@ -129,6 +161,7 @@ namespace Thycotic.SecretServerEngine2.LogViewer.Views
             _autoRefresh = true;
             _refreshIntervalSeconds = 15;
             LogEntries = new ObservableCollection<LogEntry>();
+            LogItemsInCorrelation = new ObservableCollection<LogEntry>();
 
             Task.Factory.StartNew(ReactToAutoRefresh);
 
@@ -146,22 +179,30 @@ namespace Thycotic.SecretServerEngine2.LogViewer.Views
 
             _cts = new CancellationTokenSource();
 
-            Task.Factory.StartNew(GetLatestLogEntries, _cts.Token)
+            Task.Factory.StartNew(GetLatestLogCorrelations, _cts.Token)
                 .ContinueWith(t => Thread.Sleep(TimeSpan.FromSeconds(_refreshIntervalSeconds)), _cts.Token)
                 .ContinueWith(t => ReactToAutoRefresh(), _cts.Token);
         }
 
-        private void GetLatestLogEntries()
+        private void GetLatestLogCorrelations()
         {
             var results = _dataProvider.GetLatestCorrelations(_logLevel.Value).ToList();
 
             //clear the existing log
             this.InvokeOnUiThread(() => LogEntries.Clear());
-
             this.InvokeOnUiThread(() => results.ForEach(le => LogEntries.Add(le)));
-
         }
 
+        private void GetLatestLogEntries()
+        {
+            var results = string.IsNullOrWhiteSpace(_selectedCorrelation)
+                ? new List<LogEntry>()
+                : _dataProvider.GetLogEntriesInCorrelation(_selectedCorrelation).ToList();
+
+            //clear the existing log
+            this.InvokeOnUiThread(() => LogItemsInCorrelation.Clear());
+            this.InvokeOnUiThread(() => results.ForEach(logEntry => LogItemsInCorrelation.Add(logEntry)));
+        }
 
         protected virtual void OnPropertyChanged(string propertyName = null)
         {

@@ -21,7 +21,10 @@ namespace Thycotic.SecretServerEngine2.LogViewer
         {
             try
             {
-                return func.Invoke();
+                lock (_database)
+                {
+                    return func.Invoke();
+                }
             }
             catch (Exception ex)
             {

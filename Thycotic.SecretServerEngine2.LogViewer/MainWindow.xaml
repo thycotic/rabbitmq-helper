@@ -68,18 +68,27 @@
 
                             <GridView AllowsColumnReorder="false" ColumnHeaderToolTip="Log Entry Information">
 
+                                <!--<GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Date" Width="Auto"/>-->
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Date}" Header="Date" Width="Auto"/>
-
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=UserId}" Header="User ID" Width="Auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=ServiceRole}" Header="Service Role" Width="Auto"/>
+                                <!--<GridViewColumn DisplayMemberBinding="{Binding Path=Correlation}" Header="Correlation" Width="Auto"/>-->
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Context}" Header="Context" Width="Auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Thread}" Header="Thread" Width="Auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Level}" Header="Level" Width="Auto"/>
-
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Correlation}" Header="Correlation" Width="Auto" />
-
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Logger}" Header="Logger" Width="100"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Message}" Header="Message" Width="Auto"/>
                             </GridView>
 
                         </ListView.View>
                     </ListView>
                     <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="true" Width="5"></GridSplitter>
-                    <TextBlock Grid.Column="2"></TextBlock>
+                    <StackPanel Grid.Column="2" >
+                        <Label>Message:</Label>
+                        <TextBox BorderThickness="0" IsReadOnly="True" Text="{Binding Path=SelectedLogEntry.Message}" TextWrapping="Wrap"></TextBox>
+                        <Label>Exception:</Label>
+                        <TextBox BorderThickness="0" IsReadOnly="True" Text="{Binding Path=SelectedLogEntry.Exception}" TextWrapping="Wrap"></TextBox>
+                    </StackPanel>
                 </Grid>
             </TabItem>
             <!--<TabItem Header="Technical Support">
