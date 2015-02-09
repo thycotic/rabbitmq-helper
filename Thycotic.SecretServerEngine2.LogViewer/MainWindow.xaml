@@ -3,15 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:thycotic="clr-namespace:Thycotic.SecretServerEngine2.LogViewer" 
+        xmlns:thycotic="clr-namespace:Thycotic.SecretServerEngine2.LogViewer"
+        xmlns:models="clr-namespace:Thycotic.SecretServerEngine2.LogViewer.Models"
+        xmlns:views="clr-namespace:Thycotic.SecretServerEngine2.LogViewer.Views"
         x:Class="Thycotic.SecretServerEngine2.LogViewer.MainWindow"
         mc:Ignorable="d"
-        Title="Secret Server Engine Log Viewer" Height="1024" Width="768" WindowState="Maximized">
+        Title="Secret Server Engine Log Viewer" Width="1024" Height="768">
     <Window.DataContext>
-        <thycotic:MainWindowViewModel/>
+        <views:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="250"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -29,10 +33,10 @@
                 </WrapPanel>
             </ToolBar>
         </ToolBarTray>
-        <ListView Grid.Row="1"  ItemsSource="{Binding LogEntries}">
+        <ListView Grid.Row="1" Name="LogCorrelations" ItemsSource="{Binding LogEntries}">
             <ListView.View>
 
-                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Log Entry Information">
+                <GridView AllowsColumnReorder="false" ColumnHeaderToolTip="Log Entry Information">
 
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Date}" Header="Date" Width="Auto"/>
 
@@ -44,7 +48,45 @@
 
             </ListView.View>
         </ListView>
-        <StatusBar Grid.Row="2" DockPanel.Dock="Bottom">
+        <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" 
+              VerticalAlignment="Center"
+              ShowsPreview="true"
+              Height="5"></GridSplitter>
+        <TabControl Grid.Row="3">
+            <TabItem Header="Log entry details">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ListView  Grid.Column="0" Name="LogItemsInCorrelation" ItemsSource="{Binding LogItemsInCorrelation}">
+                        <ListView.View>
+
+                            <GridView AllowsColumnReorder="false" ColumnHeaderToolTip="Log Entry Information">
+
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Date}" Header="Date" Width="Auto"/>
+
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Level}" Header="Level" Width="Auto"/>
+
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Correlation}" Header="Correlation" Width="Auto" />
+
+                            </GridView>
+
+                        </ListView.View>
+                    </ListView>
+                    <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="true" Width="5"></GridSplitter>
+                    <TextBlock Grid.Column="2"></TextBlock>
+                </Grid>
+            </TabItem>
+            <!--<TabItem Header="Technical Support">
+                <TextBlock FontStyle="Italic">Coming...</TextBlock>
+            </TabItem>-->
+        </TabControl>
+        <StatusBar Grid.Row="4" DockPanel.Dock="Bottom">
 
             <StatusBarItem>
                 <WrapPanel>

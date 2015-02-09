@@ -5,53 +5,60 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Thycotic.SecretServerEngine2.LogViewer.Models;
 
-namespace Thycotic.SecretServerEngine2.LogViewer
+namespace Thycotic.SecretServerEngine2.LogViewer.Views
 {
     public class MainWindowViewModel : INotifyPropertyChanged, IViewModel
     {
-        private readonly LogLevel[] _logLevels =
+        private LogDataProvider _dataProvider;
+
+        private readonly LogLevelViewModel[] _logLevels =
         {
-            new LogLevel
+            new LogLevelViewModel
             {
                 Name = "All",
                 Value = "*"
             },
-            new LogLevel
+            new LogLevelViewModel
             {
                 Name = "Information",
                 Value = "INFO"
             },
-            new LogLevel
+            new LogLevelViewModel
             {
                 Name = "Warning",
                 Value = "WARN"
             },
-            new LogLevel
+            new LogLevelViewModel
             {
                 Name = "Error",
                 Value = "ERROR"
             }
         };
 
-        public LogLevel[] LogLevels
+        public LogLevelViewModel[] LogLevels
         {
             get { return _logLevels; }
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private LogLevel _logLevel;
+        private LogLevelViewModel _logLevel;
         private bool _autoRefresh;
         private int _refreshIntervalSeconds;
-       
+
         private readonly RoutedEventHandler _onLogLevelChange;
         private readonly RoutedEventHandler _onAutoRefreshChange;
         private readonly RoutedEventHandler _onRefreshIntervalChange;
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
         public ObservableCollection<LogEntry> LogEntries { get; private set; }
+        public LogEntry SelectedCorrelation { get; private set; }
 
-        public LogLevel LogLevel
+        public ObservableCollection<LogEntry> LogItemsInCorrelation { get; private set; }
+        public LogEntry SelectedLogEntry { get; private set; }
+        
+        public LogLevelViewModel LogLevel
         {
             get { return _logLevel; }
             set
@@ -85,7 +92,7 @@ namespace Thycotic.SecretServerEngine2.LogViewer
 
         public int RefreshIntervalSeconds
         {
-            get {return  _refreshIntervalSeconds; }
+            get { return _refreshIntervalSeconds; }
             set
             {
                 if (value == _refreshIntervalSeconds)
@@ -105,24 +112,25 @@ namespace Thycotic.SecretServerEngine2.LogViewer
             }
         }
 
+       
         public MainWindowViewModel()
         {
-            InitializeDefaults();
-
             _onLogLevelChange += (sender, args) => ReactToAutoRefresh();
             _onAutoRefreshChange += (sender, args) => ReactToAutoRefresh();
             _onRefreshIntervalChange += (sender, args) => ReactToAutoRefresh();
 
-            Task.Factory.StartNew(ReactToAutoRefresh);
-
         }
 
-        private void InitializeDefaults()
+        public void Initialize(LogDataProvider dataProvider)
         {
+            _dataProvider = dataProvider;
+
             _logLevel = _logLevels[0];
             _autoRefresh = true;
             _refreshIntervalSeconds = 15;
             LogEntries = new ObservableCollection<LogEntry>();
+
+            Task.Factory.StartNew(ReactToAutoRefresh);
 
         }
 
@@ -142,22 +150,16 @@ namespace Thycotic.SecretServerEngine2.LogViewer
                 .ContinueWith(t => Thread.Sleep(TimeSpan.FromSeconds(_refreshIntervalSeconds)), _cts.Token)
                 .ContinueWith(t => ReactToAutoRefresh(), _cts.Token);
         }
-        
+
         private void GetLatestLogEntries()
         {
+            var results = _dataProvider.GetLatestCorrelations(_logLevel.Value).ToList();
+
+            //clear the existing log
             this.InvokeOnUiThread(() => LogEntries.Clear());
 
-            Enumerable.Range(0, 100).ToList().ForEach(i =>
-            {
-                var random = new Random(Guid.NewGuid().GetHashCode());
+            this.InvokeOnUiThread(() => results.ForEach(le => LogEntries.Add(le)));
 
-                this.InvokeOnUiThread(() => LogEntries.Add(new LogEntry
-                {
-                    Date = DateTime.Now - TimeSpan.FromMinutes(i),
-                    Level = _logLevel.Value == "*" ? LogLevels[random.Next(1, LogLevels.Count())].Value : _logLevel.Value,
-                    Correlation = Guid.NewGuid()
-                }));
-            });
         }
 
 
