@@ -19,7 +19,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <value>
         /// The queue.
         /// </value>
-        public QueueProxy Queue { get; private set; }
+        public MessageQueueProxy Queue { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Mailbox"/> class.
@@ -29,7 +29,7 @@ namespace Thycotic.MemoryMq.Subsystem
         public Mailbox(RoutingSlip routingSlip, MessageQueue queue)
         {
             RoutingSlip = routingSlip;
-            Queue = new QueueProxy(queue);
+            Queue = new MessageQueueProxy(queue);
         }
     }
 }

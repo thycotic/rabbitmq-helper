@@ -1,12 +1,14 @@
+using System;
+using System.Diagnostics.Contracts;
+
 namespace Thycotic.MemoryMq.Subsystem
 {
     /// <summary>
     /// Queue proxy. Limits the ability to queuing any new items
     /// </summary>
-    //TODO: Rename to MessageQueueProxy
-    public class QueueProxy
+    public class MessageQueueProxy
     {
-        private readonly MessageQueue _queue;
+        private readonly IMessageQueue _queue;
 
         /// <summary>
         /// Gets a value indicating whether this instance is empty.
@@ -23,11 +25,13 @@ namespace Thycotic.MemoryMq.Subsystem
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="QueueProxy"/> class.
+        /// Initializes a new instance of the <see cref="MessageQueueProxy"/> class.
         /// </summary>
         /// <param name="queue">The queue.</param>
-        public QueueProxy(MessageQueue queue)
+        public MessageQueueProxy(IMessageQueue queue)
         {
+            Contract.Requires<ArgumentNullException>(queue != null);
+
             _queue = queue;
         }
 

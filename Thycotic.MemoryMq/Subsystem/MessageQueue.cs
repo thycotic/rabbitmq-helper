@@ -7,7 +7,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// <summary>
     /// Message queue
     /// </summary>
-    public class MessageQueue
+    public class MessageQueue : IMessageQueue
     {
         private readonly ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs> _queue =
             new ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs>();

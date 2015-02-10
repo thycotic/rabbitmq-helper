@@ -8,8 +8,6 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
     [Binding]
     public class RoutingSlipSteps
     {
-        private const string NotRoutingKeyException = "NotRoutingKeyException";
-
         [Given(@"there exists a RoutingSlip stored in the scenario as (\w+) with exchange (\w+) and routing key (\w+)")]
         public void GivenThereExistsARoutingSlipStoredInTheScenarioAsRoutingSlipTestWithExchangeTestChangeAndRoutingKeyTestRoutingKey(string routingSlipName, string exchangeName, string routingKey)
         {
@@ -38,7 +36,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             }
             catch (Exception ex)
             {
-                ScenarioContext.Current[NotRoutingKeyException] = ex.Message;
+                ScenarioContext.Current[ScenarioCommon.ScenarioException] = ex.Message;
             }
         }
 
@@ -48,14 +46,6 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             var str = (string)ScenarioContext.Current[routingSlipResults];
 
             str.Should().Be(resultsString);
-        }
-
-
-        [Then(@"there should have been a exception thrown with message ""(.*)""")]
-        public void ThenThereShouldHaveBeenAExceptionThrownWithMessage(string exceptionMessage)
-        {
-            var message = (string) ScenarioContext.Current[NotRoutingKeyException];
-            message.Should().Be(exceptionMessage);
         }
     }
 }
