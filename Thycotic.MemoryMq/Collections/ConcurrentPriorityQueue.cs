@@ -17,35 +17,19 @@ namespace Thycotic.MemoryMq.Collections
         private readonly QueueNodePointer _head = new QueueNodePointer();
         private readonly QueueNodePointer _tail = new QueueNodePointer();
 
-        private void ValidateQueueInvariant()
-        {
-            if ((_head != null) && (_tail == null))
-            {
-                throw new ApplicationException("Invalid queue");
-            }
-
-            if ((_head == null) && (_tail != null))
-            {
-                throw new ApplicationException("Invalid queue");
-            }
-        }
-
         /// <summary>
         /// Enqueues the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
         public void Enqueue(T item)
         {
-            ValidateQueueInvariant();
-
             //adds to the tail
             //tail moves back
 
             if (_head.Node == null)
             {
                 var node = new QueueNode { Item = item, Next = null };
-                _head.Node = node;
-                _tail.Node = node;
+                _head.Node = _tail.Node = node;
 
             }
             else
@@ -65,17 +49,12 @@ namespace Thycotic.MemoryMq.Collections
         /// <param name="item">The item.</param>
         public void PriorityEnqueue(T item)
         {
-            ValidateQueueInvariant();
-
             //resets the head
             //whatever the last head was new head has it as its next
 
             if (_head.Node == null)
             {
-                var node = new QueueNode { Item = item, Next = null };
-                _head.Node = node;
-                _tail.Node = node;
-
+               Enqueue(item);
             }
             else
             {
@@ -91,8 +70,6 @@ namespace Thycotic.MemoryMq.Collections
         /// <returns></returns>
         public bool TryDequeue(out T result)
         {
-            ValidateQueueInvariant();
-
             //empty queue
             if (_head.Node == null)
             {
@@ -110,14 +87,7 @@ namespace Thycotic.MemoryMq.Collections
             }
             else
             {
-                if (_head.Node.Next != null)
-                {
-                    _head.Node = _head.Node.Next.Node;
-                }
-                else
-                {
-                    _head.Node = null;
-                }
+                _head.Node = _head.Node.Next != null ? _head.Node.Next.Node : null;
             }
 
             return true;
