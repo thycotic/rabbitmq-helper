@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Data.OleDb;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
 namespace Thycotic.MemoryMq.Collections
 {
@@ -17,7 +11,7 @@ namespace Thycotic.MemoryMq.Collections
         private readonly QueueNodePointer _head = new QueueNodePointer();
         private readonly QueueNodePointer _tail = new QueueNodePointer();
 
-        private object _syncRoot = new object();
+        private readonly object _syncRoot = new object();
 
         /// <summary>
         /// Gets a value indicating whether this instance is empty.
