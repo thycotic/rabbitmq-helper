@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Thycotic.Logging;
+using Thycotic.MemoryMq.Collections;
 
 namespace Thycotic.MemoryMq.Subsystem
 {
@@ -10,7 +11,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class ExchangeDictionary 
     {
-        private readonly ConcurrentDictionary<RoutingSlip, ConcurrentQueue<MemoryMqDeliveryEventArgs>> _data = new ConcurrentDictionary<RoutingSlip, ConcurrentQueue<MemoryMqDeliveryEventArgs>>();
+        private readonly ConcurrentDictionary<RoutingSlip, ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs>> _data = new ConcurrentDictionary<RoutingSlip, ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs>>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ExchangeDictionary));
 
@@ -44,7 +45,7 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             _log.Debug(string.Format("Publishing message to {0}", routingSlip));
 
-            _data.GetOrAdd(routingSlip, s => new ConcurrentQueue<MemoryMqDeliveryEventArgs>());
+            _data.GetOrAdd(routingSlip, s => new ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs>());
 
             _data[routingSlip].Enqueue(body);
         }

@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using Thycotic.MemoryMq.Collections;
 
 namespace Thycotic.MemoryMq.Subsystem
 {
@@ -7,7 +8,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class QueueProxy
     {
-        private readonly ConcurrentQueue<MemoryMqDeliveryEventArgs> _queue;
+        private readonly ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs> _queue;
 
         /// <summary>
         /// Gets a value indicating whether this instance is empty.
@@ -27,7 +28,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// Initializes a new instance of the <see cref="QueueProxy"/> class.
         /// </summary>
         /// <param name="queue">The queue.</param>
-        public QueueProxy(ConcurrentQueue<MemoryMqDeliveryEventArgs> queue)
+        public QueueProxy(ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs> queue)
         {
             _queue = queue;
         }
@@ -49,8 +50,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="body">The <see cref="MemoryMqDeliveryEventArgs"/> instance containing the event data.</param>
         public void Retry(MemoryMqDeliveryEventArgs body)
         {
-            //TODO: use an implementation where the message is put at the front.
-            _queue.Enqueue(body);
+            _queue.PriorityEnqueue(body);
         }
     }
 }

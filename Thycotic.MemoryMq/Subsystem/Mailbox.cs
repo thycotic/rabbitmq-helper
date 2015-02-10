@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+using Thycotic.MemoryMq.Collections;
 
 namespace Thycotic.MemoryMq.Subsystem
 {
@@ -28,7 +28,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         /// <param name="routingSlip">The routing slip.</param>
         /// <param name="queue">The queue.</param>
-        public Mailbox(RoutingSlip routingSlip, ConcurrentQueue<MemoryMqDeliveryEventArgs> queue)
+        public Mailbox(RoutingSlip routingSlip, ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs> queue)
         {
             RoutingSlip = routingSlip;
             Queue = new QueueProxy(queue);

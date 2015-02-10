@@ -17,29 +17,51 @@ namespace Thycotic.MemoryMq.Collections
         private readonly QueueNodePointer _head = new QueueNodePointer();
         private readonly QueueNodePointer _tail = new QueueNodePointer();
 
+        private object _syncRoot = new object();
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is empty.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is empty; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsEmpty
+        {
+            get
+            {
+                lock (_syncRoot)
+                {
+                    return _head.Node == null;
+                }
+            }
+        }
+
         /// <summary>
         /// Enqueues the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
         public void Enqueue(T item)
         {
-            //adds to the tail
-            //tail moves back
-
-            if (_head.Node == null)
+            lock (_syncRoot)
             {
-                var node = new QueueNode { Item = item, Next = null };
-                _head.Node = _tail.Node = node;
+                //adds to the tail
+                //tail moves back
 
-            }
-            else
-            {
-                var oldTailNode = _tail.Node;
+                if (_head.Node == null)
+                {
+                    var node = new QueueNode {Item = item, Next = null};
+                    _head.Node = _tail.Node = node;
 
-                var node = new QueueNode { Item = item, Next = null };
-                oldTailNode.Next = new QueueNodePointer(node);
+                }
+                else
+                {
+                    var oldTailNode = _tail.Node;
 
-                _tail.Node = node;
+                    var node = new QueueNode {Item = item, Next = null};
+                    oldTailNode.Next = new QueueNodePointer(node);
+
+                    _tail.Node = node;
+                }
             }
         }
 
@@ -49,17 +71,20 @@ namespace Thycotic.MemoryMq.Collections
         /// <param name="item">The item.</param>
         public void PriorityEnqueue(T item)
         {
-            //resets the head
-            //whatever the last head was new head has it as its next
+            lock (_syncRoot)
+            {
+                //resets the head
+                //whatever the last head was new head has it as its next
 
-            if (_head.Node == null)
-            {
-               Enqueue(item);
-            }
-            else
-            {
-                var node = new QueueNode { Item = item, Next = new QueueNodePointer(_head.Node) };
-                _head.Node = node;
+                if (_head.Node == null)
+                {
+                    Enqueue(item);
+                }
+                else
+                {
+                    var node = new QueueNode {Item = item, Next = new QueueNodePointer(_head.Node)};
+                    _head.Node = node;
+                }
             }
         }
 
@@ -70,26 +95,28 @@ namespace Thycotic.MemoryMq.Collections
         /// <returns></returns>
         public bool TryDequeue(out T result)
         {
-            //empty queue
-            if (_head.Node == null)
+            lock (_syncRoot)
             {
-                result = default(T);
-                return false;
-            }
+                //empty queue
+                if (_head.Node == null)
+                {
+                    result = default(T);
+                    return false;
+                }
 
-            //no empty queue, set result
-            result = _head.Node.Item;
+                //no empty queue, set result
+                result = _head.Node.Item;
 
-            //last node
-            if (_tail.Node == _head.Node)
-            {
-                _head.Node = _tail.Node = null;
+                //last node
+                if (_tail.Node == _head.Node)
+                {
+                    _head.Node = _tail.Node = null;
+                }
+                else
+                {
+                    _head.Node = _head.Node.Next.Node;
+                }
             }
-            else
-            {
-                _head.Node = _head.Node.Next != null ? _head.Node.Next.Node : null;
-            }
-
             return true;
         }
 

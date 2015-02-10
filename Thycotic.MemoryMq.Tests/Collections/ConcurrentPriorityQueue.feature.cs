@@ -65,27 +65,73 @@ namespace Thycotic.MemoryMq.Tests.Collections
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Adding to empty queue")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
-        public virtual void AddingToEmptyQueue()
+        [NUnit.Framework.DescriptionAttribute("An empty queue should be empty")]
+        public virtual void AnEmptyQueueShouldBeEmpty()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding to empty queue", new string[] {
-                        "mytag"});
-#line 6
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An empty queue should be empty", ((string[])(null)));
+#line 5
 this.ScenarioSetup(scenarioInfo);
-#line 7
+#line 6
  testRunner.Given("there exists an integer ConcurrentPriorityQueue stored in the scenario as Concurr" +
                     "entPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 8
- testRunner.And("item 2 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 9
- testRunner.And("item 4 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 10
- testRunner.And("item 8 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 11
+#line 7
  testRunner.When("all items are dequeued from scenario object ConcurrentPriorityQueueTest and store" +
                     "d in scenario object ConcurrentPriorityQueueResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 8
+ testRunner.Then("the scenario object ConcurrentPriorityQueueTest should be empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Adding to empty queue and then fully emptying it")]
+        public virtual void AddingToEmptyQueueAndThenFullyEmptyingIt()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding to empty queue and then fully emptying it", ((string[])(null)));
+#line 10
+this.ScenarioSetup(scenarioInfo);
+#line 11
+ testRunner.Given("there exists an integer ConcurrentPriorityQueue stored in the scenario as Concurr" +
+                    "entPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 12
+ testRunner.And("the scenario object ConcurrentPriorityQueueTest is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
+ testRunner.And("item 2 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 14
+ testRunner.And("item 4 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
+ testRunner.And("item 8 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.When("all items are dequeued from scenario object ConcurrentPriorityQueueTest and store" +
+                    "d in scenario object ConcurrentPriorityQueueResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
+ testRunner.Then("the scenario object ConcurrentPriorityQueueTest should be empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Adding to empty queue")]
+        public virtual void AddingToEmptyQueue()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding to empty queue", ((string[])(null)));
+#line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
+ testRunner.Given("there exists an integer ConcurrentPriorityQueue stored in the scenario as Concurr" +
+                    "entPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 21
+ testRunner.And("the scenario object ConcurrentPriorityQueueTest is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 22
+ testRunner.And("item 2 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 23
+ testRunner.And("item 4 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 24
+ testRunner.And("item 8 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 25
+ testRunner.When("all items are dequeued from scenario object ConcurrentPriorityQueueTest and store" +
+                    "d in scenario object ConcurrentPriorityQueueResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 26
  testRunner.Then("the string join of scenario object ConcurrentPriorityQueueResults should be \"2 4 " +
                     "8\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -97,21 +143,23 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AddingToEmptyQueueWithPriority()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding to empty queue with priority", ((string[])(null)));
-#line 14
+#line 28
 this.ScenarioSetup(scenarioInfo);
-#line 15
+#line 29
  testRunner.Given("there exists an integer ConcurrentPriorityQueue stored in the scenario as Concurr" +
                     "entPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 16
+#line 30
+ testRunner.And("the scenario object ConcurrentPriorityQueueTest is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 31
  testRunner.And("item 2 is priorty enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 17
+#line 32
  testRunner.And("item 4 is priorty enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 18
+#line 33
  testRunner.And("item 8 is priorty enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 19
+#line 34
  testRunner.When("all items are dequeued from scenario object ConcurrentPriorityQueueTest and store" +
                     "d in scenario object ConcurrentPriorityQueueResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 20
+#line 35
  testRunner.Then("the string join of scenario object ConcurrentPriorityQueueResults should be \"8 4 " +
                     "2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -123,23 +171,23 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AddingAndRemovingFromQueue()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding and removing from queue", ((string[])(null)));
-#line 22
+#line 37
 this.ScenarioSetup(scenarioInfo);
-#line 23
+#line 38
  testRunner.Given("there exists an integer ConcurrentPriorityQueue stored in the scenario as Concurr" +
                     "entPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 24
+#line 39
  testRunner.And("item 2 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 25
+#line 40
  testRunner.And("item 4 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 26
+#line 41
  testRunner.And("item 8 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 27
+#line 42
  testRunner.And("item is dequeued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 28
+#line 43
  testRunner.When("all items are dequeued from scenario object ConcurrentPriorityQueueTest and store" +
                     "d in scenario object ConcurrentPriorityQueueResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 29
+#line 44
  testRunner.Then("the string join of scenario object ConcurrentPriorityQueueResults should be \"4 8\"" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -151,21 +199,21 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AddingToQueueWithPriority()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding to queue with priority", ((string[])(null)));
-#line 32
+#line 46
 this.ScenarioSetup(scenarioInfo);
-#line 33
+#line 47
  testRunner.Given("there exists an integer ConcurrentPriorityQueue stored in the scenario as Concurr" +
                     "entPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 34
+#line 48
  testRunner.And("item 4 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 35
+#line 49
  testRunner.And("item 8 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 36
+#line 50
  testRunner.And("item 2 is priorty enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 37
+#line 51
  testRunner.When("all items are dequeued from scenario object ConcurrentPriorityQueueTest and store" +
                     "d in scenario object ConcurrentPriorityQueueResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 38
+#line 52
  testRunner.Then("the string join of scenario object ConcurrentPriorityQueueResults should be \"2 4 " +
                     "8\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -177,15 +225,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void RemovingFromEmptyQueue()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Removing from empty queue", ((string[])(null)));
-#line 40
+#line 54
 this.ScenarioSetup(scenarioInfo);
-#line 41
+#line 55
  testRunner.Given("there exists an integer ConcurrentPriorityQueue stored in the scenario as Concurr" +
                     "entPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 42
+#line 56
  testRunner.When("all items are dequeued from scenario object ConcurrentPriorityQueueTest and store" +
                     "d in scenario object ConcurrentPriorityQueueResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 43
+#line 57
  testRunner.Then("the string join of scenario object ConcurrentPriorityQueueResults should be \"\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -196,17 +244,17 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void RemovingFromQueueWithASingleItem()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Removing from queue with a single item", ((string[])(null)));
-#line 45
+#line 59
 this.ScenarioSetup(scenarioInfo);
-#line 46
+#line 60
  testRunner.Given("there exists an integer ConcurrentPriorityQueue stored in the scenario as Concurr" +
                     "entPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 47
+#line 61
  testRunner.And("item 2 is enqueued in the scenario object ConcurrentPriorityQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 48
+#line 62
  testRunner.When("all items are dequeued from scenario object ConcurrentPriorityQueueTest and store" +
                     "d in scenario object ConcurrentPriorityQueueResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 49
+#line 63
  testRunner.Then("the string join of scenario object ConcurrentPriorityQueueResults should be \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

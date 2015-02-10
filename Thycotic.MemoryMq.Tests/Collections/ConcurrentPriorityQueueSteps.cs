@@ -16,6 +16,22 @@ namespace Thycotic.MemoryMq.Tests.Collections
             ScenarioContext.Current[queueName] = new ConcurrentPriorityQueue<int>();
         }
 
+        [Given(@"the scenario object (\w+) is empty")]
+        public void GivenTheScenarioObjectConcurrentPriorityQueueTestShouldBeEmpty(string queueName)
+        {
+            var queue = (ConcurrentPriorityQueue<int>)ScenarioContext.Current[queueName];
+
+            queue.IsEmpty.Should().BeTrue();
+        }
+
+        [Given(@"the scenario object (\w+) is not empty")]
+        public void GivenTheScenarioObjectConcurrentPriorityQueueTestShouldNotBeEmpty(string queueName)
+        {
+            var queue = (ConcurrentPriorityQueue<int>)ScenarioContext.Current[queueName];
+
+            queue.IsEmpty.Should().BeFalse();
+        }
+
         [Given(@"item (\d+) is enqueued in the scenario object (\w+)")]
         public void GivenItemIsEnqueuedInTheScenarioObjectConcurrentPriorityQueueTest(int item, string queueName)
         {
@@ -53,6 +69,23 @@ namespace Thycotic.MemoryMq.Tests.Collections
 
             ScenarioContext.Current[resultsName] = results.ToArray();
         }
+
+        [Then(@"the scenario object (\w+) should be empty")]
+        public void ThenTheScenarioObjectConcurrentPriorityQueueTestShouldBeEmpty(string queueName)
+        {
+            var queue = (ConcurrentPriorityQueue<int>)ScenarioContext.Current[queueName];
+
+            queue.IsEmpty.Should().BeTrue();
+        }
+
+        [Then(@"the scenario object (\w+) should not be empty")]
+        public void ThenTheScenarioObjectConcurrentPriorityQueueTestShouldNotBeEmpty(string queueName)
+        {
+            var queue = (ConcurrentPriorityQueue<int>)ScenarioContext.Current[queueName];
+
+            queue.IsEmpty.Should().BeFalse();
+        }
+
 
         [Then(@"the string join of scenario object (\w+) should be ""(.*)""")]
         public void ThenTheStringJoinOfScenarioObjectConcurrentPriorityQueueResultsShouldBe(string resultsName, string resultsString)
