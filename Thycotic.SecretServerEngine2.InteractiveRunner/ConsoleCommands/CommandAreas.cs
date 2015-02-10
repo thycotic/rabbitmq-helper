@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands
+﻿namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands
 {
     internal static class CommandAreas
     {

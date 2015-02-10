@@ -1,5 +1,3 @@
-using Thycotic.MemoryMq.Collections;
-
 namespace Thycotic.MemoryMq.Subsystem
 {
     /// <summary>

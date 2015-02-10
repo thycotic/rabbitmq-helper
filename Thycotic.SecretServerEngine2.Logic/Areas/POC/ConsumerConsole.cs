@@ -4,12 +4,12 @@ namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
 {
     static class ConsumerConsole
     {
-        private static object _syncRoot = new object();
+        private static readonly object SyncRoot = new object();
 
         private static void WriteHelper(Action writeAction)
         {
             //lock so that coloring doesn't get ruined
-            lock (_syncRoot)
+            lock (SyncRoot)
             {
                 var oldColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;

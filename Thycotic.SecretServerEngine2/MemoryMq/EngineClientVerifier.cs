@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IdentityModel.Selectors;
-using System.Runtime.Remoting.Channels;
-using System.Security;
 using Thycotic.Logging;
 
 namespace Thycotic.SecretServerEngine2.MemoryMq

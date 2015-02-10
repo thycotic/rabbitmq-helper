@@ -48,7 +48,7 @@ namespace Thycotic.SecretServerEngine2.LogViewer.Views
         private bool _autoRefresh;
         private int _refreshIntervalSeconds;
         private string _selectedCorrelation;
-        private LogEntry _selectedLogEntry { get; set; }
+        private LogEntry _selectedLogEntry;
 
         private readonly RoutedEventHandler _onLogLevelChange;
         private readonly RoutedEventHandler _onAutoRefreshChange;

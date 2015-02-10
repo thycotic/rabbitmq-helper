@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using Thycotic.SecretServerEngine2.LogViewer.Models;
 using Thycotic.SecretServerEngine2.LogViewer.Views;
@@ -10,9 +9,9 @@ namespace Thycotic.SecretServerEngine2.LogViewer
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private MainWindowViewModel _viewModel;
+        private readonly MainWindowViewModel _viewModel;
         public MainWindow()
         {
             InitializeComponent();

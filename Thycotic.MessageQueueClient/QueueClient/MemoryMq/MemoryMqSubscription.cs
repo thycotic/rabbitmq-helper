@@ -1,9 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using RabbitMQ.Client.Events;
 using Thycotic.MemoryMq;
-using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 
 namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
 {

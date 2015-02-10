@@ -19,7 +19,7 @@ namespace Thycotic.MemoryMq.Subsystem
 
         private readonly ILogWriter _log = Log.Get(typeof(MessageDispatcher));
 
-        private LogCorrelation _correlation = LogCorrelation.Create();
+        private readonly LogCorrelation _correlation = LogCorrelation.Create();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageDispatcher"/> class.
@@ -32,6 +32,11 @@ namespace Thycotic.MemoryMq.Subsystem
             _exchange = exchange;
             _bindings = bindings;
             _clientDictionary = clientDictionary;
+
+            if (_correlation == null)
+            {
+                throw new ApplicationException("No correlation");
+            }
         }
 
         private void MonitorAndDispatch()

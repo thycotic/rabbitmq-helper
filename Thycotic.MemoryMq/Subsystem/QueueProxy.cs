@@ -1,6 +1,3 @@
-using System.Collections.Concurrent;
-using Thycotic.MemoryMq.Collections;
-
 namespace Thycotic.MemoryMq.Subsystem
 {
     /// <summary>

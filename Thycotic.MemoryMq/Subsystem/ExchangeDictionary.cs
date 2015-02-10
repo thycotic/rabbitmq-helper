@@ -1,9 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Thycotic.Logging;
-using Thycotic.MemoryMq.Collections;
 
 namespace Thycotic.MemoryMq.Subsystem
 {

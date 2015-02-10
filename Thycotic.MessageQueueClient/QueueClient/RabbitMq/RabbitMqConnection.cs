@@ -35,7 +35,7 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
         /// <param name="password">The password.</param>
         public RabbitMqConnection(string url, string userName, string password)
         {
-            var hostName2 = "THYCOPAIR24.testparent.thycotic.com";
+            const string hostName2 = "THYCOPAIR24.testparent.thycotic.com";
 
             _connectionFactory = new ConnectionFactory
             {
