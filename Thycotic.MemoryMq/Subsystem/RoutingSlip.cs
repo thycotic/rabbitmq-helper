@@ -1,3 +1,5 @@
+using System;
+
 namespace Thycotic.MemoryMq.Subsystem
 {
     /// <summary>
@@ -104,11 +106,14 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </returns>
         public override string ToString()
         {
-            if (!string.IsNullOrWhiteSpace(Exchange))
+            if (string.IsNullOrWhiteSpace(RoutingKey))
             {
-                return string.Format("{0}:{1}", Exchange, RoutingKey);
+                throw new ApplicationException("No routing key");
             }
-            return RoutingKey;
+
+            return !string.IsNullOrWhiteSpace(Exchange)
+                ? string.Format("{0}:{1}", Exchange, RoutingKey)
+                : RoutingKey;
         }
     }
 }
