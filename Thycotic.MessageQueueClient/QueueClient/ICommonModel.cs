@@ -73,16 +73,20 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// Basics the ack.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="exchange"></param>
+        /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
-        void BasicAck(ulong deliveryTag, bool multiple);
+        void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple);
 
         /// <summary>
         /// Basics the nack.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="exchange"></param>
+        /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         /// <param name="requeue">if set to <c>true</c> [requeue].</param>
-        void BasicNack(ulong deliveryTag, bool multiple, bool requeue);
+        void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue);
 
         /// <summary>
         /// Queues the declare.

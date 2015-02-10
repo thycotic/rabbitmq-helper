@@ -141,23 +141,27 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// Basics the ack.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="exchange"></param>
+        /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void BasicAck(ulong deliveryTag, bool multiple)
+        public void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple)
         {
-            _server.BasicAck(deliveryTag, multiple);
+            _server.BasicAck(deliveryTag, exchange, routingKey, multiple);
         }
 
         /// <summary>
         /// Basics the nack.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="exchange"></param>
+        /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         /// <param name="requeue">if set to <c>true</c> [requeue].</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void BasicNack(ulong deliveryTag, bool multiple, bool requeue)
+        public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
-            _server.BasicNack(deliveryTag, multiple);
+            _server.BasicNack(deliveryTag, exchange, routingKey, multiple);
         }
 
         /// <summary>

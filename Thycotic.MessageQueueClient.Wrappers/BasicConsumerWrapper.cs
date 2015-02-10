@@ -50,15 +50,17 @@ namespace Thycotic.MessageQueueClient.Wrappers
         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
             string routingKey, ICommonModelProperties properties, byte[] body)
         {
-            Task.Run(() => ExecuteMessage(deliveryTag, body));
+            Task.Run(() => ExecuteMessage(deliveryTag, exchange, routingKey, body));
         }
 
         /// <summary>
         /// Executes the message.
         /// </summary>
+        /// <param name="exchange">The exchange.</param>
+        /// <param name="routingKey">The routing key.</param>
         /// <param name="deliveryTag">The delivery tag.</param>
         /// <param name="body">The body.</param>
-        private void ExecuteMessage(ulong deliveryTag, byte[] body)
+        private void ExecuteMessage(ulong deliveryTag, string exchange, string routingKey, byte[] body)
         {
             const bool multiple = false;
 
@@ -75,14 +77,14 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
                     _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
 
-                    CommonModel.BasicAck(deliveryTag, multiple);
+                    CommonModel.BasicAck(deliveryTag, exchange, routingKey, multiple);
 
                 }
                 catch (Exception e)
                 {
                     _log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof(TRequest))), e);
 
-                    CommonModel.BasicNack(deliveryTag, multiple, requeue: true);
+                    CommonModel.BasicNack(deliveryTag, exchange, routingKey, multiple, requeue: true);
                 }
             }
         }

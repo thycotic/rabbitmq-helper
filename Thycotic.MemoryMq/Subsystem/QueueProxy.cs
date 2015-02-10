@@ -6,9 +6,10 @@ namespace Thycotic.MemoryMq.Subsystem
     /// <summary>
     /// Queue proxy. Limits the ability to queuing any new items
     /// </summary>
+    //TODO: Rename to MessageQueueProxy
     public class QueueProxy
     {
-        private readonly ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs> _queue;
+        private readonly MessageQueue _queue;
 
         /// <summary>
         /// Gets a value indicating whether this instance is empty.
@@ -28,7 +29,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// Initializes a new instance of the <see cref="QueueProxy"/> class.
         /// </summary>
         /// <param name="queue">The queue.</param>
-        public QueueProxy(ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs> queue)
+        public QueueProxy(MessageQueue queue)
         {
             _queue = queue;
         }
@@ -45,12 +46,12 @@ namespace Thycotic.MemoryMq.Subsystem
 
 
         /// <summary>
-        /// Retries the specified body.
+        /// Negatively the acknoledges the specified delivery tag.
         /// </summary>
-        /// <param name="body">The <see cref="MemoryMqDeliveryEventArgs"/> instance containing the event data.</param>
-        public void Retry(MemoryMqDeliveryEventArgs body)
+        /// <param name="deliveryTag">The delivery tag.</param>
+        public void NegativelyAcknoledge(ulong deliveryTag)
         {
-            _queue.PriorityEnqueue(body);
+            _queue.NegativelyAcknoledge(deliveryTag);
         }
     }
 }

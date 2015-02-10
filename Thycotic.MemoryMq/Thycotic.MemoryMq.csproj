@@ -61,6 +61,7 @@
     <Compile Include="Collections\ConcurrentPriorityQueue.cs" />
     <Compile Include="MemoryMqProperties.cs" />
     <Compile Include="Subsystem\BindingDictionary.cs" />
+    <Compile Include="Subsystem\MessageQueue.cs" />
     <Compile Include="WcfHelpers.cs" />
     <Compile Include="Subsystem\ClientDictionary.cs" />
     <Compile Include="Subsystem\ExchangeDictionary.cs" />

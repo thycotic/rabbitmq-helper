@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Collections;
 
@@ -11,7 +12,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class ExchangeDictionary 
     {
-        private readonly ConcurrentDictionary<RoutingSlip, ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs>> _data = new ConcurrentDictionary<RoutingSlip, ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs>>();
+        private readonly ConcurrentDictionary<RoutingSlip, MessageQueue> _data = new ConcurrentDictionary<RoutingSlip, MessageQueue>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ExchangeDictionary));
 
@@ -45,9 +46,31 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             _log.Debug(string.Format("Publishing message to {0}", routingSlip));
 
-            _data.GetOrAdd(routingSlip, s => new ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs>());
+            _data.GetOrAdd(routingSlip, s => new MessageQueue());
 
             _data[routingSlip].Enqueue(body);
+        }
+
+        /// <summary>
+        /// Acknowledges the specified delivery tag.
+        /// </summary>
+        /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="routingSlip">The routing slip.</param>
+        /// <exception cref="System.ApplicationException">Delivery tag was not found</exception>
+        public void Acknowledge(ulong deliveryTag, RoutingSlip routingSlip)
+        {
+           _data[routingSlip].Acknowledge(deliveryTag);
+        }
+
+        /// <summary>
+        /// Negativelies the acknowledge.
+        /// </summary>
+        /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="routingSlip">The routing slip.</param>
+        /// <exception cref="System.ApplicationException">Delivery tag was not found</exception>
+        public void NegativelyAcknowledge(ulong deliveryTag, RoutingSlip routingSlip)
+        {
+            _data[routingSlip].NegativelyAcknoledge(deliveryTag);
         }
     }
 }

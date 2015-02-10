@@ -32,7 +32,6 @@ namespace Thycotic.MemoryMq.Subsystem
             _exchange = exchange;
             _bindings = bindings;
             _clientDictionary = clientDictionary;
-
         }
 
         private void MonitorAndDispatch()
@@ -73,13 +72,15 @@ namespace Thycotic.MemoryMq.Subsystem
 
                         try
                         {
+                            //this will only fail if WCF fails
+                            //otherwise errors will be nacked by the client
                             clientProxy.Callback.SendMessage(body);
                         }
                         catch (Exception ex)
                         {
                             _log.Error("Failed to send message to client. Requeing message", ex);
 
-                            mailbox.Queue.Retry(body);
+                            mailbox.Queue.NegativelyAcknoledge(body.DeliveryTag);
                         }
                         
 

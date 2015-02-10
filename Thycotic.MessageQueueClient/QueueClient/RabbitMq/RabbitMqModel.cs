@@ -83,13 +83,15 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
             _rawModel.BasicQos(prefetchSize, prefetchCount, global);
         }
 
-        public void BasicAck(ulong deliveryTag, bool multiple)
+        public void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple)
         {
+            //rabbit does not exchange or routing key information
             _rawModel.BasicAck(deliveryTag, multiple);
         }
 
-        public void BasicNack(ulong deliveryTag, bool multiple, bool requeue)
+        public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
+            //rabbit does not exchange or routing key information
             _rawModel.BasicNack(deliveryTag, multiple, requeue);
         }
 
