@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,20 +37,24 @@ namespace Thycotic.MemoryMq.Collections
         public void Enqueue(T item)
         {
             ValidateQueueInvariant();
-            
+
             //adds to the tail
             //tail moves back
 
             if (_head.Node == null)
             {
-                var node = new QueueNode {Item = item, Next = null};
+                var node = new QueueNode { Item = item, Next = null };
                 _head.Node = node;
                 _tail.Node = node;
-                
+
             }
             else
             {
-                var node = new QueueNode { Item = item, Next = _tail };
+                var oldTailNode = _tail.Node;
+
+                var node = new QueueNode { Item = item, Next = null };
+                oldTailNode.Next = new QueueNodePointer(node);
+
                 _tail.Node = node;
             }
         }
@@ -105,7 +110,14 @@ namespace Thycotic.MemoryMq.Collections
             }
             else
             {
-                _head.Node = _head.Node.Next.Node;
+                if (_head.Node.Next != null)
+                {
+                    _head.Node = _head.Node.Next.Node;
+                }
+                else
+                {
+                    _head.Node = null;
+                }
             }
 
             return true;
@@ -116,10 +128,19 @@ namespace Thycotic.MemoryMq.Collections
             public T Item { get; set; }
             public QueueNodePointer Next { get; set; }
         }
-        
+
         private class QueueNodePointer
         {
             public QueueNode Node { get; set; }
+
+            public QueueNodePointer()
+            {
+            }
+
+            public QueueNodePointer(QueueNode node)
+            {
+                Node = node;
+            }
 
         }
     }
