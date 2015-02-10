@@ -79,7 +79,7 @@ namespace Thycotic.MemoryMq.Collections
             }
             else
             {
-                var node = new QueueNode { Item = item, Next = _head };
+                var node = new QueueNode { Item = item, Next = new QueueNodePointer(_head.Node) };
                 _head.Node = node;
             }
         }

@@ -31,7 +31,13 @@ namespace Thycotic.MemoryMq.Tests.Collections
             queue.TryDequeue(out item);
         }
 
-
+        [Given(@"item (\d+) is priorty enqueued in the scenario object (\w+)")]
+        public void GivenItemIsPriortyEnqueuedInTheScenarioObjectConcurrentPriorityQueueTest(int item, string queueName)
+        {
+            var queue = (ConcurrentPriorityQueue<int>)ScenarioContext.Current[queueName];
+            queue.PriorityEnqueue(item);
+        }
+        
         [When(@"all items are dequeued from scenario object (\w+) and stored in scenario object (\w+)")]
         public void WhenAllItemsAreDequeuedFromScenarioObjectConcurrentPriorityQueueTestAndStoredInScenarioObjectConcurrentPriorityQueueResults(string queueName, string resultsName)
         {
