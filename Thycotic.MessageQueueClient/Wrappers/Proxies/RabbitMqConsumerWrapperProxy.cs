@@ -43,7 +43,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.Proxies
         /// <exception cref="System.NotImplementedException"></exception>
         public void HandleBasicConsumeOk(string consumerTag)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.Proxies
         /// <exception cref="System.NotImplementedException"></exception>
         public void HandleBasicCancelOk(string consumerTag)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.Proxies
         /// <exception cref="System.NotImplementedException"></exception>
         public void HandleBasicCancel(string consumerTag)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Thycotic.MessageQueueClient.Wrappers.Proxies
         /// <exception cref="System.NotImplementedException"></exception>
         public void HandleModelShutdown(IModel model, ShutdownEventArgs reason)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         #endregion
 
