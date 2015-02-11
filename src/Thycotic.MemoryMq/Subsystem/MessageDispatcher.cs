@@ -9,11 +9,11 @@ namespace Thycotic.MemoryMq.Subsystem
     /// <summary>
     /// Message dispatcher
     /// </summary>
-    public class MessageDispatcher : IDisposable
+    public class MessageDispatcher : IMessageDispatcher
     {
-        private readonly ExchangeDictionary _exchange;
-        private readonly BindingDictionary _bindings;
-        private readonly ClientDictionary _clientDictionary;
+        private readonly IExchangeDictionary _exchange;
+        private readonly IBindingDictionary _bindings;
+        private readonly IClientDictionary _clientDictionary;
         private CancellationTokenSource _cts;
         private Task _monitoringTask;
 
@@ -27,7 +27,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="exchange">The exchange dictionary.</param>
         /// <param name="bindings">The bindings.</param>
         /// <param name="clientDictionary">The client dictionary.</param>
-        public MessageDispatcher(ExchangeDictionary exchange, BindingDictionary bindings, ClientDictionary clientDictionary)
+        public MessageDispatcher(IExchangeDictionary exchange, IBindingDictionary bindings, IClientDictionary clientDictionary)
         {
             _exchange = exchange;
             _bindings = bindings;

@@ -6,7 +6,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// <summary>
     /// Bindings dictionary 
     /// </summary>
-    public class BindingDictionary
+    public class BindingDictionary : IBindingDictionary
     {
         private readonly ConcurrentDictionary<RoutingSlip, string> _data = new ConcurrentDictionary<RoutingSlip, string>();
 

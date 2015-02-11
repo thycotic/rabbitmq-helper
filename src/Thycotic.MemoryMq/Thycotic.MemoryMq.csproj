@@ -145,6 +145,10 @@
     <Compile Include="Collections\ConcurrentPriorityQueue.cs" />
     <Compile Include="MemoryMqProperties.cs" />
     <Compile Include="Subsystem\BindingDictionary.cs" />
+    <Compile Include="Subsystem\IBindingDictionary.cs" />
+    <Compile Include="Subsystem\IClientDictionary.cs" />
+    <Compile Include="Subsystem\IExchangeDictionary.cs" />
+    <Compile Include="Subsystem\IMessageDispatcher.cs" />
     <Compile Include="Subsystem\IMessageQueue.cs" />
     <Compile Include="Subsystem\MessageQueue.cs" />
     <Compile Include="WcfHelpers.cs" />

@@ -8,7 +8,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// <summary>
     /// Client dictionary
     /// </summary>
-    public class ClientDictionary
+    public class ClientDictionary : IClientDictionary
     {
         private readonly ConcurrentDictionary<string, ClientList> _data =
             new ConcurrentDictionary<string, ClientList>();

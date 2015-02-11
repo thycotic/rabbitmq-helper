@@ -10,21 +10,38 @@ namespace Thycotic.MemoryMq
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class MemoryMqServer : IMemoryMqServer
     {
-        private readonly ExchangeDictionary _messages = new ExchangeDictionary();
-        private readonly BindingDictionary _bindings = new BindingDictionary();
-        private readonly ClientDictionary _clientDictionary = new ClientDictionary();
-        private readonly MessageDispatcher _messageDispatcher;
+        private readonly IExchangeDictionary _messages;
+        private readonly IBindingDictionary _bindings;
+        private readonly IClientDictionary _clients;
+        private readonly IMessageDispatcher _messageDispatcher;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServer));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqServer"/> class.
+        /// This the constructor used by WCF
         /// </summary>
         public MemoryMqServer()
         {
-            _messageDispatcher = new MessageDispatcher(_messages, _bindings, _clientDictionary);
+            _messages = new ExchangeDictionary();
+            _bindings = new BindingDictionary();
+            _clients = new ClientDictionary();
+            _messageDispatcher = new MessageDispatcher(_messages, _bindings, _clients);
             _messageDispatcher.Start();
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryMqServer"/> class.
+        /// </summary>
+        public MemoryMqServer(IExchangeDictionary messages, IBindingDictionary bindings, IClientDictionary clients, IMessageDispatcher dispatcher)
+        {
+            _messages = messages;
+            _bindings = bindings;
+            _clients = clients;
+            _messageDispatcher = dispatcher;
+            _messageDispatcher.Start();
+        }
+
 
         /// <summary>
         /// Basic publish.
@@ -59,7 +76,7 @@ namespace Thycotic.MemoryMq
         {
             _log.Debug("Attaching consumer");
             
-            _clientDictionary.AddClient(queueName);
+            _clients.AddClient(queueName);
         }
 
         /// <summary>
