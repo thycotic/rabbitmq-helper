@@ -15,19 +15,6 @@ namespace Thycotic.MessageQueueClient.Tests
             TypeNameHandling = TypeNameHandling.Auto
         };
 
-        [Given(@"there exists an object of type ""(.+)"" stored in the scenario as (\w+)")]
-        public void GivenThereExistsAnObjectOfTypeStoredInTheScenarioAs(string typeName, string testObjectNameInContext)
-        {
-            var type = Type.GetType(typeName);
-
-            if (type == null)
-            {
-                throw new TypeLoadException(string.Format("Type {0} does not exist", typeName));
-            }
-
-            ScenarioContext.Current[testObjectNameInContext] = Activator.CreateInstance(type);
-        }
-
         [Given(@"the property (\w+) in the scenario object (\w+) is set to ""(.*)""")]
         public void GivenThePropertyInTheScenarioObjectIsSetTo(string propertyName, string testObjectNameInContext, string value)
         {

@@ -10,19 +10,6 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
     [Binding]
     public class MessageQueueProxySteps
     {
-        [Given(@"there exists a MessageQueue stored in the scenario as (\w+)")]
-        public void GivenThereExistsAMessageQueueStoredInTheScenario(string messageQueueName)
-        {
-            ScenarioContext.Current[messageQueueName] = new MessageQueue();
-
-        }
-
-        [Given(@"there exists a MessageQueue substitute stored in the scenario as (\w+)")]
-        public void GivenThereExistsAMessageQueueSubstituteStoredInTheScenario(string messageQueueName)
-        {
-            ScenarioContext.Current[messageQueueName] = Substitute.For<IMessageQueue>();
-        }
-
         [Given(@"there exists a MessageQueueProxy stored in the scenario as (\w+) with MessageQueue (\w+)")]
         public void GivenThereExistsAMessageQueueProxyStoredInTheScenario(string messageQueueProxyName, string messageQueueName)
         {
