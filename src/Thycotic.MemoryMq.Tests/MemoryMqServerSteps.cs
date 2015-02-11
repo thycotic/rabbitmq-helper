@@ -19,12 +19,12 @@ namespace Thycotic.MemoryMq.Tests
             ScenarioContext.Current[serverName] = new MemoryMqServer(exchange, bindings, clients, messageDispatcher);
         }
 
-        [When(@"the method BasicPublish on MemoryMqServer (\w+) is called")]
-        public void WhenTheMethodBasicPublishOnMemoryMqServerMemoryMqServerTestIsCalled(string serverName)
+        [When(@"the method BasicPublish on MemoryMqServer (\w+) is called with exchange (\w+) and routing key (\w+)")]
+        public void WhenTheMethodBasicPublishOnMemoryMqServerMemoryMqServerTestIsCalled(string serverName, string exchangeName, string routingKey)
         {
             var server = (IMemoryMqServer)ScenarioContext.Current[serverName];
 
-            server.BasicPublish(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), true, true, new MemoryMqProperties(), null);
+            server.BasicPublish(exchangeName, routingKey, true, true, new MemoryMqProperties(), null);
         }
 
         [When(@"the method QueueBind on MemoryMqServer (\w+) is called")]
@@ -78,40 +78,40 @@ namespace Thycotic.MemoryMq.Tests
             messageDispatcher.Received().Start();       
         }
 
-        [Then(@"the method Publish on ExchangeDictionary substitute (\w+) is called")]
-        public void ThenTheMethodexchangesNameOnExchangeDictionarySubstituteIsCalled(string exchangesName)
+        [Then(@"the method Publish on ExchangeDictionary substitute (\w+) is called with exchange (\w+) and routing key (\w+)")]
+        public void ThenTheMethodexchangesNameOnExchangeDictionarySubstituteIsCalled(string exchangesName, string exchangeName, string routingKey)
         {
             var exchange = (IExchangeDictionary)ScenarioContext.Current[exchangesName];
 
-            exchange.Received().Publish(Arg.Any<RoutingSlip>(), Arg.Any<MemoryMqDeliveryEventArgs>());
+            exchange.Received().Publish(new RoutingSlip(exchangeName, routingKey), Arg.Any<MemoryMqDeliveryEventArgs>());
         }
 
         [Then(@"the method AddBinding on BindingDictionary substitute (\w+) is called")]
         public void ThenTheMethodAddBindingOnBindingDictionarySubstituteIsCalled(string bindingsName)
         {
             var queue = (IBindingDictionary)ScenarioContext.Current[bindingsName];
-            queue.ReceivedWithAnyArgs().AddBinding(Arg.Any<RoutingSlip>(), Arg.Any<string>());
+            queue.Received().AddBinding(Arg.Any<RoutingSlip>(), Arg.Any<string>());
         }
 
         [Then(@"the method AddClient on ClientDictionary substitute (\w+) is called")]
         public void ThenTheMethodAddClientOnClientDictionarySubstituteIsCalled(string clientsName)
         {
             var clients = (IClientDictionary)ScenarioContext.Current[clientsName];
-            clients.ReceivedWithAnyArgs().AddClient(Arg.Any<string>());
+            clients.Received().AddClient(Arg.Any<string>());
         }
 
         [Then(@"the method Acknowledge on ExchangeDictionary substitute (\w+) is called")]
         public void ThenTheMethodAcknowledgeOnExchangeDictionaryIsCalled(string exchangeName)
         {
             var messages = (IExchangeDictionary)ScenarioContext.Current[exchangeName];
-            messages.ReceivedWithAnyArgs().Acknowledge(Arg.Any<ulong>(), Arg.Any<RoutingSlip>());
+            messages.Received().Acknowledge(Arg.Any<ulong>(), Arg.Any<RoutingSlip>());
         }
 
         [Then(@"the method NegativelyAcknowledge on ExchangeDictionary substitute (\w+) is called")]
         public void ThenTheMethodNegativelyAcknowledgeOnExchangeDictionarySubstituteIsCalled(string exchangeName)
         {
             var messages = (IExchangeDictionary)ScenarioContext.Current[exchangeName];
-            messages.ReceivedWithAnyArgs().NegativelyAcknowledge(Arg.Any<ulong>(), Arg.Any<RoutingSlip>());
+            messages.Received().NegativelyAcknowledge(Arg.Any<ulong>(), Arg.Any<RoutingSlip>());
         }
 
         [Then(@"the method Stop on MessageDispatcher substitute (\w+) is called")]

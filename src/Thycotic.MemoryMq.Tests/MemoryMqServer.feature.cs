@@ -94,11 +94,11 @@ testRunner.Given("there exists a substitute object of type \"Thycotic.MemoryMq.S
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Constructor calls Start on dispatcher", new string[] {
                         "mytag"});
-#line 11
+#line 13
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
-#line 12
+#line 14
  testRunner.Then("the method Start on MessageDispatcher substitute MessageDispatcherTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -109,15 +109,16 @@ this.FeatureBackground();
         public virtual void BasicPublishCallsPublishOnExchangeDictionary()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("BasicPublish calls Publish on ExchangeDictionary", ((string[])(null)));
-#line 14
+#line 16
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
-#line 15
- testRunner.When("the method BasicPublish on MemoryMqServer MemoryMqServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 16
+#line 17
+ testRunner.When("the method BasicPublish on MemoryMqServer MemoryMqServerTest is called with excha" +
+                    "nge ExchangeTest and routing key RoutingKeyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 18
  testRunner.Then("the method Publish on ExchangeDictionary substitute ExchangeDictionaryTest is cal" +
-                    "led", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                    "led with exchange ExchangeTest and routing key RoutingKeyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -127,13 +128,13 @@ this.FeatureBackground();
         public virtual void QueueBindCallsAddBindingOnBindingDictionary()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("QueueBind calls AddBinding on BindingDictionary", ((string[])(null)));
-#line 18
+#line 20
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
-#line 19
+#line 21
  testRunner.When("the method QueueBind on MemoryMqServer MemoryMqServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 20
+#line 22
  testRunner.Then("the method AddBinding on BindingDictionary substitute BindingDictionaryTest is ca" +
                     "lled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -145,13 +146,13 @@ this.FeatureBackground();
         public virtual void BasicConsumeCallsAddClientOnClientDictionary()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("BasicConsume calls AddClient on ClientDictionary", ((string[])(null)));
-#line 22
+#line 24
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
-#line 23
+#line 25
  testRunner.When("the method BasicConsume on MemoryMqServer MemoryMqServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 24
+#line 26
  testRunner.Then("the method AddClient on ClientDictionary substitute ClientDictionaryTest is calle" +
                     "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -163,13 +164,13 @@ this.FeatureBackground();
         public virtual void BasicAckCallsAcknowledgeOnExchangeDictionary()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("BasicAck calls Acknowledge on ExchangeDictionary", ((string[])(null)));
-#line 26
+#line 28
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
-#line 27
+#line 29
  testRunner.When("the method BasicAck on MemoryMqServer MemoryMqServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 28
+#line 30
  testRunner.Then("the method Acknowledge on ExchangeDictionary substitute ExchangeDictionaryTest is" +
                     " called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -181,13 +182,13 @@ this.FeatureBackground();
         public virtual void BasicNackCallsNegativelyAcknowledgeOnExchangeDictionary()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("BasicNack calls NegativelyAcknowledge on ExchangeDictionary", ((string[])(null)));
-#line 30
+#line 32
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
-#line 31
+#line 33
  testRunner.When("the method BasicNack on MemoryMqServer MemoryMqServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 32
+#line 34
  testRunner.Then("the method NegativelyAcknowledge on ExchangeDictionary substitute ExchangeDiction" +
                     "aryTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -199,13 +200,13 @@ this.FeatureBackground();
         public virtual void DisposeCallsStopOnMessageDispatcher()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Dispose calls Stop on MessageDispatcher", ((string[])(null)));
-#line 34
+#line 36
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
-#line 35
+#line 37
  testRunner.When("the method Dispose on MemoryMqServer MemoryMqServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 36
+#line 38
  testRunner.Then("the method Stop on MessageDispatcher substitute MessageDispatcherTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

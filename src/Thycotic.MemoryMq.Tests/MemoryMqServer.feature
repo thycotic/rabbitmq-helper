@@ -7,13 +7,15 @@ Given there exists a substitute object of type "Thycotic.MemoryMq.Subsystem.IExc
 	And there exists a substitute object of type "Thycotic.MemoryMq.Subsystem.IMessageDispatcher, Thycotic.MemoryMq" stored in the scenario as MessageDispatcherTest
 	And there exists a MemoryMqServer stored in the scenario as MemoryMqServerTest with ExchangeDictionary ExchangeDictionaryTest, BindingDictionary BindingDictionaryTest, ClientDictionary ClientDictionaryTest and MessageDispatcher MessageDispatcherTest
 
+#TODO: Check for explicit parameters
+
 @mytag
 Scenario: Constructor calls Start on dispatcher
 	Then the method Start on MessageDispatcher substitute MessageDispatcherTest is called
 
 Scenario: BasicPublish calls Publish on ExchangeDictionary
-	When the method BasicPublish on MemoryMqServer MemoryMqServerTest is called
-	Then the method Publish on ExchangeDictionary substitute ExchangeDictionaryTest is called
+	When the method BasicPublish on MemoryMqServer MemoryMqServerTest is called with exchange ExchangeTest and routing key RoutingKeyTest
+	Then the method Publish on ExchangeDictionary substitute ExchangeDictionaryTest is called with exchange ExchangeTest and routing key RoutingKeyTest
 
 Scenario: QueueBind calls AddBinding on BindingDictionary
 	When the method QueueBind on MemoryMqServer MemoryMqServerTest is called
