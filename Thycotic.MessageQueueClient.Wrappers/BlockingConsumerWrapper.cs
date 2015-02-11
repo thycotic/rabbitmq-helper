@@ -14,7 +14,8 @@ namespace Thycotic.MessageQueueClient.Wrappers
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
     public class BlockingConsumerWrapper<TRequest, TResponse, THandler> : ConsumerWrapperBase<TRequest, THandler>
-        where TRequest : IConsumable
+        where TRequest : class, IConsumable
+        where TResponse : class
         where THandler : IBlockingConsumer<TRequest, TResponse>
     {
         private readonly IMessageSerializer _serializer;

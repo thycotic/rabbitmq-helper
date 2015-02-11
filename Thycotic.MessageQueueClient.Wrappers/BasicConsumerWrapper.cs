@@ -13,7 +13,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
     public class BasicConsumerWrapper<TRequest, THandler> : ConsumerWrapperBase<TRequest, THandler>
-        where TRequest : IConsumable
+        where TRequest : class, IConsumable
         where THandler : IBasicConsumer<TRequest>
     {
         private readonly Func<Owned<THandler>> _handlerFactory;
