@@ -64,34 +64,60 @@ namespace Thycotic.MemoryMq.Tests
             testRunner.CollectScenarioErrors();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("BasicPublish calls messages Publish")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
-        public virtual void BasicPublishCallsMessagesPublish()
+        public virtual void FeatureBackground()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("BasicPublish calls messages Publish", new string[] {
-                        "mytag"});
+#line 3
 #line 4
-this.ScenarioSetup(scenarioInfo);
-#line 5
- testRunner.Given("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IExchangeDi" +
+testRunner.Given("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IExchangeDi" +
                     "ctionary, Thycotic.MemoryMq\" stored in the scenario as ExchangeDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 6
+#line 5
  testRunner.And("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IBindingDic" +
                     "tionary, Thycotic.MemoryMq\" stored in the scenario as BindingDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 7
+#line 6
  testRunner.And("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IClientDict" +
                     "ionary, Thycotic.MemoryMq\" stored in the scenario as ClientDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 8
+#line 7
  testRunner.And("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IMessageDis" +
                     "patcher, Thycotic.MemoryMq\" stored in the scenario as MessageDispatcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 9
+#line 8
  testRunner.And("there exists a MemoryMqServer stored in the scenario as MemoryMqServerTest with E" +
                     "xchangeDictionary ExchangeDictionaryTest, BindingDictionary BindingDictionaryTes" +
                     "t, ClientDictionary ClientDictionaryTest and MessageDispatcher MessageDispatcher" +
                     "Test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 10
+#line hidden
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Constructor calls Start on dispatcher")]
+        [NUnit.Framework.CategoryAttribute("mytag")]
+        public virtual void ConstructorCallsStartOnDispatcher()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Constructor calls Start on dispatcher", new string[] {
+                        "mytag"});
+#line 11
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line 12
  testRunner.Then("the method Start on MessageDispatcher substitute MessageDispatcherTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("BasicPublish calls Publish on dispatcher")]
+        public virtual void BasicPublishCallsPublishOnDispatcher()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("BasicPublish calls Publish on dispatcher", ((string[])(null)));
+#line 14
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line 15
+ testRunner.When("the method BasicPublish on MemoryMqServer MemoryMqServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+ testRunner.Then("the method Publish on ExchangeDictionary substitute ExchangeDictionaryTest is cal" +
+                    "led", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
