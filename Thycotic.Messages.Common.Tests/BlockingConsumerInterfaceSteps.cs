@@ -16,7 +16,7 @@ namespace Thycotic.Messages.Common.Tests
         [When(@"the method Consumer on BlockingConsumerDummy (\w+) is called with a null reference")]
         public void WhenTheMethodConsumerOnIBasicConsumerIsCalledWithANullReference(string consumerName)
         {
-            ScenarioContext.Current.ExecuteThrowing<ApplicationException>(() =>
+            ScenarioContext.Current.ExecuteThrowing<ArgumentNullException>(() =>
             {
                 var consumer = (BlockingConsumerDummy)ScenarioContext.Current[consumerName];
                 consumer.Consume(null);
