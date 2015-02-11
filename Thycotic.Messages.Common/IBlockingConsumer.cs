@@ -27,7 +27,7 @@ namespace Thycotic.Messages.Common
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     [ContractClassFor(typeof(IBlockingConsumer<,>))]
-    public sealed class BlockingConsumerContract<TRequest, TResponse> : IBlockingConsumer<TRequest, TResponse>
+    public abstract class BlockingConsumerContract<TRequest, TResponse> : IBlockingConsumer<TRequest, TResponse>
         where TRequest : class
         where TResponse : class
     {

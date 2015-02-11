@@ -2,6 +2,7 @@
 using FluentAssertions;
 using TechTalk.SpecFlow;
 using Thycotic.MemoryMq.Subsystem;
+using Thycotic.Utility.Specflow;
 
 namespace Thycotic.MemoryMq.Tests.Subsystem
 {
@@ -29,15 +30,11 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [When(@"the string representation of scenario object (\w+) and stored in scenario object (\w+)")]
         public void WhenTheStringRepresentationOfScenarioObjectRoutingSlipTestAndStoredInScenarioObjectRoutingSlipTestResults(string routingSlipName, string routingSlipResults)
         {
-            try
+            ScenarioContext.Current.ExecuteThrowing<ApplicationException>(() =>
             {
                 var routingSlip = (RoutingSlip) ScenarioContext.Current[routingSlipName];
                 ScenarioContext.Current[routingSlipResults] = routingSlip.ToString();
-            }
-            catch (Exception ex)
-            {
-                ScenarioContext.Current[ScenarioCommon.ScenarioException] = ex.Message;
-            }
+            });
         }
 
         [Then(@"value of scenario object (\w+) should be ""(.*)""")]

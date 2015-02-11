@@ -3,6 +3,7 @@ using FluentAssertions;
 using NSubstitute;
 using TechTalk.SpecFlow;
 using Thycotic.MemoryMq.Subsystem;
+using Thycotic.Utility.Specflow;
 
 namespace Thycotic.MemoryMq.Tests.Subsystem
 {
@@ -32,15 +33,10 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [Given(@"there is attempt to create a MessageQueueProxy with a null queue")]
         public void GivenThereIsAttemptToCreateAMessageQueueProxyWithANullQueue()
         {
-            try
+            ScenarioContext.Current.ExecuteThrowing<ArgumentNullException>(() =>
             {
-               var temp = new MessageQueueProxy(null);
-            }
-            catch (Exception ex)
-            {
-                ScenarioContext.Current[ScenarioCommon.ScenarioException] = ex.Message;
-            }
-            
+                var temp = new MessageQueueProxy(null);
+            });
         }
 
         [When(@"the method TryDequeue on MessageQueueProxy (\w+) is called")]

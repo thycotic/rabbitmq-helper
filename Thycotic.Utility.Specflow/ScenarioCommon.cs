@@ -1,16 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
-namespace Thycotic.MemoryMq.Tests
+namespace Thycotic.Utility.Specflow
 {
     public static class ScenarioCommon
     {
         public const string ScenarioException = "ScenarioException";
+    }
+
+    public static class ScenarioExtensions
+    {
+        public static void ExecuteThrowing<T>(this ScenarioContext context, Action action)
+            where T: Exception
+        {
+            try
+            {
+                action.Invoke();
+            }
+            catch (T ex)
+            {
+                context[ScenarioCommon.ScenarioException] = ex.Message;
+            }
+        }
     }
 
     [Binding]
