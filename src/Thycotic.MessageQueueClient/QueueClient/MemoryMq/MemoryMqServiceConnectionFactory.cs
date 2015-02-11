@@ -20,6 +20,8 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
             get { return _uri.Host; }
         }
 
+        public bool UseSsl { get; set; }
+
         private Uri _uri;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServiceConnectionFactory));
@@ -27,7 +29,12 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         public IMemoryMqServiceConnection CreateConnection()
         {
             var clientBinding = new NetTcpBinding(SecurityMode.TransportWithMessageCredential);
-            clientBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+
+            if (UseSsl)
+            {
+                clientBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;    
+            }
+            
             clientBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
 
             var callback = new MemoryMqServiceCallback();

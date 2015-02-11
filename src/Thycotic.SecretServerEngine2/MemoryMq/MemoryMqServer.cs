@@ -16,12 +16,25 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
     public class MemoryMqServer : IStartable, IDisposable
     {
         private readonly string _connectionString;
+        private bool _useSsl;
         private readonly string _thumbprint;
         private Task _serverTask;
         private ServiceHost _host;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServer));
         private readonly UserNamePasswordValidator _engineClientVerifier;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryMqServer"/> class.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
+        /// <param name="engineClientVerifier">The engine client verifier.</param>
+        public MemoryMqServer(string connectionString, UserNamePasswordValidator engineClientVerifier)
+        {
+            _connectionString = connectionString;
+            _useSsl = false;
+            _engineClientVerifier = engineClientVerifier;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqServer" /> class.
@@ -32,6 +45,7 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
         public MemoryMqServer(string connectionString, string thumbprint, UserNamePasswordValidator engineClientVerifier)
         {
             _connectionString = connectionString;
+            _useSsl = true;
             _thumbprint = thumbprint;
             _engineClientVerifier = engineClientVerifier;
         }
@@ -49,8 +63,17 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
 
             _serverTask = Task.Factory.StartNew(() =>
             {
-                var serviceBinding = new NetTcpBinding(SecurityMode.TransportWithMessageCredential);
-                serviceBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+                NetTcpBinding serviceBinding;
+
+                if (_useSsl)
+                {
+                    serviceBinding = new NetTcpBinding(SecurityMode.TransportWithMessageCredential);
+                    serviceBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+                }
+                else
+                {
+                    serviceBinding = new NetTcpBinding(SecurityMode.Message);
+                }
                 serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
 
                 _host = new ServiceHost(typeof(Thycotic.MemoryMq.MemoryMqServer));
@@ -58,12 +81,15 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
                 _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = _engineClientVerifier;
                 _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
 
-                _host.Credentials.ServiceCertificate.SetCertificate(
-                    StoreLocation.LocalMachine,
-                    StoreName.My,
-                    X509FindType.FindByThumbprint,
-                    _thumbprint);
-
+                if (_useSsl)
+                {
+                    _host.Credentials.ServiceCertificate.SetCertificate(
+                        StoreLocation.LocalMachine,
+                        StoreName.My,
+                        X509FindType.FindByThumbprint,
+                        _thumbprint);
+                }
+                
                 try
                 {
                     _host.Open();

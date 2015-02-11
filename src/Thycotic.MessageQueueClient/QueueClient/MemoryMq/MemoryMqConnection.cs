@@ -28,9 +28,10 @@ namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
         /// Initializes a new instance of the <see cref="MemoryMqConnection"/> class.
         /// </summary>
         /// <param name="url">The URL.</param>
-        public MemoryMqConnection(string url)
+        /// <param name="useSsl"></param>
+        public MemoryMqConnection(string url, bool useSsl)
         {
-            _connectionFactory = new MemoryMqServiceConnectionFactory { Uri = url, RequestedHeartbeat = 300 };
+            _connectionFactory = new MemoryMqServiceConnectionFactory { Uri = url, UseSsl = useSsl, RequestedHeartbeat = 300 };
             ResetConnection();
         }
 

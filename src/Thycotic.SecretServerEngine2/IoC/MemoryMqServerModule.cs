@@ -22,7 +22,7 @@ namespace Thycotic.SecretServerEngine2.IoC
         {
             base.Load(builder);
 
-            var startServerString = _configurationProvider(ConfigurationKeys.MemoryMq.StartServer);
+            var startServerString = _configurationProvider(ConfigurationKeys.MemoryMq.Server.Start);
 
             bool startServer;
             if (!Boolean.TryParse(startServerString, out startServer))
@@ -40,15 +40,30 @@ namespace Thycotic.SecretServerEngine2.IoC
             var connectionString = _configurationProvider(ConfigurationKeys.MemoryMq.ConnectionString);
             _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-            var thumbprint = _configurationProvider(ConfigurationKeys.MemoryMq.Thumbprint);
-            _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
-
             builder.RegisterType<EngineClientVerifier>()
                 .AsImplementedInterfaces()
                 .As<UserNamePasswordValidator>()
                 .InstancePerDependency();
 
-            builder.Register(context => new MemoryMqServer(connectionString, thumbprint, context.Resolve<UserNamePasswordValidator>())).As<IStartable>().SingleInstance();
+
+            var useSsl = Convert.ToBoolean(_configurationProvider(ConfigurationKeys.MemoryMq.UseSSL));
+            if (useSsl)
+            {
+                var thumbprint = _configurationProvider(ConfigurationKeys.MemoryMq.Server.Thumbprint);
+                _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
+
+
+                builder.Register(context => new MemoryMqServer(connectionString, thumbprint, context.Resolve<UserNamePasswordValidator>()))
+                    .As<IStartable>()
+                    .SingleInstance();
+            }
+            else
+            {
+
+                builder.Register(context => new MemoryMqServer(connectionString, context.Resolve<UserNamePasswordValidator>()))
+                    .As<IStartable>()
+                    .SingleInstance();
+            }
         }
     }
 }

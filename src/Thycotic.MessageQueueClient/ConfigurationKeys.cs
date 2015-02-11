@@ -1,4 +1,6 @@
-﻿namespace Thycotic.MessageQueueClient
+﻿using System;
+
+namespace Thycotic.MessageQueueClient
 {
     /// <summary>
     /// Configuration keys
@@ -29,6 +31,11 @@
             /// The password
             /// </summary>
             public const string Password = "RabbitMq.Password";
+
+            /// <summary>
+            /// Whether or not to use SSL
+            /// </summary>
+            public static string UseSSL = "RabbitMq.UseSSL";
         }
 
         /// <summary>
@@ -41,15 +48,30 @@
             /// </summary>
             public const string ConnectionString = "MemoryMq.ConnectionString";
 
-            /// <summary>
-            /// The thumb print
-            /// </summary>
-            public const string Thumbprint = "MemoryMq.Thumbprint";
+            //TODO: Use username/password? -dkk
 
             /// <summary>
-            /// The start server
+            /// Whether or not to use SSL
             /// </summary>
-            public const string StartServer = "MemoryMq.StartServer";
+            public static string UseSSL = "MemoryMq.UseSSL";
+
+            /// <summary>
+            /// Server related
+            /// </summary>
+            public static class Server
+            {
+
+                /// <summary>
+                /// The thumb print
+                /// </summary>
+                public const string Thumbprint = "MemoryMq.Server.Thumbprint";
+
+                /// <summary>
+                /// The start server
+                /// </summary>
+                public const string Start = "MemoryMq.Server.Start";
+
+            }
         }
     }
 }

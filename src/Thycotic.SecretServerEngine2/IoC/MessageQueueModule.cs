@@ -43,7 +43,15 @@ namespace Thycotic.SecretServerEngine2.IoC
                 var password = _configurationProvider(ConfigurationKeys.RabbitMq.Password);
                 _log.Info(string.Format("RabbitMq password is {0}", string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
-                var useSsl = true; //TODO: From config
+                var useSsl = Convert.ToBoolean(_configurationProvider(ConfigurationKeys.RabbitMq.UseSSL));
+                if (useSsl)
+                {
+                    _log.Info("RabbitMq using encryption");
+                }
+                else
+                {
+                    _log.Warn("RabbitMq is not using encryption");
+                }
 
                 builder.Register(context => new RabbitMqConnection(connectionString, userName, password, useSsl))
                     .As<ICommonConnection>().InstancePerDependency();
@@ -59,7 +67,18 @@ namespace Thycotic.SecretServerEngine2.IoC
                 var connectionString = _configurationProvider(ConfigurationKeys.MemoryMq.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-                builder.Register(context => new MemoryMqConnection(connectionString))
+                var useSsl = Convert.ToBoolean(_configurationProvider(ConfigurationKeys.MemoryMq.UseSSL));
+                if (useSsl)
+                {
+                    _log.Info("MemoryMq using encryption");
+                }
+                else
+                {
+                    _log.Warn("MemoryMq is not using encryption");
+                }
+
+
+                builder.Register(context => new MemoryMqConnection(connectionString, useSsl))
                     .As<ICommonConnection>().InstancePerDependency();
             }
 
