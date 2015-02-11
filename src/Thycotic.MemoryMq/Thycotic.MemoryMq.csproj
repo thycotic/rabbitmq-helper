@@ -142,9 +142,6 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="..\VersionInfo.cs">
-      <Link>Properties\VersionInfo.cs</Link>
-    </Compile>
     <Compile Include="Collections\ConcurrentPriorityQueue.cs" />
     <Compile Include="MemoryMqProperties.cs" />
     <Compile Include="Subsystem\BindingDictionary.cs" />

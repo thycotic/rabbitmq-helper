@@ -155,6 +155,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\ProductInfo.cs">
+      <Link>Properties\ProductInfo.cs</Link>
+    </Compile>
     <Compile Include="Collections\ConcurrentPriorityQueue.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

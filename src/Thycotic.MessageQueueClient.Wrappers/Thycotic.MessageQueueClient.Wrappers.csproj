@@ -149,9 +149,6 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="..\VersionInfo.cs">
-      <Link>Properties\VersionInfo.cs</Link>
-    </Compile>
     <Compile Include="ConsumerWrapperFactory.cs" />
     <Compile Include="IoC\WrappersModule.cs" />
     <Compile Include="BasicConsumerWrapper.cs" />

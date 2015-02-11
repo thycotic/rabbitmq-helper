@@ -143,9 +143,6 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="..\VersionInfo.cs">
-      <Link>Properties\VersionInfo.cs</Link>
-    </Compile>
     <Compile Include="ILogWriter.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="LogContext.cs" />

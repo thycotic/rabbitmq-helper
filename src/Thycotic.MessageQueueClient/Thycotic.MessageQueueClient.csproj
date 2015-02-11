@@ -147,9 +147,6 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="..\VersionInfo.cs">
-      <Link>Properties\VersionInfo.cs</Link>
-    </Compile>
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="IRequestBus.cs" />
     <Compile Include="JsonMessageSerializer.cs" />

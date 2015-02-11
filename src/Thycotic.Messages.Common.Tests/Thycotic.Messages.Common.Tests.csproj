@@ -150,9 +150,6 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="..\VersionInfo.cs">
-      <Link>Properties\VersionInfo.cs</Link>
-    </Compile>
     <Compile Include="BasicConsumerDummy.cs" />
     <Compile Include="BlockingConsumerInterface.feature.cs">
       <DependentUpon>BlockingConsumerInterface.feature</DependentUpon>
