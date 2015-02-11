@@ -33,29 +33,35 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
         /// <param name="url">The URL.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password.</param>
-        public RabbitMqConnection(string url, string userName, string password)
+        /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
+        public RabbitMqConnection(string url, string userName, string password, bool useSsl)
         {
-            const string hostName2 = "THYCOPAIR24.testparent.thycotic.com";
+            var uri = new Uri(url);
+
+            var sslOption = useSsl
+                ? new SslOption
+                {
+                    Enabled = true,
+                    ServerName = uri.Host,
+                    AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch |
+                                             SslPolicyErrors.RemoteCertificateChainErrors,
+                }
+                : new SslOption
+                {
+                    Enabled = false
+                };
 
             _connectionFactory = new ConnectionFactory
             {
-                HostName = hostName2,//new Uri(url).Host,
-
-                VirtualHost = "/",
-                Port = 5671,
-
-                Ssl = new SslOption
-                {
-                    Enabled = true,
-                    ServerName = hostName2,// new Uri(url).Host,
-                    AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch |
-                                             SslPolicyErrors.RemoteCertificateChainErrors,
-                },
-                //Uri = url,
+                HostName = uri.Host,
+                VirtualHost = "/", //TODO: Change maybe?
+                Port = uri.Port,
+                Ssl = sslOption,
                 RequestedHeartbeat = 300,
                 UserName = userName,
                 Password = password
             };
+
             ResetConnection();
         }
 

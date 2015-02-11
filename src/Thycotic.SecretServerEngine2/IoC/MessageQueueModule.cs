@@ -43,7 +43,9 @@ namespace Thycotic.SecretServerEngine2.IoC
                 var password = _configurationProvider(ConfigurationKeys.RabbitMq.Password);
                 _log.Info(string.Format("RabbitMq password is {0}", string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
-                builder.Register(context => new RabbitMqConnection(connectionString, userName, password))
+                var useSsl = true; //TODO: From config
+
+                builder.Register(context => new RabbitMqConnection(connectionString, userName, password, useSsl))
                     .As<ICommonConnection>().InstancePerDependency();
 
             }
