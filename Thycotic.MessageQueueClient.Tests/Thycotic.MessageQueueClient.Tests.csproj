@@ -109,6 +109,10 @@
       <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
       <Name>Thycotic.Messages.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
+      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
+      <Name>Thycotic.Utility.Specflow</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
