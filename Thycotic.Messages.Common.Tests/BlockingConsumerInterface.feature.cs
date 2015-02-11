@@ -19,20 +19,20 @@ namespace Thycotic.Messages.Common.Tests
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("BasicConsumerInterface")]
-    public partial class BasicConsumerInterfaceFeature
+    [NUnit.Framework.DescriptionAttribute("BlockingConsumerInterface")]
+    public partial class BlockingConsumerInterfaceFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "BasicConsumerInterface.feature"
+#line 1 "BlockingConsumerInterface.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "BasicConsumerInterface", "", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "BlockingConsumerInterface", "", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -74,11 +74,11 @@ namespace Thycotic.Messages.Common.Tests
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.Given("there exists a BasicConsumerDummy stored in the scenario as BasicConsumerInterfac" +
-                    "eTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a BlockingConsumerDummy stored in the scenario as BlockingConsumerIn" +
+                    "terfaceTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
- testRunner.When("the method Consumer on BasicConsumerDummy BasicConsumerInterfaceTest is called wi" +
-                    "th a null reference", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method Consumer on BlockingConsumerDummy BlockingConsumerInterfaceTest is cal" +
+                    "led with a null reference", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 7
  testRunner.Then("there should have been a exception thrown with message \"Precondition failed: requ" +
                     "est != null\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
