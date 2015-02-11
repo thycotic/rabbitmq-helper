@@ -22,6 +22,11 @@ namespace Thycotic.Utility.Specflow
             {
                 context[ScenarioCommon.ScenarioException] = ex.Message;
             }
+            catch (Exception ex)
+            {
+                throw new NotSupportedException(
+                    string.Format("Scenario was expecting an exception of type {0} but found one of type {1} ", typeof (T), ex.GetType()), ex);
+            }
         }
     }
 
