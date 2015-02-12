@@ -11,6 +11,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
     {
         private readonly ICommonConnection _connection;
         private readonly IMessageSerializer _messageSerializer;
+        private readonly IMessageEncryptor _messageEncryptor;
 
         private readonly ILogWriter _log = Log.Get(typeof(RequestBus));
 
@@ -19,10 +20,12 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <param name="messageSerializer">The message serializer.</param>
-        public RequestBus(ICommonConnection connection, IMessageSerializer messageSerializer)
+        /// <param name="messageEncryptor">The message encryptor.</param>
+        public RequestBus(ICommonConnection connection, IMessageSerializer messageSerializer, IMessageEncryptor messageEncryptor)
         {
             _connection = connection;
             _messageSerializer = messageSerializer;
+            _messageEncryptor = messageEncryptor;
         }
 
         /// <summary>
@@ -33,9 +36,8 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// <param name="persistent">if set to <c>true</c> [persistent].</param>
         public void BasicPublish(string exchangeName, IConsumable request, bool persistent = true)
         {
-            _log.Debug(string.Format("Publishing basic (fire and forget) {0}", request));
+            _log.Debug(string.Format("Publishing basic (fire and forget) {0}", request.GetType()));
 
-            var body = _messageSerializer.ToBytes(request);
             var routingKey = request.GetRoutingKey();
 
             try
@@ -48,7 +50,9 @@ namespace Thycotic.MessageQueueClient.QueueClient
                     var properties = channel.CreateBasicProperties();
                     properties.SetPersistent(persistent);
 
-                    channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
+                    channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory,
+                        DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties,
+                        _messageEncryptor.Encrypt(exchangeName, _messageSerializer.ToBytes(request)));
 
                     channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
                 }
@@ -76,9 +80,8 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// or</exception>
         public TResponse BlockingPublish<TResponse>(string exchangeName, IConsumable request, int timeoutSeconds)
         {
-            _log.Debug(string.Format("Publishing blocking {0}", request));
+            _log.Debug(string.Format("Publishing blocking {0}", request.GetType()));
 
-            var body = _messageSerializer.ToBytes(request);
             var routingKey = request.GetRoutingKey();
 
             try
@@ -93,7 +96,9 @@ namespace Thycotic.MessageQueueClient.QueueClient
                         channel.ConfirmSelect();
                         channel.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
 
-                        channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
+                        channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory,
+                            DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties,
+                            _messageEncryptor.Encrypt(exchangeName, _messageSerializer.ToBytes(request)));
 
                         channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
 
@@ -114,10 +119,10 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
                         if (response.BasicProperties.Type != "error")
                         {
-                            return _messageSerializer.ToRequest<TResponse>(response.Body);
+                            return _messageSerializer.ToRequest<TResponse>(_messageEncryptor.Decrypt(exchangeName, response.Body));
                         }
 
-                        var error = _messageSerializer.ToRequest<BlockingConsumerError>(response.Body);
+                        var error = _messageSerializer.ToRequest<BlockingConsumerError>(_messageEncryptor.Decrypt(exchangeName, response.Body));
                         throw new ApplicationException(error.Message);
                     }
                 }

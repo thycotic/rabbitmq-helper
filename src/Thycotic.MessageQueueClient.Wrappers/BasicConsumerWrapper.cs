@@ -18,7 +18,8 @@ namespace Thycotic.MessageQueueClient.Wrappers
     {
         private readonly IExchangeNameProvider _exchangeNameProvider;
         private readonly Func<Owned<THandler>> _handlerFactory;
-        private readonly IMessageSerializer _serializer;
+        private readonly IMessageSerializer _messageSerializer;
+        private readonly IMessageEncryptor _messageEncryptor;
         private readonly ILogWriter _log = Log.Get(typeof(BasicConsumerWrapper<TRequest, THandler>));
 
         /// <summary>
@@ -26,14 +27,17 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </summary>
         /// <param name="connection">The RMQ.</param>
         /// <param name="exchangeNameProvider">The exchange provider.</param>
-        /// <param name="serializer">The serializer.</param>
+        /// <param name="messageSerializer">The serializer.</param>
+        /// <param name="messageEncryptor">The message encryptor.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BasicConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+        public BasicConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IMessageSerializer messageSerializer,
+            IMessageEncryptor messageEncryptor, Func<Owned<THandler>> handlerFactory)
             : base(connection, exchangeNameProvider)
         {
             _exchangeNameProvider = exchangeNameProvider;
             _handlerFactory = handlerFactory;
-            _serializer = serializer;
+            _messageSerializer = messageSerializer;
+            _messageEncryptor = messageEncryptor;
         }
 
 
@@ -59,11 +63,11 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// <summary>
         /// Executes the message.
         /// </summary>
-        /// <param name="exchange">The exchange.</param>
+        /// <param name="exchangeName">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
         /// <param name="deliveryTag">The delivery tag.</param>
         /// <param name="body">The body.</param>
-        private void ExecuteMessage(ulong deliveryTag, string exchange, string routingKey, byte[] body)
+        private void ExecuteMessage(ulong deliveryTag, string exchangeName, string routingKey, byte[] body)
         {
             const bool multiple = false;
 
@@ -71,7 +75,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             {
                 try
                 {
-                    var message = _serializer.ToRequest<TRequest>(body);
+                    var message = _messageSerializer.ToRequest<TRequest>(_messageEncryptor.Decrypt(exchangeName, body));
 
                     using (var handler = _handlerFactory())
                     {
@@ -80,14 +84,14 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
                     _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
 
-                    CommonModel.BasicAck(deliveryTag, exchange, routingKey, multiple);
+                    CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, multiple);
 
                 }
                 catch (Exception e)
                 {
                     _log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof(TRequest))), e);
 
-                    CommonModel.BasicNack(deliveryTag, exchange, routingKey, multiple, requeue: true);
+                    CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, multiple, requeue: true);
                 }
             }
         }

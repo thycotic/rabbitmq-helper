@@ -18,7 +18,8 @@ namespace Thycotic.MessageQueueClient.Wrappers
         where TResponse : class
         where THandler : IBlockingConsumer<TRequest, TResponse>
     {
-        private readonly IMessageSerializer _serializer;
+        private readonly IMessageSerializer _messageSerializer;
+        private readonly IMessageEncryptor _messageEncryptor;
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly ICommonConnection _connection;
         private readonly ILogWriter _log = Log.Get(typeof(BlockingConsumerWrapper<TRequest, TResponse, THandler>));
@@ -28,13 +29,16 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </summary>
         /// <param name="connection">The RMQ.</param>
         /// <param name="exchangeNameProvider">The exchange provider.</param>
-        /// <param name="serializer">The serializer.</param>
+        /// <param name="messageSerializer">The serializer.</param>
+        /// <param name="messageEncryptor">The message encryptor.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BlockingConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+        public BlockingConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IMessageSerializer messageSerializer,
+            IMessageEncryptor messageEncryptor, Func<Owned<THandler>> handlerFactory)
             : base(connection, exchangeNameProvider)
         {
 
-            _serializer = serializer;
+            _messageSerializer = messageSerializer;
+            _messageEncryptor = messageEncryptor;
             _handlerFactory = handlerFactory;
             _connection = connection;
 
@@ -63,16 +67,16 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Executes the message.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
-        /// <param name="exchange">The exchange.</param>
+        /// <param name="exchangeName">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
         /// <param name="properties">The properties.</param>
         /// <param name="body">The body.</param>
-        private void ExecuteMessage(ulong deliveryTag, string exchange, string routingKey, ICommonModelProperties properties, byte[] body)
+        private void ExecuteMessage(ulong deliveryTag, string exchangeName, string routingKey, ICommonModelProperties properties, byte[] body)
         {
             try
             {
 
-                var message = _serializer.ToRequest<TRequest>(body);
+                var message = _messageSerializer.ToRequest<TRequest>(_messageEncryptor.Decrypt(exchangeName,body));
                 var responseType = "success";
                 object response;
 
@@ -94,7 +98,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
                 if (properties.IsReplyToPresent())
                 {
-                    Respond(properties.ReplyTo, response, properties.CorrelationId, responseType);
+                    Respond(exchangeName, properties.ReplyTo, response, properties.CorrelationId, responseType);
                 }
             }
             catch (Exception e)
@@ -103,13 +107,12 @@ namespace Thycotic.MessageQueueClient.Wrappers
             }
             finally
             {
-                CommonModel.BasicAck(deliveryTag, exchange, routingKey, false);
+                CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, false);
             }
         }
 
-        private void Respond(string replyTo, object response, string correlationId, string type)
+        private void Respond(string originatingExchangeName, string replyTo, object response, string correlationId, string type)
         {
-            var body = _serializer.ToBytes(response);
             var routingKey = replyTo;
 
             using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
@@ -121,10 +124,11 @@ namespace Thycotic.MessageQueueClient.Wrappers
                 properties.CorrelationId = correlationId;
                 properties.Type = type;
 
-                //TODO: Should this be empty or the default exchange
-                var exchange = string.Empty;
+                //reply-to's do not use exchange names since there is a reply-to address
+                var replyToExchangeName = string.Empty;
 
-                channel.BasicPublish(exchange, routingKey, DefaultConfigValues.Model.Publish.NotMandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
+                channel.BasicPublish(replyToExchangeName, routingKey, DefaultConfigValues.Model.Publish.NotMandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties,
+                    _messageEncryptor.Encrypt(originatingExchangeName, _messageSerializer.ToBytes(response)));
 
                 channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
             }

@@ -157,6 +157,7 @@
     <Compile Include="QueueClient\IHasRawValue.cs" />
     <Compile Include="QueueClient\ICommonModel.cs" />
     <Compile Include="QueueClient\ICommonModelProperties.cs" />
+    <Compile Include="IMessageEncryptor.cs" />
     <Compile Include="QueueClient\MemoryMq\IMemoryMqServiceConnection.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqQueue.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqServiceCallback.cs" />
@@ -175,7 +176,7 @@
     <Compile Include="QueueClient\MemoryMq\MemoryMqConnection.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqModel.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqModelProperties.cs" />
-    <Compile Include="MessageSerializer.cs" />
+    <Compile Include="IMessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueClient\RabbitMq\RabbitMqConnection.cs" />
     <Compile Include="QueueClient\DefaultConfigValues.cs" />
