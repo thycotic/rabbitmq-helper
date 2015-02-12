@@ -10,35 +10,22 @@ using Thycotic.TempAppCore;
 namespace Thycotic.SecretServerEngine2.Security
 {
     /// <summary>
-    /// Message encrytor which encrypts and decrypts based on exchange name
+    /// Message encryptor which encrypts and decrypts based on exchange name
     /// </summary>
     public class MessageEncryptor : IMessageEncryptor
     {
+        private readonly IMessageEncryptionKeyProvider _encryptionKeyProvider;
         private readonly ILogWriter _log = Log.Get(typeof(MessageEncryptor));
-
+        
         private const int SaltLength = 8;
 
-        private Lazy<SymmetricKey> _symmetricKey;
-        private Lazy<InitializationVector> _initializationVector;
-
-        private AesCryptoServiceProvider _aes = new AesCryptoServiceProvider();
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessageEncryptor"/> class.
+        /// Initializes a new instance of the <see cref="MessageEncryptor" /> class.
         /// </summary>
-        public MessageEncryptor()
+        /// <param name="encryptionKeyProvider">The encryption key provider.</param>
+        public MessageEncryptor(IMessageEncryptionKeyProvider encryptionKeyProvider)
         {
-            const int aesKeySize = 256;
-            const int ivSize = 128;
-
-            _aes.BlockSize = ivSize;
-            _aes.KeySize = aesKeySize;
-            _aes.GenerateIV();
-            _aes.GenerateKey();
-
-            _symmetricKey = new Lazy<SymmetricKey>(() => new SymmetricKey(_aes.Key));
-
-            _initializationVector = new Lazy<InitializationVector>(() => new InitializationVector(_aes.IV));
+            _encryptionKeyProvider = encryptionKeyProvider;
         }
 
         /// <summary>
@@ -54,8 +41,16 @@ namespace Thycotic.SecretServerEngine2.Security
 
             try
             {
+                SymmetricKey symmetricKey;
+        InitializationVector initializationVector;
+
+                if (!_encryptionKeyProvider.TryGetKey(exchangeName, out symmetricKey, out initializationVector))
+                {
+                    throw new ApplicationException("No key information available");
+                }
+
                 var saltedBody = saltProvider.Salt(unEncryptedBody, SaltLength);
-                var encryptedBody = encryptor.Encrypt(saltedBody, _symmetricKey.Value, _initializationVector.Value);
+                var encryptedBody = encryptor.Encrypt(saltedBody, symmetricKey, initializationVector);
                 return encryptedBody;
             }
             catch (Exception ex)
@@ -79,7 +74,15 @@ namespace Thycotic.SecretServerEngine2.Security
             var encryptor = new SymmetricEncryptor();
             try
             {
-                var decryptedBody = encryptor.Decrypt(encryptedBody, _symmetricKey.Value, _initializationVector.Value);
+                SymmetricKey symmetricKey;
+                InitializationVector initializationVector;
+
+                if (!_encryptionKeyProvider.TryGetKey(exchangeName, out symmetricKey, out initializationVector))
+                {
+                    throw new ApplicationException("No key information available");
+                }
+
+                var decryptedBody = encryptor.Decrypt(encryptedBody, symmetricKey, initializationVector);
                 var unsaltedBody = saltProvider.Unsalt(decryptedBody, SaltLength);
                 return unsaltedBody;
             }
