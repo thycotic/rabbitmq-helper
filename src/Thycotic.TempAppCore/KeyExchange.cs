@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 
 namespace Thycotic.TempAppCore
@@ -101,9 +102,9 @@ namespace Thycotic.TempAppCore
 
         private RSACryptoServiceProvider GetCryptoServiceProvider(byte[] cspBlob)
         {
-            CspParameters parameters = new CspParameters();
+            var parameters = new CspParameters();
             parameters.Flags = CspProviderFlags.UseMachineKeyStore;
-            RSACryptoServiceProvider cryptoServiceProvider = new RSACryptoServiceProvider(MIN_KEY_SIZE, parameters);
+            var cryptoServiceProvider = new RSACryptoServiceProvider(MIN_KEY_SIZE, parameters);
             cryptoServiceProvider.ImportCspBlob(cspBlob);
             return cryptoServiceProvider;
         }
@@ -160,15 +161,15 @@ namespace Thycotic.TempAppCore
 
         private static SymmetricKey GetAESKeyFromPassword(string password)
         {
-            byte[] keyBytes = new Rfc2898DeriveBytes(password, Salt, Iterations).GetBytes(KeySize);
+            var keyBytes = new Rfc2898DeriveBytes(password, Salt, Iterations).GetBytes(KeySize);
             return new SymmetricKey(keyBytes);
         }
 
         private byte[] EncryptOrDecrypt(byte[] bytes, SymmetricKey key, InitializationVector iv, bool decrypt)
         {
-            using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider { Key = key.Value, IV = iv.Value })
+            using (var aes = new AesCryptoServiceProvider { Key = key.Value, IV = iv.Value })
             {
-                using (ICryptoTransform cryptoTransform = decrypt ? aes.CreateDecryptor() : aes.CreateEncryptor())
+                using (var cryptoTransform = decrypt ? aes.CreateDecryptor() : aes.CreateEncryptor())
                 {
                     return cryptoTransform.TransformFinalBlock(bytes, 0, bytes.Length);
                 }
@@ -177,11 +178,11 @@ namespace Thycotic.TempAppCore
 
         private void EncryptOrDecrypt(Stream inputStream, Stream outputStream, SymmetricKey key, InitializationVector iv, bool decrypt)
         {
-            using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider { Key = key.Value, IV = iv.Value })
+            using (var aes = new AesCryptoServiceProvider { Key = key.Value, IV = iv.Value })
             {
-                using (ICryptoTransform cryptoTransform = decrypt ? aes.CreateDecryptor() : aes.CreateEncryptor())
+                using (var cryptoTransform = decrypt ? aes.CreateDecryptor() : aes.CreateEncryptor())
                 {
-                    using (CryptoStream cryptoStream = new CryptoStream(inputStream, cryptoTransform, CryptoStreamMode.Read))
+                    using (var cryptoStream = new CryptoStream(inputStream, cryptoTransform, CryptoStreamMode.Read))
                     {
                         BlockCopy(cryptoStream, outputStream);
                         outputStream.Flush();
@@ -193,9 +194,9 @@ namespace Thycotic.TempAppCore
 
         private void BlockCopy(Stream input, Stream output)
         {
-            int bufferSize = 4096;
-            byte[] buffer = new byte[bufferSize];
-            int bytesRead = 0;
+            var bufferSize = 4096;
+            var buffer = new byte[bufferSize];
+            var bytesRead = 0;
             while ((bytesRead = input.Read(buffer, 0, buffer.Length)) != 0)
             {
                 output.Write(buffer, 0, bytesRead);
@@ -245,14 +246,14 @@ namespace Thycotic.TempAppCore
 
         public int NextInt()
         {
-            byte[] bytes = new byte[4];
+            var bytes = new byte[4];
             random.GetBytes(bytes);
             return BitConverter.ToInt32(bytes, 0);
         }
 
         public bool NextBool()
         {
-            byte[] bytes = new byte[1];
+            var bytes = new byte[1];
             random.GetBytes(bytes);
             if (bytes[0] % 2 == 0)
             {
@@ -263,9 +264,9 @@ namespace Thycotic.TempAppCore
 
         public int NextInt(int maximum)
         {
-            int numValidBytes = (int)Math.Ceiling(Math.Log(maximum, 2));
-            int mask = (int)((long)Math.Pow(2, numValidBytes) - 1);
-            byte[] bytes = new byte[4];
+            var numValidBytes = (int)Math.Ceiling(Math.Log(maximum, 2));
+            var mask = (int)((long)Math.Pow(2, numValidBytes) - 1);
+            var bytes = new byte[4];
             int r;
             random.GetBytes(bytes);
             r = mask & BitConverter.ToInt32(bytes, 0);
@@ -279,9 +280,9 @@ namespace Thycotic.TempAppCore
 
         public int Next(int minValue, int maxValue)
         {
-            int lower = minValue;
-            int higher = maxValue;
-            double percent = GetPercent();
+            var lower = minValue;
+            var higher = maxValue;
+            var percent = GetPercent();
             return (int)(((higher - lower) * percent) + lower);
         }
 
@@ -292,19 +293,19 @@ namespace Thycotic.TempAppCore
 
         public double NextDouble(double lowest, double highest)
         {
-            double percent = GetPercent();
+            var percent = GetPercent();
             return ((highest - lowest) * percent) + lowest;
         }
 
         public float NextFloat(float lowest, float highest)
         {
-            double percent = GetPercent();
+            var percent = GetPercent();
             return (float)(((highest - lowest) * percent) + lowest);
         }
 
         private double GetPercent()
         {
-            byte[] buffer = new byte[sizeof(UInt64)];
+            var buffer = new byte[sizeof(UInt64)];
             UInt64 rand;
             random.GetNonZeroBytes(buffer);
             rand = BitConverter.ToUInt64(buffer, 0);
@@ -319,8 +320,8 @@ namespace Thycotic.TempAppCore
 
         public byte[] Salt(byte[] data, int saltLength)
         {
-            byte[] saltedBytes = new byte[saltLength];
-            byte[] saltedData = new byte[data.Length + saltLength];
+            var saltedBytes = new byte[saltLength];
+            var saltedData = new byte[data.Length + saltLength];
             randomNumber.NextBytes(saltedBytes);
             saltedBytes.CopyTo(saltedData, 0);
             data.CopyTo(saltedData, saltLength);
@@ -329,9 +330,44 @@ namespace Thycotic.TempAppCore
 
         public byte[] Unsalt(byte[] data, int saltLength)
         {
-            byte[] unsaltedData = new byte[data.Length - saltLength];
+            var unsaltedData = new byte[data.Length - saltLength];
             Array.ConstrainedCopy(data, saltLength, unsaltedData, 0, unsaltedData.Length);
             return unsaltedData;
+        }
+    }
+
+    public class SerializationService
+    {
+        private BinaryFormatter _binaryFormatter;
+
+        public SerializationService()
+        {
+            _binaryFormatter = new BinaryFormatter();
+        }
+
+        public byte[] Serialize(object objectToSerialize)
+        {
+            return Serialize(objectToSerialize, 0);
+        }
+
+        public byte[] Serialize(object objectToSerialize, int offsetBufferSize)
+        {
+            using (var stream = new MemoryStream())
+            {
+                _binaryFormatter.Serialize(stream, objectToSerialize);
+                var returnData = new byte[stream.Length + offsetBufferSize];
+                stream.Position = 0;
+                stream.Read(returnData, offsetBufferSize, (int)stream.Length);
+                return returnData;
+            }
+        }
+
+        public object Deserialize(byte[] unsaltedData)
+        {
+            using (var stream = new MemoryStream(unsaltedData))
+            {
+                return _binaryFormatter.Deserialize(stream);
+            }
         }
     }
 

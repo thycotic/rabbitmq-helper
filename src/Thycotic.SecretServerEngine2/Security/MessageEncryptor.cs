@@ -1,4 +1,11 @@
-﻿using Thycotic.MessageQueueClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
+using Thycotic.Logging;
+using Thycotic.MessageQueueClient;
+using Thycotic.TempAppCore;
 
 namespace Thycotic.SecretServerEngine2.Security
 {
@@ -7,28 +14,84 @@ namespace Thycotic.SecretServerEngine2.Security
     /// </summary>
     public class MessageEncryptor : IMessageEncryptor
     {
+        private readonly ILogWriter _log = Log.Get(typeof(MessageEncryptor));
+
+        private const int SaltLength = 8;
+
+        private Lazy<SymmetricKey> _symmetricKey;
+        private Lazy<InitializationVector> _initializationVector;
+
+        private AesCryptoServiceProvider _aes = new AesCryptoServiceProvider();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MessageEncryptor"/> class.
+        /// </summary>
+        public MessageEncryptor()
+        {
+            const int aesKeySize = 256;
+            const int ivSize = 128;
+
+            _aes.BlockSize = ivSize;
+            _aes.KeySize = aesKeySize;
+            _aes.GenerateIV();
+            _aes.GenerateKey();
+
+            _symmetricKey = new Lazy<SymmetricKey>(() => new SymmetricKey(_aes.Key));
+
+            _initializationVector = new Lazy<InitializationVector>(() => new InitializationVector(_aes.IV));
+        }
+
         /// <summary>
         /// Encrypts the specified exchange name.
         /// </summary>
         /// <param name="exchangeName">Name of the exchange.</param>
-        /// <param name="body">To bytes.</param>
+        /// <param name="unEncryptedBody">To bytes.</param>
         /// <returns></returns>
-        public byte[] Encrypt(string exchangeName, byte[] body)
+        public byte[] Encrypt(string exchangeName, byte[] unEncryptedBody)
         {
-            return body;
+            var encryptor = new SymmetricEncryptor();
+            var saltProvider = new ByteSaltProvider();
+
+            try
+            {
+                var saltedBody = saltProvider.Salt(unEncryptedBody, SaltLength);
+                var encryptedBody = encryptor.Encrypt(saltedBody, _symmetricKey.Value, _initializationVector.Value);
+                return encryptedBody;
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Failed to encrypt", ex);
+                throw;
+            }
         }
+
+
 
         /// <summary>
         /// Decrypts the specified exchange name.
         /// </summary>
         /// <param name="exchangeName">Name of the exchange.</param>
-        /// <param name="body">The body.</param>
+        /// <param name="encryptedBody">The body.</param>
         /// <returns></returns>
-        public byte[] Decrypt(string exchangeName, byte[] body)
+        public byte[] Decrypt(string exchangeName, byte[] encryptedBody)
         {
-            return body;
+            var saltProvider = new ByteSaltProvider();
+            var encryptor = new SymmetricEncryptor();
+            try
+            {
+                var decryptedBody = encryptor.Decrypt(encryptedBody, _symmetricKey.Value, _initializationVector.Value);
+                var unsaltedBody = saltProvider.Unsalt(decryptedBody, SaltLength);
+                return unsaltedBody;
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Failed to decrypt", ex);
+                throw;
+            }
         }
 
+        #region For reference
+        //TODO: Remove this eventually
         //server
         //private object CallMethod(Client client, IRpcAgentServerCallBack callBack, string methodName, params object[] args)
         //{
@@ -161,5 +224,6 @@ namespace Thycotic.SecretServerEngine2.Security
         //        return agent;
         //    }
         //}
+        #endregion
     }
 }
