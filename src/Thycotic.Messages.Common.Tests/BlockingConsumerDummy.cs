@@ -2,7 +2,7 @@
 
 namespace Thycotic.Messages.Common.Tests
 {
-    public class BlockingConsumerDummy : IBlockingConsumer<object, object>
+    internal class BlockingConsumerDummy : IBlockingConsumer<object, object>
     {
         public object Consume(object request)
         {

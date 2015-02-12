@@ -2,7 +2,7 @@
 
 namespace Thycotic.Messages.Common.Tests
 {
-    public class BasicConsumerDummy : IBasicConsumer<object>
+    internal class BasicConsumerDummy : IBasicConsumer<object>
     {
         public void Consume(object request)
         {
