@@ -9,17 +9,7 @@ namespace Thycotic.Utility.Specflow
     {
         private static object GetSubstitute(string typeName)
         {
-            var type = Type.GetType(typeName);
-
-            if (type == null)
-            {
-                throw new TypeLoadException(string.Format("Type {0} does not exist", typeName));
-            }
-
-            if (!type.IsInterface)
-            {
-                throw new NotSupportedException("Substitution for concrete classes is not supported");
-            }
+            var type = ScenarioContext.Current.GetLoadedType(typeName);
 
             //TODO: Check to make sure that the type has tests requested for it -dkk
 
