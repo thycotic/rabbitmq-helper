@@ -20,22 +20,23 @@ namespace Thycotic.MessageQueueClient.Wrappers
     {
         private readonly IMessageSerializer _serializer;
         private readonly Func<Owned<THandler>> _handlerFactory;
-        private readonly ICommonConnection _rmq;
+        private readonly ICommonConnection _connection;
         private readonly ILogWriter _log = Log.Get(typeof(BlockingConsumerWrapper<TRequest, TResponse, THandler>));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TRequest,TResponse,THandler}"/> class.
+        /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TRequest,TResponse,THandler}" /> class.
         /// </summary>
-        /// <param name="rmq">The RMQ.</param>
+        /// <param name="connection">The RMQ.</param>
+        /// <param name="exchangeProvider">The exchange provider.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BlockingConsumerWrapper(ICommonConnection rmq, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
-            : base(rmq)
+        public BlockingConsumerWrapper(ICommonConnection connection, IExchangeProvider exchangeProvider, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+            : base(connection, exchangeProvider)
         {
 
             _serializer = serializer;
             _handlerFactory = handlerFactory;
-            _rmq = rmq;
+            _connection = connection;
 
         }
 
@@ -111,7 +112,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             var body = _serializer.ToBytes(response);
             var routingKey = replyTo;
 
-            using (var channel = _rmq.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
+            using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
             {
                 channel.ConfirmSelect();
 

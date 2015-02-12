@@ -10,6 +10,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// <summary>
         /// Alias for the exchange
         /// </summary>
+        [Obsolete("use configurable value", true)]
         public const string Exchange = "thycotic";
 
         /// <summary>

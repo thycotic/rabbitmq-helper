@@ -16,19 +16,22 @@ namespace Thycotic.MessageQueueClient.Wrappers
         where TRequest : class, IConsumable
         where THandler : IBasicConsumer<TRequest>
     {
+        private readonly IExchangeProvider _exchangeProvider;
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IMessageSerializer _serializer;
         private readonly ILogWriter _log = Log.Get(typeof(BasicConsumerWrapper<TRequest, THandler>));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BasicConsumerWrapper{TRequest,THandler}"/> class.
+        /// Initializes a new instance of the <see cref="BasicConsumerWrapper{TRequest,THandler}" /> class.
         /// </summary>
         /// <param name="connection">The RMQ.</param>
+        /// <param name="exchangeProvider">The exchange provider.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BasicConsumerWrapper(ICommonConnection connection, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
-            : base(connection)
+        public BasicConsumerWrapper(ICommonConnection connection, IExchangeProvider exchangeProvider, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+            : base(connection, exchangeProvider)
         {
+            _exchangeProvider = exchangeProvider;
             _handlerFactory = handlerFactory;
             _serializer = serializer;
         }

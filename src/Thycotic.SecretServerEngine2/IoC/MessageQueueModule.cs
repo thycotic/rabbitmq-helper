@@ -26,7 +26,9 @@ namespace Thycotic.SecretServerEngine2.IoC
 
             _log.Debug("Initializing message queue dependencies...");
 
-            builder.RegisterType<JsonMessageSerializer>().As<IMessageSerializer>().SingleInstance();
+            builder.RegisterType<JsonMessageSerializer>().AsImplementedInterfaces().SingleInstance();
+
+            builder.RegisterType<ExchangeProvider>().AsImplementedInterfaces().SingleInstance();
 
             var queueType = _configurationProvider(ConfigurationKeys.QueueType);
             

@@ -22,18 +22,21 @@ namespace Thycotic.MessageQueueClient.Wrappers
         public ICommonModel CommonModel { get; private set; }
 
         private readonly ICommonConnection _connection;
+        private readonly IExchangeProvider _exchangeProvider;
 
         private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TRequest, THandler>));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest,THandler}"/> class.
+        /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest,THandler}" /> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        protected ConsumerWrapperBase(ICommonConnection connection)
+        /// <param name="exchangeProvider">The exchange provider.</param>
+        protected ConsumerWrapperBase(ICommonConnection connection, IExchangeProvider exchangeProvider)
         {
             _connection = connection;
+            _exchangeProvider = exchangeProvider;
             _connection.ConnectionCreated += (sender, args) => CreateModel();
         }
 
@@ -41,6 +44,8 @@ namespace Thycotic.MessageQueueClient.Wrappers
         {
             try
             {
+                var exchangeName = _exchangeProvider.GetCurrentChange();
+
                 var routingKey = this.GetRoutingKey(typeof(TRequest));
 
                 var queueName = this.GetQueueName(typeof(THandler), typeof(TRequest));
@@ -60,10 +65,10 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
                 model.ModelShutdown += RecoverConnection;
 
-                model.ExchangeDeclare(DefaultConfigValues.Exchange, DefaultConfigValues.ExchangeType);
+                model.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
 
                 model.QueueDeclare(queueName, true, false, false, null);
-                model.QueueBind(queueName, DefaultConfigValues.Exchange, routingKey);
+                model.QueueBind(queueName, exchangeName, routingKey);
 
                 const bool noAck = false; //since this consumer will send an acknowledgement
                 var consumer = this;
@@ -109,7 +114,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
             Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task =>
             {
-                _log.Debug("Reopenning channel...");
+                _log.Debug("Reopening channel...");
                 StartConsuming();
             });
         }

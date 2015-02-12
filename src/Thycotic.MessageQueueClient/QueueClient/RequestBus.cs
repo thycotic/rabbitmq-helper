@@ -10,23 +10,22 @@ namespace Thycotic.MessageQueueClient.QueueClient
     public class RequestBus : IRequestBus
     {
         private readonly ICommonConnection _connection;
+        private readonly IExchangeProvider _exchangeProvider;
         private readonly IMessageSerializer _messageSerializer;
-        private readonly string _exchangeName;
 
         private readonly ILogWriter _log = Log.Get(typeof(RequestBus));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequestBus"/> class.
+        /// Initializes a new instance of the <see cref="RequestBus" /> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
+        /// <param name="exchangeProvider">The exchange provider.</param>
         /// <param name="messageSerializer">The message serializer.</param>
-        /// <param name="exchangeName">Name of the exchange.</param>
-        public RequestBus(ICommonConnection connection, IMessageSerializer messageSerializer,
-                                string exchangeName = DefaultConfigValues.Exchange)
+        public RequestBus(ICommonConnection connection, IExchangeProvider exchangeProvider, IMessageSerializer messageSerializer)
         {
             _connection = connection;
+            _exchangeProvider = exchangeProvider;
             _messageSerializer = messageSerializer;
-            _exchangeName = exchangeName;
         }
 
         /// <summary>
@@ -53,6 +52,8 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
             try
             {
+                var exchangeName = _exchangeProvider.GetCurrentChange();
+
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
                     using (var subscription = channel.CreateSubscription(channel.QueueDeclare().QueueName))
@@ -61,9 +62,9 @@ namespace Thycotic.MessageQueueClient.QueueClient
                         properties.CorrelationId = Guid.NewGuid().ToString();
                         properties.ReplyTo = subscription.QueueName;
                         channel.ConfirmSelect();
-                        channel.ExchangeDeclare(_exchangeName, DefaultConfigValues.ExchangeType);
+                        channel.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
 
-                        channel.BasicPublish(_exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
+                        channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
 
                         channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
 
@@ -113,15 +114,17 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
             try
             {
+                var exchangeName = _exchangeProvider.GetCurrentChange();
+
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
                     channel.ConfirmSelect();
-                    channel.ExchangeDeclare(_exchangeName, DefaultConfigValues.ExchangeType);
+                    channel.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
 
                     var properties = channel.CreateBasicProperties();
                     properties.SetPersistent(persistent);
 
-                    channel.BasicPublish(_exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
+                    channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
 
                     channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
                 }
