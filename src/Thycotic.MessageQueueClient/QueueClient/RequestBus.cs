@@ -27,79 +27,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
             _exchangeNameProvider = exchangeNameProvider;
             _messageSerializer = messageSerializer;
         }
-
-        /// <summary>
-        /// Publishes the specified request as an RPC.
-        /// </summary>
-        /// <typeparam name="TResponse">The type of the response.</typeparam>
-        /// <param name="request">The request.</param>
-        /// <param name="timeoutSeconds">The timeout seconds.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ApplicationException">
-        /// RPC call timed out
-        /// or
-        /// RPC call was disconnected
-        /// or
-        /// CorrelationId mismatch
-        /// or
-        /// </exception>
-        public TResponse BlockingPublish<TResponse>(IConsumable request, int timeoutSeconds)
-        {
-            _log.Debug(string.Format("Publishing blocking {0}", request));
-
-            var body = _messageSerializer.ToBytes(request);
-            var routingKey = request.GetRoutingKey();
-
-            try
-            {
-                var exchangeName = _exchangeNameProvider.GetCurrentChange();
-
-                using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
-                {
-                    using (var subscription = channel.CreateSubscription(channel.QueueDeclare().QueueName))
-                    {
-                        var properties = channel.CreateBasicProperties();
-                        properties.CorrelationId = Guid.NewGuid().ToString();
-                        properties.ReplyTo = subscription.QueueName;
-                        channel.ConfirmSelect();
-                        channel.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
-
-                        channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
-
-                        channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
-
-                        CommonDeliveryEventArgs response;
-                        if (!subscription.Next(timeoutSeconds * 1000, out response))
-                        {
-                            throw new ApplicationException("RPC call timed out");
-                        }
-
-                        if (response == null)
-                        {
-                            throw new ApplicationException("RPC call was disconnected");
-                        }
-                        if (response.BasicProperties.CorrelationId != properties.CorrelationId)
-                        {
-                            throw new ApplicationException("CorrelationId mismatch");
-                        }
-
-                        if (response.BasicProperties.Type != "error")
-                        {
-                            return _messageSerializer.ToRequest<TResponse>(response.Body);
-                        }
-
-                        var error = _messageSerializer.ToRequest<BlockingConsumerError>(response.Body);
-                        throw new ApplicationException(error.Message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _log.Error("RPC call failed", ex);
-                throw;
-            }
-        }
-
+        
         /// <summary>
         /// Publishes the specified request as a fire-and-forget
         /// </summary>
@@ -136,6 +64,76 @@ namespace Thycotic.MessageQueueClient.QueueClient
             }
         }
 
+        /// <summary>
+        /// Publishes the specified request as an RPC.
+        /// </summary>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <param name="timeoutSeconds">The timeout seconds.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ApplicationException">
+        /// Blocking call timed out
+        /// or
+        /// Blocking call was disconnected
+        /// or
+        /// CorrelationId mismatch
+        /// or
+        /// </exception>
+        public TResponse BlockingPublish<TResponse>(IConsumable request, int timeoutSeconds)
+        {
+            _log.Debug(string.Format("Publishing blocking {0}", request));
 
+            var body = _messageSerializer.ToBytes(request);
+            var routingKey = request.GetRoutingKey();
+
+            try
+            {
+                var exchangeName = _exchangeNameProvider.GetCurrentChange();
+
+                using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
+                {
+                    using (var subscription = channel.CreateSubscription(channel.QueueDeclare().QueueName))
+                    {
+                        var properties = channel.CreateBasicProperties();
+                        properties.CorrelationId = Guid.NewGuid().ToString();
+                        properties.ReplyTo = subscription.QueueName;
+                        channel.ConfirmSelect();
+                        channel.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
+
+                        channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties, body);
+
+                        channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
+
+                        CommonDeliveryEventArgs response;
+                        if (!subscription.Next(timeoutSeconds * 1000, out response))
+                        {
+                            throw new ApplicationException("Blocking call timed out");
+                        }
+
+                        if (response == null)
+                        {
+                            throw new ApplicationException("Blocking call was disconnected");
+                        }
+                        if (response.BasicProperties.CorrelationId != properties.CorrelationId)
+                        {
+                            throw new ApplicationException("CorrelationId mismatch");
+                        }
+
+                        if (response.BasicProperties.Type != "error")
+                        {
+                            return _messageSerializer.ToRequest<TResponse>(response.Body);
+                        }
+
+                        var error = _messageSerializer.ToRequest<BlockingConsumerError>(response.Body);
+                        throw new ApplicationException(error.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error("RPC call failed", ex);
+                throw;
+            }
+        }
     }
 }
