@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
@@ -28,17 +29,19 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts multiple messages to the exchange"; }
         }
 
-        public MultiplePublishCommand(IRequestBus bus)
+        public MultiplePublishCommand(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             _bus = bus;
 
             Action = parameters =>
             {
+                var exchangeName = exchangeNameProvider.GetCurrentExchange();
+
                 _log.Info("Posting message to exchange");
 
-                Task.Factory.StartNew(() => _bus.BlockingPublish<BlockingConsumerResult>(new StepMessage { Count = 5 }, 30));
+                Task.Factory.StartNew(() => _bus.BlockingPublish<BlockingConsumerResult>(exchangeName, new StepMessage { Count = 5 }, 30));
 
-                Enumerable.Range(0,100).ToList().AsParallel().ForAll(i => _bus.BasicPublish(new HelloWorldMessage { Content = Guid.NewGuid().ToString()}));
+                Enumerable.Range(0,100).ToList().AsParallel().ForAll(i => _bus.BasicPublish(exchangeName, new HelloWorldMessage { Content = Guid.NewGuid().ToString()}));
 
                 _log.Info("Posting completed");
 

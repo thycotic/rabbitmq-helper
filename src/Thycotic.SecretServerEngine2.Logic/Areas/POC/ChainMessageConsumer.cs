@@ -1,4 +1,5 @@
 ﻿using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
@@ -10,15 +11,18 @@ namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
     public class ChainMessageConsumer : IBasicConsumer<ChainMessage>
     {
         private readonly IRequestBus _bus;
+        private readonly IExchangeNameProvider _exchangeNameProvider;
         //private readonly ILogWriter _log = Log.Get(typeof(ChainMessage));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChainMessageConsumer"/> class.
+        /// Initializes a new instance of the <see cref="ChainMessageConsumer" /> class.
         /// </summary>
         /// <param name="bus">The bus.</param>
-        public ChainMessageConsumer(IRequestBus bus)
+        /// <param name="exchangeNameProvider">The exchange name provider.</param>
+        public ChainMessageConsumer(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             _bus = bus;
+            _exchangeNameProvider = exchangeNameProvider;
         }
 
         /// <summary>
@@ -31,7 +35,7 @@ namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
 
             ConsumerConsole.WriteLine("Posting next message...");
 
-            _bus.BasicPublish(new HelloWorldMessage { Content = "Hello from the chain consumer!"});
+            _bus.BasicPublish(_exchangeNameProvider.GetCurrentExchange(), new HelloWorldMessage { Content = "Hello from the chain consumer!"});
 
             ConsumerConsole.WriteLine("Posted");
         }

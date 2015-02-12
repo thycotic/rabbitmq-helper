@@ -18,7 +18,7 @@
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public string GetCurrentChange()
+        public string GetCurrentExchange()
         {
             return ExchangeName;
         }

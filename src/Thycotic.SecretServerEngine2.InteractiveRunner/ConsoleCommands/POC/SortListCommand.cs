@@ -2,6 +2,7 @@
 using System.Linq;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Areas.POC.Response;
 
@@ -27,7 +28,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a sort list blocking message to the exchange"; }
         }
 
-        public SortListCommand(IRequestBus bus)
+        public SortListCommand(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             _bus = bus;
 
@@ -40,7 +41,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
                     Items = Enumerable.Range(0, 25).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
                 };
 
-                var response = _bus.BlockingPublish<SortListResponse>(message, 30*1000);
+                var response = _bus.BlockingPublish<SortListResponse>(exchangeNameProvider.GetCurrentExchange(), message, 30*1000);
 
                 _log.Info("Posting completed.");
 

@@ -2,6 +2,7 @@
 using System.Linq;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 
 namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
@@ -26,7 +27,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "Floods the exchange with messages"; }
         }
 
-        public FloodCommand(IRequestBus bus)
+        public FloodCommand(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             _bus = bus;
 
@@ -43,7 +44,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
                 {
                     var message = new PingMessage();
 
-                    _bus.BasicPublish(message);
+                    _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
                 });
 
                 _log.Info("Flooding completed");

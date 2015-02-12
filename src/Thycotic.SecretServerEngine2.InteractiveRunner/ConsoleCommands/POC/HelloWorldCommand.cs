@@ -1,5 +1,6 @@
 ﻿using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 
 namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
@@ -23,7 +24,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a hello world message to the exchange"; }
         }
 
-        public HelloWorldCommand(IRequestBus bus)
+        public HelloWorldCommand(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             _bus = bus;
 
@@ -39,7 +40,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
                     Content = content
                 };
 
-                _bus.BasicPublish(message);
+                _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
 
                 _log.Info("Posting completed");
 

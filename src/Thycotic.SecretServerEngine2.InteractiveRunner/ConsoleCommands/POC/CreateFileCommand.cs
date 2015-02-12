@@ -2,6 +2,7 @@
 using System.IO;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 
 namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
@@ -26,7 +27,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a create temp file message to the exchange"; }
         }
 
-        public CreateFileCommand(IRequestBus bus)
+        public CreateFileCommand(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             _bus = bus;
 
@@ -39,7 +40,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
                     Path = Path.Combine(Path.GetTempPath(), "SSEPOC", Guid.NewGuid().ToString(), "file.txt")
                 };
 
-                _bus.BasicPublish(message);
+                _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
 
                 _log.Info("Posting completed");
 

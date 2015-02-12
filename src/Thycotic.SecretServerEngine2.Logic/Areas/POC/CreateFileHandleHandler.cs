@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Threading;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
@@ -15,15 +16,18 @@ namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
         IBasicConsumer<CreateFileMessage>
     {
         private readonly IRequestBus _bus;
+        private readonly IExchangeNameProvider _exchangeNameProvider;
         //private readonly ILogWriter _log = Log.Get(typeof(ChainMessage));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChainMessageConsumer"/> class.
+        /// Initializes a new instance of the <see cref="ChainMessageConsumer" /> class.
         /// </summary>
         /// <param name="bus">The bus.</param>
-        public CreateFileHandler(IRequestBus bus)
+        /// <param name="exchangeNameProvider">The exchange name provider.</param>
+        public CreateFileHandler(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             _bus = bus;
+            _exchangeNameProvider = exchangeNameProvider;
         }
 
         /// <summary>
@@ -75,7 +79,7 @@ namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
 
             ConsumerConsole.WriteLine("Posting directory message...");
             //_bus.BasicPublish(new CreateDirectoryMessage {Path = path});
-            _bus.BlockingPublish<BlockingConsumerResult>(new CreateDirectoryMessage { Path = path }, 30);
+            _bus.BlockingPublish<BlockingConsumerResult>(_exchangeNameProvider.GetCurrentExchange(), new CreateDirectoryMessage { Path = path }, 30);
 
             ConsumerConsole.WriteLine("Posted directory message...");
 

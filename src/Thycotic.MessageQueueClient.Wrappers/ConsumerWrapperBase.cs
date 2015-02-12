@@ -44,7 +44,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         {
             try
             {
-                var exchangeName = _exchangeNameProvider.GetCurrentChange();
+                var exchangeName = _exchangeNameProvider.GetCurrentExchange();
 
                 var routingKey = this.GetRoutingKey(typeof(TRequest));
 

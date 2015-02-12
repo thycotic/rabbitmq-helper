@@ -5,12 +5,11 @@ using Thycotic.Messages.Common;
 namespace Thycotic.MessageQueueClient.QueueClient
 {
     /// <summary>
-    /// Rabbit Mq message bus
+    /// Request bus
     /// </summary>
     public class RequestBus : IRequestBus
     {
         private readonly ICommonConnection _connection;
-        private readonly IExchangeNameProvider _exchangeNameProvider;
         private readonly IMessageSerializer _messageSerializer;
 
         private readonly ILogWriter _log = Log.Get(typeof(RequestBus));
@@ -19,21 +18,20 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// Initializes a new instance of the <see cref="RequestBus" /> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        /// <param name="exchangeNameProvider">The exchange provider.</param>
         /// <param name="messageSerializer">The message serializer.</param>
-        public RequestBus(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IMessageSerializer messageSerializer)
+        public RequestBus(ICommonConnection connection, IMessageSerializer messageSerializer)
         {
             _connection = connection;
-            _exchangeNameProvider = exchangeNameProvider;
             _messageSerializer = messageSerializer;
         }
-        
+
         /// <summary>
         /// Publishes the specified request as a fire-and-forget
         /// </summary>
+        /// <param name="exchangeName">Name of the exchange.</param>
         /// <param name="request">The request.</param>
         /// <param name="persistent">if set to <c>true</c> [persistent].</param>
-        public void BasicPublish(IConsumable request, bool persistent = true)
+        public void BasicPublish(string exchangeName, IConsumable request, bool persistent = true)
         {
             _log.Debug(string.Format("Publishing basic (fire and forget) {0}", request));
 
@@ -42,8 +40,6 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
             try
             {
-                var exchangeName = _exchangeNameProvider.GetCurrentChange();
-
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
                     channel.ConfirmSelect();
@@ -68,18 +64,17 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// Publishes the specified request as an RPC.
         /// </summary>
         /// <typeparam name="TResponse">The type of the response.</typeparam>
+        /// <param name="exchangeName">Name of the exchange.</param>
         /// <param name="request">The request.</param>
         /// <param name="timeoutSeconds">The timeout seconds.</param>
         /// <returns></returns>
-        /// <exception cref="System.ApplicationException">
-        /// Blocking call timed out
+        /// <exception cref="System.ApplicationException">Blocking call timed out
         /// or
         /// Blocking call was disconnected
         /// or
         /// CorrelationId mismatch
-        /// or
-        /// </exception>
-        public TResponse BlockingPublish<TResponse>(IConsumable request, int timeoutSeconds)
+        /// or</exception>
+        public TResponse BlockingPublish<TResponse>(string exchangeName, IConsumable request, int timeoutSeconds)
         {
             _log.Debug(string.Format("Publishing blocking {0}", request));
 
@@ -88,8 +83,6 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
             try
             {
-                var exchangeName = _exchangeNameProvider.GetCurrentChange();
-
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
                     using (var subscription = channel.CreateSubscription(channel.QueueDeclare().QueueName))

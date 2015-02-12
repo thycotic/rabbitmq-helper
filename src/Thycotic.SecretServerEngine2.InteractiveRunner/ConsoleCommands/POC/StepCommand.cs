@@ -1,6 +1,7 @@
 ﻿using System;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
@@ -26,7 +27,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a blocking message to the exchange"; }
         }
 
-        public StepCommand(IRequestBus bus)
+        public StepCommand(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             _bus = bus;
 
@@ -44,7 +45,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
                     Count = count
                 };
 
-                var response = _bus.BlockingPublish<BlockingConsumerResult>(message, (count+5) * 1000);
+                var response = _bus.BlockingPublish<BlockingConsumerResult>(exchangeNameProvider.GetCurrentExchange(), message, (count+5) * 1000);
 
                 _log.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
             };

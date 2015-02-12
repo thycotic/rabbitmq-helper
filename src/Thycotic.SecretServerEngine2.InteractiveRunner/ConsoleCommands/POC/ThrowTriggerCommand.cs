@@ -1,6 +1,7 @@
 ﻿using System;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
@@ -26,7 +27,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
             get { return "Posts a throwing blocking message to the exchange"; }
         }
 
-        public ThrowTriggerCommand(IRequestBus bus)
+        public ThrowTriggerCommand(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             _bus = bus;
             Action = parameters =>
@@ -37,7 +38,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
 
                 try
                 {
-                    _bus.BlockingPublish<BlockingConsumerResult>(message, 30*1000);
+                    _bus.BlockingPublish<BlockingConsumerResult>(exchangeNameProvider.GetCurrentExchange(), message, 30*1000);
 
                 }
                 catch (Exception ex)

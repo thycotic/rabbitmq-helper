@@ -9,7 +9,7 @@
         /// Gets the current change.
         /// </summary>
         /// <returns></returns>
-        string GetCurrentChange();
+        string GetCurrentExchange();
 
     }
 }
