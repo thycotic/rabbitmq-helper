@@ -28,7 +28,13 @@ namespace Thycotic.SecretServerEngine2.IoC
 
             builder.RegisterType<JsonMessageSerializer>().AsImplementedInterfaces().SingleInstance();
 
-            builder.RegisterType<ExchangeProvider>().AsImplementedInterfaces().SingleInstance();
+            var exchangeName = _configurationProvider(ConfigurationKeys.QueueExchangeName);
+
+
+            builder.Register(context => new ExchangeNameProvider
+            {
+                ExchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic"
+            }).AsImplementedInterfaces().SingleInstance();
 
             var queueType = _configurationProvider(ConfigurationKeys.QueueType);
             

@@ -27,11 +27,11 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TRequest,TResponse,THandler}" /> class.
         /// </summary>
         /// <param name="connection">The RMQ.</param>
-        /// <param name="exchangeProvider">The exchange provider.</param>
+        /// <param name="exchangeNameProvider">The exchange provider.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BlockingConsumerWrapper(ICommonConnection connection, IExchangeProvider exchangeProvider, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
-            : base(connection, exchangeProvider)
+        public BlockingConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IMessageSerializer serializer, Func<Owned<THandler>> handlerFactory)
+            : base(connection, exchangeNameProvider)
         {
 
             _serializer = serializer;

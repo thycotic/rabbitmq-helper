@@ -3,7 +3,7 @@
     /// <summary>
     /// Interface for an exchange provider
     /// </summary>
-    public interface IExchangeProvider
+    public interface IExchangeNameProvider
     {
         /// <summary>
         /// Gets the current change.

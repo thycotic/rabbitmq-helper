@@ -22,7 +22,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         public ICommonModel CommonModel { get; private set; }
 
         private readonly ICommonConnection _connection;
-        private readonly IExchangeProvider _exchangeProvider;
+        private readonly IExchangeNameProvider _exchangeNameProvider;
 
         private bool _terminated;
 
@@ -32,11 +32,11 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest,THandler}" /> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        /// <param name="exchangeProvider">The exchange provider.</param>
-        protected ConsumerWrapperBase(ICommonConnection connection, IExchangeProvider exchangeProvider)
+        /// <param name="exchangeNameProvider">The exchange provider.</param>
+        protected ConsumerWrapperBase(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider)
         {
             _connection = connection;
-            _exchangeProvider = exchangeProvider;
+            _exchangeNameProvider = exchangeNameProvider;
             _connection.ConnectionCreated += (sender, args) => CreateModel();
         }
 
@@ -44,7 +44,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         {
             try
             {
-                var exchangeName = _exchangeProvider.GetCurrentChange();
+                var exchangeName = _exchangeNameProvider.GetCurrentChange();
 
                 var routingKey = this.GetRoutingKey(typeof(TRequest));
 

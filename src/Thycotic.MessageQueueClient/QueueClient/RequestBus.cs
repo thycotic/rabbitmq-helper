@@ -10,7 +10,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
     public class RequestBus : IRequestBus
     {
         private readonly ICommonConnection _connection;
-        private readonly IExchangeProvider _exchangeProvider;
+        private readonly IExchangeNameProvider _exchangeNameProvider;
         private readonly IMessageSerializer _messageSerializer;
 
         private readonly ILogWriter _log = Log.Get(typeof(RequestBus));
@@ -19,12 +19,12 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// Initializes a new instance of the <see cref="RequestBus" /> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        /// <param name="exchangeProvider">The exchange provider.</param>
+        /// <param name="exchangeNameProvider">The exchange provider.</param>
         /// <param name="messageSerializer">The message serializer.</param>
-        public RequestBus(ICommonConnection connection, IExchangeProvider exchangeProvider, IMessageSerializer messageSerializer)
+        public RequestBus(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IMessageSerializer messageSerializer)
         {
             _connection = connection;
-            _exchangeProvider = exchangeProvider;
+            _exchangeNameProvider = exchangeNameProvider;
             _messageSerializer = messageSerializer;
         }
 
@@ -52,7 +52,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
             try
             {
-                var exchangeName = _exchangeProvider.GetCurrentChange();
+                var exchangeName = _exchangeNameProvider.GetCurrentChange();
 
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
@@ -114,7 +114,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
             try
             {
-                var exchangeName = _exchangeProvider.GetCurrentChange();
+                var exchangeName = _exchangeNameProvider.GetCurrentChange();
 
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {

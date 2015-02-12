@@ -152,9 +152,9 @@
     <Compile Include="JsonMessageSerializer.cs" />
     <Compile Include="KeyExchange.cs" />
     <Compile Include="QueueClient\CommonDeliveryEventArgs.cs" />
-    <Compile Include="QueueClient\ExchangeProvider.cs" />
+    <Compile Include="QueueClient\ExchangeNameProvider.cs" />
     <Compile Include="QueueClient\ICommonConnection.cs" />
-    <Compile Include="QueueClient\IExchangeProvider.cs" />
+    <Compile Include="QueueClient\IExchangeNameProvider.cs" />
     <Compile Include="QueueClient\IHasRawValue.cs" />
     <Compile Include="QueueClient\ICommonModel.cs" />
     <Compile Include="QueueClient\ICommonModelProperties.cs" />

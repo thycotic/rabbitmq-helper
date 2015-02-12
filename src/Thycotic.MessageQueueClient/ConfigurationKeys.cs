@@ -13,6 +13,11 @@ namespace Thycotic.MessageQueueClient
         public const string QueueType = "Queue.Type";
 
         /// <summary>
+        /// The queue exchange
+        /// </summary>
+        public const string QueueExchangeName = "Queue.ExchangeName";
+
+        /// <summary>
         /// Rabbit Mq
         /// </summary>
         public static class RabbitMq
