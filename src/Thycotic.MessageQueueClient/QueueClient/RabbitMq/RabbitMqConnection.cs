@@ -36,33 +36,43 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
         public RabbitMqConnection(string url, string userName, string password, bool useSsl)
         {
-            var uri = new Uri(url);
+            //TODO: Get rid of the redundant redundant -dkk
 
-            var sslOption = useSsl
-                ? new SslOption
-                {
-                    Enabled = true,
-                    ServerName = uri.Host,
-                    AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch |
-                                             SslPolicyErrors.RemoteCertificateChainErrors,
-                }
-                : new SslOption
-                {
-                    Enabled = false
-                };
-
-            _connectionFactory = new ConnectionFactory
+            if (useSsl)
             {
-                HostName = uri.Host,
-                VirtualHost = "/", //TODO: Change maybe?
-                Port = uri.Port,
-                Ssl = sslOption,
-                RequestedHeartbeat = 300,
-                UserName = userName,
-                Password = password
-            };
+                var uri = new Uri(url);
 
+                _connectionFactory = new ConnectionFactory
+                {
+                    HostName = uri.Host,
+                    VirtualHost = "/", //TODO: Change maybe?
+                    Port = uri.Port,
+                    Ssl = new SslOption
+                    {
+                        Enabled = true,
+                        ServerName = uri.Host,
+                        AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch |
+                                                 SslPolicyErrors.RemoteCertificateChainErrors,
+                    },
+                    Uri = url,
+                    RequestedHeartbeat = 300,
+                    UserName = userName,
+                    Password = password
+                };
+            }
+            else
+            {
+                _connectionFactory = new ConnectionFactory
+                {
+                    Uri = url,
+                    RequestedHeartbeat = 300,
+                    UserName = userName,
+                    Password = password
+                };
+            }
+            
             ResetConnection();
+
         }
 
         #region Mapping
@@ -101,11 +111,11 @@ namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
                 {
                     //if there is an issue opening the channel, clean up and rethrow
                     _log.Error(string.Format("Failed to connect because {0}", ex.Message));
-                    
+
                     _log.Info("Sleeping before reconnecting");
 
                     Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
-                    
+
                     throw;
                 }
             });
