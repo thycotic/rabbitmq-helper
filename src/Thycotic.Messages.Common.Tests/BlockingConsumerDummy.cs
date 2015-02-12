@@ -2,9 +2,9 @@
 
 namespace Thycotic.Messages.Common.Tests
 {
-    internal class BlockingConsumerDummy : IBlockingConsumer<object, object>
+    internal class BlockingConsumerDummy : IBlockingConsumer<object, BlockingConsumerResult>
     {
-        public object Consume(object request)
+        public BlockingConsumerResult Consume(object request)
         {
             //contracts should kick in
             if (request == null)
@@ -12,7 +12,7 @@ namespace Thycotic.Messages.Common.Tests
                 throw new NotSupportedException("Code contracts did not kick in");
             }
 
-            return null;
+            return new BlockingConsumerResult {Status = true};
         }
     }
 }
