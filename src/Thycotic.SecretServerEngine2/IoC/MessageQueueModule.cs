@@ -6,6 +6,7 @@ using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
+using Thycotic.SecretServerEngine2.Security;
 
 namespace Thycotic.SecretServerEngine2.IoC
 {
@@ -27,6 +28,7 @@ namespace Thycotic.SecretServerEngine2.IoC
             _log.Debug("Initializing message queue dependencies...");
 
             builder.RegisterType<JsonMessageSerializer>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<MessageEncryptor>().AsImplementedInterfaces().SingleInstance();
 
             var exchangeName = _configurationProvider(ConfigurationKeys.QueueExchangeName);
             exchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic";
