@@ -4,6 +4,7 @@ using System.Reflection;
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands;
 
 namespace Thycotic.SecretServerEngine2.InteractiveRunner
@@ -54,23 +55,27 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
         private static void ConfigureCli(CommandLineInterface cli, IContainer parentContainer)
         {
             var bus = parentContainer.Resolve<IRequestBus>();
+            var exchangeNameProvider = parentContainer.Resolve<IExchangeNameProvider>();
 
             var currentAssembly = Assembly.GetExecutingAssembly();
 
             // Create the builder with which components/services are registered.
             var builder = new ContainerBuilder();
 
-            builder.Register(container => bus).As<IRequestBus>();
+            //HACK: Why won't AsImplementedIntefaces work?? -dkk
+            builder.Register(container => bus).As<IRequestBus>().SingleInstance();
+            builder.Register(container => exchangeNameProvider).As<IExchangeNameProvider>().SingleInstance();
+
             builder.RegisterAssemblyTypes(currentAssembly)
                 .Where(t => !t.IsAbstract)
-                .Where(t => typeof (IConsoleCommand).IsAssignableFrom(t))
+                .Where(t => typeof(IConsoleCommand).IsAssignableFrom(t))
                 .Where(t => t != typeof(SystemConsoleCommand));
 
             var tempContainer = builder.Build();
 
             var commands =
                 tempContainer.ComponentRegistry.Registrations.Where(
-                    r => typeof (IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
+                    r => typeof(IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
 
             commands.ToList().ForEach(c => cli.AddCommand((IConsoleCommand)tempContainer.Resolve(c.Activator.LimitType)));
         }
