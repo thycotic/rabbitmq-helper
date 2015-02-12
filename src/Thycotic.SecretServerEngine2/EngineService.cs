@@ -29,8 +29,13 @@ namespace Thycotic.SecretServerEngine2
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineService"/> class.
         /// </summary>
+        public EngineService() : this(true){}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EngineService"/> class.
+        /// </summary>
         /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
-        public EngineService(bool startConsuming = true)
+        public EngineService(bool startConsuming)
         {
             _startConsuming = startConsuming;
             ConfigureLogging();
