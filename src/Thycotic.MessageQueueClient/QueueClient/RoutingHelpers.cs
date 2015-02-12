@@ -34,12 +34,13 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// Gets the name of the queue based on the specified consumer and consumable.
         /// </summary>
         /// <param name="consumer">The consumer.</param>
+        /// <param name="exchangeName">Name of the exchange.</param>
         /// <param name="consumerType">Type of the consumer.</param>
         /// <param name="consumableType">Type of the consumable.</param>
         /// <returns></returns>
-        public static string GetQueueName(this IConsumerWrapperBase consumer, Type consumerType, Type consumableType)
+        public static string GetQueueName(this IConsumerWrapperBase consumer, string exchangeName, Type consumerType, Type consumableType)
         {
-            return string.Format("{0}:{1}", consumerType.FullName, consumer.GetRoutingKey(consumableType));
+            return string.Format("{0}:{1}:{2}", exchangeName, consumerType.FullName, consumer.GetRoutingKey(consumableType));
         }
 
     }

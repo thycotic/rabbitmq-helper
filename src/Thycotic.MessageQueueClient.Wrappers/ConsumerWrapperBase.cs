@@ -48,7 +48,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
 
                 var routingKey = this.GetRoutingKey(typeof(TRequest));
 
-                var queueName = this.GetQueueName(typeof(THandler), typeof(TRequest));
+                var queueName = this.GetQueueName(exchangeName, typeof(THandler), typeof(TRequest));
 
                 const int retryAttempts = -1; //forever
                 const int retryDelayGrowthFactor = 1;
