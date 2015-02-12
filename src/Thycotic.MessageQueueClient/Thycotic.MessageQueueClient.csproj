@@ -150,7 +150,6 @@
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="IRequestBus.cs" />
     <Compile Include="JsonMessageSerializer.cs" />
-    <Compile Include="KeyExchange.cs" />
     <Compile Include="QueueClient\CommonDeliveryEventArgs.cs" />
     <Compile Include="QueueClient\ExchangeNameProvider.cs" />
     <Compile Include="QueueClient\ICommonConnection.cs" />

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Security.Cryptography;
+using Thycotic.SecretServerEngine2.Web.Models;
 
-
-namespace Thycotic.MessageQueueClient
+namespace Thycotic.SecretServerEngine2.Web
 {
     class KeyExchange
     {
@@ -224,7 +224,21 @@ namespace Thycotic.MessageQueueClient
             }
         }
 
-        public void CreateSymmetricKeyAndIv(out SymmetricKey symmetricKey, out InitializationVector initializationVector)
+        public static void CreatePublicAndPrivateKeys(out PublicKey publicKey, out PrivateKey privateKey)
+        {
+            const int RsaSecurityKeySize = 2048;
+            const CspProviderFlags flags = CspProviderFlags.UseMachineKeyStore;
+            var cspParameters = new CspParameters { Flags = flags };
+
+            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(RsaSecurityKeySize, cspParameters))
+            {
+                privateKey = new PrivateKey(provider.ExportCspBlob(true));
+                publicKey = new PublicKey(provider.ExportCspBlob(false));
+            }
+        }
+
+
+        public static void CreateSymmetricKeyAndIv(out SymmetricKey symmetricKey, out InitializationVector initializationVector)
         {
             int AesKeySize = 256;
             int IvSize = 128;
@@ -241,7 +255,7 @@ namespace Thycotic.MessageQueueClient
         }
         #endregion
 
-        public void Blah(string publicKey, string version)
+        public static EngineAuthenticationResult GetClientKey(string publicKey, string version)
         {
             const int SALT_LENGTH = 8;
 
@@ -257,13 +271,19 @@ namespace Thycotic.MessageQueueClient
             //    SymmetricKey = symmetricKey.Value,
             //    InitalizationVector = initializationVector.Value
             //}, callback);
-            AsymmetricEncryptor asymmetricEncryptor = new AsymmetricEncryptor();
-            byte[] saltedSymmetricKey = saltProvider.Salt(symmetricKey.Value, SALT_LENGTH);
-            byte[] encryptedSymmetricKey = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedSymmetricKey);
-            byte[] saltedInitializationVector = saltProvider.Salt(initializationVector.Value, SALT_LENGTH);
-            byte[] encryptedInitializationVector = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedInitializationVector);
+            var asymmetricEncryptor = new AsymmetricEncryptor();
+            var saltedSymmetricKey = saltProvider.Salt(symmetricKey.Value, SALT_LENGTH);
+            var encryptedSymmetricKey = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedSymmetricKey);
+            var saltedInitializationVector = saltProvider.Salt(initializationVector.Value, SALT_LENGTH);
+            var encryptedInitializationVector = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedInitializationVector);
             double versionNum;
-            bool canParse = double.TryParse(version, out versionNum);
+            var canParse = double.TryParse(version, out versionNum);
+
+            return new EngineAuthenticationResult
+            {
+                EncryptedSymmetricKey = encryptedSymmetricKey,
+                EncryptedInitializationVector = encryptedInitializationVector
+            };
         }
     }
 }
