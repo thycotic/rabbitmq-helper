@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -11,14 +12,14 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
     [RoutePrefix("api/EngineAuthentication")]
     public class EngineAuthenticationController : ApiController
     {
-        
+
         public static void CreatePublicAndPrivateKeys(out PublicKey publicKey, out PrivateKey privateKey)
         {
             const int RsaSecurityKeySize = 2048;
             const CspProviderFlags flags = CspProviderFlags.UseMachineKeyStore;
             var cspParameters = new CspParameters { Flags = flags };
 
-            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(RsaSecurityKeySize, cspParameters))
+            using (var provider = new RSACryptoServiceProvider(RsaSecurityKeySize, cspParameters))
             {
                 privateKey = new PrivateKey(provider.ExportCspBlob(true));
                 publicKey = new PublicKey(provider.ExportCspBlob(false));
@@ -31,7 +32,7 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             int AesKeySize = 256;
             int IvSize = 128;
 
-            using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider())
+            using (var aes = new AesCryptoServiceProvider())
             {
                 aes.BlockSize = IvSize;
                 aes.KeySize = AesKeySize;
@@ -73,6 +74,8 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             };
         }
 
+        private static ConcurrentDictionary<string, EngineAuthenticationResult> _approvedRequests = new ConcurrentDictionary<string, EngineAuthenticationResult>();
+
         [HttpPost]
         [Route("GetNewKey")]
         public Task<EngineAuthenticationRequest> GetNewKey()
@@ -81,14 +84,18 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             PublicKey publicKey;
             CreatePublicAndPrivateKeys(out publicKey, out privateKey);
 
-            return Task.FromResult(new EngineAuthenticationRequest{ PublicKey = Convert.ToBase64String(publicKey.Value) });
+            return Task.FromResult(new EngineAuthenticationRequest { PublicKey = Convert.ToBase64String(publicKey.Value) });
         }
 
         [HttpPost]
         [Route("Authenticate")]
         public Task<EngineAuthenticationResult> Authenticate(EngineAuthenticationRequest request)
         {
-            return Task.FromResult(GetClientKey(request.PublicKey, request.Version));
+            //TODO: Validate client
+
+            var result = _approvedRequests.GetOrAdd(request.ExchangeName, key => GetClientKey(request.PublicKey, request.Version));
+
+            return Task.FromResult(result);
         }
     }
 }
