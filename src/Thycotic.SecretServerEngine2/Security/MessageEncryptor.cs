@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Text;
+using System.Collections.Concurrent;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.TempAppCore;
@@ -16,8 +13,8 @@ namespace Thycotic.SecretServerEngine2.Security
     {
         private readonly IMessageEncryptionKeyProvider _encryptionKeyProvider;
         private readonly ILogWriter _log = Log.Get(typeof(MessageEncryptor));
-        
-        private const int SaltLength = 8;
+
+        private readonly ConcurrentDictionary<string, MessageEncryptionPair> _encryptionPairs = new ConcurrentDictionary<string, MessageEncryptionPair>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageEncryptor" /> class.
@@ -26,6 +23,31 @@ namespace Thycotic.SecretServerEngine2.Security
         public MessageEncryptor(IMessageEncryptionKeyProvider encryptionKeyProvider)
         {
             _encryptionKeyProvider = encryptionKeyProvider;
+
+        }
+
+        private MessageEncryptionPair GetEncryptionPair(string exchangeName)
+        {
+            //delegates in concurrent dictionary was not synchronized, so we lock
+            lock (_encryptionPairs)
+            {
+                return _encryptionPairs.GetOrAdd(exchangeName, key =>
+                {
+                    SymmetricKey symmetricKey;
+                    InitializationVector initializationVector;
+
+                    if (!_encryptionKeyProvider.TryGetKey(exchangeName, out symmetricKey, out initializationVector))
+                    {
+                        throw new ApplicationException("No key information available");
+                    }
+
+                    return new MessageEncryptionPair
+                    {
+                        SymmetricKey = symmetricKey,
+                        InitializationVector = initializationVector
+                    };
+                });
+            }
         }
 
         /// <summary>
@@ -41,16 +63,10 @@ namespace Thycotic.SecretServerEngine2.Security
 
             try
             {
-                SymmetricKey symmetricKey;
-        InitializationVector initializationVector;
+                var pair = GetEncryptionPair(exchangeName);
 
-                if (!_encryptionKeyProvider.TryGetKey(exchangeName, out symmetricKey, out initializationVector))
-                {
-                    throw new ApplicationException("No key information available");
-                }
-
-                var saltedBody = saltProvider.Salt(unEncryptedBody, SaltLength);
-                var encryptedBody = encryptor.Encrypt(saltedBody, symmetricKey, initializationVector);
+                var saltedBody = saltProvider.Salt(unEncryptedBody, MessageEncryptionPair.SaltLength);
+                var encryptedBody = encryptor.Encrypt(saltedBody, pair.SymmetricKey, pair.InitializationVector);
                 return encryptedBody;
             }
             catch (Exception ex)
@@ -60,6 +76,7 @@ namespace Thycotic.SecretServerEngine2.Security
             }
         }
 
+      
 
 
         /// <summary>
@@ -74,16 +91,10 @@ namespace Thycotic.SecretServerEngine2.Security
             var encryptor = new SymmetricEncryptor();
             try
             {
-                SymmetricKey symmetricKey;
-                InitializationVector initializationVector;
+                var pair = GetEncryptionPair(exchangeName);
 
-                if (!_encryptionKeyProvider.TryGetKey(exchangeName, out symmetricKey, out initializationVector))
-                {
-                    throw new ApplicationException("No key information available");
-                }
-
-                var decryptedBody = encryptor.Decrypt(encryptedBody, symmetricKey, initializationVector);
-                var unsaltedBody = saltProvider.Unsalt(decryptedBody, SaltLength);
+                var decryptedBody = encryptor.Decrypt(encryptedBody, pair.SymmetricKey, pair.InitializationVector);
+                var unsaltedBody = saltProvider.Unsalt(decryptedBody, MessageEncryptionPair.SaltLength);
                 return unsaltedBody;
             }
             catch (Exception ex)
