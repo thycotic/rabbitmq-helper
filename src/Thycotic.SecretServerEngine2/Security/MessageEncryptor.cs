@@ -75,10 +75,7 @@ namespace Thycotic.SecretServerEngine2.Security
                 throw;
             }
         }
-
-      
-
-
+        
         /// <summary>
         /// Decrypts the specified exchange name.
         /// </summary>
