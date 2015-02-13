@@ -4,29 +4,14 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Thycotic.SecretServerEngine2.Web.Models;
 using Thycotic.TempAppCore;
+using Thycotic.TempAppCore.Engine;
 
 namespace Thycotic.SecretServerEngine2.Web.Controllers
 {
     [RoutePrefix("api/EngineAuthentication")]
     public class EngineAuthenticationController : ApiController
     {
-
-        public static void CreatePublicAndPrivateKeys(out PublicKey publicKey, out PrivateKey privateKey)
-        {
-            const int RsaSecurityKeySize = 2048;
-            const CspProviderFlags flags = CspProviderFlags.UseMachineKeyStore;
-            var cspParameters = new CspParameters { Flags = flags };
-
-            using (var provider = new RSACryptoServiceProvider(RsaSecurityKeySize, cspParameters))
-            {
-                privateKey = new PrivateKey(provider.ExportCspBlob(true));
-                publicKey = new PublicKey(provider.ExportCspBlob(false));
-            }
-        }
-
-
         public static void CreateSymmetricKeyAndIv(out SymmetricKey symmetricKey, out InitializationVector initializationVector)
         {
             int AesKeySize = 256;
@@ -52,40 +37,24 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             SymmetricKey symmetricKey;
             InitializationVector initializationVector;
             CreateSymmetricKeyAndIv(out symmetricKey, out initializationVector);
-            //_openAgentConnectionProvider.AddClient(new Client
-            //{
-            //    PublicKey = publicKey,
-            //    Name = name,
-            //    SymmetricKey = symmetricKey.Value,
-            //    InitalizationVector = initializationVector.Value
-            //}, callback);
-            var asymmetricEncryptor = new AsymmetricEncryptor();
-            var saltedSymmetricKey = saltProvider.Salt(symmetricKey.Value, SALT_LENGTH);
-            var encryptedSymmetricKey = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedSymmetricKey);
-            var saltedInitializationVector = saltProvider.Salt(initializationVector.Value, SALT_LENGTH);
-            var encryptedInitializationVector = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedInitializationVector);
+            //var asymmetricEncryptor = new AsymmetricEncryptor();
+            //var saltedSymmetricKey = saltProvider.Salt(symmetricKey.Value, SALT_LENGTH);
+            //var encryptedSymmetricKey = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedSymmetricKey);
+            //var saltedInitializationVector = saltProvider.Salt(initializationVector.Value, SALT_LENGTH);
+            //var encryptedInitializationVector = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedInitializationVector);
             double versionNum;
             var canParse = double.TryParse(version, out versionNum);
 
             return new EngineAuthenticationResult
             {
-                EncryptedSymmetricKey = encryptedSymmetricKey,
-                EncryptedInitializationVector = encryptedInitializationVector
+                //SymmetricKey = encryptedSymmetricKey,
+                SymmetricKey = symmetricKey.Value,
+                //InitializationVector = encryptedInitializationVector
+                InitializationVector = initializationVector.Value
             };
         }
 
         private static ConcurrentDictionary<string, EngineAuthenticationResult> _approvedRequests = new ConcurrentDictionary<string, EngineAuthenticationResult>();
-
-        [HttpPost]
-        [Route("GetNewKey")]
-        public Task<EngineAuthenticationRequest> GetNewKey()
-        {
-            PrivateKey privateKey;
-            PublicKey publicKey;
-            CreatePublicAndPrivateKeys(out publicKey, out privateKey);
-
-            return Task.FromResult(new EngineAuthenticationRequest { PublicKey = Convert.ToBase64String(publicKey.Value) });
-        }
 
         [HttpPost]
         [Route("Authenticate")]

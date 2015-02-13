@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using Autofac;
 using Thycotic.Logging;
@@ -29,6 +30,15 @@ namespace Thycotic.SecretServerEngine2.IoC
 
             builder.RegisterType<JsonMessageSerializer>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<MessageEncryptor>().AsImplementedInterfaces().SingleInstance();
+
+            var remoteConfigurationConnectionString = _configurationProvider(ConfigurationKeys.RemoteConfiguration.ConnectionString);
+
+            if (string.IsNullOrWhiteSpace(remoteConfigurationConnectionString))
+            {
+                throw new ConfigurationErrorsException("No configuration web point connection string");
+            }
+
+            builder.Register(context => new MessageEncryptionKeyProvider(remoteConfigurationConnectionString)).AsImplementedInterfaces().SingleInstance();
 
             var exchangeName = _configurationProvider(ConfigurationKeys.QueueExchangeName);
             exchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic";
