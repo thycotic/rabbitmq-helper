@@ -105,7 +105,10 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public void Start()
         {
-            Stop();
+            if (_cts != null || _monitoringTask != null)
+            {
+                throw new ApplicationException("Dispatcher already running");
+            }
 
             _log.Debug("Staring message monitoring");
 
