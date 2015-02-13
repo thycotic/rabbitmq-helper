@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -32,6 +33,7 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
 
             var saltProvider = new ByteSaltProvider();
 
+            //TODO: Ask Kevin, do we need to encrypt the key?
             SymmetricKey symmetricKey;
             InitializationVector initializationVector;
             CreateSymmetricKeyAndIv(out symmetricKey, out initializationVector);
@@ -58,7 +60,8 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
         [Route("Authenticate")]
         public Task<EngineAuthenticationResult> Authenticate(EngineAuthenticationRequest request)
         {
-            //TODO: Validate client
+            //TODO: Validate client - talk to Ben
+            //TODO: Ask Kevin if public key for the engine is enough ot should we also have a friendly name?
 
             var result = _approvedRequests.GetOrAdd(request.ExchangeName, key => GetClientKey(request.PublicKey, request.Version));
 
