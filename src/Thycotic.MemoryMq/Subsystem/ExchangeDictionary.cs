@@ -88,15 +88,38 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <exception cref="System.NotImplementedException"></exception>
         public void RestorePersistedMessages()
         {
-            _log.Info("Restoring messages disk");
+            _log.Info("Restoring messages from disk");
 
             try
             {
-                //TODO: Implement restore
+                var path = GetPersistPath();
+                if (!File.Exists(path))
+                {
+                    //nothing to restore
+                    return;
+                }
+
+                CombinedSnapshot snapshot;
+
+                using (var fs = File.Open(path, FileMode.Open))
+                using (var sw = new StreamReader(fs))
+                using (var jw = new JsonTextReader(sw))
+                {
+                    var serializer = new JsonSerializer();
+                    snapshot = serializer.Deserialize<CombinedSnapshot>(jw);
+                }
+
+                if (snapshot != null && snapshot.Exchanges.Length > 0)
+                {
+                    snapshot.Exchanges.ToList().ForEach(e => e.DeliveryEventArguments.ToList().ForEach(dea => Publish(e.RoutingSlip, dea)));
+                }
+
+                //remove the file
+                File.Delete(path);
             }
             catch (Exception ex)
             {
-                _log.Error("Failed to persist messages", ex);
+                _log.Error("Failed to restore messages", ex);
             }
 
         }
@@ -104,16 +127,29 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <summary>
         /// Persists the messages from memory to disk.
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void PersistMessages()
         {
             _log.Info("Persisting messages to disk");
 
             try
             {
+                var path = GetPersistPath();
+                if (!File.Exists(path))
+                {
+                    //delete any previous snapshots
+                    File.Delete(path);
+                }
+
+                if (IsEmpty)
+                {
+                    //nothing to persist
+                    return;
+                }
+
+
                 var snapshot = GenerateSnapshot();
 
-                using (var fs = File.Open(GetPersistPath(), FileMode.OpenOrCreate))
+                using (var fs = File.Open(path, FileMode.Create))
                 using (var sw = new StreamWriter(fs))
                 using (var jw = new JsonTextWriter(sw))
                 {
