@@ -178,7 +178,16 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
                             cm => cm.Name == "help");
                     }
 
-                    Task.Factory.StartNew(() => command.Action.Invoke(parameters));
+                    if (command is IImmediateConsoleCommand)
+                    {
+                        command.Action.Invoke(parameters);
+                    }
+                    else
+                    {
+                        Task.Factory.StartNew(() => command.Action.Invoke(parameters));
+                    }
+
+
                 }
                 catch (Exception ex)
                 {
