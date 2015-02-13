@@ -33,6 +33,8 @@ namespace Thycotic.SecretServerEngine2.Security
             {
                 return _encryptionPairs.GetOrAdd(exchangeName, key =>
                 {
+                    _log.Info(string.Format("Retrieving encryption key for {0} exchange", exchangeName));
+
                     SymmetricKey symmetricKey;
                     InitializationVector initializationVector;
 
@@ -63,6 +65,8 @@ namespace Thycotic.SecretServerEngine2.Security
 
             try
             {
+                _log.Debug(string.Format("Encrypting body for exchange {0}", exchangeName));
+
                 var pair = GetEncryptionPair(exchangeName);
 
                 var saltedBody = saltProvider.Salt(unEncryptedBody, MessageEncryptionPair.SaltLength);
@@ -88,6 +92,8 @@ namespace Thycotic.SecretServerEngine2.Security
             var encryptor = new SymmetricEncryptor();
             try
             {
+                _log.Debug(string.Format("Decrypting body from exchange {0}", exchangeName));
+
                 var pair = GetEncryptionPair(exchangeName);
 
                 var decryptedBody = encryptor.Decrypt(encryptedBody, pair.SymmetricKey, pair.InitializationVector);
