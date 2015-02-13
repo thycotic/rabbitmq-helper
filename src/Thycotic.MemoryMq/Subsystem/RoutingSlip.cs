@@ -13,7 +13,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <value>
         /// The exchange.
         /// </value>
-        public string Exchange { get; private set; }
+        public string Exchange { get; set; }
 
         /// <summary>
         /// Gets the routing key.
@@ -21,7 +21,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <value>
         /// The routing key.
         /// </value>
-        public string RoutingKey { get; private set; }
+        public string RoutingKey { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoutingSlip"/> class.
