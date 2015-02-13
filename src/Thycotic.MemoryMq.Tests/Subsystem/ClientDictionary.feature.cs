@@ -19,20 +19,20 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("BindingDictionary")]
-    public partial class BindingDictionaryFeature
+    [NUnit.Framework.DescriptionAttribute("ClientDictionary")]
+    public partial class ClientDictionaryFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "BindingDictionary.feature"
+#line 1 "ClientDictionary.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "BindingDictionary", "", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "ClientDictionary", "", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -62,6 +62,35 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         public virtual void ScenarioCleanup()
         {
             testRunner.CollectScenarioErrors();
+        }
+        
+        public virtual void FeatureBackground()
+        {
+#line 3
+#line 4
+ testRunner.Given("there exists an object of type \"Thycotic.MemoryMq.Subsystem.ClientDictionary, Thy" +
+                    "cotic.MemoryMq\" stored in the scenario as ClientDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("TryGetClient should call GetOrAdd On ConcurrentDictionary")]
+        [NUnit.Framework.CategoryAttribute("mytag")]
+        public virtual void TryGetClientShouldCallGetOrAddOnConcurrentDictionary()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("TryGetClient should call GetOrAdd On ConcurrentDictionary", new string[] {
+                        "mytag"});
+#line 12
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line 13
+ testRunner.When("the method TryGetClient on ClientDictionary ClientDictionaryTest is called with q" +
+                    "ueue name queueNameTest and the result is stored in scenario as clientResult", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 14
+ testRunner.Then("the result stored in scenario as clientResult is null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
         }
     }
 }
