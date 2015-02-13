@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using Autofac;
+using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands;
@@ -11,44 +12,53 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
 {
     internal static class Program
     {
+        private static readonly ILogWriter _log = Log.Get(typeof(Program));
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main(string[] args)
         {
-            //interactive mode (first argument is i or icd
-            if (args.Any() && ((args.First() == "i") || (args.First() == "icd")))
+            try
             {
-                Console.WriteLine("Starting interactive mode...");
+                //interactive mode (first argument is i or icd
+                if (args.Any() && ((args.First() == "i") || (args.First() == "icd")))
+                {
+                    Console.WriteLine("Starting interactive mode...");
 
-                var cli = new CommandLineInterface();
+                    var cli = new CommandLineInterface();
 
-                #region Start server
-                var startConsuming = args.First() != "icd"; //the first argument is not icd (Interactive with Consumption Disabled)
+                    #region Start server
+                    var startConsuming = args.First() != "icd"; //the first argument is not icd (Interactive with Consumption Disabled)
 
-                var agent = new EngineService(startConsuming);
-                agent.Start(new string[] { });
-                #endregion
+                    var agent = new EngineService(startConsuming);
+                    agent.Start(new string[] { });
+                    #endregion
 
-                #region Start client
-                ConfigureCli(cli, agent.IoCContainer);
+                    #region Start client
+                    ConfigureCli(cli, agent.IoCContainer);
 
-                cli.BeginInputLoop(string.Join(" ", args.Skip(1)));
-                #endregion
+                    cli.BeginInputLoop(string.Join(" ", args.Skip(1)));
+                    #endregion
 
-                #region Clean up
-                cli.Wait();
+                    #region Clean up
+                    cli.Wait();
 
-                agent.Stop();
-                #endregion
-            }
-            else
-            {
-                var servicesToRun = new ServiceBase[]
+                    agent.Stop();
+                    #endregion
+                }
+                else
+                {
+                    var servicesToRun = new ServiceBase[]
                 {
                     new EngineService()
                 };
-                ServiceBase.Run(servicesToRun);
+                    ServiceBase.Run(servicesToRun);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Failed to start service", ex);
             }
         }
 

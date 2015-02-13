@@ -23,6 +23,18 @@ namespace Thycotic.SecretServerEngine2
 
         private readonly bool _startConsuming;
 
+        private readonly Func<string, string> _configurationManagerProxy = name =>
+        {
+            var value = ConfigurationManager.AppSettings[name];
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
+            }
+
+            return value;
+        };
+
         private readonly ILogWriter _log = Log.Get(typeof(EngineService));
         private LogCorrelation _correlation;
 
@@ -45,7 +57,7 @@ namespace Thycotic.SecretServerEngine2
         {
             Log.Configure();
         }
-
+        
         /// <summary>
         /// Configures inversion of control.
         /// </summary>
@@ -53,31 +65,38 @@ namespace Thycotic.SecretServerEngine2
         {
             _log.Debug("Configuring IoC...");
 
-            ResetIoCContainer();
-
-            // Create the builder with which components/services are registered.
-            var builder = new ContainerBuilder();
-
-            builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
-
-            Func<string, string> configurationProvider = name => ConfigurationManager.AppSettings[name];
-
-            builder.RegisterModule(new MessageQueueModule(configurationProvider));
-
-            if (_startConsuming)
+            try
             {
-                builder.RegisterModule(new LogicModule());
-                builder.RegisterModule(new WrappersModule());
+                ResetIoCContainer();
+
+                // Create the builder with which components/services are registered.
+                var builder = new ContainerBuilder();
+
+                builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
+
+                builder.RegisterModule(new MessageQueueModule(_configurationManagerProxy));
+
+                if (_startConsuming)
+                {
+                    builder.RegisterModule(new LogicModule());
+                    builder.RegisterModule(new WrappersModule());
+                }
+                else
+                {
+                    _log.Warn("Consumption disabled, your will only be able to issue requests");
+                }
+
+                // Build the container to finalize registrations and prepare for object resolution.
+                IoCContainer = builder.Build();
+
+                _log.Debug("Configuring IoC complete");
+            
             }
-            else
+            catch (Exception ex)
             {
-                _log.Warn("Consumption disabled, your will only be able to issue requests");
+                _log.Error("Failed to configure IoC", ex);
+                throw;
             }
-
-            // Build the container to finalize registrations and prepare for object resolution.
-            IoCContainer = builder.Build();
-
-            _log.Debug("Configuring IoC complete");
         }
 
         private void ResetIoCContainer()

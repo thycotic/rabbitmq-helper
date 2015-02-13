@@ -33,11 +33,6 @@ namespace Thycotic.SecretServerEngine2.IoC
 
             var remoteConfigurationConnectionString = _configurationProvider(ConfigurationKeys.RemoteConfiguration.ConnectionString);
 
-            if (string.IsNullOrWhiteSpace(remoteConfigurationConnectionString))
-            {
-                throw new ConfigurationErrorsException("No configuration web point connection string");
-            }
-
             builder.Register(context => new MessageEncryptionKeyProvider(remoteConfigurationConnectionString)).AsImplementedInterfaces().SingleInstance();
 
             var exchangeName = _configurationProvider(ConfigurationKeys.QueueExchangeName);
