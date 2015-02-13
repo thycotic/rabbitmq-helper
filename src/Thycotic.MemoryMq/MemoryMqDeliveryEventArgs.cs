@@ -71,6 +71,12 @@ namespace Thycotic.MemoryMq
         [DataMember]
         public MemoryMqProperties Properties { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryMqDeliveryEventArgs"/> class.
+        /// </summary>
+        public MemoryMqDeliveryEventArgs()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqDeliveryEventArgs"/> class.
