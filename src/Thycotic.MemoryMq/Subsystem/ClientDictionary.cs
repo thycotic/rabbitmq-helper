@@ -29,10 +29,10 @@ namespace Thycotic.MemoryMq.Subsystem
             client.Channel.Closed += (sender, args) =>
             {
                 _log.Debug("Detaching consumer");
-                GetConsumerList(queueName).RemoveClient(client);
+                GetClientList(queueName).RemoveClient(client);
             };
 
-            GetConsumerList(queueName).AddConsumer(client);
+            GetClientList(queueName).AddClient(client);
         }
 
         /// <summary>
@@ -43,16 +43,22 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <returns></returns>
         public bool TryGetClient(string queueName, out MemoryMqServerClientProxy clientProxy)
         {
-            return GetConsumerList(queueName).TryGetClient(out clientProxy);
+            return GetClientList(queueName).TryGetClient(out clientProxy);
         }
 
-        private ClientList GetConsumerList(string queueName)
+        private ClientList GetClientList(string queueName)
         {
-            return _data.GetOrAdd(queueName, s => new ClientList());
+            lock (_data)
+            {
+                return _data.GetOrAdd(queueName, s => new ClientList());
+            }
         }
 
-
-        private class ClientList
+        //TODO: Make own file
+        /// <summary>
+        /// 
+        /// </summary>
+        public class ClientList
         {
             private readonly ConcurrentDictionary<string, MemoryMqServerClientProxy> _data = new ConcurrentDictionary<string, MemoryMqServerClientProxy>();
 
@@ -60,19 +66,32 @@ namespace Thycotic.MemoryMq.Subsystem
 
             private readonly ILogWriter _log = Log.Get(typeof(ClientList));
 
-            public void AddConsumer(MemoryMqServerClientProxy clientProxy)
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="clientProxy"></param>
+            public void AddClient(MemoryMqServerClientProxy clientProxy)
             {
                 _log.Debug(string.Format("Adding consumer with session ID {0}", clientProxy.Channel.SessionId));
 
                 _data.TryAdd(clientProxy.Channel.SessionId, clientProxy);
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="clientProxy"></param>
             public void RemoveClient(MemoryMqServerClientProxy clientProxy)
             {
                 MemoryMqServerClientProxy temp;
                 _data.TryRemove(clientProxy.Channel.SessionId, out temp);
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="clientProxy"></param>
+            /// <returns></returns>
             public bool TryGetClient(out MemoryMqServerClientProxy clientProxy)
             {
                 var count = _data.Count;
