@@ -109,8 +109,11 @@ namespace Thycotic.MemoryMq.Subsystem
 
             _log.Debug("Staring message monitoring");
 
+            Task.Factory.StartNew(() => _exchange.RestorePersistedMessages());
+
             _cts = new CancellationTokenSource();
             _monitoringTask = Task.Factory.StartNew(MonitorAndDispatch);
+
         }
 
         /// <summary>
@@ -118,30 +121,26 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public void Stop()
         {
-            if ((_cts == null) || (_monitoringTask == null))
+            if (_cts != null)
             {
-                return;
+                _cts.Cancel();
             }
 
-            var drainTask = Task.Factory.StartNew(() =>
+            if (_monitoringTask != null)
             {
-                _log.Info("Draining exchange...");
+                _log.Debug("Stopping message monitoring");
 
-                while (!_exchange.IsEmpty)
-                {
-                    _log.Info("Waiting for queues to drain...");
-                    Thread.Sleep(1000);
-                }
-            });
+                _monitoringTask.Wait();
+            }
 
-            //TODO: Make configurable
-            drainTask.Wait(TimeSpan.FromSeconds(30));
+            _log.Info("Persisting exchange messages...");
 
-            _log.Debug("Stopping message monitoring");
+            var persistTask = Task.Factory.StartNew(() => _exchange.PersistMessages());
 
-            _cts.Cancel();
+            //TODO: Make configurable as indefinite sounds bad
+            persistTask.Wait();
 
-            _monitoringTask.Wait();
+          
         }
 
         /// <summary>

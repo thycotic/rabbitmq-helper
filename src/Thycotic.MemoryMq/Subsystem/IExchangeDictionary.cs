@@ -45,5 +45,15 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="routingSlip">The routing slip.</param>
         /// <exception cref="System.ApplicationException">Delivery tag was not found</exception>
         void NegativelyAcknowledge(ulong deliveryTag, RoutingSlip routingSlip);
+
+        /// <summary>
+        /// Restores the persisted messages from disk to memory.
+        /// </summary>
+        void RestorePersistedMessages();
+
+        /// <summary>
+        /// Persists the messages from memory to disk.
+        /// </summary>
+        void PersistMessages();
     }
 }

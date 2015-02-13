@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using Thycotic.Logging;
+using Thycotic.MemoryMq.Subsystem.Persistance;
 
 namespace Thycotic.MemoryMq.Subsystem
 {
@@ -20,7 +24,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <value>
         /// The mailboxes.
         /// </value>
-        public IList<Mailbox> Mailboxes 
+        public IList<Mailbox> Mailboxes
         {
             get { return _data.Select(kvp => new Mailbox(kvp.Key, kvp.Value)).ToList(); }
         }
@@ -31,7 +35,8 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <value>
         ///   <c>true</c> if this instance is empty; otherwise, <c>false</c>.
         /// </value>
-        public bool IsEmpty {
+        public bool IsEmpty
+        {
             get { return _data.Values.All(q => q.IsEmpty); }
         }
 
@@ -57,7 +62,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <exception cref="System.ApplicationException">Delivery tag was not found</exception>
         public void Acknowledge(ulong deliveryTag, RoutingSlip routingSlip)
         {
-           _data[routingSlip].Acknowledge(deliveryTag);
+            _data[routingSlip].Acknowledge(deliveryTag);
         }
 
         /// <summary>
@@ -70,5 +75,91 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             _data[routingSlip].NegativelyAcknoledge(deliveryTag);
         }
+
+        private static string GetPersistPath()
+        {
+            //TODO: Figure out what better path to have this live under
+            return Path.Combine(Directory.GetCurrentDirectory(), "store.json");
+        }
+
+        /// <summary>
+        /// Restores the persisted messages from disk to memory.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void RestorePersistedMessages()
+        {
+            _log.Info("Restoring messages disk");
+
+            try
+            {
+                //TODO: Implement restore
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Failed to persist messages", ex);
+            }
+
+        }
+
+        /// <summary>
+        /// Persists the messages from memory to disk.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void PersistMessages()
+        {
+            _log.Info("Persisting messages to disk");
+
+            try
+            {
+                var snapshot = GenerateSnapshot();
+
+                using (var fs = File.Open(GetPersistPath(), FileMode.OpenOrCreate))
+                using (var sw = new StreamWriter(fs))
+                using (var jw = new JsonTextWriter(sw))
+                {
+                    jw.Formatting = Formatting.None;
+
+                    var serializer = new JsonSerializer();
+                    serializer.Serialize(jw, snapshot);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Failed to persist messages", ex);
+            }
+        }
+
+        private CombinedSnapshot GenerateSnapshot()
+        {
+            var exchangeSnapshotList = new List<ExchangeSnapshot>();
+
+            _data.ToList().ForEach(kvp =>
+            {
+                var routingSlipSnapshotList = new List<MemoryMqDeliveryEventArgs>();
+
+                var routingSlip = kvp.Key;
+
+                var queue = kvp.Value;
+
+                MemoryMqDeliveryEventArgs deliveryArgs;
+                while (queue.TryDequeue(out deliveryArgs))
+                {
+                    routingSlipSnapshotList.Add(deliveryArgs);
+                }
+
+                exchangeSnapshotList.Add(new ExchangeSnapshot
+                {
+                    RoutingSlip = routingSlip,
+                    DeliveryEventArguments = routingSlipSnapshotList.ToArray()
+                });
+
+            });
+
+            return new CombinedSnapshot
+            {
+                Exchanges = exchangeSnapshotList.ToArray()
+            };
+        }
     }
+
 }

@@ -128,6 +128,9 @@
     <AssemblyOriginatorKeyFile>..\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -151,6 +154,8 @@
     <Compile Include="Subsystem\IMessageDispatcher.cs" />
     <Compile Include="Subsystem\IMessageQueue.cs" />
     <Compile Include="Subsystem\MessageQueue.cs" />
+    <Compile Include="Subsystem\Persistance\ExchangeSnapshot.cs" />
+    <Compile Include="Subsystem\Persistance\CombinedSnapshot.cs" />
     <Compile Include="WcfHelpers.cs" />
     <Compile Include="Subsystem\ClientDictionary.cs" />
     <Compile Include="Subsystem\ExchangeDictionary.cs" />
@@ -169,6 +174,7 @@
     <None Include="..\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.Logging\Thycotic.Logging.csproj">
