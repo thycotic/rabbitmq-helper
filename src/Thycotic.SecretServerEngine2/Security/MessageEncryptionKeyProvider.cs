@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Security.Cryptography;
 using ServiceStack;
+using Thycotic.AppCore.Cryptography;
+using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
-using Thycotic.TempAppCore;
-using Thycotic.TempAppCore.Engine;
+using Thycotic.SecretServerEngine2.Web.Common.Request;
+using Thycotic.SecretServerEngine2.Web.Common.Response;
 
 namespace Thycotic.SecretServerEngine2.Security
 {
@@ -60,7 +62,7 @@ namespace Thycotic.SecretServerEngine2.Security
             {
                 var publicKey = GetEngineKey();
 
-                var response = _serviceClient.Send<EngineAuthenticationResult>("POST", "api/EngineAuthentication/Authenticate",
+                var response = _serviceClient.Send<EngineAuthenticationResponse>("POST", "api/EngineAuthentication/Authenticate",
                     new EngineAuthenticationRequest
                     {
                         ExchangeName = exchangeName,

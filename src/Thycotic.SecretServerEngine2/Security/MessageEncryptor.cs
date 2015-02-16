@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using Thycotic.AppCore;
+using Thycotic.AppCore.Cryptography;
+using Thycotic.ihawu.Business.DoubleLock.Cryptography;
+using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
-using Thycotic.TempAppCore;
 
 namespace Thycotic.SecretServerEngine2.Security
 {

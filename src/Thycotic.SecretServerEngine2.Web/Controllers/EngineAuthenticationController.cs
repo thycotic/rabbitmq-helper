@@ -3,8 +3,11 @@ using System.Collections.Concurrent;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Thycotic.TempAppCore;
-using Thycotic.TempAppCore.Engine;
+using Thycotic.AppCore;
+using Thycotic.AppCore.Cryptography;
+using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
+using Thycotic.SecretServerEngine2.Web.Common.Request;
+using Thycotic.SecretServerEngine2.Web.Common.Response;
 
 namespace Thycotic.SecretServerEngine2.Web.Controllers
 {
@@ -27,7 +30,7 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             }
         }
 
-        public static EngineAuthenticationResult GetClientKey(string publicKey, string version)
+        public static EngineAuthenticationResponse GetClientKey(string publicKey, string version)
         {
             const int SALT_LENGTH = 8;
 
@@ -45,7 +48,7 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             double versionNum;
             var canParse = double.TryParse(version, out versionNum);
 
-            return new EngineAuthenticationResult
+            return new EngineAuthenticationResponse
             {
                 //SymmetricKey = encryptedSymmetricKey,
                 SymmetricKey = symmetricKey.Value,
@@ -54,11 +57,11 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             };
         }
 
-        private static ConcurrentDictionary<string, EngineAuthenticationResult> _approvedRequests = new ConcurrentDictionary<string, EngineAuthenticationResult>();
+        private static ConcurrentDictionary<string, EngineAuthenticationResponse> _approvedRequests = new ConcurrentDictionary<string, EngineAuthenticationResponse>();
 
         [HttpPost]
         [Route("Authenticate")]
-        public Task<EngineAuthenticationResult> Authenticate(EngineAuthenticationRequest request)
+        public Task<EngineAuthenticationResponse> Authenticate(EngineAuthenticationRequest request)
         {
             //TODO: Validate client - talk to Ben
             //TODO: Ask Kevin if public key for the engine is enough ot should we also have a friendly name?

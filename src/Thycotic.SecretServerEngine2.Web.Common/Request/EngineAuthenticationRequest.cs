@@ -1,4 +1,4 @@
-﻿namespace Thycotic.TempAppCore.Engine
+﻿namespace Thycotic.SecretServerEngine2.Web.Common.Request
 {
     public class EngineAuthenticationRequest
     {
