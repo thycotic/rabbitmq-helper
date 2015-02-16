@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Thycotic.SecretServerEngine2
 {
@@ -13,9 +14,9 @@ namespace Thycotic.SecretServerEngine2
         /// <value>
         /// The version.
         /// </value>
-        public static string Version
+        public static Version Version
         {
-            get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+            get { return Assembly.GetExecutingAssembly().GetName().Version; }
         }
         /// <summary>
         /// Gets the release architecture.
@@ -26,6 +27,15 @@ namespace Thycotic.SecretServerEngine2
         public static string Architecture
         {
             get { return Assembly.GetExecutingAssembly().GetName().ProcessorArchitecture.ToString(); }
+        }
+
+        /// <summary>
+        /// Gets the release version as a double from the major and minor components
+        /// </summary>
+        /// <returns></returns>
+        public static double GetVersionAsDouble()
+        {
+            return Convert.ToDouble(Version.Major) + Convert.ToDouble(Version.Minor)/10;
         }
     }
 }

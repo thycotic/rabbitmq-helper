@@ -4,6 +4,6 @@
     {
         public string ExchangeName { get; set; }
         public string PublicKey { get; set; }
-        public string Version { get; set; }
+        public double Version { get; set; }
     }
 }

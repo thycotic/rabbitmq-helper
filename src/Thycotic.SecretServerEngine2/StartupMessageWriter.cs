@@ -27,7 +27,7 @@ namespace Thycotic.SecretServerEngine2
                 var sr = new StreamReader(logoStream);
                 var logoAscii = sr.ReadToEnd();
 
-                logoAscii = logoAscii.Replace("{version}", ReleaseInformationHelper.Version);
+                logoAscii = logoAscii.Replace("{version}", ReleaseInformationHelper.Version.ToString());
                 logoAscii = logoAscii.Replace("{architecture}", ReleaseInformationHelper.Architecture);
 
                 //don't use the log since it just spams the table

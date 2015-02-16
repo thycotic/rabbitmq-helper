@@ -67,7 +67,7 @@ namespace Thycotic.SecretServerEngine2.Security
                     {
                         ExchangeName = exchangeName,
                         PublicKey = Convert.ToBase64String(publicKey.Value),
-                        Version = ReleaseInformationHelper.Version
+                        Version = ReleaseInformationHelper.GetVersionAsDouble()
                     });
 
                 symmetricKey = new SymmetricKey(response.SymmetricKey);

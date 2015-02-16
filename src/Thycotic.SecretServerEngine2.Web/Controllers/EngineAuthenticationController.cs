@@ -16,13 +16,13 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
     {
         public static void CreateSymmetricKeyAndIv(out SymmetricKey symmetricKey, out InitializationVector initializationVector)
         {
-            int AesKeySize = 256;
-            int IvSize = 128;
+            const int aesKeySize = 256;
+            const int ivSize = 128;
 
             using (var aes = new AesCryptoServiceProvider())
             {
-                aes.BlockSize = IvSize;
-                aes.KeySize = AesKeySize;
+                aes.BlockSize = ivSize;
+                aes.KeySize = aesKeySize;
                 aes.GenerateIV();
                 aes.GenerateKey();
                 symmetricKey = new SymmetricKey(aes.Key);
@@ -30,34 +30,29 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             }
         }
 
-        public static EngineAuthenticationResponse GetClientKey(string publicKey, string version)
+        public static EngineAuthenticationResponse GetClientKey(string publicKey, double version)
         {
             const int SALT_LENGTH = 8;
 
             var saltProvider = new ByteSaltProvider();
 
-            //TODO: Ask Kevin, do we need to encrypt the key?
             SymmetricKey symmetricKey;
             InitializationVector initializationVector;
             CreateSymmetricKeyAndIv(out symmetricKey, out initializationVector);
-            //var asymmetricEncryptor = new AsymmetricEncryptor();
-            //var saltedSymmetricKey = saltProvider.Salt(symmetricKey.Value, SALT_LENGTH);
-            //var encryptedSymmetricKey = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedSymmetricKey);
-            //var saltedInitializationVector = saltProvider.Salt(initializationVector.Value, SALT_LENGTH);
-            //var encryptedInitializationVector = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedInitializationVector);
-            double versionNum;
-            var canParse = double.TryParse(version, out versionNum);
-
+            var asymmetricEncryptor = new AsymmetricEncryptor();
+            var saltedSymmetricKey = saltProvider.Salt(symmetricKey.Value, SALT_LENGTH);
+            var encryptedSymmetricKey = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedSymmetricKey);
+            var saltedInitializationVector = saltProvider.Salt(initializationVector.Value, SALT_LENGTH);
+            var encryptedInitializationVector = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedInitializationVector);
+            
             return new EngineAuthenticationResponse
             {
-                //SymmetricKey = encryptedSymmetricKey,
-                SymmetricKey = symmetricKey.Value,
-                //InitializationVector = encryptedInitializationVector
-                InitializationVector = initializationVector.Value
+                SymmetricKey = encryptedSymmetricKey,
+                InitializationVector = encryptedInitializationVector
             };
         }
 
-        private static ConcurrentDictionary<string, EngineAuthenticationResponse> _approvedRequests = new ConcurrentDictionary<string, EngineAuthenticationResponse>();
+        private static readonly ConcurrentDictionary<string, EngineAuthenticationResponse> ApprovedRequests = new ConcurrentDictionary<string, EngineAuthenticationResponse>();
 
         [HttpPost]
         [Route("Authenticate")]
@@ -66,7 +61,9 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             //TODO: Validate client - talk to Ben
             //TODO: Ask Kevin if public key for the engine is enough ot should we also have a friendly name?
 
-            var result = _approvedRequests.GetOrAdd(request.ExchangeName, key => GetClientKey(request.PublicKey, request.Version));
+            var result = request.Version < ReleaseInformationHelper.GetVersionAsDouble()
+                ? new EngineAuthenticationResponse {UpgradeNeeded = true}
+                : ApprovedRequests.GetOrAdd(request.ExchangeName, key => GetClientKey(request.PublicKey, request.Version));
 
             return Task.FromResult(result);
         }
