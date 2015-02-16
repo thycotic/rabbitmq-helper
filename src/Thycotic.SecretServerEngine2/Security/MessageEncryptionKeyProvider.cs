@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using ServiceStack;
+using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
@@ -15,7 +16,6 @@ namespace Thycotic.SecretServerEngine2.Security
     public class MessageEncryptionKeyProvider : IMessageEncryptionKeyProvider
     {
         private readonly JsonServiceClient _serviceClient;
-
         private readonly ILogWriter _log = Log.Get(typeof(MessageEncryptionKeyProvider));
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Thycotic.SecretServerEngine2.Security
             _serviceClient = new JsonServiceClient(url);
         }
 
-        private static void CreatePublicAndPrivateKeys(out PublicKey publicKey, out PrivateKey privateKey)
+        private static void GetEngineKey(out PublicKey publicKey, out PrivateKey privateKey)
         {
             const int RsaSecurityKeySize = 2048;
             const CspProviderFlags flags = CspProviderFlags.UseMachineKeyStore;
@@ -38,15 +38,6 @@ namespace Thycotic.SecretServerEngine2.Security
                 privateKey = new PrivateKey(provider.ExportCspBlob(true));
                 publicKey = new PublicKey(provider.ExportCspBlob(false));
             }
-        }
-
-        private static PublicKey GetEngineKey()
-        {
-            PublicKey publicKey;
-            PrivateKey privateKey;
-            CreatePublicAndPrivateKeys(out publicKey, out privateKey);
-
-            return publicKey;
         }
 
         /// <summary>
@@ -60,7 +51,9 @@ namespace Thycotic.SecretServerEngine2.Security
         {
             try
             {
-                var publicKey = GetEngineKey();
+                PublicKey publicKey;
+                PrivateKey privateKey;
+                GetEngineKey(out publicKey, out privateKey);
 
                 var response = _serviceClient.Send<EngineAuthenticationResponse>("POST", "api/EngineAuthentication/Authenticate",
                     new EngineAuthenticationRequest
@@ -70,8 +63,16 @@ namespace Thycotic.SecretServerEngine2.Security
                         Version = ReleaseInformationHelper.GetVersionAsDouble()
                     });
 
-                symmetricKey = new SymmetricKey(response.SymmetricKey);
-                initializationVector = new InitializationVector(response.InitializationVector);
+                var saltProvider = new ByteSaltProvider();
+                
+                var asymmetricEncryptor = new AsymmetricEncryptor();
+                var decryptedSymmetricKey = asymmetricEncryptor.DecryptWithKey(privateKey, response.SymmetricKey);
+                var unsaltedSymmetricKey = saltProvider.Unsalt(decryptedSymmetricKey, MessageEncryptionPair.SaltLength);
+                var decryptedInitializationVector = asymmetricEncryptor.DecryptWithKey(privateKey, response.InitializationVector);
+                var unsaltedInitializationVector = saltProvider.Unsalt(decryptedInitializationVector, MessageEncryptionPair.SaltLength);
+
+                symmetricKey = new SymmetricKey(unsaltedSymmetricKey);
+                initializationVector = new InitializationVector(unsaltedInitializationVector);
                 return true;
             }
             
