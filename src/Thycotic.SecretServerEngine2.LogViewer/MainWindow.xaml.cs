@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows.Controls;
 using Thycotic.SecretServerEngine2.LogViewer.Models;
+using Thycotic.SecretServerEngine2.LogViewer.Providers;
 using Thycotic.SecretServerEngine2.LogViewer.Views;
 
 
@@ -11,15 +13,15 @@ namespace Thycotic.SecretServerEngine2.LogViewer
     /// </summary>
     public partial class MainWindow
     {
+        private readonly Func<LogDataProvider> _dataProviderFactory = () => new LogDataProvider("Log4Net");
+
         private readonly MainWindowViewModel _viewModel;
         public MainWindow()
         {
             InitializeComponent();
 
-            var dataProvider = new LogDataProvider("Log4Net");
-                
             var viewModel = new MainWindowViewModel();
-            viewModel.Initialize(dataProvider);
+            viewModel.Initialize(_dataProviderFactory);
             _viewModel = viewModel;
             LogCorrelations.SelectionChanged += OnLogCorrelationChanged;
             LogItemsInCorrelation.SelectionChanged += OnLogItemChanged;
