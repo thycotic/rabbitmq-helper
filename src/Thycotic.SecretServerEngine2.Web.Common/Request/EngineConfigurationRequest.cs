@@ -1,12 +1,12 @@
-﻿namespace Thycotic.SecretServerEngine2.Web.Common.Request
-{
-    public class EngineAuthenticationRequest
-    {
+﻿using System;
 
+namespace Thycotic.SecretServerEngine2.Web.Common.Request
+{
+    public class EngineConfigurationRequest
+    {
         public string EngineFriendlyName { get; set; }
         public string PublicKey { get; set; }
         public double Version { get; set; }
-
-        public string ExchangeName { get; set; }
+        
     }
 }

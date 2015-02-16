@@ -149,7 +149,6 @@
     </Compile>
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="IRequestBus.cs" />
-    <Compile Include="JsonMessageSerializer.cs" />
     <Compile Include="QueueClient\CommonDeliveryEventArgs.cs" />
     <Compile Include="QueueClient\ExchangeNameProvider.cs" />
     <Compile Include="QueueClient\ICommonConnection.cs" />
@@ -176,7 +175,6 @@
     <Compile Include="QueueClient\MemoryMq\MemoryMqConnection.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqModel.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqModelProperties.cs" />
-    <Compile Include="IMessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueClient\RabbitMq\RabbitMqConnection.cs" />
     <Compile Include="QueueClient\DefaultConfigValues.cs" />
@@ -205,6 +203,10 @@
     <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
       <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
       <Name>Thycotic.Messages.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
+      <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
+      <Name>Thycotic.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,17 +8,6 @@ namespace Thycotic.MessageQueueClient
     public static class ConfigurationKeys
     {
         /// <summary>
-        /// Configuration
-        /// </summary>
-        public class RemoteConfiguration
-        {
-            /// <summary>
-            /// The connection string
-            /// </summary>
-            public const string ConnectionString = "RemoteConfiguration.ConnectionString";
-        }
-
-        /// <summary>
         /// The queue type
         /// </summary>
         public const string QueueType = "Queue.Type";

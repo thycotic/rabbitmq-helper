@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
+using Thycotic.MessageQueueClient;
 using Thycotic.SecretServerEngine2.Web.Common.Request;
 using Thycotic.SecretServerEngine2.Web.Common.Response;
 
@@ -52,17 +54,57 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             };
         }
 
+
+        public static EngineConfigurationResponse GetConfiguration(string publicKey, double version)
+        {
+            const int SALT_LENGTH = 8;
+
+            var saltProvider = new ByteSaltProvider();
+
+            var serializer = new JsonMessageSerializer();
+
+            var configuration = new Dictionary<string, string>
+            {
+                {ConfigurationKeys.QueueType, SupportedMessageQueues.MemoryMq},
+                {ConfigurationKeys.QueueExchangeName, "thycotic"},
+                {ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://THYCOPAIR24.testparent.thycotic.com:8523"},
+                {ConfigurationKeys.MemoryMq.UseSSL, "true"},
+                //{ConfigurationKeys.MemoryMq.Server.Thumbprint, "f1faa2aa00f1350edefd9490e3fc95017db3c897"},
+                {ConfigurationKeys.MemoryMq.Server.Start, "false"}
+            };
+
+            var configurationBytes = serializer.ToBytes(configuration);
+
+            var asymmetricEncryptor = new AsymmetricEncryptor();
+            var saltedConfiguration = saltProvider.Salt(configurationBytes, SALT_LENGTH);
+            var encryptedConfiguration = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedConfiguration);
+            
+            return new EngineConfigurationResponse
+            {
+                Configuration = encryptedConfiguration
+            };
+        }
+
+
         private static readonly ConcurrentDictionary<string, EngineAuthenticationResponse> ApprovedRequests = new ConcurrentDictionary<string, EngineAuthenticationResponse>();
+
+        [HttpPost]
+        [Route("GetConfiguration")]
+        public Task<EngineConfigurationResponse> GetConfiguration(EngineConfigurationRequest request)
+        {
+            var result = request.Version < ReleaseInformationHelper.GetVersionAsDouble()
+                ? new EngineConfigurationResponse {UpgradeNeeded = true}
+                : GetConfiguration(request.PublicKey, request.Version);
+
+            return Task.FromResult(result);
+        }
 
         [HttpPost]
         [Route("Authenticate")]
         public Task<EngineAuthenticationResponse> Authenticate(EngineAuthenticationRequest request)
         {
-            //TODO: Validate client - talk to Ben
-            //TODO: Ask Kevin if public key for the engine is enough ot should we also have a friendly name?
-
             var result = request.Version < ReleaseInformationHelper.GetVersionAsDouble()
-                ? new EngineAuthenticationResponse {UpgradeNeeded = true}
+                ? new EngineAuthenticationResponse { UpgradeNeeded = true }
                 : ApprovedRequests.GetOrAdd(request.ExchangeName, key => GetClientKey(request.PublicKey, request.Version));
 
             return Task.FromResult(result);

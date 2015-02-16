@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
+using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.Wrappers.IoC;
+using Thycotic.SecretServerEngine2.Configuration;
 using Thycotic.SecretServerEngine2.IoC;
+using Thycotic.SecretServerEngine2.Logic;
+using Thycotic.SecretServerEngine2.Security;
 
 namespace Thycotic.SecretServerEngine2
 {
@@ -23,18 +28,8 @@ namespace Thycotic.SecretServerEngine2
 
         private readonly bool _startConsuming;
 
-        private readonly Func<string, string> _configurationManagerProxy = name =>
-        {
-            var value = ConfigurationManager.AppSettings[name];
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
-            }
-
-            return value;
-        };
-
+        private Dictionary<string, string> _instanceConfiguration = new Dictionary<string, string>();
+        
         private readonly ILogWriter _log = Log.Get(typeof(EngineService));
         private LogCorrelation _correlation;
 
@@ -53,6 +48,35 @@ namespace Thycotic.SecretServerEngine2
             ConfigureLogging();
         }
 
+        private string GetInstanceConfigurationProxy(string name)
+        {
+            if (!_instanceConfiguration.ContainsKey(name))
+            {
+                throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
+            }
+
+            var value = _instanceConfiguration[name];
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
+            }
+
+            return value;
+        }
+
+        private string GetLocalConfigurationManagerProxy(string name)
+        {
+            var value = ConfigurationManager.AppSettings[name];
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
+            }
+
+            return value;
+        }
+
         private static void ConfigureLogging()
         {
             Log.Configure();
@@ -69,12 +93,25 @@ namespace Thycotic.SecretServerEngine2
             {
                 ResetIoCContainer();
 
+                if (!TryGetRemoteConfiguration(GetLocalConfigurationManagerProxy))
+                {
+                    _log.Info("Engine is not enabled/configured. Existing...");
+                    //TODO: Maybe retry later -dkk
+                    return;
+                }
+
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();
 
                 builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
 
-                builder.RegisterModule(new MessageQueueModule(_configurationManagerProxy));
+                builder.RegisterType<LocalKeyProvider>().AsImplementedInterfaces().SingleInstance();
+                builder.Register(
+                    context =>
+                        new RestCommunicationProvider(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.ConnectionString)))
+                    .AsImplementedInterfaces();
+
+                builder.RegisterModule(new MessageQueueModule(GetInstanceConfigurationProxy));
 
                 if (_startConsuming)
                 {
@@ -97,6 +134,27 @@ namespace Thycotic.SecretServerEngine2
                 _log.Error("Failed to configure IoC", ex);
                 throw;
             }
+        }
+
+        private bool TryGetRemoteConfiguration(Func<string, string> getLocalConfigurationManagerProxy)
+        {
+            var url = getLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.ConnectionString);
+
+            var keyProvider = new LocalKeyProvider();
+            var restClient = new RestCommunicationProvider(url);
+
+            var configurationProvider = new RemoteConfigurationProvider(keyProvider, restClient, new JsonMessageSerializer());
+
+            var configuration = configurationProvider.GetConfiguration();
+
+            if (configuration == null)
+            {
+                return false;
+            }
+
+            _instanceConfiguration = configuration;
+
+            return true;
         }
 
         private void ResetIoCContainer()

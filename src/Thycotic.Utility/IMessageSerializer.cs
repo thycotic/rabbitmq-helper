@@ -3,6 +3,7 @@
     /// <summary>
     /// Interface for a message serializer
     /// </summary>
+    //TODO: Rename to IObjectSerializer
     public interface IMessageSerializer
     {
         /// <summary>
@@ -11,6 +12,7 @@
         /// <typeparam name="TRequest">The type of the request.</typeparam>
         /// <param name="bytes">The bytes.</param>
         /// <returns></returns>
+        //TODO: Rename to ToObject
         TRequest ToRequest<TRequest>(byte[] bytes);
 
         /// <summary>
