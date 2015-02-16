@@ -1,0 +1,2048 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Thycotic.HSM</name>
+    </assembly>
+    <members>
+        <member name="T:Thycotic.HSM.CNG.AlgorithmGroup">
+            <summary>
+            Identifies an algorithm group.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.AlgorithmGroup.Equals(Thycotic.HSM.CNG.AlgorithmGroup)">
+            <summary>
+            Indicates whether the current algorithm group is equal to another algorithm group.
+            </summary>
+            <returns>
+            true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+            </returns>
+            <param name="other">An object to compare with this object.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.AlgorithmGroup.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <returns>
+            true if the specified object  is equal to the current object; otherwise, false.
+            </returns>
+            <param name="other">The object to compare with the current object. </param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.AlgorithmGroup.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current object.
+            </returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.AlgorithmGroup.op_Equality(Thycotic.HSM.CNG.AlgorithmGroup,Thycotic.HSM.CNG.AlgorithmGroup)">
+            <summary>
+            Determines if two instances of <see cref="T:Thycotic.HSM.CNG.AlgorithmGroup"/> are equal.
+            </summary>
+            <param name="left">The left side of the operator.</param>
+            <param name="right">The right side of the operator.</param>
+            <returns>True if the instances are equal, otherwise false.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.AlgorithmGroup.op_Inequality(Thycotic.HSM.CNG.AlgorithmGroup,Thycotic.HSM.CNG.AlgorithmGroup)">
+            <summary>
+            Determines if two instances of <see cref="T:Thycotic.HSM.CNG.AlgorithmGroup"/> are not equal.
+            </summary>
+            <param name="left">The left side of the operator.</param>
+            <param name="right">The right side of the operator.</param>
+            <returns>True if the instances are not equal, otherwise false.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.AlgorithmGroup.Rsa">
+            <summary>
+            The RSA algorithm group.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.AlgorithmGroup.Dh">
+            <summary>
+            The Diffie-Hellman algorithm group.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.AlgorithmGroup.Dsa">
+            <summary>
+            The DSA algorithm group
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.AlgorithmGroup.EcDsa">
+            <summary>
+            The elliptic curve DSA algorithm group.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.AlgorithmGroup.EcDh">
+            <summary>
+            The elliptic curve Diffie-Hellman algorithm group.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.AlgorithmSupport">
+            <summary>
+            Determins the support for an algorithm for a particular storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.AlgorithmSupport.IsAlgorithmSupported``1(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Determines whether or not an algorithm is supported by the storage provider.
+            </summary>
+            <typeparam name="TAlgorithm">The type of algorithm.</typeparam>
+            <param name="storageProvider">The storage provider.</param>
+            <returns>True if the algorithm is supported, otherwise false.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.DsaCngAlgorithm">
+            <summary>
+            The DSA algorithm.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.NCryptAsymmetricAlgorithmBase`1">
+            <summary>
+            A base class for all asymmetric signing algorithms.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.NCryptAlgorithmBase">
+            <summary>
+            A base class for which all Ncrypt CNG algorithms derive from.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.ICngAlgorithm">
+            <summary>
+            An interface for all CNG algorithms.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ICngAlgorithm.AlgorithmName">
+            <summary>
+            Gets the algorithm name.
+            </summary>
+            <returns>The name of the algorithm.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ICngAlgorithm.StorageProvider">
+            <summary>
+            The storage provider the algorithm was created for.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.NCryptAlgorithmBase.Dispose">
+            <summary>
+            Closes all resources for the algorithm.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.NCryptAlgorithmBase.AlgorithmName">
+            <summary>
+            Gets the algorithm name.
+            </summary>
+            <returns>The name of the algorithm.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.NCryptAlgorithmBase.StorageProvider">
+            <summary>
+            The storage provider the algorithm was created for.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.IAsymmetricCngAlgorithm`1">
+            <summary>
+            A contact interface that all asymmetric CNG algorithms implement.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.DsaCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Asymmetric.DsaCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the algorithm.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.DsaCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Asymmetric.DsaCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1">
+            <summary>
+            An asymmetric CNG key.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.ICngKey">
+            <summary>
+            A contract for all CNG keys.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.Dispose">
+            <summary>
+            Frees resources associated with the key.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.Delete">
+            <summary>
+            Removes the persistent key from the storage provider. If the key is ephemeral, this call is ignored and does not give an error.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.ExportKey(Thycotic.HSM.CNG.KeyFormat)">
+            <summary>
+            Exports a key into a binary blob for transit.
+            </summary>
+            <param name="keyFormat">The format to export the key in.</param>
+            <returns>A byte array blob of the key.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when attempting to export a key that cannot be exported.</exception>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.KeySize">
+            <summary>
+            Gets the size of the key, in bits.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.ExportPolicy">
+            <summary>
+            Gets or sets the export policy of the key. This value cannot be changed once the key is finalized.
+            Not all providers and KSPs support all options.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.Name">
+            <summary>
+            Gets the name of the string. If the key is an unnamed ephemeral key, the value is null.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.UniqueName">
+            <summary>
+            Gets the unique name of the key. This property is used when it is thought that the key name
+            originally passed to <see cref="M:Thycotic.HSM.CNG.CngKeyFactory.GeneratePersistedKey``1(System.String,System.Int32,System.Boolean)"/> is not unique enough to reliably identify the persisted key.
+            If the key is an unnamed ephemeral key, the value is null.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.LegalKeySizes">
+            <summary>
+            Gets the legal key sizes for the algorithm.
+            </summary>
+            <returns>An array of legal key sizes, in bits.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.LastModified">
+            <summary>
+            Get the date and time which a key was last modified. If the key is ephemeral, this value is null.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.AlgorithmGroup">
+            <summary>
+            The name of the algorithm group for this key.
+            </summary>
+            <exception cref="T:Thycotic.HSM.CNG.CngException">Thrown if the name of the algorithm group cannot be determined or is not a recognized algorithm group.</exception>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.Algorithm">
+            <summary>
+            The name of the algorithm for this key.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey`1.BlockSize">
+            <summary>
+            The length, in bytes, of the encryption block.
+            This property is only valid for algorithms that support encryption.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.AsymmetricEncryptionTransform`1">
+            <summary>
+            An asymmetric transformation for encryption.
+            </summary>
+            <typeparam name="TAlgorithm">The algorithm for the transformation.</typeparam>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.IAsymmetricTransform">
+            <summary>
+            An interface for common asymmetric encryption and decryption transformations.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.IAsymmetricTransform.Transform(System.Byte[],Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration)">
+            <summary>
+            Transforms a block of data.
+            </summary>
+            <param name="data">The data to transform.</param>
+            <param name="paddingConfiguration">The padding configuration used for the operation. See <seealso cref="T:Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration"/> for usage.</param>
+            <returns>The data transformed.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.IAsymmetricTransform.Transform(System.Byte[],Thycotic.HSM.CNG.Asymmetric.OaepPaddingConfiguration)">
+            <summary>
+            Transforms a block of data.
+            </summary>
+            <param name="data">The data to transform.</param>
+            <param name="paddingConfiguration">The padding configuration used for the operation. See <seealso cref="T:Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration"/> for usage.</param>
+            <returns>The data transformed.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.AsymmetricEncryptionTransform`1.Dispose">
+            <summary>
+            Cleans up any resources associated with the transformation once complete.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.AsymmetricEncryptionTransform`1.Transform(System.Byte[],Thycotic.HSM.CNG.Asymmetric.OaepPaddingConfiguration)">
+            <summary>
+            Transforms a set of data with the specified padding.
+            </summary>
+            <param name="data">The raw data to transform.</param>
+            <param name="paddingConfiguration">The padding configuration for the transformation. See the members of <see cref="T:Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration"/> for options.</param>
+            <returns>An array of bytes transformed according to the operation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.AsymmetricEncryptionTransform`1.Transform(System.Byte[],Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration)">
+            <summary>
+            Transforms a set of data with the specified padding.
+            </summary>
+            <param name="data">The raw data to transform.</param>
+            <param name="paddingConfiguration">The padding configuration for the transformation. See the members of <see cref="T:Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration"/> for options.</param>
+            <returns>An array of bytes transformed according to the operation.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.RsaCngAlgorithm">
+            <summary>
+            The RSA algorithm.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.NCryptAsymmetricEncryptionAlgorithmBase`1">
+            <summary>
+            A base class for asymmetric algorithms that support encryption.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.IAsymmetricEncryptionAlgorithm`1">
+            <summary>
+            An interface for which all asymmetric encryption algorithms implement.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.IAsymmetricEncryptionAlgorithm`1.CreateEncryptor(Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey{`0})">
+            <summary>
+            Creates an encryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the encryption operation.</param>
+            <returns>An asymmetric encryption transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.IAsymmetricEncryptionAlgorithm`1.CreateDecryptor(Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey{`0})">
+            <summary>
+            Creates an decryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the encryption operation.</param>
+            <returns>An asymmetric encryption transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.NCryptAsymmetricEncryptionAlgorithmBase`1.CreateEncryptor(Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey{`0})">
+            <summary>
+            Creates an encryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the encryption operation.</param>
+            <returns>An asymmetric encryption transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.NCryptAsymmetricEncryptionAlgorithmBase`1.CreateDecryptor(Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey{`0})">
+            <summary>
+            Creates an decryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the encryption operation.</param>
+            <returns>An asymmetric encryption transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.RsaCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Asymmetric.RsaCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the algorithm.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.RsaCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Asymmetric.RsaCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.OaepPaddingConfiguration">
+            <summary>
+            Class for configuring OAEP padding. The default hashing algorithm is <see cref="P:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.Sha1"/>.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration">
+            <summary>
+            Configures that padding for transformations and signing of asymmetric algorithms.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration.None">
+            <summary>
+            Indicates that no padding will be used.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration.Pkcs1">
+            <summary>
+            Indicates that PKCS#1 padding will be used.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration.Oaep">
+            <summary>
+            Indicates that OAEP padding will be used. This can be further configured with 
+            <see cref="M:Thycotic.HSM.CNG.Asymmetric.OaepPaddingConfiguration.WithAlgorithm(Thycotic.HSM.CNG.Hash.CngHashAlgorithm)"/> to specify the hashing algorithm. The default is SHA1.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Asymmetric.OaepPaddingConfiguration.WithAlgorithm(Thycotic.HSM.CNG.Hash.CngHashAlgorithm)">
+            <summary>
+            Adjusts the hashing algorithm used with OAEP padding.
+            </summary>
+            <param name="algorithm">The algorithm to use with the padding.</param>
+            <returns>A new instance of <seealso cref="T:Thycotic.HSM.CNG.Asymmetric.OaepPaddingConfiguration"/> with the desired algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.CngInterface">
+            <summary>
+            Represents a kind of CNG interface.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngInterface.SymmetricCipherInterface">
+            <summary>
+            Represents the symmetric cipher interface.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngInterface.HashInterface">
+            <summary>
+            Represents the hash interface.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngInterface.AsymmetricEncryptionInterface">
+            <summary>
+            Represents the asymmetric cipher interface.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngInterface.SecretAgreementInterface">
+            <summary>
+            Represents the secret agreement interface.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngInterface.SignatureInterface">
+            <summary>
+            Represents the signature interface.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngInterface.RngInterface">
+            <summary>
+            Represents the random number generator interface.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngInterface.KeyStorageInterface">
+            <summary>
+            Represents the key storage interface.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngInterface.SChannelInterface">
+            <summary>
+            Represents the SChannel interface.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngInterface.SChannelSignatureInterface">
+            <summary>
+            Represents the SChannel signature interface.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.CngProviderImplementationType">
+            <summary>
+            A combination of values describing the implementation of the CNG provider, such as whether the provider is hardware or software based.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngProviderImplementationType.Unknown">
+            <summary>
+            The implementation type is not queryable or cannot be determined. 
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngProviderImplementationType.Hardware">
+            <summary>
+            The provider is hardware based.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngProviderImplementationType.Software">
+            <summary>
+            The provider is software based.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngProviderImplementationType.Removable">
+            <summary>
+            The provider is removable.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.CngProviderImplementationType.HardwareRng">
+            <summary>
+            The provider is a hardware based random number generator.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.ExportKeyPolicy">
+            <summary>
+            Sets the export policy for a CNG key.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.ExportKeyPolicy.NoExport">
+            <summary>
+            The key cannot be exported.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.ExportKeyPolicy.AllowExport">
+            <summary>
+            The key can be exported in a non-cleartext form, such as with the protection of another key.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.ExportKeyPolicy.AllowPlaintextExport">
+            <summary>
+            The key can be exported in cleartext.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.ExportKeyPolicy.AllowArchiving">
+            <summary>
+            The key can be exported once in a non-cleartext form, such as with the protection of another key.
+            This must be done after the key is created but before it is closed.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.ExportKeyPolicy.AllowPlaintextArchiving">
+            <summary>
+            The key can be exported once in cleartext.
+            This must be done after the key is created but before it is closed.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.BCryptHashAlgorithmBase`1">
+            <summary>
+            A base class for which all CNG hashing algorithms derrive from.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.BCryptAlgorithmBase">
+            <summary>
+            A base class for which all Bcrypt CNG algorithms derive from.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.BCryptAlgorithmBase.Dispose">
+            <summary>
+            Closes all resources for the algorithm.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.BCryptAlgorithmBase.AlgorithmName">
+            <summary>
+            Gets the algorithm name.
+            </summary>
+            <returns>The name of the algorithm.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.BCryptAlgorithmBase.StorageProvider">
+            <summary>
+            The storage provider the algorithm was created for.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.IHashCngAlgorithm`1">
+            <summary>
+            A contact interface that all hash CNG algorithms implement.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.IHashCngAlgorithm`1.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.IHashCngAlgorithm`1.CreateHash">
+            <summary>
+            Creates a hash operation for the algorithm.
+            </summary>
+            <returns>A hash transformation.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Hash.IHashCngAlgorithm`1.HashLength">
+            <summary>
+            Gets the size of the hash, in bytes, produced.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.BCryptHashAlgorithmBase`1.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.BCryptHashAlgorithmBase`1.CreateHash">
+            <summary>
+            Creates a hash operation for the algorithm.
+            </summary>
+            <returns>A hash transformation.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Hash.BCryptHashAlgorithmBase`1.HashLength">
+            <summary>
+            Gets the size of the hash, in bytes, produced.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.BCryptHmacHashAlgorithmBase`1">
+            <summary>
+            A base class for which all CNG keyed (HMAC) hashing algorithms derrive from.
+            </summary>
+            <typeparam name="TAlgorithm">The type of hash algorithm.</typeparam>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.IHmacHashCngAlgorithm`1">
+            <summary>
+            A contact interface that all hash CNG algorithms implement.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.IHmacHashCngAlgorithm`1.CreateHash(System.Byte[])">
+            <summary>
+            Creates an HMAC hash operation for the algorithm with the specified key.
+            </summary>
+            <param name="key">The key for HMAC.</param>
+            <returns>A hash transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.BCryptHmacHashAlgorithmBase`1.CreateHash">
+            <summary>
+            Creates an HMAC hash operation for the algorithm with an empty key.
+            </summary>
+            <returns>A hash transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.BCryptHmacHashAlgorithmBase`1.CreateHash(System.Byte[])">
+            <summary>
+            Creates an HMAC hash operation for the algorithm with the specified key.
+            </summary>
+            <param name="key">The key for HMAC.</param>
+            <returns>A hash transformation.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.CngHashAlgorithm">
+            <summary>
+            Identifies a hashing algorithm.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.Equals(Thycotic.HSM.CNG.Hash.CngHashAlgorithm)">
+            <summary>
+            Determines if the current <c>HashAlgorithm</c> object represents the same algorithm as another.
+            </summary>
+            <param name="other">The other algorithm to compare.</param>
+            <returns>True if that algorithms are the same, otherwise false.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.Equals(System.Object)">
+            <summary>
+            Determines if the current <c>HashAlgorithm</c> object represents the same algorithm as another.
+            </summary>
+            <param name="obj">The other algorithm to compare.</param>
+            <returns>True if that algorithms are the same, otherwise false.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current algorithm.
+            </returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.op_Equality(Thycotic.HSM.CNG.Hash.CngHashAlgorithm,Thycotic.HSM.CNG.Hash.CngHashAlgorithm)">
+            <summary>
+            Determines if two <c>HashAlgorithm</c> objects represent the same algorithm.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if that algorithms are the same, otherwise false.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.op_Inequality(Thycotic.HSM.CNG.Hash.CngHashAlgorithm,Thycotic.HSM.CNG.Hash.CngHashAlgorithm)">
+            <summary>
+            Determines if two <c>HashAlgorithm</c> objects represent different algorithms.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True if that algorithms are different, otherwise false.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.Sha1">
+            <summary>
+            The SHA1 hashing algorithm.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.Sha256">
+            <summary>
+            The SHA256 hashing algorithm.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.Sha384">
+            <summary>
+            The SHA384 hashing algorithm.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Hash.CngHashAlgorithm.Sha512">
+            <summary>
+            The SHA512 hashing algorithm.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.IHashTransform">
+            <summary>
+            An interface for all hash transformations.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.IHashTransform.ComputeHash(System.IO.Stream)">
+            <summary>
+            Computes the hash of a stream of data.
+            </summary>
+            <param name="source">The stream to hash.</param>
+            <returns>The digest produced by the algorithm.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.IHashTransform.ComputeHash(System.Byte[])">
+            <summary>
+            Computes the hash of a block of data.
+            </summary>
+            <param name="source">The content to compute the hash.</param>
+            <returns>The digest produced by the algorithm.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.IHashTransform.ComputeHash(System.String)">
+            <summary>
+            Computes the hash of a string with <see cref="T:System.Text.UnicodeEncoding">Unicode</see> text encoding.
+            </summary>
+            <param name="str">The string to hash.</param>
+            <returns>The digest produced by the algorithm.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.IHashTransform.ComputeHash(System.String,System.Text.Encoding)">
+            <summary>
+            /// Computes the hash of a string with the specified encoding.
+            </summary>
+            <param name="str">The string to hash.</param>
+            <param name="encoding">The encoding to use when hashing the string.</param>
+            <returns>The digest produced by the algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha1HmacHashCngAlgorithm">
+            <summary>
+            The 160-bit secure hash algorithm with an HMAC key.
+            Standard: FIPS 180-2, FIPS 198
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha1HmacHashCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha1HmacHashCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha1HmacHashCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha1HmacHashCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha1HmacHashCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha256HmacHashCngAlgorithm">
+            <summary>
+            The 256-bit secure hash algorithm with an HMAC key.
+            Standard: FIPS 180-2, FIPS 198
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha256HmacHashCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha256HmacHashCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha256HmacHashCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha256HmacHashCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha256HmacHashCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha384HmacHashCngAlgorithm">
+            <summary>
+            The 384-bit secure hash algorithm with an HMAC key.
+            Standard: FIPS 180-2, FIPS 198
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha384HmacHashCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha384HmacHashCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha384HmacHashCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha384HmacHashCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha384HmacHashCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha512HmacHashCngAlgorithm">
+            <summary>
+            The 512-bit secure hash algorithm with an HMAC key.
+            Standard: FIPS 180-2, FIPS 198
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha512HmacHashCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha512HmacHashCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha512HmacHashCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha512HmacHashCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.HmacAlgorithms.Sha512HmacHashCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Helpers.MemoryHelpers">
+            <summary>
+            Helpers for native memory.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Helpers.MemoryHelpers.Fill(System.IntPtr,System.Int32,System.Byte)">
+            <summary>
+            Fills an address with a value.
+            </summary>
+            <param name="address">The address to begin filling.</param>
+            <param name="length">The number of values to write, in bytes.</param>
+            <param name="value">The value to write.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Helpers.MemoryHelpers.ZeroMemory(System.IntPtr,System.Int32)">
+            <summary>
+            Fills an address with zeros.
+            </summary>
+            <param name="address">The address to begin writing zeros.</param>
+            <param name="length">The number of zeros to write, in bytes.</param>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Kdf.ICngKdf`2">
+            <summary>
+            An interface for which all key deriviation functions implement.
+            </summary>
+            <typeparam name="TAlgorithm">The type of the key deriviation function.</typeparam>
+            <typeparam name="THmacAlgorithm">The type of HMAC algorithm used to derive the key.</typeparam>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.ICngKdf`2.DeriveKey(System.String,System.Byte[],System.Int64,System.Nullable{System.Int32})">
+            <summary>
+            Derives a key from a password and a salt with a given number of iterations.
+            </summary>
+            <param name="password">The password, or sensitive data, to derive the key from.</param>
+            <param name="salt">The salt, or non-sensitive data, to derive the key from.</param>
+            <param name="iterations">The number of iterations to apply when deriving the key.</param>
+            <param name="size">The size in bytes of the derived key. If the value is null, then the size will be the digest length of <typeparamref name="THmacAlgorithm"/>.</param>
+            <returns>A derived key, equal to the size of the HMAC function.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.ICngKdf`2.DeriveKey(System.Byte[],System.Byte[],System.Int64,System.Nullable{System.Int32})">
+            <summary>
+            Derives a key from a password and a salt with a given number of iterations.
+            </summary>
+            <param name="password">The password, or sensitive data, to derive the key from.</param>
+            <param name="salt">The salt, or non-sensitive data, to derive the key from.</param>
+            <param name="iterations">The number of iterations to apply when deriving the key.</param>
+            <param name="size">The size in bytes of the derived key. If the value is null, then the size will be the digest length of <typeparamref name="THmacAlgorithm"/>.</param>
+            <returns>A derived key, equal to the size of the HMAC function.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1">
+            <summary>
+            Uses the PBKDF2 algorithm to derive a key.
+            </summary>
+            <typeparam name="THmacAlgorithm">The type of HMAC function used to derive the key.</typeparam>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1.#ctor(`0)">
+            <summary>
+            Creates a new instance of <see cref="T:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1"/>.
+            </summary>
+            <param name="macAlgorithm">The HMAC algorithm instance used in the KDF function.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1.#ctor">
+            <summary>
+            Creates a new instance of <see cref="T:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1"/> using the default constructor of the type <typeparamref name="THmacAlgorithm"/>.
+            </summary>
+            <exception cref="T:System.MissingMethodException">The type <typeparamref name="THmacAlgorithm"/> does not have a public and parameterless contructor.</exception>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new instance of <see cref="T:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1"/> with the specified storage provider.
+            </summary>
+            <exception cref="T:System.MissingMethodException">The type <typeparamref name="THmacAlgorithm"/> does not have a constructor taking a storage provider.</exception>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1.DeriveKey(System.String,System.Byte[],System.Int64,System.Nullable{System.Int32})">
+            <summary>
+            Derives a key from a password and a salt with a given number of iterations.
+            </summary>
+            <param name="password">The password, or sensitive data, to derive the key from. This password is treated as unicode data.</param>
+            <param name="salt">The salt, or non-sensitive data, to derive the key from.</param>
+            <param name="iterations">The number of iterations to apply when deriving the key.</param>
+            <param name="size">The size in bytes of the derived key. If the value is null, then the size will be the digest length of <typeparamref name="THmacAlgorithm"/>.</param>
+            <returns>A derived key, equal to the size of the HMAC function.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1.DeriveKey(System.Security.SecureString,System.Byte[],System.Int64,System.Text.Encoding,System.Nullable{System.Int32})">
+            <summary>
+            Derives a key from a password and a salt with a given number of iterations.
+            </summary>
+            <param name="password">The secure password, or sensitive data, to derive the key from.</param>
+            <param name="salt">The salt, or non-sensitive data, to derive the key from.</param>
+            <param name="iterations">The number of iterations to apply when deriving the key.</param>
+            <param name="encoding">The encoding used to create a hash of the password.</param>
+            <param name="size">The size in bytes of the derived key. If the value is null, then the size will be the digest length of <typeparamref name="THmacAlgorithm"/>.</param>
+            <returns>A derived key, equal to the size of the HMAC function.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1.DeriveKey(System.Security.SecureString,System.Byte[],System.Int64,System.Nullable{System.Int32})">
+            <summary>
+            Derives a key from a password and a salt with a given number of iterations.
+            </summary>
+            <param name="password">The secure password, or sensitive data, to derive the key from. This password is treated as unicode data.</param>
+            <param name="salt">The salt, or non-sensitive data, to derive the key from.</param>
+            <param name="iterations">The number of iterations to apply when deriving the key.</param>
+            <param name="size">The size in bytes of the derived key. If the value is null, then the size will be the digest length of <typeparamref name="THmacAlgorithm"/>.</param>
+            <returns>A derived key, equal to the size of the HMAC function.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1.DeriveKey(System.String,System.Byte[],System.Int64,System.Text.Encoding,System.Nullable{System.Int32})">
+            <summary>
+            Derives a key from a password and a salt with a given number of iterations and encoding algorithm.
+            </summary>
+            <param name="password">The password, or sensitive data, to derive the key from.</param>
+            <param name="salt">The salt, or non-sensitive data, to derive the key from.</param>
+            <param name="iterations">The number of iterations to apply when deriving the key.</param>
+            <param name="encoding">The encoding used to create a hash of the password.</param>
+            <param name="size">The size in bytes of the derived key. If the value is null, then the size will be the digest length of <typeparamref name="THmacAlgorithm"/>.</param>
+            <returns>A derived key, equal to the size of the HMAC function.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1.DeriveKey(System.Byte[],System.Byte[],System.Int64,System.Nullable{System.Int32})">
+            <summary>
+            Derives a key from a password and a salt with a given number of iterations.
+            </summary>
+            <param name="password">The password, or sensitive data, to derive the key from.</param>
+            <param name="salt">The salt, or non-sensitive data, to derive the key from.</param>
+            <param name="iterations">The number of iterations to apply when deriving the key.</param>
+            <param name="size">The size in bytes of the derived key. If the value is null, then the size will be the digest length of <typeparamref name="THmacAlgorithm"/>.</param>
+            <returns>A derived key, equal to the size of the HMAC function.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1.Dispose">
+            <summary>
+            Cleans up resources. This should be called when you are done using the instance of <see cref="T:Thycotic.HSM.CNG.Kdf.Pbkdf2Cng`1"/>.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.KeyFormat">
+            <summary>
+            The key format for importing and exporting asymmetric key formats.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.KeyFormat.Equals(Thycotic.HSM.CNG.KeyFormat)">
+            <summary>
+            Indicates whether the current KeyFormat is equal to another.
+            </summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>
+            true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.KeyFormat.Equals(System.Object)">
+            <summary>
+            Indicates whether the current KeyFormat is equal to another object.
+            </summary>
+            <param name="obj">An object to compare with this object.</param>
+            <returns>
+            true if the current object is equal to the <paramref name="obj"/> parameter; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.KeyFormat.op_Equality(Thycotic.HSM.CNG.KeyFormat,Thycotic.HSM.CNG.KeyFormat)">
+            <summary>
+            Compares two key formats for equality.
+            </summary>
+            <param name="left">The left operand of the operation.</param>
+            <param name="right">The right operand of the operation.</param>
+            <returns>True if the values are equal, otherwise false.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.KeyFormat.op_Inequality(Thycotic.HSM.CNG.KeyFormat,Thycotic.HSM.CNG.KeyFormat)">
+            <summary>
+            Compares two key formats for inequality.
+            </summary>
+            <param name="left">The left operand of the operation.</param>
+            <param name="right">The right operand of the operation.</param>
+            <returns>True if the values are not equal, otherwise false.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.KeyFormat.ToString">
+            <summary>
+            Returns a string that represents the key format.
+            </summary>
+            <returns>
+            A string that represents the key format.
+            </returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.KeyFormat.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current object.
+            </returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.KeyFormat.OpaqueTransport">
+            <summary>
+            Export a key in a format that is specific to a single KSP and is suitable for transport. Opaque BLOBs are not transferable and must be imported by using the same KSP that generated the BLOB.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.KeyFormat.RsaPublicPrivateKey">
+            <summary>
+            Export an RSA public/private key pair.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.KeyFormat.CapiRsaPublicPrivateKey">
+            <summary>
+            Export an RSA public/private key pair that is compatible with CAPI.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.KeyFormat.CapiRsaPublicKey">
+            <summary>
+            Export an RSA public key that is compatible with CAPI.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.KeyFormat.RsaPublicKey">
+            <summary>
+            Export an RSA public key.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.CngStorageProviders">
+            <summary>
+            Gets information about the available storage providers on the system.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngStorageProviders.DefaultStorageProviderFor``1">
+            <summary>
+            Gets the default storage provider for a given algorithm.
+            </summary>
+            <typeparam name="TAlgorithm">The type of algorithm to get the default storage provider.</typeparam>
+            <returns>A <see cref="T:Thycotic.HSM.CNG.ICngStorageProvider"/>.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngStorageProviders.GetStorageProviders">
+            <summary>
+            Gets the storage providers registered on the system.
+            </summary>
+            <returns>An array of storage providers, both primitive and persistent.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngStorageProviders.GetStorageProvider(System.String)">
+            <summary>
+            Gets a storage provider by name.
+            </summary>
+            <param name="name">The name of the storage provider to load.</param>
+            <returns>A storage provider.</returns>
+            <exception cref="T:Thycotic.HSM.CNG.CngException">Thrown</exception>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.ICngStorageProvider">
+            <summary>
+            A storage provider.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ICngStorageProvider.Name">
+            <summary>
+            The name of the storage provider.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ICngStorageProvider.Type">
+            <summary>
+            The type of storage provider. See <see cref="T:Thycotic.HSM.CNG.StorageProviderType"/> for more information.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ICngStorageProvider.SupportsSecurityDescriptors">
+            <summary>
+            Determines whether or not the storage provider supports security descriptors.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ICngStorageProvider.IsSmartCardReader">
+            <summary>
+            Determines if the storage provider is a smart card reader.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ICngStorageProvider.ImplementationType">
+            <summary>
+            Determines the implementation type of the provider.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Rng.DualEcAlgorithm">
+            <summary>
+            The dual elliptic curve random-number generator algorithm.
+            Standard: SP800-90
+            </summary>
+            <remarks>This algorithm is known to have weaknesses and should not be used in production.</remarks>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Rng.RngAlgorithmBase">
+            <summary>
+            A base class for which all CNG random number generators derrive from.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RngAlgorithmBase.GenerateBytes(System.Byte[])">
+            <summary>
+            Fills a byte array with random data generated by the random number generator
+            </summary>
+            <param name="container">The byte array to fill with random data.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.DualEcAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Rng.DualEcAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.DualEcAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Rng.DualEcAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Rng.DualEcAlgorithm.DefaultInstance">
+            <summary>
+            Gets a shared, default instance of the <see cref="T:Thycotic.HSM.CNG.Rng.DualEcAlgorithm"/>.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Rng.RngAlgorithm">
+            <summary>
+            The random-number generator algorithm.
+            Standard: FIPS 186-2, FIPS 140-2, NIST SP 800-90
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Rng.RngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Rng.RngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Rng.RngAlgorithm.DefaultInstance">
+            <summary>
+            Gets a shared, default instance of the <see cref="T:Thycotic.HSM.CNG.Rng.RngAlgorithm"/>.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Rng.RandomStream`1">
+            <summary>
+            A stream of random data.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RandomStream`1.#ctor(System.Nullable{System.Int64})">
+            <summary>
+            Creates a new instance of the <see cref="T:Thycotic.HSM.CNG.Rng.RandomStream`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RandomStream`1.Flush">
+            <summary>
+            When overridden in a derived class, clears all buffers for this stream and causes any buffered data to be written to the underlying device.
+            In <see cref="T:Thycotic.HSM.CNG.Rng.RandomStream`1"/> this has no affect.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RandomStream`1.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources used by the <see cref="T:System.IO.Stream"/> and optionally releases the managed resources.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RandomStream`1.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            When overridden in a derived class, sets the position within the current stream.
+            In <see cref="T:Thycotic.HSM.CNG.Rng.RandomStream`1"/> this always throws an exception.
+            </summary>
+            <exception cref="T:System.NotSupportedException">Always thrown.</exception>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RandomStream`1.SetLength(System.Int64)">
+            <summary>
+            Sets the length of the current stream.
+            In <see cref="T:Thycotic.HSM.CNG.Rng.RandomStream`1"/> this always throws an exception.
+            </summary>
+            <param name="value">The desired length of the current stream in bytes. </param>
+            <exception cref="T:System.NotSupportedException">The stream does not support both writing and seeking.</exception>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RandomStream`1.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.
+            </summary>
+            <returns>
+            The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.
+            </returns>
+            <param name="buffer">An array of bytes. When this method returns, the buffer contains the specified byte array with the values between <paramref name="offset"/> and (<paramref name="offset"/> + <paramref name="count"/> - 1) replaced by the bytes read from the current source. </param><param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin storing the data read from the current stream. </param><param name="count">The maximum number of bytes to be read from the current stream. </param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.RandomStream`1.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes a sequence of bytes to the current stream. In <see cref="T:Thycotic.HSM.CNG.Rng.RandomStream`1"/> this is always throws an exception.
+            </summary>
+            <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream. </param><param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream. </param><param name="count">The number of bytes to be written to the current stream. </param>
+            <exception cref="T:System.NotSupportedException">The stream is not writable.</exception>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Rng.RandomStream`1.CanRead">
+            <summary>
+            When overridden in a derived class, gets a value indicating whether the current stream supports reading.
+            In <see cref="T:Thycotic.HSM.CNG.Rng.RandomStream`1"/> the stream is always readable.
+            </summary>
+            <returns>
+            This stream is always readable.
+            </returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Rng.RandomStream`1.CanSeek">
+            <summary>
+            Gets a value indicating whether the current stream supports seeking. In <see cref="T:Thycotic.HSM.CNG.Rng.RandomStream`1"/> this is always false.
+            </summary>
+            <returns>
+            This stream is never seekable.
+            </returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Rng.RandomStream`1.CanWrite">
+            <summary>
+            Gets a value indicating whether the current stream supports writing. In <see cref="T:Thycotic.HSM.CNG.Rng.RandomStream`1"/> this is always false.
+            </summary>
+            <returns>
+            This stream is never writable.
+            </returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Rng.RandomStream`1.Length">
+            <summary>
+            Gets the length in bytes of the stream. In In <see cref="T:Thycotic.HSM.CNG.Rng.RandomStream`1"/> this always throws an exception.
+            </summary>
+            <returns>
+            This stream always has an indeterminate length.
+            </returns>
+            <exception cref="T:System.NotSupportedException">This stream does not support seeking.</exception>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Rng.RandomStream`1.Position">
+            <summary>
+            Gets or sets the position within the current stream.
+            </summary>
+            <returns>
+            The current position within the stream.
+            </returns>
+            <exception cref="T:System.NotSupportedException">The stream does not support seeking. </exception>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.StorageProviderType">
+            <summary>
+            An enumeration that specifies the storage provider's type. This can be <see cref="F:Thycotic.HSM.CNG.StorageProviderType.Primitive"/> for the BCRYPT provider types,
+            or <see cref="F:Thycotic.HSM.CNG.StorageProviderType.Persistent"/> for the NCRYPT provider types.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.StorageProviderType.Primitive">
+            <summary>
+            The storage provider is primitive, or used in the BCRYPT system.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.CNG.StorageProviderType.Persistent">
+            <summary>
+            The storage provider is persistent, or used in the NCRYPT system.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.AesAeadCngAlgorithm">
+            <summary>
+            The advanced encryption standard symmetric encryption algorithm with authentication data.
+            </summary>
+            <remarks>Standard: FIPS 197</remarks>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAeadAlgorithmBase`1">
+            <summary>
+            A base class for all symmetric AEAD algorithms.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAlgorithmBase`1">
+            <summary>
+            The base class for all symmetric algorithms.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAlgorithmBase`1.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAlgorithmBase`1.BlockSize">
+            <summary>
+            The size of the cipher block, in bytes.
+            </summary>
+            <returns>The size of the cipher block, or null if the algorithm does not suport block operation.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAlgorithmBase`1.LegalBlockSizes">
+            <summary>
+            Gets the legal block sizes for the algorithm, in bytes.
+            </summary>
+            <returns>An array of legal key sizes.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAlgorithmBase`1.LegalKeySizes">
+            <summary>
+            Gets the legal key sizes for the algorithm.
+            </summary>
+            <returns>An array of legal key sizes, in bits.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAeadAlgorithm`1">
+            <summary>
+            A contact interface that all symmetric CNG algorithms implement which are authenticated.
+            </summary>
+            <typeparam name="TAlgorithm">The algorithm type.</typeparam>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAlgorithm`1">
+            <summary>
+            A contact interface that all symmetric CNG algorithms implement.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAlgorithm`1.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAlgorithm`1.BlockSize">
+            <summary>
+            The size of the cipher block. This only applies to block algorithms in a block mode, such as AES-CBC.
+            </summary>
+            <returns>The size of the cipher block in bytes, or null if the algorithm does not suport block operation.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAlgorithm`1.LegalBlockSizes">
+            <summary>
+            Gets the legal block sizes for the algorithm.
+            </summary>
+            <returns>An array of legal block sizes, in bytes.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAlgorithm`1.LegalKeySizes">
+            <summary>
+            Gets the legal key sizes for the algorithm.
+            </summary>
+            <returns>An array of legal key sizes, in bytes.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAeadAlgorithm`1.TagLengths(Thycotic.HSM.CNG.ChainingMode)">
+            <summary>
+            The authentication tag lengths that are supported by the algorithm.
+            </summary>
+            <param name="chainingMode">
+            The chaining mode of to get the valid tag lengths. This must be an AEAD mode.
+            </param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAeadAlgorithm`1.CreateEncryptor(Thycotic.HSM.CNG.Symmetric.SymmetricCngKey,System.Int32,System.Byte[],System.Byte[])">
+            <summary>
+            Creates an encryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the transformation.</param>
+            <param name="tagLength">
+            The size of the resulting tag when the transformation is finalized. The tag can be retrieved in <see cref="P:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Tag"/>.
+            A list of valid tag sizes can be retrieved with <see cref="M:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAeadAlgorithm`1.TagLengths(Thycotic.HSM.CNG.ChainingMode)"/>.</param>
+            <param name="nonce">The nonce associated with the operation.</param>
+            <param name="authenticatedData">Additional authentication data associated with the transformation.</param>
+            <returns>A symmetric encryption transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricCngAeadAlgorithm`1.CreateDecryptor(Thycotic.HSM.CNG.Symmetric.SymmetricCngKey,System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Creates an decryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the transformation.</param>
+            <param name="tag">The tag used to validate the operation.</param>
+            <param name="nonce">The nonce associated with the operation.</param>
+            <param name="authenticatedData">Additional authentication data associated with the transformation.</param>
+            <returns>A symmetric decryption transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAeadAlgorithmBase`1.TagLengths(Thycotic.HSM.CNG.ChainingMode)">
+            <summary>
+            The authentication tag lengths that are supported by the algorithm.
+            </summary>
+            <param name="chainingMode">
+            The chaining mode of to get the valid tag lengths. This must be an AEAD mode.
+            </param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAeadAlgorithmBase`1.CreateEncryptor(Thycotic.HSM.CNG.Symmetric.SymmetricCngKey,System.Int32,System.Byte[],System.Byte[])">
+            <summary>
+            Creates an encryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the transformation.</param>
+            <param name="tagLength">
+            The size of the resulting tag when the transformation is finalized. The tag can be retrieved in <see cref="P:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Tag"/>.
+            A list of valid tag sizes can be retrieved with <see cref="M:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAeadAlgorithmBase`1.TagLengths(Thycotic.HSM.CNG.ChainingMode)"/>.</param>
+            <param name="nonce">The nonce associated with the operation. This must be 96-bits.</param>
+            <param name="authenticatedData">Additional authentication data associated with the transformation.</param>
+            <returns>A symmetric encryption transformation.</returns>
+            <exception cref="T:System.ArgumentNullException">One or more parameters is null that are required.</exception>
+            <exception cref="T:Thycotic.HSM.CNG.CngException">A parameter is in an invalid state.</exception>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricAeadAlgorithmBase`1.CreateDecryptor(Thycotic.HSM.CNG.Symmetric.SymmetricCngKey,System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Creates an decryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the transformation. This value is required.</param>
+            <param name="tag">The tag used to validate the operation.</param>
+            <param name="nonce">The nonce associated with the operation. This must be 96-bits.</param>
+            <param name="authenticatedData">Additional authentication data associated with the transformation.</param>
+            <returns>A symmetric decryption transformation.</returns>
+            <exception cref="T:System.ArgumentNullException">One or more parameters is null that are required.</exception>
+            <exception cref="T:Thycotic.HSM.CNG.CngException">A parameter is in an invalid state.</exception>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.AesAeadCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.AesAeadCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.AesAeadCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.AesAeadCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.AesAeadCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A clone of the current algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricBlockAlgorithmBase`1">
+            <summary>
+            A base class for all symmetric block algorithms.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.ISymmetricCngBlockAlgorithm`1">
+            <summary>
+            A contact interface that all symmetric CNG algorithms implement which are unauthenticated.
+            </summary>
+            <typeparam name="TAlgorithm">The algorithm type.</typeparam>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricCngBlockAlgorithm`1.CreateEncryptor(Thycotic.HSM.CNG.Symmetric.SymmetricCngKey,System.Byte[])">
+            <summary>
+            Creates an encryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the transformation.</param>
+            <param name="initializationVector">The initialization vector for the transformation.</param>
+            <returns>A symmetric encryption transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricCngBlockAlgorithm`1.CreateDecryptor(Thycotic.HSM.CNG.Symmetric.SymmetricCngKey,System.Byte[])">
+            <summary>
+            Creates an encryption operation for the algorithm.
+            </summary>
+            <param name="cngKey">The key for the transformation.</param>
+            <param name="initializationVector">The initialization vector for the transformation.</param>
+            <returns>A symmetric encryption transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricBlockAlgorithmBase`1.CreateEncryptor(Thycotic.HSM.CNG.Symmetric.SymmetricCngKey,System.Byte[])">
+            <summary>
+            Creates an encryption operation for the algorithm.
+            </summary>
+            <param name="initializationVector">The initialization vector for the transformation.</param>
+            <param name="cngKey">The key for the encryption operation.</param>
+            <returns>A symmetric encryption transformation.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.BCryptSymmetricBlockAlgorithmBase`1.CreateDecryptor(Thycotic.HSM.CNG.Symmetric.SymmetricCngKey,System.Byte[])">
+            <summary>
+            Creates a decryption operation for the algorithm.
+            </summary>
+            <param name="initializationVector">The initialization vector for the transformation.</param>
+            <param name="cngKey">The key for the decryption operation.</param>
+            <returns>A symmetric encryption transformation.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.DesCngAlgorithm">
+            <summary>
+            The data encryption standard symmetric encryption algorithm.
+            </summary>
+            <remarks>Standard: FIPS 46-3, FIPS 81</remarks>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.DesCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.DesCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.DesCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.DesCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.DesCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A clone of the current algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.AesCngAlgorithm">
+            <summary>
+            The advanced encryption standard symmetric encryption algorithm.
+            </summary>
+            <remarks>Standard: FIPS 197</remarks>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.AesCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.AesCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.AesCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.AesCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.AesCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A clone of the current algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.ChainingMode">
+            <summary>
+            Represents the chaining mode of the encryption algorithm
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.ChainingMode.TryParse(System.String,Thycotic.HSM.CNG.ChainingMode@)">
+            <summary>
+            Attempts to parse a chaining mode.
+            </summary>
+            <param name="mode">The value to parse.</param>
+            <param name="chainingMode">The result of the parsing, or null if not successful.</param>
+            <returns>True if the parsing was successful, otherwise false.</returns>
+            <remarks>
+            This can parse either the Bcrypt value or the abbreviated name.
+            <example>
+            TryParse("ChainingModeCBC", out chainingMode);
+            </example>
+            <example>
+            TryParse("CBC", out chainingMode);
+            </example>
+            </remarks>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.ChainingMode.Equals(Thycotic.HSM.CNG.ChainingMode)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <returns>
+            true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+            </returns>
+            <param name="other">An object to compare with this object.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.ChainingMode.Equals(System.Object)">
+            <summary>
+            Determines whether the specified chaining mode is equal to the current object.
+            </summary>
+            <returns>
+            True if the specified object is equal to the current chaining mode; otherwise, false.
+            </returns>
+            <param name="other">The object to compare with the current object. </param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.ChainingMode.ToString">
+            <summary>
+            Returns a string that represents the chaining mode.
+            </summary>
+            <returns>
+            A string that represents the chaining mode.
+            </returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.ChainingMode.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>
+            A hash code for the current object.
+            </returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.ChainingMode.op_Equality(Thycotic.HSM.CNG.ChainingMode,Thycotic.HSM.CNG.ChainingMode)">
+            <summary>
+            Determines if two instances of <see cref="T:Thycotic.HSM.CNG.ChainingMode"/> are equal.
+            </summary>
+            <param name="left">The left side of the operator.</param>
+            <param name="right">The right side of the operator.</param>
+            <returns>True if the instances are equal, otherwise false.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.ChainingMode.op_Inequality(Thycotic.HSM.CNG.ChainingMode,Thycotic.HSM.CNG.ChainingMode)">
+            <summary>
+            Determines if two instances of <see cref="T:Thycotic.HSM.CNG.ChainingMode"/> are not equal.
+            </summary>
+            <param name="left">The left side of the operator.</param>
+            <param name="right">The right side of the operator.</param>
+            <returns>True if the instances are not equal, otherwise false.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ChainingMode.NA">
+            <summary>
+            The algorithm does not support chaining.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ChainingMode.CBC">
+            <summary>
+            Cipher block chaining mode.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ChainingMode.CCM">
+            <summary>
+            Counter with CBC-MAC mode.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ChainingMode.CFB">
+            <summary>
+            Cipher feedback mode.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ChainingMode.ECB">
+            <summary>
+            Electronic code book mode.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.ChainingMode.GCM">
+            <summary>
+            Galois/counter mode.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.CngKeyFactory">
+            <summary>
+            A factory for creating CNG keys.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.DerriveKey``1(Thycotic.HSM.CNG.Symmetric.ISymmetricCngBlockAlgorithm{``0},System.Byte[])">
+            <summary>
+            Derrives a new symmetric key using reproducable key material, such as a hash.
+            </summary>
+            <param name="cngAlgorithm">The algorithm to derrive the key for.</param>
+            <param name="keyMaterial">The key material. This must be equal to the size of the key of the algorithm.</param>
+            <returns>A symmetric key derrived from the key material.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.GenerateKey``1(Thycotic.HSM.CNG.Symmetric.ISymmetricCngAlgorithm{``0},Thycotic.HSM.CNG.Rng.RngAlgorithmBase,System.Int32)">
+            <summary>
+            Generates a random key for a specific algorithm with a specific random number generator.
+            </summary>
+            <param name="cngAlgorithm">The algorithm the key will be used for.</param>
+            <param name="randomNumberGenerator">The random number generator to derrive the key from.</param>
+            <param name="keyLengthBits">The size of the key to generate. The size must be valid key size for the algorithm.</param>
+            <returns>A randomly generated symmetric key.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.ImportKey``1(Thycotic.HSM.CNG.Symmetric.ISymmetricCngAlgorithm{``0},System.Byte[])">
+            <summary>
+            Import a plaintext symmetric key into the CNG provider.
+            </summary>
+            <param name="cngAlgorithm">The algorithm the key belongs to.</param>
+            <param name="key">The plaintext key.</param>
+            <returns>A new CNG key.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.ImportKey``1(Thycotic.HSM.CNG.Symmetric.ISymmetricCngBlockAlgorithm{``0},System.Byte*,System.Int32)">
+            <summary>
+            Import a plaintext symmetric key into the CNG provider.
+            </summary>
+            <param name="cngAlgorithm">The algorithm the key belongs to.</param>
+            <param name="key">The plaintext key. It is up to the callee to zero and free this memory.</param>
+            <param name="keyLength">The length, in bytes, of <paramref name="key"/>.</param>
+            <returns>A new CNG key.</returns>
+            <remarks>Zeros internal structures after operation completion.</remarks>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.GenerateKey``1(Thycotic.HSM.CNG.Symmetric.ISymmetricCngAlgorithm{``0},System.Int32)">
+            <summary>
+            Generates a random key for a specific algorithm with the <see cref="T:Thycotic.HSM.CNG.Rng.RngAlgorithm"/>.
+            </summary>
+            <param name="cngAlgorithm">The algorithm to generate a key.</param>
+            <param name="keyLengthBits">The size of the key to generate. The size must be valid key size for the algorithm.</param>
+            <returns>A randomly generated symmetric key.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.GenerateEphemeralKey``1(System.Int32)">
+            <summary>
+            Generates an unnamed, ephemeral CNG key in the default storage provider for <typeparamref name="TAlgorithm"/>.
+            </summary>
+            <typeparam name="TAlgorithm">The type of algorithm the CNG key will be generated for.</typeparam>
+            <param name="keyLengthBits">The size of the key, in bits.</param>
+            <returns>A generated asymmetric key.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.GenerateEphemeralKey``1(Thycotic.HSM.CNG.ICngStorageProvider,System.Int32,Thycotic.HSM.CNG.ExportKeyPolicy)">
+            <summary>
+            Generates an unnamed, ephemeral CNG key.
+            </summary>
+            <typeparam name="TAlgorithm">The type of algorithm the CNG key will be generated for.</typeparam>
+            <param name="storageProvider">The KSP to create the key in.</param>
+            <param name="keyLengthBits">The size of the key, in bits.</param>
+            <param name="keyPolicy">The export policy of the generated key.</param>
+            <returns>A generated asymmetric key.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.OpenPersistedKey``1(Thycotic.HSM.CNG.ICngStorageProvider,System.String)">
+            <summary>
+            Opens an existing key from the KSP.
+            </summary>
+            <param name="storageProvider">The KSP to open the key from.</param>
+            <param name="keyName">The name of the persisted key.</param>
+            <returns>A managed object for the existing key.</returns>
+            <exception cref="T:Thycotic.HSM.CNG.CngException">Thrown if the key does not exist.</exception>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.GeneratePersistedKey``1(Thycotic.HSM.CNG.ICngStorageProvider,System.String,System.Int32,System.Boolean,Thycotic.HSM.CNG.ExportKeyPolicy)">
+            <summary>
+            Generates a persisted CNG key and stores it in the KSP.
+            </summary>
+            <typeparam name="TAlgorithm">The type of algorithm the CNG key will be generated for.</typeparam>
+            <param name="storageProvider">The KSP to generate the key in.</param>
+            <param name="keyName">The name of the persisted key.</param>
+            <param name="keyLengthBits">The size of the key, in bits.</param>
+            <param name="overwrite">True if existing keys should be overwritten, otherwise false.</param>
+            <param name="keyPolicy">Sets the export policy of the generated key.</param>
+            <returns>A generated asymmetric key.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngKeyFactory.GeneratePersistedKey``1(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Generates a persisted CNG key and stores it in the default KSP.
+            </summary>
+            <typeparam name="TAlgorithm">The type of algorithm the CNG key will be generated for.</typeparam>
+            <param name="keyName">The name of the persisted key.</param>
+            <param name="keyLengthBits">The size of the key, in bits.</param>
+            <param name="overwrite">True if existing keys should be overwritten, otherwise false.</param>
+            <returns>A generated asymmetric key.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.DesXCngAlgorithm">
+            <summary>
+            The extended data encryption standard symmetric encryption algorithm.
+            </summary>
+            <remarks>This algorithm is not standardized.</remarks>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.DesXCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.DesXCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.DesXCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.DesXCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.DesXCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A clone of the current algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.FIPSProvider">
+            <summary>
+            Gets infomration about the FIPS (Federal Information Processing Standard) enviroment on the system.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.FIPSProvider.IsFIPSComplianceEnabled">
+            <summary>
+            True if FIPS compliance is enabled, otherwise false.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Rng.DsaRngAlgorithm">
+            <summary>
+            The random-number generator algorithm suitable for DSA (Digital Signature Algorithm).
+            Standard: FIPS 186-2
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.DsaRngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Rng.DsaRngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Rng.DsaRngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Rng.DsaRngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Rng.DsaRngAlgorithm.DefaultInstance">
+            <summary>
+            Gets a shared, default instance of the <see cref="T:Thycotic.HSM.CNG.Rng.DsaRngAlgorithm"/>.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.Sha1HashCngAlgorithm">
+            <summary>
+            The 160-bit secure hash algorithm.
+            Standard: FIPS 180-2, FIPS 198
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha1HashCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.Sha1HashCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha1HashCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.Sha1HashCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha1HashCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.Sha256HashCngAlgorithm">
+            <summary>
+            The 256-bit secure hash algorithm.
+            Standard: FIPS 180-2, FIPS 198
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha256HashCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.Sha256HashCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha256HashCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.Sha256HashCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha256HashCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.Sha384HashCngAlgorithm">
+            <summary>
+            The 384-bit secure hash algorithm.
+            Standard: FIPS 180-2, FIPS 198
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha384HashCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.Sha384HashCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha384HashCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.Sha384HashCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha384HashCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Hash.Sha512HashCngAlgorithm">
+            <summary>
+            The 512-bit secure hash algorithm.
+            Standard: FIPS 180-2, FIPS 198
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha512HashCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.Sha512HashCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha512HashCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Hash.Sha512HashCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Hash.Sha512HashCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A copy of the CNG algorithm.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.CngException">
+            <summary>
+            An exception for Cryptographic Next Generation (CNG) operations.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.CngException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Used by the .NET Framework for constructor serialization.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform">
+            <summary>
+            An interface for all symmetric authenticated transformations.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.ISymmetricTransform">
+            <summary>
+            An interface for all symmetric transformations.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricTransform.AsCryptoTransform">
+            <summary>
+            Wraps the current transformation in an <see cref="T:System.Security.Cryptography.ICryptoTransform"/> to be used with compatible .NET Framework APIs.
+            </summary>
+            <returns>A cryptographic transformation.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.ISymmetricTransform.ChainingMode">
+            <summary>
+            Gets or sets the chaining mode of the transformation.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Transform(System.Byte[],System.Boolean)">
+            <summary>
+            Transforms a set of data. When the <paramref name="final"/> parameter is <c>true</c>, the transform can no longer be used. If the operation is encrypt,
+            the <see cref="P:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Tag"/> property contains the authentication tag when the transformation is finalized. If the operation is decrypt, the Tag must already be set
+            and the tag is validated when the transformation is finalized.
+            </summary>
+            <param name="data">The data to transform.</param>
+            <param name="final">True if this is the final transformation, thus finishing the transformation.</param>
+            <returns>The transformed data.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Transform(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Transforms a stream of data. If the operation is encrypt,
+            the <see cref="P:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Tag"/> property contains the authentication tag when the transformation is complete. If the operation is decrypt, the Tag must already be set
+            and the tag is validated when the transformation is finalized.
+            </summary>
+            <param name="source">The source stream of data to transform.</param>
+            <param name="destination">The destination stream of the transformed data.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.TransformAsync(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Asynchronously transforms a stream of data. If the operation is encrypt,
+            the <see cref="P:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Tag"/> property contains the authentication tag when the transformation is complete. If the operation is decrypt, the Tag must already be set
+            and the tag is validated when the transformation is finalized.
+            </summary>
+            <param name="source">The source stream of data to transform.</param>
+            <param name="destination">The destination stream of the transformed data.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Transform(System.Byte[],System.Int32,System.Int32,System.Byte[],System.Int32,System.Boolean)">
+            <summary>
+            Transforms a block of data with the associated <see cref="T:Thycotic.HSM.CNG.Symmetric.SymmetricCngKey">CngKey</see> while supporting offsets.
+            </summary>
+            <param name="inputBuffer">The data buffer to transform.</param>
+            <param name="inputOffset">The offset to start reading from in <paramref name="inputBuffer"/>.</param>
+            <param name="inputCount">The number of bytes in the <paramref name="inputBuffer"/> to transform.</param>
+            <param name="outputBuffer">The buffer the transformed data will be copied to.</param>
+            <param name="outputOffset">The offset to start writing in for <paramref name="outputBuffer"/>.</param>
+            <param name="final">True if the data should be padded, otherwise false.</param>
+            <returns>The number of bytes written to the output buffer.</returns>
+        </member>
+        <member name="P:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Tag">
+            <summary>
+            Gets the Tag for the AEAD operation. If the operation is encrypt, the tag cannot be read until the transformation is finalized, either by
+            using <see cref="M:Thycotic.HSM.CNG.Symmetric.ISymmetricAeadTransform.Transform(System.Byte[],System.Boolean)"/> with the <c>final</c> parameter as true, or by using a Stream operation. The tag cannot be read when decrypting.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.ISymmetricBlockTransform">
+            <summary>
+            An interface for all symmetric block transformations.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricBlockTransform.Transform(System.Byte[],System.Boolean)">
+            <summary>
+            Transforms a block of data with the associated <see cref="T:Thycotic.HSM.CNG.CngKeyFactory">CngKey</see> and initialization vector.
+            </summary>
+            <param name="data">The data to transform.</param>
+            <param name="pad">True if the data should be padded, otherwise false.</param>
+            <returns>The data transformed.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricBlockTransform.Transform(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Transforms a stream of data with the associated <see cref="T:Thycotic.HSM.CNG.CngKeyFactory">CngKey</see> and initialization vector.
+            </summary>
+            <param name="source">The source stream to transform.</param>
+            <param name="destination">The destination stream to write the transformation to.</param>
+            <remarks>This reads the entire source stream, transforms it and writes it to the destination. The stream is automatically padded.</remarks>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricBlockTransform.TransformAsync(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Asynchronously transforms a stream of data with the associated <see cref="T:Thycotic.HSM.CNG.CngKeyFactory">CngKey</see> and initialization vector.
+            </summary>
+            <param name="source">The source stream to transform.</param>
+            <param name="destination">The destination stream to write the transformation to.</param>
+            <remarks>This reads the entire source stream, transforms it and writes it to the destination. The stream is automatically padded.</remarks>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.ISymmetricBlockTransform.Transform(System.Byte[],System.Int32,System.Int32,System.Byte[],System.Int32,System.Boolean)">
+            <summary>
+            Transforms a block of data with the associated <see cref="T:Thycotic.HSM.CNG.Symmetric.SymmetricCngKey">CngKey</see> and initialization vector while supporting offsets.
+            </summary>
+            <param name="inputBuffer">The data buffer to transform.</param>
+            <param name="inputOffset">The offset to start reading from in <paramref name="inputBuffer"/>.</param>
+            <param name="inputCount">The number of bytes in the <paramref name="inputBuffer"/> to transform.</param>
+            <param name="outputBuffer">The buffer the transformed data will be copied to.</param>
+            <param name="outputOffset">The offset to start writing in for <paramref name="outputBuffer"/>.</param>
+            <param name="pad">True if the data should be padded, otherwise false.</param>
+            <returns>The number of bytes written to the output buffer.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.SymmetricCngKey">
+            <summary>
+            A symmetric CNG key.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.SymmetricCngKey.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.SymmetricCngKey.Dispose(System.Boolean)">
+            <summary>
+            Dispose cleans up resouces that are no longer needed.
+            </summary>
+            <param name="disposing">True if disposing of managed objects, otherwise false.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.SymmetricCngKey.Finalize">
+            <summary>
+            Releases all the resources used by the <see cref="T:Thycotic.HSM.CNG.CngKeyFactory"/> class.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.HRESULT">
+            <summary>
+            A HRESULT from a Win32 function.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.NTE_NOT_SUPPORTED">
+            <summary>
+            The device does not support the operation.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.STATUS_BUFFER_TOO_SMALL">
+            <summary>
+            The buffer is too small to contain the entry. No information has been written to the buffer.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.NTE_NO_MEMORY">
+            <summary>
+            A memory allocation failure occurred.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.STATUS_INVALID_HANDLE">
+            <summary>
+            The handle is invalid.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.STATUS_INVALID_PARAMETER">
+            <summary>
+            The parameter is invalid.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.NTE_EXISTS">
+            <summary>
+            The object already exists.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.S_FALSE">
+            <summary>
+            A false result. (0x00000001)
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.NTE_BAD_KEYSET">
+            <summary>
+            Keyset does not exist (0x80090016)
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.NTE_INVALID_PARAMETER">
+            <summary>
+            The parameter is incorrect. (0x80090027)
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.STATUS_AUTH_TAG_MISMATCH">
+            <summary>
+            The computed authentication tag did not match the input authentication tag.
+            </summary>
+        </member>
+        <member name="F:Thycotic.HSM.HRESULT.SUCCESS">
+            <summary>
+            Success.
+            </summary>
+        </member>
+        <member name="T:Thycotic.HSM.KeyTransition">
+            <summary>
+            Transitions a encrypted key into a KSP by decrypting with an asymmetric key.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.KeyTransition.TransitionKey``2(Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey{``1},Thycotic.HSM.CNG.Asymmetric.IAsymmetricEncryptionAlgorithm{``1},Thycotic.HSM.CNG.Symmetric.ISymmetricCngBlockAlgorithm{``0},System.Byte[],Thycotic.HSM.CNG.Asymmetric.PaddingConfiguration)">
+            <summary>
+            Transitions an encrypted symmetric key into a KSP by decrypting it with an asymmetric key.
+            </summary>
+            <typeparam name="TSymmetricAlgorithm">The algorithm of the <paramref name="protectedKey"/> parameter.</typeparam>
+            <typeparam name="TASymmetricAlgorithm">The algorithm of the <paramref name="protectionKey"/> parameter.</typeparam>
+            <param name="protectionKey">The asymmetric key used to decrypt the symmetric key before transitioning it to the KSP.</param>
+            <param name="asymmetricCngAlgorithm">An instance of the asymmetric algorithm to decrypt the protected key.</param>
+            <param name="symmetricAlgorithm">
+            An instance of the symmetric algorithm for importing the protected key.
+            This algorithm instance should not be used for anything except the transition.
+            </param>
+            <param name="protectedKey">A symmetric key that will be decrypted and placed in the KSP.</param>
+            <param name="paddingConfiguration">The asymmetric padding configuration used to decrypt the protected key.</param>
+            <returns>An instance of a key transitioned into the storage provider.</returns>
+        </member>
+        <member name="M:Thycotic.HSM.KeyTransition.TransitionKey``2(Thycotic.HSM.CNG.Asymmetric.AsymmetricCngKey{``1},Thycotic.HSM.CNG.Asymmetric.IAsymmetricEncryptionAlgorithm{``1},Thycotic.HSM.CNG.Symmetric.ISymmetricCngBlockAlgorithm{``0},System.Byte[],Thycotic.HSM.CNG.Asymmetric.OaepPaddingConfiguration)">
+            <summary>
+            Transitions an encrypted symmetric key into a KSP by decrypting it with an asymmetric key.
+            </summary>
+            <typeparam name="TSymmetricAlgorithm">The algorithm of the <paramref name="protectedKey"/> parameter.</typeparam>
+            <typeparam name="TASymmetricAlgorithm">The algorithm of the <paramref name="protectionKey"/> parameter.</typeparam>
+            <param name="protectionKey">The asymmetric key used to decrypt the symmetric key before transitioning it to the KSP.</param>
+            <param name="asymmetricCngAlgorithm">An instance of the asymmetric algorithm to decrypt the protected key.</param>
+            <param name="symmetricAlgorithm">
+            An instance of the symmetric algorithm for importing the protected key.
+            This algorithm instance should not be used for anything except the transition.
+            </param>
+            <param name="protectedKey">A symmetric key that will be decrypted and placed in the KSP.</param>
+            <param name="paddingConfiguration">The asymmetric padding configuration used to decrypt the protected key.</param>
+            <returns>An instance of a key transitioned into the storage provider.</returns>
+        </member>
+        <member name="T:Thycotic.HSM.CNG.Symmetric.TDesCngAlgorithm">
+            <summary>
+            The triple data encryption standard symmetric encryption algorithm.
+            </summary>
+            <remarks>Standard: SP800-67, SP800-38A</remarks>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.TDesCngAlgorithm.#ctor(Thycotic.HSM.CNG.ICngStorageProvider)">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.TDesCngAlgorithm"/> with a specific storage provider.
+            </summary>
+            <param name="storageProvider">The storage provider for the random number generator.</param>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.TDesCngAlgorithm.#ctor">
+            <summary>
+            Creates a new <see cref="T:Thycotic.HSM.CNG.Symmetric.TDesCngAlgorithm"/> with the default storage provider.
+            </summary>
+        </member>
+        <member name="M:Thycotic.HSM.CNG.Symmetric.TDesCngAlgorithm.Clone">
+            <summary>
+            Creates a new CNG algorithm with the same parameters as the current instance.
+            </summary>
+            <returns>A clone of the current algorithm.</returns>
+        </member>
+    </members>
+</doc>
