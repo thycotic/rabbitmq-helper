@@ -5,7 +5,7 @@ using PetaPoco;
 using Thycotic.SecretServerEngine2.LogViewer.Models;
 using Thycotic.SecretServerEngine2.LogViewer.Views;
 
-namespace Thycotic.SecretServerEngine2.LogViewer
+namespace Thycotic.SecretServerEngine2.LogViewer.Providers
 {
     public class LogDataProvider
     {
@@ -40,11 +40,20 @@ namespace Thycotic.SecretServerEngine2.LogViewer
                 var sb = new StringBuilder();
 
                 sb.Append(@"
-                    SELECT TOP 1000
+                    SELECT TOP 50
                            [Date] = MIN([Date])
-	                      ,[Correlation]
+                             ,[Correlation]
                           ,[Level]      
-                    FROM Log ");
+                    FROM ( ");
+
+                //inner
+                sb.Append(@"
+                        SELECT TOP 1000 
+                            [Date] = [Date]
+                            ,[Correlation]
+                            ,[Level]  
+                                         FROM Log
+                    ");
 
                 if (logLevel != LogLevelViewModel.CatchAllLevel)
                 {
@@ -54,6 +63,10 @@ namespace Thycotic.SecretServerEngine2.LogViewer
                 }
 
                 sb.Append(@"
+                        ORDER BY [Date] DESC");
+
+                //end inner
+                sb.Append(@" ) raw
                     GROUP BY [Correlation], [Level]
                     ORDER BY [Date] DESC
                 ");
