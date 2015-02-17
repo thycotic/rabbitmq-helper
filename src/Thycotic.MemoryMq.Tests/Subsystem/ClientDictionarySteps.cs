@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 using Thycotic.MemoryMq.Subsystem;
 
 namespace Thycotic.MemoryMq.Tests.Subsystem

@@ -3,7 +3,6 @@ using System.Linq;
 using Autofac.Core;
 using FluentAssertions;
 using TechTalk.SpecFlow;
-using Thycotic.Utility;
 
 namespace Thycotic.SecretServerEngine2.Tests
 {

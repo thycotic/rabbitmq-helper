@@ -16,7 +16,7 @@ namespace Thycotic.SecretServerEngine2.MemoryMq
     public class MemoryMqServer : IStartable, IDisposable
     {
         private readonly string _connectionString;
-        private bool _useSsl;
+        private readonly bool _useSsl;
         private readonly string _thumbprint;
         private Task _serverTask;
         private ServiceHost _host;

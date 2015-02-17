@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
 using Thycotic.SecretServerEngine2.Logic;
 using Thycotic.SecretServerEngine2.Security;
 using Thycotic.SecretServerEngine2.Web.Common.Request;

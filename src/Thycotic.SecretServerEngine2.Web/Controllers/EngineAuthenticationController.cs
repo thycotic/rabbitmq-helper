@@ -74,7 +74,7 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
 
                 //{ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://THYCOPAIR24.testparent.thycotic.com:8523"},
                 {ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://AURORA:8523"},
-                {ConfigurationKeys.MemoryMq.UseSSL, "true"},
+                {ConfigurationKeys.MemoryMq.UseSsl, "true"},
                 //{ConfigurationKeys.MemoryMq.Server.Thumbprint, "f1faa2aa00f1350edefd9490e3fc95017db3c897"},
                 {ConfigurationKeys.MemoryMq.Server.Thumbprint, "1ec85a6084862addedb77c4a777c86747f488c90"},
                 {ConfigurationKeys.MemoryMq.Server.Start, "true"}

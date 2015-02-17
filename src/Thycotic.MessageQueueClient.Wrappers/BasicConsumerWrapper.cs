@@ -17,7 +17,6 @@ namespace Thycotic.MessageQueueClient.Wrappers
         where TRequest : class, IConsumable
         where THandler : IBasicConsumer<TRequest>
     {
-        private readonly IExchangeNameProvider _exchangeNameProvider;
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly IObjectSerializer _objectSerializer;
         private readonly IMessageEncryptor _messageEncryptor;
@@ -35,7 +34,6 @@ namespace Thycotic.MessageQueueClient.Wrappers
             IMessageEncryptor messageEncryptor, Func<Owned<THandler>> handlerFactory)
             : base(connection, exchangeNameProvider)
         {
-            _exchangeNameProvider = exchangeNameProvider;
             _handlerFactory = handlerFactory;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;

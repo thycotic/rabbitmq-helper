@@ -12,7 +12,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
 {
     internal static class Program
     {
-        private static readonly ILogWriter _log = Log.Get(typeof(Program));
+        private static readonly ILogWriter Log = Logging.Log.Get(typeof(Program));
 
         /// <summary>
         /// The main entry point for the application.
@@ -58,7 +58,7 @@ namespace Thycotic.SecretServerEngine2.InteractiveRunner
             }
             catch (Exception ex)
             {
-                _log.Error("Failed to start service", ex);
+                Log.Error("Failed to start service", ex);
             }
         }
 

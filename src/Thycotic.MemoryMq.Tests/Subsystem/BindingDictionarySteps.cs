@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using NSubstitute;
-using TechTalk.SpecFlow;
-using Thycotic.MemoryMq.Subsystem;
+﻿using TechTalk.SpecFlow;
 
 namespace Thycotic.MemoryMq.Tests.Subsystem
 {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Thycotic.MessageQueueClient
+﻿namespace Thycotic.MessageQueueClient
 {
     /// <summary>
     /// Configuration keys
@@ -40,7 +38,7 @@ namespace Thycotic.MessageQueueClient
             /// <summary>
             /// Whether or not to use SSL
             /// </summary>
-            public static string UseSSL = "RabbitMq.UseSSL";
+            public static string UseSsl = "RabbitMq.UseSSL";
         }
 
         /// <summary>
@@ -58,7 +56,7 @@ namespace Thycotic.MessageQueueClient
             /// <summary>
             /// Whether or not to use SSL
             /// </summary>
-            public static string UseSSL = "MemoryMq.UseSSL";
+            public static string UseSsl = "MemoryMq.UseSSL";
 
             /// <summary>
             /// Server related

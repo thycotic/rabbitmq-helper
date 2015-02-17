@@ -2,7 +2,6 @@
 using System.IdentityModel.Selectors;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
 using Thycotic.SecretServerEngine2.MemoryMq;
 
 namespace Thycotic.SecretServerEngine2.IoC
@@ -46,7 +45,7 @@ namespace Thycotic.SecretServerEngine2.IoC
                 .InstancePerDependency();
 
 
-            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueueClient.ConfigurationKeys.MemoryMq.UseSSL));
+            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueueClient.ConfigurationKeys.MemoryMq.UseSsl));
             if (useSsl)
             {
                 var thumbprint = _configurationProvider(MessageQueueClient.ConfigurationKeys.MemoryMq.Server.Thumbprint);

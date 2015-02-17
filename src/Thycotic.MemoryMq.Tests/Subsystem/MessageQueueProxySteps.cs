@@ -22,7 +22,8 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         {
             ScenarioContext.Current.ExecuteThrowing<ArgumentNullException>(() =>
             {
-                var temp = new MessageQueueProxy(null);
+// ReSharper disable once ObjectCreationAsStatement
+                new MessageQueueProxy(null);
             });
         }
 

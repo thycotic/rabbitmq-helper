@@ -4,13 +4,11 @@ using System.Configuration;
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.Wrappers.IoC;
 using Thycotic.SecretServerEngine2.Configuration;
 using Thycotic.SecretServerEngine2.IoC;
 using Thycotic.SecretServerEngine2.Logic;
 using Thycotic.SecretServerEngine2.Security;
-using Thycotic.Utility;
 using Thycotic.Utility.Serialization;
 
 namespace Thycotic.SecretServerEngine2
