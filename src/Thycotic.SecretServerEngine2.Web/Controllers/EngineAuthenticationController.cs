@@ -10,6 +10,7 @@ using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.MessageQueueClient;
 using Thycotic.SecretServerEngine2.Web.Common.Request;
 using Thycotic.SecretServerEngine2.Web.Common.Response;
+using Thycotic.Utility.Security;
 
 namespace Thycotic.SecretServerEngine2.Web.Controllers
 {
@@ -34,17 +35,15 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
 
         public static EngineAuthenticationResponse GetClientKey(string publicKey, double version)
         {
-            const int SALT_LENGTH = 8;
-
             var saltProvider = new ByteSaltProvider();
 
             SymmetricKey symmetricKey;
             InitializationVector initializationVector;
             CreateSymmetricKeyAndIv(out symmetricKey, out initializationVector);
             var asymmetricEncryptor = new AsymmetricEncryptor();
-            var saltedSymmetricKey = saltProvider.Salt(symmetricKey.Value, SALT_LENGTH);
+            var saltedSymmetricKey = saltProvider.Salt(symmetricKey.Value, MessageEncryption.SaltLength);
             var encryptedSymmetricKey = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedSymmetricKey);
-            var saltedInitializationVector = saltProvider.Salt(initializationVector.Value, SALT_LENGTH);
+            var saltedInitializationVector = saltProvider.Salt(initializationVector.Value, MessageEncryption.SaltLength);
             var encryptedInitializationVector = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedInitializationVector);
             
             return new EngineAuthenticationResponse
@@ -57,8 +56,6 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
 
         public static EngineConfigurationResponse GetConfiguration(string publicKey, double version)
         {
-            const int SALT_LENGTH = 8;
-
             var saltProvider = new ByteSaltProvider();
 
             var serializer = new JsonMessageSerializer();
@@ -76,7 +73,7 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             var configurationBytes = serializer.ToBytes(configuration);
 
             var asymmetricEncryptor = new AsymmetricEncryptor();
-            var saltedConfiguration = saltProvider.Salt(configurationBytes, SALT_LENGTH);
+            var saltedConfiguration = saltProvider.Salt(configurationBytes, MessageEncryption.SaltLength);
             var encryptedConfiguration = asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedConfiguration);
             
             return new EngineConfigurationResponse
