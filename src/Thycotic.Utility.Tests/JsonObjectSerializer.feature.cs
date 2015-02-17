@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Thycotic.MessageQueueClient.Tests
+namespace Thycotic.Utility.Tests
 {
     using TechTalk.SpecFlow;
     
@@ -25,15 +25,15 @@ namespace Thycotic.MessageQueueClient.Tests
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "JsonMessageSerializer.feature"
+#line 1 "JsonObjectSerializer.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "MessageSerializer", "In order to avoid silly mistakes with serializaion,\nwe need to make sure the seri" +
-                    "alizer is working properly", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "MessageSerializer", "In order to avoid silly mistakes with serializaion,\r\nwe need to make sure the ser" +
+                    "ializer is working properly", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         

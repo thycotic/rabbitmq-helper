@@ -5,10 +5,10 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using TechTalk.SpecFlow;
 
-namespace Thycotic.MessageQueueClient.Tests
+namespace Thycotic.Utility.Tests
 {
     [Binding]
-    public class JsonMessageSerializerSteps
+    public class JsonObjectSerializerSteps
     {
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
@@ -41,7 +41,7 @@ namespace Thycotic.MessageQueueClient.Tests
         {
             var obj = ScenarioContext.Current[testObjectNameInContext];
 
-            var serializer = new JsonMessageSerializer();
+            var serializer = new JsonObjectSerializer();
 
             ScenarioContext.Current[resultObjectNameInContext] = serializer.ToBytes(obj);
         }

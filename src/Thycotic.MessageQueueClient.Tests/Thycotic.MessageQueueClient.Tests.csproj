@@ -167,21 +167,11 @@
     </Compile>
     <Compile Include="ITestConsumerInvoker.cs" />
     <Compile Include="TestConsumerInvoker.cs" />
-    <Compile Include="JsonMessageSerializer.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>JsonMessageSerializer.feature</DependentUpon>
-    </Compile>
-    <Compile Include="JsonMessageSerializerSteps.cs" />
     <Compile Include="TestMqRequestBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="JsonMessageSerializer.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>JsonMessageSerializer.feature.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
