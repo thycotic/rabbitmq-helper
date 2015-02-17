@@ -65,6 +65,12 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
             {
                 {ConfigurationKeys.QueueType, SupportedMessageQueues.MemoryMq},
                 {ConfigurationKeys.QueueExchangeName, "thycotic"},
+                //{ConfigurationKeys.RabbitMq.ConnectionString, "amqp://THYCOPAIR24.testparent.thycotic.com:5671"},
+                //ConfigurationKeys.RabbitMq.ConnectionString, "amqp://localhost:5671"},
+                //{ConfigurationKeys.RabbitMq.UserName, "test"},
+                //{ConfigurationKeys.RabbitMq.Password, "test"},
+                //{ConfigurationKeys.RabbitMq.UseSSL, "false"},
+
                 //{ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://THYCOPAIR24.testparent.thycotic.com:8523"},
                 {ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://AURORA:8523"},
                 {ConfigurationKeys.MemoryMq.UseSSL, "true"},
