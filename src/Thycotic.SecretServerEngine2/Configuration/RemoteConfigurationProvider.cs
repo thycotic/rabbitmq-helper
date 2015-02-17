@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.Logging;
@@ -18,6 +19,8 @@ namespace Thycotic.SecretServerEngine2.Configuration
     /// </summary>
     public class RemoteConfigurationProvider : IRemoteConfigurationProvider
     {
+        private readonly string _friendlyName;
+        private readonly Guid _identityGuid;
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IRestCommunicationProvider _restCommunicationProvider;
         private readonly IObjectSerializer _objectSerializer;
@@ -27,11 +30,15 @@ namespace Thycotic.SecretServerEngine2.Configuration
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteConfigurationProvider" /> class.
         /// </summary>
+        /// <param name="friendlyName"></param>
+        /// <param name="identityGuid"></param>
         /// <param name="localKeyProvider">The local key provider.</param>
         /// <param name="restCommunicationProvider">The remote communication provider.</param>
         /// <param name="objectSerializer">The message serializer.</param>
-        public RemoteConfigurationProvider(ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider, IObjectSerializer objectSerializer)
+        public RemoteConfigurationProvider(string friendlyName, Guid identityGuid, ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider, IObjectSerializer objectSerializer)
         {
+            _friendlyName = friendlyName;
+            _identityGuid = identityGuid;
             _localKeyProvider = localKeyProvider;
             _restCommunicationProvider = restCommunicationProvider;
             _objectSerializer = objectSerializer;
@@ -41,7 +48,6 @@ namespace Thycotic.SecretServerEngine2.Configuration
         /// Gets the configuration.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public Dictionary<string, string> GetConfiguration()
         {
             try
@@ -53,10 +59,16 @@ namespace Thycotic.SecretServerEngine2.Configuration
                 var response = _restCommunicationProvider.Post<EngineConfigurationResponse>(EndPoints.GetConfiguration,
                     new EngineConfigurationRequest
                     {
-                        EngineFriendlyName = Guid.NewGuid().ToString(),
+                        IdentityGuid = _identityGuid,
+                        FriendlyName = _friendlyName,
                         PublicKey = Convert.ToBase64String(publicKey.Value),
                         Version = ReleaseInformationHelper.GetVersionAsDouble()
                     });
+
+                if (!response.Success)
+                {
+                    throw new ConfigurationErrorsException(response.ErrorMessage);
+                }
 
                 var saltProvider = new ByteSaltProvider();
 

@@ -140,10 +140,12 @@ namespace Thycotic.SecretServerEngine2
         {
             var url = getLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.ConnectionString);
 
+            var friendlyName = getLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName);
+            var identityGuid = new Guid(getLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.IdentityGuid));
             var keyProvider = new LocalKeyProvider();
             var restClient = new RestCommunicationProvider(url);
 
-            var configurationProvider = new RemoteConfigurationProvider(keyProvider, restClient, new JsonObjectSerializer());
+            var configurationProvider = new RemoteConfigurationProvider(friendlyName, identityGuid, keyProvider, restClient, new JsonObjectSerializer());
 
             var configuration = configurationProvider.GetConfiguration();
 

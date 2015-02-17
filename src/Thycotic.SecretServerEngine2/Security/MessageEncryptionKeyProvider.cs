@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
@@ -54,6 +55,11 @@ namespace Thycotic.SecretServerEngine2.Security
                         PublicKey = Convert.ToBase64String(publicKey.Value),
                         Version = ReleaseInformationHelper.GetVersionAsDouble()
                     });
+
+                if (!response.Success)
+                {
+                    throw new ConfigurationErrorsException(response.ErrorMessage);
+                }
 
                 var saltProvider = new ByteSaltProvider();
 
