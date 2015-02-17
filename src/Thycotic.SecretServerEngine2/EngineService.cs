@@ -10,6 +10,7 @@ using Thycotic.SecretServerEngine2.Configuration;
 using Thycotic.SecretServerEngine2.IoC;
 using Thycotic.SecretServerEngine2.Logic;
 using Thycotic.SecretServerEngine2.Security;
+using Thycotic.Utility;
 
 namespace Thycotic.SecretServerEngine2
 {
@@ -143,7 +144,7 @@ namespace Thycotic.SecretServerEngine2
             var keyProvider = new LocalKeyProvider();
             var restClient = new RestCommunicationProvider(url);
 
-            var configurationProvider = new RemoteConfigurationProvider(keyProvider, restClient, new JsonMessageSerializer());
+            var configurationProvider = new RemoteConfigurationProvider(keyProvider, restClient, new JsonObjectSerializer());
 
             var configuration = configurationProvider.GetConfiguration();
 

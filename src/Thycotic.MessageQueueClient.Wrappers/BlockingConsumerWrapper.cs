@@ -18,7 +18,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
         where TResponse : class
         where THandler : IBlockingConsumer<TRequest, TResponse>
     {
-        private readonly IMessageSerializer _messageSerializer;
+        private readonly IObjectSerializer _objectSerializer;
         private readonly IMessageEncryptor _messageEncryptor;
         private readonly Func<Owned<THandler>> _handlerFactory;
         private readonly ICommonConnection _connection;
@@ -29,15 +29,15 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </summary>
         /// <param name="connection">The RMQ.</param>
         /// <param name="exchangeNameProvider">The exchange provider.</param>
-        /// <param name="messageSerializer">The serializer.</param>
+        /// <param name="objectSerializer">The serializer.</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BlockingConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IMessageSerializer messageSerializer,
+        public BlockingConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IObjectSerializer objectSerializer,
             IMessageEncryptor messageEncryptor, Func<Owned<THandler>> handlerFactory)
             : base(connection, exchangeNameProvider)
         {
 
-            _messageSerializer = messageSerializer;
+            _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
             _handlerFactory = handlerFactory;
             _connection = connection;
@@ -76,7 +76,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             try
             {
 
-                var message = _messageSerializer.ToRequest<TRequest>(_messageEncryptor.Decrypt(exchangeName,body));
+                var message = _objectSerializer.ToObject<TRequest>(_messageEncryptor.Decrypt(exchangeName,body));
                 var responseType = "success";
                 object response;
 
@@ -128,7 +128,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
                 var replyToExchangeName = string.Empty;
 
                 channel.BasicPublish(replyToExchangeName, routingKey, DefaultConfigValues.Model.Publish.NotMandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties,
-                    _messageEncryptor.Encrypt(originatingExchangeName, _messageSerializer.ToBytes(response)));
+                    _messageEncryptor.Encrypt(originatingExchangeName, _objectSerializer.ToBytes(response)));
 
                 channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
             }

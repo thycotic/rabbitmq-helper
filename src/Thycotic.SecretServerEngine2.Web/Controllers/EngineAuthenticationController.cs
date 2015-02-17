@@ -10,6 +10,7 @@ using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.MessageQueueClient;
 using Thycotic.SecretServerEngine2.Web.Common.Request;
 using Thycotic.SecretServerEngine2.Web.Common.Response;
+using Thycotic.Utility;
 using Thycotic.Utility.Security;
 
 namespace Thycotic.SecretServerEngine2.Web.Controllers
@@ -58,16 +59,18 @@ namespace Thycotic.SecretServerEngine2.Web.Controllers
         {
             var saltProvider = new ByteSaltProvider();
 
-            var serializer = new JsonMessageSerializer();
+            var serializer = new JsonObjectSerializer();
 
             var configuration = new Dictionary<string, string>
             {
                 {ConfigurationKeys.QueueType, SupportedMessageQueues.MemoryMq},
                 {ConfigurationKeys.QueueExchangeName, "thycotic"},
-                {ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://THYCOPAIR24.testparent.thycotic.com:8523"},
+                //{ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://THYCOPAIR24.testparent.thycotic.com:8523"},
+                {ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://AURORA:8523"},
                 {ConfigurationKeys.MemoryMq.UseSSL, "true"},
                 //{ConfigurationKeys.MemoryMq.Server.Thumbprint, "f1faa2aa00f1350edefd9490e3fc95017db3c897"},
-                {ConfigurationKeys.MemoryMq.Server.Start, "false"}
+                {ConfigurationKeys.MemoryMq.Server.Thumbprint, "1ec85a6084862addedb77c4a777c86747f488c90"},
+                {ConfigurationKeys.MemoryMq.Server.Start, "true"}
             };
 
             var configurationBytes = serializer.ToBytes(configuration);

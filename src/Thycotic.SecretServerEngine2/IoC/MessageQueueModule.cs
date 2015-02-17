@@ -8,6 +8,7 @@ using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
 using Thycotic.SecretServerEngine2.Security;
+using Thycotic.Utility;
 
 namespace Thycotic.SecretServerEngine2.IoC
 {
@@ -25,7 +26,7 @@ namespace Thycotic.SecretServerEngine2.IoC
 
         private void LoadMessageSerialization(ContainerBuilder builder)
         {
-            builder.RegisterType<JsonMessageSerializer>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<JsonObjectSerializer>().AsImplementedInterfaces().SingleInstance();
         }
 
         private void LoadMessageEncryption(ContainerBuilder builder)

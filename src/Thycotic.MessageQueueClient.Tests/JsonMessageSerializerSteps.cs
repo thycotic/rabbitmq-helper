@@ -4,6 +4,7 @@ using System.Text;
 using FluentAssertions;
 using Newtonsoft.Json;
 using TechTalk.SpecFlow;
+using Thycotic.Utility;
 
 namespace Thycotic.MessageQueueClient.Tests
 {
@@ -41,7 +42,7 @@ namespace Thycotic.MessageQueueClient.Tests
         {
             var obj = ScenarioContext.Current[testObjectNameInContext];
 
-            var serializer = new JsonMessageSerializer();
+            var serializer = new JsonObjectSerializer();
 
             ScenarioContext.Current[resultObjectNameInContext] = serializer.ToBytes(obj);
         }

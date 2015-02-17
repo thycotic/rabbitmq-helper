@@ -19,7 +19,7 @@ namespace Thycotic.SecretServerEngine2.Configuration
     {
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IRestCommunicationProvider _restCommunicationProvider;
-        private readonly IMessageSerializer _messageSerializer;
+        private readonly IObjectSerializer _objectSerializer;
 
         private readonly ILogWriter _log = Log.Get(typeof(MessageEncryptionKeyProvider));
 
@@ -28,12 +28,12 @@ namespace Thycotic.SecretServerEngine2.Configuration
         /// </summary>
         /// <param name="localKeyProvider">The local key provider.</param>
         /// <param name="restCommunicationProvider">The remote communication provider.</param>
-        /// <param name="messageSerializer">The message serializer.</param>
-        public RemoteConfigurationProvider(ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider, IMessageSerializer messageSerializer)
+        /// <param name="objectSerializer">The message serializer.</param>
+        public RemoteConfigurationProvider(ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider, IObjectSerializer objectSerializer)
         {
             _localKeyProvider = localKeyProvider;
             _restCommunicationProvider = restCommunicationProvider;
-            _messageSerializer = messageSerializer;
+            _objectSerializer = objectSerializer;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Thycotic.SecretServerEngine2.Configuration
                 var decryptedConfiguration = asymmetricEncryptor.DecryptWithKey(privateKey, response.Configuration);
                 var unsaltedConfiguration = saltProvider.Unsalt(decryptedConfiguration, MessageEncryption.SaltLength);
 
-                return _messageSerializer.ToRequest<Dictionary<string, string>>(unsaltedConfiguration);
+                return _objectSerializer.ToObject<Dictionary<string, string>>(unsaltedConfiguration);
             }
 
             catch (Exception ex)

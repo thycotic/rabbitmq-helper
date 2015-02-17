@@ -1,12 +1,13 @@
 using System.Text;
 using Newtonsoft.Json;
+using Thycotic.MessageQueueClient;
 
-namespace Thycotic.MessageQueueClient
+namespace Thycotic.Utility
 {
     /// <summary>
     /// JSON message serializer based on JSON.NET
     /// </summary>
-    public class JsonMessageSerializer : IMessageSerializer
+    public class JsonObjectSerializer : IObjectSerializer
     {
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
@@ -19,7 +20,7 @@ namespace Thycotic.MessageQueueClient
         /// <typeparam name="TRequest">The type of the request.</typeparam>
         /// <param name="bytes">The bytes.</param>
         /// <returns></returns>
-        public TRequest ToRequest<TRequest>(byte[] bytes)
+        public TRequest ToObject<TRequest>(byte[] bytes)
         {
             return JsonConvert.DeserializeObject<TRequest>(Encoding.UTF8.GetString(bytes), _serializerSettings);
         }

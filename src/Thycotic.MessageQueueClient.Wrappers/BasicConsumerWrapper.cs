@@ -18,7 +18,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
     {
         private readonly IExchangeNameProvider _exchangeNameProvider;
         private readonly Func<Owned<THandler>> _handlerFactory;
-        private readonly IMessageSerializer _messageSerializer;
+        private readonly IObjectSerializer _objectSerializer;
         private readonly IMessageEncryptor _messageEncryptor;
         private readonly ILogWriter _log = Log.Get(typeof(BasicConsumerWrapper<TRequest, THandler>));
 
@@ -27,16 +27,16 @@ namespace Thycotic.MessageQueueClient.Wrappers
         /// </summary>
         /// <param name="connection">The RMQ.</param>
         /// <param name="exchangeNameProvider">The exchange provider.</param>
-        /// <param name="messageSerializer">The serializer.</param>
+        /// <param name="objectSerializer">The serializer.</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
         /// <param name="handlerFactory">The handler factory.</param>
-        public BasicConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IMessageSerializer messageSerializer,
+        public BasicConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IObjectSerializer objectSerializer,
             IMessageEncryptor messageEncryptor, Func<Owned<THandler>> handlerFactory)
             : base(connection, exchangeNameProvider)
         {
             _exchangeNameProvider = exchangeNameProvider;
             _handlerFactory = handlerFactory;
-            _messageSerializer = messageSerializer;
+            _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
         }
 
@@ -75,7 +75,7 @@ namespace Thycotic.MessageQueueClient.Wrappers
             {
                 try
                 {
-                    var message = _messageSerializer.ToRequest<TRequest>(_messageEncryptor.Decrypt(exchangeName, body));
+                    var message = _objectSerializer.ToObject<TRequest>(_messageEncryptor.Decrypt(exchangeName, body));
 
                     using (var handler = _handlerFactory())
                     {

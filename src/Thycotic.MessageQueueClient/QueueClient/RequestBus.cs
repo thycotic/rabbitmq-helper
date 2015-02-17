@@ -10,7 +10,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
     public class RequestBus : IRequestBus
     {
         private readonly ICommonConnection _connection;
-        private readonly IMessageSerializer _messageSerializer;
+        private readonly IObjectSerializer _objectSerializer;
         private readonly IMessageEncryptor _messageEncryptor;
 
         private readonly ILogWriter _log = Log.Get(typeof(RequestBus));
@@ -19,12 +19,12 @@ namespace Thycotic.MessageQueueClient.QueueClient
         /// Initializes a new instance of the <see cref="RequestBus" /> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        /// <param name="messageSerializer">The message serializer.</param>
+        /// <param name="objectSerializer">The message serializer.</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
-        public RequestBus(ICommonConnection connection, IMessageSerializer messageSerializer, IMessageEncryptor messageEncryptor)
+        public RequestBus(ICommonConnection connection, IObjectSerializer objectSerializer, IMessageEncryptor messageEncryptor)
         {
             _connection = connection;
-            _messageSerializer = messageSerializer;
+            _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
         }
 
@@ -52,7 +52,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
                     channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory,
                         DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties,
-                        _messageEncryptor.Encrypt(exchangeName, _messageSerializer.ToBytes(request)));
+                        _messageEncryptor.Encrypt(exchangeName, _objectSerializer.ToBytes(request)));
 
                     channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
                 }
@@ -98,7 +98,7 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
                         channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory,
                             DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties,
-                            _messageEncryptor.Encrypt(exchangeName, _messageSerializer.ToBytes(request)));
+                            _messageEncryptor.Encrypt(exchangeName, _objectSerializer.ToBytes(request)));
 
                         channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
 
@@ -119,10 +119,10 @@ namespace Thycotic.MessageQueueClient.QueueClient
 
                         if (response.BasicProperties.Type != "error")
                         {
-                            return _messageSerializer.ToRequest<TResponse>(_messageEncryptor.Decrypt(exchangeName, response.Body));
+                            return _objectSerializer.ToObject<TResponse>(_messageEncryptor.Decrypt(exchangeName, response.Body));
                         }
 
-                        var error = _messageSerializer.ToRequest<BlockingConsumerError>(_messageEncryptor.Decrypt(exchangeName, response.Body));
+                        var error = _objectSerializer.ToObject<BlockingConsumerError>(_messageEncryptor.Decrypt(exchangeName, response.Body));
                         throw new ApplicationException(error.Message);
                     }
                 }
