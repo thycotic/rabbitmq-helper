@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Thycotic.SecretServerEngine2
+namespace Thycotic.Utility
 {
     /// <summary>
     /// Release information helper

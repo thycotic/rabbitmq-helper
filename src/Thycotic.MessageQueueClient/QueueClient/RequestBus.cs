@@ -1,6 +1,7 @@
 ﻿using System;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
+using Thycotic.Utility.Serialization;
 
 namespace Thycotic.MessageQueueClient.QueueClient
 {

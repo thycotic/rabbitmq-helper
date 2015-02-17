@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Autofac;
 using Thycotic.Logging;
+using Thycotic.Utility;
 
 namespace Thycotic.SecretServerEngine2
 {

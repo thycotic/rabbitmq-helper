@@ -4,6 +4,7 @@ using Autofac.Features.OwnedInstances;
 using Thycotic.Logging;
 using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Common;
+using Thycotic.Utility.Serialization;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {

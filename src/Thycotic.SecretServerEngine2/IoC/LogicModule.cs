@@ -5,6 +5,7 @@ using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.SecretServerEngine2.Logic.Areas.POC;
 using Thycotic.Utility;
+using Thycotic.Utility.Reflection;
 using Module = Autofac.Module;
 
 namespace Thycotic.SecretServerEngine2.IoC

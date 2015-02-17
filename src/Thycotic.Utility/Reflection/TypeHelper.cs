@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Thycotic.Utility
+namespace Thycotic.Utility.Reflection
 {
     /// <summary>
     /// Type helper methods

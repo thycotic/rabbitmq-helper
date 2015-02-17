@@ -1,9 +1,8 @@
-﻿namespace Thycotic.MessageQueueClient
+﻿namespace Thycotic.Utility.Serialization
 {
     /// <summary>
     /// Interface for a message serializer
     /// </summary>
-    //TODO: Rename to IObjectSerializer
     public interface IObjectSerializer
     {
         /// <summary>
@@ -12,7 +11,6 @@
         /// <typeparam name="TRequest">The type of the request.</typeparam>
         /// <param name="bytes">The bytes.</param>
         /// <returns></returns>
-        //TODO: Rename to ToObject
         TRequest ToObject<TRequest>(byte[] bytes);
 
         /// <summary>

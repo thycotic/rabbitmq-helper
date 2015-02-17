@@ -7,6 +7,7 @@ using Thycotic.SecretServerEngine2.Configuration;
 using Thycotic.SecretServerEngine2.Logic;
 using Thycotic.SecretServerEngine2.Web.Common.Request;
 using Thycotic.SecretServerEngine2.Web.Common.Response;
+using Thycotic.Utility;
 using Thycotic.Utility.Security;
 
 namespace Thycotic.SecretServerEngine2.Security

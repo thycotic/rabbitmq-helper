@@ -4,6 +4,7 @@ using System.Text;
 using FluentAssertions;
 using Newtonsoft.Json;
 using TechTalk.SpecFlow;
+using Thycotic.Utility.Serialization;
 
 namespace Thycotic.Utility.Tests
 {

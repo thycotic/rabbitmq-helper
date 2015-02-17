@@ -12,6 +12,7 @@ using Thycotic.SecretServerEngine2.Web.Common.Request;
 using Thycotic.SecretServerEngine2.Web.Common.Response;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
+using Thycotic.Utility.Serialization;
 
 namespace Thycotic.SecretServerEngine2.Web.Controllers
 {

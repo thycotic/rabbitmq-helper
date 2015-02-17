@@ -4,6 +4,7 @@ using System.Linq;
 using Autofac;
 using Thycotic.Messages.Common;
 using Thycotic.Utility;
+using Thycotic.Utility.Reflection;
 
 namespace Thycotic.MessageQueueClient.Wrappers
 {

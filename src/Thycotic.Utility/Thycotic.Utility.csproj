@@ -143,12 +143,12 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="IObjectSerializer.cs" />
-    <Compile Include="JsonObjectSerializer.cs" />
+    <Compile Include="Serialization\IObjectSerializer.cs" />
+    <Compile Include="Serialization\JsonObjectSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReleaseInformationHelper.cs" />
     <Compile Include="Security\MessageEncryptionPair.cs" />
-    <Compile Include="TypeHelper.cs" />
+    <Compile Include="Reflection\TypeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">

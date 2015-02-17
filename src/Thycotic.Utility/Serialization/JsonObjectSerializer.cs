@@ -1,8 +1,7 @@
 using System.Text;
 using Newtonsoft.Json;
-using Thycotic.MessageQueueClient;
 
-namespace Thycotic.Utility
+namespace Thycotic.Utility.Serialization
 {
     /// <summary>
     /// JSON message serializer based on JSON.NET
