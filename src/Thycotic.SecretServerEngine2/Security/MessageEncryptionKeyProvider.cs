@@ -7,6 +7,7 @@ using Thycotic.SecretServerEngine2.Configuration;
 using Thycotic.SecretServerEngine2.Logic;
 using Thycotic.SecretServerEngine2.Web.Common.Request;
 using Thycotic.SecretServerEngine2.Web.Common.Response;
+using Thycotic.Utility.Security;
 
 namespace Thycotic.SecretServerEngine2.Security
 {
@@ -57,9 +58,9 @@ namespace Thycotic.SecretServerEngine2.Security
 
                 var asymmetricEncryptor = new AsymmetricEncryptor();
                 var decryptedSymmetricKey = asymmetricEncryptor.DecryptWithKey(privateKey, response.SymmetricKey);
-                var unsaltedSymmetricKey = saltProvider.Unsalt(decryptedSymmetricKey, MessageEncryptionPair.SaltLength);
+                var unsaltedSymmetricKey = saltProvider.Unsalt(decryptedSymmetricKey, MessageEncryption.SaltLength);
                 var decryptedInitializationVector = asymmetricEncryptor.DecryptWithKey(privateKey, response.InitializationVector);
-                var unsaltedInitializationVector = saltProvider.Unsalt(decryptedInitializationVector, MessageEncryptionPair.SaltLength);
+                var unsaltedInitializationVector = saltProvider.Unsalt(decryptedInitializationVector, MessageEncryption.SaltLength);
 
                 symmetricKey = new SymmetricKey(unsaltedSymmetricKey);
                 initializationVector = new InitializationVector(unsaltedInitializationVector);

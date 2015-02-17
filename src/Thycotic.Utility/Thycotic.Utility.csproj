@@ -147,6 +147,7 @@
     <Compile Include="JsonMessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReleaseInformationHelper.cs" />
+    <Compile Include="Security\MessageEncryptionPair.cs" />
     <Compile Include="TypeHelper.cs" />
   </ItemGroup>
   <ItemGroup>

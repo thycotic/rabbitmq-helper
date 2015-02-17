@@ -1,17 +1,23 @@
-using Thycotic.AppCore.Cryptography;
-using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
-
-namespace Thycotic.SecretServerEngine2.Security
+namespace Thycotic.Utility.Security
 {
+
     /// <summary>
-    /// Tuple of Symmetric key and initialization vector.
+    /// Message encryption
     /// </summary>
-    public class MessageEncryptionPair
+    public static class MessageEncryption
     {
         /// <summary>
         /// The salt length
         /// </summary>
         public const int SaltLength = 8;
+    }
+
+    /// <summary>
+    /// Tuple of Symmetric key and initialization vector.
+    /// </summary>
+    public class MessageEncryptionPair<TSymmetricKey, TInitializationVector>
+    {
+
 
         /// <summary>
         /// Gets or sets the symmetric key.
@@ -19,7 +25,7 @@ namespace Thycotic.SecretServerEngine2.Security
         /// <value>
         /// The symmetric key.
         /// </value>
-        public SymmetricKey SymmetricKey { get; set; }
+        public TSymmetricKey SymmetricKey { get; set; }
 
         /// <summary>
         /// Gets or sets the initialization vector.
@@ -27,6 +33,6 @@ namespace Thycotic.SecretServerEngine2.Security
         /// <value>
         /// The initialization vector.
         /// </value>
-        public InitializationVector InitializationVector { get; set; }
+        public TInitializationVector InitializationVector { get; set; }
     }
 }

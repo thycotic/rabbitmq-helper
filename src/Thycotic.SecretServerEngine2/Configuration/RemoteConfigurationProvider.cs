@@ -8,6 +8,7 @@ using Thycotic.SecretServerEngine2.Logic;
 using Thycotic.SecretServerEngine2.Security;
 using Thycotic.SecretServerEngine2.Web.Common.Request;
 using Thycotic.SecretServerEngine2.Web.Common.Response;
+using Thycotic.Utility.Security;
 
 namespace Thycotic.SecretServerEngine2.Configuration
 {
@@ -60,7 +61,7 @@ namespace Thycotic.SecretServerEngine2.Configuration
 
                 var asymmetricEncryptor = new AsymmetricEncryptor();
                 var decryptedConfiguration = asymmetricEncryptor.DecryptWithKey(privateKey, response.Configuration);
-                var unsaltedConfiguration = saltProvider.Unsalt(decryptedConfiguration, MessageEncryptionPair.SaltLength);
+                var unsaltedConfiguration = saltProvider.Unsalt(decryptedConfiguration, MessageEncryption.SaltLength);
 
                 return _messageSerializer.ToRequest<Dictionary<string, string>>(unsaltedConfiguration);
             }
