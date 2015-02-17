@@ -8,11 +8,11 @@
         /// <summary>
         /// The get configuration
         /// </summary>
-        public const string GetConfiguration = "api/EngineAuthentication/GetConfiguration";
+        public const string GetConfiguration = "api/EngineWebService/GetConfiguration";
 
         /// <summary>
         /// The authenticate
         /// </summary>
-        public const string Authenticate = "api/EngineAuthentication/Authenticate";
+        public const string Authenticate = "api/EngineWebService/Authenticate";
     }
 }
