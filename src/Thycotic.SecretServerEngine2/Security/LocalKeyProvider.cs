@@ -15,14 +15,15 @@ namespace Thycotic.SecretServerEngine2.Security
         /// <param name="privateKey">The private key.</param>
         public void GetKeys(out PublicKey publicKey, out PrivateKey privateKey)
         {
-            const int rsaSecurityKeySize = 2048;
+            //TODO: Review key size 4096 with Kevin -dkk
+            const int rsaSecurityKeySize = 4096;
             const CspProviderFlags flags = CspProviderFlags.UseMachineKeyStore;
             var cspParameters = new CspParameters { Flags = flags };
 
             using (var provider = new RSACryptoServiceProvider(rsaSecurityKeySize, cspParameters))
             {
-                privateKey = new PrivateKey(provider.ExportCspBlob(true));
                 publicKey = new PublicKey(provider.ExportCspBlob(false));
+                privateKey = new PrivateKey(provider.ExportCspBlob(true));
             }
         }
     }
