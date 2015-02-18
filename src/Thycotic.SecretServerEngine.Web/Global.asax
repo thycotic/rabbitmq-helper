@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Thycotic.SecretServerEngine2.Web.WebApiApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Thycotic.SecretServerEngine.Web.WebApiApplication" Language="C#" %>

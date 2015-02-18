@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Thycotic.SecretServerEngine2.Tests
+namespace Thycotic.SecretServerEngine.Tests
 {
     using TechTalk.SpecFlow;
     

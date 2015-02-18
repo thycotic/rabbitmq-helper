@@ -23,9 +23,9 @@
 // 
 // The following connection settings were used to generate this file
 // 
-//     Connection String Name: `LocalMySqlServer`
+//     Connection String Name: `Log4Net`
 //     Provider:               ``
-//     Connection String:      ``
+//     Connection String:      `data source=(local);initial catalog=Log4NetSSA2;integrated security=true`
 //     Schema:                 ``
 //     Include Views:          `False`
 
