@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Thycotic.MessageQueueClient;
+﻿using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
@@ -14,7 +9,7 @@ namespace Thycotic.SecretServerEngineClient
     /// <summary>
     /// Basic request bus factory
     /// </summary>
-    public class RequestBusFactory
+    public static class RequestBusFactory
     {
         /// <summary>
         /// Gets the Rabbit mq bus.
@@ -23,12 +18,13 @@ namespace Thycotic.SecretServerEngineClient
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
-        /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
         /// <returns></returns>
-        public IRequestBus GetRabbitMqBus(string url, string userName, string password, bool useSsl, IObjectSerializer objectSerializer, IMessageEncryptor messageEncryptor)
+        public static IRequestBus GetRabbitMqBus(string url, string userName, string password, bool useSsl, IMessageEncryptor messageEncryptor)
         {
             var connection = new RabbitMqConnection(url, userName, password, useSsl);
+
+            var objectSerializer = new JsonObjectSerializer();
 
             return new RequestBus(connection, objectSerializer, messageEncryptor);
         }
@@ -38,12 +34,13 @@ namespace Thycotic.SecretServerEngineClient
         /// </summary>
         /// <param name="url">The URL.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
-        /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
         /// <returns></returns>
-        public IRequestBus GetMemoryMqBus(string url, bool useSsl, IObjectSerializer objectSerializer, IMessageEncryptor messageEncryptor)
+        public static IRequestBus GetMemoryMqBus(string url, bool useSsl, IMessageEncryptor messageEncryptor)
         {
             var connection = new MemoryMqConnection(url, useSsl);
+
+            var objectSerializer = new JsonObjectSerializer();
 
             return new RequestBus(connection, objectSerializer, messageEncryptor);
         }
