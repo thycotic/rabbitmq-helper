@@ -165,6 +165,7 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="DummyObject.cs" />
     <Compile Include="JsonObjectSerializer.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
