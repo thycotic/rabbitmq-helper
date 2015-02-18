@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
-using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueue.Client;
+using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 

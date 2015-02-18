@@ -5,7 +5,7 @@ using Autofac;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Reflection;
 
-namespace Thycotic.MessageQueueClient.Wrappers
+namespace Thycotic.MessageQueue.Client.Wrappers
 {
     /// <summary>
     /// Consumer wrapper factory

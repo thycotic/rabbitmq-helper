@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Thycotic.MemoryMq;
-using Thycotic.MessageQueueClient.Wrappers;
+using Thycotic.MessageQueue.Client.Wrappers;
 
-namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
     /// <summary>
     /// Memory Mq model

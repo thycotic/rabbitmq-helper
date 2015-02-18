@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.Wrappers
+namespace Thycotic.MessageQueue.Client.Wrappers
 {
     /// <summary>
     /// Base consumer wrapper

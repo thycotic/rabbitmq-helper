@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
     internal interface IMemoryMqServiceConnection
     {

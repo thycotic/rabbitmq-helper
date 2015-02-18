@@ -1,6 +1,6 @@
 ﻿using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient
+namespace Thycotic.MessageQueue.Client
 {
     /// <summary>
     /// Interface for a message bus

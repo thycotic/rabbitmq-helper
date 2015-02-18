@@ -1,5 +1,4 @@
-﻿using System;
-using Thycotic.SecretServerEngine.Web.Common.Request;
+﻿using Thycotic.SecretServerEngine.Web.Common.Request;
 
 namespace Thycotic.SecretServerEngine.Web.Common.Response
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Thycotic.MessageQueueClient.QueueClient
+namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Interface for a model subscription

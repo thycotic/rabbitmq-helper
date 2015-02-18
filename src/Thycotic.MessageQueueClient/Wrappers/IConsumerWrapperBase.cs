@@ -1,7 +1,7 @@
 ﻿using System;
-using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueue.Client.QueueClient;
 
-namespace Thycotic.MessageQueueClient.Wrappers
+namespace Thycotic.MessageQueue.Client.Wrappers
 {
     /// <summary>
     /// Interface for a consumer wrapper base class

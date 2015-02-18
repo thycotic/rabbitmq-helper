@@ -1,8 +1,8 @@
 ﻿using System;
-using Thycotic.MessageQueueClient.Wrappers;
+using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.QueueClient
+namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Routing helpers

@@ -2,7 +2,7 @@
 using Thycotic.Logging;
 using Module = Autofac.Module;
 
-namespace Thycotic.MessageQueueClient.Wrappers.IoC
+namespace Thycotic.MessageQueue.Client.Wrappers.IoC
 {
     /// <summary>
     /// Module to register wrappers and their factory

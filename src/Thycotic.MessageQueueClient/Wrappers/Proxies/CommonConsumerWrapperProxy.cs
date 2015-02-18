@@ -1,6 +1,6 @@
-﻿using Thycotic.MessageQueueClient.QueueClient;
+﻿using Thycotic.MessageQueue.Client.QueueClient;
 
-namespace Thycotic.MessageQueueClient.Wrappers.Proxies
+namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
 {
     /// <summary>
     /// Common wrapper proxy

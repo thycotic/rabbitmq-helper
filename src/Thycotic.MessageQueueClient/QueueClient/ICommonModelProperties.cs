@@ -1,4 +1,4 @@
-﻿namespace Thycotic.MessageQueueClient.QueueClient
+﻿namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Inte3rface for model properties

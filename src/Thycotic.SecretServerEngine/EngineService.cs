@@ -4,7 +4,7 @@ using System.Configuration;
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient.Wrappers.IoC;
+using Thycotic.MessageQueue.Client.Wrappers.IoC;
 using Thycotic.SecretServerEngine.IoC;
 using Thycotic.SecretServerEngine.Security;
 using Thycotic.SecretServerEngine.Configuration;

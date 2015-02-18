@@ -1,10 +1,10 @@
-﻿using Thycotic.MessageQueueClient;
-using Thycotic.MessageQueueClient.QueueClient;
-using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
-using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
+﻿using Thycotic.MessageQueue.Client;
+using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
+using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.SecretServerEngineClient
+namespace Thycotic.SecretServerEngine.Client
 {
     /// <summary>
     /// Basic request bus factory

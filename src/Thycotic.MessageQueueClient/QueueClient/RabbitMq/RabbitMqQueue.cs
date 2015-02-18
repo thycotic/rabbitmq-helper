@@ -1,6 +1,6 @@
 ﻿using RabbitMQ.Client;
 
-namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
+namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 {
     internal class RabbitMqQueue : ICommonQueue
     {

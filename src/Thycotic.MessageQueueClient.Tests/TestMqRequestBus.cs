@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.Tests
+namespace Thycotic.MessageQueue.Client.Tests
 {
     /// <summary>
     /// Memory message queue that is volatile and non-persistent

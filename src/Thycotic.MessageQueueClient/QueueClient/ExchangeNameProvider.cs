@@ -1,4 +1,4 @@
-﻿namespace Thycotic.MessageQueueClient.QueueClient
+﻿namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Exchange provider

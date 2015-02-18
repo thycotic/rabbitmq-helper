@@ -2,7 +2,7 @@
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.MessagePatterns;
 
-namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
+namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 {
     internal class RabbitMqSubscription : ISubscription
     {

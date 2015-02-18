@@ -1,4 +1,4 @@
-namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
     /// <summary>
     /// Memory Mq queue

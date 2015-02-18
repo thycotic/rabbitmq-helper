@@ -6,7 +6,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 using Thycotic.Logging;
 
-namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
+namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 {
     /// <summary>
     /// Rabbit Mq Connection

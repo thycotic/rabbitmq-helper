@@ -11,5 +11,5 @@ Scenario: Start calls IoC configuration
 	Then the objects of the following types should be resolvable through IoC from EngineService EngineServiceTest:
 		| Type																							|
 		| Thycotic.SecretServerEngine2.StartupMessageWriter, Thycotic.SecretServerEngine2               |
-		| Thycotic.MessageQueueClient.QueueClient.ICommonConnection, Thycotic.MessageQueueClient        |
+		| Thycotic.MessageQueue.Client.QueueClient.ICommonConnection, Thycotic.MessageQueue.Client        |
 

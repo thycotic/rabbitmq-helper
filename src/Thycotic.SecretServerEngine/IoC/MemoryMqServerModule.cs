@@ -21,7 +21,7 @@ namespace Thycotic.SecretServerEngine.IoC
         {
             base.Load(builder);
 
-            var startServerString = _configurationProvider(MessageQueueClient.ConfigurationKeys.MemoryMq.Server.Start);
+            var startServerString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Start);
 
             bool startServer;
             if (!Boolean.TryParse(startServerString, out startServer))
@@ -36,7 +36,7 @@ namespace Thycotic.SecretServerEngine.IoC
 
             _log.Debug("Initializing Memory Mq server...");
 
-            var connectionString = _configurationProvider(MessageQueueClient.ConfigurationKeys.MemoryMq.ConnectionString);
+            var connectionString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
             _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
             builder.RegisterType<EngineClientVerifier>()
@@ -45,10 +45,10 @@ namespace Thycotic.SecretServerEngine.IoC
                 .InstancePerDependency();
 
 
-            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueueClient.ConfigurationKeys.MemoryMq.UseSsl));
+            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
             if (useSsl)
             {
-                var thumbprint = _configurationProvider(MessageQueueClient.ConfigurationKeys.MemoryMq.Server.Thumbprint);
+                var thumbprint = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Thumbprint);
                 _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
 
 

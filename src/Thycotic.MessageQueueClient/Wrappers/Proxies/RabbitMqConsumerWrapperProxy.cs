@@ -1,9 +1,9 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Thycotic.MessageQueueClient.QueueClient;
-using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
+using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
 
-namespace Thycotic.MessageQueueClient.Wrappers.Proxies
+namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
 {
     /// <summary>
     /// Rabbit Mq consumer wrapper proxy

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using RabbitMQ.Client;
-using Thycotic.MessageQueueClient.Wrappers;
-using Thycotic.MessageQueueClient.Wrappers.Proxies;
+using Thycotic.MessageQueue.Client.Wrappers;
+using Thycotic.MessageQueue.Client.Wrappers.Proxies;
 
-namespace Thycotic.MessageQueueClient.QueueClient.RabbitMq
+namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 {
     internal class RabbitMqModel : ICommonModel
     {

@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.MemoryMq;
 
-namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
     /// <summary>
     /// Memory Mq subscription

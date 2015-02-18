@@ -1,7 +1,7 @@
 ﻿using System;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.Tests
+namespace Thycotic.MessageQueue.Client.Tests
 {
     /// <summary>
     /// Consumer wrapper factory

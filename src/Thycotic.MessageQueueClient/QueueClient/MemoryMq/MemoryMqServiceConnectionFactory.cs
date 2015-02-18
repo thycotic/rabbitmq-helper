@@ -3,7 +3,7 @@ using System.ServiceModel;
 using Thycotic.Logging;
 using Thycotic.MemoryMq;
 
-namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
     internal class MemoryMqServiceConnectionFactory
     {

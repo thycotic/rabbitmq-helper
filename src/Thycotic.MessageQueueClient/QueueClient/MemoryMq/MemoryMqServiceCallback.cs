@@ -1,7 +1,7 @@
 ﻿using System;
 using Thycotic.MemoryMq;
 
-namespace Thycotic.MessageQueueClient.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
     /// <summary>
     /// Callback from the memory Mq

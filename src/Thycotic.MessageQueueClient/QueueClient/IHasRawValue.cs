@@ -1,4 +1,4 @@
-﻿namespace Thycotic.MessageQueueClient.QueueClient
+﻿namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Interface for an object that has a raw value

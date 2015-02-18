@@ -1,4 +1,4 @@
-﻿namespace Thycotic.MessageQueueClient
+﻿namespace Thycotic.MessageQueue.Client
 {
     /// <summary>
     /// Supported message queue/queue types

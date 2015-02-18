@@ -1,8 +1,8 @@
 ﻿using NSubstitute;
 using TechTalk.SpecFlow;
-using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueue.Client.QueueClient;
 
-namespace Thycotic.MessageQueueClient.Wrappers.Tests
+namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
     [Binding]
     public class ConsumerWrapperBaseSteps

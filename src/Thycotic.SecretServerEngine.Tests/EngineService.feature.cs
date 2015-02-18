@@ -92,7 +92,7 @@ this.FeatureBackground();
             table1.AddRow(new string[] {
                         "Thycotic.SecretServerEngine2.StartupMessageWriter, Thycotic.SecretServerEngine2"});
             table1.AddRow(new string[] {
-                        "Thycotic.MessageQueueClient.QueueClient.ICommonConnection, Thycotic.MessageQueueC" +
+                        "Thycotic.MessageQueue.Client.QueueClient.ICommonConnection, Thycotic.MessageQueueC" +
                             "lient"});
 #line 11
  testRunner.Then("the objects of the following types should be resolvable through IoC from EngineSe" +

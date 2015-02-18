@@ -3,7 +3,7 @@ using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.MessageQueueClient.QueueClient
+namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Request bus

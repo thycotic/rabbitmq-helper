@@ -2,10 +2,10 @@
 using System.Linq;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
-using Thycotic.MessageQueueClient.QueueClient;
-using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
-using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
+using Thycotic.MessageQueue.Client;
+using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
+using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
 using Thycotic.SecretServerEngine.Security;
 using Thycotic.Utility.Serialization;
 
@@ -36,7 +36,7 @@ namespace Thycotic.SecretServerEngine.IoC
 
         private void LoadExchangeResolution(ContainerBuilder builder)
         {
-            var exchangeName = _configurationProvider(MessageQueueClient.ConfigurationKeys.QueueExchangeName);
+            var exchangeName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.QueueExchangeName);
             exchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic";
             _log.Info(string.Format("Exchange name is {0}", exchangeName));
 
@@ -52,16 +52,16 @@ namespace Thycotic.SecretServerEngine.IoC
         {
             _log.Info("Using RabbitMq");
 
-            var connectionString = _configurationProvider(MessageQueueClient.ConfigurationKeys.RabbitMq.ConnectionString);
+            var connectionString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString);
             _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-            var userName = _configurationProvider(MessageQueueClient.ConfigurationKeys.RabbitMq.UserName);
+            var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName);
             _log.Info(string.Format("RabbitMq username is {0}", userName));
 
-            var password = _configurationProvider(MessageQueueClient.ConfigurationKeys.RabbitMq.Password);
+            var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.Password);
             _log.Info(string.Format("RabbitMq password is {0}", string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
-            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueueClient.ConfigurationKeys.RabbitMq.UseSsl));
+            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl));
             if (useSsl)
             {
                 _log.Info("RabbitMq using encryption");
@@ -83,10 +83,10 @@ namespace Thycotic.SecretServerEngine.IoC
             //initialize if necessary server 
             builder.RegisterModule(new MemoryMqServerModule(_configurationProvider));
 
-            var connectionString = _configurationProvider(MessageQueueClient.ConfigurationKeys.MemoryMq.ConnectionString);
+            var connectionString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
             _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueueClient.ConfigurationKeys.MemoryMq.UseSsl));
+            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
             if (useSsl)
             {
                 _log.Info("MemoryMq using encryption");
@@ -118,7 +118,7 @@ namespace Thycotic.SecretServerEngine.IoC
 
             LoadExchangeResolution(builder);
 
-            var queueType = _configurationProvider(MessageQueueClient.ConfigurationKeys.QueueType);
+            var queueType = _configurationProvider(MessageQueue.Client.ConfigurationKeys.QueueType);
             
             if (queueType == SupportedMessageQueues.RabbitMq)
             {

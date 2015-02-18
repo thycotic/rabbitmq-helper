@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.MessageQueueClient.QueueClient
+namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Default configuration values for the system

@@ -1,7 +1,7 @@
-﻿using Thycotic.MessageQueueClient.QueueClient;
+﻿using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueueClient.Wrappers.Tests
+namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
     internal class RequestDummy : IConsumable
     {

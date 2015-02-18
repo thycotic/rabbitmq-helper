@@ -4,7 +4,7 @@ using Thycotic.AppCore.Cryptography;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
+using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;
 
 namespace Thycotic.SecretServerEngine.Security

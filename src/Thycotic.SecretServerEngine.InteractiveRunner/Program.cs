@@ -4,8 +4,8 @@ using System.Reflection;
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.MessageQueueClient;
-using Thycotic.MessageQueueClient.QueueClient;
+using Thycotic.MessageQueue.Client;
+using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.SecretServerEngine.InteractiveRunner.ConsoleCommands;
 
 namespace Thycotic.SecretServerEngine.InteractiveRunner
