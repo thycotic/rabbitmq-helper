@@ -6,7 +6,7 @@ namespace Thycotic.SecretServerEngine.Web.Common.Response
     /// <summary>
     /// Response to an <see cref="EngineConfigurationRequest"/> request.
     /// </summary>
-    public class EngineConfigurationResponse : ResponseBase
+    public class EngineConfigurationResponse : EngineResponseBase
     {
         /// <summary>
         /// Gets or sets the configuration.

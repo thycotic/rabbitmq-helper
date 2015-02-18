@@ -1,12 +1,12 @@
 ﻿namespace Thycotic.SecretServerEngine.Web.Common.Response
 {
     /// <summary>
-    /// Base response
+    /// Base engine response
     /// </summary>
-    public abstract class ResponseBase
+    public abstract class EngineResponseBase
     {
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="ResponseBase"/> is success.
+        /// Gets or sets a value indicating whether this <see cref="EngineResponseBase"/> is success.
         /// </summary>
         /// <value>
         ///   <c>true</c> if success; otherwise, <c>false</c>.

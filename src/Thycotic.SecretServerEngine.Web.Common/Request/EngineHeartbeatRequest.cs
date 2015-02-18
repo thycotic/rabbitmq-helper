@@ -5,14 +5,14 @@ namespace Thycotic.SecretServerEngine.Web.Common.Request
     /// <summary>
     /// Engine authentication request when an engine tries to manipulate contents of an exchange.
     /// </summary>
-    public class EngineAuthenticationRequest : EngineRequestBase
+    public class EngineHeartbeatRequest : EngineRequestBase
     {
         /// <summary>
-        /// Gets or sets the name of the exchange.
+        /// Gets or sets the last activity.
         /// </summary>
         /// <value>
-        /// The name of the exchange.
+        /// The last activity.
         /// </value>
-        public string ExchangeName { get; set; }
+        public DateTime LastActivity { get; set; }
     }
 }

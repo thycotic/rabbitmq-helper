@@ -6,7 +6,7 @@ namespace Thycotic.SecretServerEngine.Web.Common.Response
     /// <summary>
     /// Response to an <see cref="EngineAuthenticationRequest"/> request.
     /// </summary>
-    public class EngineAuthenticationResponse : ResponseBase
+    public class EngineAuthenticationResponse : EngineResponseBase
     {
         /// <summary>
         /// Gets or sets the symmetric key.
