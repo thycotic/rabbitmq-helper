@@ -1,6 +1,6 @@
 using System;
 
-namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands
+namespace Thycotic.SecretServerEngine.InteractiveRunner.ConsoleCommands
 {
     internal interface IConsoleCommand
     {

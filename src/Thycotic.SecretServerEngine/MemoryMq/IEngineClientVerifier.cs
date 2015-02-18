@@ -1,4 +1,4 @@
-﻿namespace Thycotic.SecretServerEngine2.MemoryMq
+﻿namespace Thycotic.SecretServerEngine.MemoryMq
 {
     /// <summary>
     /// Interface for engine client verifier

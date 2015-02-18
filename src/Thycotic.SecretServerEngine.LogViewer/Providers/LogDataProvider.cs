@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using PetaPoco;
-using Thycotic.SecretServerEngine2.LogViewer.Models;
-using Thycotic.SecretServerEngine2.LogViewer.Views;
+using Thycotic.SecretServerEngine.LogViewer.Models;
+using Thycotic.SecretServerEngine.LogViewer.Views;
 
-namespace Thycotic.SecretServerEngine2.LogViewer.Providers
+namespace Thycotic.SecretServerEngine.LogViewer.Providers
 {
     public class LogDataProvider
     {

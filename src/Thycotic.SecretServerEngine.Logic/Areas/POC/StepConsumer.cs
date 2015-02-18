@@ -2,7 +2,7 @@
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.SecretServerEngine2.Logic.Areas.POC
+namespace Thycotic.SecretServerEngine.Logic.Areas.POC
 {
     /// <summary>
     /// Slow RPC consumer

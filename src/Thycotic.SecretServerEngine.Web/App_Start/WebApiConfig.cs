@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Thycotic.SecretServerEngine2.Web
+namespace Thycotic.SecretServerEngine.Web
 {
     public static class WebApiConfig
     {

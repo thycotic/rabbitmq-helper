@@ -4,15 +4,15 @@ using System.Configuration;
 using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.Logging;
-using Thycotic.SecretServerEngine2.Logic;
-using Thycotic.SecretServerEngine2.Security;
-using Thycotic.SecretServerEngine2.Web.Common.Request;
-using Thycotic.SecretServerEngine2.Web.Common.Response;
+using Thycotic.SecretServerEngine.Security;
+using Thycotic.SecretServerEngine.Logic;
+using Thycotic.SecretServerEngine.Web.Common.Request;
+using Thycotic.SecretServerEngine.Web.Common.Response;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.SecretServerEngine2.Configuration
+namespace Thycotic.SecretServerEngine.Configuration
 {
     /// <summary>
     /// Remote configuration provider

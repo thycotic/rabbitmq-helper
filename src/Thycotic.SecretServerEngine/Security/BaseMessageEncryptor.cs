@@ -7,7 +7,7 @@ using Thycotic.Logging;
 using Thycotic.MessageQueueClient;
 using Thycotic.Utility.Security;
 
-namespace Thycotic.SecretServerEngine2.Security
+namespace Thycotic.SecretServerEngine.Security
 {
     /// <summary>
     /// Message encryptor which encrypts and decrypts based on exchange name

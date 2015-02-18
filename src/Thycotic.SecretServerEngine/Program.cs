@@ -1,6 +1,6 @@
 ﻿using System.ServiceProcess;
 
-namespace Thycotic.SecretServerEngine2
+namespace Thycotic.SecretServerEngine
 {
     internal static class Program
     {

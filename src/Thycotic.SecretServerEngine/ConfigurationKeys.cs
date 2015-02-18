@@ -1,4 +1,4 @@
-﻿namespace Thycotic.SecretServerEngine2
+﻿namespace Thycotic.SecretServerEngine
 {
     /// <summary>
     /// Configuration keys

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands
+namespace Thycotic.SecretServerEngine.InteractiveRunner.ConsoleCommands
 {
     internal abstract class ConsoleCommandBase : IConsoleCommand
     {

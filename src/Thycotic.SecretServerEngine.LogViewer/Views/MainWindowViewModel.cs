@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Thycotic.SecretServerEngine2.LogViewer.Models;
-using Thycotic.SecretServerEngine2.LogViewer.Providers;
+using Thycotic.SecretServerEngine.LogViewer.Models;
+using Thycotic.SecretServerEngine.LogViewer.Providers;
 
-namespace Thycotic.SecretServerEngine2.LogViewer.Views
+namespace Thycotic.SecretServerEngine.LogViewer.Views
 {
     public class MainWindowViewModel : INotifyPropertyChanged, IViewModel
     {

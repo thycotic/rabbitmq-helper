@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 
-namespace Thycotic.SecretServerEngine2.CertificateHelper
+namespace Thycotic.SecretServerEngine.CertificateHelper
 {
     class Program
     {

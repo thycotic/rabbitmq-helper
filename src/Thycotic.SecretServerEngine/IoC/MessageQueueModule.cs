@@ -6,10 +6,10 @@ using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.MessageQueueClient.QueueClient.MemoryMq;
 using Thycotic.MessageQueueClient.QueueClient.RabbitMq;
-using Thycotic.SecretServerEngine2.Security;
+using Thycotic.SecretServerEngine.Security;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.SecretServerEngine2.IoC
+namespace Thycotic.SecretServerEngine.IoC
 {
     class MessageQueueModule : Module
     {

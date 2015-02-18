@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace Thycotic.SecretServerEngine2.LogViewer
+namespace Thycotic.SecretServerEngine.LogViewer
 {
     public class CommandHandler : ICommand
     {

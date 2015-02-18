@@ -5,7 +5,7 @@ using Thycotic.MessageQueueClient;
 using Thycotic.MessageQueueClient.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 
-namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands.POC
+namespace Thycotic.SecretServerEngine.InteractiveRunner.ConsoleCommands.POC
 {
     class CreateFileCommand : ConsoleCommandBase
     {

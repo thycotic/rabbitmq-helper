@@ -1,4 +1,4 @@
-﻿namespace Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands
+﻿namespace Thycotic.SecretServerEngine.InteractiveRunner.ConsoleCommands
 {
     internal class SystemConsoleCommand : ConsoleCommandBase, IImmediateConsoleCommand {
     }

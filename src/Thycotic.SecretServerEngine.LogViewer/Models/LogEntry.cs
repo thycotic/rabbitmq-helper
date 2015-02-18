@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.SecretServerEngine2.LogViewer.Models
+namespace Thycotic.SecretServerEngine.LogViewer.Models
 {
     public class LogEntry
     {

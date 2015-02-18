@@ -1,4 +1,4 @@
-namespace Thycotic.SecretServerEngine2.LogViewer
+namespace Thycotic.SecretServerEngine.LogViewer
 {
     public interface IViewModel
     {

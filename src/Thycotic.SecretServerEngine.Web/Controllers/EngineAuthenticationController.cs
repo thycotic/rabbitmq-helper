@@ -8,13 +8,13 @@ using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.MessageQueueClient;
-using Thycotic.SecretServerEngine2.Web.Common.Request;
-using Thycotic.SecretServerEngine2.Web.Common.Response;
+using Thycotic.SecretServerEngine.Web.Common.Request;
+using Thycotic.SecretServerEngine.Web.Common.Response;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.SecretServerEngine2.Web.Controllers
+namespace Thycotic.SecretServerEngine.Web.Controllers
 {
     [RoutePrefix("api/EngineAuthentication")]
     public class EngineAuthenticationController : ApiController

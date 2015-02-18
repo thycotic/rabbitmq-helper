@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace Thycotic.SecretServerEngine2.Web
+namespace Thycotic.SecretServerEngine.Web
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

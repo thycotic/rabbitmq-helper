@@ -1,4 +1,4 @@
-﻿namespace Thycotic.SecretServerEngine2.Web.Common.Response
+﻿namespace Thycotic.SecretServerEngine.Web.Common.Response
 {
     public abstract class ResponseBase
     {

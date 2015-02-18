@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Thycotic.SecretServerEngine2.Configuration
+namespace Thycotic.SecretServerEngine.Configuration
 {
     /// <summary>
     /// Interface for a remote configuration provider

@@ -7,10 +7,10 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
-using Thycotic.SecretServerEngine2.InteractiveRunner.ConsoleCommands;
+using Thycotic.SecretServerEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Utility;
 
-namespace Thycotic.SecretServerEngine2.InteractiveRunner
+namespace Thycotic.SecretServerEngine.InteractiveRunner
 {
     internal class CommandLineInterface
     {

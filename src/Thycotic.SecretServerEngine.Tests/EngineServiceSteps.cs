@@ -4,7 +4,7 @@ using Autofac.Core;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
-namespace Thycotic.SecretServerEngine2.Tests
+namespace Thycotic.SecretServerEngine.Tests
 {
     [Binding]
     public class ConsumerWrapperBaseSteps

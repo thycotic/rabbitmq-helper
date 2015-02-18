@@ -8,7 +8,7 @@ using Autofac;
 using Thycotic.Logging;
 using Thycotic.MemoryMq;
 
-namespace Thycotic.SecretServerEngine2.MemoryMq
+namespace Thycotic.SecretServerEngine.MemoryMq
 {
     /// <summary>
     /// Memory mq WCF server wrapper.

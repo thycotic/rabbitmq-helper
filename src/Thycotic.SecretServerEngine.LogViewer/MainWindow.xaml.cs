@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Controls;
-using Thycotic.SecretServerEngine2.LogViewer.Models;
-using Thycotic.SecretServerEngine2.LogViewer.Providers;
-using Thycotic.SecretServerEngine2.LogViewer.Views;
+using Thycotic.SecretServerEngine.LogViewer.Models;
+using Thycotic.SecretServerEngine.LogViewer.Providers;
+using Thycotic.SecretServerEngine.LogViewer.Views;
 
 
-namespace Thycotic.SecretServerEngine2.LogViewer
+namespace Thycotic.SecretServerEngine.LogViewer
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

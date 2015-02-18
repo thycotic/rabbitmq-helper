@@ -4,14 +4,14 @@ using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
-using Thycotic.SecretServerEngine2.Configuration;
-using Thycotic.SecretServerEngine2.Logic;
-using Thycotic.SecretServerEngine2.Web.Common.Request;
-using Thycotic.SecretServerEngine2.Web.Common.Response;
+using Thycotic.SecretServerEngine.Configuration;
+using Thycotic.SecretServerEngine.Logic;
+using Thycotic.SecretServerEngine.Web.Common.Request;
+using Thycotic.SecretServerEngine.Web.Common.Response;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 
-namespace Thycotic.SecretServerEngine2.Security
+namespace Thycotic.SecretServerEngine.Security
 {
     /// <summary>
     /// Message encryption provider

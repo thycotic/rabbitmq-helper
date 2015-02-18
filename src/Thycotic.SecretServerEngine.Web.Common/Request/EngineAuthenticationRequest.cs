@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.SecretServerEngine2.Web.Common.Request
+namespace Thycotic.SecretServerEngine.Web.Common.Request
 {
     public class EngineAuthenticationRequest
     {

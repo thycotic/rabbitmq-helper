@@ -1,4 +1,4 @@
-﻿namespace Thycotic.SecretServerEngine2.LogViewer.Views
+﻿namespace Thycotic.SecretServerEngine.LogViewer.Views
 {
     public class LogLevelViewModel
     {

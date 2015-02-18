@@ -1,7 +1,7 @@
 ﻿using ServiceStack;
 using Thycotic.Logging;
 
-namespace Thycotic.SecretServerEngine2.Logic
+namespace Thycotic.SecretServerEngine.Logic
 {
     /// <summary>
     /// Remote configuration provider
