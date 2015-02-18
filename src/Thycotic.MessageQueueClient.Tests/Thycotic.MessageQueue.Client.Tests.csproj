@@ -6,8 +6,8 @@
     <ProjectGuid>{9C4E6FBC-BF2B-4099-816C-89098229EA6D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.MessageQueueClient.Tests</RootNamespace>
-    <AssemblyName>Thycotic.MessageQueueClient.Tests</AssemblyName>
+    <RootNamespace>Thycotic.MessageQueue.Client.Tests</RootNamespace>
+    <AssemblyName>Thycotic.MessageQueue.Client.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

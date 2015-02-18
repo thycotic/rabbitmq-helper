@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Thycotic.MessageQueueClient.Wrappers.Tests
+namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
     using TechTalk.SpecFlow;
     

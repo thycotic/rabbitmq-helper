@@ -7,8 +7,8 @@
     <ProjectGuid>{D0D2D7E5-D147-47E9-8D8F-18F6F6B19720}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.MessageQueueClient.Wrappers</RootNamespace>
-    <AssemblyName>Thycotic.MessageQueueClient.Wrappers</AssemblyName>
+    <RootNamespace>Thycotic.MessageQueue.Client.Wrappers</RootNamespace>
+    <AssemblyName>Thycotic.MessageQueue.Client.Wrappers</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -23,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\Thycotic.MessageQueueClient.Wrappers.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Thycotic.MessageQueue.Client.Wrappers.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
@@ -78,7 +78,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Release\Thycotic.MessageQueueClient.Wrappers.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Thycotic.MessageQueue.Client.Wrappers.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
