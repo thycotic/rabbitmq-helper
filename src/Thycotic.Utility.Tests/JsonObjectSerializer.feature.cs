@@ -75,8 +75,8 @@ namespace Thycotic.Utility.Tests
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("there exists an object of type \"Thycotic.Utility.Tests.DummyObject\" stored in the" +
-                    " scenario as JsonObjectSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists an object of type \"Thycotic.Utility.Tests.DummyObject, Thycotic.Util" +
+                    "ity.Tests\" stored in the scenario as JsonObjectSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
  testRunner.And("the property StatusText in the scenario object JsonObjectSerializerTestObject is " +
                     "set to \"Mary had a little lamb\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -98,8 +98,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 12
 this.ScenarioSetup(scenarioInfo);
 #line 13
- testRunner.Given("there exists an object of type \"Thycotic.Utility.Tests.DummyObject\" stored in the" +
-                    " scenario as JsonObjectSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists an object of type \"Thycotic.Utility.Tests.DummyObject, Thycotic.Util" +
+                    "ity.Tests\" stored in the scenario as JsonObjectSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
  testRunner.And("the property StatusText in the scenario object JsonObjectSerializerTestObject is " +
                     "set to \"Mary had a large lamb\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -108,8 +108,8 @@ this.ScenarioSetup(scenarioInfo);
                     "cenario object JsonObjectSerializerTestObjectBytes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
  testRunner.When("the scenario object JsonObjectSerializerTestObjectBytes is turned into an object " +
-                    "of type \"Thycotic.Utility.Tests.DummyObject\" and stored in the scenario as JsonO" +
-                    "bjectSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                    "of type \"Thycotic.Utility.Tests.DummyObject, Thycotic.Utility.Tests\" and stored " +
+                    "in the scenario as JsonObjectSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
  testRunner.Then("the scenario object JsonObjectSerializerTestObject should be equivalent of scenar" +
                     "io object JsonObjectSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
