@@ -1,5 +1,8 @@
-﻿namespace Thycotic.SecretServerEngine.Web.Common.Response
+﻿using System;
+
+namespace Thycotic.SecretServerEngine.Web.Common.Response
 {
+    [Obsolete("Needs to live on SS side as nuget")]
     public class EngineAuthenticationResponse : ResponseBase
     {
         public byte[] SymmetricKey { get; set; }

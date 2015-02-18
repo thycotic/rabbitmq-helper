@@ -2,6 +2,7 @@
 
 namespace Thycotic.SecretServerEngine.Web.Common.Request
 {
+    [Obsolete("Needs to live on SS side as nuget")]
     public class EngineAuthenticationRequest
     {
         public Guid IdentityGuid { get; set; }
