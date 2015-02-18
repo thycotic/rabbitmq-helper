@@ -6,6 +6,11 @@
     public static class ConfigurationKeys
     {
         /// <summary>
+        /// The heartbeat interval
+        /// </summary>
+        public const string HeartbeatInterval = "Heartbeat.Interval";
+
+        /// <summary>
         /// The queue type
         /// </summary>
         public const string QueueType = "Queue.Type";

@@ -68,37 +68,9 @@ namespace Thycotic.SecretServerEngine.Tests
         {
 #line 4
 #line 5
- testRunner.Given("there exists an object of type \"Thycotic.SecretServerEngine2.EngineService, Thyco" +
-                    "tic.SecretServerEngine2\" stored in the scenario as EngineServiceTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists an object of type \"Thycotic.SecretServerEngine.EngineService, Thycot" +
+                    "ic.SecretServerEngine\" stored in the scenario as EngineServiceTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Start calls IoC configuration")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
-        public virtual void StartCallsIoCConfiguration()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start calls IoC configuration", new string[] {
-                        "mytag"});
-#line 9
-this.ScenarioSetup(scenarioInfo);
-#line 4
-this.FeatureBackground();
-#line 10
- testRunner.When("the method Start on EngineService EngineServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Type"});
-            table1.AddRow(new string[] {
-                        "Thycotic.SecretServerEngine2.StartupMessageWriter, Thycotic.SecretServerEngine2"});
-            table1.AddRow(new string[] {
-                        "Thycotic.MessageQueue.Client.QueueClient.ICommonConnection, Thycotic.MessageQueueC" +
-                            "lient"});
-#line 11
- testRunner.Then("the objects of the following types should be resolvable through IoC from EngineSe" +
-                    "rvice EngineServiceTest:", ((string)(null)), table1, "Then ");
-#line hidden
-            this.ScenarioCleanup();
         }
     }
 }

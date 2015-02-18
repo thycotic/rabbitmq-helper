@@ -19,8 +19,8 @@ namespace Thycotic.Utility.Tests
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("MessageSerializer")]
-    public partial class MessageSerializerFeature
+    [NUnit.Framework.DescriptionAttribute("JsonObjectSerializer")]
+    public partial class JsonObjectSerializerFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -32,7 +32,7 @@ namespace Thycotic.Utility.Tests
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "MessageSerializer", "In order to avoid silly mistakes with serializaion,\r\nwe need to make sure the ser" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "JsonObjectSerializer", "In order to avoid silly mistakes with serializaion,\r\nwe need to make sure the ser" +
                     "ializer is working properly", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -75,17 +75,17 @@ namespace Thycotic.Utility.Tests
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("there exists an object of type \"Thycotic.Messages.Common.BlockingConsumerResult, " +
-                    "Thycotic.Messages.Common\" stored in the scenario as MessageSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists an object of type \"Thycotic.Utility.Tests.DummyObject, Thycotic.Util" +
+                    "ity.Tests\" stored in the scenario as JsonObjectSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
- testRunner.And("the property StatusText in the scenario object MessageSerializerTestObject is set" +
-                    " to \"Mary had a little lamb\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the property StatusText in the scenario object JsonObjectSerializerTestObject is " +
+                    "set to \"Mary had a little lamb\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
- testRunner.When("the scenario object MessageSerializerTestObject is turned into bytes and stored i" +
-                    "n the scenario as MessageSerializerResult", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the scenario object JsonObjectSerializerTestObject is turned into bytes and store" +
+                    "d in the scenario as JsonObjectSerializerResult", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 10
- testRunner.Then("the scenario object MessageSerializerResult should be the byte equivalent of scen" +
-                    "ario object MessageSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the scenario object JsonObjectSerializerResult should be the byte equivalent of s" +
+                    "cenario object JsonObjectSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -98,21 +98,21 @@ this.ScenarioSetup(scenarioInfo);
 #line 12
 this.ScenarioSetup(scenarioInfo);
 #line 13
- testRunner.Given("there exists an object of type \"Thycotic.Messages.Common.BlockingConsumerResult, " +
-                    "Thycotic.Messages.Common\" stored in the scenario as MessageSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists an object of type \"Thycotic.Utility.Tests.DummyObject, Thycotic.Util" +
+                    "ity.Tests\" stored in the scenario as JsonObjectSerializerTestObject", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.And("the property StatusText in the scenario object MessageSerializerTestObject is set" +
-                    " to \"Mary had a large lamb\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the property StatusText in the scenario object JsonObjectSerializerTestObject is " +
+                    "set to \"Mary had a large lamb\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
- testRunner.And("the scenario object MessageSerializerTestObject byte equivalent is stored in scen" +
-                    "ario object MessageSerializerTestObjectBytes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the scenario object JsonObjectSerializerTestObject byte equivalent is stored in s" +
+                    "cenario object JsonObjectSerializerTestObjectBytes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
- testRunner.When("the scenario object MessageSerializerTestObjectBytes is turned into an object of " +
-                    "type \"Thycotic.Messages.Common.BlockingConsumerResult, Thycotic.Messages.Common\"" +
-                    " and stored in the scenario as MessageSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the scenario object JsonObjectSerializerTestObjectBytes is turned into an object " +
+                    "of type \"Thycotic.Utility.Tests.DummyObject, Thycotic.Utility.Tests\" and stored " +
+                    "in the scenario as JsonObjectSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
- testRunner.Then("the scenario object MessageSerializerTestObject should be equivalent of scenario " +
-                    "object MessageSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the scenario object JsonObjectSerializerTestObject should be equivalent of scenar" +
+                    "io object JsonObjectSerializerTestObject2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
