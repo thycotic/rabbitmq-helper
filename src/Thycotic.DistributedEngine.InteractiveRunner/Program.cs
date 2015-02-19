@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using Autofac;
+using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -21,17 +22,24 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
         {
             try
             {
-                //interactive mode (first argument is i or icd
-                if (args.Any() && ((args.First() == "i") || (args.First() == "icd")))
+                //interactive mode (first argument is i, il or icd
+                //i - interactive still going out to web service to look for configuration
+                //il - interactive but using a loopback for configuration
+                //icd - interactive still going out to web service to look for configuration, consumption disabled
+                //ilcd - interactive but using a loopback for configuration, consumption disabled
+                if (args.Any() && args.First().StartsWith("i"))
                 {
                     Console.WriteLine("Starting interactive mode...");
 
                     var cli = new CommandLineInterface();
 
                     #region Start server
-                    var startConsuming = args.First() != "icd"; //the first argument is not icd (Interactive with Consumption Disabled)
+                    var startConsuming = !args.First().EndsWith("cd");
 
-                    var agent = new EngineService(startConsuming);
+                    var agent = args.First().StartsWith("il")
+                        ? new EngineService(startConsuming, new LoopbackIoCConfigurator()) //loopback
+                        : new EngineService(startConsuming);
+                    
                     agent.Start(new string[] { });
                     #endregion
 

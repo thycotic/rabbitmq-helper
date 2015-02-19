@@ -28,14 +28,17 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
         public IMemoryMqServiceConnection CreateConnection()
         {
-            var clientBinding = new NetTcpBinding(SecurityMode.TransportWithMessageCredential);
+            NetTcpBinding clientBinding;
 
             if (UseSsl)
             {
-                clientBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;    
+                clientBinding = new NetTcpBinding(SecurityMode.Transport);
+                clientBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
             }
-            
-            clientBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
+            else
+            {
+                clientBinding = new NetTcpBinding(SecurityMode.None);
+            }
 
             var callback = new MemoryMqServiceCallback();
 
@@ -44,16 +47,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             //channelFactory.Closed += new EventHandler(DuplexChannelFactory_Closed);
             //channelFactory.Closing += new EventHandler(DuplexChannelFactory_Closing);
             //channelFactory.Faulted += new EventHandler(DuplexChannelFactory_Faulted);
-
-            var credentials = channelFactory.Credentials;
-
-            if (credentials == null)
-            {
-                throw new ApplicationException("No credentials object");
-            }
-
-            credentials.UserName.UserName = Guid.NewGuid().ToString();
-            credentials.UserName.Password = string.Empty;
 
             try
             {

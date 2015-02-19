@@ -67,19 +67,17 @@ namespace Thycotic.DistributedEngine.MemoryMq
 
                 if (_useSsl)
                 {
-                    serviceBinding = new NetTcpBinding(SecurityMode.TransportWithMessageCredential);
+                    serviceBinding = new NetTcpBinding(SecurityMode.Transport);
                     serviceBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
                 }
                 else
                 {
-                    serviceBinding = new NetTcpBinding(SecurityMode.Message);
+                    serviceBinding = new NetTcpBinding(SecurityMode.None);
                 }
                 serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
 
                 _host = new ServiceHost(typeof(Thycotic.MemoryMq.MemoryMqServer));
                 _host.AddServiceEndpoint(typeof(IMemoryMqServer), serviceBinding, _connectionString);
-                _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = _engineClientVerifier;
-                _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
 
                 if (_useSsl)
                 {

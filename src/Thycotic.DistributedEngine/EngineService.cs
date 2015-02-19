@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.ServiceProcess;
 using Autofac;
-using Thycotic.Logging;
-using Thycotic.MessageQueue.Client.Wrappers.IoC;
-using Thycotic.DistributedEngine.IoC;
-using Thycotic.DistributedEngine.Security;
 using Thycotic.DistributedEngine.Configuration;
-using Thycotic.DistributedEngine.Logic;
-using Thycotic.Utility.Serialization;
+using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine
 {
@@ -27,61 +20,40 @@ namespace Thycotic.DistributedEngine
         public IContainer IoCContainer { get; private set; }
 
         private readonly bool _startConsuming;
+        private readonly IIoCConfigurator _iioCConfigurator;
 
-        private Dictionary<string, string> _instanceConfiguration = new Dictionary<string, string>();
-        
         private readonly ILogWriter _log = Log.Get(typeof(EngineService));
         private LogCorrelation _correlation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineService"/> class.
         /// </summary>
-        public EngineService() : this(true){}
+        public EngineService() : this(true, new IoCConfigurator()) { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineService"/> class.
+        /// Initializes a new instance of the <see cref="EngineService" /> class.
         /// </summary>
         /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
-        public EngineService(bool startConsuming)
+        public EngineService(bool startConsuming) : this(startConsuming, new IoCConfigurator()) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EngineService" /> class.
+        /// </summary>
+        /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
+        /// <param name="iioCConfigurator">The iio c configurator.</param>
+        public EngineService(bool startConsuming, IIoCConfigurator iioCConfigurator)
         {
             _startConsuming = startConsuming;
+            _iioCConfigurator = iioCConfigurator;
             ConfigureLogging();
         }
 
-        private string GetInstanceConfigurationProxy(string name)
-        {
-            if (!_instanceConfiguration.ContainsKey(name))
-            {
-                throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
-            }
-
-            var value = _instanceConfiguration[name];
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
-            }
-
-            return value;
-        }
-
-        private string GetLocalConfigurationManagerProxy(string name)
-        {
-            var value = ConfigurationManager.AppSettings[name];
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
-            }
-
-            return value;
-        }
 
         private static void ConfigureLogging()
         {
             Log.Configure();
         }
-        
+
         /// <summary>
         /// Configures inversion of control.
         /// </summary>
@@ -93,70 +65,24 @@ namespace Thycotic.DistributedEngine
             {
                 ResetIoCContainer();
 
-                if (!TryGetRemoteConfiguration(GetLocalConfigurationManagerProxy))
+                if (!_iioCConfigurator.TryGetRemoteConfiguration())
                 {
                     _log.Info("Engine is not enabled/configured. Existing...");
                     //TODO: Maybe retry later -dkk
                     return;
                 }
 
-                // Create the builder with which components/services are registered.
-                var builder = new ContainerBuilder();
-
-                builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
-
-                builder.RegisterType<LocalKeyProvider>().AsImplementedInterfaces().SingleInstance();
-                builder.Register(
-                    context =>
-                        new RestCommunicationProvider(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.ConnectionString)))
-                    .AsImplementedInterfaces();
-
-                builder.RegisterModule(new MessageQueueModule(GetInstanceConfigurationProxy));
-
-                if (_startConsuming)
-                {
-                    builder.RegisterModule(new LogicModule());
-                    builder.RegisterModule(new WrappersModule());
-                }
-                else
-                {
-                    _log.Warn("Consumption disabled, your will only be able to issue requests");
-                }
-
                 // Build the container to finalize registrations and prepare for object resolution.
-                IoCContainer = builder.Build();
+                IoCContainer = _iioCConfigurator.Build(_startConsuming);
 
                 _log.Debug("Configuring IoC complete");
-            
+
             }
             catch (Exception ex)
             {
-                _log.Error("Failed to configure IoC", ex);
+                _log.Error(string.Format("Failed to configure IoC because {0}", ex.Message), ex);
                 throw;
             }
-        }
-
-        private bool TryGetRemoteConfiguration(Func<string, string> getLocalConfigurationManagerProxy)
-        {
-            var url = getLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.ConnectionString);
-
-            var friendlyName = getLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName);
-            var identityGuid = new Guid(getLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.IdentityGuid));
-            var keyProvider = new LocalKeyProvider();
-            var restClient = new RestCommunicationProvider(url);
-
-            var configurationProvider = new RemoteConfigurationProvider(friendlyName, identityGuid, keyProvider, restClient, new JsonObjectSerializer());
-
-            var configuration = configurationProvider.GetConfiguration();
-
-            if (configuration == null)
-            {
-                return false;
-            }
-
-            _instanceConfiguration = configuration;
-
-            return true;
         }
 
         private void ResetIoCContainer()

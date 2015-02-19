@@ -170,6 +170,8 @@
     <Compile Include="EngineService.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Configuration\IIoCConfigurator.cs" />
+    <Compile Include="Configuration\IoCConfigurator.cs" />
     <Compile Include="IoC\MemoryMqServerModule.cs" />
     <Compile Include="Configuration\IRemoteConfigurationProvider.cs" />
     <Compile Include="Configuration\RemoteConfigurationProvider.cs" />
