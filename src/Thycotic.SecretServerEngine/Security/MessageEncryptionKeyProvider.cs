@@ -2,12 +2,12 @@
 using System.Configuration;
 using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
+using Thycotic.DistributedEngine.Web.Common.Request;
+using Thycotic.DistributedEngine.Web.Common.Response;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
 using Thycotic.SecretServerEngine.Configuration;
 using Thycotic.SecretServerEngine.Logic;
-using Thycotic.SecretServerEngine.Web.Common.Request;
-using Thycotic.SecretServerEngine.Web.Common.Response;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 
