@@ -164,9 +164,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.SecretServerEngine.Logic\Thycotic.SecretServerEngine.Logic.csproj">
+    <ProjectReference Include="..\Thycotic.SecretServerEngine.Logic\Thycotic.DistributedEngine.Logic.csproj">
       <Project>{74ec374a-729a-4707-8586-32d10cdc3ecc}</Project>
-      <Name>Thycotic.SecretServerEngine.Logic</Name>
+      <Name>Thycotic.DistributedEngine.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
       <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>

@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MessageQueue.Clien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages", "Thycotic.Messages\Thycotic.Messages.csproj", "{BB022C12-4D04-4195-BBB7-BAAA0E20FCB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.SecretServerEngine", "Thycotic.SecretServerEngine\Thycotic.SecretServerEngine.csproj", "{DF86AFEF-6D78-46C9-9BDA-419C4547EFE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine", "Thycotic.SecretServerEngine\Thycotic.DistributedEngine.csproj", "{DF86AFEF-6D78-46C9-9BDA-419C4547EFE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Logging", "Thycotic.Logging\Thycotic.Logging.csproj", "{FE8BE3EA-3F69-488E-8AC8-CFE47525D93F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.SecretServerEngine.InteractiveRunner", "Thycotic.SecretServerEngine.InteractiveRunner\Thycotic.SecretServerEngine.InteractiveRunner.csproj", "{A11F8CAA-97D7-4A08-B7A1-6F331830D316}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.InteractiveRunner", "Thycotic.SecretServerEngine.InteractiveRunner\Thycotic.DistributedEngine.InteractiveRunner.csproj", "{A11F8CAA-97D7-4A08-B7A1-6F331830D316}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MessageQueue.Tools", "Thycotic.MessageQueue.Tools\Thycotic.MessageQueue.Tools.csproj", "{4B2BF50E-0B2B-4487-B498-FEB4901730D6}"
 EndProject
@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{AD
 		Create_Log4Net.sql = Create_Log4Net.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.SecretServerEngine.Logic", "Thycotic.SecretServerEngine.Logic\Thycotic.SecretServerEngine.Logic.csproj", "{74EC374A-729A-4707-8586-32D10CDC3ECC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Logic", "Thycotic.SecretServerEngine.Logic\Thycotic.DistributedEngine.Logic.csproj", "{74EC374A-729A-4707-8586-32D10CDC3ECC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Common", "Thycotic.Messages.Common\Thycotic.Messages.Common.csproj", "{818F6124-14C0-447F-8001-4C8DDC2F83FF}"
 EndProject
@@ -39,9 +39,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BD5F23
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq", "Thycotic.MemoryMq\Thycotic.MemoryMq.csproj", "{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.SecretServerEngine.LogViewer", "Thycotic.SecretServerEngine.LogViewer\Thycotic.SecretServerEngine.LogViewer.csproj", "{6802EEF8-B101-43B6-AB26-F82A6F750F23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.LogViewer", "Thycotic.SecretServerEngine.LogViewer\Thycotic.DistributedEngine.LogViewer.csproj", "{6802EEF8-B101-43B6-AB26-F82A6F750F23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.SecretServerEngine.CertificateHelper", "Thycotic.SecretServerEngine.CertificateHelper\Thycotic.SecretServerEngine.CertificateHelper.csproj", "{8E815A53-4472-4C31-9FF5-1BD48B976565}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.CertificateHelper", "Thycotic.SecretServerEngine.CertificateHelper\Thycotic.DistributedEngine.CertificateHelper.csproj", "{8E815A53-4472-4C31-9FF5-1BD48B976565}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.Tests", "Thycotic.MemoryMq.Tests\Thycotic.MemoryMq.Tests.csproj", "{1D136130-3ED7-4087-9A1D-F5F35504B518}"
 EndProject
@@ -53,13 +53,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MessageQueue.Clien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Tests", "Thycotic.Messages.Tests\Thycotic.Messages.Tests.csproj", "{B8DF9BCE-75A1-4690-ADC2-409D55095A26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.SecretServerEngine.Tests", "Thycotic.SecretServerEngine.Tests\Thycotic.SecretServerEngine.Tests.csproj", "{8E2112AB-6688-4E3A-B23D-6C606B848B81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Tests", "Thycotic.SecretServerEngine.Tests\Thycotic.DistributedEngine.Tests.csproj", "{8E2112AB-6688-4E3A-B23D-6C606B848B81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.SecretServerEngine.Logic.Tests", "Thycotic.SecretServerEngine.Logic.Tests\Thycotic.SecretServerEngine.Logic.Tests.csproj", "{CB29A39A-D28B-43B8-B965-8912F8BC7635}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Logic.Tests", "Thycotic.SecretServerEngine.Logic.Tests\Thycotic.DistributedEngine.Logic.Tests.csproj", "{CB29A39A-D28B-43B8-B965-8912F8BC7635}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Utility.Tests", "Thycotic.Utility.Tests\Thycotic.Utility.Tests.csproj", "{341587C7-483A-442A-BF23-49D1A5138E57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.SecretServerEngine.Client", "Thycotic.SecretServerEngine.Client\Thycotic.SecretServerEngine.Client.csproj", "{FB4B3469-BCE8-4F52-9EB8-69AB5637914E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Client", "Thycotic.SecretServerEngine.Client\Thycotic.DistributedEngine.Client.csproj", "{FB4B3469-BCE8-4F52-9EB8-69AB5637914E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
