@@ -175,7 +175,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.SecretServerEngine\Thycotic.DistributedEngine.csproj">
+    <ProjectReference Include="..\Thycotic.DistributedEngine\Thycotic.DistributedEngine.csproj">
       <Project>{df86afef-6d78-46c9-9bda-419c4547efe3}</Project>
       <Name>Thycotic.DistributedEngine</Name>
     </ProjectReference>
