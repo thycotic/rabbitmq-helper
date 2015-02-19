@@ -2,9 +2,9 @@
 using System.IdentityModel.Selectors;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.SecretServerEngine.MemoryMq;
+using Thycotic.DistributedEngine.MemoryMq;
 
-namespace Thycotic.SecretServerEngine.IoC
+namespace Thycotic.DistributedEngine.IoC
 {
     class MemoryMqServerModule : Module
     {

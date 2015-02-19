@@ -7,8 +7,8 @@
     <ProjectGuid>{A11F8CAA-97D7-4A08-B7A1-6F331830D316}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.SecretServerEngine.InteractiveRunner</RootNamespace>
-    <AssemblyName>Thycotic.SecretServerEngine.InteractiveRunner</AssemblyName>
+    <RootNamespace>Thycotic.DistributedEngine.InteractiveRunner</RootNamespace>
+    <AssemblyName>Thycotic.DistributedEngine.InteractiveRunner</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

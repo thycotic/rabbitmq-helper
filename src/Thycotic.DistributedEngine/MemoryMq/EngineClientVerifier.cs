@@ -2,7 +2,7 @@
 using System.IdentityModel.Selectors;
 using Thycotic.Logging;
 
-namespace Thycotic.SecretServerEngine.MemoryMq
+namespace Thycotic.DistributedEngine.MemoryMq
 {
     /// <summary>
     /// Engine client verifier

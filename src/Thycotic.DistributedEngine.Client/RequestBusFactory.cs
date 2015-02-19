@@ -4,7 +4,7 @@ using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.SecretServerEngine.Client
+namespace Thycotic.DistributedEngine.Client
 {
     /// <summary>
     /// Basic request bus factory

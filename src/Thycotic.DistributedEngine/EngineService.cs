@@ -5,13 +5,13 @@ using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.Wrappers.IoC;
-using Thycotic.SecretServerEngine.IoC;
-using Thycotic.SecretServerEngine.Security;
-using Thycotic.SecretServerEngine.Configuration;
-using Thycotic.SecretServerEngine.Logic;
+using Thycotic.DistributedEngine.IoC;
+using Thycotic.DistributedEngine.Security;
+using Thycotic.DistributedEngine.Configuration;
+using Thycotic.DistributedEngine.Logic;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.SecretServerEngine
+namespace Thycotic.DistributedEngine
 {
     /// <summary>
     /// Engine windows service

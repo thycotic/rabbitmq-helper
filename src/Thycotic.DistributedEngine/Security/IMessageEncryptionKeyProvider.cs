@@ -1,7 +1,7 @@
 ﻿using Thycotic.AppCore.Cryptography;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 
-namespace Thycotic.SecretServerEngine.Security
+namespace Thycotic.DistributedEngine.Security
 {
     /// <summary>
     /// Interface for a message encryption provider

@@ -5,7 +5,7 @@ using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 
-namespace Thycotic.SecretServerEngine.InteractiveRunner.ConsoleCommands.POC
+namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 {
     class FloodCommand : ConsoleCommandBase
     {

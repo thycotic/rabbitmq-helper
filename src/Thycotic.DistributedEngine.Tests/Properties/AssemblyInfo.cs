@@ -3,7 +3,7 @@
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Thycotic.SecretServerEngine2.Tests")]
+[assembly: AssemblyTitle("Thycotic.DistributedEngine2.Tests")]
 [assembly: AssemblyDescription("")]
 
 // Version information for an assembly consists of the following four values:

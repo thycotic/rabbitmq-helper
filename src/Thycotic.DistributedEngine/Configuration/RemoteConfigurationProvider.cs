@@ -6,13 +6,13 @@ using Thycotic.AppCore.Cryptography;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
 using Thycotic.Logging;
-using Thycotic.SecretServerEngine.Security;
-using Thycotic.SecretServerEngine.Logic;
+using Thycotic.DistributedEngine.Security;
+using Thycotic.DistributedEngine.Logic;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.SecretServerEngine.Configuration
+namespace Thycotic.DistributedEngine.Configuration
 {
     /// <summary>
     /// Remote configuration provider

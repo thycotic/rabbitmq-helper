@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Thycotic.AppCore.Cryptography;
 
-namespace Thycotic.SecretServerEngine.Security
+namespace Thycotic.DistributedEngine.Security
 {
     /// <summary>
     /// Local key provider

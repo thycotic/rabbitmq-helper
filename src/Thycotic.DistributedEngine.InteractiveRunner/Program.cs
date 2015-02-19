@@ -6,9 +6,9 @@ using Autofac;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.SecretServerEngine.InteractiveRunner.ConsoleCommands;
+using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 
-namespace Thycotic.SecretServerEngine.InteractiveRunner
+namespace Thycotic.DistributedEngine.InteractiveRunner
 {
     internal static class Program
     {

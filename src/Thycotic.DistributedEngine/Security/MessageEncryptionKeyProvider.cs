@@ -6,12 +6,12 @@ using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
-using Thycotic.SecretServerEngine.Configuration;
-using Thycotic.SecretServerEngine.Logic;
+using Thycotic.DistributedEngine.Configuration;
+using Thycotic.DistributedEngine.Logic;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 
-namespace Thycotic.SecretServerEngine.Security
+namespace Thycotic.DistributedEngine.Security
 {
     /// <summary>
     /// Message encryption provider

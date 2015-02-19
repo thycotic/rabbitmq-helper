@@ -5,7 +5,7 @@ using Autofac;
 using Thycotic.Logging;
 using Thycotic.Utility;
 
-namespace Thycotic.SecretServerEngine
+namespace Thycotic.DistributedEngine
 {
     /// <summary>
     /// Startup message writer. Mostly to ensure Autofac is working properly.
@@ -21,7 +21,7 @@ namespace Thycotic.SecretServerEngine
         {
             _log.Info("Application is starting...");
 
-            var logoStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.SecretServerEngine2.logo.txt");
+            var logoStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.DistributedEngine2.logo.txt");
 
             if (logoStream != null)
             {

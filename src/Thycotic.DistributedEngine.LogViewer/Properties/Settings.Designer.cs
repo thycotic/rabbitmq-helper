@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Thycotic.SecretServerEngine.LogViewer.Properties {
+namespace Thycotic.DistributedEngine.LogViewer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

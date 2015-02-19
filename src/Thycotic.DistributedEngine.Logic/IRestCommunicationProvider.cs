@@ -1,4 +1,4 @@
-namespace Thycotic.SecretServerEngine.Logic
+namespace Thycotic.DistributedEngine.Logic
 {
     /// <summary>
     /// Interface for a remote configuration provider

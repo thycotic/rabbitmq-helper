@@ -3,11 +3,11 @@ using System.Reflection;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
-using Thycotic.SecretServerEngine.Logic.Areas.POC;
+using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.Utility.Reflection;
 using Module = Autofac.Module;
 
-namespace Thycotic.SecretServerEngine.IoC
+namespace Thycotic.DistributedEngine.IoC
 {
     class LogicModule : Module
     {

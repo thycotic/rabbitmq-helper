@@ -7,8 +7,8 @@
     <ProjectGuid>{8E815A53-4472-4C31-9FF5-1BD48B976565}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.SecretServerEngine.CertificateHelper</RootNamespace>
-    <AssemblyName>Thycotic.SecretServerEngine.CertificateHelper</AssemblyName>
+    <RootNamespace>Thycotic.DistributedEngine.CertificateHelper</RootNamespace>
+    <AssemblyName>Thycotic.DistributedEngine.CertificateHelper</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,6 +1,6 @@
 ﻿using Thycotic.AppCore.Cryptography;
 
-namespace Thycotic.SecretServerEngine.Security
+namespace Thycotic.DistributedEngine.Security
 {
     /// <summary>
     /// Interface for a lcal key provider

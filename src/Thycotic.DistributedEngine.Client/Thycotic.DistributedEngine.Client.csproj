@@ -7,8 +7,8 @@
     <ProjectGuid>{FB4B3469-BCE8-4F52-9EB8-69AB5637914E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.SecretServerEngine.Client</RootNamespace>
-    <AssemblyName>Thycotic.SecretServerEngine.Client</AssemblyName>
+    <RootNamespace>Thycotic.DistributedEngine.Client</RootNamespace>
+    <AssemblyName>Thycotic.DistributedEngine.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -66,7 +66,7 @@
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\Thycotic.SecretServerEngine.Client.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Thycotic.DistributedEngine.Client.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -118,7 +118,7 @@
     <CodeContractsRuntimeCheckingLevel>Pre and Post</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
-    <DocumentationFile>bin\Release\Thycotic.SecretServerEngine.Client.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Thycotic.DistributedEngine.Client.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>

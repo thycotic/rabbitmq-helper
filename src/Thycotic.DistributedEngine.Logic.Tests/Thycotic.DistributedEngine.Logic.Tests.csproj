@@ -6,8 +6,8 @@
     <ProjectGuid>{CB29A39A-D28B-43B8-B965-8912F8BC7635}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.SecretServerEngine.Logic.Tests</RootNamespace>
-    <AssemblyName>Thycotic.SecretServerEngine.Logic.Tests</AssemblyName>
+    <RootNamespace>Thycotic.DistributedEngine.Logic.Tests</RootNamespace>
+    <AssemblyName>Thycotic.DistributedEngine.Logic.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

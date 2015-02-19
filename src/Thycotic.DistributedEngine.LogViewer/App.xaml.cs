@@ -1,4 +1,4 @@
-﻿namespace Thycotic.SecretServerEngine.LogViewer
+﻿namespace Thycotic.DistributedEngine.LogViewer
 {
     /// <summary>
     /// Interaction logic for App.xaml

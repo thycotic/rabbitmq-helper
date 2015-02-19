@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Thycotic.SecretServerEngine.Tests
+namespace Thycotic.DistributedEngine.Tests
 {
     using TechTalk.SpecFlow;
     
@@ -68,7 +68,7 @@ namespace Thycotic.SecretServerEngine.Tests
         {
 #line 4
 #line 5
- testRunner.Given("there exists an object of type \"Thycotic.SecretServerEngine.EngineService, Thycot" +
+ testRunner.Given("there exists an object of type \"Thycotic.DistributedEngine.EngineService, Thycot" +
                     "ic.SecretServerEngine\" stored in the scenario as EngineServiceTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }

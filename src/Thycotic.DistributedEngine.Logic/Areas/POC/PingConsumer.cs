@@ -3,7 +3,7 @@ using System.Linq;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.SecretServerEngine.Logic.Areas.POC
+namespace Thycotic.DistributedEngine.Logic.Areas.POC
 {
     /// <summary>
     /// Simple Hello World consumer

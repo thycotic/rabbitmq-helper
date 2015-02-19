@@ -3,7 +3,7 @@ using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Areas.POC.Response;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.SecretServerEngine.Logic.Areas.POC
+namespace Thycotic.DistributedEngine.Logic.Areas.POC
 {
     /// <summary>
     /// Sort list RPC consumer

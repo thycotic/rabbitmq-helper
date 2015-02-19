@@ -6,7 +6,7 @@ using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Areas.POC.Response;
 
-namespace Thycotic.SecretServerEngine.InteractiveRunner.ConsoleCommands.POC
+namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 {
     class SortListCommand : ConsoleCommandBase
     {

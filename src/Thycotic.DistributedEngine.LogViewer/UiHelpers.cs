@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 
-namespace Thycotic.SecretServerEngine.LogViewer
+namespace Thycotic.DistributedEngine.LogViewer
 {
     public static class UiHelpers
     {

@@ -1,4 +1,4 @@
-﻿namespace Thycotic.SecretServerEngine.Configuration
+﻿namespace Thycotic.DistributedEngine.Configuration
 {
     /// <summary>
     /// Possible configuration endpoints
