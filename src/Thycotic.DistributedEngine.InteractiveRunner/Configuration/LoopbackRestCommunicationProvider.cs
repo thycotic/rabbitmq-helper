@@ -23,17 +23,10 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         {
             const string prefix = EndPoints.EngineWebService.Prefix;
 
-            _loopBacks = new Dictionary<Uri, Func<object, dynamic>>
-            {
-                {
-                    this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.GetConfiguration),
-                    LoopbackNotSupported
-                },
-                {
-                    this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.Authenticate),
-                    LoopbackAuthenticate
-                }
-            };
+            _loopBacks.Add(this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.GetConfiguration),
+                LoopbackNotSupported);
+            _loopBacks.Add(this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.Authenticate),
+                LoopbackAuthenticate);
         }
 
         public TResult Post<TResult>(Uri uri, object request)
