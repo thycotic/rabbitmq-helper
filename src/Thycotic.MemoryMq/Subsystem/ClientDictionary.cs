@@ -1,6 +1,5 @@
 ﻿using System.Collections.Concurrent;
 using System.Linq;
-using System.ServiceModel;
 using Thycotic.Logging;
 
 namespace Thycotic.MemoryMq.Subsystem
@@ -10,10 +9,21 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class ClientDictionary : IClientDictionary
     {
+        private readonly ICallbackChannelProvider _callbackChannelProvider;
+
         private readonly ConcurrentDictionary<string, ClientList> _data =
             new ConcurrentDictionary<string, ClientList>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ClientDictionary));
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientDictionary"/> class.
+        /// </summary>
+        /// <param name="callbackChannelProvider">The callback channel provider.</param>
+        public ClientDictionary(ICallbackChannelProvider callbackChannelProvider)
+        {
+            _callbackChannelProvider = callbackChannelProvider;
+        }
 
         /// <summary>
         /// Adds the client.
@@ -21,7 +31,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queueName">Name of the queue.</param>
         public void AddClient(string queueName)
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IMemoryMqServerCallback>();
+            var callback = _callbackChannelProvider.GetCallbackChannel(); 
 
             var client = new MemoryMqServerClientProxy(callback.GetChannel(), callback);
 

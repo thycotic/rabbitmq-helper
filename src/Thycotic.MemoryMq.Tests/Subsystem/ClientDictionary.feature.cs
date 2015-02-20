@@ -68,26 +68,54 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         {
 #line 3
 #line 4
- testRunner.Given("there exists an object of type \"Thycotic.MemoryMq.Subsystem.ClientDictionary, Thy" +
-                    "cotic.MemoryMq\" stored in the scenario as ClientDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.ICallbackCh" +
+                    "annelProvider, Thycotic.MemoryMq\" stored in the scenario as CallbackChannelProvi" +
+                    "derTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 5
+ testRunner.And("there exists a ClientDictionary stored in the scenario as ClientDictionaryTest wi" +
+                    "th CallbackChennelProvider CallbackChannelProviderTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 6
+ testRunner.And("the substitute object CallbackChannelProviderTest returns a substitute for GetCal" +
+                    "lbackChannel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("TryGetClient should call GetOrAdd On ConcurrentDictionary")]
+        [NUnit.Framework.DescriptionAttribute("AddClient adds a client to the dictionary")]
         [NUnit.Framework.CategoryAttribute("mytag")]
-        public virtual void TryGetClientShouldCallGetOrAddOnConcurrentDictionary()
+        public virtual void AddClientAddsAClientToTheDictionary()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("TryGetClient should call GetOrAdd On ConcurrentDictionary", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("AddClient adds a client to the dictionary", new string[] {
                         "mytag"});
-#line 12
+#line 9
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
-#line 13
+#line 10
+ testRunner.When("the method AddClient on ClientDictionary ClientDictionaryTest is called with queu" +
+                    "e name queueNameTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 11
  testRunner.When("the method TryGetClient on ClientDictionary ClientDictionaryTest is called with q" +
                     "ueue name queueNameTest and the result is stored in scenario as clientResult", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 12
+ testRunner.Then("the result stored in scenario as clientResult is not null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("TryGetClient should call GetOrAdd On ConcurrentDictionary")]
+        public virtual void TryGetClientShouldCallGetOrAddOnConcurrentDictionary()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("TryGetClient should call GetOrAdd On ConcurrentDictionary", ((string[])(null)));
 #line 14
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line 15
+ testRunner.When("the method TryGetClient on ClientDictionary ClientDictionaryTest is called with q" +
+                    "ueue name queueNameTest and the result is stored in scenario as clientResult", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
  testRunner.Then("the result stored in scenario as clientResult is null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

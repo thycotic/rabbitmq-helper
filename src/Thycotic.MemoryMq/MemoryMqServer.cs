@@ -21,11 +21,19 @@ namespace Thycotic.MemoryMq
         /// Initializes a new instance of the <see cref="MemoryMqServer"/> class.
         /// This the constructor used by WCF
         /// </summary>
-        public MemoryMqServer()
+        public MemoryMqServer() : this(new CallbackChannelProvider())
+        {
+            //default constructor for wcf
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryMqServer"/> class.
+        /// </summary>
+        public MemoryMqServer(ICallbackChannelProvider callbackChannelProvider)
         {
             _messages = new ExchangeDictionary();
             _bindings = new BindingDictionary();
-            _clients = new ClientDictionary();
+            _clients = new ClientDictionary(callbackChannelProvider);
             _messageDispatcher = new MessageDispatcher(_messages, _bindings, _clients);
             _messageDispatcher.Start();
         }
