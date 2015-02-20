@@ -22,9 +22,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         public LoopbackConfigurationProvider()
         {
             _scenarios.Add(Scenarios.NonSslMemoryMq, NonSslMemoryMq);
-            _scenarios.Add(Scenarios.SslMemoryMq, SslMemoryMq);
             _scenarios.Add(Scenarios.NonSslRabbitMq, NonSslRabbitMq);
+#if NO
+            //TODO: Certificates need to be worked out
+            _scenarios.Add(Scenarios.SslMemoryMq, SslMemoryMq);
             _scenarios.Add(Scenarios.SslRabbitMq, SslRabbitMq);
+#endif
         }
 
         public Dictionary<string, string> GetConfiguration()
@@ -38,6 +41,22 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             return _scenarios[scenario].Invoke();
         }
 
+        private static string GetMemoryMqConnectionString(int portNumber = DefaultPorts.MemoryMq.NonSsl)
+        {
+            return GetConnectionString("net.tcp", portNumber);
+        }
+
+        private static string GetRabbitMqConnectionString(int portNumber = DefaultPorts.RabbitMq.NonSsl)
+        {
+            return GetConnectionString("amqp", portNumber);
+        }
+
+        private static string GetConnectionString(string scheme, int portNumber)
+        {
+            //Environment.MachineName
+            return string.Format("{0}://{1}:{2}", scheme, "localhost", portNumber);
+        }
+
 
         private static Dictionary<string, string> NonSslMemoryMq()
         {
@@ -45,7 +64,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             {
                 {MessageQueue.Client.ConfigurationKeys.QueueExchangeName, "thycotic"},
                 {MessageQueue.Client.ConfigurationKeys.QueueType, SupportedMessageQueues.MemoryMq},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://localhost:8523"},
+                {MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString, GetMemoryMqConnectionString()},
                 {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "false"},
                 {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Start, "true"},
             };
@@ -58,9 +77,10 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             {
                 {MessageQueue.Client.ConfigurationKeys.QueueExchangeName, "thycotic"},
                 {MessageQueue.Client.ConfigurationKeys.QueueType, SupportedMessageQueues.MemoryMq},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://localhost:8523"},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "false"},
+                {MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString, GetMemoryMqConnectionString(DefaultPorts.MemoryMq.Ssl)},
+                {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "true"},
                 {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Start, "true"},
+                {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Thumbprint, "invalid"},
             };
         }
 
@@ -70,7 +90,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             {
                 {MessageQueue.Client.ConfigurationKeys.QueueExchangeName, "thycotic"},
                 {MessageQueue.Client.ConfigurationKeys.QueueType, SupportedMessageQueues.RabbitMq},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString, "amqp://localhost:5672"},
+                {MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString, GetRabbitMqConnectionString()},
                 {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "guest"},
                 {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "guest"},
                 {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "false"}
@@ -84,10 +104,11 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             return new Dictionary<string, string>
             {
                 {MessageQueue.Client.ConfigurationKeys.QueueExchangeName, "thycotic"},
-                {MessageQueue.Client.ConfigurationKeys.QueueType, SupportedMessageQueues.MemoryMq},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString, "net.tcp://localhost:8523"},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "false"},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Start, "true"},
+                {MessageQueue.Client.ConfigurationKeys.QueueType, SupportedMessageQueues.RabbitMq},
+                {MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString, GetRabbitMqConnectionString(DefaultPorts.RabbitMq.Ssl)},
+                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "guest"},
+                {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "guest"},
+                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "true"}
             };
         }
     }
