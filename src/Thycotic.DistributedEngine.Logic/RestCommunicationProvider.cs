@@ -1,4 +1,5 @@
-﻿using ServiceStack;
+﻿using System;
+using ServiceStack;
 using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.Logic
@@ -24,14 +25,14 @@ namespace Thycotic.DistributedEngine.Logic
         /// Posts the specified request to the specified path.
         /// </summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>
-        /// <param name="path">The path.</param>
+        /// <param name="uri">The URI.</param>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public TResult Post<TResult>(string path, object request)
+        public TResult Post<TResult>(Uri uri, object request)
         {
-            _log.Debug(string.Format("Posting to {0}", path));
+            _log.Debug(string.Format("Posting to {0}", uri));
 
-            return _serviceClient.Send<TResult>("POST", path, request);
+            return _serviceClient.Send<TResult>("POST", uri.ToString(), request);
         }
     }
 }

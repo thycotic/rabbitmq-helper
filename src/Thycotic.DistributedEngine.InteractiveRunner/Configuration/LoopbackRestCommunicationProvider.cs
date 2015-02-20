@@ -16,17 +16,17 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         private readonly ByteSaltProvider _saltProvider = new ByteSaltProvider();
         private readonly AsymmetricEncryptor _asymmetricEncryptor = new AsymmetricEncryptor();
 
-        public TResult Post<TResult>(string path, object request)
+        public TResult Post<TResult>(Uri uri, object request)
         {
-            switch (path)
+            switch (uri.ToString())
             {
-                case EndPoints.GetConfiguration:
+                case EndPoints.EngineWebService.Actions.GetConfiguration:
                     throw new NotSupportedException("LoopbackConfigurationProvider should have been used");
-                case EndPoints.Authenticate:
+                case EndPoints.EngineWebService.Actions.Authenticate:
                     return (dynamic)Authenticate(request);
                 default:
-                    throw new NotSupportedException(string.Format("No loopback configured for {0}", path));
-                
+                    throw new NotSupportedException(string.Format("No loopback configured for {0}", uri));
+
             }
         }
 
@@ -39,7 +39,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         private EngineAuthenticationResponse Authenticate(object request)
         {
             var authRequest = (EngineAuthenticationRequest)request;
-            	
+
             const int aesKeySize = 256;
             const int ivSize = 128;
 
