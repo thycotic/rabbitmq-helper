@@ -2,6 +2,7 @@
 using System.Configuration;
 using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
+using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
@@ -19,16 +20,19 @@ namespace Thycotic.DistributedEngine.Security
     public class MessageEncryptionKeyProvider : IMessageEncryptionKeyProvider
     {
         private readonly IRestCommunicationProvider _restCommunicationProvider;
+        private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly ILogWriter _log = Log.Get(typeof(MessageEncryptionKeyProvider));
 
         /// <summary>
         /// Messages the encryptor.
         /// </summary>
+        /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="localKeyProvider">The local key provider.</param>
         /// <param name="restCommunicationProvider">The remote configuration provider.</param>
-        public MessageEncryptionKeyProvider(ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider)
+        public MessageEncryptionKeyProvider(IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider)
         {
+            _engineIdentificationProvider = engineIdentificationProvider;
             _localKeyProvider = localKeyProvider;
             _restCommunicationProvider = restCommunicationProvider;
         }
@@ -52,6 +56,7 @@ namespace Thycotic.DistributedEngine.Security
                             EndPoints.EngineWebService.Actions.Authenticate),
                     new EngineAuthenticationRequest
                     {
+                        IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                         ExchangeName = exchangeName,
                         PublicKey = Convert.ToBase64String(publicKey.Value),
                         Version = ReleaseInformationHelper.GetVersionAsDouble()

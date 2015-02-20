@@ -6,6 +6,7 @@ using Thycotic.AppCore.Cryptography;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
+using Thycotic.ihawu.Business;
 using Thycotic.Logging;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.DistributedEngine.Logic;
@@ -20,8 +21,7 @@ namespace Thycotic.DistributedEngine.Configuration
     /// </summary>
     public class RemoteConfigurationProvider : IRemoteConfigurationProvider
     {
-        private readonly string _friendlyName;
-        private readonly Guid _identityGuid;
+        private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IRestCommunicationProvider _restCommunicationProvider;
         private readonly IObjectSerializer _objectSerializer;
@@ -31,15 +31,13 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteConfigurationProvider" /> class.
         /// </summary>
-        /// <param name="friendlyName"></param>
-        /// <param name="identityGuid"></param>
+        /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="localKeyProvider">The local key provider.</param>
         /// <param name="restCommunicationProvider">The remote communication provider.</param>
         /// <param name="objectSerializer">The message serializer.</param>
-        public RemoteConfigurationProvider(string friendlyName, Guid identityGuid, ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider, IObjectSerializer objectSerializer)
+        public RemoteConfigurationProvider(IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider, IObjectSerializer objectSerializer)
         {
-            _friendlyName = friendlyName;
-            _identityGuid = identityGuid;
+            _engineIdentificationProvider = engineIdentificationProvider;
             _localKeyProvider = localKeyProvider;
             _restCommunicationProvider = restCommunicationProvider;
             _objectSerializer = objectSerializer;
@@ -63,8 +61,8 @@ namespace Thycotic.DistributedEngine.Configuration
                             EndPoints.EngineWebService.Actions.GetConfiguration),
                         new EngineConfigurationRequest
                         {
-                            IdentityGuid = _identityGuid,
-                            FriendlyName = _friendlyName,
+                            IdentityGuid = _engineIdentificationProvider.IdentityGuid,
+                            FriendlyName = _engineIdentificationProvider.FriendlyName,
                             PublicKey = Convert.ToBase64String(publicKey.Value),
                             Version = ReleaseInformationHelper.GetVersionAsDouble()
                         });

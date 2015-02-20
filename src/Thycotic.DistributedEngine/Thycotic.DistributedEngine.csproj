@@ -167,6 +167,8 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="ConfigurationKeys.cs" />
+    <Compile Include="Configuration\EngineIdentificationProvider.cs" />
+    <Compile Include="Configuration\IEngineIdentificationProvider.cs" />
     <Compile Include="EngineService.cs">
       <SubType>Component</SubType>
     </Compile>

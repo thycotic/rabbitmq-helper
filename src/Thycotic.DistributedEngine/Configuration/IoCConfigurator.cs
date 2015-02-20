@@ -85,6 +85,13 @@ namespace Thycotic.DistributedEngine.Configuration
             var builder = new ContainerBuilder();
 
             builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
+            
+            builder.Register(context => new EngineIdentificationProvider
+            {
+                FriendlyName = GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName),
+                IdentityGuid =
+                    new Guid(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.IdentityGuid))
+            }).As<IEngineIdentificationProvider>().SingleInstance();
 
             builder.RegisterType<LocalKeyProvider>().AsImplementedInterfaces().SingleInstance();
             builder.Register(context => _restCommunicationProvider).As<IRestCommunicationProvider>().AsImplementedInterfaces();
@@ -115,13 +122,17 @@ namespace Thycotic.DistributedEngine.Configuration
 
             if (_remoteConfigurationProvider == null)
             {
-                var friendlyName = GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName);
-                var identityGuid =
-                    new Guid(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.IdentityGuid));
+                
                 var keyProvider = new LocalKeyProvider();
                 var restClient = new RestCommunicationProvider(url);
 
-                _remoteConfigurationProvider = new RemoteConfigurationProvider(friendlyName, identityGuid, keyProvider,
+                var engineIdentificationProvider = new EngineIdentificationProvider
+                {
+                    FriendlyName = GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName),
+                    IdentityGuid =
+                        new Guid(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.IdentityGuid))
+                };
+                _remoteConfigurationProvider = new RemoteConfigurationProvider(engineIdentificationProvider , keyProvider,
                     restClient, new JsonObjectSerializer());
             }
 
