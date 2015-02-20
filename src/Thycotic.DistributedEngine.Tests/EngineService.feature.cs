@@ -68,9 +68,38 @@ namespace Thycotic.DistributedEngine.Tests
         {
 #line 4
 #line 5
- testRunner.Given("there exists an object of type \"Thycotic.DistributedEngine.EngineService, Thycot" +
-                    "ic.SecretServerEngine\" stored in the scenario as EngineServiceTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists an object of type \"System.Boolean\" stored in the scenario as startCo" +
+                    "nsumingTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 6
+ testRunner.And("there exists a substitute object of type \"Thycotic.DistributedEngine.Configuratio" +
+                    "n.IIoCConfigurator, Thycotic.DistributedEngine\" stored in the scenario as IoCCon" +
+                    "figuratorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 7
+ testRunner.And("there exists a EngineService stored in the scenario as EngineServiceTest with sta" +
+                    "rtConsuming startConsumingTest and IoCConfigurator IoCConfiguratorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 8
+ testRunner.And("the substitute object IoCConfiguratorTest returns true for TryGetRemoteConfigurat" +
+                    "ion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Start calls IoC configuration")]
+        [NUnit.Framework.CategoryAttribute("mytag")]
+        public virtual void StartCallsIoCConfiguration()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Start calls IoC configuration", new string[] {
+                        "mytag"});
+#line 12
+this.ScenarioSetup(scenarioInfo);
+#line 4
+this.FeatureBackground();
+#line 13
+ testRunner.When("the method Start on EngineService EngineServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 14
+ testRunner.Then("the method Build on IoCConfigurator substitute IoCConfiguratorTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
         }
     }
 }
