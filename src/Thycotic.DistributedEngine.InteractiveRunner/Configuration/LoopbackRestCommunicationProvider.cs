@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using Thycotic.AppCore;
@@ -16,18 +17,33 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         private readonly ByteSaltProvider _saltProvider = new ByteSaltProvider();
         private readonly AsymmetricEncryptor _asymmetricEncryptor = new AsymmetricEncryptor();
 
+        private readonly Dictionary<Uri, Func<object, dynamic>> _loopBacks = new Dictionary<Uri, Func<object, dynamic>>();
+
+        public LoopbackRestCommunicationProvider()
+        {
+            const string prefix = EndPoints.EngineWebService.Prefix;
+
+            _loopBacks = new Dictionary<Uri, Func<object, dynamic>>
+            {
+                {
+                    this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.GetConfiguration),
+                    LoopbackNotSupported
+                },
+                {
+                    this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.Authenticate),
+                    LoopbackAuthenticate
+                }
+            };
+        }
+
         public TResult Post<TResult>(Uri uri, object request)
         {
-            switch (uri.ToString())
+            if (_loopBacks.ContainsKey(uri))
             {
-                case EndPoints.EngineWebService.Actions.GetConfiguration:
-                    throw new NotSupportedException("LoopbackConfigurationProvider should have been used");
-                case EndPoints.EngineWebService.Actions.Authenticate:
-                    return (dynamic)Authenticate(request);
-                default:
-                    throw new NotSupportedException(string.Format("No loopback configured for {0}", uri));
-
+                return _loopBacks[uri].Invoke(request);
             }
+
+            throw new NotSupportedException(string.Format("No loopback configured for {0}", uri));
         }
 
         private byte[] EncryptWithPublicKey(string publicKey, byte[] bytes)
@@ -36,7 +52,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             return _asymmetricEncryptor.EncryptWithPublicKey(new PublicKey(Convert.FromBase64String(publicKey)), saltedBytes);
         }
 
-        private EngineAuthenticationResponse Authenticate(object request)
+        private static object LoopbackNotSupported(object request)
+        {
+            throw new NotSupportedException();
+        }
+
+        private EngineAuthenticationResponse LoopbackAuthenticate(object request)
         {
             var authRequest = (EngineAuthenticationRequest)request;
 
