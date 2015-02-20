@@ -21,7 +21,7 @@ namespace Thycotic.DistributedEngine
         {
             _log.Info("Application is starting...");
 
-            var logoStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.DistributedEngine2.logo.txt");
+            var logoStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.DistributedEngine.logo.txt");
 
             if (logoStream != null)
             {
