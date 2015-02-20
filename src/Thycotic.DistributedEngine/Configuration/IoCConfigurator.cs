@@ -17,7 +17,7 @@ namespace Thycotic.DistributedEngine.Configuration
     public class IoCConfigurator : IIoCConfigurator
     {
         private readonly IRestCommunicationProvider _restCommunicationProvider;
-        private readonly IRemoteConfigurationProvider _remoteConfigurationProvider;
+        private IRemoteConfigurationProvider _remoteConfigurationProvider;
         private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
 
         private Dictionary<string, string> _instanceConfiguration = new Dictionary<string, string>();
@@ -121,7 +121,7 @@ namespace Thycotic.DistributedEngine.Configuration
                 var keyProvider = new LocalKeyProvider();
                 var restClient = new RestCommunicationProvider(url);
 
-                var configurationProvider = new RemoteConfigurationProvider(friendlyName, identityGuid, keyProvider,
+                _remoteConfigurationProvider = new RemoteConfigurationProvider(friendlyName, identityGuid, keyProvider,
                     restClient, new JsonObjectSerializer());
             }
 

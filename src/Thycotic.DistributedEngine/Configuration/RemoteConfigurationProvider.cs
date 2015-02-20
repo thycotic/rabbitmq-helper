@@ -57,14 +57,17 @@ namespace Thycotic.DistributedEngine.Configuration
                 PrivateKey privateKey;
                 _localKeyProvider.GetKeys(out publicKey, out privateKey);
 
-                var response = _restCommunicationProvider.Post<EngineConfigurationResponse>(EndPoints.GetConfiguration,
-                    new EngineConfigurationRequest
-                    {
-                        IdentityGuid = _identityGuid,
-                        FriendlyName = _friendlyName,
-                        PublicKey = Convert.ToBase64String(publicKey.Value),
-                        Version = ReleaseInformationHelper.GetVersionAsDouble()
-                    });
+                var response =
+                    _restCommunicationProvider.Post<EngineConfigurationResponse>(
+                        _restCommunicationProvider.GetEndpointUri(EndPoints.EngineWebService.Prefix,
+                            EndPoints.EngineWebService.Actions.GetConfiguration),
+                        new EngineConfigurationRequest
+                        {
+                            IdentityGuid = _identityGuid,
+                            FriendlyName = _friendlyName,
+                            PublicKey = Convert.ToBase64String(publicKey.Value),
+                            Version = ReleaseInformationHelper.GetVersionAsDouble()
+                        });
 
                 if (!response.Success)
                 {

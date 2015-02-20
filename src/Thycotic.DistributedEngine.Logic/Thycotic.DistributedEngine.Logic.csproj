@@ -160,6 +160,7 @@
     <Compile Include="IRestCommunicationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestCommunicationProvider.cs" />
+    <Compile Include="RestCommunicationProviderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.Logging\Thycotic.Logging.csproj">

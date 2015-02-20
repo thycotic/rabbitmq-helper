@@ -48,7 +48,8 @@ namespace Thycotic.DistributedEngine.Security
                 PrivateKey privateKey;
                 _localKeyProvider.GetKeys(out publicKey, out privateKey);
 
-                var response = _restCommunicationProvider.Post<EngineAuthenticationResponse>(EndPoints.Authenticate,
+                var response = _restCommunicationProvider.Post<EngineAuthenticationResponse>(_restCommunicationProvider.GetEndpointUri(EndPoints.EngineWebService.Prefix,
+                            EndPoints.EngineWebService.Actions.Authenticate),
                     new EngineAuthenticationRequest
                     {
                         ExchangeName = exchangeName,
