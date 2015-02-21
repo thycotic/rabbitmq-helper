@@ -4,7 +4,7 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Thycotic.DistributedEngine2.LogViewer")]
+[assembly: AssemblyTitle("Thycotic.DistributedEngine.LogViewer")]
 [assembly: AssemblyDescription("")]
 //In order to begin building localizable applications, set 
 //<UICulture>CultureYouAreCodingWith</UICulture> in your .csproj file

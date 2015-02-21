@@ -1,1 +1,1 @@
-start cmd /k ..\Thycotic.DistributedEngine2.InteractiveRunner.exe i
+start cmd /k ..\Thycotic.DistributedEngine.InteractiveRunner.exe i

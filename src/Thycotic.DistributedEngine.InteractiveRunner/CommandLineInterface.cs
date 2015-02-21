@@ -73,7 +73,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
         private static void ConfigureConsoleWindow()
         {
-            Console.Title = string.Format("Secret Server Agent in interactive mode v.{0} ({1})", ReleaseInformationHelper.Version, ReleaseInformationHelper.Architecture);
+            Console.Title = string.Format("Secret Server Distributed Engine in interactive mode v.{0} ({1})", ReleaseInformationHelper.Version, ReleaseInformationHelper.Architecture);
 
             InteropHelper.DisableCloseMenuItem();
 
