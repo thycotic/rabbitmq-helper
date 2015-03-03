@@ -32,5 +32,13 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         {
             WriteHelper(() => Console.Write(value));
         }
+        
+        public static void WriteMatrix(char value)
+        {
+            var random = new Random(Guid.NewGuid().GetHashCode());
+
+            Console.SetCursorPosition(random.Next(Console.LargestWindowWidth-20), random.Next(Console.LargestWindowHeight - 20));
+            WriteHelper(() => Console.Write(value));
+        }
     }
 }
