@@ -35,9 +35,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         
         public static void WriteMatrix(char value)
         {
+            const int margin = 10;
             var random = new Random(Guid.NewGuid().GetHashCode());
-
-            Console.SetCursorPosition(random.Next(Console.LargestWindowWidth-20), random.Next(Console.LargestWindowHeight - 20));
+            Console.SetCursorPosition(random.Next(Console.LargestWindowWidth-margin), random.Next(Console.LargestWindowHeight - margin));
             WriteHelper(() => Console.Write(value));
         }
     }
