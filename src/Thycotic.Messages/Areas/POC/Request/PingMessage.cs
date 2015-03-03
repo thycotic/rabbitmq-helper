@@ -7,6 +7,15 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// </summary>
     public class PingMessage : IConsumable
     {
+
+        /// <summary>
+        /// Gets or sets the sequence.
+        /// </summary>
+        /// <value>
+        /// The sequence.
+        /// </value>
+        public int Sequence { get; set; }
+
         /// <summary>
         /// Gets the version.
         /// </summary>

@@ -42,7 +42,10 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 
                 Enumerable.Range(0, count).AsParallel().ForAll(i =>
                 {
-                    var message = new PingMessage();
+                    var message = new PingMessage
+                    {
+                        Sequence = i
+                    };
 
                     _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
                 });
