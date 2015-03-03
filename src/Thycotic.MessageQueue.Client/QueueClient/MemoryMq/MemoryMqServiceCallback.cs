@@ -7,7 +7,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
     /// <summary>
     /// Callback from the memory Mq
     /// </summary>
-    public class MemoryMqServiceCallback : IMemoryMqServerCallback, IDisposable
+    public class MemoryMqServiceCallback : IMemoryMqServerCallback
     {
 
         /// <summary>
@@ -24,20 +24,12 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         {
             if (BytesReceived != null)
             {
-                Task.Factory.StartNew(() => BytesReceived(this, deliveryArgs));
+                BytesReceived(this, deliveryArgs);
             }
             else
             {
                 throw new ApplicationException("There is no one listening");
             }
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            BytesReceived = null;
         }
     }
 }

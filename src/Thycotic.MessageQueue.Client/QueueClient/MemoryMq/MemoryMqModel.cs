@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Thycotic.MemoryMq;
 using Thycotic.MessageQueue.Client.Wrappers;
 
@@ -225,10 +226,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
             //when the server sends us something, process it
             _callback.BytesReceived +=
-                (sender, deliveryArgs) =>
-                    consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag, deliveryArgs.Redelivered, deliveryArgs.Exchange,
-                        deliveryArgs.RoutingKey, Map(deliveryArgs.Properties), deliveryArgs.Body);
-
+                (sender, deliveryArgs) => Task.Factory.StartNew(() =>
+                    consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag,
+                        deliveryArgs.Redelivered, deliveryArgs.Exchange,
+                        deliveryArgs.RoutingKey, Map(deliveryArgs.Properties), deliveryArgs.Body));
         }
 
         /// <summary>
