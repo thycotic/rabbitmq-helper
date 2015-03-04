@@ -9,10 +9,5 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         {
             
         }
-
-        private LoopbackIoCConfigurator(IRestCommunicationProvider restCommunicationProvider, IRemoteConfigurationProvider remoteConfigurationProvider)
-            : base(restCommunicationProvider, remoteConfigurationProvider)
-        {
-        }
     }
 }
