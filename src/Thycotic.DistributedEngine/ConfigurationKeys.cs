@@ -16,10 +16,15 @@
             public const string ConnectionString = "RemoteConfiguration.ConnectionString";
 
             /// <summary>
+            /// The organization identifier
+            /// </summary>
+            public const string OrganizationId = "RemoteConfiguration.OrganizationId";
+
+            /// <summary>
             /// The friendly name of the engine
             /// </summary>
             public const string FriendlyName = "RemoteConfiguration.FriendlyName";
-
+            
             /// <summary>
             /// The identity unique identifier
             /// </summary>
