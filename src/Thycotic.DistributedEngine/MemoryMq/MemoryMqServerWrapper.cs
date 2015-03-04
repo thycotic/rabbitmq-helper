@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IdentityModel.Selectors;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.ServiceModel.Security;
@@ -13,7 +12,7 @@ namespace Thycotic.DistributedEngine.MemoryMq
     /// <summary>
     /// Memory mq WCF server wrapper.
     /// </summary>
-    public class MemoryMqServer : IStartable, IDisposable
+    public class MemoryMqServerWrapper : IStartable, IDisposable
     {
         private readonly string _connectionString;
         private readonly bool _useSsl;
@@ -21,33 +20,28 @@ namespace Thycotic.DistributedEngine.MemoryMq
         private Task _serverTask;
         private ServiceHost _host;
 
-        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServer));
-        private readonly UserNamePasswordValidator _engineClientVerifier;
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServerWrapper));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqServer"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqServerWrapper"/> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
-        /// <param name="engineClientVerifier">The engine client verifier.</param>
-        public MemoryMqServer(string connectionString, UserNamePasswordValidator engineClientVerifier)
+        public MemoryMqServerWrapper(string connectionString)
         {
             _connectionString = connectionString;
             _useSsl = false;
-            _engineClientVerifier = engineClientVerifier;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqServer" /> class.
+        /// Initializes a new instance of the <see cref="MemoryMqServerWrapper" /> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
         /// <param name="thumbprint">The thumbprint.</param>
-        /// <param name="engineClientVerifier">The engine client verifier.</param>
-        public MemoryMqServer(string connectionString, string thumbprint, UserNamePasswordValidator engineClientVerifier)
+        public MemoryMqServerWrapper(string connectionString, string thumbprint)
         {
             _connectionString = connectionString;
             _useSsl = true;
             _thumbprint = thumbprint;
-            _engineClientVerifier = engineClientVerifier;
         }
 
         /// <summary>

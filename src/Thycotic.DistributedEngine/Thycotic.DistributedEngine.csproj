@@ -181,9 +181,7 @@
     <Compile Include="Security\ILocalKeyProvider.cs" />
     <Compile Include="Security\LocalKeyProvider.cs" />
     <Compile Include="Security\MessageEncryptor.cs" />
-    <Compile Include="MemoryMq\EngineClientVerifier.cs" />
-    <Compile Include="MemoryMq\IEngineClientVerifier.cs" />
-    <Compile Include="MemoryMq\MemoryMqServer.cs" />
+    <Compile Include="MemoryMq\MemoryMqServerWrapper.cs" />
     <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="IoC\LogicModule.cs" />
     <Compile Include="IoC\MessageQueueModule.cs" />
