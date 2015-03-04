@@ -100,7 +100,7 @@ namespace Thycotic.DistributedEngine.MemoryMq
         /// </summary>
         public void Stop()
         {
-            _log.Info("Server stopping...");
+            _log.Info("Server stopping. This might take a few seconds...");
 
             if ((_host == null) || (_serverTask == null)) return;
 
