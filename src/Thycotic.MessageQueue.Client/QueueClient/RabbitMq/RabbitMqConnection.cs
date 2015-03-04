@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Security;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using RabbitMQ.Client;
@@ -37,28 +38,26 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         public RabbitMqConnection(string url, string userName, string password, bool useSsl)
         {
             //TODO: Get rid of the redundant redundant -dkk
+            _connectionFactory = new ConnectionFactory
+            {
+                Uri = url,
+                RequestedHeartbeat = 300,
+                UserName = userName,
+                Password = password
+            };
 
             if (useSsl)
             {
                 var uri = new Uri(url);
 
-                _connectionFactory = new ConnectionFactory
+                _connectionFactory.Ssl = new SslOption
                 {
-                    HostName = uri.Host,
-                    VirtualHost = "/", //TODO: Change maybe?
-                    Port = uri.Port,
-                    Ssl = new SslOption
-                    {
-                        Enabled = true,
-                        ServerName = uri.Host,
-                        AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch |
-                                                 SslPolicyErrors.RemoteCertificateChainErrors,
-                    },
-                    Uri = url,
-                    RequestedHeartbeat = 300,
-                    UserName = userName,
-                    Password = password
+                    Enabled = true,
+                    ServerName = uri.Host,
+                    //AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch | SslPolicyErrors.RemoteCertificateChainErrors,
                 };
+
+
             }
             else
             {
