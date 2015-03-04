@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
+using System.Threading;
 using Autofac;
 using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
 using Thycotic.Logging;
@@ -30,21 +31,22 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 if (args.Any() && args.First().StartsWith("i"))
                 {
                     Console.WriteLine("Starting interactive mode...");
+                    Console.WriteLine();
 
                     var cli = new CommandLineInterface();
 
                     #region Start server
                     var startConsuming = !args.First().EndsWith("cd");
 
-                    var agent = args.First().StartsWith("il")
+                    var engine = args.First().StartsWith("il")
                         ? new EngineService(startConsuming, new LoopbackIoCConfigurator()) //loopback
                         : new EngineService(startConsuming);
                     
-                    agent.Start(new string[] { });
+                    engine.Start(new string[] { });
                     #endregion
 
                     #region Start client
-                    ConfigureCli(cli, agent.IoCContainer);
+                    ConfigureCli(cli, engine.IoCContainer);
 
                     cli.BeginInputLoop(string.Join(" ", args.Skip(1)));
                     #endregion
@@ -52,8 +54,13 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     #region Clean up
                     cli.Wait();
 
-                    agent.Stop();
+                    engine.Stop();
                     #endregion
+
+                    Console.WriteLine();
+                    Console.WriteLine("Engine stopped");
+
+                    Thread.Sleep(TimeSpan.FromSeconds(2));
                 }
                 else
                 {
