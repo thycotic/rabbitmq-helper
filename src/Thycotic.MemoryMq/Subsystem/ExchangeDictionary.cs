@@ -88,8 +88,6 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <exception cref="System.NotImplementedException"></exception>
         public void RestorePersistedMessages()
         {
-            _log.Info("Restoring messages from disk");
-
             try
             {
                 var path = GetPersistPath();
@@ -98,6 +96,8 @@ namespace Thycotic.MemoryMq.Subsystem
                     //nothing to restore
                     return;
                 }
+
+                _log.Info("Restoring messages from disk...");
 
                 CombinedSnapshot snapshot;
 
@@ -129,8 +129,6 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public void PersistMessages()
         {
-            _log.Info("Persisting messages to disk");
-
             try
             {
                 var path = GetPersistPath();
@@ -145,6 +143,8 @@ namespace Thycotic.MemoryMq.Subsystem
                     //nothing to persist
                     return;
                 }
+
+                _log.Info("There are messages in the exchange. Persisting to disk...");
 
 
                 var snapshot = GenerateSnapshot();

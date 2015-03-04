@@ -136,8 +136,6 @@ namespace Thycotic.MemoryMq.Subsystem
                 _monitoringTask.Wait();
             }
 
-            _log.Info("Persisting exchange messages...");
-
             var persistTask = Task.Factory.StartNew(() => _exchange.PersistMessages());
 
             //TODO: Make configurable as indefinite sounds bad
