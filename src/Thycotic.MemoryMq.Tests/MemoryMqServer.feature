@@ -35,4 +35,4 @@ Scenario: BasicNack calls NegativelyAcknowledge on ExchangeDictionary
 
 Scenario: Dispose calls Stop on MessageDispatcher
 	When the method Dispose on MemoryMqServer MemoryMqServerTest is called
-	Then the method Stop on MessageDispatcher substitute MessageDispatcherTest is called
+	Then the method Dispose on MessageDispatcher substitute MessageDispatcherTest is called

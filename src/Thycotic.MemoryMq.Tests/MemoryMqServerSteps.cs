@@ -114,11 +114,11 @@ namespace Thycotic.MemoryMq.Tests
             messages.Received().NegativelyAcknowledge(Arg.Any<ulong>(), Arg.Any<RoutingSlip>());
         }
 
-        [Then(@"the method Stop on MessageDispatcher substitute (\w+) is called")]
+        [Then(@"the method Dispose on MessageDispatcher substitute (\w+) is called")]
         public void ThenTheMethodStopOnMessageDispatcherSubstituteIsCalled(string dispatcherName)
         {
             var messageDispatcher = (IMessageDispatcher)ScenarioContext.Current[dispatcherName];
-            messageDispatcher.Received().Stop();
+            messageDispatcher.Received().Dispose();
         }
     }
 }

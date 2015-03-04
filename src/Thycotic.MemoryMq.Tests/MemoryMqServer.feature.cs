@@ -207,7 +207,8 @@ this.FeatureBackground();
 #line 37
  testRunner.When("the method Dispose on MemoryMqServer MemoryMqServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 38
- testRunner.Then("the method Stop on MessageDispatcher substitute MessageDispatcherTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method Dispose on MessageDispatcher substitute MessageDispatcherTest is calle" +
+                    "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
