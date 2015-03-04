@@ -94,13 +94,7 @@
                 /// </summary>
                 public const string Thumbprint = "MemoryMq.Server.Thumbprint";
 
-                /// <summary>
-                /// The start server
-                /// </summary>
-                public const string Start = "MemoryMq.Server.Start";
-
             }
         }
-
     }
 }

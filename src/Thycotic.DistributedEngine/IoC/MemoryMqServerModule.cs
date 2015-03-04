@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IdentityModel.Selectors;
+using System.Net;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.DistributedEngine.MemoryMq;
@@ -20,24 +20,21 @@ namespace Thycotic.DistributedEngine.IoC
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
+            
+            var connectionString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
+            _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-            var startServerString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Start);
+            var uri = new Uri(connectionString);
 
-            bool startServer;
-            if (!Boolean.TryParse(startServerString, out startServer))
+            //if the connection string host is different than the current,
+            //don't start server
+            if (!String.Equals(uri.Host, Dns.GetHostEntry("LocalHost").HostName, StringComparison.CurrentCultureIgnoreCase))
             {
-                return;
-            }
-
-            if (!startServer)
-            {
+                _log.Debug("Connection string host and local host are different. Memory Mq server will not start.");
                 return;
             }
 
             _log.Debug("Initializing Memory Mq server...");
-
-            var connectionString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
-            _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
             var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
             if (useSsl)

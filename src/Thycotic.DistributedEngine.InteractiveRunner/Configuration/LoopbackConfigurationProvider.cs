@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
 using System.Security.Cryptography;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.DistributedEngine.Configuration;
@@ -68,7 +69,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         private static string GetConnectionString(string scheme, int portNumber)
         {
             //Environment.MachineName
-            return string.Format("{0}://{1}:{2}", scheme, "localhost", portNumber);
+            return string.Format("{0}://{1}:{2}", scheme, Dns.GetHostEntry("LocalHost").HostName, portNumber);
         }
 
         private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetEncryptionPair()
@@ -100,8 +101,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
                 {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
                 {MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString, GetMemoryMqConnectionString()},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "false"},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Start, "true"},
+                {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "false"}
             };
         }
 
@@ -114,7 +114,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
                 {MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString, GetMemoryMqConnectionString(DefaultPorts.MemoryMq.Ssl)},
                 {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "true"},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Start, "true"},
                 {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Thumbprint, "invalid"},
             };
         }
