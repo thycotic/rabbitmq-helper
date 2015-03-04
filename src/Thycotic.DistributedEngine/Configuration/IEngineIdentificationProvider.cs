@@ -8,6 +8,14 @@ namespace Thycotic.DistributedEngine.Configuration
     public interface IEngineIdentificationProvider
     {
         /// <summary>
+        /// Gets or sets the organization identifier.
+        /// </summary>
+        /// <value>
+        /// The organization identifier.
+        /// </value>
+        int OrganizationId { get; set; }
+
+        /// <summary>
         /// Gets the name of the friendly.
         /// </summary>
         /// <value>
@@ -22,5 +30,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// The identity unique identifier.
         /// </value>
         Guid IdentityGuid { get; }
+
+        
     }
 }

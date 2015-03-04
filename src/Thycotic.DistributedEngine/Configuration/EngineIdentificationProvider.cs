@@ -8,6 +8,14 @@ namespace Thycotic.DistributedEngine.Configuration
     public class EngineIdentificationProvider : IEngineIdentificationProvider
     {
         /// <summary>
+        /// Gets or sets the organization identifier.
+        /// </summary>
+        /// <value>
+        /// The organization identifier.
+        /// </value>
+        public int OrganizationId { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the friendly.
         /// </summary>
         /// <value>

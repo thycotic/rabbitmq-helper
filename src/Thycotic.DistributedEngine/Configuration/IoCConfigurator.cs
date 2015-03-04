@@ -39,7 +39,7 @@ namespace Thycotic.DistributedEngine.Configuration
             return value;
         }
 
-        private string GetLocalConfigurationManagerProxy(string name)
+        private static string GetLocalConfigurationManagerProxy(string name)
         {
             var value = ConfigurationManager.AppSettings[name];
 
@@ -74,6 +74,17 @@ namespace Thycotic.DistributedEngine.Configuration
         }
 
 
+        private static EngineIdentificationProvider CreateEngineIdentificationProvider()
+        {
+            return new EngineIdentificationProvider
+            {
+                OrganizationId = Convert.ToInt32(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.OrganizationId)),
+                FriendlyName = GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName),
+                IdentityGuid =
+                    new Guid(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.IdentityGuid))
+            };
+        }
+
         /// <summary>
         /// Builds the IoC container.
         /// </summary>
@@ -86,12 +97,7 @@ namespace Thycotic.DistributedEngine.Configuration
 
             builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
             
-            builder.Register(context => new EngineIdentificationProvider
-            {
-                FriendlyName = GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName),
-                IdentityGuid =
-                    new Guid(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.IdentityGuid))
-            }).As<IEngineIdentificationProvider>().SingleInstance();
+            builder.Register(context => CreateEngineIdentificationProvider()).As<IEngineIdentificationProvider>().SingleInstance();
 
             builder.RegisterType<LocalKeyProvider>().AsImplementedInterfaces().SingleInstance();
             builder.Register(context => _restCommunicationProvider).As<IRestCommunicationProvider>().AsImplementedInterfaces();
@@ -126,13 +132,7 @@ namespace Thycotic.DistributedEngine.Configuration
                 var keyProvider = new LocalKeyProvider();
                 var restClient = new RestCommunicationProvider(url);
 
-                var engineIdentificationProvider = new EngineIdentificationProvider
-                {
-                    FriendlyName = GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName),
-                    IdentityGuid =
-                        new Guid(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.IdentityGuid))
-                };
-                _remoteConfigurationProvider = new RemoteConfigurationProvider(engineIdentificationProvider , keyProvider,
+                _remoteConfigurationProvider = new RemoteConfigurationProvider(CreateEngineIdentificationProvider() , keyProvider,
                     restClient, new JsonObjectSerializer());
             }
 

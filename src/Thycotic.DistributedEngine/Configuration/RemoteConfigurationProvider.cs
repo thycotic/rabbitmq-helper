@@ -6,7 +6,6 @@ using Thycotic.AppCore.Cryptography;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
-using Thycotic.ihawu.Business;
 using Thycotic.Logging;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.DistributedEngine.Logic;
@@ -61,6 +60,7 @@ namespace Thycotic.DistributedEngine.Configuration
                             EndPoints.EngineWebService.Actions.GetConfiguration),
                         new EngineConfigurationRequest
                         {
+                            OrganizationId = _engineIdentificationProvider.OrganizationId,
                             FriendlyName = _engineIdentificationProvider.FriendlyName,
                             IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                             PublicKey = Convert.ToBase64String(publicKey.Value),
