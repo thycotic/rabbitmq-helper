@@ -8,6 +8,14 @@ namespace Thycotic.DistributedEngine.Configuration
     public interface IEngineIdentificationProvider
     {
         /// <summary>
+        /// Gets or sets the name of the host.
+        /// </summary>
+        /// <value>
+        /// The name of the host.
+        /// </value>
+        string HostName { get; set; }
+
+        /// <summary>
         /// Gets or sets the organization identifier.
         /// </summary>
         /// <value>

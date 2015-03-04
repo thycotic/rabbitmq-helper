@@ -54,18 +54,20 @@ namespace Thycotic.DistributedEngine.Configuration
                 PrivateKey privateKey;
                 _localKeyProvider.GetKeys(out publicKey, out privateKey);
 
-                var response =
-                    _restCommunicationProvider.Post<EngineConfigurationResponse>(
-                        _restCommunicationProvider.GetEndpointUri(EndPoints.EngineWebService.Prefix,
-                            EndPoints.EngineWebService.Actions.GetConfiguration),
-                        new EngineConfigurationRequest
-                        {
-                            OrganizationId = _engineIdentificationProvider.OrganizationId,
-                            FriendlyName = _engineIdentificationProvider.FriendlyName,
-                            IdentityGuid = _engineIdentificationProvider.IdentityGuid,
-                            PublicKey = Convert.ToBase64String(publicKey.Value),
-                            Version = ReleaseInformationHelper.GetVersionAsDouble()
-                        });
+                var uri = _restCommunicationProvider.GetEndpointUri(EndPoints.EngineWebService.Prefix,
+                    EndPoints.EngineWebService.Actions.GetConfiguration);
+
+                var request = new EngineConfigurationRequest
+                {
+                    OrganizationId = _engineIdentificationProvider.OrganizationId,
+                    HostName = _engineIdentificationProvider.HostName,
+                    FriendlyName = _engineIdentificationProvider.FriendlyName,
+                    IdentityGuid = _engineIdentificationProvider.IdentityGuid,
+                    PublicKey = Convert.ToBase64String(publicKey.Value),
+                    Version = ReleaseInformationHelper.GetVersionAsDouble()
+                };
+                
+                var response = _restCommunicationProvider.Post<EngineConfigurationResponse>(uri, request);
 
                 if (!response.Success)
                 {
@@ -83,7 +85,7 @@ namespace Thycotic.DistributedEngine.Configuration
 
             catch (Exception ex)
             {
-                _log.Error("Failed to retrieve exchange key", ex);
+                _log.Warn(string.Format("Failed to retrieve configuration because {0}", ex.Message), ex);
                 throw;
             }
         }

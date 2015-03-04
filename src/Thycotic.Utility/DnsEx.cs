@@ -11,6 +11,7 @@
         /// <returns></returns>
         public static string GetDnsHostName()
         {
+            //HACK: Omg ugly
             return System.Net.Dns.GetHostEntry("LocalHost").HostName;
         }
     }
