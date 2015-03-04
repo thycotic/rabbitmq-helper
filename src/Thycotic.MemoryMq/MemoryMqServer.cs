@@ -16,6 +16,7 @@ namespace Thycotic.MemoryMq
         private readonly IMessageDispatcher _messageDispatcher;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServer));
+        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqServer"/> class.
@@ -116,7 +117,15 @@ namespace Thycotic.MemoryMq
         /// </summary>
         public void Dispose()
         {
-            _messageDispatcher.Stop();
+            //HACK: wcf seems to call Dispose twice -dkk
+            if (_disposed)
+            {
+                return;
+            }
+
+            _messageDispatcher.Dispose();
+
+            _disposed = true;
         }
     }
 }
