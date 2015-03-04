@@ -33,7 +33,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             if (UseSsl)
             {
                 clientBinding = new NetTcpBinding(SecurityMode.Transport);
-                clientBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+                clientBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
             }
             else
             {

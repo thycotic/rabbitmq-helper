@@ -62,7 +62,7 @@ namespace Thycotic.DistributedEngine.MemoryMq
                 if (_useSsl)
                 {
                     serviceBinding = new NetTcpBinding(SecurityMode.Transport);
-                    serviceBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+                    serviceBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
                 }
                 else
                 {
