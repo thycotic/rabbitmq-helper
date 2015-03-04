@@ -78,8 +78,6 @@
             /// </summary>
             public const string ConnectionString = "MemoryMq.ConnectionString";
 
-            //TODO: Use username/password? -dkk
-
             /// <summary>
             /// Whether or not to use SSL
             /// </summary>
