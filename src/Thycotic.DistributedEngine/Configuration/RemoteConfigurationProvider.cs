@@ -26,7 +26,7 @@ namespace Thycotic.DistributedEngine.Configuration
         private readonly IRestCommunicationProvider _restCommunicationProvider;
         private readonly IObjectSerializer _objectSerializer;
 
-        private readonly ILogWriter _log = Log.Get(typeof(MessageEncryptionKeyProvider));
+        private readonly ILogWriter _log = Log.Get(typeof(RemoteConfigurationProvider));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteConfigurationProvider" /> class.
@@ -61,8 +61,8 @@ namespace Thycotic.DistributedEngine.Configuration
                             EndPoints.EngineWebService.Actions.GetConfiguration),
                         new EngineConfigurationRequest
                         {
-                            IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                             FriendlyName = _engineIdentificationProvider.FriendlyName,
+                            IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                             PublicKey = Convert.ToBase64String(publicKey.Value),
                             Version = ReleaseInformationHelper.GetVersionAsDouble()
                         });

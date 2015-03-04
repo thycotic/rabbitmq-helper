@@ -11,14 +11,36 @@
         public const string HeartbeatInterval = "Heartbeat.Interval";
 
         /// <summary>
-        /// The queue type
+        /// Pipeline
         /// </summary>
-        public const string QueueType = "Queue.Type";
+        public static class Pipeline
+        {
+            /// <summary>
+            /// The queue type
+            /// </summary>
+            public const string QueueType = "Pipeline.QueueType";
+        }
 
         /// <summary>
-        /// The queue exchange
+        /// Exchange
         /// </summary>
-        public const string QueueExchangeName = "Queue.ExchangeName";
+        public static class Exchange
+        {
+            /// <summary>
+            /// The queue exchange
+            /// </summary>
+            public const string Name = "Exchange.Name";
+
+            /// <summary>
+            /// The symmetric key
+            /// </summary>
+            public const string SymmetricKey = "Exchange.SymmetricKey";
+
+            /// <summary>
+            /// The initialization vector
+            /// </summary>
+            public const string InitializationVector = "Exchange.InitializationVector";
+        }
 
         /// <summary>
         /// Rabbit Mq
@@ -81,5 +103,6 @@
 
             }
         }
+
     }
 }

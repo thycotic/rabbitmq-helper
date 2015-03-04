@@ -25,8 +25,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
             _loopBacks.Add(this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.GetConfiguration),
                 LoopbackNotSupported);
-            _loopBacks.Add(this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.Authenticate),
-                LoopbackAuthenticate);
         }
 
         public TResult Post<TResult>(Uri uri, object request)
@@ -50,27 +48,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             throw new NotSupportedException();
         }
 
-        private EngineAuthenticationResponse LoopbackAuthenticate(object request)
-        {
-            var authRequest = (EngineAuthenticationRequest)request;
-
-            const int aesKeySize = 256;
-            const int ivSize = 128;
-
-            using (var aes = new AesCryptoServiceProvider())
-            {
-                aes.BlockSize = ivSize;
-                aes.KeySize = aesKeySize;
-                aes.GenerateIV();
-                aes.GenerateKey();
-
-                return new EngineAuthenticationResponse
-                {
-                    Success = true,
-                    SymmetricKey = EncryptWithPublicKey(authRequest.PublicKey, aes.Key),
-                    InitializationVector = EncryptWithPublicKey(authRequest.PublicKey, aes.IV)
-                };
-            }
-        }
+        
     }
 }

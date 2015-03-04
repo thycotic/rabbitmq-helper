@@ -39,18 +39,27 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                 var count = Math.Max(0, Convert.ToInt32(countString));
 
                 _log.Info(string.Format("Flooding exchange with {0} request(s). Please wait...", count));
-
-                Enumerable.Range(0, count).AsParallel().ForAll(i =>
+                
+                try
                 {
-                    var message = new PingMessage
+                    var i = 0;
+                    while (i++ < count)
                     {
-                        Sequence = i
-                    };
 
-                    _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
-                });
+                        var message = new PingMessage
+                        {
+                            Sequence = i
+                        };
 
-                _log.Info("Flooding completed");
+                        _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
+                    }
+
+                    _log.Info("Flooding completed");
+                }
+                catch (ObjectDisposedException)
+                {
+                    _log.Info("Flooding aborted");
+                }
             };
         }
     }

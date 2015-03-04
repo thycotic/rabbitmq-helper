@@ -12,20 +12,27 @@ namespace Thycotic.DistributedEngine.Security
     /// </summary>
     public class MessageEncryptor : BaseMessageEncryptor
     {
-        private readonly IMessageEncryptionKeyProvider _encryptionKeyProvider;
         private readonly ILogWriter _log = Log.Get(typeof(MessageEncryptor));
 
         private readonly ConcurrentDictionary<string, MessageEncryptionPair<SymmetricKey, InitializationVector>> _encryptionPairs = new ConcurrentDictionary<string, MessageEncryptionPair<SymmetricKey, InitializationVector>>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessageEncryptor" /> class.
+        /// Adds the key.
         /// </summary>
-        /// <param name="encryptionKeyProvider">The encryption key provider.</param>
-        public MessageEncryptor(IMessageEncryptionKeyProvider encryptionKeyProvider)
+        /// <param name="exchangeName">Name of the exchange.</param>
+        /// <param name="symmetricKey">The symmetric key.</param>
+        /// <param name="initializationVector">The initialization vector.</param>
+        public bool TryAddKey(string exchangeName, SymmetricKey symmetricKey, InitializationVector initializationVector)
         {
-            _encryptionKeyProvider = encryptionKeyProvider;
+            _log.Info(string.Format("Adding symmetric key and initialization vector for {0} exchange", exchangeName));
 
+            return _encryptionPairs.TryAdd(exchangeName, new MessageEncryptionPair<SymmetricKey, InitializationVector>
+            {
+                SymmetricKey = symmetricKey,
+                InitializationVector = initializationVector
+            });
         }
+
 
         /// <summary>
         /// Gets the encryption pair.
@@ -34,28 +41,12 @@ namespace Thycotic.DistributedEngine.Security
         /// <returns></returns>
         protected override MessageEncryptionPair<SymmetricKey, InitializationVector> GetEncryptionPair(string exchangeName)
         {
-            //delegates in concurrent dictionary was not synchronized, so we lock
-            lock (_encryptionPairs)
+            MessageEncryptionPair<SymmetricKey, InitializationVector> pair;
+            if (!_encryptionPairs.TryGetValue(exchangeName, out pair))
             {
-                return _encryptionPairs.GetOrAdd(exchangeName, key =>
-                {
-                    _log.Info(string.Format("Retrieving encryption key for {0} exchange", exchangeName));
-
-                    SymmetricKey symmetricKey;
-                    InitializationVector initializationVector;
-
-                    if (!_encryptionKeyProvider.TryGetKey(exchangeName, out symmetricKey, out initializationVector))
-                    {
-                        throw new ApplicationException("No key information available");
-                    }
-
-                    return new MessageEncryptionPair<SymmetricKey, InitializationVector>
-                    {
-                        SymmetricKey = symmetricKey,
-                        InitializationVector = initializationVector
-                    };
-                });
+                throw new ApplicationException("No key information available");
             }
+            return pair;
         }
     }
 }

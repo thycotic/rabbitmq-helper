@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
+using Thycotic.AppCore.Cryptography;
+using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -28,16 +30,17 @@ namespace Thycotic.DistributedEngine.IoC
             builder.RegisterType<JsonObjectSerializer>().AsImplementedInterfaces().SingleInstance();
         }
 
-        private void LoadMessageEncryption(ContainerBuilder builder)
+        private void LoadExchange(ContainerBuilder builder)
         {
-            builder.RegisterType<MessageEncryptionKeyProvider>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<MessageEncryptor>().AsImplementedInterfaces().SingleInstance();
-        }
-
-        private void LoadExchangeResolution(ContainerBuilder builder)
-        {
-            var exchangeName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.QueueExchangeName);
+            var exchangeName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.Name);
             exchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic";
+
+            var symmetricKeyString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.SymmetricKey);
+            var initializationVectorString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.InitializationVector);
+
+            var symmetricKey = new SymmetricKey(Convert.FromBase64String(symmetricKeyString));
+            var initializationVector = new InitializationVector(Convert.FromBase64String(initializationVectorString));
+
             _log.Info(string.Format("Exchange name is {0}", exchangeName));
 
             builder.Register(context => new ExchangeNameProvider
@@ -45,6 +48,14 @@ namespace Thycotic.DistributedEngine.IoC
                 ExchangeName = exchangeName
             }).AsImplementedInterfaces().SingleInstance();
 
+            builder.Register(context =>
+            {
+                var messageEncryptionKeyProvider = new MessageEncryptor();
+                
+                messageEncryptionKeyProvider.TryAddKey(exchangeName, symmetricKey, initializationVector);
+
+                return messageEncryptionKeyProvider;
+            }).AsImplementedInterfaces().SingleInstance();
         }
 
 
@@ -114,11 +125,9 @@ namespace Thycotic.DistributedEngine.IoC
 
             LoadMessageSerialization(builder);
 
-            LoadMessageEncryption(builder);
+            LoadExchange(builder);
 
-            LoadExchangeResolution(builder);
-
-            var queueType = _configurationProvider(MessageQueue.Client.ConfigurationKeys.QueueType);
+            var queueType = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType);
             
             if (queueType == SupportedMessageQueues.RabbitMq)
             {
