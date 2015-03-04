@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Net;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.DistributedEngine.MemoryMq;
+using Thycotic.Utility;
 
 namespace Thycotic.DistributedEngine.IoC
 {
@@ -28,7 +28,7 @@ namespace Thycotic.DistributedEngine.IoC
 
             //if the connection string host is different than the current,
             //don't start server
-            if (!String.Equals(uri.Host, Dns.GetHostEntry("LocalHost").HostName, StringComparison.CurrentCultureIgnoreCase))
+            if (!String.Equals(uri.Host, DnsEx.GetDnsHostName(), StringComparison.CurrentCultureIgnoreCase))
             {
                 _log.Debug("Connection string host and local host are different. Memory Mq server will not start.");
                 return;

@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Net;
 using System.Security.Cryptography;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.DistributedEngine.Configuration;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.MessageQueue.Client;
+using Thycotic.Utility;
 using Thycotic.Utility.Security;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
@@ -69,7 +69,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         private static string GetConnectionString(string scheme, int portNumber)
         {
             //Environment.MachineName
-            return string.Format("{0}://{1}:{2}", scheme, Dns.GetHostEntry("LocalHost").HostName, portNumber);
+            return string.Format("{0}://{1}:{2}", scheme, DnsEx.GetDnsHostName(), portNumber);
         }
 
         private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetEncryptionPair()

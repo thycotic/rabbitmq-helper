@@ -7,6 +7,7 @@ using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.Wrappers.IoC;
+using Thycotic.Utility;
 using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.Configuration
@@ -78,6 +79,7 @@ namespace Thycotic.DistributedEngine.Configuration
         {
             return new EngineIdentificationProvider
             {
+                HostName = DnsEx.GetDnsHostName(),
                 OrganizationId = Convert.ToInt32(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.OrganizationId)),
                 FriendlyName = GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName),
                 IdentityGuid =
