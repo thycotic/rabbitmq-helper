@@ -179,7 +179,6 @@
     </Compile>
     <Compile Include="CommandLineInterface.cs" />
     <Compile Include="Configuration\LoopbackRestCommunicationProvider.cs" />
-    <Compile Include="Configuration\LoopbackConfigurationProvider.cs" />
     <Compile Include="ConsoleCommands\CommandAreas.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandBase.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandParameters.cs" />

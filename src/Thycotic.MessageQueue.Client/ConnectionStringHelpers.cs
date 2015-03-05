@@ -20,10 +20,9 @@ namespace Thycotic.MessageQueue.Client
         /// <summary>
         /// Gets the local rabbit mq connection string.
         /// </summary>
-        /// <param name="hostName">Name of the host.</param>
         /// <param name="portNumber">The port number.</param>
         /// <returns></returns>
-        public static string GetLocalRabbitMqConnectionString(string hostName, int portNumber = DefaultPorts.RabbitMq.NonSsl)
+        public static string GetLocalRabbitMqConnectionString(int portNumber = DefaultPorts.RabbitMq.NonSsl)
         {
             return GetRabbitMqConnectionString(DnsEx.GetDnsHostName(), portNumber);
         }
