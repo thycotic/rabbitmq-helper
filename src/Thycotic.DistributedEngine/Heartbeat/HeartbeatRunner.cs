@@ -87,7 +87,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
             }
 
             //the configuration has not changed since it was last consumed
-            //if (response.LastConfigurationUpdate <= _engineService.IoCConfigurator.LastConfigurationConsume) return;
+            if (response.LastConfigurationUpdated <= _engineService.IoCConfigurator.LastConfigurationConsumed) return;
 
             var saltProvider = new ByteSaltProvider();
 

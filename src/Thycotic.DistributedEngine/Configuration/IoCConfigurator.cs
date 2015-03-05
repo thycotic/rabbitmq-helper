@@ -26,8 +26,7 @@ namespace Thycotic.DistributedEngine.Configuration
         private readonly IRestCommunicationProvider _restCommunicationProvider;
         private IRemoteConfigurationProvider _remoteConfigurationProvider;
         
-        
-        private Dictionary<string, string> _instanceConfiguration = new Dictionary<string, string>();
+        private Dictionary<string, string> _instanceConfiguration;
 
         private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
 
@@ -37,10 +36,15 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <value>
         /// The last configuration consume.
         /// </value>
-        public DateTime LastConfigurationConsume { get; set; }
+        public DateTime LastConfigurationConsumed { get; set; }
 
         private string GetOptionalInstanceConfiguration(string name, bool throwIfNotFound)
         {
+            if (_instanceConfiguration == null)
+            {
+                throw new ConfigurationErrorsException("No configuration available");
+            }
+
             if (!_instanceConfiguration.ContainsKey(name) && throwIfNotFound)
             {
                 throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
@@ -178,7 +182,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <returns></returns>
         public bool TryAssignConfiguration(Dictionary<string, string> configuration)
         {
-            LastConfigurationConsume = _dateTimeProvider.Now;
+            LastConfigurationConsumed = _dateTimeProvider.Now;
 
             _instanceConfiguration = configuration;
 
@@ -191,6 +195,12 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <returns></returns>
         public bool TryGetAndAssignConfiguration()
         {
+            if (_instanceConfiguration != null)
+            {
+                //already have a configuration
+                return true;
+            }
+
             var url = GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.ConnectionString);
 
             if (_remoteConfigurationProvider == null)

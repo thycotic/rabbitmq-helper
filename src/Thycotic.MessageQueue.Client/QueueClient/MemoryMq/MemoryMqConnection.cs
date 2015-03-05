@@ -55,7 +55,16 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     if (ConnectionCreated != null)
                     {
                         Task.Delay(TimeSpan.FromMilliseconds(500))
-                            .ContinueWith(task => ConnectionCreated(this, new EventArgs()));
+                            .ContinueWith(task =>
+                            {
+                                //it's possible that the connection is terminated prior since the delay
+                                if (_terminated)
+                                {
+                                    return;
+                                }
+
+                                ConnectionCreated(this, new EventArgs());
+                            });
                     }
 
                     return cn;
@@ -77,7 +86,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         private void RecoverConnection(object connection, EventArgs reason)
         {
             //if this was actually requested, don't recover the connection and let it die
-            if (_terminated) return;
+            if (_terminated)
+            {
+                return;
+            }
 
             _log.Warn(string.Format("Connection closed because {0}", reason));
             ResetConnection();

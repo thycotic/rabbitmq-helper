@@ -8,7 +8,6 @@ using Thycotic.DistributedEngine.Security;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
-using Thycotic.ihawu.Business.Agents;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;
@@ -25,6 +24,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
         private readonly Dictionary<Uri, Func<object, dynamic>> _loopBacks = new Dictionary<Uri, Func<object, dynamic>>();
         private Lazy<Dictionary<string, string>> _bakedConfiguration;
+        private DateTime _lastBaked;
 
         public LoopbackRestCommunicationProvider(ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer)
         {
@@ -59,7 +59,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
         private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetEncryptionPair()
         {
-
             const int aesKeySize = 256;
             const int ivSize = 128;
 
@@ -110,7 +109,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                         throw new NotSupportedException();
                 }
 
-                configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] = Convert.ToString(5);
+                configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] = Convert.ToString(1);
 
                 //add additional configuration
                 var pair = GetEncryptionPair();
@@ -119,8 +118,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 configuration[MessageQueue.Client.ConfigurationKeys.Exchange.InitializationVector] =
                     Convert.ToBase64String(pair.InitializationVector.Value);
 
+                _lastBaked = DateTime.Now + TimeSpan.FromMinutes(10);
+
                 return configuration;
             });
+
+            
 
             var configurationString = _objectSerializer.ToBytes(_bakedConfiguration.Value);
 
@@ -145,6 +148,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             
             return new EngineHeartbeatResponse
             {
+                LastConfigurationUpdated = _lastBaked,
                 NewConfiguration = EncryptWithPublicKey(_localKeyProvider.PublicKey,configurationString),
                 Success = true
             };

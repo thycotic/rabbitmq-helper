@@ -108,7 +108,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
         private void RecoverConnection(object model, ModelShutdownEventArgs reason)
         {
-            if (_terminated) return;
+            if (_terminated)
+            {
+                return;
+            }
 
             _log.Warn(string.Format("Channel closed because {0}", reason.ReplyText));
 

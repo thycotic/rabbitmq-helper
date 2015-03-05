@@ -15,7 +15,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <value>
         /// The last configuration consume.
         /// </value>
-        DateTime LastConfigurationConsume { get; set; }
+        DateTime LastConfigurationConsumed { get; set; }
 
         /// <summary>
         /// Tries the assign configuration.
