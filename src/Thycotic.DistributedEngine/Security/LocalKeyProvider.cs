@@ -23,19 +23,24 @@ namespace Thycotic.DistributedEngine.Security
         {
             _pair = new Lazy<Tuple<PublicKey, PrivateKey>>(() =>
             {
-                _log.Debug("Generating local public private pair");
-
-                //TODO: Review key size 4096 with Kevin -dkk
-                const int rsaSecurityKeySize = 4096;
-                const CspProviderFlags flags = CspProviderFlags.UseMachineKeyStore;
-                var cspParameters = new CspParameters {Flags = flags};
-
-                using (var provider = new RSACryptoServiceProvider(rsaSecurityKeySize, cspParameters))
+                using (LogContext.Create("Key generation"))
                 {
-                    var publicKey = new PublicKey(provider.ExportCspBlob(false));
-                    var privateKey = new PrivateKey(provider.ExportCspBlob(true));
+                    _log.Info("Generating local public/private pair...");
 
-                    return new Tuple<PublicKey, PrivateKey>(publicKey, privateKey);
+                    //TODO: Review key size 4096 with Kevin -dkk
+                    const int rsaSecurityKeySize = 4096;
+                    const CspProviderFlags flags = CspProviderFlags.UseMachineKeyStore;
+                    var cspParameters = new CspParameters {Flags = flags};
+
+                    using (var provider = new RSACryptoServiceProvider(rsaSecurityKeySize, cspParameters))
+                    {
+                        var publicKey = new PublicKey(provider.ExportCspBlob(false));
+                        var privateKey = new PrivateKey(provider.ExportCspBlob(true));
+
+                        _log.Debug(string.Format("Public key is {0}", Convert.ToBase64String(publicKey.Value)));
+
+                        return new Tuple<PublicKey, PrivateKey>(publicKey, privateKey);
+                    }
                 }
             });
         }
