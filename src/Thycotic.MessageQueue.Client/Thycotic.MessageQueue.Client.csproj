@@ -148,6 +148,8 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="ConfigurationKeys.cs" />
+    <Compile Include="ConnectionStringHelpers.cs" />
+    <Compile Include="DefaultSchemas.cs" />
     <Compile Include="DefaultPorts.cs" />
     <Compile Include="IRequestBus.cs" />
     <Compile Include="QueueClient\CommonDeliveryEventArgs.cs" />
