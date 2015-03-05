@@ -17,12 +17,12 @@ namespace Thycotic.DistributedEngine.Tests
             ScenarioContext.Current[engineServiceName] = new EngineService(startConsuming, ioCConfigurator);
         }
 
-        [Given(@"the substitute object (\w+) returns true for TryGetRemoteConfiguration")]
-        public void GivenTheSubstituteObjectReturnsTrueForTryGetRemoteConfiguration(string ioCConfiguratorName)
+        [Given(@"the substitute object (\w+) returns true for TryGetAndAssignConfiguration")]
+        public void GivenTheSubstituteObjectReturnsTrueForTryGetAndAssignConfiguration(string ioCConfiguratorName)
         {
             var ioCConfigurator = (IIoCConfigurator)ScenarioContext.Current[ioCConfiguratorName];
 
-            ioCConfigurator.TryGetRemoteConfiguration().Returns(true);
+            ioCConfigurator.TryGetAndAssignConfiguration().Returns(true);
         }
 
 
@@ -32,7 +32,7 @@ namespace Thycotic.DistributedEngine.Tests
         {
             var engineService = (EngineService)ScenarioContext.Current[engineServiceName];
 
-            engineService.Start(null);
+            engineService.Start();
         }
 
         [Then(@"the method Build on IoCConfigurator substitute (\w+) is called")]

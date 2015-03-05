@@ -55,6 +55,7 @@ namespace Thycotic.DistributedEngine.Configuration
 
                 var request = new EngineConfigurationRequest
                 {
+                    ExchangeId = _engineIdentificationProvider.ExchangeId,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
                     HostName = _engineIdentificationProvider.HostName,
                     FriendlyName = _engineIdentificationProvider.FriendlyName,

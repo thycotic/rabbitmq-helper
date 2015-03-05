@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using Autofac;
 
 namespace Thycotic.DistributedEngine.Configuration
 {
@@ -8,10 +10,25 @@ namespace Thycotic.DistributedEngine.Configuration
     public interface IIoCConfigurator
     {
         /// <summary>
+        /// Gets or sets the last configuration consume.
+        /// </summary>
+        /// <value>
+        /// The last configuration consume.
+        /// </value>
+        DateTime LastConfigurationConsume { get; set; }
+
+        /// <summary>
+        /// Tries the assign configuration.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns></returns>
+        bool TryAssignConfiguration(Dictionary<string, string> configuration);
+
+        /// <summary>
         /// Tries the get remote configuration.
         /// </summary>
         /// <returns></returns>
-        bool TryGetRemoteConfiguration();
+        bool TryGetAndAssignConfiguration();
 
         /// <summary>
         /// Builds the IoC container.
@@ -20,7 +37,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <param name="startConsuming">if set to <c>true</c> [start engineService].</param>
         /// <returns></returns>
         IContainer Build(EngineService engineService, bool startConsuming);
-
-
+        
+        
     }
 }

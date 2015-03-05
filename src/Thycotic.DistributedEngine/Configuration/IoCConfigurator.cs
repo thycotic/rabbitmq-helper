@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using Autofac;
+using Thycotic.AppCore;
 using Thycotic.DistributedEngine.IoC;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Security;
@@ -17,22 +18,37 @@ namespace Thycotic.DistributedEngine.Configuration
     /// </summary>
     public class IoCConfigurator : IIoCConfigurator
     {
+        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IObjectSerializer _objectSerializer;
+        private readonly IEngineIdentificationProvider _engineIdentificationProvider;
+
+        private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IRestCommunicationProvider _restCommunicationProvider;
         private IRemoteConfigurationProvider _remoteConfigurationProvider;
-        private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
-
+        
+        
         private Dictionary<string, string> _instanceConfiguration = new Dictionary<string, string>();
 
-        private string GetInstanceConfigurationProxy(string name)
+        private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
+
+        /// <summary>
+        /// Gets or sets the last configuration consume.
+        /// </summary>
+        /// <value>
+        /// The last configuration consume.
+        /// </value>
+        public DateTime LastConfigurationConsume { get; set; }
+
+        private string GetOptionalInstanceConfiguration(string name, bool throwIfNotFound)
         {
-            if (!_instanceConfiguration.ContainsKey(name))
+            if (!_instanceConfiguration.ContainsKey(name) && throwIfNotFound)
             {
                 throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
             }
 
             var value = _instanceConfiguration[name];
 
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value) && throwIfNotFound)
             {
                 throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
             }
@@ -40,16 +56,26 @@ namespace Thycotic.DistributedEngine.Configuration
             return value;
         }
 
-        private static string GetLocalConfigurationManagerProxy(string name)
+        private string GetInstanceConfiguration(string name)
+        {
+            return GetOptionalInstanceConfiguration(name, true);
+        }
+
+        private static string GetOptionalLocalConfiguration(string name, bool throwIfNotFound)
         {
             var value = ConfigurationManager.AppSettings[name];
 
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value) && throwIfNotFound)
             {
                 throw new ConfigurationErrorsException(string.Format("Missing configuration parameter {0}", name));
             }
 
             return value;
+        }
+
+        private static string GetLocalConfiguration(string name)
+        {
+            return GetOptionalLocalConfiguration(name, true);
         }
 
         /// <summary>
@@ -57,66 +83,79 @@ namespace Thycotic.DistributedEngine.Configuration
         /// </summary>
         public IoCConfigurator()
         {
+            _objectSerializer = new JsonObjectSerializer();
+
+            _engineIdentificationProvider = CreateEngineIdentificationProvider();
+
             _restCommunicationProvider =
                 new RestCommunicationProvider(
-                    GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.ConnectionString));
+                    GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.ConnectionString));
             //remote configurator will be created on at runtime
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IoCConfigurator"/> class.
         /// </summary>
+        /// <param name="localKeyProvider"></param>
         /// <param name="restCommunicationProvider"></param>
         /// <param name="remoteConfigurationProvider">The remote configuration provider.</param>
-        public IoCConfigurator(IRestCommunicationProvider restCommunicationProvider, IRemoteConfigurationProvider remoteConfigurationProvider)
+        public IoCConfigurator(ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider, IRemoteConfigurationProvider remoteConfigurationProvider)
         {
+            _dateTimeProvider = new RealDateTimeProvider();
+
+            _objectSerializer = new JsonObjectSerializer();
+
+            _engineIdentificationProvider = CreateEngineIdentificationProvider();
+
+            _localKeyProvider = localKeyProvider;
             _restCommunicationProvider = restCommunicationProvider;
             _remoteConfigurationProvider = remoteConfigurationProvider;
         }
 
-
-        private static EngineIdentificationProvider CreateEngineIdentificationProvider()
+        /// <summary>
+        /// Creates the engine identification provider.
+        /// </summary>
+        /// <returns></returns>
+        public static EngineIdentificationProvider CreateEngineIdentificationProvider()
         {
+            var exchangeIdString =
+                GetOptionalLocalConfiguration(ConfigurationKeys.RemoteConfiguration.ExchangeId,
+                    false);
+
             return new EngineIdentificationProvider
             {
+                ExchangeId = !string.IsNullOrWhiteSpace(exchangeIdString) ? Convert.ToInt32(exchangeIdString) : new int?(),
                 HostName = DnsEx.GetDnsHostName(),
-                OrganizationId = Convert.ToInt32(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.OrganizationId)),
-                FriendlyName = GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.FriendlyName),
+                OrganizationId = Convert.ToInt32(GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.OrganizationId)),
+                FriendlyName = GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.FriendlyName),
                 IdentityGuid =
-                    new Guid(GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.IdentityGuid))
+                    new Guid(GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.IdentityGuid))
             };
         }
 
         /// <summary>
         /// Builds the IoC container.
         /// </summary>
-        /// <param name="engineService"></param>
+        /// <param name="engineService">The engine service.</param>
         /// <param name="startConsuming">if set to <c>true</c> [start engineService].</param>
         /// <returns></returns>
         public IContainer Build(EngineService engineService, bool startConsuming)
         {
-
-            var localKeyProvider = new LocalKeyProvider();
-
-            var objectSerializer = new JsonObjectSerializer();
-
-            var engineIdentificationProvider = CreateEngineIdentificationProvider();
-
             // Create the builder with which components/services are registered.
             var builder = new ContainerBuilder();
 
-            builder.Register(context => objectSerializer).As<IObjectSerializer>().SingleInstance();
+            builder.Register(context => _objectSerializer).As<IObjectSerializer>().SingleInstance();
 
-            builder.Register(context => localKeyProvider).As<ILocalKeyProvider>().SingleInstance();
-            builder.Register(context => engineIdentificationProvider).As<IEngineIdentificationProvider>().SingleInstance();
+            builder.Register(context => _localKeyProvider).As<ILocalKeyProvider>().SingleInstance();
+            builder.Register(context => _engineIdentificationProvider).As<IEngineIdentificationProvider>().SingleInstance();
 
             builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
 
-            builder.RegisterModule(new HeartbeatModule(engineService, engineIdentificationProvider, localKeyProvider, objectSerializer, _restCommunicationProvider, GetInstanceConfigurationProxy));
+            builder.RegisterModule(new HeartbeatModule(engineService, _dateTimeProvider, _engineIdentificationProvider, _localKeyProvider, _objectSerializer, _restCommunicationProvider, GetInstanceConfiguration));
 
             builder.Register(context => _restCommunicationProvider).As<IRestCommunicationProvider>().AsImplementedInterfaces();
 
-            builder.RegisterModule(new MessageQueueModule(GetInstanceConfigurationProxy));
+            builder.RegisterModule(new MessageQueueModule(GetInstanceConfiguration));
 
             if (startConsuming)
             {
@@ -131,14 +170,28 @@ namespace Thycotic.DistributedEngine.Configuration
 
             return builder.Build();
         }
+        
+        /// <summary>
+        /// Tries the assign configuration.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns></returns>
+        public bool TryAssignConfiguration(Dictionary<string, string> configuration)
+        {
+            LastConfigurationConsume = _dateTimeProvider.Now;
+
+            _instanceConfiguration = configuration;
+
+            return true;
+        }
 
         /// <summary>
         /// Tries the get remote configuration.
         /// </summary>
         /// <returns></returns>
-        public bool TryGetRemoteConfiguration()
+        public bool TryGetAndAssignConfiguration()
         {
-            var url = GetLocalConfigurationManagerProxy(ConfigurationKeys.RemoteConfiguration.ConnectionString);
+            var url = GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.ConnectionString);
 
             if (_remoteConfigurationProvider == null)
             {
@@ -152,14 +205,7 @@ namespace Thycotic.DistributedEngine.Configuration
 
             var configuration = _remoteConfigurationProvider.GetConfiguration();
 
-            if (configuration == null)
-            {
-                return false;
-            }
-
-            _instanceConfiguration = configuration;
-
-            return true;
+            return configuration != null && TryAssignConfiguration(configuration);
         }
     }
 }

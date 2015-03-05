@@ -78,8 +78,8 @@ namespace Thycotic.DistributedEngine.Tests
  testRunner.And("there exists a EngineService stored in the scenario as EngineServiceTest with sta" +
                     "rtConsuming startConsumingTest and IoCConfigurator IoCConfiguratorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
- testRunner.And("the substitute object IoCConfiguratorTest returns true for TryGetRemoteConfigurat" +
-                    "ion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the substitute object IoCConfiguratorTest returns true for TryGetAndAssignConfigu" +
+                    "ration", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         

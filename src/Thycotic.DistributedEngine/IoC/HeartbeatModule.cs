@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using Thycotic.AppCore;
 using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.Heartbeat;
 using Thycotic.DistributedEngine.Logic;
@@ -13,6 +14,7 @@ namespace Thycotic.DistributedEngine.IoC
     class HeartbeatModule : Module
     {
         private readonly EngineService _engineService;
+        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IObjectSerializer _objectSerializer;
@@ -20,10 +22,12 @@ namespace Thycotic.DistributedEngine.IoC
         private readonly Func<string, string> _configurationProvider;
 
         private readonly ILogWriter _log = Log.Get(typeof(HeartbeatModule));
+        
 
-        public HeartbeatModule(EngineService engineService, IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer, IRestCommunicationProvider restCommunicationProvider, Func<string, string> configurationProvider)
+        public HeartbeatModule(EngineService engineService, IDateTimeProvider dateTimeProvider, IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer, IRestCommunicationProvider restCommunicationProvider, Func<string, string> configurationProvider)
         {
             _engineService = engineService;
+            _dateTimeProvider = dateTimeProvider;
             _engineIdentificationProvider = engineIdentificationProvider;
             _localKeyProvider = localKeyProvider;
             _objectSerializer = objectSerializer;
@@ -40,7 +44,7 @@ namespace Thycotic.DistributedEngine.IoC
             var heartbeatIntervalSeconds =
                 Convert.ToInt32(_configurationProvider(MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds));
 
-            builder.Register(context => new HeartbeatRunner(_engineService, _engineIdentificationProvider, _localKeyProvider, _objectSerializer, _restCommunicationProvider, heartbeatIntervalSeconds)).As<IStartable>().SingleInstance();
+            builder.Register(context => new HeartbeatRunner(_engineService, _dateTimeProvider, _engineIdentificationProvider, _localKeyProvider, _objectSerializer, _restCommunicationProvider, heartbeatIntervalSeconds)).As<IStartable>().SingleInstance();
         }
     }
 }

@@ -16,6 +16,11 @@
             public const string ConnectionString = "RemoteConfiguration.ConnectionString";
 
             /// <summary>
+            /// The exchange identifier
+            /// </summary>
+            public const string ExchangeId = "RemoteConfiguration.ExchangeId";
+
+            /// <summary>
             /// The organization identifier
             /// </summary>
             public const string OrganizationId = "RemoteConfiguration.OrganizationId";

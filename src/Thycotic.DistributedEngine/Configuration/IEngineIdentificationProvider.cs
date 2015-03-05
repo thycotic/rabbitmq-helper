@@ -39,6 +39,12 @@ namespace Thycotic.DistributedEngine.Configuration
         /// </value>
         Guid IdentityGuid { get; }
 
-        
+        /// <summary>
+        /// Gets or sets the exchange identifier.
+        /// </summary>
+        /// <value>
+        /// The exchange identifier.
+        /// </value>
+        int? ExchangeId { get; set; }
     }
 }

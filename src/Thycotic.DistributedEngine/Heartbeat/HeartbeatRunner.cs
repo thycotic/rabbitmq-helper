@@ -26,6 +26,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
     public class HeartbeatRunner : IStartable, IDisposable
     {
         private readonly EngineService _engineService;
+        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IObjectSerializer _objectSerializer;
@@ -40,14 +41,16 @@ namespace Thycotic.DistributedEngine.Heartbeat
         /// Initializes a new instance of the <see cref="HeartbeatRunner" /> class.
         /// </summary>
         /// <param name="engineService">The engine service.</param>
+        /// <param name="dateTimeProvider">The date time provider.</param>
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="localKeyProvider">The local key provider.</param>
-        /// <param name="objectSerializer"></param>
+        /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="restCommunicationProvider">The rest communication provider.</param>
         /// <param name="heartbeatIntervalSeconds">The heartbeat configuration provider.</param>
-        public HeartbeatRunner(EngineService engineService, IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer, IRestCommunicationProvider restCommunicationProvider, int heartbeatIntervalSeconds)
+        public HeartbeatRunner(EngineService engineService, IDateTimeProvider dateTimeProvider, IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer, IRestCommunicationProvider restCommunicationProvider, int heartbeatIntervalSeconds)
         {
             _engineService = engineService;
+            _dateTimeProvider = dateTimeProvider;
             _engineIdentificationProvider = engineIdentificationProvider;
             _localKeyProvider = localKeyProvider;
             _objectSerializer = objectSerializer;
@@ -69,9 +72,11 @@ namespace Thycotic.DistributedEngine.Heartbeat
 
             var request = new EngineHeartbeatRequest
             {
+                
                 IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                 PublicKey = Convert.ToBase64String(_localKeyProvider.PublicKey.Value),
-                Version = ReleaseInformationHelper.GetVersionAsDouble()
+                Version = ReleaseInformationHelper.GetVersionAsDouble(),
+                LastActivity = _dateTimeProvider.Now
             };
 
             var response = _restCommunicationProvider.Post<EngineHeartbeatResponse>(uri, request);
@@ -81,16 +86,23 @@ namespace Thycotic.DistributedEngine.Heartbeat
                 throw new ConfigurationErrorsException(response.ErrorMessage);
             }
 
+            //the configuration has not changed since it was last consumed
+            //if (response.LastConfigurationUpdate <= _engineService.IoCConfigurator.LastConfigurationConsume) return;
+
             var saltProvider = new ByteSaltProvider();
 
             var asymmetricEncryptor = new AsymmetricEncryptor();
-            var decryptedConfiguration = asymmetricEncryptor.DecryptWithKey(_localKeyProvider.PrivateKey, response.NewConfiguration);
+            var decryptedConfiguration = asymmetricEncryptor.DecryptWithKey(_localKeyProvider.PrivateKey,
+                response.NewConfiguration);
             var unsaltedConfiguration = saltProvider.Unsalt(decryptedConfiguration, MessageEncryption.SaltLength);
 
             var newConfiguration = _objectSerializer.ToObject<Dictionary<string, string>>(unsaltedConfiguration);
 
+            _engineService.Stop();
 
+            _engineService.IoCConfigurator.TryAssignConfiguration(newConfiguration);
 
+            _engineService.Start();
         }
 
         private void WaitPumpAndSchedule()

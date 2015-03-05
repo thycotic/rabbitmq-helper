@@ -49,21 +49,14 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     //loopback
                     if (args.First().StartsWith("il"))
                     {
-                        var identityGuid = Guid.NewGuid();
-                        var engineIdentificationProvider = new EngineIdentificationProvider
-                        {
-                            HostName = DnsEx.GetDnsHostName(),
-                            IdentityGuid = identityGuid,
-                            FriendlyName = identityGuid.ToString(),
-                            OrganizationId = -1
-                        };
+                        var engineIdentificationProvider = IoCConfigurator.CreateEngineIdentificationProvider();
                         var localKeyProvider = new LocalKeyProvider();
                         var objectSerializer = new JsonObjectSerializer();
-                        var loopbackRestCommunicationProvider = new LoopbackRestCommunicationProvider();
+                        var loopbackRestCommunicationProvider = new LoopbackRestCommunicationProvider(localKeyProvider, objectSerializer);
                         var loopbackConfigurationProvider = new RemoteConfigurationProvider(
                             engineIdentificationProvider, localKeyProvider, loopbackRestCommunicationProvider,
                             objectSerializer);
-                        var ioCConfigurator = new IoCConfigurator(loopbackRestCommunicationProvider, loopbackConfigurationProvider);
+                        var ioCConfigurator = new IoCConfigurator(localKeyProvider, loopbackRestCommunicationProvider, loopbackConfigurationProvider);
                         engine = new EngineService(startConsuming, ioCConfigurator);
                     }
                     else
@@ -71,7 +64,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                         engine = new EngineService(startConsuming);
                     }
 
-                    engine.Start(new string[] { });
+                    engine.Start();
                     #endregion
 
                     #region Start client

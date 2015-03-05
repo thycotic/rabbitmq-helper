@@ -19,8 +19,17 @@ namespace Thycotic.DistributedEngine
         /// </value>
         public IContainer IoCContainer { get; private set; }
 
+        /// <summary>
+        /// Gets the io c configurator.
+        /// </summary>
+        /// <value>
+        /// The io c configurator.
+        /// </value>
+        public IIoCConfigurator IoCConfigurator { get; private set; }
+
         private readonly bool _startConsuming;
-        private readonly IIoCConfigurator _iioCConfigurator;
+
+
 
         private readonly ILogWriter _log = Log.Get(typeof(EngineService));
         private LogCorrelation _correlation;
@@ -40,11 +49,11 @@ namespace Thycotic.DistributedEngine
         /// Initializes a new instance of the <see cref="EngineService" /> class.
         /// </summary>
         /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
-        /// <param name="iioCConfigurator">The iio c configurator.</param>
-        public EngineService(bool startConsuming, IIoCConfigurator iioCConfigurator)
+        /// <param name="ioCConfigurator">The iio c configurator.</param>
+        public EngineService(bool startConsuming, IIoCConfigurator ioCConfigurator)
         {
             _startConsuming = startConsuming;
-            _iioCConfigurator = iioCConfigurator;
+            IoCConfigurator = ioCConfigurator;
             ConfigureLogging();
         }
 
@@ -65,14 +74,14 @@ namespace Thycotic.DistributedEngine
             {
                 ResetIoCContainer();
 
-                if (!_iioCConfigurator.TryGetRemoteConfiguration())
+                if (!IoCConfigurator.TryGetAndAssignConfiguration())
                 {
                     _log.Info("Engine is not enabled/configured. Existing...");
                     return;
                 }
 
                 // Build the container to finalize registrations and prepare for object resolution.
-                IoCContainer = _iioCConfigurator.Build(this, _startConsuming);
+                IoCContainer = IoCConfigurator.Build(this, _startConsuming);
 
                 _log.Debug("Configuring IoC complete");
 
@@ -110,10 +119,9 @@ namespace Thycotic.DistributedEngine
         /// <summary>
         /// Starts the specified arguments.
         /// </summary>
-        /// <param name="args">The arguments.</param>
-        public void Start(string[] args)
+        public void Start()
         {
-            OnStart(args);
+            OnStart(new string []{ });
         }
 
         /// <summary>
