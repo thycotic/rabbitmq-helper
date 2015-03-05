@@ -68,12 +68,11 @@ namespace Thycotic.DistributedEngine
                 if (!_iioCConfigurator.TryGetRemoteConfiguration())
                 {
                     _log.Info("Engine is not enabled/configured. Existing...");
-                    //TODO: Maybe retry later -dkk
                     return;
                 }
 
                 // Build the container to finalize registrations and prepare for object resolution.
-                IoCContainer = _iioCConfigurator.Build(_startConsuming);
+                IoCContainer = _iioCConfigurator.Build(this, _startConsuming);
 
                 _log.Debug("Configuring IoC complete");
 

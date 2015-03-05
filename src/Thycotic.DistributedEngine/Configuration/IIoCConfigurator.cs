@@ -16,9 +16,10 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <summary>
         /// Builds the IoC container.
         /// </summary>
-        /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
+        /// <param name="engineService">The engineService.</param>
+        /// <param name="startConsuming">if set to <c>true</c> [start engineService].</param>
         /// <returns></returns>
-        IContainer Build(bool startConsuming);
+        IContainer Build(EngineService engineService, bool startConsuming);
 
 
     }

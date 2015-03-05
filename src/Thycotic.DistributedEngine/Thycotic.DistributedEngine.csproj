@@ -173,6 +173,7 @@
     </Compile>
     <Compile Include="Configuration\IIoCConfigurator.cs" />
     <Compile Include="Configuration\IoCConfigurator.cs" />
+    <Compile Include="IoC\HeartbeatModule.cs" />
     <Compile Include="IoC\MemoryMqServerModule.cs" />
     <Compile Include="Configuration\IRemoteConfigurationProvider.cs" />
     <Compile Include="Configuration\RemoteConfigurationProvider.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Security\LocalKeyProvider.cs" />
     <Compile Include="Security\MessageEncryptor.cs" />
     <Compile Include="MemoryMq\MemoryMqServerWrapper.cs" />
+    <Compile Include="Heartbeat\HeartbeatRunner.cs" />
     <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="IoC\LogicModule.cs" />
     <Compile Include="IoC\MessageQueueModule.cs" />

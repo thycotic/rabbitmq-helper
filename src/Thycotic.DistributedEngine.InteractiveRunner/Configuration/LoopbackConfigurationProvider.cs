@@ -47,6 +47,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
             var configuration = _scenarios[scenario].Invoke();
 
+            configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] = Convert.ToString(5);
+
             //add additional configuration
             var pair = GetEncryptionPair();
             configuration[MessageQueue.Client.ConfigurationKeys.Exchange.SymmetricKey] = Convert.ToBase64String(pair.SymmetricKey.Value);

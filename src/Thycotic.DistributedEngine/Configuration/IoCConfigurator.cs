@@ -90,18 +90,21 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <summary>
         /// Builds the IoC container.
         /// </summary>
-        /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
+        /// <param name="engineService"></param>
+        /// <param name="startConsuming">if set to <c>true</c> [start engineService].</param>
         /// <returns></returns>
-        public IContainer Build(bool startConsuming)
+        public IContainer Build(EngineService engineService, bool startConsuming)
         {
             // Create the builder with which components/services are registered.
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
-
+            builder.RegisterType<LocalKeyProvider>().AsImplementedInterfaces().SingleInstance();
             builder.Register(context => CreateEngineIdentificationProvider()).As<IEngineIdentificationProvider>().SingleInstance();
 
-            builder.RegisterType<LocalKeyProvider>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
+
+            builder.RegisterModule(new HeartbeatModule(engineService, GetInstanceConfigurationProxy));
+
             builder.Register(context => _restCommunicationProvider).As<IRestCommunicationProvider>().AsImplementedInterfaces();
 
             builder.RegisterModule(new MessageQueueModule(GetInstanceConfigurationProxy));

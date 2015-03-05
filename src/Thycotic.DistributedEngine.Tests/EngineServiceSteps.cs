@@ -1,15 +1,11 @@
-﻿using System;
-using System.Linq;
-using Autofac.Core;
-using FluentAssertions;
-using NSubstitute;
+﻿using NSubstitute;
 using TechTalk.SpecFlow;
 using Thycotic.DistributedEngine.Configuration;
 
 namespace Thycotic.DistributedEngine.Tests
 {
     [Binding]
-    public class ConsumerWrapperBaseSteps
+    public class EngineServiceSteps
     {
 
         [Given(@"there exists a EngineService stored in the scenario as (\w+) with startConsuming (\w+) and IoCConfigurator (\w+)")]
@@ -43,7 +39,7 @@ namespace Thycotic.DistributedEngine.Tests
         public void ThenTheMethodBuildOnIoCConfiguratorSubstituteIsCalled(string ioCConfiguratorName)
         {
             var ioCConfigurator = (IIoCConfigurator)ScenarioContext.Current[ioCConfiguratorName];
-            ioCConfigurator.Received().Build(false);
+            ioCConfigurator.Received().Build(Arg.Any<EngineService>(), false);
         }
     }
 }

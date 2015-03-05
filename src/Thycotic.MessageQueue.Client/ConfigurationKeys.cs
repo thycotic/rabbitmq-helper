@@ -8,7 +8,7 @@
         /// <summary>
         /// The heartbeat interval
         /// </summary>
-        public const string HeartbeatInterval = "Heartbeat.Interval";
+        public const string HeartbeatIntervalSeconds = "Heartbeat.IntervalSeconds";
 
         /// <summary>
         /// Pipeline
