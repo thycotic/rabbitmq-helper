@@ -98,7 +98,7 @@ namespace Thycotic.DistributedEngine.Configuration
             var builder = new ContainerBuilder();
 
             builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
-            
+
             builder.Register(context => CreateEngineIdentificationProvider()).As<IEngineIdentificationProvider>().SingleInstance();
 
             builder.RegisterType<LocalKeyProvider>().AsImplementedInterfaces().SingleInstance();
@@ -130,11 +130,11 @@ namespace Thycotic.DistributedEngine.Configuration
 
             if (_remoteConfigurationProvider == null)
             {
-                
+
                 var keyProvider = new LocalKeyProvider();
                 var restClient = new RestCommunicationProvider(url);
 
-                _remoteConfigurationProvider = new RemoteConfigurationProvider(CreateEngineIdentificationProvider() , keyProvider,
+                _remoteConfigurationProvider = new RemoteConfigurationProvider(CreateEngineIdentificationProvider(), keyProvider,
                     restClient, new JsonObjectSerializer());
             }
 
