@@ -13,7 +13,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 {
     internal class LoopbackConfigurationProvider : IRemoteConfigurationProvider
     {
-        private const string LoopbackExchangeName = "thycotic-loopback";
+        private readonly LoopbackRestCommunicationProvider _loopbackRestCommunicationProvider;
+  
 
         private readonly Dictionary<Scenarios, Func<Dictionary<string, string>>> _scenarios =
             new Dictionary<Scenarios, Func<Dictionary<string, string>>>();
@@ -26,8 +27,9 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             SslRabbitMq
         }
 
-        public LoopbackConfigurationProvider()
+        public LoopbackConfigurationProvider(LoopbackRestCommunicationProvider loopbackRestCommunicationProvider)
         {
+            _loopbackRestCommunicationProvider = loopbackRestCommunicationProvider;
             _scenarios.Add(Scenarios.NonSslMemoryMq, NonSslMemoryMq);
             _scenarios.Add(Scenarios.NonSslRabbitMq, NonSslRabbitMq);
 #if NO
@@ -58,21 +60,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
         }
 
-        private static string GetMemoryMqConnectionString(int portNumber = DefaultPorts.MemoryMq.NonSsl)
-        {
-            return GetConnectionString("net.tcp", portNumber);
-        }
-
-        private static string GetRabbitMqConnectionString(int portNumber = DefaultPorts.RabbitMq.NonSsl)
-        {
-            return GetConnectionString("amqp", portNumber);
-        }
-
-        private static string GetConnectionString(string scheme, int portNumber)
-        {
-            //Environment.MachineName
-            return string.Format("{0}://{1}:{2}", scheme, DnsEx.GetDnsHostName(), portNumber);
-        }
+       
 
         private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetEncryptionPair()
         {
@@ -96,56 +84,5 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             }
         }
 
-        private static Dictionary<string, string> NonSslMemoryMq()
-        {
-            return new Dictionary<string, string>
-            {
-                {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString, GetMemoryMqConnectionString()},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "false"}
-            };
-        }
-
-
-        private Dictionary<string, string> SslMemoryMq()
-        {
-            return new Dictionary<string, string>
-            {
-                {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString, GetMemoryMqConnectionString(DefaultPorts.MemoryMq.Ssl)},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "true"},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Thumbprint, "invalid"},
-            };
-        }
-
-        private Dictionary<string, string> NonSslRabbitMq()
-        {
-            return new Dictionary<string, string>
-            {
-                {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString, GetRabbitMqConnectionString()},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "guest"},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "guest"},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "false"}
-            };
-        }
-
-
-
-        private Dictionary<string, string> SslRabbitMq()
-        {
-            return new Dictionary<string, string>
-            {
-                {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString, GetRabbitMqConnectionString(DefaultPorts.RabbitMq.Ssl)},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "guest"},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "guest"},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "true"}
-            };
-        }
     }
 }

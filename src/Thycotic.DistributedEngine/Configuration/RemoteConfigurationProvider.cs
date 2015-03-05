@@ -50,12 +50,8 @@ namespace Thycotic.DistributedEngine.Configuration
         {
             try
             {
-                PublicKey publicKey;
-                PrivateKey privateKey;
-                _localKeyProvider.GetKeys(out publicKey, out privateKey);
-
                 var uri = _restCommunicationProvider.GetEndpointUri(EndPoints.EngineWebService.Prefix,
-                    EndPoints.EngineWebService.Actions.GetConfiguration);
+                     EndPoints.EngineWebService.Actions.GetConfiguration);
 
                 var request = new EngineConfigurationRequest
                 {
@@ -63,10 +59,10 @@ namespace Thycotic.DistributedEngine.Configuration
                     HostName = _engineIdentificationProvider.HostName,
                     FriendlyName = _engineIdentificationProvider.FriendlyName,
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
-                    PublicKey = Convert.ToBase64String(publicKey.Value),
+                    PublicKey = Convert.ToBase64String(_localKeyProvider.PublicKey.Value),
                     Version = ReleaseInformationHelper.GetVersionAsDouble()
                 };
-                
+
                 var response = _restCommunicationProvider.Post<EngineConfigurationResponse>(uri, request);
 
                 if (!response.Success)
@@ -77,7 +73,7 @@ namespace Thycotic.DistributedEngine.Configuration
                 var saltProvider = new ByteSaltProvider();
 
                 var asymmetricEncryptor = new AsymmetricEncryptor();
-                var decryptedConfiguration = asymmetricEncryptor.DecryptWithKey(privateKey, response.Configuration);
+                var decryptedConfiguration = asymmetricEncryptor.DecryptWithKey(_localKeyProvider.PrivateKey, response.Configuration);
                 var unsaltedConfiguration = saltProvider.Unsalt(decryptedConfiguration, MessageEncryption.SaltLength);
 
                 return _objectSerializer.ToObject<Dictionary<string, string>>(unsaltedConfiguration);

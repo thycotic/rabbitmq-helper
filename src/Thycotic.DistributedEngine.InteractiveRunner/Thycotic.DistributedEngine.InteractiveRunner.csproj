@@ -193,7 +193,6 @@
     <Compile Include="ConsoleCommands\POC\SortListCommand.cs" />
     <Compile Include="ConsoleCommands\POC\HelloWorldCommand.cs" />
     <Compile Include="ConsoleCommands\SystemConsoleCommand.cs" />
-    <Compile Include="Configuration\LoopbackIoCConfigurator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

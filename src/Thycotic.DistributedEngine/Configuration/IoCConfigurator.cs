@@ -95,15 +95,24 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <returns></returns>
         public IContainer Build(EngineService engineService, bool startConsuming)
         {
+
+            var localKeyProvider = new LocalKeyProvider();
+
+            var objectSerializer = new JsonObjectSerializer();
+
+            var engineIdentificationProvider = CreateEngineIdentificationProvider();
+
             // Create the builder with which components/services are registered.
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<LocalKeyProvider>().AsImplementedInterfaces().SingleInstance();
-            builder.Register(context => CreateEngineIdentificationProvider()).As<IEngineIdentificationProvider>().SingleInstance();
+            builder.Register(context => objectSerializer).As<IObjectSerializer>().SingleInstance();
+
+            builder.Register(context => localKeyProvider).As<ILocalKeyProvider>().SingleInstance();
+            builder.Register(context => engineIdentificationProvider).As<IEngineIdentificationProvider>().SingleInstance();
 
             builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
 
-            builder.RegisterModule(new HeartbeatModule(engineService, GetInstanceConfigurationProxy));
+            builder.RegisterModule(new HeartbeatModule(engineService, engineIdentificationProvider, localKeyProvider, objectSerializer, _restCommunicationProvider, GetInstanceConfigurationProxy));
 
             builder.Register(context => _restCommunicationProvider).As<IRestCommunicationProvider>().AsImplementedInterfaces();
 

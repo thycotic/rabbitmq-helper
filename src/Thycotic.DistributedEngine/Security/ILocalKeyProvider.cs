@@ -8,10 +8,20 @@ namespace Thycotic.DistributedEngine.Security
     public interface ILocalKeyProvider
     {
         /// <summary>
-        /// Gets the local key.
+        /// Gets the public key.
         /// </summary>
-        /// <param name="publicKey">The public key.</param>
-        /// <param name="privateKey">The private key.</param>
-        void GetKeys(out PublicKey publicKey, out PrivateKey privateKey);
+        /// <value>
+        /// The public key.
+        /// </value>
+        PublicKey PublicKey { get; }
+
+
+        /// <summary>
+        /// Gets the private key.
+        /// </summary>
+        /// <value>
+        /// The private key.
+        /// </value>
+        PrivateKey PrivateKey { get; }
     }
 }

@@ -23,13 +23,6 @@ namespace Thycotic.DistributedEngine.IoC
         {
             _configurationProvider = configurationProvider;
         }
-
-
-        private void LoadMessageSerialization(ContainerBuilder builder)
-        {
-            builder.RegisterType<JsonObjectSerializer>().AsImplementedInterfaces().SingleInstance();
-        }
-
         private void LoadExchange(ContainerBuilder builder)
         {
             var exchangeName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.Name);
@@ -122,8 +115,6 @@ namespace Thycotic.DistributedEngine.IoC
             base.Load(builder);
 
             _log.Debug("Initializing message queue dependencies...");
-
-            LoadMessageSerialization(builder);
 
             LoadExchange(builder);
 

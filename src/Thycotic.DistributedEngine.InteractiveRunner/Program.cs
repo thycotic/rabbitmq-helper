@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Net;
 using System.Reflection;
 using System.ServiceProcess;
 using System.Threading;
 using Autofac;
+using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
+using Thycotic.DistributedEngine.Security;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
+using Thycotic.Utility;
+using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner
 {
@@ -38,10 +44,33 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     #region Start server
                     var startConsuming = !args.First().EndsWith("cd");
 
-                    var engine = args.First().StartsWith("il")
-                        ? new EngineService(startConsuming, new LoopbackIoCConfigurator()) //loopback
-                        : new EngineService(startConsuming);
-                    
+                    EngineService engine;
+
+                    //loopback
+                    if (args.First().StartsWith("il"))
+                    {
+                        var identityGuid = Guid.NewGuid();
+                        var engineIdentificationProvider = new EngineIdentificationProvider
+                        {
+                            HostName = DnsEx.GetDnsHostName(),
+                            IdentityGuid = identityGuid,
+                            FriendlyName = identityGuid.ToString(),
+                            OrganizationId = -1
+                        };
+                        var localKeyProvider = new LocalKeyProvider();
+                        var objectSerializer = new JsonObjectSerializer();
+                        var loopbackRestCommunicationProvider = new LoopbackRestCommunicationProvider();
+                        var loopbackConfigurationProvider = new RemoteConfigurationProvider(
+                            engineIdentificationProvider, localKeyProvider, loopbackRestCommunicationProvider,
+                            objectSerializer);
+                        var ioCConfigurator = new IoCConfigurator(loopbackRestCommunicationProvider, loopbackConfigurationProvider);
+                        engine = new EngineService(startConsuming, ioCConfigurator);
+                    }
+                    else
+                    {
+                        engine = new EngineService(startConsuming);
+                    }
+
                     engine.Start(new string[] { });
                     #endregion
 
