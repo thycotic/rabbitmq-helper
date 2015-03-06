@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using log4net;
 using log4net.Appender;
+using log4net.Core;
+using log4net.Repository.Hierarchy;
 
 namespace Thycotic.Logging
 {
@@ -22,6 +25,20 @@ namespace Thycotic.Logging
         public static void Configure()
         {
             log4net.Config.XmlConfigurator.Configure();
+
+        }
+
+        /// <summary>
+        /// Attaches the memory appender.
+        /// </summary>
+        [DebuggerStepThrough]
+        public static void AttachRecentEventsMemoryAppender()
+        {
+            var repository = (Hierarchy)LogManager.GetRepository();
+            repository.Root.AddAppender(new MemoryAppender
+            {
+                Name = BuiltInLogNames.RecentEventsMemoryAppender
+            });
         }
 
         /// <summary>
@@ -46,7 +63,11 @@ namespace Thycotic.Logging
 
         }
 
-        private static IEnumerable<IAppender> GetAppenders()
+        /// <summary>
+        /// Gets the appenders.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<IAppender> GetAppenders()
         {
             return log4net.LogManager.GetRepository().GetAppenders();
         }

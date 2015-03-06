@@ -174,6 +174,8 @@
     </Compile>
     <Compile Include="Configuration\IIoCConfigurator.cs" />
     <Compile Include="Configuration\IoCConfigurator.cs" />
+    <Compile Include="Heartbeat\HeartbeatConfigurationProvider.cs" />
+    <Compile Include="Heartbeat\IHeartbeatConfigurationProvider.cs" />
     <Compile Include="IoC\HeartbeatModule.cs" />
     <Compile Include="IoC\MemoryMqServerModule.cs" />
     <Compile Include="Configuration\IRemoteConfigurationProvider.cs" />

@@ -7,6 +7,7 @@ using Thycotic.DistributedEngine.IoC;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Logging;
+using Thycotic.Logging.LogTail;
 using Thycotic.MessageQueue.Client.Wrappers.IoC;
 using Thycotic.Utility;
 using Thycotic.Utility.Serialization;
@@ -18,10 +19,8 @@ namespace Thycotic.DistributedEngine.Configuration
     /// </summary>
     public class IoCConfigurator : IIoCConfigurator
     {
-        private readonly IDateTimeProvider _dateTimeProvider;
-        private readonly IObjectSerializer _objectSerializer;
+        private readonly IDateTimeProvider _dateTimeProvider = new RealDateTimeProvider();
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
-
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IRestCommunicationProvider _restCommunicationProvider;
         private IRemoteConfigurationProvider _remoteConfigurationProvider;
@@ -29,6 +28,7 @@ namespace Thycotic.DistributedEngine.Configuration
         private Dictionary<string, string> _instanceConfiguration;
 
         private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
+
 
         /// <summary>
         /// Gets or sets the last configuration consume.
@@ -87,8 +87,6 @@ namespace Thycotic.DistributedEngine.Configuration
         /// </summary>
         public IoCConfigurator()
         {
-            _objectSerializer = new JsonObjectSerializer();
-
             _engineIdentificationProvider = CreateEngineIdentificationProvider();
 
             _restCommunicationProvider =
@@ -105,10 +103,6 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <param name="remoteConfigurationProvider">The remote configuration provider.</param>
         public IoCConfigurator(ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider, IRemoteConfigurationProvider remoteConfigurationProvider)
         {
-            _dateTimeProvider = new RealDateTimeProvider();
-
-            _objectSerializer = new JsonObjectSerializer();
-
             _engineIdentificationProvider = CreateEngineIdentificationProvider();
 
             _localKeyProvider = localKeyProvider;
@@ -148,14 +142,17 @@ namespace Thycotic.DistributedEngine.Configuration
             // Create the builder with which components/services are registered.
             var builder = new ContainerBuilder();
 
-            builder.Register(context => _objectSerializer).As<IObjectSerializer>().SingleInstance();
+            builder.Register(context => _dateTimeProvider).As<IDateTimeProvider>().SingleInstance();
 
             builder.Register(context => _localKeyProvider).As<ILocalKeyProvider>().SingleInstance();
             builder.Register(context => _engineIdentificationProvider).As<IEngineIdentificationProvider>().SingleInstance();
+           
+            builder.RegisterType<RecentLogEntryProvider>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<JsonObjectSerializer>().AsImplementedInterfaces().SingleInstance();
 
             builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
 
-            builder.RegisterModule(new HeartbeatModule(engineService, _dateTimeProvider, _engineIdentificationProvider, _localKeyProvider, _objectSerializer, _restCommunicationProvider, GetInstanceConfiguration));
+            builder.RegisterModule(new HeartbeatModule(GetInstanceConfiguration, engineService));
 
             builder.Register(context => _restCommunicationProvider).As<IRestCommunicationProvider>().AsImplementedInterfaces();
 
