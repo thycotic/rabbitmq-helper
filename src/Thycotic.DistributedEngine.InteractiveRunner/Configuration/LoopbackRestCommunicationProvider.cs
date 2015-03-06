@@ -109,7 +109,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                         throw new NotSupportedException();
                 }
 
-                configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] = Convert.ToString(1);
+                configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] = Convert.ToString(5);
 
                 //add additional configuration
                 var pair = GetEncryptionPair();
@@ -198,8 +198,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                         MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString,
                         ConnectionStringHelpers.GetLocalRabbitMqConnectionString()
                     },
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "guest"},
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "guest"},
+                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "j@c.com"},
+                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "password1"},
                     {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "false"}
                 };
             }
@@ -216,8 +216,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                         MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString,
                         ConnectionStringHelpers.GetLocalRabbitMqConnectionString(DefaultPorts.RabbitMq.Ssl)
                     },
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "guest"},
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "guest"},
+                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "j@c.com"},
+                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "password1"},
                     {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "true"}
                 };
             }
