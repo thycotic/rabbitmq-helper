@@ -14,7 +14,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 
         public EventHandler<ModelShutdownEventArgs> ModelShutdown { get; set; }
 
-        public bool IsOpen { get; set; }
+        public bool IsOpen
+        {
+            get { return _rawModel.IsOpen; }
+        }
 
         public RabbitMqModel(IModel rawModel)
         {
@@ -45,13 +48,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             return new RabbitMqModelProperties(properties);
         }
         #endregion
-
-
-        public void Dispose()
-        {
-            _rawModel.Dispose();
-        }
-
+        
         public ICommonModelProperties CreateBasicProperties()
         {
             return Map(_rawModel.CreateBasicProperties());
@@ -123,6 +120,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         public void Close()
         {
             _rawModel.Close();
+        }
+
+        public void Dispose()
+        {
+            _rawModel.Dispose();
         }
 
     }

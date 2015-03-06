@@ -51,6 +51,23 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         public object RawValue { get { return null; } }
 
 
+        /// <summary>
+        /// Gets or sets the model shutdown.
+        /// </summary>
+        /// <value>
+        /// The model shutdown.
+        /// </value>
+        public EventHandler<ModelShutdownEventArgs> ModelShutdown { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is open.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is open; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsOpen { get; private set; }
+
+
         #region Mapping
         private ICommonModelProperties Map(MemoryMqProperties properties)
         {
@@ -121,22 +138,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         {
             //nothing here
         }
-
-        /// <summary>
-        /// Gets or sets the model shutdown.
-        /// </summary>
-        /// <value>
-        /// The model shutdown.
-        /// </value>
-        public EventHandler<ModelShutdownEventArgs> ModelShutdown { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is open.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is open; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsOpen { get; set; }
 
         /// <summary>
         /// Basics the ack.
@@ -221,6 +222,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
+            IsOpen = true;
+
             //tell the server we want to consume
             _server.BasicConsume(queueName);
 
@@ -235,9 +238,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <summary>
         /// Closes this instance.
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void Close()
         {
+            IsOpen = false;
         }
 
         /// <summary>

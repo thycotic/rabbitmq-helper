@@ -149,7 +149,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             if (CommonModel == null || !CommonModel.IsOpen) return;
 
             _log.Debug("Closing channel...");
-            CommonModel.Close();
+            CommonModel.Dispose();
             _log.Debug("Channel closed");
         }
     }
