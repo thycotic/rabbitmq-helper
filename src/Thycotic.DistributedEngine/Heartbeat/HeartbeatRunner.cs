@@ -76,14 +76,13 @@ namespace Thycotic.DistributedEngine.Heartbeat
 
             var logEntries = _recentLogEntryProvider.GetEntries();
 
-            logEntries.ToList().ForEach(e => Console.WriteLine(new string(e.Message.Reverse().ToArray())));
-
             var request = new EngineHeartbeatRequest
             {
                 IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                 PublicKey = Convert.ToBase64String(_localKeyProvider.PublicKey.Value),
                 Version = ReleaseInformationHelper.GetVersionAsDouble(),
-                LastActivity = _dateTimeProvider.Now
+                LastActivity = _dateTimeProvider.Now,
+                //LogEnties = logEntries
             };
 
             var response = _restCommunicationProvider.Post<EngineHeartbeatResponse>(uri, request);
