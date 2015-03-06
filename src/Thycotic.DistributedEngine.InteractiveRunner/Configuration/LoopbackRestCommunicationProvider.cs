@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.DistributedEngine.Logic;
+using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
+using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;
@@ -25,6 +28,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         private readonly Dictionary<Uri, Func<object, dynamic>> _loopBacks = new Dictionary<Uri, Func<object, dynamic>>();
         private Lazy<Dictionary<string, string>> _bakedConfiguration;
         private DateTime _lastBaked;
+
+        private readonly ILogWriter _log = Log.Get(typeof(LoopbackRestCommunicationProvider));
 
         public LoopbackRestCommunicationProvider(ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer)
         {
@@ -109,7 +114,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                         throw new NotSupportedException();
                 }
 
-                configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] = Convert.ToString(5);
+                configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] = Convert.ToString(30);
 
                 //add additional configuration
                 var pair = GetEncryptionPair();
@@ -142,6 +147,17 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             if (!_bakedConfiguration.IsValueCreated)
             {
                 throw new ApplicationException("There should be a configuration already");
+            }
+
+            var logEntries = heartbeatRequest.LogEntries;
+
+            if (logEntries.Any())
+            {
+                _log.Info("Received log entries from engine");
+
+                logEntries.ToList()
+                    .ForEach(
+                        e => ConsumerConsole.WriteLine(string.Format("Engine -> {0}", e.Message), ConsoleColor.Magenta));
             }
 
             var configurationString = _objectSerializer.ToBytes(_bakedConfiguration.Value);

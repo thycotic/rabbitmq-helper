@@ -21,7 +21,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         {
             ConsumerConsole.WriteLine(string.Format("Received \"{0}\" item(s)", request.Items.Length));
 
-            request.Items.ToList().ForEach(ConsumerConsole.WriteLine);
+            request.Items.ToList().ForEach(i => ConsumerConsole.WriteLine(i));
 
             return new SortListResponse { Items = request.Items.OrderBy(i => i).ToArray() };
         }

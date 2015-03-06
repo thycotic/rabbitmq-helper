@@ -9,8 +9,10 @@ using Thycotic.AppCore;
 using Thycotic.AppCore.Cryptography;
 using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.Logic;
+using Thycotic.DistributedEngine.LogViewer.Models;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.DistributedEngine.Web.Common;
+using Thycotic.DistributedEngine.Web.Common.Logging;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
 using Thycotic.Logging;
@@ -70,11 +72,11 @@ namespace Thycotic.DistributedEngine.Heartbeat
             }
 
             _log.Info("Heart beating back to server");
-            
+
             var uri = _restCommunicationProvider.GetEndpointUri(EndPoints.EngineWebService.Prefix,
                     EndPoints.EngineWebService.Actions.Heartbeat);
 
-            var logEntries = _recentLogEntryProvider.GetEntries();
+            var logEntries = _recentLogEntryProvider.GetEntries().Select(MapLogEntries).ToArray();
 
             var request = new EngineHeartbeatRequest
             {
@@ -82,7 +84,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
                 PublicKey = Convert.ToBase64String(_localKeyProvider.PublicKey.Value),
                 Version = ReleaseInformationHelper.GetVersionAsDouble(),
                 LastActivity = _dateTimeProvider.Now,
-                //LogEnties = logEntries
+                LogEntries = logEntries
             };
 
             var response = _restCommunicationProvider.Post<EngineHeartbeatResponse>(uri, request);
@@ -113,6 +115,8 @@ namespace Thycotic.DistributedEngine.Heartbeat
 
             _engineService.Start();
         }
+
+
 
         private void WaitPumpAndSchedule()
         {
@@ -159,6 +163,24 @@ namespace Thycotic.DistributedEngine.Heartbeat
             {
                 ex.InnerExceptions.Where(e => !(e is TaskCanceledException)).ToList().ForEach(e => _log.Error(e.Message, e));
             }
+        }
+
+        private static EngineLogEntry MapLogEntries(LogEntry logEntry)
+        {
+            return new EngineLogEntry
+            {
+                Id = logEntry.Id,
+                Date = logEntry.Date,
+                UserId = logEntry.UserId,
+                ServiceRole = logEntry.ServiceRole,
+                Correlation = logEntry.Correlation,
+                Context = logEntry.Context,
+                Thread = logEntry.Thread,
+                Level = logEntry.Level,
+                Logger = logEntry.Logger,
+                Message = logEntry.Message,
+                Exception = logEntry.Exception
+            };
         }
     }
 }
