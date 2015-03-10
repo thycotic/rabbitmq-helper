@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -27,6 +28,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
         /// </summary>
         static void Main(string[] args)
         {
+            ConfigureTraceListener();
+
             try
             {
                 //interactive mode (first argument is i, il or icd
@@ -36,8 +39,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 //ilcd - interactive but using a loopback for configuration, consumption disabled
                 if (args.Any() && args.First().StartsWith("i"))
                 {
-                    Console.WriteLine("Starting interactive mode...");
-                    Console.WriteLine();
+                    Trace.TraceInformation("Starting interactive mode...");
 
                     var cli = new CommandLineInterface();
 
@@ -79,8 +81,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     engine.Stop();
                     #endregion
 
-                    Console.WriteLine();
-                    Console.WriteLine("Engine stopped");
+                    Trace.TraceInformation("Engine stopped");
 
                     Thread.Sleep(TimeSpan.FromSeconds(2));
                 }
@@ -97,6 +98,21 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             {
                 Log.Error("Failed to start service", ex);
             }
+        }
+
+        private static void ConfigureTraceListener()
+        {
+            var consoleTracer = new ConsoleTraceListener
+            {
+                Name = "Thycotic.DistributedEngine.InteractiveRunner.ConsoleTracer"
+            };
+
+            // Write the initial trace message to the console trace listener.
+            consoleTracer.WriteLine(DateTime.Now + " [" + consoleTracer.Name + "] - Starting output to trace listener.");
+
+            // Add the new console trace listener to  
+            // the collection of trace listeners.
+            Trace.Listeners.Add(consoleTracer);
         }
 
         private static void ConfigureCli(CommandLineInterface cli, IContainer parentContainer)

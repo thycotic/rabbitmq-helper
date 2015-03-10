@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.ServiceProcess;
 using Autofac;
 using Thycotic.DistributedEngine.Configuration;
@@ -61,9 +62,9 @@ namespace Thycotic.DistributedEngine
 
         private static void ConfigureLogging()
         {
-            Console.WriteLine("Configuring logging...");
+            Trace.TraceInformation("Configuring logging...");
             Log.Configure();
-            Console.WriteLine("Attaching recent events appender...");
+            Trace.TraceInformation("Attaching recent events appender...");
             Log.AttachRecentEventsMemoryAppender();
         }
 
