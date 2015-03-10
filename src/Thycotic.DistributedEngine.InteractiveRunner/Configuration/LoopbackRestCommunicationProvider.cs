@@ -114,7 +114,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                         throw new NotSupportedException();
                 }
 
-                configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] = Convert.ToString(30);
+                configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] =
+                    Convert.ToString(TimeSpan.FromMinutes(5).TotalSeconds);
 
                 //add additional configuration
                 var pair = GetEncryptionPair();
