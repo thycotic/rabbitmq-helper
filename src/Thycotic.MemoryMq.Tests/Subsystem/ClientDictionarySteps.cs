@@ -37,10 +37,10 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         public void WhenTheMethodTryGetClientOnClientDictionaryIsCalledWithQueueNameAndTheResultIsStored(string clientDictionaryName, string queueNameTest, string resultName)
         {
             var clientDictionary = (IClientDictionary)ScenarioContext.Current[clientDictionaryName];
-            MemoryMqWcfServerClientProxy proxy;
-            clientDictionary.TryGetClient(queueNameTest, out proxy);
+            IMemoryMqWcfServerCallback callback;
+            clientDictionary.TryGetClient(queueNameTest, out callback);
 
-            ScenarioContext.Current[resultName] = proxy;
+            ScenarioContext.Current[resultName] = callback;
         }
     }
 }

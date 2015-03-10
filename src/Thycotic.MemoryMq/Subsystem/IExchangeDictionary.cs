@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Thycotic.MemoryMq.Subsystem
@@ -5,7 +6,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// <summary>
     /// Interface for an exchange dictionary
     /// </summary>
-    public interface IExchangeDictionary
+    public interface IExchangeDictionary : IDisposable
     {
         /// <summary>
         /// Gets the mailboxes in the exchange

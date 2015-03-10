@@ -31,18 +31,18 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queueName">Name of the queue.</param>
         public void AddClient(string queueName)
         {
-            var callback = _callbackChannelProvider.GetCallbackChannel(); 
+            var callback = _callbackChannelProvider.GetCallbackChannel();
 
-            var client = new MemoryMqWcfServerClientProxy(callback.ToContextChannel(), callback);
+            var channel = callback.ToContextChannel();
 
             //have the consumer remove itself when it disconnects
-            client.Channel.Closed += (sender, args) =>
+            channel.Closed += (sender, args) =>
             {
                 _log.Debug("Detaching consumer");
-                GetClientList(queueName).RemoveClient(client);
+                GetClientList(queueName).RemoveClient(callback);
             };
 
-            GetClientList(queueName).AddClient(client);
+            GetClientList(queueName).AddClient(callback);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="clientProxy">The client.</param>
         /// <returns></returns>
-        public bool TryGetClient(string queueName, out MemoryMqWcfServerClientProxy clientProxy)
+        public bool TryGetClient(string queueName, out IMemoryMqWcfServerCallback clientProxy)
         {
             return GetClientList(queueName).TryGetClient(out clientProxy);
         }
@@ -70,7 +70,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public class ClientList
         {
-            private readonly ConcurrentDictionary<string, MemoryMqWcfServerClientProxy> _data = new ConcurrentDictionary<string, MemoryMqWcfServerClientProxy>();
+            private readonly ConcurrentDictionary<string, IMemoryMqWcfServerCallback> _data = new ConcurrentDictionary<string, IMemoryMqWcfServerCallback>();
 
             private int _robin;
 
@@ -79,22 +79,26 @@ namespace Thycotic.MemoryMq.Subsystem
             /// <summary>
             /// 
             /// </summary>
-            /// <param name="clientProxy"></param>
-            public void AddClient(MemoryMqWcfServerClientProxy clientProxy)
+            /// <param name="callback"></param>
+            public void AddClient(IMemoryMqWcfServerCallback callback)
             {
-                _log.Debug(string.Format("Adding consumer with session ID {0}", clientProxy.Channel.SessionId));
+                var channel = callback.ToContextChannel();
 
-                _data.TryAdd(clientProxy.Channel.SessionId, clientProxy);
+                _log.Debug(string.Format("Adding consumer with session ID {0}", channel.SessionId));
+                
+                _data.TryAdd(channel.SessionId, callback);
             }
 
             /// <summary>
             /// 
             /// </summary>
-            /// <param name="clientProxy"></param>
-            public void RemoveClient(MemoryMqWcfServerClientProxy clientProxy)
+            /// <param name="callback"></param>
+            public void RemoveClient(IMemoryMqWcfServerCallback callback)
             {
-                MemoryMqWcfServerClientProxy temp;
-                _data.TryRemove(clientProxy.Channel.SessionId, out temp);
+                var channel = callback.ToContextChannel();
+
+                IMemoryMqWcfServerCallback temp;
+                _data.TryRemove(channel.SessionId, out temp);
             }
 
             /// <summary>
@@ -102,7 +106,7 @@ namespace Thycotic.MemoryMq.Subsystem
             /// </summary>
             /// <param name="clientProxy"></param>
             /// <returns></returns>
-            public bool TryGetClient(out MemoryMqWcfServerClientProxy clientProxy)
+            public bool TryGetClient(out IMemoryMqWcfServerCallback clientProxy)
             {
                 var count = _data.Count;
                 //simple round robin 
@@ -118,6 +122,14 @@ namespace Thycotic.MemoryMq.Subsystem
                 _robin = 0;
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            
         }
     }
 }

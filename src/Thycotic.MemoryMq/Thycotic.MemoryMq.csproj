@@ -166,7 +166,6 @@
     <Compile Include="MemoryMqWcfServer.cs" />
     <Compile Include="MemoryMqDeliveryEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MemoryMqWcfServerClientProxy.cs" />
     <Compile Include="Subsystem\Mailbox.cs" />
     <Compile Include="Subsystem\MessageDispatcher.cs" />
     <Compile Include="Subsystem\MessageQueueProxy.cs" />

@@ -60,8 +60,8 @@ namespace Thycotic.MemoryMq.Subsystem
                             return;
                         }
 
-                        MemoryMqWcfServerClientProxy clientProxy;
-                        if (!_clientDictionary.TryGetClient(queueName, out clientProxy))
+                        IMemoryMqWcfServerCallback callback;
+                        if (!_clientDictionary.TryGetClient(queueName, out callback))
                         {
                             //no client for the queue
                             return;
@@ -79,7 +79,7 @@ namespace Thycotic.MemoryMq.Subsystem
                         {
                             //this will only fail if WCF fails
                             //otherwise errors will be nacked by the client
-                            clientProxy.Callback.SendMessage(body);
+                            callback.SendMessage(body);
                         }
                         catch (Exception ex)
                         {

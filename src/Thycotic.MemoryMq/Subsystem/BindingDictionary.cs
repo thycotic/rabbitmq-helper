@@ -34,5 +34,13 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             return _data.TryGetValue(routingSlip, out queueName);
         }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            
+        }
     }
 }

@@ -22,7 +22,8 @@ namespace Thycotic.MemoryMq
         /// Initializes a new instance of the <see cref="MemoryMqWcfServer"/> class.
         /// This the constructor used by WCF
         /// </summary>
-        public MemoryMqWcfServer() : this(new CallbackChannelProvider())
+        public MemoryMqWcfServer()
+            : this(new CallbackChannelProvider())
         {
             //default constructor for wcf
         }
@@ -84,7 +85,7 @@ namespace Thycotic.MemoryMq
         public void BasicConsume(string queueName)
         {
             _log.Debug("Attaching consumer");
-            
+
             _clients.AddClient(queueName);
         }
 
@@ -123,6 +124,9 @@ namespace Thycotic.MemoryMq
                 return;
             }
 
+            _messages.Dispose();
+            _bindings.Dispose();
+            _clients.Dispose();
             _messageDispatcher.Dispose();
 
             _disposed = true;

@@ -1,9 +1,11 @@
+using System;
+
 namespace Thycotic.MemoryMq.Subsystem
 {
     /// <summary>
     /// Interface for a client dictionary
     /// </summary>
-    public interface IClientDictionary
+    public interface IClientDictionary : IDisposable
     {
         /// <summary>
         /// Adds the client.
@@ -17,6 +19,6 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="clientProxy">The client.</param>
         /// <returns></returns>
-        bool TryGetClient(string queueName, out MemoryMqWcfServerClientProxy clientProxy);
+        bool TryGetClient(string queueName, out IMemoryMqWcfServerCallback clientProxy);
     }
 }

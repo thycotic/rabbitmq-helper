@@ -1,9 +1,11 @@
+using System;
+
 namespace Thycotic.MemoryMq.Subsystem
 {
     /// <summary>
     /// Interface for a binding dictionary
     /// </summary>
-    public interface IBindingDictionary
+    public interface IBindingDictionary : IDisposable
     {
         /// <summary>
         /// Binds a queue to a routing slip
