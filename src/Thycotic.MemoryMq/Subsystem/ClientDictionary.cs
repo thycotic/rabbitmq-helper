@@ -96,7 +96,7 @@ namespace Thycotic.MemoryMq.Subsystem
             public void RemoveClient(IMemoryMqWcfServerCallback callback)
             {
                 var channel = callback.ToContextChannel();
-
+                
                 IMemoryMqWcfServerCallback temp;
                 _data.TryRemove(channel.SessionId, out temp);
             }
@@ -122,6 +122,14 @@ namespace Thycotic.MemoryMq.Subsystem
                 _robin = 0;
                 return false;
             }
+
+            /// <summary>
+            /// Removes all.
+            /// </summary>
+            public void RemoveAll()
+            {
+                _data.Values.ToList().ForEach(RemoveClient);
+            }
         }
 
         /// <summary>
@@ -129,7 +137,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public void Dispose()
         {
-            
+            _data.Values.ToList().ForEach(cl => cl.RemoveAll());
         }
     }
 }
