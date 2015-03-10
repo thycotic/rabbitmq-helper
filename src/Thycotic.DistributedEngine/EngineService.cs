@@ -61,8 +61,9 @@ namespace Thycotic.DistributedEngine
 
         private static void ConfigureLogging()
         {
+            Console.WriteLine("Configuring logging...");
             Log.Configure();
-
+            Console.WriteLine("Attaching recent events appender...");
             Log.AttachRecentEventsMemoryAppender();
         }
 
