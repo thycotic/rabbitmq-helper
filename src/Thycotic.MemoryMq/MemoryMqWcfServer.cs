@@ -10,7 +10,7 @@ namespace Thycotic.MemoryMq
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class MemoryMqWcfServer : IMemoryMqWcfServer
     {
-        private readonly IExchangeDictionary _messages;
+        private readonly IExchangeDictionary _exchanges;
         private readonly IBindingDictionary _bindings;
         private readonly IClientDictionary _clients;
         private readonly IMessageDispatcher _messageDispatcher;
@@ -33,19 +33,19 @@ namespace Thycotic.MemoryMq
         /// </summary>
         public MemoryMqWcfServer(ICallbackChannelProvider callbackChannelProvider)
         {
-            _messages = new ExchangeDictionary();
+            _exchanges = new ExchangeDictionary();
             _bindings = new BindingDictionary();
             _clients = new ClientDictionary(callbackChannelProvider);
-            _messageDispatcher = new MessageDispatcher(_messages, _bindings, _clients);
+            _messageDispatcher = new MessageDispatcher(_exchanges, _bindings, _clients);
             _messageDispatcher.Start();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqWcfServer"/> class.
         /// </summary>
-        public MemoryMqWcfServer(IExchangeDictionary messages, IBindingDictionary bindings, IClientDictionary clients, IMessageDispatcher dispatcher)
+        public MemoryMqWcfServer(IExchangeDictionary exchanges, IBindingDictionary bindings, IClientDictionary clients, IMessageDispatcher dispatcher)
         {
-            _messages = messages;
+            _exchanges = exchanges;
             _bindings = bindings;
             _clients = clients;
             _messageDispatcher = dispatcher;
@@ -64,7 +64,7 @@ namespace Thycotic.MemoryMq
         /// <param name="body">The body.</param>
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, MemoryMqProperties properties, byte[] body)
         {
-            _messages.Publish(new RoutingSlip(exchangeName, routingKey), new MemoryMqDeliveryEventArgs(exchangeName, routingKey, properties, body));
+            _exchanges.Publish(new RoutingSlip(exchangeName, routingKey), new MemoryMqDeliveryEventArgs(exchangeName, routingKey, properties, body));
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Thycotic.MemoryMq
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         public void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple)
         {
-            _messages.Acknowledge(deliveryTag, new RoutingSlip(exchange, routingKey));
+            _exchanges.Acknowledge(deliveryTag, new RoutingSlip(exchange, routingKey));
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Thycotic.MemoryMq
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple)
         {
-            _messages.NegativelyAcknowledge(deliveryTag, new RoutingSlip(exchange, routingKey));
+            _exchanges.NegativelyAcknowledge(deliveryTag, new RoutingSlip(exchange, routingKey));
         }
 
         /// <summary>
@@ -124,11 +124,14 @@ namespace Thycotic.MemoryMq
                 return;
             }
 
-            _messages.Dispose();
-            _bindings.Dispose();
             _clients.Dispose();
+
             _messageDispatcher.Dispose();
 
+            _bindings.Dispose();
+
+            _exchanges.Dispose();
+            
             _disposed = true;
         }
     }
