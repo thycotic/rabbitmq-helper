@@ -75,8 +75,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
         {
             Console.Title = string.Format("Secret Server Distributed Engine in interactive mode v.{0} ({1})", ReleaseInformationHelper.Version, ReleaseInformationHelper.Architecture);
 
-            Task.Factory.StartNew(InteropHelper.DisableCloseMenuItem);
-            Task.Factory.StartNew(InteropHelper.Maximize);
+            InteropHelper.DisableCloseMenuItem();
+            InteropHelper.Maximize();
         }
 
         public void AddCommand(IConsoleCommand command)

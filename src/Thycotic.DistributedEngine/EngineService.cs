@@ -104,7 +104,7 @@ namespace Thycotic.DistributedEngine
 
             if (_startConsuming)
             {
-                _log.Info("Stopping all consumers");
+                _log.Info("Stopping all consumers...");
                 var consumerFactory = IoCContainer.Resolve<ConsumerWrapperFactory>();
 
                 //clean up the consumers in the factory

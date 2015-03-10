@@ -28,8 +28,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
         /// </summary>
         static void Main(string[] args)
         {
-            ConfigureTraceListener();
-
             try
             {
                 //interactive mode (first argument is i, il or icd
@@ -39,9 +37,11 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 //ilcd - interactive but using a loopback for configuration, consumption disabled
                 if (args.Any() && args.First().StartsWith("i"))
                 {
-                    Trace.TraceInformation("Starting interactive mode...");
+                    ConfigureTraceListener();
 
                     var cli = new CommandLineInterface();
+
+                    Trace.TraceInformation("Starting interactive mode...");
 
                     #region Start server
                     var startConsuming = !args.First().EndsWith("cd");
@@ -107,12 +107,9 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 Name = "Thycotic.DistributedEngine.InteractiveRunner.ConsoleTracer"
             };
 
-            // Write the initial trace message to the console trace listener.
-            consoleTracer.WriteLine(DateTime.Now + " [" + consoleTracer.Name + "] - Starting output to trace listener.");
-
-            // Add the new console trace listener to  
-            // the collection of trace listeners.
             Trace.Listeners.Add(consoleTracer);
+
+            Trace.TraceInformation("Console tracer attached");
         }
 
         private static void ConfigureCli(CommandLineInterface cli, IContainer parentContainer)
