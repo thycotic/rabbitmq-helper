@@ -25,7 +25,7 @@ namespace Thycotic.MemoryMq.Tests
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "MemoryMqServer.feature"
+#line 1 "MemoryMqWcfServer.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]

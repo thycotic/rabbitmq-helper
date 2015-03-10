@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Thycotic.MemoryMq;
 
-namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 {
     /// <summary>
     /// Callback from the memory Mq
     /// </summary>
-    public class MemoryMqServiceCallback : IMemoryMqServerCallback
+    public class MemoryMqWcfServiceCallback : IMemoryMqWcfServerCallback
     {
 
         /// <summary>

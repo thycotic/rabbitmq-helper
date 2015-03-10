@@ -22,7 +22,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             var callbackChannelProvider = (ICallbackChannelProvider)ScenarioContext.Current[callbackChannelProviderName];
 
 // ReSharper disable once SuspiciousTypeConversion.Global
-            callbackChannelProvider.GetCallbackChannel().Returns(Substitute.For<IMemoryMqServerCallback, IContextChannel>());
+            callbackChannelProvider.GetCallbackChannel().Returns(Substitute.For<IMemoryMqWcfServerCallback, IContextChannel>());
         }
 
 
@@ -37,7 +37,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         public void WhenTheMethodTryGetClientOnClientDictionaryIsCalledWithQueueNameAndTheResultIsStored(string clientDictionaryName, string queueNameTest, string resultName)
         {
             var clientDictionary = (IClientDictionary)ScenarioContext.Current[clientDictionaryName];
-            MemoryMqServerClientProxy proxy;
+            MemoryMqWcfServerClientProxy proxy;
             clientDictionary.TryGetClient(queueNameTest, out proxy);
 
             ScenarioContext.Current[resultName] = proxy;

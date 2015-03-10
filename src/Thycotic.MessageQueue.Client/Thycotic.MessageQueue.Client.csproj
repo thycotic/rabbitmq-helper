@@ -160,11 +160,11 @@
     <Compile Include="QueueClient\ICommonModel.cs" />
     <Compile Include="QueueClient\ICommonModelProperties.cs" />
     <Compile Include="IMessageEncryptor.cs" />
-    <Compile Include="QueueClient\MemoryMq\IMemoryMqServiceConnection.cs" />
+    <Compile Include="QueueClient\MemoryMq\Wcf\IMemoryMqWcfServiceConnection.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqQueue.cs" />
-    <Compile Include="QueueClient\MemoryMq\MemoryMqServiceCallback.cs" />
-    <Compile Include="QueueClient\MemoryMq\MemoryMqServiceConnection.cs" />
-    <Compile Include="QueueClient\MemoryMq\MemoryMqServiceConnectionFactory.cs" />
+    <Compile Include="QueueClient\MemoryMq\Wcf\MemoryMqWcfServiceCallback.cs" />
+    <Compile Include="QueueClient\MemoryMq\Wcf\MemoryMqWcfServiceConnection.cs" />
+    <Compile Include="QueueClient\MemoryMq\Wcf\MemoryMqWcfServiceConnectionFactory.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqSubscription.cs" />
     <Compile Include="QueueClient\ModelShutdownEventArgs.cs" />
     <Compile Include="QueueClient\ICommonQueue.cs" />

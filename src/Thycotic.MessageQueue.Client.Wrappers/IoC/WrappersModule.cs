@@ -28,7 +28,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.IoC
             builder.RegisterGeneric(typeof(BasicConsumerWrapper<,>)).InstancePerDependency();
             builder.RegisterGeneric(typeof(BlockingConsumerWrapper<,,>)).InstancePerDependency();
 
-            builder.RegisterType<ConsumerWrapperFactory>().As<IStartable>().SingleInstance();
+            //register as self too when we want to clean it up explicitly
+            builder.RegisterType<ConsumerWrapperFactory>().As<IStartable>().AsSelf().SingleInstance();
         }
     }
 }

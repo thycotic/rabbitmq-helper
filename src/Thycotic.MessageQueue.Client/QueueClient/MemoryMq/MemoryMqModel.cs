@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using Thycotic.MemoryMq;
+using Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf;
 using Thycotic.MessageQueue.Client.Wrappers;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
@@ -11,20 +13,21 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqModel : ICommonModel
     {
-        private readonly IMemoryMqServer _server;
-        private readonly MemoryMqServiceCallback _callback;
+        private readonly IMemoryMqWcfServer _server;
+        private readonly MemoryMqWcfServiceCallback _callback;
+        private readonly ICommunicationObject _communicationObject;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqModel"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqModel" /> class.
         /// </summary>
         /// <param name="server">The create channel.</param>
-        /// <param name="callback"></param>
-        public MemoryMqModel(IMemoryMqServer server, MemoryMqServiceCallback callback)
+        /// <param name="callback">The callback.</param>
+        public MemoryMqModel(IMemoryMqWcfServer server, MemoryMqWcfServiceCallback callback)
         {
             _server = server;
             _callback = callback;
 
-            var communicationObject = _server.GetCommunicationObject();
+            _communicationObject = _server.ToCommunicationObject();
             
             Action<object, EventArgs> connectionShutdownHandler = (model, reason) =>
             {
@@ -37,8 +40,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 }
             };
 
-            communicationObject.Faulted += (sender, args) => connectionShutdownHandler(sender, args);
-            communicationObject.Closed += (sender, args) => connectionShutdownHandler(sender, args);
+            _communicationObject.Faulted += (sender, args) => connectionShutdownHandler(sender, args);
+            _communicationObject.Closed += (sender, args) => connectionShutdownHandler(sender, args);
 
         }
 
@@ -65,7 +68,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <value>
         ///   <c>true</c> if this instance is open; otherwise, <c>false</c>.
         /// </value>
-        public bool IsOpen { get; private set; }
+        public bool IsOpen
+        {
+            get { return _communicationObject.State == CommunicationState.Opened; }
+        }
 
 
         #region Mapping
@@ -222,8 +228,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            IsOpen = true;
-
             //tell the server we want to consume
             _server.BasicConsume(queueName);
 
@@ -240,7 +244,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// </summary>
         public void Close()
         {
-            IsOpen = false;
+            //nothing to close, the connection will close the communication object
         }
 
         /// <summary>
@@ -249,6 +253,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         public void Dispose()
         {
             Close();
+
+            _callback.BytesReceived = null;
         }
     }
 }

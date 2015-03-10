@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
+using Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
@@ -18,8 +19,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// </value>
         public EventHandler ConnectionCreated { get; set; }
 
-        private readonly MemoryMqServiceConnectionFactory _connectionFactory;
-        private Lazy<IMemoryMqServiceConnection> _connection;
+        private readonly MemoryMqWcfServiceConnectionFactory _connectionFactory;
+        private Lazy<IMemoryMqWcfServiceConnection> _connection;
         private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqConnection));
@@ -31,7 +32,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="useSsl"></param>
         public MemoryMqConnection(string url, bool useSsl)
         {
-            _connectionFactory = new MemoryMqServiceConnectionFactory { Uri = url, UseSsl = useSsl, RequestedHeartbeat = 300 };
+            _connectionFactory = new MemoryMqWcfServiceConnectionFactory { Uri = url, UseSsl = useSsl, RequestedHeartbeat = 300 };
             ResetConnection();
         }
 
@@ -39,7 +40,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         {
             CloseCurrentConnection();
 
-            _connection = new Lazy<IMemoryMqServiceConnection>(() =>
+            _connection = new Lazy<IMemoryMqWcfServiceConnection>(() =>
             {
                 _log.Debug("Opening connection...");
                 try

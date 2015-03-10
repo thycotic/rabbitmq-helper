@@ -9,6 +9,6 @@
         /// Gets the callback channel.
         /// </summary>
         /// <returns></returns>
-        IMemoryMqServerCallback GetCallbackChannel();
+        IMemoryMqWcfServerCallback GetCallbackChannel();
     }
 }

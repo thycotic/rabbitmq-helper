@@ -70,8 +70,8 @@ namespace Thycotic.DistributedEngine.MemoryMq
                 }
                 serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
 
-                _host = new ServiceHost(typeof(Thycotic.MemoryMq.MemoryMqServer));
-                _host.AddServiceEndpoint(typeof(IMemoryMqServer), serviceBinding, _connectionString);
+                _host = new ServiceHost(typeof(MemoryMqWcfServer));
+                _host.AddServiceEndpoint(typeof(IMemoryMqWcfServer), serviceBinding, _connectionString);
 
                 if (_useSsl)
                 {

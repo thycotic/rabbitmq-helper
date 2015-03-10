@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 {
-    internal interface IMemoryMqServiceConnection
+    internal interface IMemoryMqWcfServiceConnection
     {
         ICommonModel CreateModel();
 

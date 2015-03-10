@@ -1,11 +1,13 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 
-namespace Thycotic.MemoryMq.Subsystem
+namespace Thycotic.MemoryMq
 {
     /// <summary>
     /// Memory mq client proxy
     /// </summary>
-    public class MemoryMqServerClientProxy
+    //TODO: Do away with this totally useless class -dkk
+    public class MemoryMqWcfServerClientProxy
     {
         /// <summary>
         /// Gets the channel.
@@ -21,14 +23,14 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <value>
         /// The callback.
         /// </value>
-        public IMemoryMqServerCallback Callback { get; private set; }
+        public IMemoryMqWcfServerCallback Callback { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqServerClientProxy"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqWcfServerClientProxy"/> class.
         /// </summary>
         /// <param name="channel">The channel.</param>
         /// <param name="callback">The callback.</param>
-        public MemoryMqServerClientProxy(IContextChannel channel, IMemoryMqServerCallback callback)
+        public MemoryMqWcfServerClientProxy(IContextChannel channel, IMemoryMqWcfServerCallback callback)
         {
             Channel = channel;
             Callback = callback;

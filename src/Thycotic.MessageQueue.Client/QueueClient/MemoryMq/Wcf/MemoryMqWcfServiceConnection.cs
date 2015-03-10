@@ -3,16 +3,16 @@ using System.ServiceModel;
 using Thycotic.Logging;
 using Thycotic.MemoryMq;
 
-namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 {
-    internal class MemoryMqServiceConnection : IMemoryMqServiceConnection
+    internal class MemoryMqWcfServiceConnection : IMemoryMqWcfServiceConnection
     {
-        private readonly IMemoryMqServer _server;
+        private readonly IMemoryMqWcfServer _server;
 
         private readonly ICommunicationObject _communicationObject;
-        private readonly MemoryMqServiceCallback _callback;
+        private readonly MemoryMqWcfServiceCallback _callback;
 
-        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServiceConnection));
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqWcfServiceConnection));
 
         public bool IsOpen
         {
@@ -21,11 +21,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
         public EventHandler ConnectionShutdown { get; set; }
 
-        public MemoryMqServiceConnection(IMemoryMqServer server, MemoryMqServiceCallback callback)
+        public MemoryMqWcfServiceConnection(IMemoryMqWcfServer server, MemoryMqWcfServiceCallback callback)
         {
             _server = server;
             _callback = callback;
-            _communicationObject = server.GetCommunicationObject();
+            _communicationObject = server.ToCommunicationObject();
 
             Action<object, EventArgs> connectionShutdownHandler = (sender, args) =>
             {

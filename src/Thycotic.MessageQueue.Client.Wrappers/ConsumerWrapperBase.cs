@@ -27,6 +27,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TRequest, THandler>));
+        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest,THandler}" /> class.
@@ -144,6 +145,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// </summary>
         public void Dispose()
         {
+            if (_disposed)
+            {
+                return;
+            }
+
             _terminated = true;
 
             if (CommonModel == null || !CommonModel.IsOpen) return;
@@ -151,6 +157,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             _log.Debug("Closing channel...");
             CommonModel.Dispose();
             _log.Debug("Channel closed");
+
+            _log.Debug("Closing connection...");
+            _connection.Dispose();
+            _log.Debug("Connection closed");
+
+            _disposed = true;
         }
     }
 }

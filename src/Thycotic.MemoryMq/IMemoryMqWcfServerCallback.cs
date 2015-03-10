@@ -6,7 +6,7 @@ namespace Thycotic.MemoryMq
     /// Interface for a memory mq server callback
     /// </summary>
     [ServiceContract(Namespace = "http://www.thycotic.com/services")]
-    public interface IMemoryMqServerCallback
+    public interface IMemoryMqWcfServerCallback
     {
         /// <summary>
         /// Sends the message.

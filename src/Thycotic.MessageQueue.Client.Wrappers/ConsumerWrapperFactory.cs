@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Autofac;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Reflection;
@@ -10,11 +11,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
     /// <summary>
     /// Consumer wrapper factory
     /// </summary>
-    public class ConsumerWrapperFactory : IStartable
+    public class ConsumerWrapperFactory : IStartable, IDisposable
     {
         private readonly IComponentContext _context;
 
         private readonly HashSet<IConsumerWrapperBase> _consumerWrappers = new HashSet<IConsumerWrapperBase>();
+        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsumerWrapperFactory"/> class.
@@ -30,7 +32,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// </summary>
         public void Start()
         {
-            StartActionConsumers(typeof (IBasicConsumer<>), typeof(BasicConsumerWrapper<,>));
+            StartActionConsumers(typeof(IBasicConsumer<>), typeof(BasicConsumerWrapper<,>));
             StartFunctionConsumers(typeof(IBlockingConsumer<,>), typeof(BlockingConsumerWrapper<,,>));
         }
 
@@ -48,7 +50,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                     var consumerWrapperType = wrapperType.MakeGenericType(messageType, consumerType);
 
-                    var consumerWrapper = (IConsumerWrapperBase) _context.Resolve(consumerWrapperType);
+                    var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
 
                     _consumerWrappers.Add(consumerWrapper);
 
@@ -76,6 +78,38 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                 consumerWrapper.StartConsuming();
             });
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            var exceptions = new List<Exception>();
+
+            _consumerWrappers.ToList().ForEach(cw =>
+            {
+                try
+                {
+                    cw.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    exceptions.Add(ex);
+                }
+            });
+
+            if (exceptions.Any())
+            {
+                throw new AggregateException("Could not dispose the factory", exceptions);
+            }
+
+            _disposed = true;
         }
     }
 }

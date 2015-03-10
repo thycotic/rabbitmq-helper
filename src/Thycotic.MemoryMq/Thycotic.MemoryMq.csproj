@@ -161,12 +161,12 @@
     <Compile Include="WcfHelpers.cs" />
     <Compile Include="Subsystem\ClientDictionary.cs" />
     <Compile Include="Subsystem\ExchangeDictionary.cs" />
-    <Compile Include="IMemoryMqServerCallback.cs" />
-    <Compile Include="IMemoryMqServer.cs" />
-    <Compile Include="MemoryMqServer.cs" />
+    <Compile Include="IMemoryMqWcfServerCallback.cs" />
+    <Compile Include="IMemoryMqWcfServer.cs" />
+    <Compile Include="MemoryMqWcfServer.cs" />
     <Compile Include="MemoryMqDeliveryEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Subsystem\IMemoryMqServerClient.cs" />
+    <Compile Include="MemoryMqWcfServerClientProxy.cs" />
     <Compile Include="Subsystem\Mailbox.cs" />
     <Compile Include="Subsystem\MessageDispatcher.cs" />
     <Compile Include="Subsystem\MessageQueueProxy.cs" />

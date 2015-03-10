@@ -3,6 +3,7 @@ using System.ServiceProcess;
 using Autofac;
 using Thycotic.DistributedEngine.Configuration;
 using Thycotic.Logging;
+using Thycotic.MessageQueue.Client.Wrappers;
 
 namespace Thycotic.DistributedEngine
 {
@@ -74,8 +75,6 @@ namespace Thycotic.DistributedEngine
 
             try
             {
-                ResetIoCContainer();
-
                 if (!IoCConfigurator.TryGetAndAssignConfiguration())
                 {
                     _log.Info("Engine is not enabled/configured. Existing...");
@@ -101,12 +100,24 @@ namespace Thycotic.DistributedEngine
 
             _log.Debug("Cleaning up IoC container");
 
+            if (_startConsuming)
+            {
+                _log.Info("Stopping all consumers");
+                var consumerFactory = IoCContainer.Resolve<ConsumerWrapperFactory>();
+
+                //clean up the consumers in the factory
+                consumerFactory.Dispose();
+            }
+
+
             IoCContainer.Dispose();
         }
 
         private void BringUp()
         {
             _correlation = LogCorrelation.Create();
+
+            ResetIoCContainer();
 
             ConfigureIoC();
         }

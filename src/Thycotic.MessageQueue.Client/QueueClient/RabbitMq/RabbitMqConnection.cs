@@ -123,7 +123,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         private void RecoverConnection(IConnection connection, ShutdownEventArgs reason)
         {
             //if this was actually requested, don't recover the connection and let it die
-            if (_terminated) return;
+            if (_terminated)
+            {
+                return;
+            }
 
             _log.Warn(string.Format("Connection closed because {0}", reason));
             ResetConnection();

@@ -12,7 +12,7 @@ namespace Thycotic.MemoryMq
         /// </summary>
         /// <param name="callback">The callback.</param>
         /// <returns></returns>
-        public static IContextChannel GetChannel(this IMemoryMqServerCallback callback)
+        public static IContextChannel ToContextChannel(this IMemoryMqWcfServerCallback callback)
         {
 // ReSharper disable once SuspiciousTypeConversion.Global
             return (IContextChannel) callback;
@@ -23,7 +23,7 @@ namespace Thycotic.MemoryMq
         /// </summary>
         /// <param name="server">The server.</param>
         /// <returns></returns>
-        public static ICommunicationObject GetCommunicationObject(this IMemoryMqServer server)
+        public static ICommunicationObject ToCommunicationObject(this IMemoryMqWcfServer server)
         {
 // ReSharper disable once SuspiciousTypeConversion.Global
             return (ICommunicationObject) server;

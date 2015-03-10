@@ -33,7 +33,7 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             var callback = _callbackChannelProvider.GetCallbackChannel(); 
 
-            var client = new MemoryMqServerClientProxy(callback.GetChannel(), callback);
+            var client = new MemoryMqWcfServerClientProxy(callback.ToContextChannel(), callback);
 
             //have the consumer remove itself when it disconnects
             client.Channel.Closed += (sender, args) =>
@@ -51,7 +51,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="clientProxy">The client.</param>
         /// <returns></returns>
-        public bool TryGetClient(string queueName, out MemoryMqServerClientProxy clientProxy)
+        public bool TryGetClient(string queueName, out MemoryMqWcfServerClientProxy clientProxy)
         {
             return GetClientList(queueName).TryGetClient(out clientProxy);
         }
@@ -70,7 +70,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public class ClientList
         {
-            private readonly ConcurrentDictionary<string, MemoryMqServerClientProxy> _data = new ConcurrentDictionary<string, MemoryMqServerClientProxy>();
+            private readonly ConcurrentDictionary<string, MemoryMqWcfServerClientProxy> _data = new ConcurrentDictionary<string, MemoryMqWcfServerClientProxy>();
 
             private int _robin;
 
@@ -80,7 +80,7 @@ namespace Thycotic.MemoryMq.Subsystem
             /// 
             /// </summary>
             /// <param name="clientProxy"></param>
-            public void AddClient(MemoryMqServerClientProxy clientProxy)
+            public void AddClient(MemoryMqWcfServerClientProxy clientProxy)
             {
                 _log.Debug(string.Format("Adding consumer with session ID {0}", clientProxy.Channel.SessionId));
 
@@ -91,9 +91,9 @@ namespace Thycotic.MemoryMq.Subsystem
             /// 
             /// </summary>
             /// <param name="clientProxy"></param>
-            public void RemoveClient(MemoryMqServerClientProxy clientProxy)
+            public void RemoveClient(MemoryMqWcfServerClientProxy clientProxy)
             {
-                MemoryMqServerClientProxy temp;
+                MemoryMqWcfServerClientProxy temp;
                 _data.TryRemove(clientProxy.Channel.SessionId, out temp);
             }
 
@@ -102,7 +102,7 @@ namespace Thycotic.MemoryMq.Subsystem
             /// </summary>
             /// <param name="clientProxy"></param>
             /// <returns></returns>
-            public bool TryGetClient(out MemoryMqServerClientProxy clientProxy)
+            public bool TryGetClient(out MemoryMqWcfServerClientProxy clientProxy)
             {
                 var count = _data.Count;
                 //simple round robin 

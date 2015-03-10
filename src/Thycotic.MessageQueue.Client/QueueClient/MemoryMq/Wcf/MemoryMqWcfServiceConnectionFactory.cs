@@ -3,9 +3,9 @@ using System.ServiceModel;
 using Thycotic.Logging;
 using Thycotic.MemoryMq;
 
-namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
+namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 {
-    internal class MemoryMqServiceConnectionFactory
+    internal class MemoryMqWcfServiceConnectionFactory
     {
         public string Uri
         {
@@ -24,9 +24,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
         private Uri _uri;
 
-        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqServiceConnectionFactory));
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqWcfServiceConnectionFactory));
 
-        public IMemoryMqServiceConnection CreateConnection()
+        public IMemoryMqWcfServiceConnection CreateConnection()
         {
             NetTcpBinding clientBinding;
 
@@ -40,9 +40,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 clientBinding = new NetTcpBinding(SecurityMode.None);
             }
 
-            var callback = new MemoryMqServiceCallback();
+            var callback = new MemoryMqWcfServiceCallback();
 
-            var channelFactory = new DuplexChannelFactory<IMemoryMqServer>(callback, clientBinding, Uri);
+            var channelFactory = new DuplexChannelFactory<IMemoryMqWcfServer>(callback, clientBinding, Uri);
             //TODO: Do i need to worry about that since this is ephemeral? -dkk
             //channelFactory.Closed += new EventHandler(DuplexChannelFactory_Closed);
             //channelFactory.Closing += new EventHandler(DuplexChannelFactory_Closing);
@@ -52,7 +52,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             {
                 var channel = channelFactory.CreateChannel();
 
-                return new MemoryMqServiceConnection(channel, callback);
+                return new MemoryMqWcfServiceConnection(channel, callback);
             }
             catch (Exception ex)
             {

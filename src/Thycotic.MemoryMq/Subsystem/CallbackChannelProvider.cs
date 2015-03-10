@@ -11,9 +11,9 @@ namespace Thycotic.MemoryMq.Subsystem
         /// Gets the callback channel using OperationContext.Current.
         /// </summary>
         /// <returns></returns>
-        public IMemoryMqServerCallback GetCallbackChannel()
+        public IMemoryMqWcfServerCallback GetCallbackChannel()
         {
-            return OperationContext.Current.GetCallbackChannel<IMemoryMqServerCallback>();
+            return OperationContext.Current.GetCallbackChannel<IMemoryMqWcfServerCallback>();
         }
     }
 }

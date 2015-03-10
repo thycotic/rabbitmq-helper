@@ -6,8 +6,8 @@ namespace Thycotic.MemoryMq
     /// <summary>
     /// Interface for a memory mq server
     /// </summary>
-    [ServiceContract(Namespace = "http://www.thycotic.com/services", SessionMode = SessionMode.Required, CallbackContract = typeof(IMemoryMqServerCallback))]
-    public interface IMemoryMqServer : IDisposable
+    [ServiceContract(Namespace = "http://www.thycotic.com/services", SessionMode = SessionMode.Required, CallbackContract = typeof(IMemoryMqWcfServerCallback))]
+    public interface IMemoryMqWcfServer : IDisposable
     {
         /// <summary>
         /// Basic publish.

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.MemoryMq;
+using Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
@@ -10,8 +11,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqSubscription : ISubscription
     {
-        private readonly IMemoryMqServer _server;
-        private readonly MemoryMqServiceCallback _callback;
+        private readonly IMemoryMqWcfServer _server;
+        private readonly MemoryMqWcfServiceCallback _callback;
         private readonly string _queueName;
 
         /// <summary>
@@ -20,7 +21,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="server">The model.</param>
         /// <param name="callback">The callback.</param>
-         public MemoryMqSubscription(string queueName, IMemoryMqServer server, MemoryMqServiceCallback callback)
+         public MemoryMqSubscription(string queueName, IMemoryMqWcfServer server, MemoryMqWcfServiceCallback callback)
         {
             _server = server;
             _callback = callback;

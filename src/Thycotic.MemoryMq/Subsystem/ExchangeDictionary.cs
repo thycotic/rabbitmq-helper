@@ -66,7 +66,7 @@ namespace Thycotic.MemoryMq.Subsystem
         }
 
         /// <summary>
-        /// Negativelies the acknowledge.
+        /// Negatively acknowledges.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
         /// <param name="routingSlip">The routing slip.</param>

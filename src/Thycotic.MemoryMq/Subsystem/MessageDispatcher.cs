@@ -60,7 +60,7 @@ namespace Thycotic.MemoryMq.Subsystem
                             return;
                         }
 
-                        MemoryMqServerClientProxy clientProxy;
+                        MemoryMqWcfServerClientProxy clientProxy;
                         if (!_clientDictionary.TryGetClient(queueName, out clientProxy))
                         {
                             //no client for the queue
