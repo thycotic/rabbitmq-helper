@@ -25,84 +25,97 @@ namespace Thycotic.DistributedEngine.IoC
         }
         private void LoadExchange(ContainerBuilder builder)
         {
-            var exchangeName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.Name);
-            exchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic";
-
-            var symmetricKeyString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.SymmetricKey);
-            var initializationVectorString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.InitializationVector);
-
-            var symmetricKey = new SymmetricKey(Convert.FromBase64String(symmetricKeyString));
-            var initializationVector = new InitializationVector(Convert.FromBase64String(initializationVectorString));
-
-            _log.Info(string.Format("Exchange name is {0}", exchangeName));
-
-            builder.Register(context => new ExchangeNameProvider
+            using (LogContext.Create("Exchange"))
             {
-                ExchangeName = exchangeName
-            }).AsImplementedInterfaces().SingleInstance();
+                var exchangeName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.Name);
+                exchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic";
 
-            builder.Register(context =>
-            {
-                var messageEncryptionKeyProvider = new MessageEncryptor();
-                
-                messageEncryptionKeyProvider.TryAddKey(exchangeName, symmetricKey, initializationVector);
+                var symmetricKeyString =
+                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.SymmetricKey);
+                var initializationVectorString =
+                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.InitializationVector);
 
-                return messageEncryptionKeyProvider;
-            }).AsImplementedInterfaces().SingleInstance();
+                var symmetricKey = new SymmetricKey(Convert.FromBase64String(symmetricKeyString));
+                var initializationVector = new InitializationVector(Convert.FromBase64String(initializationVectorString));
+
+                _log.Info(string.Format("Exchange name is {0}", exchangeName));
+
+                builder.Register(context => new ExchangeNameProvider
+                {
+                    ExchangeName = exchangeName
+                }).AsImplementedInterfaces().SingleInstance();
+
+                builder.Register(context =>
+                {
+                    var messageEncryptionKeyProvider = new MessageEncryptor();
+
+                    messageEncryptionKeyProvider.TryAddKey(exchangeName, symmetricKey, initializationVector);
+
+                    return messageEncryptionKeyProvider;
+                }).AsImplementedInterfaces().SingleInstance();
+            }
         }
 
 
         private void LoadRabbitMq(ContainerBuilder builder)
         {
-            _log.Info("Using RabbitMq");
-
-            var connectionString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString);
-            _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
-
-            var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName);
-            _log.Info(string.Format("RabbitMq username is {0}", userName));
-
-            var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.Password);
-            _log.Info(string.Format("RabbitMq password is {0}", string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
-
-            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl));
-            if (useSsl)
+            using (LogContext.Create("RabbitMq"))
             {
-                _log.Info("RabbitMq using encryption");
-            }
-            else
-            {
-                _log.Warn("RabbitMq is not using encryption");
-            }
+                var connectionString =
+                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString);
+                _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-            builder.Register(context => new RabbitMqConnection(connectionString, userName, password, useSsl))
-                .As<ICommonConnection>().InstancePerDependency();
+                var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName);
+                _log.Info(string.Format("RabbitMq username is {0}", userName));
+
+                var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.Password);
+                _log.Info(string.Format("RabbitMq password is {0}",
+                    string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
+
+                var useSsl =
+                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl));
+                if (useSsl)
+                {
+                    _log.Info("RabbitMq using encryption");
+                }
+                else
+                {
+                    _log.Warn("RabbitMq is not using encryption");
+                }
+
+                builder.Register(context => new RabbitMqConnection(connectionString, userName, password, useSsl))
+                    .As<ICommonConnection>().InstancePerDependency();
+            }
 
         }
 
         private void LoadMemoryMq(ContainerBuilder builder)
         {
-            _log.Info("Using MemoryMq");
-
-            //initialize if necessary server 
-            builder.RegisterModule(new MemoryMqServerModule(_configurationProvider));
-
-            var connectionString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
-            _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
-
-            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
-            if (useSsl)
+            using (LogContext.Create("MemoryMq"))
             {
-                _log.Info("MemoryMq using encryption");
-            }
-            else
-            {
-                _log.Warn("MemoryMq is not using encryption");
-            }
+
+                //initialize if necessary server 
+                builder.RegisterModule(new MemoryMqServerModule(_configurationProvider));
+
+                var connectionString =
+                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
+                _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
+
+                var useSsl =
+                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
+                if (useSsl)
+                {
+                    _log.Info("MemoryMq using encryption");
+                }
+                else
+                {
+                    _log.Warn("MemoryMq is not using encryption");
+                }
 
 
-            builder.Register(context => new MemoryMqConnection(connectionString, useSsl))
-                .As<ICommonConnection>().InstancePerDependency();
+                builder.Register(context => new MemoryMqConnection(connectionString, useSsl))
+                    .As<ICommonConnection>().InstancePerDependency();
+            }
         }
         
         private void LoadRequestBus(ContainerBuilder builder)

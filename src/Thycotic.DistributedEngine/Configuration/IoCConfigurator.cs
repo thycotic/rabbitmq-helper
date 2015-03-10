@@ -139,37 +139,44 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <returns></returns>
         public IContainer Build(EngineService engineService, bool startConsuming)
         {
-            // Create the builder with which components/services are registered.
-            var builder = new ContainerBuilder();
-
-            builder.Register(context => _dateTimeProvider).As<IDateTimeProvider>().SingleInstance();
-
-            builder.Register(context => _localKeyProvider).As<ILocalKeyProvider>().SingleInstance();
-            builder.Register(context => _engineIdentificationProvider).As<IEngineIdentificationProvider>().SingleInstance();
-           
-            builder.RegisterType<RecentLogEntryProvider>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<JsonObjectSerializer>().AsImplementedInterfaces().SingleInstance();
-
-            builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
-
-            builder.RegisterModule(new HeartbeatModule(GetInstanceConfiguration, engineService));
-
-            builder.Register(context => _restCommunicationProvider).As<IRestCommunicationProvider>().AsImplementedInterfaces();
-
-            builder.RegisterModule(new MessageQueueModule(GetInstanceConfiguration));
-
-            if (startConsuming)
+            using (LogContext.Create("IoC"))
             {
-                builder.RegisterModule(new LogicModule());
-                builder.RegisterModule(new WrappersModule());
-            }
-            else
-            {
-                _log.Warn("Consumption disabled, your will only be able to issue requests");
-            }
 
+                // Create the builder with which components/services are registered.
+                var builder = new ContainerBuilder();
 
-            return builder.Build();
+                builder.Register(context => _dateTimeProvider).As<IDateTimeProvider>().SingleInstance();
+
+                builder.Register(context => _localKeyProvider).As<ILocalKeyProvider>().SingleInstance();
+                builder.Register(context => _engineIdentificationProvider)
+                    .As<IEngineIdentificationProvider>()
+                    .SingleInstance();
+
+                builder.RegisterType<RecentLogEntryProvider>().AsImplementedInterfaces().SingleInstance();
+                builder.RegisterType<JsonObjectSerializer>().AsImplementedInterfaces().SingleInstance();
+
+                builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
+
+                builder.RegisterModule(new HeartbeatModule(GetInstanceConfiguration, engineService));
+
+                builder.Register(context => _restCommunicationProvider)
+                    .As<IRestCommunicationProvider>()
+                    .AsImplementedInterfaces();
+
+                builder.RegisterModule(new MessageQueueModule(GetInstanceConfiguration));
+
+                if (startConsuming)
+                {
+                    builder.RegisterModule(new LogicModule());
+                    builder.RegisterModule(new WrappersModule());
+                }
+                else
+                {
+                    _log.Warn("Consumption disabled, your will only be able to issue requests");
+                }
+
+                return builder.Build();
+            }
         }
         
         /// <summary>

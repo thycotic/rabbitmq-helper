@@ -20,39 +20,45 @@ namespace Thycotic.DistributedEngine.IoC
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            
-            var connectionString = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
-            _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-            var uri = new Uri(connectionString);
-
-            //if the connection string host is different than the current,
-            //don't start server
-            if (!String.Equals(uri.Host, DnsEx.GetDnsHostName(), StringComparison.CurrentCultureIgnoreCase))
+            using (LogContext.Create("MemoryMq Server"))
             {
-                _log.Debug("Connection string host and local host are different. Memory Mq server will not start.");
-                return;
-            }
+                var connectionString =
+                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
+                _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-            _log.Debug("Initializing Memory Mq server...");
+                var uri = new Uri(connectionString);
 
-            var useSsl = Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
-            if (useSsl)
-            {
-                var thumbprint = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Thumbprint);
-                _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
+                //if the connection string host is different than the current,
+                //don't start server
+                if (!String.Equals(uri.Host, DnsEx.GetDnsHostName(), StringComparison.CurrentCultureIgnoreCase))
+                {
+                    _log.Debug("Connection string host and local host are different. Memory Mq server will not start.");
+                    return;
+                }
+
+                _log.Debug("Initializing Memory Mq server...");
+
+                var useSsl =
+                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
+                if (useSsl)
+                {
+                    var thumbprint =
+                        _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Thumbprint);
+                    _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
 
 
-                builder.Register(context => new MemoryMqServerWrapper(connectionString, thumbprint))
-                    .As<IStartable>()
-                    .SingleInstance();
-            }
-            else
-            {
+                    builder.Register(context => new MemoryMqServerWrapper(connectionString, thumbprint))
+                        .As<IStartable>()
+                        .SingleInstance();
+                }
+                else
+                {
 
-                builder.Register(context => new MemoryMqServerWrapper(connectionString))
-                    .As<IStartable>()
-                    .SingleInstance();
+                    builder.Register(context => new MemoryMqServerWrapper(connectionString))
+                        .As<IStartable>()
+                        .SingleInstance();
+                }
             }
         }
     }

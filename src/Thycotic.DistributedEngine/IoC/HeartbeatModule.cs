@@ -24,18 +24,23 @@ namespace Thycotic.DistributedEngine.IoC
         {
             base.Load(builder);
 
-            _log.Debug("Initializing heartbeat...");
-
-            var heartbeatIntervalSeconds =
-                Convert.ToInt32(_configurationProvider(MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds));
-
-            builder.Register(context => _engineService).SingleInstance();
-
-            builder.Register(content => new HeartbeatConfigurationProvider
+            using (LogContext.Create("Engine Heartbeat"))
             {
-                HeartbeatIntervalSeconds = heartbeatIntervalSeconds
-            }).As<IHeartbeatConfigurationProvider>();
-            builder.RegisterType<HeartbeatRunner>().As<IStartable>().SingleInstance();
+                
+                _log.Debug("Initializing heartbeat...");
+
+                var heartbeatIntervalSeconds =
+                    Convert.ToInt32(
+                        _configurationProvider(MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds));
+
+                builder.Register(context => _engineService).SingleInstance();
+
+                builder.Register(content => new HeartbeatConfigurationProvider
+                {
+                    HeartbeatIntervalSeconds = heartbeatIntervalSeconds
+                }).As<IHeartbeatConfigurationProvider>();
+                builder.RegisterType<HeartbeatRunner>().As<IStartable>().SingleInstance();
+            }
         }
     }
 }
