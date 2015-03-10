@@ -62,7 +62,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             return _asymmetricEncryptor.EncryptWithPublicKey(publicKey, saltedBytes);
         }
 
-        private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetEncryptionPair()
+        private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetDynamicEncryptionPair()
         {
             const int aesKeySize = 256;
             const int ivSize = 128;
@@ -81,6 +81,18 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                     InitializationVector = new InitializationVector(aes.IV)
                 };
             }
+        }
+
+        private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetStaticEncryptionPair()
+        {
+            return new MessageEncryptionPair<SymmetricKey, InitializationVector>
+            {
+
+                SymmetricKey =
+                    new SymmetricKey(Convert.FromBase64String("gj/Kyu1ur7ZGgcz1tIdm5WbbTk+V6GQ1H8zw285iGG0=")),
+                InitializationVector = new InitializationVector(Convert.FromBase64String("jemA9PgH5Dt5ZFzwpBAc6A=="))
+            };
+
         }
 
         private static object LoopbackNotSupported(object request)
@@ -118,7 +130,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                     Convert.ToString(TimeSpan.FromMinutes(5).TotalSeconds);
 
                 //add additional configuration
-                var pair = GetEncryptionPair();
+                //var pair = GetDynamicEncryptionPair();
+                var pair = GetStaticEncryptionPair();
                 configuration[MessageQueue.Client.ConfigurationKeys.Exchange.SymmetricKey] =
                     Convert.ToBase64String(pair.SymmetricKey.Value);
                 configuration[MessageQueue.Client.ConfigurationKeys.Exchange.InitializationVector] =
