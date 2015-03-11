@@ -31,6 +31,12 @@ namespace Thycotic.Messages.Heartbeat.Response
         /// </value>
         public string[] StatusMessages { get; set; }
 
-        
+        /// <summary>
+        /// Gets or sets the command execution results.
+        /// </summary>
+        /// <value>
+        /// The command execution results.
+        /// </value>
+        public CommandExecutionResult[] CommandExecutionResults { get; set; }
     }
 }

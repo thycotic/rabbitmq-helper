@@ -38,6 +38,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
                 {
                     Success = verifyResult.Success,
                     ErrorCode = verifyResult.ErrorCode,
+                    CommandExecutionResults = verifyResult.CommandExecutionResults,
                     StatusMessages = verifyResult.StatusMessages
                 };
 
