@@ -13,8 +13,6 @@ namespace Thycotic.DistributedEngine
     /// </summary>
     public class EngineService : ServiceBase
     {
-        private const string InstanceBoundary = "-----------------------------------------------------";
-
         /// <summary>
         /// Occurs when the IoC container configured.
         /// </summary>
