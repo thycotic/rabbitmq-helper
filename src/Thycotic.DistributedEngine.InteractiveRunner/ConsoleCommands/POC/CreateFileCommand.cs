@@ -37,7 +37,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 
                 var message = new CreateFileMessage
                 {
-                    Path = Path.Combine(Path.GetTempPath(), "SSEPOC", Guid.NewGuid().ToString(), "file.txt")
+                    FileName = string.Format("file{0}.txt", Guid.NewGuid())
                 };
 
                 _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);

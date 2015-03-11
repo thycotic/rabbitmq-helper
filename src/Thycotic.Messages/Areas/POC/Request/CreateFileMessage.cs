@@ -13,7 +13,7 @@ namespace Thycotic.Messages.Areas.POC.Request
         /// <value>
         /// The path.
         /// </value>
-        public string Path { get; set; }
+        public string FileName { get; set; }
 
         /// <summary>
         /// Gets the version.

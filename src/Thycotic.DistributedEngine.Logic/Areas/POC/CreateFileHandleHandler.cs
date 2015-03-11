@@ -59,7 +59,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
             if (!Directory.Exists(request.Path))
             {
                 Thread.Sleep(2 * 1000);
-                ConsumerConsole.WriteLine(string.Format("Creating directory {0} in RPC", request.Path));
+                ConsumerConsole.WriteLine(string.Format("Creating directory {0} in blocking call", request.Path));
                 Directory.CreateDirectory(request.Path);
             }
 
@@ -75,17 +75,17 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         {
             ConsumerConsole.WriteLine("Received file message");
 
-            var path = Path.GetDirectoryName(request.Path);
+            var path = Path.Combine(Path.GetTempPath(), "SSDEPOC");
 
             ConsumerConsole.WriteLine("Posting directory message...");
-            //_bus.BasicPublish(new CreateDirectoryMessage {Path = path});
+            //_bus.BasicPublish(new CreateDirectoryMessage {FileName = path});
             _bus.BlockingPublish<BlockingConsumerResult>(_exchangeNameProvider.GetCurrentExchange(), new CreateDirectoryMessage { Path = path }, 30);
 
             ConsumerConsole.WriteLine("Posted directory message...");
 
 
-            ConsumerConsole.WriteLine(string.Format("Creating file {0}", request.Path));
-            File.CreateText(request.Path);
+            ConsumerConsole.WriteLine(string.Format("Creating file {0}", request.FileName));
+            File.CreateText(Path.Combine(path, request.FileName));
             ConsumerConsole.WriteLine("File created");
             
             
