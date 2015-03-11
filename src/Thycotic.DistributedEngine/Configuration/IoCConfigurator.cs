@@ -88,7 +88,7 @@ namespace Thycotic.DistributedEngine.Configuration
         public IoCConfigurator()
         {
             _engineIdentificationProvider = CreateEngineIdentificationProvider();
-
+            _localKeyProvider = new LocalKeyProvider();
             _restCommunicationProvider =
                 new RestCommunicationProvider(
                     GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.ConnectionString));
