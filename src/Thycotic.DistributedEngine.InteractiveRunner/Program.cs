@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
@@ -69,7 +70,9 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     engine.Start();
                     #endregion
 
-                    cli.BeginInputLoop(string.Join(" ", args.Skip(1)));
+                    //begin the input loop but after the logo prints
+                    Task.Delay(StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
+                        .ContinueWith(task => cli.BeginInputLoop(string.Join(" ", args.Skip(1))));
                     
                     #region Clean up
                     cli.Wait();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.Utility;
@@ -12,6 +13,11 @@ namespace Thycotic.DistributedEngine
     /// </summary>
     public class StartupMessageWriter : IStartable, IDisposable
     {
+        /// <summary>
+        /// The startup message delay
+        /// </summary>
+        public static readonly TimeSpan StartupMessageDelay = TimeSpan.FromMilliseconds(500);
+
         private readonly ILogWriter _log = Log.Get(typeof(StartupMessageWriter));
 
         /// <summary>
@@ -19,33 +25,42 @@ namespace Thycotic.DistributedEngine
         /// </summary>
         public void Start()
         {
-            _log.Info("Application is starting...");
+            _log.Debug("Application is starting...");
 
-            var logoStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.DistributedEngine.logo.txt");
-
-            if (logoStream != null)
+            Task.Delay(StartupMessageDelay).ContinueWith(task => 
             {
-                var sr = new StreamReader(logoStream);
-                var logoAscii = sr.ReadToEnd();
+                //from http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Dobri is awesome
+                var logoStream =
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.DistributedEngine.logo.txt");
 
-                logoAscii = logoAscii.Replace("{version}", ReleaseInformationHelper.Version.ToString());
-                logoAscii = logoAscii.Replace("{architecture}", ReleaseInformationHelper.Architecture);
+                if (logoStream != null)
+                {
+                    var sr = new StreamReader(logoStream);
+                    var logoAscii = sr.ReadToEnd();
 
-                //don't use the log since it just spams the table
-                Console.WriteLine(logoAscii);
-            }
-            else
-            {
-                _log.Warn("Could not locate terminal logo");
-            }
+                    logoAscii = logoAscii.Replace("{version}", ReleaseInformationHelper.Version.ToString());
+                    logoAscii = logoAscii.Replace("{architecture}", ReleaseInformationHelper.Architecture);
+
+                    //don't use the log since it just spams the table
+                    Console.WriteLine();
+                    Console.WriteLine(logoAscii);
+                    Console.WriteLine();
+                }
+                else
+                {
+                    _log.Warn("Could not locate terminal logo");
+                }
+            });
         }
+
+        
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
-            _log.Info("Application is stopping...");
+            _log.Debug("Application is stopping...");
         }
     }
 }
