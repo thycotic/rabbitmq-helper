@@ -253,8 +253,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         public void Dispose()
         {
             Close();
-
-            _callback.BytesReceived = null;
         }
     }
 }

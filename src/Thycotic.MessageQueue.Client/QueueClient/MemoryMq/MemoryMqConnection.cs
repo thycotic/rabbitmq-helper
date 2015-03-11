@@ -159,6 +159,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
             _log.Debug("Closing connection...");
             _connection.Value.Close(2 * 1000);
+            _connection.Value.Dispose();
+            _connection = null;
             _log.Debug("Connection closed");
         }
 

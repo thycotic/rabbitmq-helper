@@ -6,7 +6,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
     /// <summary>
     /// Callback from the memory Mq
     /// </summary>
-    public class MemoryMqWcfServiceCallback : IMemoryMqWcfServerCallback
+    public class MemoryMqWcfServiceCallback : IMemoryMqWcfServerCallback, IDisposable
     {
 
         /// <summary>
@@ -29,6 +29,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
             {
                 throw new ApplicationException("There is no one listening");
             }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            BytesReceived = null;
         }
     }
 }

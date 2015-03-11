@@ -2,7 +2,7 @@
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 {
-    internal interface IMemoryMqWcfServiceConnection
+    internal interface IMemoryMqWcfServiceConnection : IDisposable
     {
         ICommonModel CreateModel();
 

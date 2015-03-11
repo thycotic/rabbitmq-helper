@@ -55,5 +55,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
                 _log.Error("Failed to close connection", ex);
             }
         }
+
+        public void Dispose()
+        {
+            _callback.Dispose();
+        }
     }
 }
