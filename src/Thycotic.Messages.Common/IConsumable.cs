@@ -1,4 +1,6 @@
-﻿namespace Thycotic.Messages.Common
+﻿using System;
+
+namespace Thycotic.Messages.Common
 {
     /// <summary>
     /// Interface for a consumable
@@ -19,6 +21,7 @@
         /// <value>
         /// The retry count.
         /// </value>
+        [Obsolete("Not yet supported")]
         int RetryCount { get; set; }
     }
 }
