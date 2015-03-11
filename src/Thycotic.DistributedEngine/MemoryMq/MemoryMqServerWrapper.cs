@@ -52,7 +52,7 @@ namespace Thycotic.DistributedEngine.MemoryMq
         {
             if (_serverTask != null)
             {
-                throw new ApplicationException("Server already running");
+                throw new ApplicationException("Built-in MemoryMq server already running");
             }
 
             _serverTask = Task.Factory.StartNew(() =>
@@ -86,11 +86,11 @@ namespace Thycotic.DistributedEngine.MemoryMq
                 {
                     _host.Open();
 
-                    _log.Info("Server running...");
+                    _log.Info("Built-in MemoryMq server running...");
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(string.Format("Server could not start because {0}", ex.Message), ex);    
+                    _log.Error(string.Format("Built-in MemoryMq server could not start because {0}", ex.Message), ex);    
                 }
             });
         }
@@ -100,7 +100,7 @@ namespace Thycotic.DistributedEngine.MemoryMq
         /// </summary>
         public void Stop()
         {
-            _log.Info("Server stopping. This might take a few seconds...");
+            _log.Info("Built-in MemoryMq server stopping. This might take a few seconds...");
 
             if ((_host == null) || (_serverTask == null)) return;
 

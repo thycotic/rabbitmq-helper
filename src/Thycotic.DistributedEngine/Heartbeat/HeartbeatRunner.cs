@@ -111,6 +111,10 @@ namespace Thycotic.DistributedEngine.Heartbeat
 
             _engineService.Stop();
 
+            Console.WriteLine();
+            Console.WriteLine("@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @");
+            Console.WriteLine();
+
             _engineService.IoCConfigurator.TryAssignConfiguration(newConfiguration);
 
             _engineService.Start();

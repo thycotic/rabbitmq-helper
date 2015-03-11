@@ -15,14 +15,15 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
     internal class CommandLineInterface
     {
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-        private readonly HashSet<IConsoleCommand> _commandMappings = new HashSet<IConsoleCommand>();
+        private readonly HashSet<IConsoleCommand> _commandBuiltInMappings = new HashSet<IConsoleCommand>();
+        private readonly HashSet<IConsoleCommand> _commandCustomMappings = new HashSet<IConsoleCommand>();
 
         private readonly ILogWriter _log = Log.Get(typeof(CommandLineInterface));
 
         public CommandLineInterface()
         {
             #region Build-in system commands
-            _commandMappings.Add(new SystemConsoleCommand
+            _commandBuiltInMappings.Add(new SystemConsoleCommand
             {
                 Name = "clear",
                 Area = CommandAreas.Core,
@@ -31,7 +32,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 Action = parameters => Console.Clear()
             });
 
-            _commandMappings.Add(new SystemConsoleCommand
+            _commandBuiltInMappings.Add(new SystemConsoleCommand
             {
                 Name = "help",
                 Area = CommandAreas.Core,
@@ -42,14 +43,16 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     Console.WriteLine();
                     Console.WriteLine("Available commands: ".ToUpper());
 
-                    _commandMappings.Select(c => !string.IsNullOrWhiteSpace(c.Area) ? c.Area : CommandAreas.Uncategorized).Distinct().OrderBy(a => a).ToList().ForEach(a =>
+                    var currentMappings = GetCurrentCommandMappings().ToArray();
+
+                    currentMappings.Select(c => !string.IsNullOrWhiteSpace(c.Area) ? c.Area : CommandAreas.Uncategorized).Distinct().OrderBy(a => a).ToList().ForEach(a =>
                     {
                         Console.WriteLine("{0} command area", a);
 
                         if (a == CommandAreas.Uncategorized) a = null;
 
                         var mappings =
-                            _commandMappings.Where(c => c.Area == a).OrderBy(c => c.Name).Select(c => c.ToString());
+                            currentMappings.Where(c => c.Area == a).OrderBy(c => c.Name).Select(c => c.ToString());
 
                         mappings.ToList().ForEach(m => Console.WriteLine(" - {0}", m));
 
@@ -58,7 +61,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 }
             });
 
-            _commandMappings.Add(new SystemConsoleCommand
+            _commandBuiltInMappings.Add(new SystemConsoleCommand
             {
                 Name = "quit",
                 Area = CommandAreas.Core,
@@ -79,9 +82,19 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             InteropHelper.Maximize();
         }
 
-        public void AddCommand(IConsoleCommand command)
+        public void AddCustomCommand(IConsoleCommand command)
         {
-            _commandMappings.Add(command);
+            _commandCustomMappings.Add(command);
+        }
+
+        public void ClearCommands()
+        {
+          _commandCustomMappings.Clear();
+        }
+
+        private IEnumerable<IConsoleCommand> GetCurrentCommandMappings()
+        {
+            return _commandCustomMappings.Union(_commandBuiltInMappings);
         }
 
         public void BeginInputLoop(string initialCommand)
@@ -166,7 +179,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 try
                 {
                     var command =
-                        _commandMappings.SingleOrDefault(
+                        GetCurrentCommandMappings().SingleOrDefault(
                             cm =>
                                 (cm.Name == commandName) ||
                                 ((cm.Aliases != null) && cm.Aliases.Any(ca => ca == commandName)));
@@ -174,7 +187,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     if (command == null)
                     {
                         _log.Error(string.Format("Command {0} not found", commandName));
-                        command = _commandMappings.Single(
+                        command = _commandCustomMappings.Single(
                             cm => cm.Name == "help");
                     }
 
@@ -251,5 +264,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 ShowWindow(p.MainWindowHandle, 3); //SW_MAXIMIZE = 3
             }
         }
+
+       
     }
 }

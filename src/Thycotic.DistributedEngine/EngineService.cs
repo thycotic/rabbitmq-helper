@@ -13,28 +13,29 @@ namespace Thycotic.DistributedEngine
     /// </summary>
     public class EngineService : ServiceBase
     {
-        /// <summary>
-        /// Gets or sets the io c container.
-        /// </summary>
-        /// <value>
-        /// The io c container.
-        /// </value>
-        public IContainer IoCContainer { get; private set; }
+        private const string InstanceBoundary = "-----------------------------------------------------";
 
         /// <summary>
-        /// Gets the io c configurator.
+        /// Occurs when the IoC container configured.
+        /// </summary>
+        public EventHandler<IContainer> IoCContainerConfigured;
+
+        /// <summary>
+        /// Gets the IoC configurator.
         /// </summary>
         /// <value>
-        /// The io c configurator.
+        /// The IoC configurator.
         /// </value>
         public IIoCConfigurator IoCConfigurator { get; private set; }
 
         private readonly bool _startConsuming;
 
+        private IContainer _ioCContainer;
 
 
         private readonly ILogWriter _log = Log.Get(typeof(EngineService));
         private LogCorrelation _correlation;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineService"/> class.
@@ -84,7 +85,13 @@ namespace Thycotic.DistributedEngine
                 }
 
                 // Build the container to finalize registrations and prepare for object resolution.
-                IoCContainer = IoCConfigurator.Build(this, _startConsuming);
+                _ioCContainer = IoCConfigurator.Build(this, _startConsuming);
+
+                //notify any hooks that IoC is configured
+                if (IoCContainerConfigured != null)
+                {
+                    IoCContainerConfigured(this, _ioCContainer);
+                }
 
                 _log.Debug("Configuring IoC complete");
 
@@ -98,21 +105,21 @@ namespace Thycotic.DistributedEngine
 
         private void ResetIoCContainer()
         {
-            if (IoCContainer == null) return;
+            if (_ioCContainer == null) return;
 
             _log.Debug("Cleaning up IoC container");
 
             if (_startConsuming)
             {
                 _log.Info("Stopping all consumers...");
-                var consumerFactory = IoCContainer.Resolve<ConsumerWrapperFactory>();
+                var consumerFactory = _ioCContainer.Resolve<ConsumerWrapperFactory>();
 
                 //clean up the consumers in the factory
                 consumerFactory.Dispose();
             }
 
-
-            IoCContainer.Dispose();
+            _ioCContainer.Dispose();
+            _ioCContainer = null;
         }
 
         private void BringUp()
@@ -128,7 +135,10 @@ namespace Thycotic.DistributedEngine
         {
             ResetIoCContainer();
 
-            _correlation.Dispose();
+            if (_correlation != null)
+            {
+                _correlation.Dispose();
+            }
         }
 
         /// <summary>
@@ -147,10 +157,15 @@ namespace Thycotic.DistributedEngine
         {
             using (LogContext.Create("Starting"))
             {
+                _log.Info("Engine starting...");
+
                 base.OnStart(args);
 
                 BringUp();
+
+                _log.Info("Engine started");
             }
+            
         }
 
         /// <summary>
@@ -160,9 +175,13 @@ namespace Thycotic.DistributedEngine
         {
             using (LogContext.Create("Stopping"))
             {
+                _log.Info("Engine stopping...");
+
                 base.OnStop();
 
                 TearDown();
+
+                _log.Info("Engine stopped");
             }
         }
     }

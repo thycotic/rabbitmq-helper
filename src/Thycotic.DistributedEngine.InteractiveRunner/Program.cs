@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
 using System.Reflection;
 using System.ServiceProcess;
 using System.Threading;
@@ -14,7 +12,6 @@ using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
-using Thycotic.Utility;
 using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner
@@ -41,7 +38,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
                     var cli = new CommandLineInterface();
 
-                    Trace.TraceInformation("Starting interactive mode...");
+                    Trace.TraceInformation("Starting interactive runner...");
 
                     #region Start server
                     var startConsuming = !args.First().EndsWith("cd");
@@ -66,22 +63,21 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                         engine = new EngineService(startConsuming);
                     }
 
+                    //every time engine IoCContainer changes reconfigure the CLI
+                    engine.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
+
                     engine.Start();
                     #endregion
 
-                    #region Start client
-                    ConfigureCli(cli, engine.IoCContainer);
-
                     cli.BeginInputLoop(string.Join(" ", args.Skip(1)));
-                    #endregion
-
+                    
                     #region Clean up
                     cli.Wait();
 
                     engine.Stop();
                     #endregion
 
-                    Trace.TraceInformation("Engine stopped");
+                    Trace.TraceInformation("Interactive runner stopped");
 
                     Thread.Sleep(TimeSpan.FromSeconds(2));
                 }
@@ -114,6 +110,10 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
         private static void ConfigureCli(CommandLineInterface cli, IContainer parentContainer)
         {
+            cli.ClearCommands();
+
+            Log.Info("Configuring CLI with latest IoC configuration");
+
             var bus = parentContainer.Resolve<IRequestBus>();
             var exchangeNameProvider = parentContainer.Resolve<IExchangeNameProvider>();
 
@@ -137,7 +137,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 tempContainer.ComponentRegistry.Registrations.Where(
                     r => typeof(IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
 
-            commands.ToList().ForEach(c => cli.AddCommand((IConsoleCommand)tempContainer.Resolve(c.Activator.LimitType)));
+            commands.ToList().ForEach(c => cli.AddCustomCommand((IConsoleCommand)tempContainer.Resolve(c.Activator.LimitType)));
         }
     }
 }
