@@ -45,7 +45,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 
                 _log.Info("Posting completed.");
 
-                Console.WriteLine("Consumer returned {0} item(s)", response.Items.Length);
+                Console.WriteLine("Consumer returned \"{0}\" item(s)", response.Items.Length);
 
                 response.Items.ToList().ForEach(Console.WriteLine);
             };
