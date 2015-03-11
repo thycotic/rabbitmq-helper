@@ -6,6 +6,8 @@ using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using NSubstitute;
+using Thycotic.AppCore;
 using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
 using Thycotic.DistributedEngine.Security;
@@ -64,6 +66,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                         engine = new EngineService(startConsuming);
                     }
 
+                    ConfigureMockConfiguration();
+
                     //every time engine IoCContainer changes reconfigure the CLI
                     engine.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
 
@@ -73,7 +77,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     //begin the input loop but after the logo prints
                     Task.Delay(StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
                         .ContinueWith(task => cli.BeginInputLoop(string.Join(" ", args.Skip(1))));
-                    
+
                     #region Clean up
                     cli.Wait();
 
@@ -141,6 +145,20 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     r => typeof(IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
 
             commands.ToList().ForEach(c => cli.AddCustomCommand((IConsoleCommand)tempContainer.Resolve(c.Activator.LimitType)));
+        }
+
+        private static void ConfigureMockConfiguration()
+        {
+            var configurationProvider =  Substitute.For<IConfigurationProvider>();
+            ServiceLocator.ConfigurationProvider = configurationProvider;
+
+            var configuration = Substitute.For<IConfiguration>();
+            configuration.FipsEnabled.Returns(false);
+
+            configurationProvider.GetCurrentConfiguration().Returns(configuration);
+
+
+
         }
     }
 }

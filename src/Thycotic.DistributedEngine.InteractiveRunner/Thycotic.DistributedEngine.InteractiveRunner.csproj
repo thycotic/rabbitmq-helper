@@ -149,6 +149,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -186,6 +189,7 @@
     <Compile Include="ConsoleCommands\IImmediateConsoleCommand.cs" />
     <Compile Include="ConsoleCommands\POC\CreateFileCommand.cs" />
     <Compile Include="ConsoleCommands\POC\FloodCommand.cs" />
+    <Compile Include="ConsoleCommands\Heartbeat\SqlHeartbeatCommand.cs" />
     <Compile Include="ConsoleCommands\POC\MultiplePublishCommand.cs" />
     <Compile Include="ConsoleCommands\POC\StepCommand.cs" />
     <Compile Include="ConsoleCommands\POC\ThrowTriggerCommand.cs" />
