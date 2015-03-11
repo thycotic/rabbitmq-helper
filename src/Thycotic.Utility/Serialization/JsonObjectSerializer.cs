@@ -21,6 +21,7 @@ namespace Thycotic.Utility.Serialization
         /// <returns></returns>
         public TRequest ToObject<TRequest>(byte[] bytes)
         {
+            //TODO: Blow up if you can't reserialize!!!!
             return JsonConvert.DeserializeObject<TRequest>(Encoding.UTF8.GetString(bytes), _serializerSettings);
         }
 
