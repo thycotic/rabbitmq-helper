@@ -184,7 +184,17 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     }
                     else
                     {
-                        Task.Factory.StartNew(() => command.Action.Invoke(parameters));
+                        Task.Factory.StartNew(() => command.Action.Invoke(parameters)).ContinueWith(
+                            task =>
+                            {
+                                if (task.Exception != null)
+                                {
+                                    _log.Error(string.Format("Command failed because {0}", task.Exception.Message),
+                                        task.Exception);
+                                }
+                            });
+
+
                     }
 
 
