@@ -58,9 +58,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
                     channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _log.Error("Failed to publish message", e);
+                _log.Error(string.Format("Basic publish failed because {0}", ex.Message), ex);
                 throw;
             }
         }
@@ -130,7 +130,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             }
             catch (Exception ex)
             {
-                _log.Error("RPC call failed", ex);
+                _log.Error(string.Format("Blocking publish failed because {0}", ex.Message), ex);
                 throw;
             }
         }
