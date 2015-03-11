@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Linq;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.POC
 {
@@ -22,21 +24,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         }
 
         /// <summary>
-        /// Writes the specified value.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="foregroundColor">Color of the foreground.</param>
-        public static void Write(string value, ConsoleColor foregroundColor = ConsoleColor.DarkGreen)
-        {
-            WriteHelper(() => Console.Write(value), foregroundColor);
-        }
-
-        /// <summary>
         /// Writes the line.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="foregroundColor">Color of the foreground.</param>
-        public static void WriteLine(string value, ConsoleColor foregroundColor = ConsoleColor.DarkGreen)
+        public static void WriteLine(object value, ConsoleColor foregroundColor = ConsoleColor.DarkGreen)
         {
             WriteHelper(() => Console.WriteLine(value), foregroundColor);
         }
@@ -46,10 +38,16 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="foregroundColor">Color of the foreground.</param>
-        public static void Write(char value, ConsoleColor foregroundColor = ConsoleColor.DarkGreen)
+        public static void Write(object value, ConsoleColor foregroundColor = ConsoleColor.DarkGreen)
         {
             WriteHelper(() => Console.Write(value), foregroundColor);
         }
+
+        private static readonly object syncRoot = new object();
+
+        private static readonly ConcurrentBag<MatrixConsoleWriter> MainConsoleWriters = new ConcurrentBag<MatrixConsoleWriter>();
+        private static readonly MatrixConsoleWriter NullConsoleWriter = new MatrixConsoleWriter();
+
 
         /// <summary>
         /// Writes the matrix.
@@ -58,10 +56,19 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <param name="foregroundColor">Color of the foreground.</param>
         public static void WriteMatrix(char value, ConsoleColor foregroundColor = ConsoleColor.DarkGreen)
         {
-            const int margin = 10;
-            var random = new Random(Guid.NewGuid().GetHashCode());
-            Console.SetCursorPosition(random.Next(Console.LargestWindowWidth-margin), random.Next(Console.LargestWindowHeight - margin));
-            WriteHelper(() => Console.Write(value), foregroundColor);
+
+            lock (syncRoot)
+            {
+                if (MainConsoleWriters.IsEmpty)
+                {
+                    Enumerable.Range(0, 10).ToList().ForEach(i => MainConsoleWriters.Add(new MatrixConsoleWriter()));
+                }
+            }
+
+            MatrixConsoleWriter matrixWriter;
+            MainConsoleWriters.TryPeek(out matrixWriter);
+            matrixWriter.WriteMatrix(value);
+            NullConsoleWriter.WriteMatrix(' ');
         }
     }
 }

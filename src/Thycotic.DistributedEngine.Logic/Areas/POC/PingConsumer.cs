@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.POC.Request;
@@ -24,11 +25,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
             var index = random.Next(0, _characters.Count() - 1);
 
             ConsumerConsole.WriteMatrix(_characters[index]);
-
-            ////if (request.Sequence%1000 == 0)
-            //{
-            //    ConsumerConsole.WriteMatrix('x');
-            //}
         }
     }
 }

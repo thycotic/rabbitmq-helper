@@ -152,6 +152,7 @@
     <Compile Include="Areas\POC\CreateFileHandleHandler.cs" />
     <Compile Include="Areas\POC\ChainMessageConsumer.cs" />
     <Compile Include="Areas\POC\ConsumerConsole.cs" />
+    <Compile Include="Areas\POC\MatrixConsoleWriter.cs" />
     <Compile Include="Areas\POC\PingConsumer.cs" />
     <Compile Include="Areas\POC\SortListConsumer.cs" />
     <Compile Include="Areas\POC\ThrowTriggerConsumer.cs" />

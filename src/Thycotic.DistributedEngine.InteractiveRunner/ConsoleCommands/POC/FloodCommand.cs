@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -54,7 +53,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                         _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
                     }
 
-                    _log.Info("Flooding completed");
+                    //_log.Info("Flooding completed");
                 }
                 catch (ObjectDisposedException)
                 {
