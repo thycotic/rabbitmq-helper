@@ -135,6 +135,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Thycotic.AppCore">
+      <HintPath>..\..\lib\Thycotic.AppCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ProductInfo.cs">
@@ -149,6 +152,8 @@
     <Compile Include="Areas\POC\Request\StepMessage.cs" />
     <Compile Include="Areas\POC\Request\HelloWorldMessage.cs" />
     <Compile Include="Areas\POC\Response\SortListResponse.cs" />
+    <Compile Include="Heartbeat\Request\SecretHeartbeatMessage.cs" />
+    <Compile Include="Heartbeat\Response\SecretHeartbeatResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

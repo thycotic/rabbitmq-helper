@@ -144,11 +144,16 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Thycotic.AppCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cda7f064205a299b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Thycotic.AppCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\Heartbeat\SecretHeartbeatConsumer.cs" />
     <Compile Include="Areas\POC\CreateFileHandleHandler.cs" />
     <Compile Include="Areas\POC\ChainMessageConsumer.cs" />
     <Compile Include="Areas\POC\ConsumerConsole.cs" />
