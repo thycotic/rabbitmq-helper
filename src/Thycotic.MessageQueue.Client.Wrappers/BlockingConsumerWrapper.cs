@@ -78,7 +78,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             {
 
                 var message = _objectSerializer.ToObject<TRequest>(_messageEncryptor.Decrypt(exchangeName,body));
-                var responseType = "success";
+                var responseType = BlockingConsumerResponseTypes.Success;
                 object response;
 
                 using (var handler = _handlerFactory())
@@ -93,7 +93,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     {
                         _log.Error(ex.Message, ex);
                         response = new BlockingConsumerError { Message = ex.Message };
-                        responseType = "error";
+                        responseType = BlockingConsumerResponseTypes.Error;
                     }
                 }
 

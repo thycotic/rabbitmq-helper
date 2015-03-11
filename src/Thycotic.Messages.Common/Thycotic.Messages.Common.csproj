@@ -140,6 +140,7 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="BlockingConsumerResponseTypes.cs" />
     <Compile Include="IBlockingConsumer.cs" />
     <Compile Include="IConsumable.cs" />
     <Compile Include="IBasicConsumer.cs" />
