@@ -1,4 +1,12 @@
-﻿CREATE TABLE [dbo].[Log]
+﻿CREATE DATABASE SSDELog4Net;
+
+GO
+
+USE SSDELog4Net;
+
+GO
+
+CREATE TABLE [dbo].[Log]
 (
 [Id] [int] NOT NULL IDENTITY(1, 1),
 [Date] [datetime] NOT NULL,
@@ -13,10 +21,6 @@
 [Exception] [nvarchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 CREATE NONCLUSTERED INDEX [IX_Log_Date_Correlation_Level] ON [dbo].[Log] ([Date], [Correlation], [Level]) ON [PRIMARY]
-
-
-
-
 
 CREATE NONCLUSTERED INDEX [IX_Log_Date] ON [dbo].[Log] ([Date] DESC) ON [PRIMARY]
 
