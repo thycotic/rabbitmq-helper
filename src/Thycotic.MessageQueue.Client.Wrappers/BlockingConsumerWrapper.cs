@@ -89,10 +89,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                         _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        _log.Error("Handler error", e);
-                        response = new BlockingConsumerError { Message = e.Message };
+                        _log.Error(ex.Message, ex);
+                        response = new BlockingConsumerError { Message = ex.Message };
                         responseType = "error";
                     }
                 }
@@ -101,14 +101,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 {
                     Respond(exchangeName, properties.ReplyTo, response, properties.CorrelationId, responseType);
                 }
+
+                CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, false);
             }
             catch (Exception ex)
             {
                 _log.Error(string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TRequest)), ex.Message), ex);
-            }
-            finally
-            {
-                CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, false);
+
+                CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, false, requeue: false);
             }
         }
 
