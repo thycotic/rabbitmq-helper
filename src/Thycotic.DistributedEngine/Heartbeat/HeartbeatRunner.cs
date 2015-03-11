@@ -81,6 +81,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
             var request = new EngineHeartbeatRequest
             {
                 IdentityGuid = _engineIdentificationProvider.IdentityGuid,
+                OrganizationId = _engineIdentificationProvider.OrganizationId,
                 PublicKey = Convert.ToBase64String(_localKeyProvider.PublicKey.Value),
                 Version = ReleaseInformationHelper.GetVersionAsDouble(),
                 LastActivity = _dateTimeProvider.Now,
