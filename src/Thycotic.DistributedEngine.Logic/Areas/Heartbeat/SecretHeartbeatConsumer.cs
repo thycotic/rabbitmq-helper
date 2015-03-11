@@ -23,9 +23,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
         /// <returns></returns>
         public SecretHeartbeatResponse Consume(SecretHeartbeatMessage request)
         {
-
-            //request.PasswordInfoProvider
-
             _log.Info("Got a heartbeat request");
 
             var passwordTypeName = request.PasswordInfoProvider.PasswordTypeName;
