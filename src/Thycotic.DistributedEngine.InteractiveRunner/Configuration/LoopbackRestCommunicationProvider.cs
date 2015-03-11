@@ -123,7 +123,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                         configuration = LoopbackConfiguirationScenarios.SslRabbitMq();
                         break;
                     default:
-                        throw new NotSupportedException();
+                        throw new NotSupportedException("The requested exchange ID was not found");
                 }
 
                 configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] =
