@@ -86,9 +86,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, multiple);
 
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    _log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof(TRequest))), e);
+                    _log.Error(string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TRequest)), ex.Message), ex);
 
                     CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, multiple, requeue: true);
                 }

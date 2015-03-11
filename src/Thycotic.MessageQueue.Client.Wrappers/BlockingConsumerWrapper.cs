@@ -102,9 +102,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     Respond(exchangeName, properties.ReplyTo, response, properties.CorrelationId, responseType);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _log.Error(string.Format("Failed to process {0}", this.GetRoutingKey(typeof(TRequest))), e);
+                _log.Error(string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TRequest)), ex.Message), ex);
             }
             finally
             {
