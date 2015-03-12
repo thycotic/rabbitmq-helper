@@ -15,6 +15,7 @@ using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;
+using SymmetricKey = Thycotic.DistributedEngine.Security.Encryption.SymmetricKey;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 {

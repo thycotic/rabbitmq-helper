@@ -181,11 +181,17 @@
     <Compile Include="Configuration\IRemoteConfigurationProvider.cs" />
     <Compile Include="Configuration\RemoteConfigurationProvider.cs" />
     <Compile Include="Security\BaseMessageEncryptor.cs" />
+    <Compile Include="Security\Encryption\ByteSaltProvider.cs" />
+    <Compile Include="Security\Encryption\IKey.cs" />
     <Compile Include="Security\ILocalKeyProvider.cs" />
+    <Compile Include="Security\Encryption\ISymmetricEncryptor.cs" />
+    <Compile Include="Security\Encryption\KeyBase.cs" />
     <Compile Include="Security\LocalKeyProvider.cs" />
     <Compile Include="Security\MessageEncryptor.cs" />
     <Compile Include="MemoryMq\MemoryMqServerWrapper.cs" />
     <Compile Include="Heartbeat\HeartbeatRunner.cs" />
+    <Compile Include="Security\Encryption\SymmetricEncryptor.cs" />
+    <Compile Include="Security\Encryption\SymmetricKey.cs" />
     <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="IoC\LogicModule.cs" />
     <Compile Include="IoC\MessageQueueModule.cs" />

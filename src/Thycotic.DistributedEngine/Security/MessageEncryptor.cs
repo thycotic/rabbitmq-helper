@@ -4,6 +4,7 @@ using Thycotic.AppCore.Cryptography;
 using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
 using Thycotic.Utility.Security;
+using SymmetricKey = Thycotic.DistributedEngine.Security.Encryption.SymmetricKey;
 
 namespace Thycotic.DistributedEngine.Security
 {

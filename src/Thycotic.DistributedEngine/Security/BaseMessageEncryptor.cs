@@ -6,6 +6,9 @@ using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;
+using ByteSaltProvider = Thycotic.DistributedEngine.Security.Encryption.ByteSaltProvider;
+using SymmetricEncryptor = Thycotic.DistributedEngine.Security.Encryption.SymmetricEncryptor;
+using SymmetricKey = Thycotic.DistributedEngine.Security.Encryption.SymmetricKey;
 
 namespace Thycotic.DistributedEngine.Security
 {

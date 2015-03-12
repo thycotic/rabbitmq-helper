@@ -10,6 +10,7 @@ using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Utility.Serialization;
+using SymmetricKey = Thycotic.DistributedEngine.Security.Encryption.SymmetricKey;
 
 namespace Thycotic.DistributedEngine.IoC
 {

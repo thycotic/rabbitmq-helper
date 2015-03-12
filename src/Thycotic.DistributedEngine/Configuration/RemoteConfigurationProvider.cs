@@ -12,6 +12,7 @@ using Thycotic.DistributedEngine.Logic;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;
+using ByteSaltProvider = Thycotic.DistributedEngine.Security.Encryption.ByteSaltProvider;
 
 namespace Thycotic.DistributedEngine.Configuration
 {
