@@ -1,18 +1,15 @@
 ﻿using System;
 using Thycotic.AppCore.Federator;
-using Thycotic.DistributedEngine.Logic.Areas.Heartbeat;
 using Thycotic.ihawu.Business.Federator;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
-using Thycotic.Messages.Heartbeat.Request;
-using Thycotic.Messages.Heartbeat.Response;
 using Thycotic.Messages.PasswordChanging.Request;
 using Thycotic.Messages.PasswordChanging.Response;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 {
     /// <summary>
-    /// Secret  heartbeat request
+    /// Secret  change password request
     /// </summary>
     public class SecretChangePasswordConsumer : IBlockingConsumer<SecretChangePasswordMessage, SecretChangePasswordResponse>
     {
@@ -20,7 +17,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         private const string FAILED_VERIFY_MESSAGE = "Could not verify the password change.";
         private const string SUCCESS_MESSAGE = "Password changed successfully.";
 
-        private readonly ILogWriter _log = Log.Get(typeof(SecretHeartbeatConsumer));
+        private readonly ILogWriter _log = Log.Get(typeof(SecretChangePasswordConsumer));
 
         /// <summary>
         /// Consumes the specified request.
