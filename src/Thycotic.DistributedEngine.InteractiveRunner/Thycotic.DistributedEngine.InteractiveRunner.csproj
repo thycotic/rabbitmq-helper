@@ -171,6 +171,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.DistributedEngine.Web.Common.1.0.0.75\lib\net451\Thycotic.DistributedEngine.Web.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.Encryption">
+      <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.ihawu.Business, Version=8.8.14.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
@@ -187,6 +190,7 @@
     <Compile Include="ConsoleCommands\ConsoleCommandParameters.cs" />
     <Compile Include="ConsoleCommands\IConsoleCommand.cs" />
     <Compile Include="ConsoleCommands\IImmediateConsoleCommand.cs" />
+    <Compile Include="ConsoleCommands\PasswordChanging\SqlPasswordChangeCommand.cs" />
     <Compile Include="ConsoleCommands\POC\CreateFileCommand.cs" />
     <Compile Include="ConsoleCommands\POC\FloodCommand.cs" />
     <Compile Include="ConsoleCommands\Heartbeat\SqlHeartbeatCommand.cs" />

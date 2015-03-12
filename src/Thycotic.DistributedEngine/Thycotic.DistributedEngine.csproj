@@ -158,6 +158,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.DistributedEngine.Web.Common.1.0.0.75\lib\net451\Thycotic.DistributedEngine.Web.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.Encryption">
+      <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>

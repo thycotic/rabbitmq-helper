@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-using Thycotic.AppCore;
-using Thycotic.AppCore.Cryptography;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
-using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
+using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;

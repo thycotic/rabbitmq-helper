@@ -1,4 +1,4 @@
-﻿using Thycotic.AppCore.Cryptography;
+﻿using Thycotic.Encryption;
 
 namespace Thycotic.DistributedEngine.Security
 {

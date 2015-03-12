@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using Thycotic.AppCore.Cryptography;
-using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
+using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.Utility.Security;
 

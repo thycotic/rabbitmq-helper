@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
-using Thycotic.AppCore.Cryptography;
-using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
+using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;

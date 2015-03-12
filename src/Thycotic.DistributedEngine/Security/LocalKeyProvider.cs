@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
-using Thycotic.AppCore.Cryptography;
+using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.Utility.Security;
 
