@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using Thycotic.DistributedEngine.Security.Encryption;
+using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.Utility.Security;
-using SymmetricKey = Thycotic.DistributedEngine.Security.Encryption.SymmetricKey;
 
 namespace Thycotic.DistributedEngine.Security
 {

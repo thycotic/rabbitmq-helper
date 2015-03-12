@@ -158,6 +158,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.DistributedEngine.Web.Common.1.0.0.75\lib\net451\Thycotic.DistributedEngine.Web.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.Encryption">
+      <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>
@@ -181,24 +184,11 @@
     <Compile Include="Configuration\IRemoteConfigurationProvider.cs" />
     <Compile Include="Configuration\RemoteConfigurationProvider.cs" />
     <Compile Include="Security\BaseMessageEncryptor.cs" />
-    <Compile Include="Security\Encryption\AsymmetricEncryptor.cs" />
-    <Compile Include="Security\Encryption\ByteSaltProvider.cs" />
-    <Compile Include="Security\Encryption\EncryptedPrivateKey.cs" />
-    <Compile Include="Security\Encryption\EncryptedSymmetricKey.cs" />
-    <Compile Include="Security\Encryption\IAsymmetricEncryptor.cs" />
-    <Compile Include="Security\Encryption\IKey.cs" />
-    <Compile Include="Security\Encryption\InitializationVector.cs" />
-    <Compile Include="Security\Encryption\PrivateKey.cs" />
-    <Compile Include="Security\Encryption\PublicKey.cs" />
     <Compile Include="Security\ILocalKeyProvider.cs" />
-    <Compile Include="Security\Encryption\ISymmetricEncryptor.cs" />
-    <Compile Include="Security\Encryption\KeyBase.cs" />
     <Compile Include="Security\LocalKeyProvider.cs" />
     <Compile Include="Security\MessageEncryptor.cs" />
     <Compile Include="MemoryMq\MemoryMqServerWrapper.cs" />
     <Compile Include="Heartbeat\HeartbeatRunner.cs" />
-    <Compile Include="Security\Encryption\SymmetricEncryptor.cs" />
-    <Compile Include="Security\Encryption\SymmetricKey.cs" />
     <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="IoC\LogicModule.cs" />
     <Compile Include="IoC\MessageQueueModule.cs" />

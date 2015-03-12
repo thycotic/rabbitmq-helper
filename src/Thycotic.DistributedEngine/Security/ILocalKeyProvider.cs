@@ -1,4 +1,4 @@
-﻿using Thycotic.DistributedEngine.Security.Encryption;
+﻿using Thycotic.Encryption;
 
 namespace Thycotic.DistributedEngine.Security
 {

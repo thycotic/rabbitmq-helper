@@ -9,17 +9,16 @@ using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.LogViewer.Models;
 using Thycotic.DistributedEngine.Security;
-using Thycotic.DistributedEngine.Security.Encryption;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Logging;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
+using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;
-using ByteSaltProvider = Thycotic.DistributedEngine.Security.Encryption.ByteSaltProvider;
 
 namespace Thycotic.DistributedEngine.Heartbeat
 {

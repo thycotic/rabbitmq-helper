@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using Thycotic.DistributedEngine.Security.Encryption;
+using Thycotic.Encryption;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
@@ -11,7 +11,6 @@ using Thycotic.DistributedEngine.Logic;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;
-using ByteSaltProvider = Thycotic.DistributedEngine.Security.Encryption.ByteSaltProvider;
 
 namespace Thycotic.DistributedEngine.Configuration
 {
