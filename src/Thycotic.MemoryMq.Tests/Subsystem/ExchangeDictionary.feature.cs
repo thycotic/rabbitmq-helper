@@ -64,6 +64,15 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 3
+#line 4
+ testRunner.Given("there exists an object of type \"Thycotic.MemoryMq.Subsystem.ExchangeDictionary, T" +
+                    "hycotic.MemoryMq\" stored in the scenario as ExchangeDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("An new exchange dictionary should be empty")]
         [NUnit.Framework.CategoryAttribute("mytag")]
@@ -71,12 +80,11 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An new exchange dictionary should be empty", new string[] {
                         "mytag"});
-#line 4
+#line 7
 this.ScenarioSetup(scenarioInfo);
-#line 5
- testRunner.Given("there exists an object of type \"Thycotic.MemoryMq.Subsystem.ExchangeDictionary, T" +
-                    "hycotic.MemoryMq\" stored in the scenario as ExchangeDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 6
+#line 3
+this.FeatureBackground();
+#line 8
  testRunner.Then("the scenario object ExchangeDictionary ExchangeDictionaryTest is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
