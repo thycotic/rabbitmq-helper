@@ -21,7 +21,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
         }
 
         public override string Area {
-            get { return CommandAreas.Poc; }
+            get { return CommandAreas.TestFunctions; }
         }
 
         public override string Description

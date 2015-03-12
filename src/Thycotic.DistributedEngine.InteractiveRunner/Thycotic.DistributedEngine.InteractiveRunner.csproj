@@ -187,6 +187,7 @@
     <Compile Include="ConsoleCommands\ConsoleCommandParameters.cs" />
     <Compile Include="ConsoleCommands\IConsoleCommand.cs" />
     <Compile Include="ConsoleCommands\IImmediateConsoleCommand.cs" />
+    <Compile Include="ConsoleCommands\PasswordChanging\SqlPasswordChangeCommand.cs" />
     <Compile Include="ConsoleCommands\POC\CreateFileCommand.cs" />
     <Compile Include="ConsoleCommands\POC\FloodCommand.cs" />
     <Compile Include="ConsoleCommands\Heartbeat\SqlHeartbeatCommand.cs" />
