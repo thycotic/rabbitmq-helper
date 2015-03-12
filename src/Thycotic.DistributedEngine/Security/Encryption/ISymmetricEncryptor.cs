@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using Thycotic.AppCore.Cryptography;
-using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 
 namespace Thycotic.DistributedEngine.Security.Encryption
 {

@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-using Thycotic.AppCore;
-using Thycotic.AppCore.Cryptography;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.DistributedEngine.Security;
+using Thycotic.DistributedEngine.Security.Encryption;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
-using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;
-using SymmetricKey = Thycotic.DistributedEngine.Security.Encryption.SymmetricKey;
+using InitializationVector = Thycotic.DistributedEngine.Security.Encryption.InitializationVector;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 {

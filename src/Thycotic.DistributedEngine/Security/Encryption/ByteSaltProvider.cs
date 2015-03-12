@@ -3,8 +3,17 @@ using System.Security.Cryptography;
 
 namespace Thycotic.DistributedEngine.Security.Encryption
 {
-    class ByteSaltProvider
+    /// <summary>
+    /// ByteSaltProvider
+    /// </summary>
+    public class ByteSaltProvider
     {
+        /// <summary>
+        /// Salts the specified data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="saltLength">Length of the salt.</param>
+        /// <returns></returns>
         public byte[] Salt(byte[] data, int saltLength)
         {
             byte[] saltedBytes = new byte[saltLength];
@@ -15,6 +24,12 @@ namespace Thycotic.DistributedEngine.Security.Encryption
             return saltedData;
         }
 
+        /// <summary>
+        /// Unsalts the specified data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="saltLength">Length of the salt.</param>
+        /// <returns></returns>
         public byte[] Unsalt(byte[] data, int saltLength)
         {
             byte[] unsaltedData = new byte[data.Length - saltLength];

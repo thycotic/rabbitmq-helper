@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using Thycotic.AppCore;
-using Thycotic.AppCore.Cryptography;
+using Thycotic.DistributedEngine.Security.Encryption;
 using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;

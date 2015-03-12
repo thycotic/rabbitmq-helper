@@ -1,8 +1,5 @@
 ﻿using System;
-using Thycotic.AppCore;
-using Thycotic.AppCore.Cryptography;
-using Thycotic.ihawu.Business.DoubleLock.Cryptography;
-using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
+using Thycotic.DistributedEngine.Security.Encryption;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;

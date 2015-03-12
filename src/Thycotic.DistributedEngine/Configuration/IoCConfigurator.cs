@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using Autofac;
-using Thycotic.AppCore;
 using Thycotic.DistributedEngine.IoC;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Security;
@@ -19,7 +18,6 @@ namespace Thycotic.DistributedEngine.Configuration
     /// </summary>
     public class IoCConfigurator : IIoCConfigurator
     {
-        private readonly IDateTimeProvider _dateTimeProvider = new RealDateTimeProvider();
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IRestCommunicationProvider _restCommunicationProvider;
@@ -145,8 +143,6 @@ namespace Thycotic.DistributedEngine.Configuration
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();
 
-                builder.Register(context => _dateTimeProvider).As<IDateTimeProvider>().SingleInstance();
-
                 builder.Register(context => _localKeyProvider).As<ILocalKeyProvider>().SingleInstance();
                 builder.Register(context => _engineIdentificationProvider)
                     .As<IEngineIdentificationProvider>()
@@ -186,7 +182,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <returns></returns>
         public bool TryAssignConfiguration(Dictionary<string, string> configuration)
         {
-            LastConfigurationConsumed = _dateTimeProvider.Now;
+            LastConfigurationConsumed = DateTime.UtcNow;
 
             _instanceConfiguration = configuration;
 

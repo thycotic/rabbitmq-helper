@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using Thycotic.AppCore.Cryptography;
-using Thycotic.ihawu.Business.DoubleLock.Cryptography.KeyTypes;
+using Thycotic.DistributedEngine.Security.Encryption;
 using Thycotic.Logging;
 using Thycotic.Utility.Security;
 using SymmetricKey = Thycotic.DistributedEngine.Security.Encryption.SymmetricKey;
