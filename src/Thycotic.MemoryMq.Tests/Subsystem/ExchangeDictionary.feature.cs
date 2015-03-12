@@ -65,17 +65,19 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Add two numbers")]
+        [NUnit.Framework.DescriptionAttribute("An new exchange dictionary should be empty")]
         [NUnit.Framework.CategoryAttribute("mytag")]
-        public virtual void AddTwoNumbers()
+        public virtual void AnNewExchangeDictionaryShouldBeEmpty()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An new exchange dictionary should be empty", new string[] {
                         "mytag"});
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
  testRunner.Given("there exists an object of type \"Thycotic.MemoryMq.Subsystem.ExchangeDictionary, T" +
                     "hycotic.MemoryMq\" stored in the scenario as ExchangeDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 6
+ testRunner.Then("the scenario object ExchangeDictionary ExchangeDictionaryTest is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
