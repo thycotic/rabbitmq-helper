@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using Thycotic.DistributedEngine.Logic.Areas.POC.Matrix;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.POC
 {
@@ -43,12 +44,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
             WriteHelper(() => Console.Write(value), foregroundColor);
         }
 
-        private static readonly object syncRoot = new object();
-
-        private static readonly ConcurrentBag<MatrixConsoleWriter> MainConsoleWriters = new ConcurrentBag<MatrixConsoleWriter>();
-        private static readonly MatrixConsoleWriter NullConsoleWriter = new MatrixConsoleWriter();
-
-
+        #region Matrix
+        private static readonly ConcurrentBag<IConsoleWriter> MainConsoleWriters = new ConcurrentBag<IConsoleWriter>();
+        private static readonly ConcurrentBag<IConsoleWriter> NullConsoleWriters = new ConcurrentBag<IConsoleWriter>();
+       
         /// <summary>
         /// Writes the matrix.
         /// </summary>
@@ -57,18 +56,26 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         public static void WriteMatrix(char value, ConsoleColor foregroundColor = ConsoleColor.DarkGreen)
         {
 
-            lock (syncRoot)
+            lock (SyncRoot)
             {
-                if (MainConsoleWriters.IsEmpty)
+                if (MainConsoleWriters.IsEmpty || NullConsoleWriters.IsEmpty)
                 {
-                    Enumerable.Range(0, 10).ToList().ForEach(i => MainConsoleWriters.Add(new MatrixConsoleWriter()));
+                    Enumerable.Range(0, 100).ToList().ForEach(i =>
+                    {
+                        MainConsoleWriters.Add(new TrailingConsoleWriter());
+                        NullConsoleWriters.Add(new NullConsoleWriter());
+                    });
                 }
             }
 
-            MatrixConsoleWriter matrixWriter;
-            MainConsoleWriters.TryPeek(out matrixWriter);
-            matrixWriter.WriteMatrix(value);
-            NullConsoleWriter.WriteMatrix(' ');
+            IConsoleWriter writer;
+            MainConsoleWriters.TryPeek(out writer);
+            writer.WriteMatrix(value);
+
+            NullConsoleWriters.TryPeek(out writer);
+            writer.WriteMatrix(value);
+
         }
+        #endregion
     }
 }
