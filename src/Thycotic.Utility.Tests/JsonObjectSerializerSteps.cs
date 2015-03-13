@@ -5,6 +5,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using TechTalk.SpecFlow;
 using Thycotic.Utility.Serialization;
+using Thycotic.Utility.Specflow;
 
 namespace Thycotic.Utility.Tests
 {
@@ -19,7 +20,7 @@ namespace Thycotic.Utility.Tests
         [Given(@"the property (\w+) in the scenario object (\w+) is set to ""(.*)""")]
         public void GivenThePropertyInTheScenarioObjectIsSetTo(string propertyName, string testObjectNameInContext, string value)
         {
-            var obj = ScenarioContext.Current[testObjectNameInContext];
+            var obj = ScenarioContext.Current.Get<object>(testObjectNameInContext);
 
             var prop = obj.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
 
@@ -30,27 +31,27 @@ namespace Thycotic.Utility.Tests
         [Given(@"the scenario object (\w+) byte equivalent is stored in scenario object (\w+)")]
         public void GivenTheScenarioObjectByteEquivalentIsStored(string testObjectNameInContext, string expectedSerializationResultInContext)
         {
-            var obj = ScenarioContext.Current[testObjectNameInContext];
+            var obj = ScenarioContext.Current.Get<object>(testObjectNameInContext);
 
             var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj, Formatting.None, _serializerSettings));
 
-            ScenarioContext.Current[expectedSerializationResultInContext] = bytes;
+            ScenarioContext.Current.Set(expectedSerializationResultInContext, bytes);
         }
 
         [When(@"the scenario object (\w+) is turned into bytes and stored in the scenario as (\w+)")]
         public void WhenTheScenarioObjectIsTurnedIntoBytesAndStoredInTheScenario(string testObjectNameInContext, string resultObjectNameInContext)
         {
-            var obj = ScenarioContext.Current[testObjectNameInContext];
-
+            var obj = ScenarioContext.Current.Get<object>(testObjectNameInContext);
+            
             var serializer = new JsonObjectSerializer();
 
-            ScenarioContext.Current[resultObjectNameInContext] = serializer.ToBytes(obj);
+            ScenarioContext.Current.Set(resultObjectNameInContext, serializer.ToBytes(obj));
         }
 
         [When(@"the scenario object (\w+) is turned into an object of type ""(.+)"" and stored in the scenario as (\w+)")]
         public void WhenTheScenarioObjectIsTurnedIntoAnObjectAndStored(string expectedSerializationResultInContext, string typeName, string testObjectNameInContext)
         {
-            var bytes = (byte[])ScenarioContext.Current[expectedSerializationResultInContext];
+            var bytes = ScenarioContext.Current.Get<byte[]>(expectedSerializationResultInContext);
 
             var type = Type.GetType(typeName);
 
@@ -61,16 +62,16 @@ namespace Thycotic.Utility.Tests
 
             var obj = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(bytes), type, _serializerSettings);
 
-            ScenarioContext.Current[testObjectNameInContext] = obj;
+            ScenarioContext.Current.Set(testObjectNameInContext, obj);
         }
 
 
         [Then(@"the scenario object (\w+) should be the byte equivalent of scenario object (\w+)")]
         public void ThenTheScenarioObjectShouldBeTheByteEquivalentOf(string resultObjectNameInContext, string testObjectNameInContext)
         {
-            var obj = ScenarioContext.Current[testObjectNameInContext];
+            var obj = ScenarioContext.Current.Get<object>(testObjectNameInContext);
 
-            var actualBytes = (byte[])ScenarioContext.Current[resultObjectNameInContext];
+            var actualBytes = ScenarioContext.Current.Get<byte[]>(resultObjectNameInContext);
 
             var expectedBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj, Formatting.None, _serializerSettings));
 
@@ -79,14 +80,14 @@ namespace Thycotic.Utility.Tests
         }
 
         [Then(@"the scenario object (\w+) should be equivalent of scenario object (\w+)")]
-        public void ThenTheScenarioObjectMessageSerializerResultShouldBeEquivalentOfScenarioObjectMessageSerializerTestObject(string objectNameInContext1, string objectNameInContext2)
+        public void ThenTheScenarioObjectMessageSerializerResultShouldBeEquivalentOfScenarioObjectMessageSerializerTestObject(string testObjectNameInContext1, string testObjectNameInContext2)
         {
-            var object1 = ScenarioContext.Current[objectNameInContext1];
+            var obj1 = ScenarioContext.Current.Get<object>(testObjectNameInContext1);
 
-            var object2 = ScenarioContext.Current[objectNameInContext2];
+            var obj2 = ScenarioContext.Current.Get<object>(testObjectNameInContext2); ;
 
-            var objectString1 = JsonConvert.SerializeObject(object1, Formatting.None, _serializerSettings);
-            var objectString2 = JsonConvert.SerializeObject(object2, Formatting.None, _serializerSettings);
+            var objectString1 = JsonConvert.SerializeObject(obj1, Formatting.None, _serializerSettings);
+            var objectString2 = JsonConvert.SerializeObject(obj2, Formatting.None, _serializerSettings);
 
             objectString1.Should().Be(objectString2);
         }

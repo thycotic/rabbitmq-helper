@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using TechTalk.SpecFlow;
 using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.Utility.Specflow;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
@@ -10,16 +11,16 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         [Given(@"there exists a ConsumerWrapperBaseDummy stored in the scenario as (\w+) with CommonConnection (\w+) and ExchangeNameProvider (\w+)")]
         public void GivenThereExistsAConsumerWrapperBaseDummyStoredInTheScenarioWithCommonConnectionAndExchangeNameProvider(string consumerWrapperName, string connectionName, string exchangeProviderName)
         {
-            var connection = (ICommonConnection)ScenarioContext.Current[connectionName];
-            var exchangeNameProvider = (IExchangeNameProvider)ScenarioContext.Current[exchangeProviderName];
+            var connection = ScenarioContext.Current.Get<ICommonConnection>(connectionName);
+            var exchangeNameProvider = ScenarioContext.Current.Get<IExchangeNameProvider>(exchangeProviderName);
 
-            ScenarioContext.Current[consumerWrapperName] = new ConsumerWrapperBaseDummy(connection, exchangeNameProvider);
+            ScenarioContext.Current.Set(consumerWrapperName, new ConsumerWrapperBaseDummy(connection, exchangeNameProvider));
         }
 
         [When(@"the method StartConsuming on ConsumerWrapperBaseDummy (\w+) is called")]
         public void WhenTheMethodStartConsumingOnConsumerWrapperBaseDummyIsCalled(string consumerWrapperName)
         {
-            var consumerWrapper = (ConsumerWrapperBaseDummy)ScenarioContext.Current[consumerWrapperName];
+            var consumerWrapper = ScenarioContext.Current.Get<ConsumerWrapperBaseDummy>(consumerWrapperName);
 
             consumerWrapper.StartConsuming();
         }
@@ -27,7 +28,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         [Then(@"the method ForceInitialize on CommonConnection substitute (\w+) is called")]
         public void ThenTheMethodForceInitializeOnCommonConnectionSubstituteIsCalled(string connectionName)
         {
-            var connection = (ICommonConnection)ScenarioContext.Current[connectionName];
+            var connection = ScenarioContext.Current.Get<ICommonConnection>(connectionName);
 
             connection.Received().ForceInitialize();  
         }

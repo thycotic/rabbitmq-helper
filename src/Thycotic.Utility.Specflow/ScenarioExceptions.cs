@@ -10,7 +10,7 @@ namespace Thycotic.Utility.Specflow
         [Then(@"there should have been a exception thrown with message ""(.*)""")]
         public void ThenThereShouldHaveBeenAExceptionThrownWithMessage(string exceptionMessage)
         {
-            var message = (string)ScenarioContext.Current[ScenarioCommon.ScenarioException];
+            var message = ScenarioContext.Current.Get<string>(ScenarioCommon.ScenarioException);
             message.Should().Be(exceptionMessage);
         }
     }

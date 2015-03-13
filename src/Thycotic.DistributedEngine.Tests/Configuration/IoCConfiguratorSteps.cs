@@ -10,7 +10,7 @@ namespace Thycotic.DistributedEngine.Tests.Configuration
         [Given(@"there exists a substitute object for IIoCConfigurator stored in the scenario as (\w+)")]
         public void GivenThereExistsASubstituteObjectOfTypeStoredInTheScenarioAsIoCConfiguratorTest(string iocConfigurationName)
         {
-            ScenarioContext.Current.Add(iocConfigurationName, ScenarioContext.Current.GetSubstitute<IIoCConfigurator>());
+            ScenarioContext.Current.Set(iocConfigurationName, ScenarioContext.Current.GetSubstitute<IIoCConfigurator>());
         }
 
     }

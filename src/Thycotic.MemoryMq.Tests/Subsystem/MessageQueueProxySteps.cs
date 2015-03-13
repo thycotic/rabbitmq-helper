@@ -13,8 +13,8 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [Given(@"there exists a MessageQueueProxy stored in the scenario as (\w+) with MessageQueue (\w+)")]
         public void GivenThereExistsAMessageQueueProxyStoredInTheScenario(string messageQueueProxyName, string messageQueueName)
         {
-            var messageQueue = (IMessageQueue)ScenarioContext.Current[messageQueueName];
-            ScenarioContext.Current[messageQueueProxyName] = new MessageQueueProxy(messageQueue);
+            var messageQueue = ScenarioContext.Current.Get<IMessageQueue>(messageQueueName);
+            ScenarioContext.Current.Set(messageQueueProxyName, new MessageQueueProxy(messageQueue));
         }
 
         [Given(@"there is attempt to create a MessageQueueProxy with a null queue")]
@@ -30,7 +30,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [When(@"the method TryDequeue on MessageQueueProxy (\w+) is called")]
         public void WhenTheMethodTryDequeueOnMessageQueueProxyIsCalled(string messageQueueProxyName)
         {
-            var messageQueueProxy = (MessageQueueProxy)ScenarioContext.Current[messageQueueProxyName];
+            var messageQueueProxy = ScenarioContext.Current.Get<MessageQueueProxy>(messageQueueProxyName);
             MemoryMqDeliveryEventArgs throwAway;
             messageQueueProxy.TryDequeue(out throwAway);
         }
@@ -39,21 +39,21 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [When(@"the method NegativelyAcknoledge on MessageQueueProxy (\w+) is called")]
         public void WhenTheMethodNegativelyAcknoledgeOnMessageQueueProxyIsCalled(string messageQueueProxyName)
         {
-            var messageQueueProxy = (MessageQueueProxy)ScenarioContext.Current[messageQueueProxyName];
+            var messageQueueProxy = ScenarioContext.Current.Get<MessageQueueProxy>(messageQueueProxyName);
             messageQueueProxy.NegativelyAcknoledge(7);
         }
 
         [Then(@"the scenario MessageQueueProxy (\w+) is empty")]
         public void ThenTheScenarioMessageQueueProxyIsEmpty(string messageQueueProxyName)
         {
-            var messageQueueProxy = (MessageQueueProxy)ScenarioContext.Current[messageQueueProxyName];
+            var messageQueueProxy = ScenarioContext.Current.Get<MessageQueueProxy>(messageQueueProxyName);
             messageQueueProxy.IsEmpty.Should().BeTrue();
         }
 
         [Then(@"the method TryDequeue on MessageQueue substitute (\w+) is called")]
         public void ThenTheMethodTryDequeueOnMessageQueueSubstituteIsCalled(string messageQueueName)
         {
-            var messageQueue = (IMessageQueue)ScenarioContext.Current[messageQueueName];
+            var messageQueue = ScenarioContext.Current.Get<IMessageQueue>(messageQueueName);
 
             MemoryMqDeliveryEventArgs throwAway;
             messageQueue.ReceivedWithAnyArgs().TryDequeue(out throwAway);
@@ -62,7 +62,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [Then(@"the method NegativelyAcknoledge on MessageQueue substitute (\w+) is called")]
         public void ThenTheMethodNegativelyAcknoledgeOnMessageQueueSubstituteIsCalled(string messageQueueName)
         {
-            var messageQueue = (IMessageQueue)ScenarioContext.Current[messageQueueName];
+            var messageQueue = ScenarioContext.Current.Get<IMessageQueue>(messageQueueName);
             messageQueue.ReceivedWithAnyArgs().NegativelyAcknoledge(Arg.Any<ulong>());
         }
 
