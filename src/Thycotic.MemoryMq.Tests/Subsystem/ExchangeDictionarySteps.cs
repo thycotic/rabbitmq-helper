@@ -14,6 +14,12 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             ScenarioContext.Current.Set(exchangeDictionaryName, new ExchangeDictionary());
         }
 
+        [Given(@"there exists a substitute object for ExchangeDictionary stored in the scenario as (\w+)")]
+        public void GivenThereExistsASubstituteObjectForExchangeDictionaryStoredInTheScenario(string exchangeDictionaryName)
+        {
+            ScenarioContext.Current.Set(exchangeDictionaryName, ScenarioContext.Current.GetSubstitute<IExchangeDictionary>());
+        }
+
 
         [Given(@"the scenario object IExchangeDictionary (\w+) is empty")]
         public void GivenTheScenarioObjectExchangeDictionaryShouldBeEmpty(string exchangeDictionaryName)

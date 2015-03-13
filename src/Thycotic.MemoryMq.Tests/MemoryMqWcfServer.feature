@@ -4,7 +4,7 @@ Background:
 	Given there exists a substitute object for ExchangeDictionary stored in the scenario as ExchangeDictionaryTest
 	And there exists a substitute object for BindingDictionary stored in the scenario as BindingDictionaryTest
 	And there exists a substitute object for ClientDictionary stored in the scenario as ClientDictionaryTest
-	And there exists a substitute object for MessageDispatcher stored in the scenario as  MessageDispatcherTest
+	And there exists a substitute object for MessageDispatcher stored in the scenario as MessageDispatcherTest
 	And there exists a MemoryMqWcfServer stored in the scenario as MemoryMqWcfServerTest with ExchangeDictionary ExchangeDictionaryTest, BindingDictionary BindingDictionaryTest, ClientDictionary ClientDictionaryTest and MessageDispatcher MessageDispatcherTest
 
 #TODO: Check for explicit parameters

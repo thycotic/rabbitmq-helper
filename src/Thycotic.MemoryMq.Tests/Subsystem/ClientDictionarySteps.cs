@@ -17,6 +17,13 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             ScenarioContext.Current.Set(clientDictionaryName, new ClientDictionary(callbackChannelProvider));
         }
 
+        [Given(@"there exists a substitute object for ClientDictionary stored in the scenario as (\w+)")]
+        public void GivenThereExistsASubstituteObjectForClientDictionaryStoredInTheScenarioAsClientDictionaryTest(string clientDictionaryName)
+        {
+            ScenarioContext.Current.Set(clientDictionaryName, ScenarioContext.Current.GetSubstitute<IClientDictionary>());
+        }
+
+
         [Given(@"the substitute object (\w+) returns a substitute for GetCallbackChannel")]
         public void GivenTheSubstituteObjectReturnsASubstituteForGetCallbackChannel(string callbackChannelProviderName)
         {

@@ -78,7 +78,7 @@ namespace Thycotic.MemoryMq.Tests
                     "lientDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 7
  testRunner.And("there exists a substitute object for MessageDispatcher stored in the scenario as " +
-                    " MessageDispatcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                    "MessageDispatcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
  testRunner.And("there exists a MemoryMqWcfServer stored in the scenario as MemoryMqWcfServerTest " +
                     "with ExchangeDictionary ExchangeDictionaryTest, BindingDictionary BindingDiction" +
