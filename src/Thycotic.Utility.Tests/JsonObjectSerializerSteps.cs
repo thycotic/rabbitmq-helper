@@ -17,6 +17,12 @@ namespace Thycotic.Utility.Tests
             TypeNameHandling = TypeNameHandling.Auto
         };
 
+        [Given(@"there exists a DummyObject stored in the scenario as (\w+)")]
+        public void GivenThereExistsARoutingSlipStoredInTheScenarioAsRoutingSlipTestWithExchangeTestChangeAndRoutingKeyTestRoutingKey(string dummyObjectName)
+        {
+            this.GetScenarioContext().Set(dummyObjectName, new DummyObject());
+        }
+
         [Given(@"the property (\w+) in the scenario object (\w+) is set to ""(.*)""")]
         public void GivenThePropertyInTheScenarioObjectIsSetTo(string propertyName, string testObjectNameInContext, string value)
         {
