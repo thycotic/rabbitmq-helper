@@ -52,7 +52,7 @@ namespace Thycotic.MemoryMq.Tests.Collections
             queue.PriorityEnqueue(item);
         }
 
-        [When(@"all items are dequeued from scenario integer ConcurrentPriorityQueue (\w+) and stored in scenario integer array (\w+)")]
+        [When(@"all items are dequeued from scenario integer ConcurrentPriorityQueue (\w+) and stored in scenario object array (\w+)")]
         public void WhenAllItemsAreDequeuedFromScenarioObjectConcurrentPriorityQueueTestAndStoredInScenarioObjectConcurrentPriorityQueueResults(string queueName, string resultsName)
         {
             var queue = (ConcurrentPriorityQueue<int>)ScenarioContext.Current[queueName];
@@ -85,7 +85,7 @@ namespace Thycotic.MemoryMq.Tests.Collections
         }
 
 
-        [Then(@"the string join of scenario integer array (\w+) should be ""(.*)""")]
+        [Then(@"the string join of scenario object array (\w+) should be ""(.*)""")]
         public void ThenTheStringJoinOfScenarioObjectConcurrentPriorityQueueResultsShouldBe(string resultsName, string resultsString)
         {
             var resultArray = (int[]) ScenarioContext.Current[resultsName];

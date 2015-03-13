@@ -159,6 +159,7 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Subsystem\ExchangeDictionarySteps.cs" />
     <Compile Include="Subsystem\BindingDictionarySteps.cs" />
     <Compile Include="Collections\ConcurrentPriorityQueue.feature.cs">
       <AutoGen>True</AutoGen>
@@ -183,6 +184,11 @@
       <DependentUpon>ClientDictionary.feature</DependentUpon>
     </Compile>
     <Compile Include="Subsystem\ClientDictionarySteps.cs" />
+    <Compile Include="Subsystem\ExchangeDictionary.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExchangeDictionary.feature</DependentUpon>
+    </Compile>
     <Compile Include="Subsystem\MessageQueueProxySteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subsystem\MessageQueueProxy.feature.cs">
@@ -215,6 +221,10 @@
     <None Include="Subsystem\ClientDictionary.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ClientDictionary.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Subsystem\ExchangeDictionary.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ExchangeDictionary.feature.cs</LastGenOutput>
     </None>
     <None Include="Subsystem\MessageQueueProxy.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
