@@ -203,6 +203,8 @@ namespace Thycotic.DistributedEngine.Configuration
 
             var url = GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.ConnectionString);
 
+            _log.Info(string.Format("Attempting to retieve configuration from {0}", url ));
+
             if (_remoteConfigurationProvider == null)
             {
 
