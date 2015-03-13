@@ -68,17 +68,17 @@ namespace Thycotic.MemoryMq.Tests
         {
 #line 3
 #line 4
-testRunner.Given("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IExchangeDi" +
-                    "ctionary, Thycotic.MemoryMq\" stored in the scenario as ExchangeDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for ExchangeDictionary stored in the scenario as" +
+                    " ExchangeDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 5
- testRunner.And("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IBindingDic" +
-                    "tionary, Thycotic.MemoryMq\" stored in the scenario as BindingDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a substitute object for BindingDictionary stored in the scenario as " +
+                    "BindingDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 6
- testRunner.And("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IClientDict" +
-                    "ionary, Thycotic.MemoryMq\" stored in the scenario as ClientDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a substitute object for ClientDictionary stored in the scenario as C" +
+                    "lientDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 7
- testRunner.And("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IMessageDis" +
-                    "patcher, Thycotic.MemoryMq\" stored in the scenario as MessageDispatcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a substitute object for MessageDispatcher stored in the scenario as " +
+                    " MessageDispatcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
  testRunner.And("there exists a MemoryMqWcfServer stored in the scenario as MemoryMqWcfServerTest " +
                     "with ExchangeDictionary ExchangeDictionaryTest, BindingDictionary BindingDiction" +

@@ -68,12 +68,10 @@ namespace Thycotic.DistributedEngine.Tests
         {
 #line 4
 #line 5
- testRunner.Given("there exists an object of type \"System.Boolean\" stored in the scenario as startCo" +
-                    "nsumingTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a Boolean object stored in the scenario as startConsumingTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
- testRunner.And("there exists a substitute object of type \"Thycotic.DistributedEngine.Configuratio" +
-                    "n.IIoCConfigurator, Thycotic.DistributedEngine\" stored in the scenario as IoCCon" +
-                    "figuratorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a substitute object for IIoCConfigurator stored in the scenario as I" +
+                    "oCConfiguratorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 7
  testRunner.And("there exists a EngineService stored in the scenario as EngineServiceTest with sta" +
                     "rtConsuming startConsumingTest and IoCConfigurator IoCConfiguratorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

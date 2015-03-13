@@ -166,6 +166,7 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\IoCConfiguratorSteps.cs" />
     <Compile Include="EngineService.feature.cs">
       <DependentUpon>EngineService.feature</DependentUpon>
       <AutoGen>True</AutoGen>

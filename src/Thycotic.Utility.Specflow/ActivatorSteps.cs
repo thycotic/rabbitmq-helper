@@ -9,15 +9,14 @@ namespace Thycotic.Utility.Specflow
         [Given(@"there is a null value stored in the scenario as (\w+)")]
         public void GivenThereIsANullStoredInTheScenarioAs(string testObjectNameInContext)
         {
-            ScenarioContext.Current[testObjectNameInContext] = null;
+            ScenarioContext.Current.Add(testObjectNameInContext, null);
         }
 
-        [Given(@"there exists an object of type ""(.+)"" stored in the scenario as (\w+)")]
-        public void GivenThereExistsAnObjectOfTypeStoredInTheScenarioAs(string typeName, string testObjectNameInContext)
+        [Given(@"there exists a Boolean object stored in the scenario as (\w+)")]
+        public void GivenThereExistsABooleanObjectStoredInTheScenario(string booleanName)
         {
-            var type = ScenarioContext.Current.GetLoadedType(typeName);
-
-            ScenarioContext.Current[testObjectNameInContext] = Activator.CreateInstance(type);
+            ScenarioContext.Current.Add(booleanName, new Boolean());
         }
+
     }
 }

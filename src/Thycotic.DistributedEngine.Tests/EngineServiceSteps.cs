@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using TechTalk.SpecFlow;
 using Thycotic.DistributedEngine.Configuration;
+using Thycotic.Utility.Specflow;
 
 namespace Thycotic.DistributedEngine.Tests
 {
