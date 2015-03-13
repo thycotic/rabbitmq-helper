@@ -1,7 +1,7 @@
 ﻿Feature: ClientDictionary
 
 Background: 
-	Given there exists a substitute object of type "Thycotic.MemoryMq.Subsystem.ICallbackChannelProvider, Thycotic.MemoryMq" stored in the scenario as CallbackChannelProviderTest
+	Given there exists a substitute object for CallbackChannelProvider stored in the scenario as CallbackChannelProviderTest
 	And there exists a ClientDictionary stored in the scenario as ClientDictionaryTest with CallbackChennelProvider CallbackChannelProviderTest
 	And the substitute object CallbackChannelProviderTest returns a substitute for GetCallbackChannel
 
