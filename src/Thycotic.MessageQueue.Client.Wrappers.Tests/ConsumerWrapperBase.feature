@@ -2,8 +2,8 @@
 	
 
 Background: 
-	Given there exists a substitute object of type "Thycotic.MessageQueue.Client.QueueClient.ICommonConnection, Thycotic.MessageQueue.Client" stored in the scenario as CommonConnectionTest
-	And there exists a substitute object of type "Thycotic.MessageQueue.Client.QueueClient.IExchangeNameProvider, Thycotic.MessageQueue.Client" stored in the scenario as ExchangeNameProviderTest
+	Given there exists a substitute object for CommonConnection stored in the scenario as CommonConnectionTest
+	And there exists a substitute object for ExchangeNameProvider stored in the scenario as ExchangeNameProviderTest
 	And there exists a ConsumerWrapperBaseDummy stored in the scenario as ConsumerWrapperBaseDummyTest with CommonConnection CommonConnectionTest and ExchangeNameProvider ExchangeNameProviderTest
 
 @mytag

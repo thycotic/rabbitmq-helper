@@ -11,7 +11,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [Given(@"there exists a substitute object for MessageDispatcher stored in the scenario as (\w+)")]
         public void GivenThereExistsASubstituteObjectForMessageDispatcherStoredInTheScenario(string messageDispatcherName)
         {
-            ScenarioContext.Current.Set(messageDispatcherName, ScenarioContext.Current.GetSubstitute<IMessageDispatcher>());
+            this.GetScenarioContext().SetSubstitute<IMessageDispatcher>(messageDispatcherName);
         }
 
     }

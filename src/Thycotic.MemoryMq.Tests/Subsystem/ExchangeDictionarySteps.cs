@@ -11,20 +11,20 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [Given(@"there exists a ExchangeDictionary stored in the scenario as (\w+)")]
         public void GivenThereExistsAnExchangeDictionaryStoredInTheScenario(string exchangeDictionaryName)
         {
-            ScenarioContext.Current.Set(exchangeDictionaryName, new ExchangeDictionary());
+            this.GetScenarioContext().Set(exchangeDictionaryName, new ExchangeDictionary());
         }
 
         [Given(@"there exists a substitute object for ExchangeDictionary stored in the scenario as (\w+)")]
         public void GivenThereExistsASubstituteObjectForExchangeDictionaryStoredInTheScenario(string exchangeDictionaryName)
         {
-            ScenarioContext.Current.Set(exchangeDictionaryName, ScenarioContext.Current.GetSubstitute<IExchangeDictionary>());
+            this.GetScenarioContext().SetSubstitute<IExchangeDictionary>(exchangeDictionaryName);
         }
 
 
         [Given(@"the scenario object IExchangeDictionary (\w+) is empty")]
         public void GivenTheScenarioObjectExchangeDictionaryShouldBeEmpty(string exchangeDictionaryName)
         {
-            var exchangeDictionary = ScenarioContext.Current.Get<IExchangeDictionary>(exchangeDictionaryName);
+            var exchangeDictionary = this.GetScenarioContext().Get<IExchangeDictionary>(exchangeDictionaryName);
 
             exchangeDictionary.IsEmpty.Should().BeTrue();
         }
@@ -32,9 +32,9 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [When(@"the method Publish on IExchangeDictionary (\w+) is called with routing slip (\w+) and message delivery arguments (\w+)")]
         public void WhenTheMethodPublishOnExchangeDictionaryIsCalledWithRoutingSlipAndMessageDeliveryArguments(string exchangeDictionaryName, string routingSlipName, string deliveryArgumentsName)
         {
-            var exchangeDictionary = ScenarioContext.Current.Get<IExchangeDictionary>(exchangeDictionaryName);
-            var routingSlip = ScenarioContext.Current.Get<RoutingSlip>(routingSlipName);
-            var messageDeliveryArguments = ScenarioContext.Current.Get<MemoryMqDeliveryEventArgs>(deliveryArgumentsName);
+            var exchangeDictionary = this.GetScenarioContext().Get<IExchangeDictionary>(exchangeDictionaryName);
+            var routingSlip = this.GetScenarioContext().Get<RoutingSlip>(routingSlipName);
+            var messageDeliveryArguments = this.GetScenarioContext().Get<MemoryMqDeliveryEventArgs>(deliveryArgumentsName);
 
             exchangeDictionary.Publish(routingSlip, messageDeliveryArguments);
         }
@@ -43,7 +43,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [Then(@"the scenario object IExchangeDictionary (\w+) is empty")]
         public void ThenTheScenarioObjectExchangeDictionaryShouldBeEmpty(string exchangeDictionaryName)
         {
-            var exchangeDictionary = ScenarioContext.Current.Get<IExchangeDictionary>(exchangeDictionaryName);
+            var exchangeDictionary = this.GetScenarioContext().Get<IExchangeDictionary>(exchangeDictionaryName);
 
             exchangeDictionary.IsEmpty.Should().BeTrue();
         }

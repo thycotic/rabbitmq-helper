@@ -77,8 +77,8 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Given("there exists a RoutingSlip stored in the scenario as RoutingSlipTest with exchang" +
                     "e TestChange and routing key TestRoutingKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
- testRunner.When("the string representation of scenario object RoutingSlipTest and stored in scenar" +
-                    "io object RoutingSlipTestResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the string representation of scenario object RoutingSlipTest is stored in scenari" +
+                    "o object RoutingSlipTestResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 7
  testRunner.Then("value of scenario object RoutingSlipTestResults should be \"TestChange:TestRouting" +
                     "Key\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -97,8 +97,8 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Given("there exists a RoutingSlip stored in the scenario as RoutingSlipTest with no exch" +
                     "ange and routing key TestRoutingKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 11
- testRunner.When("the string representation of scenario object RoutingSlipTest and stored in scenar" +
-                    "io object RoutingSlipTestResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the string representation of scenario object RoutingSlipTest is stored in scenari" +
+                    "o object RoutingSlipTestResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 12
  testRunner.Then("value of scenario object RoutingSlipTestResults should be \"TestRoutingKey\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -116,8 +116,8 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Given("there exists a RoutingSlip stored in the scenario as RoutingSlipTest with exchang" +
                     "e TestChange and no routing key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 16
- testRunner.When("the string representation of scenario object RoutingSlipTest and stored in scenar" +
-                    "io object RoutingSlipTestResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the string representation of scenario object RoutingSlipTest is stored in scenari" +
+                    "o object RoutingSlipTestResults", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
  testRunner.Then("there should have been a exception thrown with message \"No routing key\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

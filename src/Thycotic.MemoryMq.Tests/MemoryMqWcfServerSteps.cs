@@ -12,18 +12,18 @@ namespace Thycotic.MemoryMq.Tests
         [Given(@"there exists a MemoryMqWcfServer stored in the scenario as (\w+) with ExchangeDictionary (\w+), BindingDictionary (\w+), ClientDictionary (\w+) and MessageDispatcher (\w+)")]
         public void GivenThereExistsAMemoryMqServerStoredInTheScenario(string serverName, string exchangesName, string bindingsName, string clientsName, string dispatcherName)
         {
-            var exchange = ScenarioContext.Current.Get<IExchangeDictionary>(exchangesName);
-            var bindings = ScenarioContext.Current.Get<IBindingDictionary>(bindingsName);
-            var clients = ScenarioContext.Current.Get<IClientDictionary>(clientsName);
-            var messageDispatcher = ScenarioContext.Current.Get<IMessageDispatcher>(dispatcherName);
+            var exchange = this.GetScenarioContext().Get<IExchangeDictionary>(exchangesName);
+            var bindings = this.GetScenarioContext().Get<IBindingDictionary>(bindingsName);
+            var clients = this.GetScenarioContext().Get<IClientDictionary>(clientsName);
+            var messageDispatcher = this.GetScenarioContext().Get<IMessageDispatcher>(dispatcherName);
 
-            ScenarioContext.Current.Set(serverName, new MemoryMqWcfServer(exchange, bindings, clients, messageDispatcher));
+            this.GetScenarioContext().Set(serverName, new MemoryMqWcfServer(exchange, bindings, clients, messageDispatcher));
         }
 
         [When(@"the method BasicPublish on MemoryMqWcfServer (\w+) is called with exchange (\w+) and routing key (\w+)")]
         public void WhenTheMethodBasicPublishOnMemoryMqServerMemoryMqServerTestIsCalled(string serverName, string exchangeName, string routingKey)
         {
-            var server = ScenarioContext.Current.Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
 
             server.BasicPublish(exchangeName, routingKey, true, true, new MemoryMqProperties(), null);
         }
@@ -31,14 +31,14 @@ namespace Thycotic.MemoryMq.Tests
         [When(@"the method QueueBind on MemoryMqWcfServer (\w+) is called")]
         public void WhenTheMethodQueueBindOnMemoryMqServerMemoryMqServerTestIsCalled(string serverName)
         {
-            var server = ScenarioContext.Current.Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
             server.QueueBind(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
         }
 
         [When(@"the method BasicConsume on MemoryMqWcfServer (\w+) is called")]
         public void WhenTheMethodBasicConsumeOnMemoryMqServerIsCalled(string serverName)
         {
-            var server = ScenarioContext.Current.Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
             var queueName = Guid.NewGuid().ToString();
             server.BasicConsume(queueName);
         }
@@ -47,7 +47,7 @@ namespace Thycotic.MemoryMq.Tests
         [When(@"the method BasicAck on MemoryMqWcfServer (\w+) is called")]
         public void WhenTheMethodBasicAckOnMemoryMqServerIsCalled(string serverName)
         {
-            var server = ScenarioContext.Current.Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
             const ulong deliveryTag = 0;
             var exchange = Guid.NewGuid().ToString();
             var routingKey = Guid.NewGuid().ToString();
@@ -57,7 +57,7 @@ namespace Thycotic.MemoryMq.Tests
         [When(@"the method BasicNack on MemoryMqWcfServer (\w+) is called")]
         public void WhenTheMethodBasicNackOnMemoryMqServerIsCalled(string serverName)
         {
-            var server = ScenarioContext.Current.Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
             const ulong deliveryTag = 0;
             var exchange = Guid.NewGuid().ToString();
             var routingKey = Guid.NewGuid().ToString();
@@ -67,14 +67,14 @@ namespace Thycotic.MemoryMq.Tests
         [When(@"the method Dispose on MemoryMqWcfServer (\w+) is called")]
         public void WhenTheMethodDisposeOnMemoryMqServerIsCalled(string serverName)
         {
-            var server = ScenarioContext.Current.Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
             server.Dispose();
         }
 
         [Then(@"the method Start on MessageDispatcher substitute (\w+) is called")]
         public void ThenTheMethodStartOnMessageDispatcherSubstituteIsCalled(string dispatcherName)
         {
-            var messageDispatcher = ScenarioContext.Current.Get<IMessageDispatcher>(dispatcherName);
+            var messageDispatcher = this.GetScenarioContext().Get<IMessageDispatcher>(dispatcherName);
 
             messageDispatcher.Received().Start();       
         }
@@ -82,7 +82,7 @@ namespace Thycotic.MemoryMq.Tests
         [Then(@"the method Publish on ExchangeDictionary substitute (\w+) is called with exchange (\w+) and routing key (\w+)")]
         public void ThenTheMethodexchangesNameOnExchangeDictionarySubstituteIsCalled(string exchangesName, string exchangeName, string routingKey)
         {
-            var exchange = ScenarioContext.Current.Get<IExchangeDictionary>(exchangesName);
+            var exchange = this.GetScenarioContext().Get<IExchangeDictionary>(exchangesName);
 
             exchange.Received().Publish(new RoutingSlip(exchangeName, routingKey), Arg.Any<MemoryMqDeliveryEventArgs>());
         }
@@ -90,35 +90,35 @@ namespace Thycotic.MemoryMq.Tests
         [Then(@"the method AddBinding on BindingDictionary substitute (\w+) is called")]
         public void ThenTheMethodAddBindingOnBindingDictionarySubstituteIsCalled(string bindingsName)
         {
-            var bindings = ScenarioContext.Current.Get<IBindingDictionary>(bindingsName);
+            var bindings = this.GetScenarioContext().Get<IBindingDictionary>(bindingsName);
             bindings.Received().AddBinding(Arg.Any<RoutingSlip>(), Arg.Any<string>());
         }
 
         [Then(@"the method AddClient on ClientDictionary substitute (\w+) is called")]
         public void ThenTheMethodAddClientOnClientDictionarySubstituteIsCalled(string clientsName)
         {
-            var clients = ScenarioContext.Current.Get<IClientDictionary>(clientsName);
+            var clients = this.GetScenarioContext().Get<IClientDictionary>(clientsName);
             clients.Received().AddClient(Arg.Any<string>());
         }
 
         [Then(@"the method Acknowledge on ExchangeDictionary substitute (\w+) is called")]
         public void ThenTheMethodAcknowledgeOnExchangeDictionaryIsCalled(string exchangeName)
         {
-            var exchange = ScenarioContext.Current.Get<IExchangeDictionary>(exchangeName);
+            var exchange = this.GetScenarioContext().Get<IExchangeDictionary>(exchangeName);
             exchange.Received().Acknowledge(Arg.Any<ulong>(), Arg.Any<RoutingSlip>());
         }
 
         [Then(@"the method NegativelyAcknowledge on ExchangeDictionary substitute (\w+) is called")]
         public void ThenTheMethodNegativelyAcknowledgeOnExchangeDictionarySubstituteIsCalled(string exchangeName)
         {
-            var messages = ScenarioContext.Current.Get<IExchangeDictionary>(exchangeName);
+            var messages = this.GetScenarioContext().Get<IExchangeDictionary>(exchangeName);
             messages.Received().NegativelyAcknowledge(Arg.Any<ulong>(), Arg.Any<RoutingSlip>());
         }
 
         [Then(@"the method Dispose on MessageDispatcher substitute (\w+) is called")]
         public void ThenTheMethodStopOnMessageDispatcherSubstituteIsCalled(string dispatcherName)
         {
-            var messageDispatcher = ScenarioContext.Current.Get<IMessageDispatcher>(dispatcherName);
+            var messageDispatcher = this.GetScenarioContext().Get<IMessageDispatcher>(dispatcherName);
             messageDispatcher.Received().Dispose();
         }
     }

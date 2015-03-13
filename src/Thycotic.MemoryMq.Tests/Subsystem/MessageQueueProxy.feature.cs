@@ -74,8 +74,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.Given("there exists an object of type \"Thycotic.MemoryMq.Subsystem.MessageQueue, Thycoti" +
-                    "c.MemoryMq\" stored in the scenario as MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a MessageQueue stored in the scenario as MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
  testRunner.And("there exists a MessageQueueProxy stored in the scenario as MessageQueueProxyTest " +
                     "with MessageQueue MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -109,8 +108,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 15
- testRunner.Given("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IMessageQue" +
-                    "ue, Thycotic.MemoryMq\" stored in the scenario as MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for MessageQueue stored in the scenario as Messa" +
+                    "geQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 16
  testRunner.And("there exists a MessageQueueProxy stored in the scenario as MessageQueueProxyTest " +
                     "with MessageQueue MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -130,8 +129,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 21
 this.ScenarioSetup(scenarioInfo);
 #line 22
- testRunner.Given("there exists a substitute object of type \"Thycotic.MemoryMq.Subsystem.IMessageQue" +
-                    "ue, Thycotic.MemoryMq\" stored in the scenario as MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for MessageQueue stored in the scenario as Messa" +
+                    "geQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 23
  testRunner.And("there exists a MessageQueueProxy stored in the scenario as MessageQueueProxyTest " +
                     "with MessageQueue MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

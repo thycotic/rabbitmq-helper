@@ -12,43 +12,43 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [Given(@"there exists a ClientDictionary stored in the scenario as (\w+) with CallbackChennelProvider (\w+)")]
         public void GivenThereExistsAClientDictionaryStoredInTheScenarioWithCallbackChannelProvider(string clientDictionaryName, string callbackChannelProviderName)
         {
-            var callbackChannelProvider = ScenarioContext.Current.Get<ICallbackChannelProvider>(callbackChannelProviderName);
+            var callbackChannelProvider = this.GetScenarioContext().Get<ICallbackChannelProvider>(callbackChannelProviderName);
 
-            ScenarioContext.Current.Set(clientDictionaryName, new ClientDictionary(callbackChannelProvider));
+            this.GetScenarioContext().Set(clientDictionaryName, new ClientDictionary(callbackChannelProvider));
         }
 
         [Given(@"there exists a substitute object for ClientDictionary stored in the scenario as (\w+)")]
         public void GivenThereExistsASubstituteObjectForClientDictionaryStoredInTheScenarioAsClientDictionaryTest(string clientDictionaryName)
         {
-            ScenarioContext.Current.Set(clientDictionaryName, ScenarioContext.Current.GetSubstitute<IClientDictionary>());
+            this.GetScenarioContext().SetSubstitute<IClientDictionary>(clientDictionaryName);
         }
 
 
         [Given(@"the substitute object (\w+) returns a substitute for GetCallbackChannel")]
         public void GivenTheSubstituteObjectReturnsASubstituteForGetCallbackChannel(string callbackChannelProviderName)
         {
-            var callbackChannelProvider = ScenarioContext.Current.Get<ICallbackChannelProvider>(callbackChannelProviderName);
+            var callbackChannelProvider = this.GetScenarioContext().Get<ICallbackChannelProvider>(callbackChannelProviderName);
 
 // ReSharper disable once SuspiciousTypeConversion.Global
-            callbackChannelProvider.GetCallbackChannel().Returns(ScenarioContext.Current.GetSubstitute<IMemoryMqWcfServerCallback, IContextChannel>());
+            callbackChannelProvider.GetCallbackChannel().Returns(this.GetScenarioContext().GetSubstituteFor<IMemoryMqWcfServerCallback, IContextChannel>());
         }
 
 
         [When(@"the method AddClient on ClientDictionary (\w+) is called with queue name (\w+)")]
         public void WhenTheMethodAddClientOnClientDictionaryIsCalled(string clientDictionaryName, string queueNameTest)
         {
-            var clientDictionary = ScenarioContext.Current.Get<IClientDictionary>(clientDictionaryName);
+            var clientDictionary = this.GetScenarioContext().Get<IClientDictionary>(clientDictionaryName);
             clientDictionary.AddClient(queueNameTest);
         }
 
         [When(@"the method TryGetClient on ClientDictionary (\w+) is called with queue name (\w+) and the result is stored in scenario as (\w+)")]
         public void WhenTheMethodTryGetClientOnClientDictionaryIsCalledWithQueueNameAndTheResultIsStored(string clientDictionaryName, string queueNameTest, string resultName)
         {
-            var clientDictionary = ScenarioContext.Current.Get<IClientDictionary>(clientDictionaryName);
+            var clientDictionary = this.GetScenarioContext().Get<IClientDictionary>(clientDictionaryName);
             IMemoryMqWcfServerCallback callback;
             clientDictionary.TryGetClient(queueNameTest, out callback);
 
-            ScenarioContext.Current.Set(resultName, callback);
+            this.GetScenarioContext().Set(resultName, callback);
         }
     }
 }

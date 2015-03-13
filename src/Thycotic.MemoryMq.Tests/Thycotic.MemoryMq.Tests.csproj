@@ -198,6 +198,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MessageQueueProxy.feature</DependentUpon>
     </Compile>
+    <Compile Include="Subsystem\MessageQueueSteps.cs" />
     <Compile Include="Subsystem\RoutingSlipSteps.cs" />
     <Compile Include="Subsystem\RoutingSlip.feature.cs">
       <AutoGen>True</AutoGen>

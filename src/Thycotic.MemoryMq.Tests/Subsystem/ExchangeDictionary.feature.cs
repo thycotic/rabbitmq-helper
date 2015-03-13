@@ -68,8 +68,8 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         {
 #line 3
 #line 4
- testRunner.Given("there exists an object of type \"Thycotic.MemoryMq.Subsystem.ExchangeDictionary, T" +
-                    "hycotic.MemoryMq\" stored in the scenario as ExchangeDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a ExchangeDictionary stored in the scenario as ExchangeDictionaryTes" +
+                    "t", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }
         
@@ -85,7 +85,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 8
- testRunner.Then("the scenario object ExchangeDictionary ExchangeDictionaryTest is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the scenario object IExchangeDictionary ExchangeDictionaryTest is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

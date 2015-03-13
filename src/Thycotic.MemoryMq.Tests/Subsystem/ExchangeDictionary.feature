@@ -1,11 +1,11 @@
 ﻿Feature: ExchangeDictionary
 
 Background: 
-	Given there exists an object of type "Thycotic.MemoryMq.Subsystem.ExchangeDictionary, Thycotic.MemoryMq" stored in the scenario as ExchangeDictionaryTest
+	Given there exists a ExchangeDictionary stored in the scenario as ExchangeDictionaryTest
 
 @mytag
 Scenario: An new exchange dictionary should be empty
-	Then the scenario object ExchangeDictionary ExchangeDictionaryTest is empty
+	Then the scenario object IExchangeDictionary ExchangeDictionaryTest is empty
 
 #Scenario: Pushing messages
 #	Given there exists an object of type "Thycotic.MemoryMq.Subsystem.RoutingSlip, Thycotic.MemoryMq" stored in the scenario as RoutingSlipTest

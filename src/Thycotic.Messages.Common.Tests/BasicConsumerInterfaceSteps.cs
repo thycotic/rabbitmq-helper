@@ -10,15 +10,15 @@ namespace Thycotic.Messages.Common.Tests
         [Given(@"there exists a BasicConsumerDummy stored in the scenario as (\w+)")]
         public void GivenThereExistsABasicConsumerDummyStoredInTheScenario(string consumerName)
         {
-            ScenarioContext.Current.Set(consumerName, new BasicConsumerDummy());
+            this.GetScenarioContext().Set(consumerName, new BasicConsumerDummy());
         }
 
         [When(@"the method Consumer on BasicConsumerDummy (\w+) is called with a null reference")]
         public void WhenTheMethodConsumerOnIBasicConsumerIsCalledWithANullReference(string consumerName)
         {
-            ScenarioContext.Current.ExecuteThrowing<ArgumentNullException>(() =>
+            this.GetScenarioContext().ExecuteThrowing<ArgumentNullException>(() =>
             {
-                var consumer = ScenarioContext.Current.Get<BasicConsumerDummy>(consumerName);
+                var consumer = this.GetScenarioContext().Get<BasicConsumerDummy>(consumerName);
                 consumer.Consume(null);
             });
         }

@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using TechTalk.SpecFlow;
 
 namespace Thycotic.Utility.Specflow
 {
     public static class ScenarioExtensions
     {
-        public static void Set<T>(this ScenarioContext context, string key, T data)
+        public static CustomScenarioContext GetScenarioContext(this object context)
         {
-            context.Set(data, key);
+            return new CustomScenarioContext(ScenarioContext.Current);
         }
 
-        public static void ExecuteThrowing<T>(this ScenarioContext context, Action action)
+        public static void ExecuteThrowing<T>(this CustomScenarioContext context, Action action)
             where T : Exception
         {
             try
@@ -20,7 +19,7 @@ namespace Thycotic.Utility.Specflow
             }
             catch (T ex)
             {
-                context.Add(ScenarioCommon.ScenarioException, ex.Message);
+                context.Set(ScenarioCommon.ScenarioException, ex.Message);
             }
             catch (Exception ex)
             {

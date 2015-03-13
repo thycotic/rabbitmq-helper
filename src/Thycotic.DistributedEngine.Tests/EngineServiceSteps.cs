@@ -12,16 +12,16 @@ namespace Thycotic.DistributedEngine.Tests
         [Given(@"there exists a EngineService stored in the scenario as (\w+) with startConsuming (\w+) and IoCConfigurator (\w+)")]
         public void GivenThereExistsAConsumerWrapperBaseDummyStoredInTheScenarioWithCommonConnectionAndExchangeNameProvider(string engineServiceName, string startConsumingName, string ioCConfiguratorName)
         {
-            var startConsuming = ScenarioContext.Current.Get<bool>(startConsumingName);
-            var ioCConfigurator = ScenarioContext.Current.Get<IIoCConfigurator>(ioCConfiguratorName);
+            var startConsuming = this.GetScenarioContext().Get<bool>(startConsumingName);
+            var ioCConfigurator = this.GetScenarioContext().Get<IIoCConfigurator>(ioCConfiguratorName);
 
-            ScenarioContext.Current.Set(engineServiceName, new EngineService(startConsuming, ioCConfigurator));
+            this.GetScenarioContext().Set(engineServiceName, new EngineService(startConsuming, ioCConfigurator));
         }
 
         [Given(@"the substitute object (\w+) returns true for TryGetAndAssignConfiguration")]
         public void GivenTheSubstituteObjectReturnsTrueForTryGetAndAssignConfiguration(string ioCConfiguratorName)
         {
-            var ioCConfigurator = ScenarioContext.Current.Get<IIoCConfigurator>(ioCConfiguratorName);
+            var ioCConfigurator = this.GetScenarioContext().Get<IIoCConfigurator>(ioCConfiguratorName);
 
             ioCConfigurator.TryGetAndAssignConfiguration().Returns(true);
         }
@@ -29,7 +29,7 @@ namespace Thycotic.DistributedEngine.Tests
         [When(@"the method Start on EngineService (\w+) is called")]
         public void WhenTheMethodStartOnEngineServiceEngineServiceTestIsCalled(string engineServiceName)
         {
-            var engineService = ScenarioContext.Current.Get<EngineService>(engineServiceName);
+            var engineService = this.GetScenarioContext().Get<EngineService>(engineServiceName);
 
             engineService.Start();
         }
@@ -37,7 +37,7 @@ namespace Thycotic.DistributedEngine.Tests
         [Then(@"the method Build on IoCConfigurator substitute (\w+) is called")]
         public void ThenTheMethodBuildOnIoCConfiguratorSubstituteIsCalled(string ioCConfiguratorName)
         {
-            var ioCConfigurator = ScenarioContext.Current.Get<IIoCConfigurator>(ioCConfiguratorName);
+            var ioCConfigurator = this.GetScenarioContext().Get<IIoCConfigurator>(ioCConfiguratorName);
             ioCConfigurator.Received().Build(Arg.Any<EngineService>(), false);
         }
     }

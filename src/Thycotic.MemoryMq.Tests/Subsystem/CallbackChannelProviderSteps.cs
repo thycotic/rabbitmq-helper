@@ -10,7 +10,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [Given(@"there exists a substitute object for CallbackChannelProvider stored in the scenario as (\w+)")]
         public void GivenThereExistsASubstituteObjectForCallbackChannelProviderStoredInTheScenario(string callbackChannelProviderName)
         {
-            ScenarioContext.Current.Set(callbackChannelProviderName, ScenarioContext.Current.GetSubstitute<ICallbackChannelProvider>());
+            this.GetScenarioContext().SetSubstitute<ICallbackChannelProvider>(callbackChannelProviderName);
         }
 
     }

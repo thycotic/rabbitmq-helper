@@ -10,7 +10,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         [Given(@"there exists a substitute object for BindingDictionary stored in the scenario as (\w+)")]
         public void GivenThereExistsASubstituteObjectForBindingDictionaryStoredInTheScenario(string bindingDictionaryName)
         {
-            ScenarioContext.Current.Set(bindingDictionaryName, ScenarioContext.Current.GetSubstitute<IBindingDictionary>());
+            this.GetScenarioContext().SetSubstitute<IBindingDictionary>(bindingDictionaryName);
         }
     }
 }
