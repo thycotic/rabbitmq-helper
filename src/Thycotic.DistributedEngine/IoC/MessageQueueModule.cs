@@ -8,7 +8,6 @@ using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
 using Thycotic.DistributedEngine.Security;
-using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.IoC
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Autofac;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Reflection;

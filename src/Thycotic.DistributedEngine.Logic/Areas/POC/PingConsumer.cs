@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using Thycotic.Logging;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 

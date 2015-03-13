@@ -6,8 +6,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Thycotic.DistributedEngine.LogViewer.Models;
 using Thycotic.DistributedEngine.LogViewer.Providers;
+using Thycotic.Logging.Models;
 
 namespace Thycotic.DistributedEngine.LogViewer.Views
 {

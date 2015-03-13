@@ -45,10 +45,15 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
                 if (!parameters.TryGet("username", out username)) return;
                 if (!parameters.TryGet("password", out password)) return;
 
-                var message = new SecretHeartbeatMessage();
-                message.PasswordInfoProvider = new GenericPasswordInfoProvider();
-                message.PasswordInfoProvider.PasswordTypeName = "Thycotic.AppCore.Federator.SqlAccountFederator";
-                message.PasswordInfoProvider.PasswordTypeId = 2;
+                var message = new SecretHeartbeatMessage
+                {
+                    PasswordInfoProvider =
+                        new GenericPasswordInfoProvider
+                        {
+                            PasswordTypeName = "Thycotic.AppCore.Federator.SqlAccountFederator",
+                            PasswordTypeId = 2
+                        }
+                };
 
                 var itemValues = new Dictionary<string, string>();
                 itemValues["server"] = server;

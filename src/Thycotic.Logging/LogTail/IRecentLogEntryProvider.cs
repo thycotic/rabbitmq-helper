@@ -1,4 +1,4 @@
-﻿using Thycotic.DistributedEngine.LogViewer.Models;
+﻿using Thycotic.Logging.Models;
 
 namespace Thycotic.Logging.LogTail
 {

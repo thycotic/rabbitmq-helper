@@ -14,8 +14,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
     public class SecretChangePasswordConsumer : IBlockingConsumer<SecretChangePasswordMessage, SecretChangePasswordResponse>
     {
         private readonly FederatorProvider _federatorProvider = new FederatorProvider();
-        private const string FAILED_VERIFY_MESSAGE = "Could not verify the password change.";
-        private const string SUCCESS_MESSAGE = "Password changed successfully.";
+        private const string FailedVerifyMessage = "Could not verify the password change.";
+        private const string SuccessMessage = "Password changed successfully.";
 
         private readonly ILogWriter _log = Log.Get(typeof(SecretChangePasswordConsumer));
 
@@ -33,7 +33,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
             try
             {
                 var federator = _federatorProvider.GetFederatorByType(passwordTypeName);
-                IChangeResult passwordChangeResult = null;
+                IChangeResult passwordChangeResult;
 
                 if (federator.AllowsChangePasswordByOtherCredential(infoProvider) && infoProvider.PrivilegedAccountInfo != null)
                 {
@@ -59,14 +59,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                     {
                         Success = false,
                         ErrorCode = FailureCode.UnknownError,
-                        StatusMessages = new[] {FAILED_VERIFY_MESSAGE}
+                        StatusMessages = new[] {FailedVerifyMessage}
                     };
                 }
                 return new SecretChangePasswordResponse
                 {
                     Success = true,
                     ErrorCode = FailureCode.NoError,
-                    StatusMessages = new[] { SUCCESS_MESSAGE }
+                    StatusMessages = new[] { SuccessMessage }
                 };
             }
             catch (Exception ex)

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Controls;
-using Thycotic.DistributedEngine.LogViewer.Models;
 using Thycotic.DistributedEngine.LogViewer.Providers;
 using Thycotic.DistributedEngine.LogViewer.Views;
+using Thycotic.Logging.Models;
 
 
 namespace Thycotic.DistributedEngine.LogViewer

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.DistributedEngine.LogViewer.Models
+namespace Thycotic.Logging.Models
 {
     /// <summary>
     /// Log entry

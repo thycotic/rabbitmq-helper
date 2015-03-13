@@ -36,6 +36,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// </value>
         public DateTime LastConfigurationConsumed { get; set; }
 
+// ReSharper disable once UnusedParameter.Local
         private string GetOptionalInstanceConfiguration(string name, bool throwIfNotFound)
         {
             if (_instanceConfiguration == null)
@@ -63,6 +64,7 @@ namespace Thycotic.DistributedEngine.Configuration
             return GetOptionalInstanceConfiguration(name, true);
         }
 
+// ReSharper disable once UnusedParameter.Local
         private static string GetOptionalLocalConfiguration(string name, bool throwIfNotFound)
         {
             var value = ConfigurationManager.AppSettings[name];

@@ -90,7 +90,7 @@ namespace Thycotic.Utility.Tests
         {
             var obj1 = this.GetScenarioContext().Get<object>(testObjectNameInContext1);
 
-            var obj2 = this.GetScenarioContext().Get<object>(testObjectNameInContext2); ;
+            var obj2 = this.GetScenarioContext().Get<object>(testObjectNameInContext2);
 
             var objectString1 = JsonConvert.SerializeObject(obj1, Formatting.None, _serializerSettings);
             var objectString2 = JsonConvert.SerializeObject(obj2, Formatting.None, _serializerSettings);

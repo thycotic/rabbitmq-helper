@@ -60,6 +60,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             return _asymmetricEncryptor.EncryptWithPublicKey(publicKey, saltedBytes);
         }
 
+// ReSharper disable once UnusedMember.Local
         private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetDynamicEncryptionPair()
         {
             const int aesKeySize = 256;
@@ -93,6 +94,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
         }
 
+// ReSharper disable once UnusedMember.Local
+// ReSharper disable once UnusedParameter.Local
         private static object LoopbackNotSupported(object request)
         {
             throw new NotSupportedException();

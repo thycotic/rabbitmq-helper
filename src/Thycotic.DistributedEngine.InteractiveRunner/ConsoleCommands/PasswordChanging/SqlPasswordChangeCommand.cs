@@ -5,8 +5,6 @@ using Thycotic.AppCore.Federator;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.Heartbeat.Request;
-using Thycotic.Messages.Heartbeat.Response;
 using Thycotic.Messages.PasswordChanging.Request;
 using Thycotic.Messages.PasswordChanging.Response;
 
@@ -49,10 +47,15 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordC
                 if (!parameters.TryGet("password", out password)) return;
                 if (!parameters.TryGet("newpassword", out newPassword)) return;
 
-                var message = new SecretChangePasswordMessage();
-                message.PasswordInfoProvider = new GenericPasswordInfoProvider();
-                message.PasswordInfoProvider.PasswordTypeName = "Thycotic.AppCore.Federator.SqlAccountFederator";
-                message.PasswordInfoProvider.PasswordTypeId = 2;
+                var message = new SecretChangePasswordMessage
+                {
+                    PasswordInfoProvider =
+                        new GenericPasswordInfoProvider
+                        {
+                            PasswordTypeName = "Thycotic.AppCore.Federator.SqlAccountFederator",
+                            PasswordTypeId = 2
+                        }
+                };
 
                 var itemValues = new Dictionary<string, string>();
                 itemValues["server"] = server;

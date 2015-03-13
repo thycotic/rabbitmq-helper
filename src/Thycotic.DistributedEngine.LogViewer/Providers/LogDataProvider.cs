@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using PetaPoco;
-using Thycotic.DistributedEngine.LogViewer.Models;
 using Thycotic.DistributedEngine.LogViewer.Views;
+using Thycotic.Logging.Models;
 
 namespace Thycotic.DistributedEngine.LogViewer.Providers
 {

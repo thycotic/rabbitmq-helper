@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net.Security;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using RabbitMQ.Client;

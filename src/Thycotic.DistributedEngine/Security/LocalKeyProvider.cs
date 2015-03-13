@@ -2,7 +2,6 @@
 using System.Security.Cryptography;
 using Thycotic.Encryption;
 using Thycotic.Logging;
-using Thycotic.Utility.Security;
 
 namespace Thycotic.DistributedEngine.Security
 {

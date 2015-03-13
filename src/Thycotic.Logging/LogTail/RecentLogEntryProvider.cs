@@ -2,7 +2,7 @@
 using System.Linq;
 using log4net.Appender;
 using log4net.Core;
-using Thycotic.DistributedEngine.LogViewer.Models;
+using Thycotic.Logging.Models;
 
 namespace Thycotic.Logging.LogTail
 {
@@ -20,6 +20,8 @@ namespace Thycotic.Logging.LogTail
         /// </summary>
         public RecentLogEntryProvider()
         {
+            _log.Debug("Attaching memory appender");
+
             _appender =
                 new Lazy<MemoryAppender>(
                     () =>
@@ -42,6 +44,8 @@ namespace Thycotic.Logging.LogTail
         /// </summary>
         public void Clear()
         {
+            _log.Debug("Clearing log");
+
             _appender.Value.Clear();
         }
 

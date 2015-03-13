@@ -51,7 +51,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC.Matrix
                 if (_matrixLeft == -1)
                 {
                     _matrixLeft = random.Next(Console.LargestWindowWidth - margin);
-                    _matrixTop = random.Next(Console.LargestWindowHeight - margin);;
+                    _matrixTop = random.Next(Console.LargestWindowHeight - margin);
                 }
 
                 if (_matrixTop >= Console.LargestWindowHeight - margin)

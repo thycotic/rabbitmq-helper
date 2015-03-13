@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using log4net;
 using log4net.Appender;
-using log4net.Core;
 using log4net.Repository.Hierarchy;
 
 namespace Thycotic.Logging
@@ -69,7 +68,7 @@ namespace Thycotic.Logging
         /// <returns></returns>
         public static IEnumerable<IAppender> GetAppenders()
         {
-            return log4net.LogManager.GetRepository().GetAppenders();
+            return LogManager.GetRepository().GetAppenders();
         }
 
         /// <summary>
@@ -88,12 +87,12 @@ namespace Thycotic.Logging
         /// </summary>
         private class GenericLogWriter : ILogWriter
         {
-            private readonly log4net.ILog _log2;
+            private readonly ILog _log2;
 
             [DebuggerStepThrough]
             public GenericLogWriter(Type type)
             {
-                _log2 = log4net.LogManager.GetLogger(type);
+                _log2 = LogManager.GetLogger(type);
             }
 
             /// <summary>
