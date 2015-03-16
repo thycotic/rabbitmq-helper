@@ -34,7 +34,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
         /// <returns></returns>
         public void Consume(SecretHeartbeatMessage request)
         {
-            _log.Info("Got a heartbeat request");
+            _log.Info(string.Format("Got a heartbeat request for Secret Id {0}:", request.SecretId));
 
             var passwordTypeName = request.PasswordInfoProvider.PasswordTypeName;
             try
@@ -47,7 +47,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
                     Success = verifyResult.Success,
                     SecretId = request.SecretId,
                     ErrorCode = (int)verifyResult.ErrorCode,
-                    CommandExecutionResults = verifyResult.CommandExecutionResults.Select(cer => new CommandExecutionResult
+                    CommandExecutionResults = (verifyResult.CommandExecutionResults ?? new AppCore.Federator.CommandExecutionResult[0]).Select(cer => new CommandExecutionResult
                     {
                         Command = cer.Command,
                         Response = cer.Response,
