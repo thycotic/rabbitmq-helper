@@ -6,7 +6,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
     /// <summary>
     /// Callback from the memory Mq
     /// </summary>
-    public class MemoryMqWcfServiceCallback : IMemoryMqWcfServiceCallback, IDisposable
+    public class MemoryMqWcfServiceCallback : IMemoryMqWcfServiceCallback
     {
 
         /// <summary>

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Thycotic.Wcf
 {
     /// <summary>
     /// Inteface for a Wcf connection
     /// </summary>
-    public interface IWcfConnection : IDisposable
+    public interface IDuplexWcfConnection : IDisposable
     {
         /// <summary>
         /// Gets a value indicating whether this instance is open.

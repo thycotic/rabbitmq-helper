@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using Autofac;
 using Thycotic.DistributedEngine.IoC;
-using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
@@ -20,7 +19,7 @@ namespace Thycotic.DistributedEngine.Configuration
     {
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILocalKeyProvider _localKeyProvider;
-        private readonly IRestCommunicationProvider _restCommunicationProvider;
+        private readonly IEngineToServerCommunicationProvider _engineToServerCommunicationProvider;
         private IRemoteConfigurationProvider _remoteConfigurationProvider;
         
         private Dictionary<string, string> _instanceConfiguration;
@@ -89,9 +88,7 @@ namespace Thycotic.DistributedEngine.Configuration
         {
             _engineIdentificationProvider = CreateEngineIdentificationProvider();
             _localKeyProvider = new LocalKeyProvider();
-            _restCommunicationProvider =
-                new RestCommunicationProvider(
-                    GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.ConnectionString));
+
             //remote configurator will be created on at runtime
         }
 
@@ -99,14 +96,14 @@ namespace Thycotic.DistributedEngine.Configuration
         /// Initializes a new instance of the <see cref="IoCConfigurator"/> class.
         /// </summary>
         /// <param name="localKeyProvider"></param>
-        /// <param name="restCommunicationProvider"></param>
+        /// <param name="engineToServerCommunicationProvider"></param>
         /// <param name="remoteConfigurationProvider">The remote configuration provider.</param>
-        public IoCConfigurator(ILocalKeyProvider localKeyProvider, IRestCommunicationProvider restCommunicationProvider, IRemoteConfigurationProvider remoteConfigurationProvider)
+        public IoCConfigurator(ILocalKeyProvider localKeyProvider, IEngineToServerCommunicationProvider engineToServerCommunicationProvider, IRemoteConfigurationProvider remoteConfigurationProvider)
         {
             _engineIdentificationProvider = CreateEngineIdentificationProvider();
 
             _localKeyProvider = localKeyProvider;
-            _restCommunicationProvider = restCommunicationProvider;
+            _engineToServerCommunicationProvider = engineToServerCommunicationProvider;
             _remoteConfigurationProvider = remoteConfigurationProvider;
         }
 
@@ -117,17 +114,17 @@ namespace Thycotic.DistributedEngine.Configuration
         public static EngineIdentificationProvider CreateEngineIdentificationProvider()
         {
             var exchangeIdString =
-                GetOptionalLocalConfiguration(ConfigurationKeys.RemoteConfiguration.ExchangeId,
+                GetOptionalLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.ExchangeId,
                     false);
 
             return new EngineIdentificationProvider
             {
                 ExchangeId = !string.IsNullOrWhiteSpace(exchangeIdString) ? Convert.ToInt32(exchangeIdString) : new int?(),
                 HostName = DnsEx.GetDnsHostName(),
-                OrganizationId = Convert.ToInt32(GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.OrganizationId)),
-                FriendlyName = GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.FriendlyName),
+                OrganizationId = Convert.ToInt32(GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.OrganizationId)),
+                FriendlyName = GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.FriendlyName),
                 IdentityGuid =
-                    new Guid(GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.IdentityGuid))
+                    new Guid(GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.IdentityGuid))
             };
         }
 
@@ -157,8 +154,8 @@ namespace Thycotic.DistributedEngine.Configuration
 
                 builder.RegisterModule(new HeartbeatModule(GetInstanceConfiguration, engineService));
 
-                builder.Register(context => _restCommunicationProvider)
-                    .As<IRestCommunicationProvider>()
+                builder.Register(context => _engineToServerCommunicationProvider)
+                    .As<IEngineToServerCommunicationProvider>()
                     .AsImplementedInterfaces();
 
                 builder.RegisterModule(new MessageQueueModule(GetInstanceConfiguration));
@@ -203,18 +200,30 @@ namespace Thycotic.DistributedEngine.Configuration
                 return true;
             }
 
-            var url = GetLocalConfiguration(ConfigurationKeys.RemoteConfiguration.ConnectionString);
+            var connectionString = GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.ConnectionString);
 
-            _log.Info(string.Format("Attempting to retieve configuration from {0}", url ));
+
+            _log.Info(string.Format("Attempting to retieve configuration from {0}", connectionString ));
 
             if (_remoteConfigurationProvider == null)
             {
+                var useSsl =
+                    Convert.ToBoolean(GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.UseSsl));
+                if (useSsl)
+                {
+                    _log.Info("Engine to server using encryption");
+                }
+                else
+                {
+                    _log.Warn("Engine to server is not using encryption");
+                }
+
 
                 var keyProvider = new LocalKeyProvider();
-                var restClient = new RestCommunicationProvider(url);
+                var communicationProvider = new EngineToServerCommunicationProvider(connectionString, useSsl);
 
                 _remoteConfigurationProvider = new RemoteConfigurationProvider(CreateEngineIdentificationProvider(), keyProvider,
-                    restClient, new JsonObjectSerializer());
+                    communicationProvider, new JsonObjectSerializer());
             }
 
             var configuration = _remoteConfigurationProvider.GetConfiguration();

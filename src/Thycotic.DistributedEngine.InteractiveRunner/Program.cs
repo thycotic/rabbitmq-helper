@@ -9,6 +9,7 @@ using Autofac;
 using NSubstitute;
 using Thycotic.AppCore;
 using Thycotic.DistributedEngine.Configuration;
+using Thycotic.DistributedEngine.Configuration.ToMoveToSS;
 using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Logging;
@@ -16,12 +17,14 @@ using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Utility.Serialization;
+using Thycotic.Wcf;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner
 {
     internal static class Program
     {
         private static readonly ILogWriter Log = Logging.Log.Get(typeof(Program));
+        private static EngineToServerCommunicationToServerWcfServiceHost _serviceHost;
 
         /// <summary>
         /// The main entry point for the application.
@@ -37,6 +40,9 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 //ilcd - interactive but using a loopback for configuration, consumption disabled
                 if (args.Any() && args.First().StartsWith("i"))
                 {
+                    _serviceHost = new EngineToServerCommunicationToServerWcfServiceHost("net.tcp://localhost:8881");
+                    _serviceHost.Start();
+
                     ConfigureTraceListener();
 
                     var cli = new CommandLineInterface();
@@ -48,17 +54,20 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
                     EngineService engine;
 
+                    var loopback = args.First().StartsWith("il");
+
                     //loopback
-                    if (args.First().StartsWith("il"))
+                    if (loopback)
                     {
+
                         var engineIdentificationProvider = IoCConfigurator.CreateEngineIdentificationProvider();
                         var localKeyProvider = new LocalKeyProvider();
                         var objectSerializer = new JsonObjectSerializer();
-                        var loopbackRestCommunicationProvider = new LoopbackRestCommunicationProvider(localKeyProvider, objectSerializer);
+                        var loopbackCommunicationProvider = new LoopbackEngineToServerCommunicationProvider(localKeyProvider, objectSerializer);
                         var loopbackConfigurationProvider = new RemoteConfigurationProvider(
-                            engineIdentificationProvider, localKeyProvider, loopbackRestCommunicationProvider,
+                            engineIdentificationProvider, localKeyProvider, loopbackCommunicationProvider,
                             objectSerializer);
-                        var ioCConfigurator = new IoCConfigurator(localKeyProvider, loopbackRestCommunicationProvider, loopbackConfigurationProvider);
+                        var ioCConfigurator = new IoCConfigurator(localKeyProvider, loopbackCommunicationProvider, loopbackConfigurationProvider);
                         engine = new EngineService(startConsuming, ioCConfigurator);
                     }
                     else
@@ -82,6 +91,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     cli.Wait();
 
                     engine.Stop();
+
+                    if (_serviceHost != null)
+                    {
+                        _serviceHost.Stop();
+                    }
+
                     #endregion
 
                     Trace.TraceInformation("Interactive runner stopped");

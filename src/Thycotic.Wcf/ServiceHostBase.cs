@@ -64,8 +64,8 @@ namespace Thycotic.Wcf
                 }
                 serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
 
-                _host = new ServiceHost(typeof (TServer));//MemoryMqWcfService));
-                _host.AddServiceEndpoint(typeof(TEndPoint), serviceBinding, _connectionString);//typeof(IMemoryMqWcfService)
+                _host = new ServiceHost(typeof(TServer));
+                _host.AddServiceEndpoint(typeof(TEndPoint), serviceBinding, _connectionString);
 
                 if (_useSsl)
                 {
@@ -75,8 +75,15 @@ namespace Thycotic.Wcf
                         X509FindType.FindByThumbprint,
                         _thumbprint);
                 }
-                
-                _host.Open();
+
+                try
+                {
+                    _host.Open();
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException(string.Format("Failed to open servce host because {0}", ex));
+                }
             });
         }
 
@@ -92,7 +99,7 @@ namespace Thycotic.Wcf
                 _host.Close();
             }
             _serverTask.Wait();
-                
+
             _host = null;
             _serverTask = null;
         }

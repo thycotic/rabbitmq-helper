@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-using Thycotic.DistributedEngine.Logic;
+using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.DistributedEngine.Security;
-using Thycotic.DistributedEngine.Web.Common;
 using Thycotic.DistributedEngine.Web.Common.Request;
 using Thycotic.DistributedEngine.Web.Common.Response;
 using Thycotic.Encryption;
@@ -16,7 +15,7 @@ using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 {
-    internal class LoopbackRestCommunicationProvider : IRestCommunicationProvider
+    internal class LoopbackEngineToServerCommunicationProvider : IEngineToServerCommunicationProvider
     {
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IObjectSerializer _objectSerializer;
@@ -27,31 +26,13 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         private Lazy<Dictionary<string, string>> _bakedConfiguration;
         private DateTime _lastBaked;
 
-        private readonly ILogWriter _log = Log.Get(typeof(LoopbackRestCommunicationProvider));
+        private readonly ILogWriter _log = Log.Get(typeof(LoopbackEngineToServerCommunicationProvider));
 
-        public LoopbackRestCommunicationProvider(ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer)
+        public LoopbackEngineToServerCommunicationProvider(ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer)
         {
             _localKeyProvider = localKeyProvider;
             _objectSerializer = objectSerializer;
 
-            const string prefix = EndPoints.EngineWebService.Prefix;
-
-            _loopBacks.Add(this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.GetConfiguration),
-                LoopbackGetConfiguration);
-
-            _loopBacks.Add(this.GetEndpointUri(prefix, EndPoints.EngineWebService.Actions.Heartbeat),
-                LoopbackHeartbeat);
-
-        }
-
-        public TResult Post<TResult>(Uri uri, object request)
-        {
-            if (_loopBacks.ContainsKey(uri))
-            {
-                return _loopBacks[uri].Invoke(request);
-            }
-
-            throw new NotSupportedException(string.Format("No loopback configured for {0}", uri));
         }
 
         private byte[] EncryptWithPublicKey(PublicKey publicKey, byte[] bytes)
@@ -94,22 +75,13 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
         }
 
-// ReSharper disable once UnusedMember.Local
-// ReSharper disable once UnusedParameter.Local
-        private static object LoopbackNotSupported(object request)
+        public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
-            throw new NotSupportedException();
-        }
-
-        private EngineConfigurationResponse LoopbackGetConfiguration(object request)
-        {
-            var configurationRequest = (EngineConfigurationRequest)request;
-
             _bakedConfiguration = new Lazy<Dictionary<string, string>>(() =>
             {
                 Dictionary<string, string> configuration;
 
-                switch (configurationRequest.ExchangeId)
+                switch (request.ExchangeId)
                 {
                     case 1:
                         configuration = LoopbackConfiguirationScenarios.NonSslMemoryMq();
@@ -142,7 +114,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
                 return configuration;
             });
-
             
 
             var configurationString = _objectSerializer.ToBytes(_bakedConfiguration.Value);
@@ -155,16 +126,15 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
         }
 
-        private EngineHeartbeatResponse LoopbackHeartbeat(object request)
+        public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
-            var heartbeatRequest = (EngineHeartbeatRequest)request;
 
             if (!_bakedConfiguration.IsValueCreated)
             {
                 throw new ApplicationException("There should be a configuration already");
             }
 
-            var logEntries = heartbeatRequest.LogEntries;
+            var logEntries = request.LogEntries;
 
             if (logEntries.Any())
             {
@@ -252,6 +222,11 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                     {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "true"}
                 };
             }
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

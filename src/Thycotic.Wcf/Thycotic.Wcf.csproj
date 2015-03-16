@@ -145,7 +145,7 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="DuplexWcfConnection.cs" />
-    <Compile Include="IWcfConnection.cs" />
+    <Compile Include="IDuplexWcfConnection.cs" />
     <Compile Include="IWcfService.cs" />
     <Compile Include="IWcfServerCallback.cs" />
     <Compile Include="ServiceHostBase.cs" />

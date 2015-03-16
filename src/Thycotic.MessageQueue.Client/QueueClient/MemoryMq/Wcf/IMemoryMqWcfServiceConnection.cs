@@ -3,7 +3,7 @@ using Thycotic.Wcf;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 {
-    internal interface IMemoryMqWcfServiceConnection : IWcfConnection
+    internal interface IMemoryMqWcfServiceConnection : IDuplexWcfConnection
     {
         ICommonModel CreateModel();
     }

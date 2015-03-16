@@ -144,6 +144,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -170,7 +171,12 @@
     </Compile>
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
+    <Compile Include="Configuration\EngineToServerCommunicationProvider.cs" />
     <Compile Include="Configuration\IEngineIdentificationProvider.cs" />
+    <Compile Include="Configuration\IEngineToServerCommunicationProvider.cs" />
+    <Compile Include="Configuration\ToMoveToSS\EngineToServerCommunicationWcfService.cs" />
+    <Compile Include="Configuration\ToMoveToSS\IEngineToServerCommunicationWcfService.cs" />
+    <Compile Include="Configuration\ToMoveToSS\EngineToServerCommunicationToServerWcfServiceHost.cs" />
     <Compile Include="EngineService.cs">
       <SubType>Component</SubType>
     </Compile>

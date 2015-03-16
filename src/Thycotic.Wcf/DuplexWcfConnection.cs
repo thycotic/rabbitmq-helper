@@ -8,7 +8,7 @@ namespace Thycotic.Wcf
     /// </summary>
     /// <typeparam name="TService">The type of the Service.</typeparam>
     /// <typeparam name="TCallback">The type of the callback.</typeparam>
-    public class DuplexWcfConnection<TService, TCallback> : IWcfConnection
+    public class DuplexWcfConnection<TService, TCallback> : IDuplexWcfConnection
         where TService : IWcfService
         where TCallback : IDisposable
     {
@@ -44,7 +44,7 @@ namespace Thycotic.Wcf
         public EventHandler ConnectionShutdown { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DuplexWcfConnection{TServer, TCallback}"/> class.
+        /// Initializes a new instance of the <see cref="DuplexWcfConnection{TService,TCallback}"/> class.
         /// </summary>
         /// <param name="service">The Service.</param>
         /// <param name="callback">The callback.</param>
