@@ -7,9 +7,9 @@ using Thycotic.Utility.Specflow;
 namespace Thycotic.MemoryMq.Tests
 {
     [Binding]
-    public class MemoryMqWcfServerSteps
+    public class MemoryMqWcfServiceSteps
     {
-        [Given(@"there exists a MemoryMqWcfServer stored in the scenario as (\w+) with ExchangeDictionary (\w+), BindingDictionary (\w+), ClientDictionary (\w+) and MessageDispatcher (\w+)")]
+        [Given(@"there exists a MemoryMqWcfService stored in the scenario as (\w+) with ExchangeDictionary (\w+), BindingDictionary (\w+), ClientDictionary (\w+) and MessageDispatcher (\w+)")]
         public void GivenThereExistsAMemoryMqServerStoredInTheScenario(string serverName, string exchangesName, string bindingsName, string clientsName, string dispatcherName)
         {
             var exchange = this.GetScenarioContext().Get<IExchangeDictionary>(exchangesName);
@@ -17,57 +17,57 @@ namespace Thycotic.MemoryMq.Tests
             var clients = this.GetScenarioContext().Get<IClientDictionary>(clientsName);
             var messageDispatcher = this.GetScenarioContext().Get<IMessageDispatcher>(dispatcherName);
 
-            this.GetScenarioContext().Set(serverName, new MemoryMqWcfServer(exchange, bindings, clients, messageDispatcher));
+            this.GetScenarioContext().Set(serverName, new MemoryMqWcfService(exchange, bindings, clients, messageDispatcher));
         }
 
-        [When(@"the method BasicPublish on MemoryMqWcfServer (\w+) is called with exchange (\w+) and routing key (\w+)")]
+        [When(@"the method BasicPublish on MemoryMqWcfService (\w+) is called with exchange (\w+) and routing key (\w+)")]
         public void WhenTheMethodBasicPublishOnMemoryMqServerMemoryMqServerTestIsCalled(string serverName, string exchangeName, string routingKey)
         {
-            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfService>(serverName);
 
             server.BasicPublish(exchangeName, routingKey, true, true, new MemoryMqProperties(), null);
         }
 
-        [When(@"the method QueueBind on MemoryMqWcfServer (\w+) is called")]
+        [When(@"the method QueueBind on MemoryMqWcfService (\w+) is called")]
         public void WhenTheMethodQueueBindOnMemoryMqServerMemoryMqServerTestIsCalled(string serverName)
         {
-            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfService>(serverName);
             server.QueueBind(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
         }
 
-        [When(@"the method BasicConsume on MemoryMqWcfServer (\w+) is called")]
+        [When(@"the method BasicConsume on MemoryMqWcfService (\w+) is called")]
         public void WhenTheMethodBasicConsumeOnMemoryMqServerIsCalled(string serverName)
         {
-            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfService>(serverName);
             var queueName = Guid.NewGuid().ToString();
             server.BasicConsume(queueName);
         }
 
 
-        [When(@"the method BasicAck on MemoryMqWcfServer (\w+) is called")]
+        [When(@"the method BasicAck on MemoryMqWcfService (\w+) is called")]
         public void WhenTheMethodBasicAckOnMemoryMqServerIsCalled(string serverName)
         {
-            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfService>(serverName);
             const ulong deliveryTag = 0;
             var exchange = Guid.NewGuid().ToString();
             var routingKey = Guid.NewGuid().ToString();
             server.BasicAck(deliveryTag, exchange, routingKey, false);
         }
 
-        [When(@"the method BasicNack on MemoryMqWcfServer (\w+) is called")]
+        [When(@"the method BasicNack on MemoryMqWcfService (\w+) is called")]
         public void WhenTheMethodBasicNackOnMemoryMqServerIsCalled(string serverName)
         {
-            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfService>(serverName);
             const ulong deliveryTag = 0;
             var exchange = Guid.NewGuid().ToString();
             var routingKey = Guid.NewGuid().ToString();
             server.BasicNack(deliveryTag, exchange, routingKey, false);
         }
 
-        [When(@"the method Dispose on MemoryMqWcfServer (\w+) is called")]
+        [When(@"the method Dispose on MemoryMqWcfService (\w+) is called")]
         public void WhenTheMethodDisposeOnMemoryMqServerIsCalled(string serverName)
         {
-            var server = this.GetScenarioContext().Get<IMemoryMqWcfServer>(serverName);
+            var server = this.GetScenarioContext().Get<IMemoryMqWcfService>(serverName);
             server.Dispose();
         }
 

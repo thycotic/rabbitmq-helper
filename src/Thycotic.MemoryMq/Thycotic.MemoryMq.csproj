@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Collections\ConcurrentPriorityQueue.cs" />
     <Compile Include="MemoryMqProperties.cs" />
+    <Compile Include="MemoryMqServiceHost.cs" />
     <Compile Include="Subsystem\BindingDictionary.cs" />
     <Compile Include="Subsystem\CallbackChannelProvider.cs" />
     <Compile Include="Subsystem\IBindingDictionary.cs" />
@@ -158,12 +159,11 @@
     <Compile Include="Subsystem\MessageQueue.cs" />
     <Compile Include="Subsystem\Persistance\ExchangeSnapshot.cs" />
     <Compile Include="Subsystem\Persistance\CombinedSnapshot.cs" />
-    <Compile Include="WcfHelpers.cs" />
     <Compile Include="Subsystem\ClientDictionary.cs" />
     <Compile Include="Subsystem\ExchangeDictionary.cs" />
-    <Compile Include="IMemoryMqWcfServerCallback.cs" />
-    <Compile Include="IMemoryMqWcfServer.cs" />
-    <Compile Include="MemoryMqWcfServer.cs" />
+    <Compile Include="IMemoryMqWcfServiceCallback.cs" />
+    <Compile Include="IMemoryMqWcfService.cs" />
+    <Compile Include="MemoryMqWcfService.cs" />
     <Compile Include="MemoryMqDeliveryEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subsystem\Mailbox.cs" />
@@ -181,6 +181,10 @@
     <ProjectReference Include="..\Thycotic.Logging\Thycotic.Logging.csproj">
       <Project>{fe8be3ea-3f69-488e-8ac8-cfe47525d93f}</Project>
       <Name>Thycotic.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Wcf\Thycotic.Wcf.csproj">
+      <Project>{f9eb0f7b-1c13-43d8-8ae3-2f452615e86f}</Project>
+      <Name>Thycotic.Wcf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

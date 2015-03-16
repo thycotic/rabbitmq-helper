@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ServiceModel;
+using Thycotic.Wcf;
 
 namespace Thycotic.MemoryMq
 {
     /// <summary>
     /// Interface for a memory mq server
     /// </summary>
-    [ServiceContract(Namespace = "http://www.thycotic.com/services", SessionMode = SessionMode.Required, CallbackContract = typeof(IMemoryMqWcfServerCallback))]
-    public interface IMemoryMqWcfServer : IDisposable
+    [ServiceContract(Namespace = "http://www.thycotic.com/services", SessionMode = SessionMode.Required, CallbackContract = typeof(IMemoryMqWcfServiceCallback))]
+    public interface IMemoryMqWcfService : IWcfService
     {
         /// <summary>
         /// Basic publish.

@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using Thycotic.Wcf;
 
 namespace Thycotic.MemoryMq
 {
@@ -6,7 +7,7 @@ namespace Thycotic.MemoryMq
     /// Interface for a memory mq server callback
     /// </summary>
     [ServiceContract(Namespace = "http://www.thycotic.com/services")]
-    public interface IMemoryMqWcfServerCallback
+    public interface IMemoryMqWcfServiceCallback : IWcfServerCallback
     {
         /// <summary>
         /// Sends the message.

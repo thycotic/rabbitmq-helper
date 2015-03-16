@@ -1,64 +1,31 @@
-﻿using System;
-using System.ServiceModel;
-using Thycotic.Logging;
-using Thycotic.MemoryMq;
+﻿using Thycotic.MemoryMq;
+using Thycotic.Wcf;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 {
-    internal class MemoryMqWcfServiceConnection : IMemoryMqWcfServiceConnection
+    /// <summary>
+    /// Memory Mq Wcf Service connection
+    /// </summary>
+    public class MemoryMqWcfServiceConnection : DuplexWcfConnection<IMemoryMqWcfService, MemoryMqWcfServiceCallback>, IMemoryMqWcfServiceConnection
     {
-        private readonly IMemoryMqWcfServer _server;
 
-        private readonly ICommunicationObject _communicationObject;
-        private readonly MemoryMqWcfServiceCallback _callback;
-
-        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqWcfServiceConnection));
-
-        public bool IsOpen
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryMqWcfServiceConnection"/> class.
+        /// </summary>
+        /// <param name="service">The Service.</param>
+        /// <param name="callback">The callback.</param>
+        public MemoryMqWcfServiceConnection(IMemoryMqWcfService service, MemoryMqWcfServiceCallback callback)
+            : base(service, callback)
         {
-            get { return _communicationObject.State == CommunicationState.Opened; }
         }
 
-        public EventHandler ConnectionShutdown { get; set; }
-
-        public MemoryMqWcfServiceConnection(IMemoryMqWcfServer server, MemoryMqWcfServiceCallback callback)
-        {
-            _server = server;
-            _callback = callback;
-            _communicationObject = server.ToCommunicationObject();
-
-            Action<object, EventArgs> connectionShutdownHandler = (sender, args) =>
-            {
-                if (ConnectionShutdown != null)
-                {
-                    ConnectionShutdown(sender, args);
-                }
-            };
-
-            _communicationObject.Faulted += (sender, args) => connectionShutdownHandler(sender, args);
-            _communicationObject.Closed += (sender, args) => connectionShutdownHandler(sender, args);
-        }
-
+        /// <summary>
+        /// Creates the model.
+        /// </summary>
+        /// <returns></returns>
         public ICommonModel CreateModel()
         {
-            return new MemoryMqModel(_server, _callback);
-        }
-
-        public void Close(int timeoutMilliseconds)
-        {
-            try
-            {
-                _communicationObject.Close(TimeSpan.FromMilliseconds(timeoutMilliseconds));
-            }
-            catch (Exception ex)
-            {
-                _log.Error("Failed to close connection", ex);
-            }
-        }
-
-        public void Dispose()
-        {
-            _callback.Dispose();
+            return new MemoryMqModel(Service, Callback);
         }
     }
 }

@@ -1,18 +1,18 @@
 ﻿using System.ServiceModel;
 
-namespace Thycotic.MemoryMq
+namespace Thycotic.Wcf
 {
     /// <summary>
     /// Channel helpers, mostly for WCF casting
     /// </summary>
-    public static class WcfHelpers
+    public static class CastHelpers
     {
         /// <summary>
         /// Gets the channel.
         /// </summary>
         /// <param name="callback">The callback.</param>
         /// <returns></returns>
-        public static IContextChannel ToContextChannel(this IMemoryMqWcfServerCallback callback)
+        public static IContextChannel ToContextChannel(this IWcfServerCallback callback)
         {
 // ReSharper disable once SuspiciousTypeConversion.Global
             return (IContextChannel) callback;
@@ -21,12 +21,12 @@ namespace Thycotic.MemoryMq
         /// <summary>
         /// Gets the communication object.
         /// </summary>
-        /// <param name="server">The server.</param>
+        /// <param name="service">The service.</param>
         /// <returns></returns>
-        public static ICommunicationObject ToCommunicationObject(this IMemoryMqWcfServer server)
+        public static ICommunicationObject ToCommunicationObject(this IWcfService service)
         {
 // ReSharper disable once SuspiciousTypeConversion.Global
-            return (ICommunicationObject) server;
+            return (ICommunicationObject) service;
         }
     }
 }

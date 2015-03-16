@@ -8,30 +8,30 @@ namespace Thycotic.MemoryMq
     /// Memory mq server
     /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
-    public class MemoryMqWcfServer : IMemoryMqWcfServer
+    public class MemoryMqWcfService : IMemoryMqWcfService
     {
         private readonly IExchangeDictionary _exchanges;
         private readonly IBindingDictionary _bindings;
         private readonly IClientDictionary _clients;
         private readonly IMessageDispatcher _messageDispatcher;
 
-        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqWcfServer));
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqWcfService));
         private bool _disposed;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqWcfServer"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqWcfService"/> class.
         /// This the constructor used by WCF
         /// </summary>
-        public MemoryMqWcfServer()
+        public MemoryMqWcfService()
             : this(new CallbackChannelProvider())
         {
             //default constructor for wcf
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqWcfServer"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqWcfService"/> class.
         /// </summary>
-        public MemoryMqWcfServer(ICallbackChannelProvider callbackChannelProvider)
+        public MemoryMqWcfService(ICallbackChannelProvider callbackChannelProvider)
         {
             _exchanges = new ExchangeDictionary();
             _bindings = new BindingDictionary();
@@ -41,9 +41,9 @@ namespace Thycotic.MemoryMq
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqWcfServer"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqWcfService"/> class.
         /// </summary>
-        public MemoryMqWcfServer(IExchangeDictionary exchanges, IBindingDictionary bindings, IClientDictionary clients, IMessageDispatcher dispatcher)
+        public MemoryMqWcfService(IExchangeDictionary exchanges, IBindingDictionary bindings, IClientDictionary clients, IMessageDispatcher dispatcher)
         {
             _exchanges = exchanges;
             _bindings = bindings;

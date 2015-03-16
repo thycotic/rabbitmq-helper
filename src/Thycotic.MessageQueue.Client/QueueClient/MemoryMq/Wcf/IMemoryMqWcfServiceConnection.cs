@@ -1,15 +1,10 @@
 ﻿using System;
+using Thycotic.Wcf;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 {
-    internal interface IMemoryMqWcfServiceConnection : IDisposable
+    internal interface IMemoryMqWcfServiceConnection : IWcfConnection
     {
         ICommonModel CreateModel();
-
-        bool IsOpen { get; }
-
-        EventHandler ConnectionShutdown { get; set; }
-
-        void Close(int timeoutMilliseconds);
     }
 }

@@ -19,8 +19,8 @@ namespace Thycotic.MemoryMq.Tests
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("MemoryMqWcfServer")]
-    public partial class MemoryMqWcfServerFeature
+    [NUnit.Framework.DescriptionAttribute("MemoryMqWcfService")]
+    public partial class MemoryMqWcfServiceFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -32,7 +32,7 @@ namespace Thycotic.MemoryMq.Tests
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "MemoryMqWcfServer", "", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "MemoryMqWcfService", "", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,10 +80,10 @@ namespace Thycotic.MemoryMq.Tests
  testRunner.And("there exists a substitute object for MessageDispatcher stored in the scenario as " +
                     "MessageDispatcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
- testRunner.And("there exists a MemoryMqWcfServer stored in the scenario as MemoryMqWcfServerTest " +
-                    "with ExchangeDictionary ExchangeDictionaryTest, BindingDictionary BindingDiction" +
-                    "aryTest, ClientDictionary ClientDictionaryTest and MessageDispatcher MessageDisp" +
-                    "atcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a MemoryMqWcfService stored in the scenario as MemoryMqWcfServiceTes" +
+                    "t with ExchangeDictionary ExchangeDictionaryTest, BindingDictionary BindingDicti" +
+                    "onaryTest, ClientDictionary ClientDictionaryTest and MessageDispatcher MessageDi" +
+                    "spatcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
@@ -114,8 +114,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 17
- testRunner.When("the method BasicPublish on MemoryMqWcfServer MemoryMqWcfServerTest is called with" +
-                    " exchange ExchangeTest and routing key RoutingKeyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method BasicPublish on MemoryMqWcfService MemoryMqWcfServiceTest is called wi" +
+                    "th exchange ExchangeTest and routing key RoutingKeyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 18
  testRunner.Then("the method Publish on ExchangeDictionary substitute ExchangeDictionaryTest is cal" +
                     "led with exchange ExchangeTest and routing key RoutingKeyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -133,7 +133,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 21
- testRunner.When("the method QueueBind on MemoryMqWcfServer MemoryMqWcfServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method QueueBind on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 22
  testRunner.Then("the method AddBinding on BindingDictionary substitute BindingDictionaryTest is ca" +
                     "lled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -151,7 +151,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 25
- testRunner.When("the method BasicConsume on MemoryMqWcfServer MemoryMqWcfServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method BasicConsume on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 26
  testRunner.Then("the method AddClient on ClientDictionary substitute ClientDictionaryTest is calle" +
                     "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -169,7 +169,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 29
- testRunner.When("the method BasicAck on MemoryMqWcfServer MemoryMqWcfServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method BasicAck on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 30
  testRunner.Then("the method Acknowledge on ExchangeDictionary substitute ExchangeDictionaryTest is" +
                     " called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -187,7 +187,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 33
- testRunner.When("the method BasicNack on MemoryMqWcfServer MemoryMqWcfServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method BasicNack on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 34
  testRunner.Then("the method NegativelyAcknowledge on ExchangeDictionary substitute ExchangeDiction" +
                     "aryTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -205,7 +205,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 37
- testRunner.When("the method Dispose on MemoryMqWcfServer MemoryMqWcfServerTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method Dispose on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 38
  testRunner.Then("the method Dispose on MessageDispatcher substitute MessageDispatcherTest is calle" +
                     "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

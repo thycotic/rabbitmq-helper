@@ -19,6 +19,6 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="clientProxy">The client.</param>
         /// <returns></returns>
-        bool TryGetClient(string queueName, out IMemoryMqWcfServerCallback clientProxy);
+        bool TryGetClient(string queueName, out IMemoryMqWcfServiceCallback clientProxy);
     }
 }

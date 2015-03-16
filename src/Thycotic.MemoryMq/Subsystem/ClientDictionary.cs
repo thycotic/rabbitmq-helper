@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Linq;
 using Thycotic.Logging;
+using Thycotic.Wcf;
 
 namespace Thycotic.MemoryMq.Subsystem
 {
@@ -51,7 +52,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="clientProxy">The client.</param>
         /// <returns></returns>
-        public bool TryGetClient(string queueName, out IMemoryMqWcfServerCallback clientProxy)
+        public bool TryGetClient(string queueName, out IMemoryMqWcfServiceCallback clientProxy)
         {
             return GetClientList(queueName).TryGetClient(out clientProxy);
         }
@@ -70,7 +71,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public class ClientList
         {
-            private readonly ConcurrentDictionary<string, IMemoryMqWcfServerCallback> _data = new ConcurrentDictionary<string, IMemoryMqWcfServerCallback>();
+            private readonly ConcurrentDictionary<string, IMemoryMqWcfServiceCallback> _data = new ConcurrentDictionary<string, IMemoryMqWcfServiceCallback>();
 
             private int _robin;
 
@@ -80,7 +81,7 @@ namespace Thycotic.MemoryMq.Subsystem
             /// 
             /// </summary>
             /// <param name="callback"></param>
-            public void AddClient(IMemoryMqWcfServerCallback callback)
+            public void AddClient(IMemoryMqWcfServiceCallback callback)
             {
                 var channel = callback.ToContextChannel();
 
@@ -93,11 +94,11 @@ namespace Thycotic.MemoryMq.Subsystem
             /// 
             /// </summary>
             /// <param name="callback"></param>
-            public void RemoveClient(IMemoryMqWcfServerCallback callback)
+            public void RemoveClient(IMemoryMqWcfServiceCallback callback)
             {
                 var channel = callback.ToContextChannel();
                 
-                IMemoryMqWcfServerCallback temp;
+                IMemoryMqWcfServiceCallback temp;
                 _data.TryRemove(channel.SessionId, out temp);
             }
 
@@ -106,7 +107,7 @@ namespace Thycotic.MemoryMq.Subsystem
             /// </summary>
             /// <param name="clientProxy"></param>
             /// <returns></returns>
-            public bool TryGetClient(out IMemoryMqWcfServerCallback clientProxy)
+            public bool TryGetClient(out IMemoryMqWcfServiceCallback clientProxy)
             {
                 var count = _data.Count;
                 //simple round robin 

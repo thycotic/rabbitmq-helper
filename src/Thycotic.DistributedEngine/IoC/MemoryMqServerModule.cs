@@ -21,7 +21,7 @@ namespace Thycotic.DistributedEngine.IoC
         {
             base.Load(builder);
 
-            using (LogContext.Create("MemoryMq Server"))
+            using (LogContext.Create("MemoryMq Service"))
             {
                 var connectionString =
                     _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
@@ -48,14 +48,14 @@ namespace Thycotic.DistributedEngine.IoC
                     _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
 
 
-                    builder.Register(context => new MemoryMqServerWrapper(connectionString, thumbprint))
+                    builder.Register(context => new MemoryMqServiceHost(connectionString, thumbprint))
                         .As<IStartable>()
                         .SingleInstance();
                 }
                 else
                 {
 
-                    builder.Register(context => new MemoryMqServerWrapper(connectionString))
+                    builder.Register(context => new MemoryMqServiceHost(connectionString))
                         .As<IStartable>()
                         .SingleInstance();
                 }

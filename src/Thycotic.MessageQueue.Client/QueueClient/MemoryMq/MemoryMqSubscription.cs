@@ -11,7 +11,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqSubscription : ISubscription
     {
-        private readonly IMemoryMqWcfServer _server;
+        private readonly IMemoryMqWcfService _server;
         private readonly MemoryMqWcfServiceCallback _callback;
         private readonly string _queueName;
 
@@ -21,7 +21,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="server">The model.</param>
         /// <param name="callback">The callback.</param>
-         public MemoryMqSubscription(string queueName, IMemoryMqWcfServer server, MemoryMqWcfServiceCallback callback)
+         public MemoryMqSubscription(string queueName, IMemoryMqWcfService server, MemoryMqWcfServiceCallback callback)
         {
             _server = server;
             _callback = callback;

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Thycotic.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf;
 using Thycotic.MessageQueue.Client.Wrappers;
+using Thycotic.Wcf;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
@@ -13,7 +14,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqModel : ICommonModel
     {
-        private readonly IMemoryMqWcfServer _server;
+        private readonly IMemoryMqWcfService _server;
         private readonly MemoryMqWcfServiceCallback _callback;
         private readonly ICommunicationObject _communicationObject;
 
@@ -22,7 +23,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// </summary>
         /// <param name="server">The create channel.</param>
         /// <param name="callback">The callback.</param>
-        public MemoryMqModel(IMemoryMqWcfServer server, MemoryMqWcfServiceCallback callback)
+        public MemoryMqModel(IMemoryMqWcfService server, MemoryMqWcfServiceCallback callback)
         {
             _server = server;
             _callback = callback;

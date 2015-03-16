@@ -164,8 +164,8 @@
     <Compile Include="QueueClient\MemoryMq\MemoryMqQueue.cs" />
     <Compile Include="QueueClient\MemoryMq\Wcf\MemoryMqWcfServiceCallback.cs" />
     <Compile Include="QueueClient\MemoryMq\Wcf\MemoryMqWcfServiceConnection.cs" />
-    <Compile Include="QueueClient\MemoryMq\Wcf\MemoryMqWcfServiceConnectionFactory.cs" />
     <Compile Include="QueueClient\MemoryMq\MemoryMqSubscription.cs" />
+    <Compile Include="QueueClient\MemoryMq\Wcf\MemoryMqWcfServiceConnectionFactory.cs" />
     <Compile Include="QueueClient\ModelShutdownEventArgs.cs" />
     <Compile Include="QueueClient\ICommonQueue.cs" />
     <Compile Include="QueueClient\RabbitMq\RabbitMqModel.cs" />
@@ -210,6 +210,10 @@
     <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
       <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
       <Name>Thycotic.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Wcf\Thycotic.Wcf.csproj">
+      <Project>{f9eb0f7b-1c13-43d8-8ae3-2f452615e86f}</Project>
+      <Name>Thycotic.Wcf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

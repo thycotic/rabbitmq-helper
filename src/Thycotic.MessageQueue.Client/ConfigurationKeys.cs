@@ -84,7 +84,7 @@
             public static string UseSsl = "MemoryMq.UseSSL";
 
             /// <summary>
-            /// Server related
+            /// Service related
             /// </summary>
             public static class Server
             {
@@ -92,7 +92,7 @@
                 /// <summary>
                 /// The thumb print
                 /// </summary>
-                public const string Thumbprint = "MemoryMq.Server.Thumbprint";
+                public const string Thumbprint = "MemoryMq.Service.Thumbprint";
 
             }
         }

@@ -60,7 +60,7 @@ namespace Thycotic.MemoryMq.Subsystem
                             return;
                         }
 
-                        IMemoryMqWcfServerCallback callback;
+                        IMemoryMqWcfServiceCallback callback;
                         if (!_clientDictionary.TryGetClient(queueName, out callback))
                         {
                             //no client for the queue
