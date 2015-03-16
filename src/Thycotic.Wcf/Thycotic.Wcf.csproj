@@ -158,6 +158,7 @@
       <Link>Thycotic.snk</Link>
     </None>
     <None Include="packages.config" />
+    <None Include="Thycotic.Wcf.nuspec" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
