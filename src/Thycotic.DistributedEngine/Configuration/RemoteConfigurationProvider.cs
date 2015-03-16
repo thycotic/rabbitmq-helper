@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Request;
 using Thycotic.Encryption;
-using Thycotic.DistributedEngine.Web.Common;
-using Thycotic.DistributedEngine.Web.Common.Request;
-using Thycotic.DistributedEngine.Web.Common.Response;
 using Thycotic.Logging;
 using Thycotic.DistributedEngine.Security;
-using Thycotic.DistributedEngine.Logic;
 using Thycotic.Utility;
 using Thycotic.Utility.Security;
 using Thycotic.Utility.Serialization;

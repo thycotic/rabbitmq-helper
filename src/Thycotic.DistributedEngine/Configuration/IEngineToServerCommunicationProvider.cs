@@ -1,4 +1,4 @@
-using Thycotic.DistributedEngine.Configuration.ToMoveToSS;
+using Thycotic.DistributedEngine.EngineToServerCommunication;
 
 namespace Thycotic.DistributedEngine.Configuration
 {

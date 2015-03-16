@@ -1,6 +1,6 @@
-using Thycotic.DistributedEngine.Configuration.ToMoveToSS;
-using Thycotic.DistributedEngine.Web.Common.Request;
-using Thycotic.DistributedEngine.Web.Common.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Request;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Response;
 using Thycotic.Wcf;
 
 namespace Thycotic.DistributedEngine.Configuration

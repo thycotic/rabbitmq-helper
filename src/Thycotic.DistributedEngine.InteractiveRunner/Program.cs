@@ -9,7 +9,6 @@ using Autofac;
 using NSubstitute;
 using Thycotic.AppCore;
 using Thycotic.DistributedEngine.Configuration;
-using Thycotic.DistributedEngine.Configuration.ToMoveToSS;
 using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Logging;
@@ -17,14 +16,12 @@ using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Utility.Serialization;
-using Thycotic.Wcf;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner
 {
     internal static class Program
     {
         private static readonly ILogWriter Log = Logging.Log.Get(typeof(Program));
-        private static EngineToServerCommunicationToServerWcfServiceHost _serviceHost;
 
         /// <summary>
         /// The main entry point for the application.
@@ -40,9 +37,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 //ilcd - interactive but using a loopback for configuration, consumption disabled
                 if (args.Any() && args.First().StartsWith("i"))
                 {
-                    _serviceHost = new EngineToServerCommunicationToServerWcfServiceHost("net.tcp://localhost:8881");
-                    _serviceHost.Start();
-
                     ConfigureTraceListener();
 
                     var cli = new CommandLineInterface();
@@ -91,11 +85,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     cli.Wait();
 
                     engine.Stop();
-
-                    if (_serviceHost != null)
-                    {
-                        _serviceHost.Stop();
-                    }
 
                     #endregion
 

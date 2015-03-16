@@ -167,9 +167,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Thycotic.AppCore.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.Web.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.Web.Common.1.0.0.75\lib\net451\Thycotic.DistributedEngine.Web.Common.dll</HintPath>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.88\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
@@ -177,6 +177,9 @@
     <Reference Include="Thycotic.ihawu.Business, Version=8.8.14.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Wcf">
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.3\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -240,10 +243,6 @@
     <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
       <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
       <Name>Thycotic.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Wcf\Thycotic.Wcf.csproj">
-      <Project>{f9eb0f7b-1c13-43d8-8ae3-2f452615e86f}</Project>
-      <Name>Thycotic.Wcf</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
