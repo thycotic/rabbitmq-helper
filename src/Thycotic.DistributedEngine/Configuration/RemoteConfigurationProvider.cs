@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Request;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
+using Thycotic.DistributedEngine.Logic;
 using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.DistributedEngine.Security;
@@ -18,7 +19,7 @@ namespace Thycotic.DistributedEngine.Configuration
     {
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILocalKeyProvider _localKeyProvider;
-        private readonly IEngineToServerCommunicationProvider _engineToServerCommunicationProvider;
+        private readonly IEngineToServerCommunicationBus _engineToServerCommunicationBus;
         private readonly IObjectSerializer _objectSerializer;
 
         private readonly ILogWriter _log = Log.Get(typeof(RemoteConfigurationProvider));
@@ -28,13 +29,13 @@ namespace Thycotic.DistributedEngine.Configuration
         /// </summary>
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="localKeyProvider">The local key provider.</param>
-        /// <param name="engineToServerCommunicationProvider">The remote communication provider.</param>
+        /// <param name="engineToServerCommunicationBus">The remote communication provider.</param>
         /// <param name="objectSerializer">The message serializer.</param>
-        public RemoteConfigurationProvider(IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IEngineToServerCommunicationProvider engineToServerCommunicationProvider, IObjectSerializer objectSerializer)
+        public RemoteConfigurationProvider(IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IEngineToServerCommunicationBus engineToServerCommunicationBus, IObjectSerializer objectSerializer)
         {
             _engineIdentificationProvider = engineIdentificationProvider;
             _localKeyProvider = localKeyProvider;
-            _engineToServerCommunicationProvider = engineToServerCommunicationProvider;
+            _engineToServerCommunicationBus = engineToServerCommunicationBus;
             _objectSerializer = objectSerializer;
         }
 
@@ -57,7 +58,7 @@ namespace Thycotic.DistributedEngine.Configuration
                     Version = ReleaseInformationHelper.GetVersionAsDouble()
                 };
 
-                var response = _engineToServerCommunicationProvider.GetConfiguration(request);
+                var response = _engineToServerCommunicationBus.GetConfiguration(request);
 
                 if (!response.Success)
                 {

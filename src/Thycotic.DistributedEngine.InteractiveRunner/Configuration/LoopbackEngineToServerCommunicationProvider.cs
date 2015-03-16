@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-using Thycotic.DistributedEngine.Configuration;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Request;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
+using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Encryption;
@@ -15,7 +16,7 @@ using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 {
-    internal class LoopbackEngineToServerCommunicationProvider : IEngineToServerCommunicationProvider
+    internal class LoopbackEngineToServerCommunicationProvider : IEngineToServerCommunicationBus
     {
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IObjectSerializer _objectSerializer;
@@ -153,6 +154,11 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 NewConfiguration = EncryptWithPublicKey(_localKeyProvider.PublicKey,configurationString),
                 Success = true
             };
+        }
+
+        public void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
+        {
+            //don't do anything on loopback
         }
 
         private static class LoopbackConfiguirationScenarios

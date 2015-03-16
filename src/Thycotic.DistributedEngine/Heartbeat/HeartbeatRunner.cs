@@ -6,8 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Thycotic.DistributedEngine.Configuration;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Logging;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Request;
+using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Encryption;
 using Thycotic.Logging;
@@ -30,7 +31,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IObjectSerializer _objectSerializer;
-        private readonly IEngineToServerCommunicationProvider _engineToServerCommunicationProvider;
+        private readonly IEngineToServerCommunicationBus _engineToServerCommunicationBus;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly ILogWriter _log = Log.Get(typeof(HeartbeatRunner));
@@ -45,8 +46,8 @@ namespace Thycotic.DistributedEngine.Heartbeat
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="localKeyProvider">The local key provider.</param>
         /// <param name="objectSerializer">The object serializer.</param>
-        /// <param name="engineToServerCommunicationProvider">The rest communication provider.</param>
-        public HeartbeatRunner(IHeartbeatConfigurationProvider heartbeatConfigurationProvider, EngineService engineService, IRecentLogEntryProvider recentLogEntryProvider, IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer, IEngineToServerCommunicationProvider engineToServerCommunicationProvider)
+        /// <param name="engineToServerCommunicationBus">The rest communication provider.</param>
+        public HeartbeatRunner(IHeartbeatConfigurationProvider heartbeatConfigurationProvider, EngineService engineService, IRecentLogEntryProvider recentLogEntryProvider, IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer, IEngineToServerCommunicationBus engineToServerCommunicationBus)
         {
             _heartbeatConfigurationProvider = heartbeatConfigurationProvider;
             _engineService = engineService;
@@ -54,7 +55,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
             _engineIdentificationProvider = engineIdentificationProvider;
             _localKeyProvider = localKeyProvider;
             _objectSerializer = objectSerializer;
-            _engineToServerCommunicationProvider = engineToServerCommunicationProvider;
+            _engineToServerCommunicationBus = engineToServerCommunicationBus;
         }
 
         private void Pump()
@@ -78,7 +79,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
                 LogEntries = logEntries
             };
 
-            var response = _engineToServerCommunicationProvider.SendHeartbeat(request);
+            var response = _engineToServerCommunicationBus.SendHeartbeat(request);
 
             if (!response.Success)
             {

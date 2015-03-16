@@ -1,23 +1,25 @@
 using Thycotic.DistributedEngine.EngineToServerCommunication;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Request;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
+using Thycotic.DistributedEngine.Logic;
 using Thycotic.Wcf;
 
-namespace Thycotic.DistributedEngine.Configuration
+namespace Thycotic.DistributedEngine
 {
     /// <summary>
     /// Engine to server communication provider
     /// </summary>
-    public class EngineToServerCommunicationProvider : IEngineToServerCommunicationProvider
+    public class EngineToServerCommunicationBus : IEngineToServerCommunicationBus
     {
         private readonly IEngineToServerCommunicationWcfService _channel;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineToServerCommunicationProvider"/> class.
+        /// Initializes a new instance of the <see cref="EngineToServerCommunicationBus"/> class.
         /// </summary>
         /// <param name="uri">The URI.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
-        public EngineToServerCommunicationProvider(string uri, bool useSsl)
+        public EngineToServerCommunicationBus(string uri, bool useSsl)
         {
             _channel = NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(uri, useSsl);
         }
@@ -40,6 +42,15 @@ namespace Thycotic.DistributedEngine.Configuration
         public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
             return _channel.SendHeartbeat(request);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="response"></param>
+        public void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
+        {
+            _channel.RecordSecretHeartbeatResponse(response);
         }
 
 

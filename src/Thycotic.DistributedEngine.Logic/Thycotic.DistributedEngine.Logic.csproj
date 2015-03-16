@@ -139,8 +139,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Thycotic.AppCore.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.92\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Wcf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.3\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +168,7 @@
     <Compile Include="Areas\POC\ThrowTriggerConsumer.cs" />
     <Compile Include="Areas\POC\StepConsumer.cs" />
     <Compile Include="Areas\POC\HelloWorldConsumer.cs" />
+    <Compile Include="IEngineToServerCommunicationBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +193,8 @@
     <None Include="..\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

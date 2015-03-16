@@ -154,8 +154,10 @@
     <Reference Include="Thycotic.AppCore">
       <HintPath>..\..\lib\Thycotic.AppCore.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.88\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.92\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
@@ -174,9 +176,8 @@
     </Compile>
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
-    <Compile Include="Configuration\EngineToServerCommunicationProvider.cs" />
+    <Compile Include="EngineToServerCommunicationBus.cs" />
     <Compile Include="Configuration\IEngineIdentificationProvider.cs" />
-    <Compile Include="Configuration\IEngineToServerCommunicationProvider.cs" />
     <Compile Include="EngineService.cs">
       <SubType>Component</SubType>
     </Compile>

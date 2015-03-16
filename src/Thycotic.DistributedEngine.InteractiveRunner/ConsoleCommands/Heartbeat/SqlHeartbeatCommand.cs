@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Thycotic.AppCore.Federator;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Heartbeat.Request;
-using Thycotic.Messages.Heartbeat.Response;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
 {

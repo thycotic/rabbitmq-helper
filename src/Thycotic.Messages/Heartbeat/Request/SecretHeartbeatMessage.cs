@@ -17,6 +17,11 @@ namespace Thycotic.Messages.Heartbeat.Request
         public IPasswordInfoProvider PasswordInfoProvider { get; set; }
 
         /// <summary>
+        /// Gets or sets the Secret Id
+        /// </summary>
+        public int SecretId { get; set; }
+
+        /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>
