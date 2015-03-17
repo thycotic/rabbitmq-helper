@@ -59,6 +59,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
                 try
                 {
                     _engineToServerCommunicationBus.RecordSecretHeartbeatResponse(response);
+                    _log.Info(string.Format("Heartbeat Result for Secret Id {0}: {1}", request.SecretId, verifyResult.ErrorCode));
                 }
                 catch (Exception)
                 {
