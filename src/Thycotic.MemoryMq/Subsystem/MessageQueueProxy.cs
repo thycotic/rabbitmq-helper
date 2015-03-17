@@ -25,6 +25,17 @@ namespace Thycotic.MemoryMq.Subsystem
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance has unacknowledged.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance has unacknowledged; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasUnacknowledged
+        {
+            get { return _queue.HasUnacknowledged; }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MessageQueueProxy"/> class.
         /// </summary>
         /// <param name="queue">The queue.</param>

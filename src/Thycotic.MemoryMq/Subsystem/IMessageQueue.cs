@@ -14,6 +14,14 @@
         bool IsEmpty { get; }
 
         /// <summary>
+        /// Gets a value indicating whether this instance has unacknowledged.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance has unacknowledged; otherwise, <c>false</c>.
+        /// </value>
+        bool HasUnacknowledged { get; }
+
+        /// <summary>
         /// Enqueues the specified body.
         /// </summary>
         /// <param name="body">The <see cref="MemoryMqDeliveryEventArgs"/> instance containing the event data.</param>

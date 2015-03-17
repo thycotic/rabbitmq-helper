@@ -40,7 +40,7 @@ namespace Thycotic.MemoryMq.Subsystem
         void Acknowledge(ulong deliveryTag, RoutingSlip routingSlip);
 
         /// <summary>
-        /// Negativelies the acknowledge.
+        /// Negatively acknowledges.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
         /// <param name="routingSlip">The routing slip.</param>

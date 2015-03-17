@@ -27,7 +27,18 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </value>
         public bool IsEmpty
         {
-            get { return _queue.IsEmpty; }
+            get { return _queue.IsEmpty && _unackedMessages.IsEmpty; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has un-acknowledged.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance has un-acknowledged; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasUnacknowledged
+        {
+            get { return !_unackedMessages.IsEmpty; }
         }
 
         private ulong GetNextDeliveryTag()
