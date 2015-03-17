@@ -50,10 +50,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <returns></returns>
         public bool Next(int timeoutMilliseconds, out CommonDeliveryEventArgs response)
         {
-            var routingKey = _queueName;
-
-            _server.QueueBind(_queueName, string.Empty, routingKey);
-
             MemoryMqDeliveryEventArgs eventArgs = null;
 
             var cts = new CancellationTokenSource();
@@ -64,6 +60,12 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 eventArgs = deliveryArgs;
                 cts.Cancel();
             };
+
+            var routingKey = _queueName;
+            
+            _server.QueueBind(_queueName, string.Empty, routingKey);
+
+          
 
             var task = Task.Factory.StartNew(() =>
             {
