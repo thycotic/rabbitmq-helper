@@ -23,7 +23,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
     internal static class Program
     {
         private static readonly ILogWriter Log = Logging.Log.Get(typeof(Program));
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -121,23 +120,23 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             Trace.TraceInformation("Console tracer attached");
         }
 
-        private static void ConfigureCli(CommandLineInterface cli, IContainer parentContainer)
+        private static void ConfigureCli(CommandLineInterface cli, IComponentContext parentContext)
         {
             cli.ClearCommands();
 
             Log.Info("Configuring CLI with latest IoC configuration");
 
-            var bus = parentContainer.Resolve<IRequestBus>();
-            var exchangeNameProvider = parentContainer.Resolve<IExchangeNameProvider>();
+            var bus = parentContext.Resolve<IRequestBus>();
+            var exchangeNameProvider = parentContext.Resolve<IExchangeNameProvider>();
 
             var currentAssembly = Assembly.GetExecutingAssembly();
 
             // Create the builder with which components/services are registered.
             var builder = new ContainerBuilder();
 
-            //HACK: Why won't AsImplementedIntefaces work?? -dkk
-            builder.Register(container => bus).As<IRequestBus>().SingleInstance();
-            builder.Register(container => exchangeNameProvider).As<IExchangeNameProvider>().SingleInstance();
+            builder.Register(context => cli.CancellationToken).As<CancellationToken>().SingleInstance();
+            builder.Register(context => bus).As<IRequestBus>().SingleInstance();
+            builder.Register(context => exchangeNameProvider).As<IExchangeNameProvider>().SingleInstance();
 
             builder.RegisterAssemblyTypes(currentAssembly)
                 .Where(t => !t.IsAbstract)
