@@ -3,7 +3,7 @@
 namespace Thycotic.Wcf
 {
     /// <summary>
-    /// Http channel factory
+    /// HTTP channel factory
     /// </summary>
     public static class HttpChannelFactory
     {
