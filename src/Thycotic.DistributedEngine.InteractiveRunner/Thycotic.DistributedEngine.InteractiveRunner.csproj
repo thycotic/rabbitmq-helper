@@ -177,6 +177,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.Wcf">
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.8\lib\net451\Thycotic.Wcf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ProductInfo.cs">
@@ -239,10 +242,6 @@
     <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
       <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
       <Name>Thycotic.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Wcf\Thycotic.Wcf.csproj">
-      <Project>{f9eb0f7b-1c13-43d8-8ae3-2f452615e86f}</Project>
-      <Name>Thycotic.Wcf</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
