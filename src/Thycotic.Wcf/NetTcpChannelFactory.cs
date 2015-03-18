@@ -3,11 +3,10 @@
 namespace Thycotic.Wcf
 {
     /// <summary>
-    /// Channel factory
+    /// Net/Tcp Channel factory
     /// </summary>
     public static class NetTcpChannelFactory
     {
-
         /// <summary>
         /// Creates a channel.
         /// </summary>

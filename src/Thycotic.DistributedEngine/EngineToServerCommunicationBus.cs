@@ -1,3 +1,4 @@
+using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
@@ -17,11 +18,22 @@ namespace Thycotic.DistributedEngine
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineToServerCommunicationBus"/> class.
         /// </summary>
-        /// <param name="uri">The URI.</param>
+        /// <param name="connectionString">The URI.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
-        public EngineToServerCommunicationBus(string uri, bool useSsl)
+        public EngineToServerCommunicationBus(string connectionString, bool useSsl)
         {
-            _channel = NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(uri, useSsl);
+            var uri = new Uri(connectionString);
+
+            switch (uri.Scheme)
+            {
+                case "net.tcp":
+                    _channel = NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(connectionString, useSsl);
+                    break;
+                case "http":
+                case "https":
+                    _channel = HttpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(connectionString, useSsl);
+                    break;
+            }
         }
 
         /// <summary>

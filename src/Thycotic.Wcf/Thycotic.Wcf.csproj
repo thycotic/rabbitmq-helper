@@ -145,6 +145,7 @@
     <Compile Include="IDuplexWcfConnection.cs" />
     <Compile Include="IWcfService.cs" />
     <Compile Include="IWcfServerCallback.cs" />
+    <Compile Include="HttpChannelFactory.cs" />
     <Compile Include="ServiceHostBase.cs" />
     <Compile Include="NetTcpChannelFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
