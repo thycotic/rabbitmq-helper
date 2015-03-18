@@ -35,7 +35,7 @@ namespace Thycotic.DistributedEngine
                 case "http":
                 case "https":
                     _log.Info(string.Format("Using HTTP channel to {0}", connectionString));
-                    //Channel = HttpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(connectionString, useSsl);
+                    Channel = HttpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(connectionString, useSsl);
                     break;
                 default:
                     throw new NotSupportedException("Requested schema does not have a supported channel");
