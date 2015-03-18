@@ -11,16 +11,16 @@ namespace Thycotic.DistributedEngine
     /// <summary>
     /// Engine to server communication provider
     /// </summary>
-    public class EngineToServerCommunicationBus : IEngineToServerCommunicationBus
+    public class EngineConfigurationBus : IEngineConfigurationBus
     {
         private readonly IEngineToServerCommunicationWcfService _channel;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineToServerCommunicationBus"/> class.
+        /// Initializes a new instance of the <see cref="EngineConfigurationBus"/> class.
         /// </summary>
         /// <param name="connectionString">The URI.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
-        public EngineToServerCommunicationBus(string connectionString, bool useSsl)
+        public EngineConfigurationBus(string connectionString, bool useSsl)
         {
             var uri = new Uri(connectionString);
 
@@ -54,24 +54,6 @@ namespace Thycotic.DistributedEngine
         public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
             return _channel.SendHeartbeat(request);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="response"></param>
-        public void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
-        {
-            _channel.RecordSecretHeartbeatResponse(response);
-        }
-
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            
         }
     }
 }

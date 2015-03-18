@@ -19,7 +19,7 @@ namespace Thycotic.DistributedEngine.Configuration
     {
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILocalKeyProvider _localKeyProvider;
-        private readonly IEngineToServerCommunicationBus _engineToServerCommunicationBus;
+        private readonly IEngineConfigurationBus _engineConfigurationBus;
         private readonly IObjectSerializer _objectSerializer;
 
         private readonly ILogWriter _log = Log.Get(typeof(RemoteConfigurationProvider));
@@ -29,13 +29,13 @@ namespace Thycotic.DistributedEngine.Configuration
         /// </summary>
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="localKeyProvider">The local key provider.</param>
-        /// <param name="engineToServerCommunicationBus">The remote communication provider.</param>
+        /// <param name="engineConfigurationBus">The remote communication provider.</param>
         /// <param name="objectSerializer">The message serializer.</param>
-        public RemoteConfigurationProvider(IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IEngineToServerCommunicationBus engineToServerCommunicationBus, IObjectSerializer objectSerializer)
+        public RemoteConfigurationProvider(IEngineIdentificationProvider engineIdentificationProvider, ILocalKeyProvider localKeyProvider, IEngineConfigurationBus engineConfigurationBus, IObjectSerializer objectSerializer)
         {
             _engineIdentificationProvider = engineIdentificationProvider;
             _localKeyProvider = localKeyProvider;
-            _engineToServerCommunicationBus = engineToServerCommunicationBus;
+            _engineConfigurationBus = engineConfigurationBus;
             _objectSerializer = objectSerializer;
         }
 
@@ -58,7 +58,7 @@ namespace Thycotic.DistributedEngine.Configuration
                     Version = ReleaseInformationHelper.GetVersionAsDouble()
                 };
 
-                var response = _engineToServerCommunicationBus.GetConfiguration(request);
+                var response = _engineConfigurationBus.GetConfiguration(request);
 
                 if (!response.Success)
                 {

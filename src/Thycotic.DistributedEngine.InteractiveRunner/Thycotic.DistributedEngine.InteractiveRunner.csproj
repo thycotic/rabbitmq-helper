@@ -169,7 +169,7 @@
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.96\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.97\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
@@ -184,7 +184,7 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="CommandLineInterface.cs" />
-    <Compile Include="Configuration\LoopbackEngineToServerCommunicationProvider.cs" />
+    <Compile Include="Configuration\LoopbackEngineConfigurationBus.cs" />
     <Compile Include="ConsoleCommands\CommandAreas.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandBase.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandParameters.cs" />

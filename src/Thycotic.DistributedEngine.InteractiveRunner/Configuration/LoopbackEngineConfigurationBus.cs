@@ -16,20 +16,19 @@ using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 {
-    internal class LoopbackEngineToServerCommunicationProvider : IEngineToServerCommunicationBus
+    internal class LoopbackEngineConfigurationBus : IEngineConfigurationBus
     {
         private readonly ILocalKeyProvider _localKeyProvider;
         private readonly IObjectSerializer _objectSerializer;
         private readonly ByteSaltProvider _saltProvider = new ByteSaltProvider();
         private readonly AsymmetricEncryptor _asymmetricEncryptor = new AsymmetricEncryptor();
 
-        private readonly Dictionary<Uri, Func<object, dynamic>> _loopBacks = new Dictionary<Uri, Func<object, dynamic>>();
         private Lazy<Dictionary<string, string>> _bakedConfiguration;
         private DateTime _lastBaked;
 
-        private readonly ILogWriter _log = Log.Get(typeof(LoopbackEngineToServerCommunicationProvider));
+        private readonly ILogWriter _log = Log.Get(typeof(LoopbackEngineConfigurationBus));
 
-        public LoopbackEngineToServerCommunicationProvider(ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer)
+        public LoopbackEngineConfigurationBus(ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer)
         {
             _localKeyProvider = localKeyProvider;
             _objectSerializer = objectSerializer;

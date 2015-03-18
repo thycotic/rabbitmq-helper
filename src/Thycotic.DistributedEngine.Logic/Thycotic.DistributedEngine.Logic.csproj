@@ -141,7 +141,7 @@
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.96\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.97\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
@@ -168,7 +168,8 @@
     <Compile Include="Areas\POC\ThrowTriggerConsumer.cs" />
     <Compile Include="Areas\POC\StepConsumer.cs" />
     <Compile Include="Areas\POC\HelloWorldConsumer.cs" />
-    <Compile Include="IEngineToServerCommunicationBus.cs" />
+    <Compile Include="IEngineConfigurationBus.cs" />
+    <Compile Include="IResponseBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ using NSubstitute;
 using Thycotic.AppCore;
 using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
+using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
@@ -57,11 +58,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                         var engineIdentificationProvider = IoCConfigurator.CreateEngineIdentificationProvider();
                         var localKeyProvider = new LocalKeyProvider();
                         var objectSerializer = new JsonObjectSerializer();
-                        var loopbackCommunicationProvider = new LoopbackEngineToServerCommunicationProvider(localKeyProvider, objectSerializer);
+                        var engineConfigurationBus = new LoopbackEngineConfigurationBus(localKeyProvider, objectSerializer);
+                        var responseBus = Substitute.For<IResponseBus>();
                         var loopbackConfigurationProvider = new RemoteConfigurationProvider(
-                            engineIdentificationProvider, localKeyProvider, loopbackCommunicationProvider,
+                            engineIdentificationProvider, localKeyProvider, engineConfigurationBus,
                             objectSerializer);
-                        var ioCConfigurator = new IoCConfigurator(localKeyProvider, loopbackCommunicationProvider, loopbackConfigurationProvider);
+                        var ioCConfigurator = new IoCConfigurator(localKeyProvider, engineConfigurationBus, responseBus, loopbackConfigurationProvider);
                         engine = new EngineService(startConsuming, ioCConfigurator);
                     }
                     else

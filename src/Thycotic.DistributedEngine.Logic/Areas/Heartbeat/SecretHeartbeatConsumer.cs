@@ -13,7 +13,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
     /// </summary>
     public class SecretHeartbeatConsumer : IBasicConsumer<SecretHeartbeatMessage>
     {
-        private readonly IEngineToServerCommunicationBus _engineToServerCommunicationBus;
+        private readonly IResponseBus _responseBus;
         private readonly FederatorProvider _federatorProvider = new FederatorProvider();
 
         private readonly ILogWriter _log = Log.Get(typeof(SecretHeartbeatConsumer));
@@ -21,10 +21,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="engineToServerCommunicationBus"></param>
-        public SecretHeartbeatConsumer(IEngineToServerCommunicationBus engineToServerCommunicationBus)
+        /// <param name="responseBus"></param>
+        public SecretHeartbeatConsumer(IResponseBus responseBus)
         {
-            _engineToServerCommunicationBus = engineToServerCommunicationBus;
+            _responseBus = responseBus;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
 
                 try
                 {
-                    _engineToServerCommunicationBus.RecordSecretHeartbeatResponse(response);
+                    _responseBus.RecordSecretHeartbeatResponse(response);
                     _log.Info(string.Format("Heartbeat Result for Secret Id {0}: {1}", request.SecretId, verifyResult.ErrorCode));
                 }
                 catch (Exception)

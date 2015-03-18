@@ -3,9 +3,9 @@
 namespace Thycotic.DistributedEngine.Logic
 {
     /// <summary>
-    /// Interface for a response bus back to secret server
+    /// Interface for a response bus
     /// </summary>
-    public interface IEngineToServerCommunicationBus : IEngineToServerCommunicationWcfService
+    public interface IResponseBus : IEngineToServerCommunicationWcfService
     {
 
     }
