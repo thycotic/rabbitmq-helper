@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Thycotic.Logging;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
@@ -11,7 +12,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
     public class PingConsumer : IBasicConsumer<PingMessage>
     {
         private readonly IResponseBus _responseBus;
-        //private readonly ILogWriter _log = Log.Get(typeof(PingConsumer));
+
+        private readonly ILogWriter _log = Log.Get(typeof(PingConsumer));
 
         private readonly char[] _characters = Enumerable.Range('a', 'z' - 'a' + 1).Select(i => (Char) i).ToArray();
 
@@ -36,8 +38,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
 
             ConsumerConsole.WriteMatrix(_characters[index]);
 
-            _responseBus.Pong();
-
+            try
+            {
+                _responseBus.Pong();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Failed to pong back to server", ex);
+            }
         }
     }
 }

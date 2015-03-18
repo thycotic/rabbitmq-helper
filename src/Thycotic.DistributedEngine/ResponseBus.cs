@@ -1,41 +1,24 @@
 using System;
-using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic;
-using Thycotic.Wcf;
 
 namespace Thycotic.DistributedEngine
 {
     /// <summary>
     /// Engine to server communication provider
     /// </summary>
-    public class ResponseBus : IResponseBus
+    public class ResponseBus : EngineToServerCommunicationWrapper, IResponseBus
     {
-        private readonly IEngineToServerCommunicationWcfService _channel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineConfigurationBus"/> class.
         /// </summary>
         /// <param name="connectionString">The URI.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
-        public ResponseBus(string connectionString, bool useSsl)
+        public ResponseBus(string connectionString, bool useSsl) : base(connectionString, useSsl)
         {
-            var uri = new Uri(connectionString);
-
-            switch (uri.Scheme)
-            {
-                case "net.tcp":
-                    _channel = NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(connectionString, useSsl);
-                    break;
-                case "http":
-                case "https":
-                    _channel = HttpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(connectionString, useSsl);
-                    break;
-            }
         }
-
 
         /// <summary>
         /// Not supported on the response bus
@@ -64,7 +47,7 @@ namespace Thycotic.DistributedEngine
         /// </summary>
         public void Pong()
         {
-            _channel.Pong();
+            Channel.Pong();
         }
 
         /// <summary>
@@ -73,7 +56,7 @@ namespace Thycotic.DistributedEngine
         /// <param name="response"></param>
         public void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
         {
-            _channel.RecordSecretHeartbeatResponse(response);
+            Channel.RecordSecretHeartbeatResponse(response);
         }
 
 
@@ -82,7 +65,7 @@ namespace Thycotic.DistributedEngine
         /// </summary>
         public void Dispose()
         {
-            
+            //nothing to dispose
         }
     }
 }

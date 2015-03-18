@@ -156,7 +156,7 @@
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.97\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.98\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
@@ -171,6 +171,7 @@
     </Compile>
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
+    <Compile Include="EngineToServerCommunicationWrapper.cs" />
     <Compile Include="ResponseBus.cs" />
     <Compile Include="EngineConfigurationBus.cs" />
     <Compile Include="Configuration\IEngineIdentificationProvider.cs" />
