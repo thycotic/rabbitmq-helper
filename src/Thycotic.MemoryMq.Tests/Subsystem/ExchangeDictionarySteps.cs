@@ -101,12 +101,20 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
 
         }
 
-        [When(@"the method PersistMessage on IExchangeDictionary (\w+) is called")]
-        public void WhenTheMethodPersistMessageOnIExchangeDictionaryIsCalled(string exchangeDictionaryName)
+        [When(@"the method PersistMessages on IExchangeDictionary (\w+) is called")]
+        public void WhenTheMethodPersistMessagseOnIExchangeDictionaryIsCalled(string exchangeDictionaryName)
         {
             var exchangeDictionary = this.GetScenarioContext().Get<IExchangeDictionary>(exchangeDictionaryName);
 
             exchangeDictionary.PersistMessages();
+        }
+
+        [When(@"the method RestorePersistedMessages on IExchangeDictionary (\w+) is called")]
+        public void WhenTheMethodRestorePersistedMessagesOnIExchangeDictionaryIsCalled(string exchangeDictionaryName)
+        {
+            var exchangeDictionary = this.GetScenarioContext().Get<IExchangeDictionary>(exchangeDictionaryName);
+
+            exchangeDictionary.RestorePersistedMessages();
         }
 
         [Then(@"a store file for IExchangeDictionary exists")]
@@ -118,6 +126,13 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         }
 
 
+        [Then(@"a store file for IExchangeDictionary does not exist")]
+        public void ThenAStoreFileDoesNotExist()
+        {
+            var path = GetStorePath();
+
+            File.Exists(path).Should().BeFalse();
+        }
 
         [Then(@"the scenario object IExchangeDictionary (\w+) is empty")]
         public void ThenTheScenarioObjectExchangeDictionaryShouldBeEmpty(string exchangeDictionaryName)

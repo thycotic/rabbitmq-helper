@@ -158,6 +158,9 @@ namespace Thycotic.MemoryMq.Subsystem
                     var serializer = new JsonSerializer();
                     serializer.Serialize(jw, snapshot);
                 }
+
+                //remove all messages
+                _data.Clear();
             }
             catch (Exception ex)
             {
@@ -203,7 +206,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <exception cref="System.NotImplementedException"></exception>
         public void Dispose()
         {
-            
+            PersistMessages();
         }
     }
 

@@ -365,10 +365,107 @@ this.FeatureBackground();
                     "outing slip RoutingSlipTest4 and message delivery arguments MemoryMqDeliveryEven" +
                     "tArgsTest4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 83
- testRunner.When("the method PersistMessage on IExchangeDictionary ExchangeDictionaryTest is called" +
-                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method PersistMessages on IExchangeDictionary ExchangeDictionaryTest is calle" +
+                    "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 84
  testRunner.Then("a store file for IExchangeDictionary exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Restoring messages from multiple mailboxes")]
+        public virtual void RestoringMessagesFromMultipleMailboxes()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Restoring messages from multiple mailboxes", ((string[])(null)));
+#line 86
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line 87
+ testRunner.Given("there exists a ExchangeDictionary stored in the scenario as ExchangeDictionaryTes" +
+                    "t2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 88
+ testRunner.Given("there exists a RoutingSlip stored in the scenario as RoutingSlipTest with exchang" +
+                    "e TestChange and routing key TestRoutingKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 89
+ testRunner.And("there exists a RoutingSlip stored in the scenario as RoutingSlipTest2 with exchan" +
+                    "ge TestChange2 and routing key TestRoutingKey2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 90
+ testRunner.And("there exists a RoutingSlip stored in the scenario as RoutingSlipTest3 with exchan" +
+                    "ge TestChange3 and routing key TestRoutingKey3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 91
+ testRunner.And("there exists a RoutingSlip stored in the scenario as RoutingSlipTest4 with exchan" +
+                    "ge TestChange4 and routing key TestRoutingKey4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 92
+ testRunner.And("there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDelive" +
+                    "ryEventArgsTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 93
+ testRunner.And("there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDelive" +
+                    "ryEventArgsTest2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 94
+ testRunner.And("there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDelive" +
+                    "ryEventArgsTest3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 95
+ testRunner.And("there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDelive" +
+                    "ryEventArgsTest4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 96
+ testRunner.When("the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with r" +
+                    "outing slip RoutingSlipTest and message delivery arguments MemoryMqDeliveryEvent" +
+                    "ArgsTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 97
+ testRunner.When("the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with r" +
+                    "outing slip RoutingSlipTest2 and message delivery arguments MemoryMqDeliveryEven" +
+                    "tArgsTest2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 98
+ testRunner.When("the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with r" +
+                    "outing slip RoutingSlipTest3 and message delivery arguments MemoryMqDeliveryEven" +
+                    "tArgsTest3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 99
+ testRunner.When("the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with r" +
+                    "outing slip RoutingSlipTest4 and message delivery arguments MemoryMqDeliveryEven" +
+                    "tArgsTest4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 100
+ testRunner.When("the method PersistMessages on IExchangeDictionary ExchangeDictionaryTest is calle" +
+                    "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 101
+ testRunner.When("the method RestorePersistedMessages on IExchangeDictionary ExchangeDictionaryTest" +
+                    "2 is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 102
+ testRunner.Then("a store file for IExchangeDictionary does not exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 103
+ testRunner.Then("the scenario object IExchangeDictionary ExchangeDictionaryTest2 has 4 mailbox(es)" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 104
+ testRunner.Then("the scenario object IExchangeDictionary ExchangeDictionaryTest2 has a mailbox mat" +
+                    "ching RoutingSlipTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 105
+ testRunner.Then("the scenario object IExchangeDictionary ExchangeDictionaryTest2 has a mailbox mat" +
+                    "ching RoutingSlipTest2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 106
+ testRunner.Then("the scenario object IExchangeDictionary ExchangeDictionaryTest2 has a mailbox mat" +
+                    "ching RoutingSlipTest3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 107
+ testRunner.Then("the scenario object IExchangeDictionary ExchangeDictionaryTest2 has a mailbox mat" +
+                    "ching RoutingSlipTest4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Persisting messages from empty exchange")]
+        public virtual void PersistingMessagesFromEmptyExchange()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Persisting messages from empty exchange", ((string[])(null)));
+#line 109
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line 110
+ testRunner.When("the method PersistMessages on IExchangeDictionary ExchangeDictionaryTest is calle" +
+                    "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 111
+ testRunner.Then("a store file for IExchangeDictionary does not exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

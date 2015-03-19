@@ -80,9 +80,33 @@ Scenario: Persisting messages from multiple mailboxes
 	When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest2 and message delivery arguments MemoryMqDeliveryEventArgsTest2
 	When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest3 and message delivery arguments MemoryMqDeliveryEventArgsTest3
 	When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest4 and message delivery arguments MemoryMqDeliveryEventArgsTest4
-	When the method PersistMessage on IExchangeDictionary ExchangeDictionaryTest is called
+	When the method PersistMessages on IExchangeDictionary ExchangeDictionaryTest is called
 	Then a store file for IExchangeDictionary exists
 
-#TODO: Restore Mesages
-#TODO: Dispose
+Scenario: Restoring messages from multiple mailboxes
+	Given there exists a ExchangeDictionary stored in the scenario as ExchangeDictionaryTest2
+	Given there exists a RoutingSlip stored in the scenario as RoutingSlipTest with exchange TestChange and routing key TestRoutingKey
+	And there exists a RoutingSlip stored in the scenario as RoutingSlipTest2 with exchange TestChange2 and routing key TestRoutingKey2
+	And there exists a RoutingSlip stored in the scenario as RoutingSlipTest3 with exchange TestChange3 and routing key TestRoutingKey3
+	And there exists a RoutingSlip stored in the scenario as RoutingSlipTest4 with exchange TestChange4 and routing key TestRoutingKey4
+	And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest
+	And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest2
+	And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest3
+	And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest4
+	When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest and message delivery arguments MemoryMqDeliveryEventArgsTest
+	When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest2 and message delivery arguments MemoryMqDeliveryEventArgsTest2
+	When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest3 and message delivery arguments MemoryMqDeliveryEventArgsTest3
+	When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest4 and message delivery arguments MemoryMqDeliveryEventArgsTest4
+	When the method PersistMessages on IExchangeDictionary ExchangeDictionaryTest is called
+	When the method RestorePersistedMessages on IExchangeDictionary ExchangeDictionaryTest2 is called
+	Then a store file for IExchangeDictionary does not exist
+	Then the scenario object IExchangeDictionary ExchangeDictionaryTest2 has 4 mailbox(es)
+	Then the scenario object IExchangeDictionary ExchangeDictionaryTest2 has a mailbox matching RoutingSlipTest
+	Then the scenario object IExchangeDictionary ExchangeDictionaryTest2 has a mailbox matching RoutingSlipTest2
+	Then the scenario object IExchangeDictionary ExchangeDictionaryTest2 has a mailbox matching RoutingSlipTest3
+	Then the scenario object IExchangeDictionary ExchangeDictionaryTest2 has a mailbox matching RoutingSlipTest4
+
+Scenario: Persisting messages from empty exchange
+	When the method PersistMessages on IExchangeDictionary ExchangeDictionaryTest is called
+	Then a store file for IExchangeDictionary does not exist
 
