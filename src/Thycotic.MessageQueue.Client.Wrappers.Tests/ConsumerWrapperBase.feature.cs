@@ -95,8 +95,8 @@ this.FeatureBackground();
  testRunner.When("the method StartConsuming on ConsumerWrapperBaseDummy ConsumerWrapperBaseDummyTes" +
                     "t is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
- testRunner.Then("the method ForceInitialize on CommonConnection substitute CommonConnectionTest is" +
-                    " called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method ForceInitialize on ICommonConnection substitute CommonConnectionTest i" +
+                    "s called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -37,7 +37,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             consumerWrapper.StartConsuming();
         }
 
-        [Then(@"the method ForceInitialize on CommonConnection substitute (\w+) is called")]
+        [Then(@"the method ForceInitialize on ICommonConnection substitute (\w+) is called")]
         public void ThenTheMethodForceInitializeOnCommonConnectionSubstituteIsCalled(string connectionName)
         {
             var connection = this.GetScenarioContext().Get<ICommonConnection>(connectionName);

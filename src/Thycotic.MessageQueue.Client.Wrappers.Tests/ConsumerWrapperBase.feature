@@ -10,4 +10,4 @@ Background:
 
 Scenario: StartConsuming calls ForceInitialize on CommonConnection
 	When the method StartConsuming on ConsumerWrapperBaseDummy ConsumerWrapperBaseDummyTest is called
-	Then the method ForceInitialize on CommonConnection substitute CommonConnectionTest is called
+	Then the method ForceInitialize on ICommonConnection substitute CommonConnectionTest is called
