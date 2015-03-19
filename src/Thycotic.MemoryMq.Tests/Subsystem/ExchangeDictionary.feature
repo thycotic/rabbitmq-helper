@@ -83,3 +83,6 @@ Scenario: Persisting messages from multiple mailboxes
 	When the method PersistMessage on IExchangeDictionary ExchangeDictionaryTest is called
 	Then a store file for IExchangeDictionary exists
 
+#TODO: Restore Mesages
+#TODO: Dispose
+
