@@ -82,6 +82,25 @@ namespace Thycotic.MessageQueue.Client.Tests
                     "ncryptor MessageEncryptorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Basic publish")]
+        public virtual void BasicPublish()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Basic publish", ((string[])(null)));
+#line 10
+this.ScenarioSetup(scenarioInfo);
+#line 4
+this.FeatureBackground();
+#line 11
+ testRunner.Given("there exists a substitute object for IConsumable stored in the scenario as Consum" +
+                    "ableTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 12
+ testRunner.When("the method BasicPublish on RequestBus RequestBusTest is called with exchange Test" +
+                    "Exchange and consumable ConsumableTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

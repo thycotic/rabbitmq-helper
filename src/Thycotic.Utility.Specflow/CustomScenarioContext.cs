@@ -66,11 +66,12 @@ namespace Thycotic.Utility.Specflow
             Set(key, GetSubstituteFor<T>());
         }
 
-        public void SetSubstitute<T>(string key, Func<T, T> preparer)
+        public void SetSubstitute<T>(string key, Action<T> preparer)
             where T : class
         {
             var substitute = GetSubstituteFor<T>();
-            Set(key, preparer.Invoke(substitute));
+            preparer.Invoke(substitute);
+            Set(key, substitute);
         }
 
         public void SetSubstitute<T1, T2>(string key)
@@ -80,12 +81,13 @@ namespace Thycotic.Utility.Specflow
             Set(key, GetSubstituteFor<T1, T2>());
         }
 
-        public void SetSubstitute<T1, T2>(string key, Func<T1, T1> preparer)
+        public void SetSubstitute<T1, T2>(string key, Action<T1> preparer)
             where T1 : class
             where T2 : class
         {
             var substitute = GetSubstituteFor<T1, T2>();
-            Set(key, preparer.Invoke(substitute));
+            preparer.Invoke(substitute);
+            Set(key, substitute);
         }
 
         public void SetSubstitute<T1, T2, T3>(string key)
@@ -96,13 +98,14 @@ namespace Thycotic.Utility.Specflow
             Set(key, GetSubstituteFor<T1, T2, T3>());
         }
 
-        public void SetSubstitute<T1, T2, T3>(string key, Func<T1, T1> preparer)
+        public void SetSubstitute<T1, T2, T3>(string key, Action<T1> preparer)
             where T1 : class
             where T2 : class
             where T3 : class
         {
             var substitute = GetSubstituteFor<T1, T2, T3>();
-            Set(key, preparer.Invoke(substitute));
+            preparer.Invoke(substitute);
+            Set(key, substitute);
         }
 
 
