@@ -1,56 +1,62 @@
-using Thycotic.DistributedEngine.EngineToServerCommunication;
+using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic;
-using Thycotic.Wcf;
 
 namespace Thycotic.DistributedEngine
 {
     /// <summary>
     /// Engine to server communication provider
     /// </summary>
-    public class EngineToServerCommunicationBus : IEngineToServerCommunicationBus
+    public class ResponseBus : EngineToServerCommunicationWrapper, IResponseBus
     {
-        private readonly IEngineToServerCommunicationWcfService _channel;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineToServerCommunicationBus"/> class.
+        /// Initializes a new instance of the <see cref="EngineConfigurationBus"/> class.
         /// </summary>
-        /// <param name="uri">The URI.</param>
+        /// <param name="connectionString">The URI.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
-        public EngineToServerCommunicationBus(string uri, bool useSsl)
+        public ResponseBus(string connectionString, bool useSsl) : base(connectionString, useSsl)
         {
-            _channel = NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(uri, useSsl);
         }
 
         /// <summary>
-        /// Gets engine configuration from server
+        /// Not supported on the response bus
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
+        /// <exception cref="System.NotSupportedException"></exception>
         public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
-            return _channel.GetConfiguration(request);
+            throw new NotSupportedException();
         }
 
         /// <summary>
-        /// Sends a heartbeat request to server
+        /// Not supported on the response bus
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
+        /// <exception cref="System.NotSupportedException"></exception>
         public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
-            return _channel.SendHeartbeat(request);
+            throw new NotSupportedException();
         }
 
         /// <summary>
-        /// 
+        /// (Ping) Pong back to server
+        /// </summary>
+        public void Pong()
+        {
+            Channel.Pong();
+        }
+
+        /// <summary>
+        /// Records the secret heartbeat response.
         /// </summary>
         /// <param name="response"></param>
         public void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
         {
-            _channel.RecordSecretHeartbeatResponse(response);
+            Channel.RecordSecretHeartbeatResponse(response);
         }
 
 
@@ -59,7 +65,7 @@ namespace Thycotic.DistributedEngine
         /// </summary>
         public void Dispose()
         {
-            
+            //nothing to dispose
         }
     }
 }

@@ -76,6 +76,7 @@ namespace Thycotic.DistributedEngine
 
             try
             {
+
                 if (!IoCConfigurator.TryGetAndAssignConfiguration())
                 {
                     _log.Info("Engine is not enabled/configured. Existing...");

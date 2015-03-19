@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -9,6 +10,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
     class FloodCommand : ConsoleCommandBase
     {
         private readonly IRequestBus _bus;
+        private readonly CancellationToken _cancellationToken;
         private readonly ILogWriter _log = Log.Get(typeof(FloodCommand));
 
         public override string Name
@@ -26,9 +28,10 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
             get { return "Floods the exchange with messages"; }
         }
 
-        public FloodCommand(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
+        public FloodCommand(IRequestBus bus, IExchangeNameProvider exchangeNameProvider, CancellationToken cancellationToken)
         {
             _bus = bus;
+            _cancellationToken = cancellationToken;
 
             Action = parameters =>
             {
@@ -42,9 +45,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                 try
                 {
                     var i = 0;
-                    while (i++ < count)
+                    while (i++ < count && !_cancellationToken.IsCancellationRequested)
                     {
-
                         var message = new PingMessage
                         {
                             Sequence = i

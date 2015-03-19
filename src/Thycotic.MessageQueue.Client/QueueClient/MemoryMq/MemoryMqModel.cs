@@ -229,15 +229,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            //tell the server we want to consume
-            _server.BasicConsume(queueName);
-
             //when the server sends us something, process it
             _callback.BytesReceived +=
                 (sender, deliveryArgs) => Task.Factory.StartNew(() =>
                     consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag,
                         deliveryArgs.Redelivered, deliveryArgs.Exchange,
                         deliveryArgs.RoutingKey, Map(deliveryArgs.Properties), deliveryArgs.Body));
+
+            //tell the server we want to consume
+            _server.BasicConsume(queueName);
         }
 
         /// <summary>

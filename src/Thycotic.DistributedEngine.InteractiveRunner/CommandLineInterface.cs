@@ -14,11 +14,16 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 {
     internal class CommandLineInterface
     {
-        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+        private CancellationTokenSource _cts = new CancellationTokenSource();
         private readonly HashSet<IConsoleCommand> _commandBuiltInMappings = new HashSet<IConsoleCommand>();
         private readonly HashSet<IConsoleCommand> _commandCustomMappings = new HashSet<IConsoleCommand>();
 
         private readonly ILogWriter _log = Log.Get(typeof(CommandLineInterface));
+
+        public CancellationToken CancellationToken
+        {
+            get { return _cts.Token; }
+        }
 
         public CommandLineInterface()
         {
@@ -89,7 +94,11 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
         public void ClearCommands()
         {
-          _commandCustomMappings.Clear();
+            _cts.Cancel();
+
+            _cts = new CancellationTokenSource();
+
+            _commandCustomMappings.Clear();
         }
 
         private IEnumerable<IConsoleCommand> GetCurrentCommandMappings()
@@ -197,7 +206,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     }
                     else
                     {
-                        Task.Factory.StartNew(() => command.Action.Invoke(parameters)).ContinueWith(
+                        Task.Factory.StartNew(() => command.Action.Invoke(parameters), CancellationToken).ContinueWith(
                             task =>
                             {
                                 if (task.Exception != null)
@@ -205,7 +214,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                                     _log.Error(string.Format("Command failed because {0}", task.Exception.Message),
                                         task.Exception);
                                 }
-                            });
+                            }, CancellationToken);
 
 
                     }
@@ -265,6 +274,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             }
         }
 
-       
+
     }
 }

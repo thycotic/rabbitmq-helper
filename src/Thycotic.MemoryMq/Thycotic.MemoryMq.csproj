@@ -140,6 +140,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Thycotic.Wcf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.17\lib\net451\Thycotic.Wcf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ProductInfo.cs">
@@ -181,10 +185,6 @@
     <ProjectReference Include="..\Thycotic.Logging\Thycotic.Logging.csproj">
       <Project>{fe8be3ea-3f69-488e-8ac8-cfe47525d93f}</Project>
       <Name>Thycotic.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Wcf\Thycotic.Wcf.csproj">
-      <Project>{f9eb0f7b-1c13-43d8-8ae3-2f452615e86f}</Project>
-      <Name>Thycotic.Wcf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
