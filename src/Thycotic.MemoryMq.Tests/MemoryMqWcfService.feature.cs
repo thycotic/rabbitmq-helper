@@ -25,7 +25,7 @@ namespace Thycotic.MemoryMq.Tests
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "MemoryMqWcfServer.feature"
+#line 1 "MemoryMqWcfService.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
@@ -68,17 +68,17 @@ namespace Thycotic.MemoryMq.Tests
         {
 #line 3
 #line 4
- testRunner.Given("there exists a substitute object for ExchangeDictionary stored in the scenario as" +
-                    " ExchangeDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for IExchangeDictionary stored in the scenario a" +
+                    "s ExchangeDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 5
- testRunner.And("there exists a substitute object for BindingDictionary stored in the scenario as " +
-                    "BindingDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a substitute object for IBindingDictionary stored in the scenario as" +
+                    " BindingDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 6
- testRunner.And("there exists a substitute object for ClientDictionary stored in the scenario as C" +
-                    "lientDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a substitute object for IClientDictionary stored in the scenario as " +
+                    "ClientDictionaryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 7
- testRunner.And("there exists a substitute object for MessageDispatcher stored in the scenario as " +
-                    "MessageDispatcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a substitute object for IMessageDispatcher stored in the scenario as" +
+                    " MessageDispatcherTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
  testRunner.And("there exists a MemoryMqWcfService stored in the scenario as MemoryMqWcfServiceTes" +
                     "t with ExchangeDictionary ExchangeDictionaryTest, BindingDictionary BindingDicti" +

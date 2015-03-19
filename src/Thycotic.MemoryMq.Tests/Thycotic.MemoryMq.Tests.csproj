@@ -173,12 +173,12 @@
       <DependentUpon>ConcurrentPriorityQueue.feature</DependentUpon>
     </Compile>
     <Compile Include="Collections\ConcurrentPriorityQueueSteps.cs" />
-    <Compile Include="MemoryMqWcfServer.feature.cs">
+    <Compile Include="MemoryMqWcfService.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MemoryMqWcfServer.feature</DependentUpon>
+      <DependentUpon>MemoryMqWcfService.feature</DependentUpon>
     </Compile>
-    <Compile Include="MemoryMqWcfServerSteps.cs" />
+    <Compile Include="MemoryMqWcfServiceSteps.cs" />
     <Compile Include="Subsystem\BindingDictionary.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -217,9 +217,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ConcurrentPriorityQueue.feature.cs</LastGenOutput>
     </None>
-    <None Include="MemoryMqWcfServer.feature">
+    <None Include="MemoryMqWcfService.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>MemoryMqWcfServer.feature.cs</LastGenOutput>
+      <LastGenOutput>MemoryMqWcfService.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Subsystem\BindingDictionary.feature">

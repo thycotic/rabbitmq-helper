@@ -1,10 +1,10 @@
 ﻿Feature: MemoryMqWcfService
 
 Background: 
-	Given there exists a substitute object for ExchangeDictionary stored in the scenario as ExchangeDictionaryTest
-	And there exists a substitute object for BindingDictionary stored in the scenario as BindingDictionaryTest
-	And there exists a substitute object for ClientDictionary stored in the scenario as ClientDictionaryTest
-	And there exists a substitute object for MessageDispatcher stored in the scenario as MessageDispatcherTest
+	Given there exists a substitute object for IExchangeDictionary stored in the scenario as ExchangeDictionaryTest
+	And there exists a substitute object for IBindingDictionary stored in the scenario as BindingDictionaryTest
+	And there exists a substitute object for IClientDictionary stored in the scenario as ClientDictionaryTest
+	And there exists a substitute object for IMessageDispatcher stored in the scenario as MessageDispatcherTest
 	And there exists a MemoryMqWcfService stored in the scenario as MemoryMqWcfServiceTest with ExchangeDictionary ExchangeDictionaryTest, BindingDictionary BindingDictionaryTest, ClientDictionary ClientDictionaryTest and MessageDispatcher MessageDispatcherTest
 
 #TODO: Check for explicit parameters

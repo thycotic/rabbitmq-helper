@@ -17,6 +17,12 @@ namespace Thycotic.Utility.Tests
             TypeNameHandling = TypeNameHandling.Auto
         };
 
+        [Given(@"there exists a substitute object for IObjectSerializer stored in the scenario as (\w+)")]
+        public void GivenThereExistsASubstituteObjectForIObjectSerializerStoredInTheScenario(string objectSerializerName)
+        {
+            this.GetScenarioContext().SetSubstitute<IObjectSerializer>(objectSerializerName);
+        }
+
         [Given(@"there exists a DummyObject stored in the scenario as (\w+)")]
         public void GivenThereExistsARoutingSlipStoredInTheScenarioAsRoutingSlipTestWithExchangeTestChangeAndRoutingKeyTestRoutingKey(string dummyObjectName)
         {

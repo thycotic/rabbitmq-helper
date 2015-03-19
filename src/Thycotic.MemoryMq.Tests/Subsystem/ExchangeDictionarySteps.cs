@@ -34,7 +34,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         }
 
         [Given(@"there exists a substitute object for IExchangeDictionary stored in the scenario as (\w+)")]
-        public void GivenThereExistsASubstituteObjectForExchangeDictionaryStoredInTheScenario(string exchangeDictionaryName)
+        public void GivenThereExistsASubstituteObjectForIExchangeDictionaryStoredInTheScenario(string exchangeDictionaryName)
         {
             this.GetScenarioContext().SetSubstitute<IExchangeDictionary>(exchangeDictionaryName);
         }

@@ -166,6 +166,12 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="ITestConsumerInvoker.cs" />
+    <Compile Include="RequestBus.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequestBus.feature</DependentUpon>
+    </Compile>
+    <Compile Include="RequestBusSteps.cs" />
     <Compile Include="TestConsumerInvoker.cs" />
     <Compile Include="TestMqRequestBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,6 +179,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="RequestBus.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RequestBus.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.MessageQueue.Client\Thycotic.MessageQueue.Client.csproj">
@@ -186,6 +196,10 @@
     <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
       <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
       <Name>Thycotic.Utility.Specflow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
+      <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
+      <Name>Thycotic.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
