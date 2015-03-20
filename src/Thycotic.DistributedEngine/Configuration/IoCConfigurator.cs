@@ -20,6 +20,7 @@ namespace Thycotic.DistributedEngine.Configuration
     {
         private readonly Lazy<IEngineIdentificationProvider> _engineIdentificationProvider;
         private readonly Lazy<ILocalKeyProvider> _localKeyProvider;
+        private readonly Lazy<IEngineToServerConnection> _engineToServerConnection;
         private readonly Lazy<IEngineConfigurationBus> _engineConfigurationBus;
         private readonly Lazy<IResponseBus> _responseBus;
         private readonly Lazy<IRemoteConfigurationProvider> _remoteConfigurationProvider;
@@ -27,8 +28,7 @@ namespace Thycotic.DistributedEngine.Configuration
         private Dictionary<string, string> _instanceConfiguration;
 
         private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
-
-
+        
         /// <summary>
         /// Gets or sets the last configuration consume.
         /// </summary>
@@ -96,34 +96,21 @@ namespace Thycotic.DistributedEngine.Configuration
             var useSsl =
                 Convert.ToBoolean(GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.UseSsl));
 
-            _engineConfigurationBus = new Lazy<IEngineConfigurationBus>(() =>
+            _engineToServerConnection = new Lazy<IEngineToServerConnection>(() =>
             {
                 if (useSsl)
                 {
-                    _log.Info("Configuration connection is using encryption");
+                    _log.Info("Connection to server is using encryption");
                 }
                 else
                 {
-                    _log.Warn("Configuration connection is not using encryption");
+                    _log.Warn("Connection to server is not using encryption");
                 }
 
-                return new EngineConfigurationBus(connectionString, useSsl);
+                return new EngineToServerConnection(connectionString, useSsl);
             });
 
-            _responseBus = new Lazy<IResponseBus>(() =>
-            {
-                  if (useSsl)
-                {
-                    _log.Info("Response connection is using encryption");
-                }
-                else
-                {
-                    _log.Warn("Response connection is not using encryption");
-                }
-
-
-                return new ResponseBus(connectionString, useSsl);
-            });
+            _engineConfigurationBus = new Lazy<IEngineConfigurationBus>(() => new EngineConfigurationBus(_engineToServerConnection.Value));
 
             _remoteConfigurationProvider =
                 new Lazy<IRemoteConfigurationProvider>(

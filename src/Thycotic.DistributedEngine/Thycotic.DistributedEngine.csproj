@@ -175,7 +175,9 @@
     </Compile>
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
-    <Compile Include="EngineToServerCommunicationWrapper.cs" />
+    <Compile Include="EngineToServerConnection.cs" />
+    <Compile Include="IEngineToServerConnection.cs" />
+    <Compile Include="Security\IEngineToServerEncryptor.cs" />
     <Compile Include="ResponseBus.cs" />
     <Compile Include="EngineConfigurationBus.cs" />
     <Compile Include="Configuration\IEngineIdentificationProvider.cs" />

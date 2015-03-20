@@ -7,14 +7,18 @@ namespace Thycotic.DistributedEngine
     /// <summary>
     /// Engine to server communication provider
     /// </summary>
-    public class EngineConfigurationBus : EngineToServerCommunicationWrapper, IEngineConfigurationBus
+    public class EngineConfigurationBus : IEngineConfigurationBus
     {
+        private readonly IEngineToServerConnection _engineToServerConnection;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineConfigurationBus"/> class.
+        /// Initializes a new instance of the <see cref="EngineConfigurationBus" /> class.
         /// </summary>
-        /// <param name="connectionString">The connection string.</param>
-        /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
-        public EngineConfigurationBus(string connectionString, bool useSsl) : base(connectionString, useSsl) { }
+        /// <param name="engineToServerConnection">The engine to server connection.</param>
+        public EngineConfigurationBus(IEngineToServerConnection engineToServerConnection)
+        {
+            _engineToServerConnection = engineToServerConnection;
+        }
 
         /// <summary>
         /// Gets engine configuration from server
@@ -23,7 +27,10 @@ namespace Thycotic.DistributedEngine
         /// <returns></returns>
         public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
-            return Channel.GetConfiguration(request);
+            using (var channel = _engineToServerConnection.OpenChannel())
+            {
+                return channel.GetConfiguration(request);
+            }
         }
 
         /// <summary>
@@ -33,7 +40,10 @@ namespace Thycotic.DistributedEngine
         /// <returns></returns>
         public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
-            return Channel.SendHeartbeat(request);
+            using (var channel = _engineToServerConnection.OpenChannel())
+            {
+                return channel.SendHeartbeat(request);
+            }
         }
     }
 }

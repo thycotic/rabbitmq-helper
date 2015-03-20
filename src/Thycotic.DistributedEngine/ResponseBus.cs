@@ -3,25 +3,36 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Res
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic;
+using Thycotic.DistributedEngine.Security;
+using Thycotic.MessageQueue.Client;
+using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine
 {
     /// <summary>
     /// Engine to server communication provider
     /// </summary>
-    public class ResponseBus : EngineToServerCommunicationWrapper, IResponseBus
+    public class ResponseBus : IResponseBus
     {
+        private readonly IEngineToServerConnection _engineToServerConnection;
+        private readonly IObjectSerializer _objectSerializer;
+        private readonly IEngineToServerEncryptor _engineToServerEncryptor;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineConfigurationBus"/> class.
+        /// Initializes a new instance of the <see cref="EngineConfigurationBus" /> class.
         /// </summary>
-        /// <param name="connectionString">The URI.</param>
-        /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
-        public ResponseBus(string connectionString, bool useSsl) : base(connectionString, useSsl)
+        /// <param name="engineToServerConnection">The engine to server connection.</param>
+        /// <param name="objectSerializer">The object serializer.</param>
+        /// <param name="engineToServerEncryptor">The message encryptor.</param>
+        public ResponseBus(IEngineToServerConnection engineToServerConnection, IObjectSerializer objectSerializer, IEngineToServerEncryptor engineToServerEncryptor)
         {
+            _engineToServerConnection = engineToServerConnection;
+            _objectSerializer = objectSerializer;
+            _engineToServerEncryptor = engineToServerEncryptor;
         }
 
         /// <summary>
-        /// Not supported on the response bus
+        /// Gets engine configuration from server
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
@@ -32,7 +43,7 @@ namespace Thycotic.DistributedEngine
         }
 
         /// <summary>
-        /// Not supported on the response bus
+        /// Sends a heartbeat request to server
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
@@ -47,7 +58,10 @@ namespace Thycotic.DistributedEngine
         /// </summary>
         public void Pong()
         {
-            Channel.Pong();
+            using (var channel = _engineToServerConnection.OpenChannel())
+            {
+                channel.Pong();
+            }
         }
 
         /// <summary>
@@ -56,7 +70,10 @@ namespace Thycotic.DistributedEngine
         /// <param name="response"></param>
         public void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
         {
-            Channel.RecordSecretHeartbeatResponse(response);
+            using (var channel = _engineToServerConnection.OpenChannel())
+            {
+                channel.RecordSecretHeartbeatResponse(response);
+            }
         }
 
 

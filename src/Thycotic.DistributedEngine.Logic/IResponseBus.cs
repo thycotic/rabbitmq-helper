@@ -7,6 +7,5 @@ namespace Thycotic.DistributedEngine.Logic
     /// </summary>
     public interface IResponseBus : IEngineToServerCommunicationWcfService
     {
-
     }
 }
