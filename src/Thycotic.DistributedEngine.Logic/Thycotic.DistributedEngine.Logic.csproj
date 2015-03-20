@@ -143,6 +143,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.112\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.Encryption">
+      <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>
@@ -170,7 +173,7 @@
     <Compile Include="Areas\POC\StepConsumer.cs" />
     <Compile Include="Areas\POC\HelloWorldConsumer.cs" />
     <Compile Include="IEngineConfigurationBus.cs" />
-    <Compile Include="IResponseBus.cs" />
+    <Compile Include="EngineToServer\IResponseBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

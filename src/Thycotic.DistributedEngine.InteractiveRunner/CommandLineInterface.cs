@@ -27,7 +27,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
         public CommandLineInterface()
         {
-            #region Build-in system commands
+            #region BuildAll-in system commands
             _commandBuiltInMappings.Add(new SystemConsoleCommand
             {
                 Name = "clear",

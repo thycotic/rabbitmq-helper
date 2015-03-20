@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
+using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
@@ -40,7 +42,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
 
             try
             {
-                _responseBus.BasicPublish();
+                _responseBus.BasicPublish(new EnginePingRequest());
             }
             catch (Exception ex)
             {

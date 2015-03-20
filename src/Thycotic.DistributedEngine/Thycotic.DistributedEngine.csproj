@@ -175,10 +175,13 @@
     </Compile>
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
-    <Compile Include="EngineToServerConnection.cs" />
-    <Compile Include="IEngineToServerConnection.cs" />
+    <Compile Include="EngineToServer\EngineToServerChannel.cs" />
+    <Compile Include="EngineToServer\EngineToServerConnection.cs" />
+    <Compile Include="EngineToServer\IEngineToServerChannel.cs" />
+    <Compile Include="EngineToServer\IEngineToServerConnection.cs" />
+    <Compile Include="Security\EngineToServerEncryptor.cs" />
     <Compile Include="Security\IEngineToServerEncryptor.cs" />
-    <Compile Include="ResponseBus.cs" />
+    <Compile Include="EngineToServer\ResponseBus.cs" />
     <Compile Include="EngineConfigurationBus.cs" />
     <Compile Include="Configuration\IEngineIdentificationProvider.cs" />
     <Compile Include="EngineService.cs">
@@ -190,8 +193,6 @@
     <Compile Include="Heartbeat\IHeartbeatConfigurationProvider.cs" />
     <Compile Include="IoC\HeartbeatModule.cs" />
     <Compile Include="IoC\MemoryMqServerModule.cs" />
-    <Compile Include="Configuration\IRemoteConfigurationProvider.cs" />
-    <Compile Include="Configuration\RemoteConfigurationProvider.cs" />
     <Compile Include="MemoryMq\MemoryMqServiceHost.cs" />
     <Compile Include="Security\BaseMessageEncryptor.cs" />
     <Compile Include="Security\ILocalKeyProvider.cs" />

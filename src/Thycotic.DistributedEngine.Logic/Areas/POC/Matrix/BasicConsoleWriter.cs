@@ -20,7 +20,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC.Matrix
         /// <param name="foregroundColor">Color of the foreground.</param>
         protected virtual void Write(char value, int top, int left, ConsoleColor foregroundColor = ConsoleColor.DarkGreen)
         {
-            lock (Console.Out)
+            lock (SyncRoot)
             {
 
                 var currentLeft = Console.CursorLeft;

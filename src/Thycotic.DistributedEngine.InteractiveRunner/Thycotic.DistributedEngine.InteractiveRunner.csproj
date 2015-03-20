@@ -189,6 +189,7 @@
     </Compile>
     <Compile Include="CommandLineInterface.cs" />
     <Compile Include="Configuration\LoopbackEngineConfigurationBus.cs" />
+    <Compile Include="Configuration\LoopbackIoCConfigurator.cs" />
     <Compile Include="ConsoleCommands\CommandAreas.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandBase.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandParameters.cs" />

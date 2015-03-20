@@ -36,7 +36,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <param name="engineService">The engineService.</param>
         /// <param name="startConsuming">if set to <c>true</c> [start engineService].</param>
         /// <returns></returns>
-        IContainer Build(EngineService engineService, bool startConsuming);
+        IContainer BuildAll(EngineService engineService, bool startConsuming);
         
         
     }

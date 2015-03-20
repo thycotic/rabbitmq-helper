@@ -67,7 +67,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
 
             _log.Info("Heart beating back to server");
 
-            var logEntries = _recentLogEntryProvider.GetEntries().Select(MapLogEntries).ToArray();
+            //var logEntries = _recentLogEntryProvider.GetEntries().Select(MapLogEntries).ToArray();
 
             var request = new EngineHeartbeatRequest
             {
@@ -76,7 +76,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
                 PublicKey = Convert.ToBase64String(_localKeyProvider.PublicKey.Value),
                 Version = ReleaseInformationHelper.GetVersionAsDouble(),
                 LastActivity = DateTime.UtcNow,
-                LogEntries = logEntries
+                //LogEntries = logEntries
             };
 
             var response = _engineConfigurationBus.SendHeartbeat(request);
@@ -92,22 +92,13 @@ namespace Thycotic.DistributedEngine.Heartbeat
             //the configuration has not changed since it was last consumed
             if (response.LastConfigurationUpdated <= _engineService.IoCConfigurator.LastConfigurationConsumed) return;
 
-            var saltProvider = new ByteSaltProvider();
-
-            var asymmetricEncryptor = new AsymmetricEncryptor();
-            var decryptedConfiguration = asymmetricEncryptor.DecryptWithKey(_localKeyProvider.PrivateKey,
-                response.NewConfiguration);
-            var unsaltedConfiguration = saltProvider.Unsalt(decryptedConfiguration, MessageEncryption.SaltLength);
-
-            var newConfiguration = _objectSerializer.ToObject<Dictionary<string, string>>(unsaltedConfiguration);
-
             _engineService.Stop();
 
             Console.WriteLine();
             Console.WriteLine("@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @");
             Console.WriteLine();
 
-            _engineService.IoCConfigurator.TryAssignConfiguration(newConfiguration);
+            _engineService.IoCConfigurator.TryAssignConfiguration(response.NewConfiguration);
 
             _engineService.Start();
         }

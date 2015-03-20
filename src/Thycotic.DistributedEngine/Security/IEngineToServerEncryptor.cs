@@ -1,5 +1,6 @@
 
 using Thycotic.Encryption;
+using Thycotic.ihawu.Business.BulkOperation;
 
 namespace Thycotic.DistributedEngine.Security
 {

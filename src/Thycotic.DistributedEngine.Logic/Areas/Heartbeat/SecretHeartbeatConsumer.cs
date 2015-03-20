@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
+using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.ihawu.Business.Federator;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
@@ -58,7 +59,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
 
                 try
                 {
-                    _responseBus.BasicPublish(response);
+                    //_responseBus.BasicPublish(response);
                     _log.Info(string.Format("Heartbeat Result for Secret Id {0}: {1}", request.SecretId, verifyResult.ErrorCode));
                 }
                 catch (Exception)

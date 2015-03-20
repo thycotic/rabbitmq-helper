@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -7,41 +8,30 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
-using Thycotic.DistributedEngine.Security;
 using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;
-using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 {
     internal class LoopbackEngineConfigurationBus : IEngineConfigurationBus
     {
-        private readonly ILocalKeyProvider _localKeyProvider;
-        private readonly IObjectSerializer _objectSerializer;
-        private readonly ByteSaltProvider _saltProvider = new ByteSaltProvider();
-        private readonly AsymmetricEncryptor _asymmetricEncryptor = new AsymmetricEncryptor();
-
         private Lazy<Dictionary<string, string>> _bakedConfiguration;
         private DateTime _lastBaked;
 
         private readonly ILogWriter _log = Log.Get(typeof(LoopbackEngineConfigurationBus));
 
-        public LoopbackEngineConfigurationBus(ILocalKeyProvider localKeyProvider, IObjectSerializer objectSerializer)
-        {
-            _localKeyProvider = localKeyProvider;
-            _objectSerializer = objectSerializer;
+        private ConcurrentDictionary<int, Dictionary<string, string>> _configurations = new ConcurrentDictionary<int, Dictionary<string, string>>();
 
-        }
 
-        private byte[] EncryptWithPublicKey(PublicKey publicKey, byte[] bytes)
-        {
-            var saltedBytes = _saltProvider.Salt(bytes, MessageEncryption.SaltLength);
-            return _asymmetricEncryptor.EncryptWithPublicKey(publicKey, saltedBytes);
-        }
+        //        private byte[] EncryptWithPublicKey(PublicKey publicKey, byte[] bytes)
+        //        {
+        //            var saltedBytes = _saltProvider.Salt(bytes, MessageEncryption.SaltLength);
+        //            return _asymmetricEncryptor.EncryptWithPublicKey(publicKey, saltedBytes);
+        //        }
 
-// ReSharper disable once UnusedMember.Local
+        // ReSharper disable once UnusedMember.Local
         private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetDynamicEncryptionPair()
         {
             const int aesKeySize = 256;
@@ -74,7 +64,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             };
 
         }
-
+        
         public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
             _bakedConfiguration = new Lazy<Dictionary<string, string>>(() =>
@@ -100,7 +90,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 }
 
                 configuration[MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds] =
-                    Convert.ToString(TimeSpan.FromMinutes(5).TotalSeconds);
+                    Convert.ToString(TimeSpan.FromSeconds(15).TotalSeconds);
 
                 //add additional configuration
                 //var pair = GetDynamicEncryptionPair();
@@ -114,13 +104,9 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
                 return configuration;
             });
-            
-
-            var configurationString = _objectSerializer.ToBytes(_bakedConfiguration.Value);
-
             return new EngineConfigurationResponse
             {
-                Configuration = EncryptWithPublicKey(_localKeyProvider.PublicKey,configurationString),
+                Configuration =_bakedConfiguration.Value,
                 Success = true
             };
 
@@ -134,6 +120,17 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 throw new ApplicationException("There should be a configuration already");
             }
 
+            return new EngineHeartbeatResponse
+            {
+                LastConfigurationUpdated = _lastBaked,
+                NewConfiguration = _bakedConfiguration.Value,
+                Success = true
+            };
+        }
+
+        public EngineLogDumpResponse SendLog(EngineLogDumpRequest request)
+        {
+
             var logEntries = request.LogEntries;
 
             if (logEntries.Any())
@@ -145,12 +142,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                         e => ConsumerConsole.WriteLine(string.Format("Engine -> {0}", e.Message), ConsoleColor.Magenta));
             }
 
-            var configurationString = _objectSerializer.ToBytes(_bakedConfiguration.Value);
-            
-            return new EngineHeartbeatResponse
+            return new EngineLogDumpResponse
             {
-                LastConfigurationUpdated = _lastBaked,
-                NewConfiguration = EncryptWithPublicKey(_localKeyProvider.PublicKey,configurationString),
                 Success = true
             };
         }
@@ -231,7 +224,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
         public void Dispose()
         {
-            
+
         }
     }
 }

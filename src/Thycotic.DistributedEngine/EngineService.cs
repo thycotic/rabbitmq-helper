@@ -83,8 +83,8 @@ namespace Thycotic.DistributedEngine
                     return;
                 }
 
-                // Build the container to finalize registrations and prepare for object resolution.
-                _ioCContainer = IoCConfigurator.Build(this, _startConsuming);
+                // BuildAll the container to finalize registrations and prepare for object resolution.
+                _ioCContainer = IoCConfigurator.BuildAll(this, _startConsuming);
 
                 //notify any hooks that IoC is configured
                 if (IoCContainerConfigured != null)

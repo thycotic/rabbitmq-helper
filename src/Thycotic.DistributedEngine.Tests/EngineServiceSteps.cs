@@ -34,11 +34,11 @@ namespace Thycotic.DistributedEngine.Tests
             engineService.Start();
         }
 
-        [Then(@"the method Build on IoCConfigurator substitute (\w+) is called")]
+        [Then(@"the method BuildAll on IoCConfigurator substitute (\w+) is called")]
         public void ThenTheMethodBuildOnIoCConfiguratorSubstituteIsCalled(string ioCConfiguratorName)
         {
             var ioCConfigurator = this.GetScenarioContext().Get<IIoCConfigurator>(ioCConfiguratorName);
-            ioCConfigurator.Received().Build(Arg.Any<EngineService>(), false);
+            ioCConfigurator.Received().BuildAll(Arg.Any<EngineService>(), false);
         }
     }
 }
