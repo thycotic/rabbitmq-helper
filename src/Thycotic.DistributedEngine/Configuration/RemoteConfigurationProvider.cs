@@ -65,13 +65,7 @@ namespace Thycotic.DistributedEngine.Configuration
                     throw new ConfigurationErrorsException(response.ErrorMessage);
                 }
 
-                var saltProvider = new ByteSaltProvider();
-
-                var asymmetricEncryptor = new AsymmetricEncryptor();
-                var decryptedConfiguration = asymmetricEncryptor.DecryptWithKey(_localKeyProvider.PrivateKey, response.Configuration);
-                var unsaltedConfiguration = saltProvider.Unsalt(decryptedConfiguration, MessageEncryption.SaltLength);
-
-                return _objectSerializer.ToObject<Dictionary<string, string>>(unsaltedConfiguration);
+                return null;// response.Configuration;
             }
 
             catch (Exception ex)

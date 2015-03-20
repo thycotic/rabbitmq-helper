@@ -1,7 +1,11 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
+using Thycotic.DistributedEngine.Security;
 using Thycotic.Logging;
+using Thycotic.Utility.Serialization;
 using Thycotic.Wcf;
+using PublicKey = Thycotic.Encryption.PublicKey;
 
 namespace Thycotic.DistributedEngine
 {
@@ -29,24 +33,35 @@ namespace Thycotic.DistributedEngine
         /// <summary>
         /// Opens the channel.
         /// </summary>
+        /// <param name="publicKey"></param>
+        /// <param name="objectSerializer"></param>
+        /// <param name="engineToServerEncryptor"></param>
         /// <returns></returns>
         /// <exception cref="System.NotSupportedException">Requested schema does not have a supported channel</exception>
-        public IEngineToServerCommunicationWcfService OpenChannel()
+        public IEngineToServerChannel OpenChannel(PublicKey publicKey, IObjectSerializer objectSerializer, IEngineToServerEncryptor engineToServerEncryptor)
         {
             var uri = new Uri(_connectionString);
+
+            IEngineToServerCommunicationWcfService2 connection;
 
             switch (uri.Scheme)
             {
                 case "net.tcp":
                     _log.Info(string.Format("Using Net/TCP channel to {0}", _connectionString));
-                    return NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
+                    connection= null;// NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
+                    break;
                 case "http":
                 case "https":
                     _log.Info(string.Format("Using HTTP channel to {0}", _connectionString));
-                    return HttpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
+                    connection = null;// HttpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
+                    break;
                 default:
                     throw new NotSupportedException("Requested schema does not have a supported channel");
             }
+
+            return new EngineToServerChannel(publicKey, connection, objectSerializer, engineToServerEncryptor);
+
+
         }
 
         /// <summary>

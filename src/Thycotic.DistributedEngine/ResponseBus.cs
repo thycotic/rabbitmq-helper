@@ -1,4 +1,5 @@
 using System;
+using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
@@ -31,50 +32,69 @@ namespace Thycotic.DistributedEngine
             _engineToServerEncryptor = engineToServerEncryptor;
         }
 
-        /// <summary>
-        /// Gets engine configuration from server
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotSupportedException"></exception>
-        public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
-        {
-            throw new NotSupportedException();
-        }
+        ///// <summary>
+        ///// Gets engine configuration from server
+        ///// </summary>
+        ///// <param name="request">The request.</param>
+        ///// <returns></returns>
+        ///// <exception cref="System.NotSupportedException"></exception>
+        //public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
+        //{
+        //    throw new NotSupportedException();
+        //}
 
-        /// <summary>
-        /// Sends a heartbeat request to server
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotSupportedException"></exception>
-        public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
-        {
-            throw new NotSupportedException();
-        }
+        ///// <summary>
+        ///// Sends a heartbeat request to server
+        ///// </summary>
+        ///// <param name="request">The request.</param>
+        ///// <returns></returns>
+        ///// <exception cref="System.NotSupportedException"></exception>
+        //public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
+        //{
+        //    throw new NotSupportedException();
+        //}
 
-        /// <summary>
-        /// (Ping) Pong back to server
-        /// </summary>
-        public void Pong()
-        {
-            using (var channel = _engineToServerConnection.OpenChannel())
-            {
-                channel.Pong();
-            }
-        }
+        //public PreAuthenticationEngineResponse PreAuthenticate()
+        //{
+        //  throw new NotSupportedException();
+        //}
 
-        /// <summary>
-        /// Records the secret heartbeat response.
-        /// </summary>
-        /// <param name="response"></param>
-        public void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
-        {
-            using (var channel = _engineToServerConnection.OpenChannel())
-            {
-                channel.RecordSecretHeartbeatResponse(response);
-            }
-        }
+        //public void BasicPublish(EncryptedEngineRequest request)
+        //{
+        //    using (var channel = _engineToServerConnection.OpenChannel())
+        //    {
+        //        channel.Pong();
+        //    }
+        //}
+
+        //public EncryptedEngineResponse BlockingPublish(EncryptedEngineRequest request)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+
+        ///// <summary>
+        ///// (Ping) Pong back to server
+        ///// </summary>
+        //public void Pong()
+        //{
+        //    using (var channel = _engineToServerConnection.OpenChannel())
+        //    {
+        //        channel.Pong();
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Records the secret heartbeat response.
+        ///// </summary>
+        ///// <param name="response"></param>
+        //public void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
+        //{
+        //    using (var channel = _engineToServerConnection.OpenChannel())
+        //    {
+        //        channel.RecordSecretHeartbeatResponse(response);
+        //    }
+        //}
 
 
         /// <summary>
@@ -83,6 +103,21 @@ namespace Thycotic.DistributedEngine
         public void Dispose()
         {
             //nothing to dispose
+        }
+
+        public PreAuthenticationEngineResponse PreAuthenticate()
+        {
+            throw new NotSupportedException();
+        }
+
+        public void BasicPublish(EncryptedEngineRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public EncryptedEngineResponse BlockingPublish(EncryptedEngineRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

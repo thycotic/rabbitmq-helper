@@ -40,7 +40,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
 
             try
             {
-                _responseBus.Pong();
+                _responseBus.BasicPublish();
             }
             catch (Exception ex)
             {
