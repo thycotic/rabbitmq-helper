@@ -156,7 +156,7 @@
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.102\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.112\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
@@ -164,9 +164,9 @@
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Wcf">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.17\lib\net451\Thycotic.Wcf.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Wcf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.19\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
