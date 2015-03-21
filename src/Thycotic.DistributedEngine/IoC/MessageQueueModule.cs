@@ -121,7 +121,6 @@ namespace Thycotic.DistributedEngine.IoC
 
         private void LoadResponseBus(ContainerBuilder builder)
         {
-            builder.RegisterType<EngineToServerEncryptor>().AsImplementedInterfaces();
             builder.RegisterType<ResponseBus>().AsImplementedInterfaces().SingleInstance();
         }
 

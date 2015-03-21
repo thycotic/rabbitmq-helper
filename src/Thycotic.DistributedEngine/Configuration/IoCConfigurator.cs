@@ -20,8 +20,6 @@ namespace Thycotic.DistributedEngine.Configuration
     /// </summary>
     public class IoCConfigurator : IIoCConfigurator
     {
-        private readonly IObjectSerializer _objectSerializer = new JsonObjectSerializer();
-
         private Dictionary<string, string> _instanceConfiguration;
 
         private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
@@ -111,6 +109,8 @@ namespace Thycotic.DistributedEngine.Configuration
                         new Guid(GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.IdentityGuid))
                 };
             }).As<IEngineIdentificationProvider>().SingleInstance();
+
+            builder.RegisterType<EngineToServerEncryptor>().AsImplementedInterfaces();
 
         }
 

@@ -188,7 +188,8 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="CommandLineInterface.cs" />
-    <Compile Include="Configuration\LoopbackEngineConfigurationBus.cs" />
+    <Compile Include="Configuration\LoopbackConfiguirationScenarios.cs" />
+    <Compile Include="Configuration\LoopbackEngineToServerChannel.cs" />
     <Compile Include="Configuration\LoopbackIoCConfigurator.cs" />
     <Compile Include="ConsoleCommands\CommandAreas.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandBase.cs" />

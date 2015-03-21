@@ -1,28 +1,70 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using Thycotic.DistributedEngine.EngineToServer;
+using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
-using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.Encryption;
 using Thycotic.Logging;
-using Thycotic.MessageQueue.Client;
 using Thycotic.Utility.Security;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 {
-    internal class LoopbackEngineConfigurationBus : IEngineConfigurationBus
+    internal class LoopbackEngineToServerChannel : IEngineToServerChannel
     {
         private Lazy<Dictionary<string, string>> _bakedConfiguration;
         private DateTime _lastBaked;
 
-        private readonly ILogWriter _log = Log.Get(typeof(LoopbackEngineConfigurationBus));
+        private readonly ILogWriter _log = Log.Get(typeof(LoopbackEngineToServerChannel));
 
-        private ConcurrentDictionary<int, Dictionary<string, string>> _configurations = new ConcurrentDictionary<int, Dictionary<string, string>>();
+        public void PreAuthenticate()
+        {
+
+        }
+
+        public void BasicPublish(IBasicConsumable request)
+        {
+            if (request is EnginePingRequest)
+            {
+                Pong((EnginePingRequest)request);
+            }
+            else if (request is SecretHeartbeatResponse)
+            {
+                RecordSecretHeartbeatResponse((SecretHeartbeatResponse)request);
+            }
+            else
+            {
+                throw new NotSupportedException("Unsupported basic publish request");
+            }
+        }
+
+        public T BlockingPublish<T>(IBlockingConsumable request)
+        {
+            object response;
+
+            if (request is EngineConfigurationRequest)
+            {
+                response = GetConfiguration((EngineConfigurationRequest)request);
+            }
+            else if (request is EngineHeartbeatRequest)
+            {
+                response = SendHeartbeat((EngineHeartbeatRequest)request);
+            }
+            else if (request is EngineLogDumpRequest)
+            {
+                response = SendLog((EngineLogDumpRequest)request);
+            }
+            else
+            {
+                throw new NotSupportedException("Unsupported blocking publish request");
+            }
+
+            return (T)response;
+        }
 
 
         //        private byte[] EncryptWithPublicKey(PublicKey publicKey, byte[] bytes)
@@ -64,8 +106,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             };
 
         }
-        
-        public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
+
+        private EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
             _bakedConfiguration = new Lazy<Dictionary<string, string>>(() =>
             {
@@ -106,19 +148,21 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             });
             return new EngineConfigurationResponse
             {
-                Configuration =_bakedConfiguration.Value,
+                Configuration = _bakedConfiguration.Value,
                 Success = true
             };
 
         }
 
-        public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
+        private EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
 
             if (!_bakedConfiguration.IsValueCreated)
             {
                 throw new ApplicationException("There should be a configuration already");
             }
+
+            ConsumerConsole.WriteLine(string.Format("Received heart beat from engine for {0}", request.LastActivity), ConsoleColor.DarkBlue);
 
             return new EngineHeartbeatResponse
             {
@@ -128,7 +172,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             };
         }
 
-        public EngineLogDumpResponse SendLog(EngineLogDumpRequest request)
+        private EngineLogDumpResponse SendLog(EngineLogDumpRequest request)
         {
 
             var logEntries = request.LogEntries;
@@ -139,7 +183,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
                 logEntries.ToList()
                     .ForEach(
-                        e => ConsumerConsole.WriteLine(string.Format("Engine -> {0}", e.Message), ConsoleColor.Magenta));
+                        e => ConsumerConsole.WriteLine(string.Format("Engine -> {0}", e.Message), ConsoleColor.DarkBlue));
             }
 
             return new EngineLogDumpResponse
@@ -148,79 +192,18 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             };
         }
 
-        public void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
+        private void Pong(EnginePingRequest request)
+        {
+            //all good
+        
+        }
+
+        private void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
         {
             //don't do anything on loopback
         }
 
-        private static class LoopbackConfiguirationScenarios
-        {
-            private const string LoopbackExchangeName = "thycotic-loopback";
 
-            public static Dictionary<string, string> NonSslMemoryMq()
-            {
-                return new Dictionary<string, string>
-                {
-                    {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                    {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
-                    {
-                        MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString,
-                        ConnectionStringHelpers.GetLocalMemoryMqConnectionString()
-                    },
-                    {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "false"}
-                };
-            }
-
-
-            public static Dictionary<string, string> SslMemoryMq()
-            {
-                return new Dictionary<string, string>
-                {
-                    {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                    {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
-                    {
-                        MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString,
-                        ConnectionStringHelpers.GetLocalMemoryMqConnectionString(DefaultPorts.MemoryMq.Ssl)
-                    },
-                    {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "true"},
-                    {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Thumbprint, "invalid"},
-                };
-            }
-
-            public static Dictionary<string, string> NonSslRabbitMq()
-            {
-                return new Dictionary<string, string>
-                {
-                    {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                    {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
-                    {
-                        MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString,
-                        ConnectionStringHelpers.GetLocalRabbitMqConnectionString()
-                    },
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "j@c.com"},
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "password1"},
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "false"}
-                };
-            }
-
-
-
-            public static Dictionary<string, string> SslRabbitMq()
-            {
-                return new Dictionary<string, string>
-                {
-                    {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                    {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
-                    {
-                        MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString,
-                        ConnectionStringHelpers.GetLocalRabbitMqConnectionString(DefaultPorts.RabbitMq.Ssl)
-                    },
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "j@c.com"},
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "password1"},
-                    {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "true"}
-                };
-            }
-        }
 
         public void Dispose()
         {
