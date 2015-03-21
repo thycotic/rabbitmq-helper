@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// <summary>
     /// Chain message
     /// </summary>
-    public class ChainMessage : IConsumable
+    public class ChainMessage : IBasicConsumable
     {
         /// <summary>
         /// Gets the version.

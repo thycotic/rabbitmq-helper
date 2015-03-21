@@ -2,9 +2,9 @@
 
 namespace Thycotic.Messages.Common.Tests
 {
-    internal class BlockingConsumerDummy : IBlockingConsumer<object, BlockingConsumerResult>
+    internal class BlockingConsumerDummy : IBlockingConsumer<BlockingConsumableDummy, BlockingConsumerResult>
     {
-        public BlockingConsumerResult Consume(object request)
+        public BlockingConsumerResult Consume(BlockingConsumableDummy request)
         {
             //contracts should kick in
             if (request == null)

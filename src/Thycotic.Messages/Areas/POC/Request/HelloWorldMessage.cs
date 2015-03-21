@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// <summary>
     /// Hello world message
     /// </summary>
-    public class HelloWorldMessage : IConsumable
+    public class HelloWorldMessage : IBasicConsumable
     {
         /// <summary>
         /// Gets or sets the content.

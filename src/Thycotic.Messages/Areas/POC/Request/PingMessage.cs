@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// <summary>
     /// Hello world message
     /// </summary>
-    public class PingMessage : IConsumable
+    public class PingMessage : IBasicConsumable
     {
 
         /// <summary>

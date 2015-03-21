@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// <summary>
     /// Throwing RPC message
     /// </summary>
-    public class ThrowTriggerMessage : IConsumable
+    public class ThrowTriggerMessage : IBlockingConsumable
     {
         /// <summary>
         /// Gets the version.
