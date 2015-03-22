@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// <summary>
     /// Chain message
     /// </summary>
-    public class CreateFileMessage : IConsumable
+    public class CreateFileMessage : IBasicConsumable
     {
         /// <summary>
         /// Gets or sets the path.

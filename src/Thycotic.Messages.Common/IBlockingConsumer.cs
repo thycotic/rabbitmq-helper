@@ -10,7 +10,7 @@ namespace Thycotic.Messages.Common
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     [ContractClass(typeof(BlockingConsumerContract<,>))]
     public interface IBlockingConsumer<in TRequest, out TResponse> : IConsumer
-        where TRequest : class
+        where TRequest : class, IBlockingConsumable
         where TResponse : class
     {
         /// <summary>
@@ -28,7 +28,7 @@ namespace Thycotic.Messages.Common
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     [ContractClassFor(typeof(IBlockingConsumer<,>))]
     public abstract class BlockingConsumerContract<TRequest, TResponse> : IBlockingConsumer<TRequest, TResponse>
-        where TRequest : class
+        where TRequest : class, IBlockingConsumable
         where TResponse : class
     {
         /// <summary>

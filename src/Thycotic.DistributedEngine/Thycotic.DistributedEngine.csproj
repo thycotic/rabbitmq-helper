@@ -156,7 +156,7 @@
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.102\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.112\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
@@ -164,9 +164,9 @@
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Wcf">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.17\lib\net451\Thycotic.Wcf.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Wcf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.19\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -175,8 +175,13 @@
     </Compile>
     <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
-    <Compile Include="EngineToServerCommunicationWrapper.cs" />
-    <Compile Include="ResponseBus.cs" />
+    <Compile Include="EngineToServer\EngineToServerChannel.cs" />
+    <Compile Include="EngineToServer\EngineToServerConnection.cs" />
+    <Compile Include="EngineToServer\IEngineToServerChannel.cs" />
+    <Compile Include="EngineToServer\IEngineToServerConnection.cs" />
+    <Compile Include="Security\EngineToServerEncryptor.cs" />
+    <Compile Include="Security\IEngineToServerEncryptor.cs" />
+    <Compile Include="EngineToServer\ResponseBus.cs" />
     <Compile Include="EngineConfigurationBus.cs" />
     <Compile Include="Configuration\IEngineIdentificationProvider.cs" />
     <Compile Include="EngineService.cs">
@@ -188,8 +193,6 @@
     <Compile Include="Heartbeat\IHeartbeatConfigurationProvider.cs" />
     <Compile Include="IoC\HeartbeatModule.cs" />
     <Compile Include="IoC\MemoryMqServerModule.cs" />
-    <Compile Include="Configuration\IRemoteConfigurationProvider.cs" />
-    <Compile Include="Configuration\RemoteConfigurationProvider.cs" />
     <Compile Include="MemoryMq\MemoryMqServiceHost.cs" />
     <Compile Include="Security\BaseMessageEncryptor.cs" />
     <Compile Include="Security\ILocalKeyProvider.cs" />

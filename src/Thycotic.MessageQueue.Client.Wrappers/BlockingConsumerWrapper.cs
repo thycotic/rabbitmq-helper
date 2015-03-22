@@ -15,7 +15,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <typeparam name="THandler">The type of the handler.</typeparam>
     public class BlockingConsumerWrapper<TRequest, TResponse, THandler> : ConsumerWrapperBase<TRequest, THandler>
-        where TRequest : class, IConsumable
+        where TRequest : class, IBlockingConsumable
         where TResponse : class
         where THandler : IBlockingConsumer<TRequest, TResponse>
     {

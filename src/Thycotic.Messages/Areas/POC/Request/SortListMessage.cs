@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// <summary>
     /// Slow RPC message
     /// </summary>
-    public class SortListMessage : IConsumable
+    public class SortListMessage : IBlockingConsumable
     {
         /// <summary>
         /// Gets or sets the items.

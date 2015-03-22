@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
+using Thycotic.DistributedEngine.EngineToServer;
 using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
@@ -21,39 +22,6 @@ namespace Thycotic.DistributedEngine.IoC
         {
             _configurationProvider = configurationProvider;
         }
-        private void LoadExchange(ContainerBuilder builder)
-        {
-            using (LogContext.Create("Exchange"))
-            {
-                var exchangeName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.Name);
-                exchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic";
-
-                var symmetricKeyString =
-                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.SymmetricKey);
-                var initializationVectorString =
-                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.InitializationVector);
-
-                var symmetricKey = new SymmetricKey(Convert.FromBase64String(symmetricKeyString));
-                var initializationVector = new InitializationVector(Convert.FromBase64String(initializationVectorString));
-
-                _log.Info(string.Format("Exchange name is {0}", exchangeName));
-
-                builder.Register(context => new ExchangeNameProvider
-                {
-                    ExchangeName = exchangeName
-                }).AsImplementedInterfaces().SingleInstance();
-
-                builder.Register(context =>
-                {
-                    var messageEncryptionKeyProvider = new MessageEncryptor();
-
-                    messageEncryptionKeyProvider.TryAddKey(exchangeName, symmetricKey, initializationVector);
-
-                    return messageEncryptionKeyProvider;
-                }).AsImplementedInterfaces().SingleInstance();
-            }
-        }
-
 
         private void LoadRabbitMq(ContainerBuilder builder)
         {
@@ -115,10 +83,45 @@ namespace Thycotic.DistributedEngine.IoC
                     .As<ICommonConnection>().InstancePerDependency();
             }
         }
-        
+
         private void LoadRequestBus(ContainerBuilder builder)
         {
+            using (LogContext.Create("Exchange"))
+            {
+                var exchangeName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.Name);
+                exchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic";
+
+                var symmetricKeyString =
+                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.SymmetricKey);
+                var initializationVectorString =
+                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.InitializationVector);
+
+                var symmetricKey = new SymmetricKey(Convert.FromBase64String(symmetricKeyString));
+                var initializationVector = new InitializationVector(Convert.FromBase64String(initializationVectorString));
+
+                _log.Info(string.Format("Exchange name is {0}", exchangeName));
+
+                builder.Register(context => new ExchangeNameProvider
+                {
+                    ExchangeName = exchangeName
+                }).AsImplementedInterfaces().SingleInstance();
+
+                builder.Register(context =>
+                {
+                    var messageEncryptionKeyProvider = new MessageEncryptor();
+
+                    messageEncryptionKeyProvider.TryAddKey(exchangeName, symmetricKey, initializationVector);
+
+                    return messageEncryptionKeyProvider;
+                }).AsImplementedInterfaces().SingleInstance();
+            }
+
             builder.RegisterType<RequestBus>().AsImplementedInterfaces().SingleInstance();
+        }
+
+        private void LoadResponseBus(ContainerBuilder builder)
+        {
+            builder.RegisterType<ResponseBus>().AsImplementedInterfaces().SingleInstance();
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -126,8 +129,6 @@ namespace Thycotic.DistributedEngine.IoC
             base.Load(builder);
 
             _log.Debug("Initializing message queue dependencies...");
-
-            LoadExchange(builder);
 
             var queueType = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType);
             
@@ -140,6 +141,7 @@ namespace Thycotic.DistributedEngine.IoC
                 LoadMemoryMq(builder);
             }
 
+            LoadResponseBus(builder);
             LoadRequestBus(builder);
         }
     }

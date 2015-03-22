@@ -1,16 +1,17 @@
-using Thycotic.DistributedEngine.EngineToServer;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
+using System;
+using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
-using Thycotic.DistributedEngine.Logic;
+using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Security;
+using Thycotic.Encryption;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.DistributedEngine
+namespace Thycotic.DistributedEngine.EngineToServer
 {
     /// <summary>
     /// Engine to server communication provider
     /// </summary>
-    public class EngineConfigurationBus : IEngineConfigurationBus
+    public class ResponseBus : IResponseBus
     {
         private readonly IEngineToServerChannel _channel;
 
@@ -19,42 +20,42 @@ namespace Thycotic.DistributedEngine
         /// </summary>
         /// <param name="engineToServerConnection">The engine to server connection.</param>
         /// <param name="objectSerializer">The object serializer.</param>
-        /// <param name="engineToServerEncryptor"></param>
-        public EngineConfigurationBus(IEngineToServerConnection engineToServerConnection, IObjectSerializer objectSerializer, IEngineToServerEncryptor engineToServerEncryptor)
+        /// <param name="engineToServerEncryptor">The message encryptor.</param>
+        public ResponseBus(IEngineToServerConnection engineToServerConnection, IObjectSerializer objectSerializer, IEngineToServerEncryptor engineToServerEncryptor)
         {
             _channel = engineToServerConnection.OpenChannel(objectSerializer, engineToServerEncryptor);
-
         }
 
         /// <summary>
-        /// Gets engine configuration from server
+        /// Basics publish
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
-        public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
+        public void BasicPublish(IBasicConsumable request)
         {
-            return _channel.BlockingPublish<EngineConfigurationResponse>(request);
+            _channel.BasicPublish(request);
 
         }
 
         /// <summary>
-        /// Sends a heartbeat request to server
+        /// Blockings the publish.
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
+        public T BlockingPublish<T>(IBlockingConsumable request)
         {
 
-            return _channel.BlockingPublish<EngineHeartbeatResponse>(request);
+            return _channel.BlockingPublish<T>(request);
 
         }
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
             _channel.Dispose();
         }
+
     }
 }

@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// <summary>
     /// Chain message
     /// </summary>
-    public class CreateDirectoryMessage : IConsumable
+    public class CreateDirectoryMessage : IBlockingConsumable
     {
         /// <summary>
         /// Gets or sets the path.

@@ -9,7 +9,7 @@ namespace Thycotic.Messages.Common
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     [ContractClass(typeof(BasicConsumerContract<>))]
     public interface IBasicConsumer<in TRequest> : IConsumer 
-        where TRequest : class 
+        where TRequest : class, IBasicConsumable 
     {
         /// <summary>
         /// Consumes the specified request.
@@ -24,7 +24,7 @@ namespace Thycotic.Messages.Common
     /// <typeparam name="TRequest"></typeparam>
     [ContractClassFor(typeof(IBasicConsumer<>))]
     public abstract class BasicConsumerContract<TRequest> : IBasicConsumer<TRequest>
-        where TRequest : class 
+        where TRequest : class, IBasicConsumable 
     {
         /// <summary>
         /// Consumes the specified request.

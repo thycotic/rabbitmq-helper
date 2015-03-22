@@ -2,9 +2,9 @@
 
 namespace Thycotic.Messages.Common.Tests
 {
-    internal class BasicConsumerDummy : IBasicConsumer<object>
+    internal class BasicConsumerDummy : IBasicConsumer<BasicConsumableDummy>
     {
-        public void Consume(object request)
+        public void Consume(BasicConsumableDummy request)
         {
             //contracts should kick in
             if (request == null)

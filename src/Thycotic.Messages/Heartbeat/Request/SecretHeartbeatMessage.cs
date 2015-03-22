@@ -6,7 +6,7 @@ namespace Thycotic.Messages.Heartbeat.Request
     /// <summary>
     /// Secret heartbeat message
     /// </summary>
-    public class SecretHeartbeatMessage : IConsumable
+    public class SecretHeartbeatMessage : IBasicConsumable
     {
         /// <summary>
         /// Gets or sets the password information provider.
