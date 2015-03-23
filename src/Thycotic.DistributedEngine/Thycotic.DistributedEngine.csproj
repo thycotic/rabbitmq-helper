@@ -144,6 +144,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -180,6 +181,7 @@
     <Compile Include="EngineToServer\IEngineToServerChannel.cs" />
     <Compile Include="EngineToServer\IEngineToServerConnection.cs" />
     <Compile Include="Security\EngineToServerEncryptor.cs" />
+    <Compile Include="Security\IdentityGuidProvider.cs" />
     <Compile Include="Security\IEngineToServerEncryptor.cs" />
     <Compile Include="EngineToServer\ResponseBus.cs" />
     <Compile Include="EngineConfigurationBus.cs" />
@@ -195,6 +197,7 @@
     <Compile Include="IoC\MemoryMqServerModule.cs" />
     <Compile Include="MemoryMq\MemoryMqServiceHost.cs" />
     <Compile Include="Security\BaseMessageEncryptor.cs" />
+    <Compile Include="Security\IIdentityGuidProvider.cs" />
     <Compile Include="Security\ILocalKeyProvider.cs" />
     <Compile Include="Security\LocalKeyProvider.cs" />
     <Compile Include="Security\MessageEncryptor.cs" />

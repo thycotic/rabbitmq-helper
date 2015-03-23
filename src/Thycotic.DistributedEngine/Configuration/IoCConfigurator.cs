@@ -20,6 +20,11 @@ namespace Thycotic.DistributedEngine.Configuration
     /// </summary>
     public class IoCConfigurator : IIoCConfigurator
     {
+        #region Expensive/reusable through restarts
+        private static readonly ILocalKeyProvider LocalKeyProvider = new LocalKeyProvider();
+        private static readonly IIdentityGuidProvider IdentityGuidProvider = new IdentityGuidProvider();
+        #endregion
+
         private Dictionary<string, string> _instanceConfiguration;
 
         private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
@@ -86,12 +91,16 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <param name="builder">The builder.</param>
         protected void RegisterCore(ContainerBuilder builder)
         {
-            builder.RegisterType<LocalKeyProvider>().AsImplementedInterfaces().SingleInstance();
+            builder.Register(context => LocalKeyProvider).As<ILocalKeyProvider>().SingleInstance();
+            builder.Register(context => IdentityGuidProvider).As<IIdentityGuidProvider>().SingleInstance();
+
             builder.RegisterType<RecentLogEntryProvider>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<JsonObjectSerializer>().AsImplementedInterfaces().SingleInstance();
-            
+           
             builder.Register(context =>
             {
+                var identityGuidProvider = context.Resolve<IIdentityGuidProvider>();
+
                 var exchangeIdString =
                     GetOptionalLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.ExchangeId,
                         false);
@@ -105,14 +114,14 @@ namespace Thycotic.DistributedEngine.Configuration
                         Convert.ToInt32(
                             GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.OrganizationId)),
                     FriendlyName = GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.FriendlyName),
-                    IdentityGuid =
-                        new Guid(GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.IdentityGuid))
+                    IdentityGuid = identityGuidProvider.IdentityGuid
                 };
             }).As<IEngineIdentificationProvider>().SingleInstance();
 
             builder.RegisterType<EngineToServerEncryptor>().AsImplementedInterfaces();
 
         }
+
 
         /// <summary>
         /// Registers the pre authorization.
