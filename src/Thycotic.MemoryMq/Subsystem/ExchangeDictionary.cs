@@ -132,7 +132,7 @@ namespace Thycotic.MemoryMq.Subsystem
             try
             {
                 var path = GetPersistPath();
-                if (!File.Exists(path))
+                if (File.Exists(path))
                 {
                     //delete any previous snapshots
                     File.Delete(path);
