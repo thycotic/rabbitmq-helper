@@ -17,6 +17,7 @@ namespace Thycotic.DistributedEngine
     public class EngineConfigurationBus : IEngineConfigurationBus
     {
         private readonly IObjectSerializer _objectSerializer;
+        private readonly IAuthenticationKeyProvider _authenticationKeyProvider;
         private readonly IAuthenticationRequestEncryptor _authenticationRequestEncryptor;
         private readonly IEngineToServerCommunicationWcfService _channel;
 
@@ -25,13 +26,16 @@ namespace Thycotic.DistributedEngine
         /// </summary>
         /// <param name="engineToServerConnection">The engine to server connection.</param>
         /// <param name="objectSerializer">The object serializer.</param>
+        /// <param name="authenticationKeyProvider">The authentication key provider.</param>
         /// <param name="authenticationRequestEncryptor">The authentication request encryptor.</param>
         public EngineConfigurationBus(IEngineToServerConnection engineToServerConnection, 
             IObjectSerializer objectSerializer, 
+            IAuthenticationKeyProvider authenticationKeyProvider,
             IAuthenticationRequestEncryptor authenticationRequestEncryptor)
         {
         
             _objectSerializer = objectSerializer;
+            _authenticationKeyProvider = authenticationKeyProvider;
             _authenticationRequestEncryptor = authenticationRequestEncryptor;
             _channel = engineToServerConnection.OpenChannel();
         }
@@ -57,7 +61,9 @@ namespace Thycotic.DistributedEngine
                 Body = _authenticationRequestEncryptor.Encrypt(serverPublicKey, requestString)
             });
 
-            return _objectSerializer.ToObject<EngineConfigurationResponse>(configurationBytes);
+            var decryptedConfigurationBytes = _authenticationRequestEncryptor.Decrypt(_authenticationKeyProvider.PrivateKey, configurationBytes);
+
+            return _objectSerializer.ToObject<EngineConfigurationResponse>(decryptedConfigurationBytes);
         }
 
         /// <summary>
