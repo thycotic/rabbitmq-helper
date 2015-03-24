@@ -7,12 +7,11 @@ using Autofac;
 using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Logging;
-using Thycotic.DistributedEngine.Logic;
+using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
 using Thycotic.Logging.Models;
 using Thycotic.Utility;
-using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.Heartbeat
 {
@@ -25,8 +24,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
         private readonly EngineService _engineService;
         private readonly IRecentLogEntryProvider _recentLogEntryProvider;
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
-        private readonly IObjectSerializer _objectSerializer;
-        private readonly IEngineConfigurationBus _engineConfigurationBus;
+        private readonly IResponseBus _responseBus;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly ILogWriter _log = Log.Get(typeof(HeartbeatRunner));
@@ -39,16 +37,18 @@ namespace Thycotic.DistributedEngine.Heartbeat
         /// <param name="engineService">The engine service.</param>
         /// <param name="recentLogEntryProvider">The recent log entry provider.</param>
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
-        /// <param name="objectSerializer">The object serializer.</param>
-        /// <param name="engineConfigurationBus">The rest communication provider.</param>
-        public HeartbeatRunner(IHeartbeatConfigurationProvider heartbeatConfigurationProvider, EngineService engineService, IRecentLogEntryProvider recentLogEntryProvider, IEngineIdentificationProvider engineIdentificationProvider, IObjectSerializer objectSerializer, IEngineConfigurationBus engineConfigurationBus)
+        /// <param name="responseBus">The rest communication provider.</param>
+        public HeartbeatRunner(IHeartbeatConfigurationProvider heartbeatConfigurationProvider, 
+            EngineService engineService, 
+            IRecentLogEntryProvider recentLogEntryProvider, 
+            IEngineIdentificationProvider engineIdentificationProvider, 
+            IResponseBus responseBus)
         {
             _heartbeatConfigurationProvider = heartbeatConfigurationProvider;
             _engineService = engineService;
             _recentLogEntryProvider = recentLogEntryProvider;
             _engineIdentificationProvider = engineIdentificationProvider;
-            _objectSerializer = objectSerializer;
-            _engineConfigurationBus = engineConfigurationBus;
+            _responseBus = responseBus;
         }
 
         private void Pump()
@@ -71,7 +71,7 @@ namespace Thycotic.DistributedEngine.Heartbeat
                 //LogEntries = logEntries
             };
 
-            var response = _engineConfigurationBus.SendHeartbeat(request);
+            var response = _responseBus.SendHeartbeat(request);
 
             if (!response.Success)
             {

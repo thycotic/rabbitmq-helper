@@ -33,6 +33,7 @@ namespace Thycotic.DistributedEngine.IoC
                     new InitializationVector(
                         Convert.FromBase64String(_configurationProvider(MessageQueue.Client.ConfigurationKeys.Engine.InitializationVector)))
             }).As<IAuthenticatedCommunicationKeyProvider>().SingleInstance();
+            builder.RegisterType<AuthenticatedCommunicationRequestEncryptor>().AsImplementedInterfaces().SingleInstance();
             
             builder.RegisterModule(new HeartbeatModule(_configurationProvider, _engineService));
             

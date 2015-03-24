@@ -2,6 +2,7 @@ using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Security;
 using Thycotic.Encryption;
@@ -46,6 +47,25 @@ namespace Thycotic.DistributedEngine.EngineToServer
                 KeyHash = _authenticatedCommunicationKeyProvider.SymmetricKey.GetHashString(),
                 Body = _authenticatedCommunicationRequestEncryptor.Encrypt((SymmetricKeyPair)_authenticatedCommunicationKeyProvider, requestString)
             };
+        }
+
+        private T UnwrapRequest<T>(byte[] bytes)
+        {
+            var unencryptedBytes = _authenticatedCommunicationRequestEncryptor.Decrypt((SymmetricKeyPair) _authenticatedCommunicationKeyProvider, bytes);
+
+            return _objectSerializer.ToObject<T>(unencryptedBytes);
+        }
+
+        /// <summary>
+        /// Sends a heartbeat request to server
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
+        {
+            var response = _channel.SendHeartbeat(WrapRequest(request));
+
+            return UnwrapRequest<EngineHeartbeatResponse>(response);
         }
 
         /// <summary>

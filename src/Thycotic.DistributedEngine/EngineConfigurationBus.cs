@@ -18,8 +18,6 @@ namespace Thycotic.DistributedEngine
     {
         private readonly IObjectSerializer _objectSerializer;
         private readonly IAuthenticationRequestEncryptor _authenticationRequestEncryptor;
-        private readonly IAuthenticatedCommunicationKeyProvider _authenticatedCommunicationKeyProvider;
-        private readonly IAuthenticatedCommunicationRequestEncryptor _authenticatedCommunicationRequestEncryptor;
         private readonly IEngineToServerCommunicationWcfService _channel;
 
         /// <summary>
@@ -28,19 +26,13 @@ namespace Thycotic.DistributedEngine
         /// <param name="engineToServerConnection">The engine to server connection.</param>
         /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="authenticationRequestEncryptor">The authentication request encryptor.</param>
-        /// <param name="authenticatedCommunicationKeyProvider">The authenticated communication key provider.</param>
-        /// <param name="authenticatedCommunicationRequestEncryptor">The authenticated communication request encryptor.</param>
         public EngineConfigurationBus(IEngineToServerConnection engineToServerConnection, 
             IObjectSerializer objectSerializer, 
-            IAuthenticationRequestEncryptor authenticationRequestEncryptor, 
-            IAuthenticatedCommunicationKeyProvider authenticatedCommunicationKeyProvider, 
-            IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
+            IAuthenticationRequestEncryptor authenticationRequestEncryptor)
         {
         
             _objectSerializer = objectSerializer;
             _authenticationRequestEncryptor = authenticationRequestEncryptor;
-            _authenticatedCommunicationKeyProvider = authenticatedCommunicationKeyProvider;
-            _authenticatedCommunicationRequestEncryptor = authenticatedCommunicationRequestEncryptor;
             _channel = engineToServerConnection.OpenChannel();
         }
 
@@ -66,24 +58,6 @@ namespace Thycotic.DistributedEngine
             });
 
             return _objectSerializer.ToObject<EngineConfigurationResponse>(configurationBytes);
-        }
-
-        /// <summary>
-        /// Sends a heartbeat request to server
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns></returns>
-        public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
-        {
-            var requestString = _objectSerializer.ToBytes(request);
-
-            var heartbeatBytes = _channel.SendHeartbeat(new SymmetricEnvelope
-            {
-                KeyHash = _authenticatedCommunicationKeyProvider.SymmetricKey.GetHashString(),
-                Body = _authenticatedCommunicationRequestEncryptor.Encrypt((SymmetricKeyPair)_authenticatedCommunicationKeyProvider, requestString)
-            });
-
-            return _objectSerializer.ToObject<EngineHeartbeatResponse>(heartbeatBytes);
         }
 
         /// <summary>

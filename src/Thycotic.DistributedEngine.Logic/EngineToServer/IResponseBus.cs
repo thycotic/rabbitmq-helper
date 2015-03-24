@@ -1,7 +1,7 @@
 ﻿using System;
-using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 
 namespace Thycotic.DistributedEngine.Logic.EngineToServer
 {
@@ -10,6 +10,13 @@ namespace Thycotic.DistributedEngine.Logic.EngineToServer
     /// </summary>
     public interface IResponseBus : IDisposable
     {
+        /// <summary>
+        /// Sends a heartbeat request to server
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request);
+
         /// <summary>
         /// Pings the specified envelope.
         /// </summary>
