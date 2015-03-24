@@ -67,11 +67,11 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
                 try
                 {
 
-                    var response = _bus.BlockingPublish<SecretHeartbeatResponse>(exchangeNameProvider.GetCurrentExchange(), message, 30);
-                    if (!response.Success)
-                    {
-                        _log.Error(response.StatusMessages.First());
-                    }
+                    _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
+                    //if (!response.Success)
+                    //{
+                    //    _log.Error(response.StatusMessages.First());
+                    //}
                 }
                 catch (Exception ex)
                 {

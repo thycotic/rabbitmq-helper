@@ -29,7 +29,7 @@ namespace Thycotic.MessageQueue.Client.Tests
         public void WhenTheMethodBasicPublishOnMemoryMqServerMemoryMqServerTestIsCalled(string requestBusName, string exchangeName, string consumableName)
         {
             var requestBus = this.GetScenarioContext().Get<IRequestBus>(requestBusName);
-            var consumable = this.GetScenarioContext().Get<IConsumable>(consumableName);
+            var consumable = this.GetScenarioContext().Get<IBasicConsumable>(consumableName);
 
             requestBus.BasicPublish(exchangeName, consumable, true);
         }

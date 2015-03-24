@@ -32,7 +32,7 @@ namespace Thycotic.MessageQueue.Client.Tests
         /// <param name="request">The request.</param>
         /// <param name="persistent">Ignored.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void BasicPublish(string exchangeName, IConsumable request, bool persistent = true)
+        public void BasicPublish(string exchangeName, IBasicConsumable request, bool persistent = true)
         {
             lock (_syncRoot)
             {
@@ -54,7 +54,7 @@ namespace Thycotic.MessageQueue.Client.Tests
         /// <returns></returns>
         /// <exception cref="System.TimeoutException"></exception>
         /// <exception cref="System.NotImplementedException"></exception>
-        public TResponse BlockingPublish<TResponse>(string exchangeName, IConsumable request, int timeoutSeconds)
+        public TResponse BlockingPublish<TResponse>(string exchangeName, IBlockingConsumable request, int timeoutSeconds)
         {
             var cts = new CancellationTokenSource(timeoutSeconds);
 

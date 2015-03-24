@@ -35,7 +35,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="exchangeName">Name of the exchange.</param>
         /// <param name="request">The request.</param>
         /// <param name="persistent">if set to <c>true</c> [persistent].</param>
-        public void BasicPublish(string exchangeName, IConsumable request, bool persistent = true)
+        public void BasicPublish(string exchangeName, IBasicConsumable request, bool persistent = true)
         {
             _log.Debug(string.Format("Publishing basic (fire and forget) {0}", request.GetType()));
 
@@ -79,7 +79,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// or
         /// CorrelationId mismatch
         /// or</exception>
-        public TResponse BlockingPublish<TResponse>(string exchangeName, IConsumable request, int timeoutSeconds)
+        public TResponse BlockingPublish<TResponse>(string exchangeName, IBlockingConsumable request, int timeoutSeconds)
         {
             _log.Debug(string.Format("Publishing blocking {0}", request.GetType()));
 
