@@ -22,8 +22,8 @@ namespace Thycotic.DistributedEngine.Security
         {
             _log.Debug(string.Format("Decrypting body with private key"));
 
-            var saltedBytes = _saltProvider.Salt(bytes, ByteSaltProvider.DefaultSaltLength);
-            return _asymmetricEncryptor.DecryptWithPrivateKey(decryptionKey, saltedBytes);
+            var saltedBytes = _asymmetricEncryptor.DecryptWithPrivateKey(decryptionKey, bytes);
+            return _saltProvider.Unsalt(saltedBytes, ByteSaltProvider.DefaultSaltLength);
         }
     }
 }
