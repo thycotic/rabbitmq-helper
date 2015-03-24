@@ -1,5 +1,6 @@
 using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Security;
@@ -32,23 +33,23 @@ namespace Thycotic.DistributedEngine.EngineToServer
             _engineToServerEncryptor = engineToServerEncryptor;
         }
 
-        private EncryptedEngineRequest WrapRequest(object request)
-        {
-            var bytes = _objectSerializer.ToBytes(request);
-            var body = _engineToServerEncryptor.EncryptWithServerPublicKey(_serverPublicKey, bytes);
+        //private EncryptedEngineRequest WrapRequest(object request)
+        //{
+        //    var bytes = _objectSerializer.ToBytes(request);
+        //    var body = _engineToServerEncryptor.EncryptWithServerPublicKey(_serverPublicKey, bytes);
 
-            return new EncryptedEngineRequest
-            {
-                Body = body
-            };
-        }
+        //    return new EncryptedEngineRequest
+        //    {
+        //        Body = body
+        //    };
+        //}
 
-        private T UnWrapResponse<T>(EncryptedEngineResponse response)
-        {
-            var body = _engineToServerEncryptor.DecryptWithPrivateKey(response.Body);
+        //private T UnWrapResponse<T>(EncryptedEngineResponse response)
+        //{
+        //    var body = _engineToServerEncryptor.DecryptWithPrivateKey(response.Body);
 
-            return _objectSerializer.ToObject<T>(body);
-        }
+        //    return _objectSerializer.ToObject<T>(body);
+        //}
 
         /// <summary>
         /// Pre-authentication request to get a public key for server so that subsequent request are encrypted with that key
@@ -56,31 +57,64 @@ namespace Thycotic.DistributedEngine.EngineToServer
         /// <returns></returns>
         public void PreAuthenticate()
         {
-            var preAuthentication = _connection.PreAuthenticate();
+            var bytes = _connection.PreAuthenticate();
 
-            _serverPublicKey = new PublicKey(Convert.FromBase64String(preAuthentication.PublicKey));
+            var response = _objectSerializer.ToObject<EnginePreAuthenticationResponse>(bytes);
+
+            _serverPublicKey = new PublicKey(Convert.FromBase64String(response.ServerPublicKey));
         }
 
         /// <summary>
-        /// Basic publish.
+        /// Gets engine configuration from server
         /// </summary>
-        /// <param name="request">The request.</param>
-        public void BasicPublish(IBasicConsumable request)
-        {
-            _connection.BasicPublish(WrapRequest(request));
-        }
-
-        /// <summary>
-        /// Blocking publish.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public T BlockingPublish<T>(IBlockingConsumable request)
+        public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
-            var response = _connection.BlockingPublish(WrapRequest(request));
+            //var bytes = _connection.GetConfiguration(envelope);
 
-            return UnWrapResponse<T>(response);
+            return null;
+        }
+
+        /// <summary>
+        /// Sends a heartbeat request to server
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
+        {
+            //var bytes = _connection.SendHeartbeat(envelope);
+            return null;
+        }
+
+        /// <summary>
+        /// Pings the specified envelope.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void Ping(EnginePingRequest request)
+        {
+         
+        }
+
+        /// <summary>
+        /// Sends the secret heartbeat response.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void SendSecretHeartbeatResponse(SecretHeartbeatResponse response)
+        {
+         
+        }
+
+        /// <summary>
+        /// Sends the remote password change response.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void SendRemotePasswordChangeResponse(RemotePasswordChangeResponse response)
+        {
+         
         }
 
         /// <summary>

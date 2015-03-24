@@ -136,6 +136,10 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Text, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ServiceStack.Text.Signed.4.0.36\lib\net40\ServiceStack.Text.dll</HintPath>
@@ -157,17 +161,18 @@
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.112\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.129\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Encryption">
-      <HintPath>..\..\lib\Thycotic.Encryption.dll</HintPath>
+    <Reference Include="Thycotic.Encryption, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a573cc6dd3295692, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.129\lib\net451\Thycotic.Encryption.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Wcf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.19\lib\net451\Thycotic.Wcf.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.24\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

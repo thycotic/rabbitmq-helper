@@ -1,5 +1,7 @@
 ﻿using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 
 namespace Thycotic.DistributedEngine.Logic.EngineToServer
 {
@@ -9,18 +11,22 @@ namespace Thycotic.DistributedEngine.Logic.EngineToServer
     public interface IResponseBus : IDisposable
     {
         /// <summary>
-        /// Basics publish
+        /// Pings the specified envelope.
         /// </summary>
         /// <param name="request">The request.</param>
-        void BasicPublish(IBasicConsumable request);
+        void Ping(EnginePingRequest request);
 
         /// <summary>
-        /// Blocking publish
+        /// Sends the secret heartbeat response.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="request">The request.</param>
-        /// <returns></returns>
-        T BlockingPublish<T>(IBlockingConsumable request);
+        /// <param name="response">The response.</param>
+        void SendSecretHeartbeatResponse(SecretHeartbeatResponse response);
+
+        /// <summary>
+        /// Sends the remote password change response.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        void SendRemotePasswordChangeResponse(RemotePasswordChangeResponse response);
     }
 }
 

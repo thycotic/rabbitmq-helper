@@ -1,9 +1,7 @@
-using System;
-using Thycotic.DistributedEngine.EngineToServerCommunication;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Security;
-using Thycotic.Encryption;
 using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.EngineToServer
@@ -26,28 +24,6 @@ namespace Thycotic.DistributedEngine.EngineToServer
             _channel = engineToServerConnection.OpenChannel(objectSerializer, engineToServerEncryptor);
         }
 
-        /// <summary>
-        /// Basics publish
-        /// </summary>
-        /// <param name="request">The request.</param>
-        public void BasicPublish(IBasicConsumable request)
-        {
-            _channel.BasicPublish(request);
-
-        }
-
-        /// <summary>
-        /// Blockings the publish.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="request">The request.</param>
-        /// <returns></returns>
-        public T BlockingPublish<T>(IBlockingConsumable request)
-        {
-
-            return _channel.BlockingPublish<T>(request);
-
-        }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -57,5 +33,34 @@ namespace Thycotic.DistributedEngine.EngineToServer
             _channel.Dispose();
         }
 
+        /// <summary>
+        /// Pings the specified envelope.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void Ping(EnginePingRequest request)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Sends the secret heartbeat response.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void SendSecretHeartbeatResponse(SecretHeartbeatResponse response)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Sends the remote password change response.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void SendRemotePasswordChangeResponse(RemotePasswordChangeResponse response)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

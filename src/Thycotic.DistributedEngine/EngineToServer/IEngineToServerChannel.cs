@@ -1,5 +1,6 @@
 using System;
-using Thycotic.DistributedEngine.EngineToServerCommunication;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 
 namespace Thycotic.DistributedEngine.EngineToServer
@@ -14,20 +15,37 @@ namespace Thycotic.DistributedEngine.EngineToServer
         /// </summary>
         /// <returns></returns>
         void PreAuthenticate();
-
+        
         /// <summary>
-        /// Basic publish.
+        /// Gets engine configuration from server
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        void BasicPublish(IBasicConsumable request);
+        EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request);
 
         /// <summary>
-        /// Blocking publish.
+        /// Sends a heartbeat request to server
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
+        EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request);
 
-        T BlockingPublish<T>(IBlockingConsumable request);
+        /// <summary>
+        /// Pings the specified envelope.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        void Ping(EnginePingRequest request);
+
+        /// <summary>
+        /// Sends the secret heartbeat response.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        void SendSecretHeartbeatResponse(SecretHeartbeatResponse response);
+
+        /// <summary>
+        /// Sends the remote password change response.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        void SendRemotePasswordChangeResponse(RemotePasswordChangeResponse response);
     }
 }

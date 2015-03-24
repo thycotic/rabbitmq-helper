@@ -42,7 +42,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
 
             try
             {
-                _responseBus.BasicPublish(new EnginePingRequest());
+                _responseBus.Ping(new EnginePingRequest());
             }
             catch (Exception ex)
             {

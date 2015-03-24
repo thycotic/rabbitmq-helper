@@ -33,7 +33,7 @@ namespace Thycotic.DistributedEngine
         /// <returns></returns>
         public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
-            return _channel.BlockingPublish<EngineConfigurationResponse>(request);
+            return _channel.GetConfiguration(request);
 
         }
 
@@ -45,8 +45,7 @@ namespace Thycotic.DistributedEngine
         public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
 
-            return _channel.BlockingPublish<EngineHeartbeatResponse>(request);
-
+            return _channel.SendHeartbeat(request);
         }
 
         /// <summary>

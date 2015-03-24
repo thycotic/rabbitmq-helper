@@ -73,7 +73,6 @@ namespace Thycotic.DistributedEngine.Heartbeat
             {
                 IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                 OrganizationId = _engineIdentificationProvider.OrganizationId,
-                PublicKey = Convert.ToBase64String(_localKeyProvider.PublicKey.Value),
                 Version = ReleaseInformationHelper.GetVersionAsDouble(),
                 LastActivity = DateTime.UtcNow,
                 //LogEntries = logEntries

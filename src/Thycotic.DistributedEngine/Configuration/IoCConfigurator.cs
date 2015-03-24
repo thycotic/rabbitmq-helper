@@ -253,7 +253,6 @@ namespace Thycotic.DistributedEngine.Configuration
             _log.Info(string.Format("Running engine on {0}", DnsEx.GetDnsHostName()));
 
             var engineIdentificationProvider = tempContainer.Resolve<IEngineIdentificationProvider>();
-            var localKeyProvider = tempContainer.Resolve<ILocalKeyProvider>();
             var engineConfigurationBus = tempContainer.Resolve<IEngineConfigurationBus>();
             
             var request = new EngineConfigurationRequest
@@ -263,7 +262,6 @@ namespace Thycotic.DistributedEngine.Configuration
                 HostName = engineIdentificationProvider.HostName,
                 FriendlyName = engineIdentificationProvider.FriendlyName,
                 IdentityGuid = engineIdentificationProvider.IdentityGuid,
-                PublicKey = Convert.ToBase64String(localKeyProvider.PublicKey.Value),
                 Version = ReleaseInformationHelper.GetVersionAsDouble()
             };
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using Thycotic.DistributedEngine.EngineToServer;
-using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
@@ -20,59 +19,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         private DateTime _lastBaked;
 
         private readonly ILogWriter _log = Log.Get(typeof(LoopbackEngineToServerChannel));
-
-        public void PreAuthenticate()
-        {
-
-        }
-
-        public void BasicPublish(IBasicConsumable request)
-        {
-            if (request is EnginePingRequest)
-            {
-                Pong((EnginePingRequest)request);
-            }
-            else if (request is SecretHeartbeatResponse)
-            {
-                RecordSecretHeartbeatResponse((SecretHeartbeatResponse)request);
-            }
-            else
-            {
-                throw new NotSupportedException("Unsupported basic publish request");
-            }
-        }
-
-        public T BlockingPublish<T>(IBlockingConsumable request)
-        {
-            object response;
-
-            if (request is EngineConfigurationRequest)
-            {
-                response = GetConfiguration((EngineConfigurationRequest)request);
-            }
-            else if (request is EngineHeartbeatRequest)
-            {
-                response = SendHeartbeat((EngineHeartbeatRequest)request);
-            }
-            else if (request is EngineLogDumpRequest)
-            {
-                response = SendLog((EngineLogDumpRequest)request);
-            }
-            else
-            {
-                throw new NotSupportedException("Unsupported blocking publish request");
-            }
-
-            return (T)response;
-        }
-
-
-        //        private byte[] EncryptWithPublicKey(PublicKey publicKey, byte[] bytes)
-        //        {
-        //            var saltedBytes = _saltProvider.Salt(bytes, MessageEncryption.SaltLength);
-        //            return _asymmetricEncryptor.EncryptWithPublicKey(publicKey, saltedBytes);
-        //        }
-
+        
         // ReSharper disable once UnusedMember.Local
         private static MessageEncryptionPair<SymmetricKey, InitializationVector> GetDynamicEncryptionPair()
         {
@@ -107,7 +54,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
         }
 
-        private EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
+        public void PreAuthenticate()
+        {
+
+        }
+
+        public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
             _bakedConfiguration = new Lazy<Dictionary<string, string>>(() =>
             {
@@ -137,6 +89,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 //add additional configuration
                 //var pair = GetDynamicEncryptionPair();
                 var pair = GetStaticEncryptionPair();
+
+                configuration[MessageQueue.Client.ConfigurationKeys.Engine.SymmetricKey] =
+                    Convert.ToBase64String(pair.SymmetricKey.Value);
+                configuration[MessageQueue.Client.ConfigurationKeys.Engine.InitializationVector] =
+                    Convert.ToBase64String(pair.InitializationVector.Value);
+
                 configuration[MessageQueue.Client.ConfigurationKeys.Exchange.SymmetricKey] =
                     Convert.ToBase64String(pair.SymmetricKey.Value);
                 configuration[MessageQueue.Client.ConfigurationKeys.Exchange.InitializationVector] =
@@ -154,7 +112,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 
         }
 
-        private EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
+        public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
 
             if (!_bakedConfiguration.IsValueCreated)
@@ -172,7 +130,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             };
         }
 
-        private EngineLogDumpResponse SendLog(EngineLogDumpRequest request)
+        public EngineLogResponse SendLog(EngineLogRequest request)
         {
 
             var logEntries = request.LogEntries;
@@ -186,24 +144,27 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                         e => ConsumerConsole.WriteLine(string.Format("Engine -> {0}", e.Message), ConsoleColor.DarkBlue));
             }
 
-            return new EngineLogDumpResponse
+            return new EngineLogResponse
             {
                 Success = true
             };
         }
 
-        private void Pong(EnginePingRequest request)
+        public void Ping(EnginePingRequest request)
         {
             //all good
-        
+
         }
 
-        private void RecordSecretHeartbeatResponse(SecretHeartbeatResponse response)
+        public void SendSecretHeartbeatResponse(SecretHeartbeatResponse response)
         {
-            //don't do anything on loopback
+            //do nothing
         }
 
-
+        public void SendRemotePasswordChangeResponse(RemotePasswordChangeResponse response)
+        {
+            //do nothing
+        }
 
         public void Dispose()
         {
