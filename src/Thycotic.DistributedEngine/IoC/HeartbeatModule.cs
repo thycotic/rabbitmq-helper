@@ -31,7 +31,7 @@ namespace Thycotic.DistributedEngine.IoC
 
                 var heartbeatIntervalSeconds =
                     Convert.ToInt32(
-                        _configurationProvider(MessageQueue.Client.ConfigurationKeys.HeartbeatIntervalSeconds));
+                        _configurationProvider(MessageQueue.Client.ConfigurationKeys.Engine.HeartbeatIntervalSeconds));
 
                 builder.Register(context => _engineService).SingleInstance();
 

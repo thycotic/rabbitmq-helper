@@ -6,9 +6,25 @@
     public static class ConfigurationKeys
     {
         /// <summary>
-        /// The heartbeat interval
+        /// Engine
         /// </summary>
-        public const string HeartbeatIntervalSeconds = "Heartbeat.IntervalSeconds";
+        public static class Engine
+        {
+            /// <summary>
+            /// The symmetric key
+            /// </summary>
+            public const string SymmetricKey = "Engine.SymmetricKey";
+
+            /// <summary>
+            /// The initialization vector
+            /// </summary>
+            public const string InitializationVector = "Engine.InitializationVector";
+
+            /// <summary>
+            /// The heartbeat interval
+            /// </summary>
+            public const string HeartbeatIntervalSeconds = "Engine.Heartbeat.IntervalSeconds";
+        }
 
         /// <summary>
         /// Pipeline
@@ -40,22 +56,6 @@
             /// The initialization vector
             /// </summary>
             public const string InitializationVector = "Exchange.InitializationVector";
-        }
-
-        /// <summary>
-        /// Engine
-        /// </summary>
-        public static class Engine
-        {
-            /// <summary>
-            /// The symmetric key
-            /// </summary>
-            public const string SymmetricKey = "Engine.SymmetricKey";
-
-            /// <summary>
-            /// The initialization vector
-            /// </summary>
-            public const string InitializationVector = "Engine.InitializationVector";
         }
 
         /// <summary>
