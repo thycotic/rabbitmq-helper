@@ -3,9 +3,9 @@
 namespace Thycotic.DistributedEngine.Security
 {
     /// <summary>
-    /// Interface for a lcal key provider
+    /// /// Interface for authenticated communication back to server
     /// </summary>
-    public interface ILocalKeyProvider
+    public interface IAuthenticationKeyProvider
     {
         /// <summary>
         /// Gets the public key.

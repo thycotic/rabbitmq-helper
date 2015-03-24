@@ -21,7 +21,7 @@ namespace Thycotic.DistributedEngine.Configuration
     public class IoCConfigurator : IIoCConfigurator
     {
         #region Expensive/reusable through restarts
-        private static readonly ILocalKeyProvider LocalKeyProvider = new LocalKeyProvider();
+        private static readonly IAuthenticationKeyProvider AuthenticationKeyProvider = new AuthenticationKeyProvider();
         private static readonly IIdentityGuidProvider IdentityGuidProvider = new IdentityGuidProvider();
         #endregion
 
@@ -91,7 +91,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <param name="builder">The builder.</param>
         protected void RegisterCore(ContainerBuilder builder)
         {
-            builder.Register(context => LocalKeyProvider).As<ILocalKeyProvider>().SingleInstance();
+            builder.Register(context => AuthenticationKeyProvider).As<IAuthenticationKeyProvider>().SingleInstance();
             builder.Register(context => IdentityGuidProvider).As<IIdentityGuidProvider>().SingleInstance();
 
             builder.RegisterType<RecentLogEntryProvider>().AsImplementedInterfaces().SingleInstance();
@@ -117,9 +117,6 @@ namespace Thycotic.DistributedEngine.Configuration
                     IdentityGuid = identityGuidProvider.IdentityGuid
                 };
             }).As<IEngineIdentificationProvider>().SingleInstance();
-
-            builder.RegisterType<EngineToServerEncryptor>().AsImplementedInterfaces();
-
         }
 
 
@@ -137,8 +134,7 @@ namespace Thycotic.DistributedEngine.Configuration
 
                 var useSsl =
                     Convert.ToBoolean(GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.UseSsl));
-
-
+                
                 if (useSsl)
                 {
                     _log.Info("Connection to server is using encryption");
@@ -162,7 +158,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
         protected virtual void RegisterPostAuthorization(ContainerBuilder builder, EngineService engineService, bool startConsuming)
         {
-            builder.RegisterModule(new HeartbeatModule(GetInstanceConfiguration, engineService));
+            builder.RegisterModule(new EngineToServerModule(GetInstanceConfiguration, engineService));
 
             builder.RegisterModule(new MessageQueueModule(GetInstanceConfiguration));
 

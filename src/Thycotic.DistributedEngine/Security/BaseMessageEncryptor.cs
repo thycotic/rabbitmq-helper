@@ -2,7 +2,6 @@
 using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
-using Thycotic.Utility.Security;
 
 namespace Thycotic.DistributedEngine.Security
 {
@@ -18,7 +17,7 @@ namespace Thycotic.DistributedEngine.Security
         /// </summary>
         /// <param name="exchangeName">Name of the exchange.</param>
         /// <returns></returns>
-        protected abstract MessageEncryptionPair<SymmetricKey, InitializationVector> GetEncryptionPair(string exchangeName);
+        protected abstract SymmetricKeyPair GetEncryptionPair(string exchangeName);
 
         /// <summary>
         /// Encrypts the specified exchange name.
@@ -31,21 +30,14 @@ namespace Thycotic.DistributedEngine.Security
             var encryptor = new SymmetricEncryptor();
             var saltProvider = new ByteSaltProvider();
 
-            try
-            {
-                _log.Debug(string.Format("Encrypting body for exchange {0}", exchangeName));
+            _log.Debug(string.Format("Encrypting body for exchange {0}", exchangeName));
 
-                var pair = GetEncryptionPair(exchangeName);
+            var pair = GetEncryptionPair(exchangeName);
 
-                var saltedBody = saltProvider.Salt(unEncryptedBody, MessageEncryption.SaltLength);
-                var encryptedBody = encryptor.Encrypt(saltedBody, pair.SymmetricKey, pair.InitializationVector);
-                return encryptedBody;
-            }
-            catch (Exception ex)
-            {
-                _log.Error("Failed to encrypt", ex);
-                throw;
-            }
+            var saltedBody = saltProvider.Salt(unEncryptedBody, ByteSaltProvider.DefaultSaltLength);
+            var encryptedBody = encryptor.Encrypt(saltedBody, pair.SymmetricKey, pair.InitializationVector);
+            return encryptedBody;
+
         }
 
         /// <summary>
@@ -58,24 +50,15 @@ namespace Thycotic.DistributedEngine.Security
         {
             var saltProvider = new ByteSaltProvider();
             var encryptor = new SymmetricEncryptor();
-            try
-            {
-                _log.Debug(string.Format("Decrypting body from exchange {0}", exchangeName));
 
-                var pair = GetEncryptionPair(exchangeName);
+            _log.Debug(string.Format("Decrypting body from exchange {0}", exchangeName));
 
-                var decryptedBody = encryptor.Decrypt(encryptedBody, pair.SymmetricKey, pair.InitializationVector);
-                var unsaltedBody = saltProvider.Unsalt(decryptedBody, MessageEncryption.SaltLength);
-                return unsaltedBody;
-            }
-            catch (Exception ex)
-            {
-                _log.Error("Failed to decrypt", ex);
-                throw;
-            }
+            var pair = GetEncryptionPair(exchangeName);
+
+            var decryptedBody = encryptor.Decrypt(encryptedBody, pair.SymmetricKey, pair.InitializationVector);
+            var unsaltedBody = saltProvider.Unsalt(decryptedBody, ByteSaltProvider.DefaultSaltLength);
+            return unsaltedBody;
+
         }
-
-   
-       
     }
 }

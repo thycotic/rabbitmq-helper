@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using Thycotic.Encryption;
 using Thycotic.Logging;
-using Thycotic.Utility.Security;
 
 namespace Thycotic.DistributedEngine.Security
 {
@@ -13,7 +12,7 @@ namespace Thycotic.DistributedEngine.Security
     {
         private readonly ILogWriter _log = Log.Get(typeof(MessageEncryptor));
 
-        private readonly ConcurrentDictionary<string, MessageEncryptionPair<SymmetricKey, InitializationVector>> _encryptionPairs = new ConcurrentDictionary<string, MessageEncryptionPair<SymmetricKey, InitializationVector>>();
+        private readonly ConcurrentDictionary<string, SymmetricKeyPair> _encryptionPairs = new ConcurrentDictionary<string, SymmetricKeyPair>();
 
         /// <summary>
         /// Adds the key.
@@ -25,7 +24,7 @@ namespace Thycotic.DistributedEngine.Security
         {
             _log.Info(string.Format("Adding symmetric key and initialization vector for {0} exchange", exchangeName));
 
-            return _encryptionPairs.TryAdd(exchangeName, new MessageEncryptionPair<SymmetricKey, InitializationVector>
+            return _encryptionPairs.TryAdd(exchangeName, new SymmetricKeyPair
             {
                 SymmetricKey = symmetricKey,
                 InitializationVector = initializationVector
@@ -38,9 +37,9 @@ namespace Thycotic.DistributedEngine.Security
         /// </summary>
         /// <param name="exchangeName">Name of the exchange.</param>
         /// <returns></returns>
-        protected override MessageEncryptionPair<SymmetricKey, InitializationVector> GetEncryptionPair(string exchangeName)
+        protected override SymmetricKeyPair GetEncryptionPair(string exchangeName)
         {
-            MessageEncryptionPair<SymmetricKey, InitializationVector> pair;
+            SymmetricKeyPair pair;
             if (!_encryptionPairs.TryGetValue(exchangeName, out pair))
             {
                 throw new ApplicationException("No key information available");

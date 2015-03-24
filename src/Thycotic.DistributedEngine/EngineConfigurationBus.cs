@@ -1,8 +1,12 @@
+using System;
 using Thycotic.DistributedEngine.EngineToServer;
+using Thycotic.DistributedEngine.EngineToServerCommunication;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Security;
+using Thycotic.Encryption;
 using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine
@@ -12,18 +16,32 @@ namespace Thycotic.DistributedEngine
     /// </summary>
     public class EngineConfigurationBus : IEngineConfigurationBus
     {
-        private readonly IEngineToServerChannel _channel;
+        private readonly IObjectSerializer _objectSerializer;
+        private readonly IAuthenticationRequestEncryptor _authenticationRequestEncryptor;
+        private readonly IAuthenticatedCommunicationKeyProvider _authenticatedCommunicationKeyProvider;
+        private readonly IAuthenticatedCommunicationRequestEncryptor _authenticatedCommunicationRequestEncryptor;
+        private readonly IEngineToServerCommunicationWcfService _channel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineConfigurationBus" /> class.
         /// </summary>
         /// <param name="engineToServerConnection">The engine to server connection.</param>
         /// <param name="objectSerializer">The object serializer.</param>
-        /// <param name="engineToServerEncryptor"></param>
-        public EngineConfigurationBus(IEngineToServerConnection engineToServerConnection, IObjectSerializer objectSerializer, IEngineToServerEncryptor engineToServerEncryptor)
+        /// <param name="authenticationRequestEncryptor">The authentication request encryptor.</param>
+        /// <param name="authenticatedCommunicationKeyProvider">The authenticated communication key provider.</param>
+        /// <param name="authenticatedCommunicationRequestEncryptor">The authenticated communication request encryptor.</param>
+        public EngineConfigurationBus(IEngineToServerConnection engineToServerConnection, 
+            IObjectSerializer objectSerializer, 
+            IAuthenticationRequestEncryptor authenticationRequestEncryptor, 
+            IAuthenticatedCommunicationKeyProvider authenticatedCommunicationKeyProvider, 
+            IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
         {
-            _channel = engineToServerConnection.OpenChannel(objectSerializer, engineToServerEncryptor);
-
+        
+            _objectSerializer = objectSerializer;
+            _authenticationRequestEncryptor = authenticationRequestEncryptor;
+            _authenticatedCommunicationKeyProvider = authenticatedCommunicationKeyProvider;
+            _authenticatedCommunicationRequestEncryptor = authenticatedCommunicationRequestEncryptor;
+            _channel = engineToServerConnection.OpenChannel();
         }
 
         /// <summary>
@@ -33,8 +51,21 @@ namespace Thycotic.DistributedEngine
         /// <returns></returns>
         public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
-            return _channel.GetConfiguration(request);
+            var preAuthenticationBytes = _channel.PreAuthenticate();
 
+            var preAuthentication = _objectSerializer.ToObject<EnginePreAuthenticationResponse>(preAuthenticationBytes);
+
+            var serverPublicKey = new PublicKey(Convert.FromBase64String(preAuthentication.ServerPublicKey));
+
+            var requestString = _objectSerializer.ToBytes(request);
+
+            var configurationBytes = _channel.GetConfiguration(new AsymmetricEnvelope
+            {
+                KeyHash = serverPublicKey.GetHashString(),
+                Body = _authenticationRequestEncryptor.Encrypt(serverPublicKey, requestString)
+            });
+
+            return _objectSerializer.ToObject<EngineConfigurationResponse>(configurationBytes);
         }
 
         /// <summary>
@@ -44,8 +75,15 @@ namespace Thycotic.DistributedEngine
         /// <returns></returns>
         public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
+            var requestString = _objectSerializer.ToBytes(request);
 
-            return _channel.SendHeartbeat(request);
+            var heartbeatBytes = _channel.SendHeartbeat(new SymmetricEnvelope
+            {
+                KeyHash = _authenticatedCommunicationKeyProvider.SymmetricKey.GetHashString(),
+                Body = _authenticatedCommunicationRequestEncryptor.Encrypt((SymmetricKeyPair)_authenticatedCommunicationKeyProvider, requestString)
+            });
+
+            return _objectSerializer.ToObject<EngineHeartbeatResponse>(heartbeatBytes);
         }
 
         /// <summary>

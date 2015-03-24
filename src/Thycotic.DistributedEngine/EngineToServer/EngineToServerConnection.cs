@@ -32,36 +32,24 @@ namespace Thycotic.DistributedEngine.EngineToServer
         /// <summary>
         /// Opens the channel.
         /// </summary>
-        /// <param name="objectSerializer"></param>
-        /// <param name="engineToServerEncryptor"></param>
         /// <returns></returns>
         /// <exception cref="System.NotSupportedException">Requested schema does not have a supported channel</exception>
-        public IEngineToServerChannel OpenChannel(IObjectSerializer objectSerializer, IEngineToServerEncryptor engineToServerEncryptor)
+        public IEngineToServerCommunicationWcfService OpenChannel()
         {
             var uri = new Uri(_connectionString);
-
-            IEngineToServerCommunicationWcfService connection;
 
             switch (uri.Scheme)
             {
                 case "net.tcp":
                     _log.Info(string.Format("Using Net/TCP channel to {0}", _connectionString));
-                    connection= NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
-                    break;
+                    return NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
                 case "http":
                 case "https":
                     _log.Info(string.Format("Using HTTP channel to {0}", _connectionString));
-                    connection = HttpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
-                    break;
+                    return HttpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
                 default:
                     throw new NotSupportedException("Requested schema does not have a supported channel");
             }
-
-            var channel = new EngineToServerChannel(connection, objectSerializer, engineToServerEncryptor);
-
-            channel.PreAuthenticate();
-
-            return channel;
         }
 
         /// <summary>

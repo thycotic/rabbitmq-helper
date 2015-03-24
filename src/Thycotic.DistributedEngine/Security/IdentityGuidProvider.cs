@@ -7,7 +7,7 @@ using Thycotic.Logging;
 namespace Thycotic.DistributedEngine.Security
 {
     /// <summary>
-    /// Identity Guid provider
+    /// Identifier provider
     /// </summary>
     public class IdentityGuidProvider : IIdentityGuidProvider
     {
