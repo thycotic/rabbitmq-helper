@@ -2,7 +2,6 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using ServiceStack.Text;
 using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.Security
