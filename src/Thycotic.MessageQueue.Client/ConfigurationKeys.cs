@@ -43,6 +43,22 @@
         }
 
         /// <summary>
+        /// Engine
+        /// </summary>
+        public static class Engine
+        {
+            /// <summary>
+            /// The symmetric key
+            /// </summary>
+            public const string SymmetricKey = "Engine.SymmetricKey";
+
+            /// <summary>
+            /// The initialization vector
+            /// </summary>
+            public const string InitializationVector = "Engine.InitializationVector";
+        }
+
+        /// <summary>
         /// Rabbit Mq
         /// </summary>
         public static class RabbitMq
