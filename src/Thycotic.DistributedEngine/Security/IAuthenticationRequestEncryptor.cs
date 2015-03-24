@@ -6,7 +6,7 @@ namespace Thycotic.DistributedEngine.Security
     /// <summary>
     /// Authentication encryptor
     /// </summary>
-    public interface IAuthenticationRequestEncryptor : IEnvelopeEncryptor<PublicKey, PrivateKey>
+    public interface IAuthenticationRequestEncryptor : IRequestEncryptor<PublicKey, PrivateKey>
     {
     }
 }
