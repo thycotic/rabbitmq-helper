@@ -168,7 +168,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
             throw new NotImplementedException();
         }
 
-        public byte[] GetConfiguration(AsymmetricEnvelope envelope)
+        public byte[] Authenticate(AsymmetricEnvelope envelope)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] GetConfiguration(SymmetricEnvelope envelope)
         {
             throw new NotImplementedException();
         }

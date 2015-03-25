@@ -19,6 +19,7 @@ namespace Thycotic.DistributedEngine
         private readonly IObjectSerializer _objectSerializer;
         private readonly IAuthenticationKeyProvider _authenticationKeyProvider;
         private readonly IAuthenticationRequestEncryptor _authenticationRequestEncryptor;
+        private readonly IAuthenticatedCommunicationRequestEncryptor _authenticatedCommunicationRequestEncryptor;
         private readonly IEngineToServerCommunicationWcfService _channel;
 
         /// <summary>
@@ -28,15 +29,18 @@ namespace Thycotic.DistributedEngine
         /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="authenticationKeyProvider">The authentication key provider.</param>
         /// <param name="authenticationRequestEncryptor">The authentication request encryptor.</param>
-        public EngineConfigurationBus(IEngineToServerConnection engineToServerConnection, 
-            IObjectSerializer objectSerializer, 
+        /// <param name="authenticatedCommunicationRequestEncryptor">The authenticated communication request encryptor.</param>
+        public EngineConfigurationBus(IEngineToServerConnection engineToServerConnection,
+            IObjectSerializer objectSerializer,
             IAuthenticationKeyProvider authenticationKeyProvider,
-            IAuthenticationRequestEncryptor authenticationRequestEncryptor)
+            IAuthenticationRequestEncryptor authenticationRequestEncryptor,
+            IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
         {
-        
+
             _objectSerializer = objectSerializer;
             _authenticationKeyProvider = authenticationKeyProvider;
             _authenticationRequestEncryptor = authenticationRequestEncryptor;
+            _authenticatedCommunicationRequestEncryptor = authenticatedCommunicationRequestEncryptor;
             _channel = engineToServerConnection.OpenChannel();
         }
 
@@ -47,24 +51,50 @@ namespace Thycotic.DistributedEngine
         /// <returns></returns>
         public EngineConfigurationResponse GetConfiguration(EngineConfigurationRequest request)
         {
-            var preAuthenticationBytes = _channel.PreAuthenticate();
+            #region Pre-auth
+            var preAuthResponseBytes = _channel.PreAuthenticate();
 
-            var preAuthentication = _objectSerializer.ToObject<EnginePreAuthenticationResponse>(preAuthenticationBytes);
+            var preAuthentication = _objectSerializer.ToObject<EnginePreAuthenticationResponse>(preAuthResponseBytes);
+            #endregion
 
+            #region Auth
             var serverPublicKey = new PublicKey(Convert.FromBase64String(preAuthentication.PublicKeyForReply));
 
-            var requestString = _objectSerializer.ToBytes(request);
+            var authRequestString = _objectSerializer.ToBytes(request);
 
-            var configurationBytes = _channel.GetConfiguration(new AsymmetricEnvelope
+            var authResponseBytes = _channel.Authenticate(new AsymmetricEnvelope
             {
                 KeyHash = serverPublicKey.GetHashString(),
-                Body = _authenticationRequestEncryptor.Encrypt(serverPublicKey, requestString),
+                Body = _authenticationRequestEncryptor.Encrypt(serverPublicKey, authRequestString),
                 PublicKeyForReply = Convert.ToBase64String(_authenticationKeyProvider.PublicKey.Value)
             });
 
-            var decryptedConfigurationBytes = _authenticationRequestEncryptor.Decrypt(_authenticationKeyProvider.PrivateKey, configurationBytes);
+            var decryptedAuthBytes = _authenticationRequestEncryptor.Decrypt(_authenticationKeyProvider.PrivateKey, authResponseBytes);
+
+            var authRespons = _objectSerializer.ToObject<EngineAuthenticationResponse>(decryptedAuthBytes);
+            #endregion
+
+            #region Configuation
+
+            var symmetricKeyPair = new SymmetricKeyPair
+            {
+                SymmetricKey = new SymmetricKey(Convert.FromBase64String(authRespons.SymmetricKey)),
+                InitializationVector =
+                    new InitializationVector(Convert.FromBase64String(authRespons.InitializationVector))
+            };
+
+            var requestString = _objectSerializer.ToBytes(request);
+
+            var configurationBytes = _channel.GetConfiguration(new SymmetricEnvelope
+            {
+                KeyHash = symmetricKeyPair.SymmetricKey.GetHashString(),
+                Body = _authenticatedCommunicationRequestEncryptor.Encrypt(symmetricKeyPair, requestString),
+            });
+
+            var decryptedConfigurationBytes = _authenticatedCommunicationRequestEncryptor.Decrypt(symmetricKeyPair, configurationBytes);
 
             return _objectSerializer.ToObject<EngineConfigurationResponse>(decryptedConfigurationBytes);
+            #endregion
         }
 
         /// <summary>

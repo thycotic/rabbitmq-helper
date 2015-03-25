@@ -127,6 +127,7 @@ namespace Thycotic.DistributedEngine.Configuration
         protected virtual void RegisterPreAuthorization(ContainerBuilder builder)
         {
             builder.RegisterType<AuthenticationRequestEncryptor>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<AuthenticatedCommunicationRequestEncryptor>().AsImplementedInterfaces().SingleInstance();
        
             builder.Register(context =>
             {
