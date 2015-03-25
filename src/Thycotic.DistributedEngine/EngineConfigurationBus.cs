@@ -51,14 +51,15 @@ namespace Thycotic.DistributedEngine
 
             var preAuthentication = _objectSerializer.ToObject<EnginePreAuthenticationResponse>(preAuthenticationBytes);
 
-            var serverPublicKey = new PublicKey(Convert.FromBase64String(preAuthentication.ServerPublicKey));
+            var serverPublicKey = new PublicKey(Convert.FromBase64String(preAuthentication.PublicKeyForReply));
 
             var requestString = _objectSerializer.ToBytes(request);
 
             var configurationBytes = _channel.GetConfiguration(new AsymmetricEnvelope
             {
                 KeyHash = serverPublicKey.GetHashString(),
-                Body = _authenticationRequestEncryptor.Encrypt(serverPublicKey, requestString)
+                Body = _authenticationRequestEncryptor.Encrypt(serverPublicKey, requestString),
+                PublicKeyForReply = Convert.ToBase64String(_authenticationKeyProvider.PublicKey.Value)
             });
 
             var decryptedConfigurationBytes = _authenticationRequestEncryptor.Decrypt(_authenticationKeyProvider.PrivateKey, configurationBytes);
