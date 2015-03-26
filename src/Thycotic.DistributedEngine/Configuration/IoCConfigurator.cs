@@ -181,7 +181,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <returns></returns>
         public IContainer BuildPreAuthorizationOnly()
         {
-            using (LogContext.Create("IoC"))
+            using (LogContext.Create("IoC - Pre-Authentication only"))
             {
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();
@@ -203,7 +203,7 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <returns></returns>
         public IContainer BuildAll(EngineService engineService, bool startConsuming)
         {
-            using (LogContext.Create("IoC"))
+            using (LogContext.Create("IoC - All"))
             {
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();
@@ -240,37 +240,41 @@ namespace Thycotic.DistributedEngine.Configuration
         /// <returns></returns>
         public bool TryGetAndAssignConfiguration()
         {
-            if (_instanceConfiguration != null)
+            using (LogContext.Create("Configurating"))
             {
-                //already have a configuration
-                return true;
+
+                if (_instanceConfiguration != null)
+                {
+                    //already have a configuration
+                    return true;
+                }
+
+                var tempContainer = BuildPreAuthorizationOnly();
+
+                _log.Info(string.Format("Running engine on {0}", DnsEx.GetDnsHostName()));
+
+                var engineIdentificationProvider = tempContainer.Resolve<IEngineIdentificationProvider>();
+                var engineConfigurationBus = tempContainer.Resolve<IEngineConfigurationBus>();
+
+                var request = new EngineConfigurationRequest
+                {
+                    ExchangeId = engineIdentificationProvider.ExchangeId,
+                    OrganizationId = engineIdentificationProvider.OrganizationId,
+                    HostName = engineIdentificationProvider.HostName,
+                    FriendlyName = engineIdentificationProvider.FriendlyName,
+                    IdentityGuid = engineIdentificationProvider.IdentityGuid,
+                    Version = ReleaseInformationHelper.GetVersionAsDouble()
+                };
+
+                var response = engineConfigurationBus.GetConfiguration(request);
+
+                if (!response.Success)
+                {
+                    throw new ConfigurationErrorsException(response.ErrorMessage);
+                }
+
+                return response.Configuration != null && TryAssignConfiguration(response.Configuration);
             }
-
-            var tempContainer = BuildPreAuthorizationOnly();
-
-            _log.Info(string.Format("Running engine on {0}", DnsEx.GetDnsHostName()));
-
-            var engineIdentificationProvider = tempContainer.Resolve<IEngineIdentificationProvider>();
-            var engineConfigurationBus = tempContainer.Resolve<IEngineConfigurationBus>();
-            
-            var request = new EngineConfigurationRequest
-            {
-                ExchangeId = engineIdentificationProvider.ExchangeId,
-                OrganizationId = engineIdentificationProvider.OrganizationId,
-                HostName = engineIdentificationProvider.HostName,
-                FriendlyName = engineIdentificationProvider.FriendlyName,
-                IdentityGuid = engineIdentificationProvider.IdentityGuid,
-                Version = ReleaseInformationHelper.GetVersionAsDouble()
-            };
-
-            var response = engineConfigurationBus.GetConfiguration(request);
-
-            if (!response.Success)
-            {
-                throw new ConfigurationErrorsException(response.ErrorMessage);
-            }
-
-            return response.Configuration != null && TryAssignConfiguration(response.Configuration);
         }
     }
 }

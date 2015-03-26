@@ -116,12 +116,12 @@ namespace Thycotic.DistributedEngine.IoC
                 }).As<IMessageEncryptor>().SingleInstance();
             }
 
-            builder.RegisterType<RequestBus>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<RequestBus>().AsImplementedInterfaces().SingleInstance();
         }
 
         private void LoadResponseBus(ContainerBuilder builder)
         {
-            builder.RegisterType<ResponseBus>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<ResponseBus>().AsImplementedInterfaces().SingleInstance();
         }
 
         protected override void Load(ContainerBuilder builder)
