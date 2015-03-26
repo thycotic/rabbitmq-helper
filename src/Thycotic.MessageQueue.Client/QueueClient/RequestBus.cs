@@ -15,6 +15,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         private readonly IMessageEncryptor _messageEncryptor;
 
         private readonly ILogWriter _log = Log.Get(typeof(RequestBus));
+        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestBus" /> class.
@@ -133,6 +134,21 @@ namespace Thycotic.MessageQueue.Client.QueueClient
                 _log.Error(string.Format("Blocking publish failed because {0}", ex.Message), ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Disposes the bus
+        /// </summary>
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _connection.Dispose();
+
+            _disposed = true;
         }
     }
 }

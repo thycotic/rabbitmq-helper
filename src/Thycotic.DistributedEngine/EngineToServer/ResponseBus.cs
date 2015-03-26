@@ -1,3 +1,4 @@
+using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
@@ -57,13 +58,47 @@ namespace Thycotic.DistributedEngine.EngineToServer
         }
 
         /// <summary>
+        /// Wraps the channel interaction
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public T WrapInteraction<T>(Func<T> func)
+        {
+            try
+            {
+                return func.Invoke();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Bus broken down", ex);
+            }
+        }
+
+        /// <summary>
+        /// Wraps the channel interaction
+        /// </summary>
+        /// <param name="action"></param>
+        public void WrapInteraction(Action action)
+        {
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Bus broken down", ex);
+            }
+        }
+
+        /// <summary>
         /// Sends a heartbeat request to server
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
         public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
         {
-            var response = _channel.SendHeartbeat(WrapRequest(request));
+            var response = WrapInteraction(() => _channel.SendHeartbeat(WrapRequest(request)));
 
             return UnwrapRequest<EngineHeartbeatResponse>(response);
         }
@@ -74,7 +109,7 @@ namespace Thycotic.DistributedEngine.EngineToServer
         /// <param name="request">The request.</param>
         public void Ping(EnginePingRequest request)
         {
-            _channel.Ping(WrapRequest(request));   
+           WrapInteraction(() => _channel.Ping(WrapRequest(request)));   
         }
 
         /// <summary>
@@ -83,7 +118,7 @@ namespace Thycotic.DistributedEngine.EngineToServer
         /// <param name="response">The response.</param>
         public void SendSecretHeartbeatResponse(SecretHeartbeatResponse response)
         {
-            _channel.SendSecretHeartbeatResponse(WrapRequest(response));
+            WrapInteraction(() => _channel.SendSecretHeartbeatResponse(WrapRequest(response)));
         }
 
         /// <summary>
@@ -92,7 +127,7 @@ namespace Thycotic.DistributedEngine.EngineToServer
         /// <param name="response">The response.</param>
         public void SendRemotePasswordChangeResponse(RemotePasswordChangeResponse response)
         {
-            _channel.SendRemotePasswordChangeResponse(WrapRequest(response));
+           WrapInteraction(() =>  _channel.SendRemotePasswordChangeResponse(WrapRequest(response)));
         }
 
         /// <summary>
@@ -100,7 +135,7 @@ namespace Thycotic.DistributedEngine.EngineToServer
         /// </summary>
         public void Dispose()
         {
-            _channel.Dispose();
+            WrapInteraction(() => _channel.Dispose());
         }
 
     }

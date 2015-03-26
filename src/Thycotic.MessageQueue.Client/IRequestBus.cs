@@ -1,11 +1,12 @@
-﻿using Thycotic.Messages.Common;
+﻿using System;
+using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueue.Client
 {
     /// <summary>
     /// Interface for a message bus
     /// </summary>
-    public interface IRequestBus
+    public interface IRequestBus : IDisposable
     {
         /// <summary>
         /// Publishes the specified request as a fire-and-forget

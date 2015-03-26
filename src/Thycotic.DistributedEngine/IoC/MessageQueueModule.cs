@@ -113,15 +113,15 @@ namespace Thycotic.DistributedEngine.IoC
                     messageEncryptionKeyProvider.TryAddKey(exchangeName, symmetricKey, initializationVector);
 
                     return messageEncryptionKeyProvider;
-                }).AsImplementedInterfaces().SingleInstance();
+                }).As<IMessageEncryptor>().SingleInstance();
             }
 
-            builder.RegisterType<RequestBus>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<RequestBus>().AsImplementedInterfaces().InstancePerDependency();
         }
 
         private void LoadResponseBus(ContainerBuilder builder)
         {
-            builder.RegisterType<ResponseBus>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<ResponseBus>().AsImplementedInterfaces().InstancePerDependency();
         }
 
         protected override void Load(ContainerBuilder builder)
