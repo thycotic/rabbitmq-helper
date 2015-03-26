@@ -71,16 +71,16 @@ namespace Thycotic.DistributedEngine
 
             var decryptedAuthBytes = _authenticationRequestEncryptor.Decrypt(_authenticationKeyProvider.PrivateKey, authResponseBytes);
 
-            var authRespons = _objectSerializer.ToObject<EngineAuthenticationResponse>(decryptedAuthBytes);
+            var authResponse = _objectSerializer.ToObject<EngineAuthenticationResponse>(decryptedAuthBytes);
             #endregion
 
             #region Configuation
 
             var symmetricKeyPair = new SymmetricKeyPair
             {
-                SymmetricKey = new SymmetricKey(Convert.FromBase64String(authRespons.SymmetricKey)),
+                SymmetricKey = new SymmetricKey(Convert.FromBase64String(authResponse.SymmetricKey)),
                 InitializationVector =
-                    new InitializationVector(Convert.FromBase64String(authRespons.InitializationVector))
+                    new InitializationVector(Convert.FromBase64String(authResponse.InitializationVector))
             };
 
             var requestString = _objectSerializer.ToBytes(request);
