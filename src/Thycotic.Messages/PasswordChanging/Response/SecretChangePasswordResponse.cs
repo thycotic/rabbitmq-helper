@@ -16,6 +16,11 @@ namespace Thycotic.Messages.PasswordChanging.Response
         public bool Success { get; set; }
 
         /// <summary>
+        /// Gets or sets the Secret Id
+        /// </summary>
+        public int SecretId { get; set; }
+
+        /// <summary>
         /// Gets or sets the error core.
         /// </summary>
         /// <value>

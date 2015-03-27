@@ -1,6 +1,7 @@
 using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
