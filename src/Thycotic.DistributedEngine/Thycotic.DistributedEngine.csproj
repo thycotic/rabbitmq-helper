@@ -142,8 +142,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
@@ -204,6 +206,12 @@
     <Compile Include="Security\AuthenticationKeyProvider.cs" />
     <Compile Include="Security\MessageEncryptor.cs" />
     <Compile Include="Heartbeat\HeartbeatRunner.cs" />
+    <Compile Include="ServiceInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ServiceInstaller.Designer.cs">
+      <DependentUpon>ServiceInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="IoC\LogicModule.cs" />
     <Compile Include="IoC\MessageQueueModule.cs" />
@@ -257,6 +265,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="logo.txt" />
+    <EmbeddedResource Include="ServiceInstaller.resx">
+      <DependentUpon>ServiceInstaller.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
