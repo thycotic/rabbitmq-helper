@@ -36,7 +36,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         /// <returns></returns>
         public void Consume(SecretChangePasswordMessage request)
         {
-            _log.Info("Got a change password request");
+            _log.Info(string.Format("Got a change password request for Secret Id {0}:", request.SecretId));
 
             var infoProvider = request.PasswordInfoProvider;
             var passwordTypeName = infoProvider.PasswordTypeName;
