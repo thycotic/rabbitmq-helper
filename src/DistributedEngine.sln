@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MessageQueue.Clien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages", "Thycotic.Messages\Thycotic.Messages.csproj", "{BB022C12-4D04-4195-BBB7-BAAA0E20FCB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine", "Thycotic.DistributedEngine\Thycotic.DistributedEngine.csproj", "{DF86AFEF-6D78-46C9-9BDA-419C4547EFE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Service", "Thycotic.DistributedEngine.Service\Thycotic.DistributedEngine.Service.csproj", "{DF86AFEF-6D78-46C9-9BDA-419C4547EFE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Logging", "Thycotic.Logging\Thycotic.Logging.csproj", "{FE8BE3EA-3F69-488E-8AC8-CFE47525D93F}"
 EndProject
@@ -53,7 +53,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MessageQueue.Clien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Tests", "Thycotic.Messages.Tests\Thycotic.Messages.Tests.csproj", "{B8DF9BCE-75A1-4690-ADC2-409D55095A26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Tests", "Thycotic.DistributedEngine.Tests\Thycotic.DistributedEngine.Tests.csproj", "{8E2112AB-6688-4E3A-B23D-6C606B848B81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Service.Tests", "Thycotic.DistributedEngine.Service.Tests\Thycotic.DistributedEngine.Service.Tests.csproj", "{8E2112AB-6688-4E3A-B23D-6C606B848B81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Logic.Tests", "Thycotic.DistributedEngine.Logic.Tests\Thycotic.DistributedEngine.Logic.Tests.csproj", "{CB29A39A-D28B-43B8-B965-8912F8BC7635}"
 EndProject

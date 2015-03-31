@@ -176,9 +176,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.DistributedEngine\Thycotic.DistributedEngine.csproj">
+    <ProjectReference Include="..\Thycotic.DistributedEngine\Thycotic.DistributedEngine.Service.csproj">
       <Project>{df86afef-6d78-46c9-9bda-419c4547efe3}</Project>
-      <Name>Thycotic.DistributedEngine</Name>
+      <Name>Thycotic.DistributedEngine.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
       <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>

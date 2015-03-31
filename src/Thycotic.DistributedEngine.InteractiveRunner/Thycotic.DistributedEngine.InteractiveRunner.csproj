@@ -240,9 +240,9 @@
       <Project>{bb022c12-4d04-4195-bbb7-baaa0e20fcb7}</Project>
       <Name>Thycotic.Messages</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Thycotic.DistributedEngine\Thycotic.DistributedEngine.csproj">
+    <ProjectReference Include="..\Thycotic.DistributedEngine.Service\Thycotic.DistributedEngine.Service.csproj">
       <Project>{df86afef-6d78-46c9-9bda-419c4547efe3}</Project>
-      <Name>Thycotic.DistributedEngine</Name>
+      <Name>Thycotic.DistributedEngine.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
       <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
