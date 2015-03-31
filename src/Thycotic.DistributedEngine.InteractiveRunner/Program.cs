@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -19,6 +18,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 {
     internal static class Program
     {
+        private static class CommandLineSwitches
+        {
+            public const string PipelineDisabled = "pd";
+            public const string ConsumptionDisabled = "cd";
+        }
+
         private static readonly ILogWriter Log = Logging.Log.Get(typeof(Program));
         /// <summary>
         /// The main entry point for the application.
@@ -27,70 +32,83 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
         {
             try
             {
-                //interactive mode (first argument is i, il or icd
-                //i - interactive still going out to web service to look for configuration
-                //icd - interactive still going out to web service to look for configuration, consumption disabled
-                if (args.Any() && args.First().StartsWith("i"))
+                var startPipeline = !args.Contains(CommandLineSwitches.PipelineDisabled);
+             
+                ConfigureTraceListener();
+
+                var cli = new CommandLineInterface();
+
+                Trace.TraceInformation("Starting interactive runner...");
+
+                PipelineService pipelineService = null;
+                if (startPipeline)
                 {
-                    ConfigureTraceListener();
-
-                    var cli = new CommandLineInterface();
-
-                    Trace.TraceInformation("Starting interactive runner...");
-
-                    PipelineService pipelineService;
+                    //Trace.TraceInformation("Starting pipeline...");
                     using (LogContext.Create("Pipeline service startup"))
                     {
                         pipelineService = new PipelineService();
                         pipelineService.Start();
                     }
-
-                    EngineService engineService;
-                    using (LogContext.Create("Engine service startup"))
-                    {
-                        var startConsuming = !args.First().EndsWith("cd");
-
-                        engineService = new EngineService(startConsuming);
-
-                        ConfigureMockConfiguration();
-
-                        //every time engine IoCContainer changes reconfigure the CLI
-                        engineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
-
-                        engineService.Start();
-                    }
-
-                    //begin the input loop but after the logo prints
-                    Task.Delay(Service.StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
-                        .ContinueWith(task => cli.BeginInputLoop(string.Join(" ", args.Skip(1))));
-
-                    Task.Delay(
-                        MemoryMq.Pipeline.Service.StartupMessageWriter.StartupMessageDelay.Add(
-                            TimeSpan.FromMilliseconds(500)))
-                        .ContinueWith(task => cli.BeginInputLoop(string.Join(" ", args.Skip(1))));
-                    
-                    #region Clean up
-
-                    cli.Wait();
-
-                    engineService.Stop();
-
-                    pipelineService.Stop();
-
-                    #endregion
-
-                    Trace.TraceInformation("Interactive runner stopped");
-
-                    Thread.Sleep(TimeSpan.FromSeconds(2));
                 }
                 else
                 {
-                    throw new NotSupportedException("Non-interactive execution is not supported");
+                    //Trace.TraceInformation("Pipeline is disabled...");
                 }
+
+                EngineService engineService;
+                using (LogContext.Create("Engine service startup"))
+                {
+                    Trace.TraceInformation("Starting engine...");
+                    var startConsuming = !args.Contains(CommandLineSwitches.ConsumptionDisabled);
+
+                    engineService = new EngineService(startConsuming);
+
+                    ConfigureMockConfiguration();
+
+                    //every time engine IoCContainer changes reconfigure the CLI
+                    engineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
+
+                    engineService.Start();
+               
+
+                //begin the input loop but after the logo prints
+                Task.Delay(Service.StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
+                    .ContinueWith(task =>
+                    {
+                        var initialCommand =
+                            args.SingleOrDefault(
+                                a =>
+                                    a != CommandLineSwitches.PipelineDisabled &&
+                                    a != CommandLineSwitches.ConsumptionDisabled);
+
+                        cli.BeginInputLoop(initialCommand);
+                    });
+                }
+
+                
+                #region Clean up
+
+                cli.Wait();
+
+                //Trace.TraceInformation("Stopping engine...");
+                engineService.Stop();
+
+                if (startPipeline)
+                {
+                    //Trace.TraceInformation("Stopping pipeline...");
+                    pipelineService.Stop();
+                }
+
+                #endregion
+
+                Trace.TraceInformation("Interactive runner stopped");
+
+                Thread.Sleep(TimeSpan.FromSeconds(2));
+
             }
             catch (Exception ex)
             {
-                Log.Error("Failed to start service", ex);
+                Log.Error("Failed to start interactive runner", ex);
             }
         }
 
