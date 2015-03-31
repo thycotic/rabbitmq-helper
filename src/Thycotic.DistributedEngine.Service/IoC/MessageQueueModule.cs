@@ -59,10 +59,6 @@ namespace Thycotic.DistributedEngine.IoC
         {
             using (LogContext.Create("MemoryMq"))
             {
-
-                //initialize if necessary server 
-                builder.RegisterModule(new MemoryMqServerModule(_configurationProvider));
-
                 var connectionString =
                     _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));

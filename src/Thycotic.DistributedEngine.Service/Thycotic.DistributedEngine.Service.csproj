@@ -197,8 +197,6 @@
     <Compile Include="Heartbeat\HeartbeatConfigurationProvider.cs" />
     <Compile Include="Heartbeat\IHeartbeatConfigurationProvider.cs" />
     <Compile Include="IoC\HeartbeatModule.cs" />
-    <Compile Include="IoC\MemoryMqServerModule.cs" />
-    <Compile Include="MemoryMq\MemoryMqServiceHost.cs" />
     <Compile Include="Security\BaseMessageEncryptor.cs" />
     <Compile Include="Security\IAuthenticationKeyProvider.cs" />
     <Compile Include="Security\IIdentityGuidProvider.cs" />

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using Autofac;
+using Thycotic.DistributedEngine.IoC;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
@@ -158,7 +159,7 @@ namespace Thycotic.DistributedEngine.Configuration
         {
             //builder.RegisterModule(new EngineToServerModule(GetInstanceConfiguration, pipelineService));
 
-            //builder.RegisterModule(new MessageQueueModule(GetInstanceConfiguration));
+            builder.RegisterModule(new MemoryMqServerModule(GetInstanceConfiguration));
 
             //if (startConsuming)
             //{
