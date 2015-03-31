@@ -55,7 +55,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                         _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
                     }
 
-                    //_log.Info("Flooding completed");
+                    _log.Info("Flooding completed");
                 }
                 catch (ObjectDisposedException)
                 {
