@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
@@ -55,6 +56,11 @@ namespace Thycotic.DistributedEngine.Service
             var preAuthResponseBytes = _channel.PreAuthenticate();
 
             var preAuthentication = _objectSerializer.ToObject<EnginePreAuthenticationResponse>(preAuthResponseBytes);
+
+            if (!preAuthentication.Success)
+            {
+                throw new ConfigurationErrorsException(preAuthentication.ErrorMessage);
+            }
             #endregion
 
             #region Auth
@@ -72,8 +78,14 @@ namespace Thycotic.DistributedEngine.Service
             var decryptedAuthBytes = _authenticationRequestEncryptor.Decrypt(_authenticationKeyProvider.PrivateKey, authResponseBytes);
 
             var authResponse = _objectSerializer.ToObject<EngineAuthenticationResponse>(decryptedAuthBytes);
-            #endregion
 
+            if (!authResponse.Success)
+            {
+                throw new ConfigurationErrorsException(authResponse.ErrorMessage);
+            }
+
+            #endregion
+            
             #region Configuation
 
             var symmetricKeyPair = new SymmetricKeyPair
