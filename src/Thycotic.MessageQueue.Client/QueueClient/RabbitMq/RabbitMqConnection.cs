@@ -35,7 +35,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
         public RabbitMqConnection(string url, string userName, string password, bool useSsl)
         {
-            //TODO: Get rid of the redundant redundant -dkk
             _connectionFactory = new ConnectionFactory
             {
                 Uri = url,
@@ -54,20 +53,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     ServerName = uri.Host,
                     //AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch | SslPolicyErrors.RemoteCertificateChainErrors,
                 };
-
-
             }
-            else
-            {
-                _connectionFactory = new ConnectionFactory
-                {
-                    Uri = url,
-                    RequestedHeartbeat = 300,
-                    UserName = userName,
-                    Password = password
-                };
-            }
-            
+           
             ResetConnection();
 
         }

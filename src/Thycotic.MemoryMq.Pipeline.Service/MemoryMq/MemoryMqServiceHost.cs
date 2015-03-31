@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Thycotic.MemoryMq.Pipeline.Service.Security;
 using Thycotic.Wcf;
 
 namespace Thycotic.MemoryMq.Pipeline.Service.MemoryMq
@@ -12,7 +13,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service.MemoryMq
         /// Initializes a new instance of the <see cref="MemoryMqServiceHost"/> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
-        public MemoryMqServiceHost(string connectionString) : base(connectionString)
+        public MemoryMqServiceHost(string connectionString) : base(connectionString, new CustomUserNamePasswordValidator())
         {
         }
 
@@ -21,11 +22,9 @@ namespace Thycotic.MemoryMq.Pipeline.Service.MemoryMq
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
         /// <param name="thumbprint">The thumbprint.</param>
-        public MemoryMqServiceHost(string connectionString, string thumbprint) : base(connectionString, thumbprint)
+        public MemoryMqServiceHost(string connectionString, string thumbprint) : base(connectionString, thumbprint, new CustomUserNamePasswordValidator())
         {
         }
-
-       
     }
 
 }

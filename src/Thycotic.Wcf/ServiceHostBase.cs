@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IdentityModel.Selectors;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
+using System.ServiceModel.Security;
 using System.Threading.Tasks;
 
 namespace Thycotic.Wcf
@@ -11,6 +13,7 @@ namespace Thycotic.Wcf
     public class ServiceHostBase<TServer, TEndPoint> : IDisposable
     {
         private readonly string _connectionString;
+        private readonly UserNamePasswordValidator _userNamePasswordValidator;
         private readonly bool _useSsl;
         private readonly string _thumbprint;
         private Task _serverTask;
@@ -20,9 +23,11 @@ namespace Thycotic.Wcf
         /// Initializes a new instance of the <see cref="ServiceHostBase{TServer,TEndPoint}"/> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
-        public ServiceHostBase(string connectionString)
+        /// <param name="userNamePasswordValidator"></param>
+        public ServiceHostBase(string connectionString, UserNamePasswordValidator userNamePasswordValidator = null)
         {
             _connectionString = connectionString;
+            _userNamePasswordValidator = userNamePasswordValidator;
             _useSsl = false;
         }
 
@@ -31,7 +36,8 @@ namespace Thycotic.Wcf
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
         /// <param name="thumbprint">The thumbprint.</param>
-        public ServiceHostBase(string connectionString, string thumbprint)
+        /// <param name="userNamePasswordValidator">The user name password validator.</param>
+        public ServiceHostBase(string connectionString, string thumbprint, UserNamePasswordValidator userNamePasswordValidator = null)
         {
             _connectionString = connectionString;
             _useSsl = true;
@@ -62,7 +68,12 @@ namespace Thycotic.Wcf
                 {
                     serviceBinding = new NetTcpBinding(SecurityMode.None);
                 }
-                serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
+
+                if (_userNamePasswordValidator != null)
+                {
+                    serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
+                    
+                }
 
                 _host = new ServiceHost(typeof(TServer));
                 _host.AddServiceEndpoint(typeof(TEndPoint), serviceBinding, _connectionString);
@@ -76,13 +87,21 @@ namespace Thycotic.Wcf
                         _thumbprint);
                 }
 
+                if (_userNamePasswordValidator != null)
+                {
+                    _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode =
+                        UserNamePasswordValidationMode.Custom;
+                    _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator =
+                        _userNamePasswordValidator;
+                }
+
                 try
                 {
                     _host.Open();
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException(string.Format("Failed to open servce host because {0}", ex));
+                    throw new ApplicationException(string.Format("Failed to open service host because {0}", ex));
                 }
             });
         }

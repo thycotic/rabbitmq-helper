@@ -1,4 +1,6 @@
-﻿namespace Thycotic.MessageQueue.Client
+﻿using System;
+
+namespace Thycotic.MessageQueue.Client
 {
     /// <summary>
     /// Configuration keys
@@ -35,6 +37,26 @@
             /// The queue type
             /// </summary>
             public const string QueueType = "Pipeline.QueueType";
+
+            /// <summary>
+            /// The connection string
+            /// </summary>
+            public const string ConnectionString = "Pipeline.ConnectionString";
+
+            /// <summary>
+            /// The user name
+            /// </summary>
+            public const string UserName = "Pipeline.UserName";
+
+            /// <summary>
+            /// The password
+            /// </summary>
+            public const string Password = "Pipeline.Password";
+
+            /// <summary>
+            /// Whether or not to use SSL
+            /// </summary>
+            public static string UseSsl = "Pipeline.UseSSL";
         }
 
         /// <summary>
@@ -61,6 +83,7 @@
         /// <summary>
         /// Rabbit Mq
         /// </summary>
+        //[Obsolete("Use Pipeline constants instead")]
         public static class RabbitMq
         {
             /// <summary>
@@ -87,6 +110,7 @@
         /// <summary>
         /// Memory Mq
         /// </summary>
+        //[Obsolete("Use Pipeline constants instead")]
         public static class MemoryMq
         {
             /// <summary>

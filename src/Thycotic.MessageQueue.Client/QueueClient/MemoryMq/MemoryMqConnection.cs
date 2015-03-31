@@ -26,13 +26,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqConnection));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryMqConnection"/> class.
+        /// Initializes a new instance of the <see cref="MemoryMqConnection" /> class.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <param name="useSsl"></param>
-        public MemoryMqConnection(string url, bool useSsl)
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
+        public MemoryMqConnection(string url, string userName, string password, bool useSsl)
         {
-            _connectionFactory = new MemoryMqWcfServiceConnectionFactory { Uri = url, UseSsl = useSsl, RequestedHeartbeat = 300 };
+            _connectionFactory = new MemoryMqWcfServiceConnectionFactory { Uri = url, UseSsl = useSsl, Username = userName, Password = password, RequestedHeartbeat = 300 };
             ResetConnection();
         }
 

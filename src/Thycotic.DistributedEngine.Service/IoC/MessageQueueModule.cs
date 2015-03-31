@@ -63,6 +63,13 @@ namespace Thycotic.DistributedEngine.Service.IoC
                     _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
+                var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UserName);
+                _log.Info(string.Format("MemoryMq username is {0}", userName));
+
+                var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.Password);
+                _log.Info(string.Format("MemoryMq password is {0}",
+                    string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
+
                 var useSsl =
                     Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
                 if (useSsl)
@@ -75,7 +82,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 }
 
 
-                builder.Register(context => new MemoryMqConnection(connectionString, useSsl))
+                builder.Register(context => new MemoryMqConnection(connectionString, userName, password, useSsl))
                     .As<ICommonConnection>().InstancePerDependency();
             }
         }
