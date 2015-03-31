@@ -43,30 +43,34 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     Trace.TraceInformation("Starting interactive runner...");
 
                     #region Start server
+
+                    var pipelineService = new PipelineService();
+                    pipelineService.Start();
+
                     var startConsuming = !args.First().EndsWith("cd");
 
-                    EngineService engine;
+                    EngineService engineService;
 
                     var loopback = args.First().StartsWith("il");
 
                     //loopback
                     if (loopback)
                     {
-
                         var ioCConfigurator = new LoopbackIoCConfigurator();
-                        engine = new EngineService(startConsuming, ioCConfigurator);
+                        engineService = new EngineService(startConsuming, ioCConfigurator);
                     }
                     else
                     {
-                        engine = new EngineService(startConsuming);
+                        engineService = new EngineService(startConsuming);
                     }
 
                     ConfigureMockConfiguration();
 
                     //every time engine IoCContainer changes reconfigure the CLI
-                    engine.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
+                    engineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
 
-                    engine.Start();
+                    engineService.Start();
+
                     #endregion
 
                     //begin the input loop but after the logo prints
@@ -74,9 +78,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                         .ContinueWith(task => cli.BeginInputLoop(string.Join(" ", args.Skip(1))));
 
                     #region Clean up
+
                     cli.Wait();
 
-                    engine.Stop();
+                    engineService.Stop();
+
+                    pipelineService.Stop();
 
                     #endregion
 
@@ -87,9 +94,10 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 else
                 {
                     var servicesToRun = new ServiceBase[]
-                {
-                    new EngineService()
-                };
+                    {
+                        new PipelineService(), 
+                        new EngineService()
+                    };
                     ServiceBase.Run(servicesToRun);
                 }
             }
@@ -145,7 +153,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
         private static void ConfigureMockConfiguration()
         {
-            var configurationProvider =  Substitute.For<IConfigurationProvider>();
+            var configurationProvider = Substitute.For<IConfigurationProvider>();
             ServiceLocator.ConfigurationProvider = configurationProvider;
 
             var configuration = Substitute.For<IConfiguration>();
