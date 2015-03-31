@@ -95,6 +95,16 @@
             public const string ConnectionString = "MemoryMq.ConnectionString";
 
             /// <summary>
+            /// The user name
+            /// </summary>
+            public const string UserName = "MemoryMq.UserName";
+
+            /// <summary>
+            /// The password
+            /// </summary>
+            public const string Password = "MemoryMq.Password";
+
+            /// <summary>
             /// Whether or not to use SSL
             /// </summary>
             public static string UseSsl = "MemoryMq.UseSSL";
