@@ -4,7 +4,6 @@ using System.ServiceProcess;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Pipeline.Service.Configuration;
-using Thycotic.MessageQueue.Client.Wrappers;
 
 namespace Thycotic.MemoryMq.Pipeline.Service
 {
@@ -26,10 +25,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         /// </value>
         public IIoCConfigurator IoCConfigurator { get; private set; }
 
-        private readonly bool _startConsuming;
-
         private IContainer _ioCContainer;
-
 
         private readonly ILogWriter _log = Log.Get(typeof(PipelineService));
         private LogCorrelation _correlation;
@@ -38,22 +34,14 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelineService"/> class.
         /// </summary>
-        public PipelineService() : this(true, new IoCConfigurator()) { }
+        public PipelineService() : this(new IoCConfigurator()) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelineService" /> class.
         /// </summary>
-        /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
-        public PipelineService(bool startConsuming) : this(startConsuming, new IoCConfigurator()) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PipelineService" /> class.
-        /// </summary>
-        /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
         /// <param name="ioCConfigurator">The iio c configurator.</param>
-        public PipelineService(bool startConsuming, IIoCConfigurator ioCConfigurator)
+        public PipelineService(IIoCConfigurator ioCConfigurator)
         {
-            _startConsuming = startConsuming;
             IoCConfigurator = ioCConfigurator;
             ConfigureLogging();
         }
@@ -76,15 +64,8 @@ namespace Thycotic.MemoryMq.Pipeline.Service
 
             try
             {
-
-                if (!IoCConfigurator.TryGetAndAssignConfiguration())
-                {
-                    _log.Info("Engine is not enabled/configured. Existing...");
-                    return;
-                }
-
                 // BuildAll the container to finalize registrations and prepare for object resolution.
-                _ioCContainer = IoCConfigurator.BuildAll(this, _startConsuming);
+                _ioCContainer = IoCConfigurator.BuildAll(this);
 
                 //notify any hooks that IoC is configured
                 if (IoCContainerConfigured != null)
@@ -107,15 +88,6 @@ namespace Thycotic.MemoryMq.Pipeline.Service
             if (_ioCContainer == null) return;
 
             _log.Debug("Cleaning up IoC container");
-
-            if (_startConsuming)
-            {
-                _log.Info("Stopping all consumers...");
-                var consumerFactory = _ioCContainer.Resolve<ConsumerWrapperFactory>();
-
-                //clean up the consumers in the factory
-                consumerFactory.Dispose();
-            }
 
             _ioCContainer.Dispose();
             _ioCContainer = null;
