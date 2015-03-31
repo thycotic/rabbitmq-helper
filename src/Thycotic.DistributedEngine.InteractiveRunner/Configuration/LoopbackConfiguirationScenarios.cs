@@ -11,13 +11,13 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         {
             return new Dictionary<string, string>
             {
-                {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
+                {ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
+                {ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
                 {
-                    MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString,
+                    ConfigurationKeys.MemoryMq.ConnectionString,
                     ConnectionStringHelpers.GetLocalMemoryMqConnectionString()
                 },
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "false"}
+                {ConfigurationKeys.MemoryMq.UseSsl, "false"}
             };
         }
 
@@ -26,14 +26,14 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         {
             return new Dictionary<string, string>
             {
-                {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
+                {ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
+                {ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
                 {
-                    MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString,
+                    ConfigurationKeys.MemoryMq.ConnectionString,
                     ConnectionStringHelpers.GetLocalMemoryMqConnectionString(DefaultPorts.MemoryMq.Ssl)
                 },
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl, "true"},
-                {MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Thumbprint, "invalid"},
+                {ConfigurationKeys.MemoryMq.UseSsl, "true"},
+                {ConfigurationKeys.MemoryMq.Server.Thumbprint, "invalid"},
             };
         }
 
@@ -41,15 +41,15 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         {
             return new Dictionary<string, string>
             {
-                {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
+                {ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
+                {ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
                 {
-                    MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString,
+                    ConfigurationKeys.RabbitMq.ConnectionString,
                     ConnectionStringHelpers.GetLocalRabbitMqConnectionString()
                 },
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "j@c.com"},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "password1"},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "false"}
+                {ConfigurationKeys.RabbitMq.UserName, "j@c.com"},
+                {ConfigurationKeys.RabbitMq.Password, "password1"},
+                {ConfigurationKeys.RabbitMq.UseSsl, "false"}
             };
         }
 
@@ -59,15 +59,15 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
         {
             return new Dictionary<string, string>
             {
-                {MessageQueue.Client.ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
-                {MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
+                {ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
+                {ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
                 {
-                    MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString,
+                    ConfigurationKeys.RabbitMq.ConnectionString,
                     ConnectionStringHelpers.GetLocalRabbitMqConnectionString(DefaultPorts.RabbitMq.Ssl)
                 },
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName, "j@c.com"},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.Password, "password1"},
-                {MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl, "true"}
+                {ConfigurationKeys.RabbitMq.UserName, "j@c.com"},
+                {ConfigurationKeys.RabbitMq.Password, "password1"},
+                {ConfigurationKeys.RabbitMq.UseSsl, "true"}
             };
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
 using FluentAssertions;
-using NSubstitute;
 using TechTalk.SpecFlow;
 using Thycotic.MemoryMq.Subsystem;
 using Thycotic.Utility.Specflow;

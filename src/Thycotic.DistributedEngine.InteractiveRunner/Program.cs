@@ -9,13 +9,13 @@ using Autofac;
 using NSubstitute;
 using Thycotic.AppCore;
 using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
-using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service;
 using Thycotic.Logging;
+using Thycotic.MemoryMq.Pipeline.Service;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
-using Thycotic.Utility.Serialization;
+using StartupMessageWriter = Thycotic.DistributedEngine.Service.StartupMessageWriter;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner
 {

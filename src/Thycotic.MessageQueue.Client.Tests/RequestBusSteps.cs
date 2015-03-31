@@ -31,7 +31,7 @@ namespace Thycotic.MessageQueue.Client.Tests
             var requestBus = this.GetScenarioContext().Get<IRequestBus>(requestBusName);
             var consumable = this.GetScenarioContext().Get<IBasicConsumable>(consumableName);
 
-            requestBus.BasicPublish(exchangeName, consumable, true);
+            requestBus.BasicPublish(exchangeName, consumable);
         }
 
         [Then(@"the method OpenChannel on ICommonConnection substitute (\w+) is called with exchange (\w+) and routing key (\w+)")]

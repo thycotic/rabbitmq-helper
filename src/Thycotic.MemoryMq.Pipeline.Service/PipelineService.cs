@@ -6,7 +6,7 @@ using Thycotic.Logging;
 using Thycotic.MemoryMq.Pipeline.Service.Configuration;
 using Thycotic.MessageQueue.Client.Wrappers;
 
-namespace Thycotic.DistributedEngine
+namespace Thycotic.MemoryMq.Pipeline.Service
 {
     /// <summary>
     /// Engine windows service

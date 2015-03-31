@@ -1,5 +1,4 @@
-﻿using System;
-using Thycotic.Wcf;
+﻿using Thycotic.Wcf;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 {

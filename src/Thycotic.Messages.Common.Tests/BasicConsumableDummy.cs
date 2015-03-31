@@ -2,7 +2,7 @@
 {
     internal class BasicConsumableDummy : IBasicConsumable
     {
-        public int Version { get; private set; }
+        public int Version { get; set; }
         public int RetryCount { get; set; }
     }
 }
