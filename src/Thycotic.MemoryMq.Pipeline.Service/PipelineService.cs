@@ -128,13 +128,13 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         {
             using (LogContext.Create("Starting"))
             {
-                _log.Info("Engine starting...");
+                _log.Info("Pipeline starting...");
 
                 base.OnStart(args);
 
                 BringUp();
 
-                _log.Info("Engine started");
+                _log.Info("Pipeline started");
             }
             
         }
@@ -146,13 +146,13 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         {
             using (LogContext.Create("Stopping"))
             {
-                _log.Info("Engine stopping...");
+                _log.Info("Pipeline stopping...");
 
                 base.OnStop();
 
                 TearDown();
 
-                _log.Info("Engine stopped");
+                _log.Info("Pipeline stopped");
             }
         }
     }

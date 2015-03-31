@@ -38,23 +38,27 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
                     Trace.TraceInformation("Starting interactive runner...");
 
-                    #region Start server
+                    PipelineService pipelineService;
+                    using (LogContext.Create("Pipeline service startup"))
+                    {
+                        pipelineService = new PipelineService();
+                        pipelineService.Start();
+                    }
 
-                    var pipelineService = new PipelineService();
-                    pipelineService.Start();
+                    EngineService engineService;
+                    using (LogContext.Create("Engine service startup"))
+                    {
+                        var startConsuming = !args.First().EndsWith("cd");
 
-                    var startConsuming = !args.First().EndsWith("cd");
+                        engineService = new EngineService(startConsuming);
 
-                    var engineService = new EngineService(startConsuming);
+                        ConfigureMockConfiguration();
 
-                    ConfigureMockConfiguration();
+                        //every time engine IoCContainer changes reconfigure the CLI
+                        engineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
 
-                    //every time engine IoCContainer changes reconfigure the CLI
-                    engineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
-
-                    engineService.Start();
-
-                    #endregion
+                        engineService.Start();
+                    }
 
                     //begin the input loop but after the logo prints
                     Task.Delay(Service.StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
