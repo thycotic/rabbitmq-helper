@@ -234,7 +234,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service.Configuration
         /// <returns></returns>
         public bool TryGetAndAssignConfiguration()
         {
-            using (LogContext.Create("Configurating"))
+            using (LogContext.Create("Configuring"))
             {
 
                 if (_instanceConfiguration != null)
