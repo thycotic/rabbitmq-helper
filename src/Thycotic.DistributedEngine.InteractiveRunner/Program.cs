@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 using Autofac;
 using NSubstitute;
 using Thycotic.AppCore;
-using Thycotic.DistributedEngine.InteractiveRunner.Configuration;
 using Thycotic.DistributedEngine.Service;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Pipeline.Service;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
-using StartupMessageWriter = Thycotic.DistributedEngine.Service.StartupMessageWriter;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner
 {
@@ -46,9 +44,9 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     pipelineService.Start();
 
                     var startConsuming = !args.First().EndsWith("cd");
-                    
+
                     var engineService = new EngineService(startConsuming);
-                    
+
                     ConfigureMockConfiguration();
 
                     //every time engine IoCContainer changes reconfigure the CLI
@@ -59,9 +57,14 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     #endregion
 
                     //begin the input loop but after the logo prints
-                    Task.Delay(StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
+                    Task.Delay(Service.StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
                         .ContinueWith(task => cli.BeginInputLoop(string.Join(" ", args.Skip(1))));
 
+                    Task.Delay(
+                        MemoryMq.Pipeline.Service.StartupMessageWriter.StartupMessageDelay.Add(
+                            TimeSpan.FromMilliseconds(500)))
+                        .ContinueWith(task => cli.BeginInputLoop(string.Join(" ", args.Skip(1))));
+                    
                     #region Clean up
 
                     cli.Wait();
@@ -78,12 +81,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 }
                 else
                 {
-                    var servicesToRun = new ServiceBase[]
-                    {
-                        new PipelineService(), 
-                        new EngineService()
-                    };
-                    ServiceBase.Run(servicesToRun);
+                    throw new NotSupportedException("Non-interactive execution is not supported");
                 }
             }
             catch (Exception ex)
