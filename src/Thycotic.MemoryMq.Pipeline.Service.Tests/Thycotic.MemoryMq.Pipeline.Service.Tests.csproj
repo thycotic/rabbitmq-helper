@@ -1,21 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF86AFEF-6D78-46C9-9BDA-419C4547EFE3}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.DistributedEngine.Service</RootNamespace>
-    <AssemblyName>Thycotic.DistributedEngine.Service</AssemblyName>
+    <RootNamespace>Thycotic.MemoryMq.Pipeline.Service.Tests</RootNamespace>
+    <AssemblyName>Thycotic.MemoryMq.Pipeline.Service.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,8 +27,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\Thycotic.DistributedEngine.Service.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -53,7 +55,7 @@
     <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
     <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
     <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
-    <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
     <CodeContractsCustomRewriterAssembly />
     <CodeContractsCustomRewriterClass />
     <CodeContractsLibPaths />
@@ -66,19 +68,16 @@
     <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
     <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
-    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Release\Thycotic.DistributedEngine.Service.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -107,7 +106,7 @@
     <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
     <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
     <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
-    <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
     <CodeContractsCustomRewriterAssembly />
     <CodeContractsCustomRewriterClass />
     <CodeContractsLibPaths />
@@ -119,144 +118,65 @@
     <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
     <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
     <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
-    <CodeContractsRuntimeCheckingLevel>Pre and Post</CodeContractsRuntimeCheckingLevel>
-    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\Thycotic.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core">
+      <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.Install" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IdentityModel" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.AppCore">
-      <HintPath>..\..\lib\Thycotic.AppCore.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.150\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.Encryption, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a573cc6dd3295692, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.150\lib\net451\Thycotic.Encryption.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.ihawu.Business">
-      <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.Wcf">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.34\lib\net451\Thycotic.Wcf.dll</HintPath>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="TechTalk.SpecFlow">
+      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="ConfigurationKeys.cs" />
-    <Compile Include="Configuration\EngineIdentificationProvider.cs" />
-    <Compile Include="EngineToServer\EngineToServerConnection.cs" />
-    <Compile Include="EngineToServer\IEngineToServerConnection.cs" />
-    <Compile Include="IoC\EngineToServerModule.cs" />
-    <Compile Include="Security\AuthenticatedCommunicationKeyProvider .cs" />
-    <Compile Include="Security\AuthenticatedCommunicationRequestEncryptor.cs" />
-    <Compile Include="Security\AuthenticationRequestEncryptor.cs" />
-    <Compile Include="Security\IAuthenticationRequestEncryptor.cs" />
-    <Compile Include="Security\IAuthenticatedCommunicationRequestEncryptor.cs" />
-    <Compile Include="Security\IdentityGuidProvider.cs" />
-    <Compile Include="EngineToServer\ResponseBus.cs" />
-    <Compile Include="EngineConfigurationBus.cs" />
-    <Compile Include="Configuration\IEngineIdentificationProvider.cs" />
-    <Compile Include="EngineService.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Configuration\IIoCConfigurator.cs" />
-    <Compile Include="Configuration\IoCConfigurator.cs" />
-    <Compile Include="Heartbeat\HeartbeatConfigurationProvider.cs" />
-    <Compile Include="Heartbeat\IHeartbeatConfigurationProvider.cs" />
-    <Compile Include="IoC\HeartbeatModule.cs" />
-    <Compile Include="IoC\MemoryMqServerModule.cs" />
-    <Compile Include="MemoryMq\MemoryMqServiceHost.cs" />
-    <Compile Include="Security\BaseMessageEncryptor.cs" />
-    <Compile Include="Security\IAuthenticationKeyProvider.cs" />
-    <Compile Include="Security\IIdentityGuidProvider.cs" />
-    <Compile Include="Security\IAuthenticatedCommunicationKeyProvider.cs" />
-    <Compile Include="Security\AuthenticationKeyProvider.cs" />
-    <Compile Include="Security\MessageEncryptor.cs" />
-    <Compile Include="Heartbeat\HeartbeatRunner.cs" />
-    <Compile Include="ServiceInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ServiceInstaller.Designer.cs">
-      <DependentUpon>ServiceInstaller.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StartupMessageWriter.cs" />
-    <Compile Include="IoC\LogicModule.cs" />
-    <Compile Include="IoC\MessageQueueModule.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Configuration\IoCConfiguratorSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Thycotic.snk">
-      <Link>Thycotic.snk</Link>
-    </None>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Thycotic.Logging\Thycotic.Logging.csproj">
-      <Project>{fe8be3ea-3f69-488e-8ac8-cfe47525d93f}</Project>
-      <Name>Thycotic.Logging</Name>
+    <ProjectReference Include="..\Thycotic.MemoryMq.Pipeline.Service\Thycotic.MemoryMq.Pipeline.Service.csproj">
+      <Project>{88bda5ed-1bca-4227-b838-681a709f4ea1}</Project>
+      <Name>Thycotic.MemoryMq.Pipeline.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">
-      <Project>{60af5da6-343c-4c6f-9cd5-2b5f04d9af92}</Project>
-      <Name>Thycotic.MemoryMq</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.MessageQueue.Client.Wrappers\Thycotic.MessageQueue.Client.Wrappers.csproj">
-      <Project>{d0d2d7e5-d147-47e9-8d8f-18f6f6b19720}</Project>
-      <Name>Thycotic.MessageQueue.Client.Wrappers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.MessageQueue.Client\Thycotic.MessageQueue.Client.csproj">
-      <Project>{23d33205-a493-4977-831a-3487ec2042d6}</Project>
-      <Name>Thycotic.MessageQueue.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
-      <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
-      <Name>Thycotic.Messages.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Messages\Thycotic.Messages.csproj">
-      <Project>{bb022c12-4d04-4195-bbb7-baaa0e20fcb7}</Project>
-      <Name>Thycotic.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.DistributedEngine.Logic\Thycotic.DistributedEngine.Logic.csproj">
-      <Project>{74ec374a-729a-4707-8586-32d10cdc3ecc}</Project>
-      <Name>Thycotic.DistributedEngine.Logic</Name>
+    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
+      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
+      <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
       <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
@@ -264,12 +184,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="logo.txt" />
-    <EmbeddedResource Include="ServiceInstaller.resx">
-      <DependentUpon>ServiceInstaller.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

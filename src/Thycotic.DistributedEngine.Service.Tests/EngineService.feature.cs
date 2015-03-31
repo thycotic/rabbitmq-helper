@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Thycotic.DistributedEngine.Tests
+namespace Thycotic.DistributedEngine.Service.Tests
 {
     using TechTalk.SpecFlow;
     
@@ -95,7 +95,7 @@ this.FeatureBackground();
 #line 13
  testRunner.When("the method Start on EngineService EngineServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14
- testRunner.Then("the method BuildAll on IoCConfigurator substitute IoCConfiguratorTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method Build on IoCConfigurator substitute IoCConfiguratorTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
