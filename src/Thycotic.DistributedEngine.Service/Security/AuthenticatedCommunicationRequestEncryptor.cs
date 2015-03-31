@@ -22,8 +22,7 @@ namespace Thycotic.DistributedEngine.Service.Security
             var saltProvider = new ByteSaltProvider();
 
             _log.Debug(string.Format("Encrypting body with symmetric key {0}", encryptionKey.SymmetricKey.GetHashString()));
-
-
+            
             var saltedBody = saltProvider.Salt(bytes, ByteSaltProvider.DefaultSaltLength);
             var encryptedBody = encryptor.Encrypt(saltedBody, encryptionKey.SymmetricKey, encryptionKey.InitializationVector);
             return encryptedBody;

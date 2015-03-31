@@ -1,32 +1,42 @@
 ﻿using System;
+using System.Linq;
 using Thycotic.AppCore.Federator;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
+using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.ihawu.Business.Federator;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.Messages.PasswordChanging.Request;
-using Thycotic.Messages.PasswordChanging.Response;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 {
     /// <summary>
     /// Secret  change password request
     /// </summary>
-    public class SecretChangePasswordConsumer : IBlockingConsumer<SecretChangePasswordMessage, SecretChangePasswordResponse>
+    public class SecretChangePasswordConsumer : IBasicConsumer<SecretChangePasswordMessage>
     {
-        private readonly FederatorProvider _federatorProvider = new FederatorProvider();
-        private const string FailedVerifyMessage = "Could not verify the password change.";
-        private const string SuccessMessage = "Password changed successfully.";
+        private readonly FederatorProvider _federatorProvider = new FederatorProvider();        
 
+        private readonly IResponseBus _responseBus;
         private readonly ILogWriter _log = Log.Get(typeof(SecretChangePasswordConsumer));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="responseBus"></param>
+        public SecretChangePasswordConsumer(IResponseBus responseBus)
+        {
+            _responseBus = responseBus;
+        }
 
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public SecretChangePasswordResponse Consume(SecretChangePasswordMessage request)
+        public void Consume(SecretChangePasswordMessage request)
         {
-            _log.Info("Got a change password request");
+            _log.Info(string.Format("Got a change password request for Secret Id {0}:", request.SecretId));
 
             var infoProvider = request.PasswordInfoProvider;
             var passwordTypeName = infoProvider.PasswordTypeName;
@@ -43,31 +53,31 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                 {
                     passwordChangeResult = federator.SetPassword(infoProvider);
                 }
-                if (!passwordChangeResult.Success)
+
+                var response = new RemotePasswordChangeResponse()
                 {
-                    return new SecretChangePasswordResponse
+                    Success = passwordChangeResult.Success,
+                    SecretId = request.SecretId,
+                    ErrorCode = (int)passwordChangeResult.ErrorCode,
+                    CommandExecutionResults = (passwordChangeResult.CommandExecutionResults ?? new CommandExecutionResult[0]).Select(cer => new EngineToServerCommunication.Areas.General.CommandExecutionResult
                     {
-                        Success = passwordChangeResult.Success,
-                        ErrorCode = passwordChangeResult.ErrorCode,
-                        CommandExecutionResults = passwordChangeResult.CommandExecutionResults,
-                        StatusMessages = passwordChangeResult.StatusMessages
-                    };
-                }
-                if (!federator.VerifyPassword(infoProvider))
-                {
-                    return new SecretChangePasswordResponse
-                    {
-                        Success = false,
-                        ErrorCode = FailureCode.UnknownError,
-                        StatusMessages = new[] {FailedVerifyMessage}
-                    };
-                }
-                return new SecretChangePasswordResponse
-                {
-                    Success = true,
-                    ErrorCode = FailureCode.NoError,
-                    StatusMessages = new[] { SuccessMessage }
+                        Command = cer.Command,
+                        Response = cer.Response,
+                        Comment = cer.Comment
+                    }).ToArray(),
+                    StatusMessages = passwordChangeResult.StatusMessages
                 };
+
+                try
+                {
+                    _responseBus.SendRemotePasswordChangeResponse(response);
+                    _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, passwordChangeResult.ErrorCode));
+                }
+                catch (Exception)
+                {
+                    _log.Error("Failed to record the secret change password response back to server");
+                    //TODO: Retry?
+                }
             }
             catch (Exception ex)
             {

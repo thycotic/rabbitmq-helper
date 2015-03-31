@@ -48,7 +48,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             _engineService = engineService;
             _recentLogEntryProvider = recentLogEntryProvider;
             _engineIdentificationProvider = engineIdentificationProvider;
-            _responseBus = responseBus;
+            _responseBus = responseBus;            
         }
 
         private void Pump()
