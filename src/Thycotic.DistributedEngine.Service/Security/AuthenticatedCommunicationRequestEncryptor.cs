@@ -3,10 +3,19 @@ using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.Service.Security
 {
-    class AuthenticatedCommunicationRequestEncryptor : IAuthenticatedCommunicationRequestEncryptor
+    /// <summary>
+    /// Authenticated communication request encryptor
+    /// </summary>
+    public class AuthenticatedCommunicationRequestEncryptor : IAuthenticatedCommunicationRequestEncryptor
     {
         private readonly ILogWriter _log = Log.Get(typeof(AuthenticatedCommunicationRequestEncryptor));
 
+        /// <summary>
+        /// Encrypts the specified encryption key.
+        /// </summary>
+        /// <param name="encryptionKey">The encryption key.</param>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns></returns>
         public byte[] Encrypt(SymmetricKeyPair encryptionKey, byte[] bytes)
         {
             var encryptor = new SymmetricEncryptor();
@@ -21,6 +30,12 @@ namespace Thycotic.DistributedEngine.Service.Security
 
         }
 
+        /// <summary>
+        /// Decrypts the specified decryption key.
+        /// </summary>
+        /// <param name="decryptionKey">The decryption key.</param>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns></returns>
         public byte[] Decrypt(SymmetricKeyPair decryptionKey, byte[] bytes)
         {
             var saltProvider = new ByteSaltProvider();

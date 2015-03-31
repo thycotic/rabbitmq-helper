@@ -31,9 +31,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             {
                 //interactive mode (first argument is i, il or icd
                 //i - interactive still going out to web service to look for configuration
-                //il - interactive but using a loopback for configuration
                 //icd - interactive still going out to web service to look for configuration, consumption disabled
-                //ilcd - interactive but using a loopback for configuration, consumption disabled
                 if (args.Any() && args.First().StartsWith("i"))
                 {
                     ConfigureTraceListener();
@@ -48,22 +46,9 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     pipelineService.Start();
 
                     var startConsuming = !args.First().EndsWith("cd");
-
-                    EngineService engineService;
-
-                    var loopback = args.First().StartsWith("il");
-
-                    //loopback
-                    if (loopback)
-                    {
-                        var ioCConfigurator = new LoopbackIoCConfigurator();
-                        engineService = new EngineService(startConsuming, ioCConfigurator);
-                    }
-                    else
-                    {
-                        engineService = new EngineService(startConsuming);
-                    }
-
+                    
+                    var engineService = new EngineService(startConsuming);
+                    
                     ConfigureMockConfiguration();
 
                     //every time engine IoCContainer changes reconfigure the CLI

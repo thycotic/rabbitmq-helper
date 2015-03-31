@@ -156,7 +156,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service.Configuration
         {
             //builder.RegisterModule(new EngineToServerModule(GetInstanceConfiguration, pipelineService));
 
-            builder.RegisterModule(new MemoryMqServerModule(GetInstanceConfiguration));
+            builder.RegisterModule(new MemoryMqServerModule(GetLocalConfiguration));
 
             //if (startConsuming)
             //{

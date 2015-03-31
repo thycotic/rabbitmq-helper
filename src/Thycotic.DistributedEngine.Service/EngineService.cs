@@ -80,7 +80,6 @@ namespace Thycotic.DistributedEngine.Service
                 if (!IoCConfigurator.TryGetAndAssignConfiguration())
                 {
                     _log.Info("Engine is not enabled/configured. Existing...");
-                    return;
                 }
 
                 // BuildAll the container to finalize registrations and prepare for object resolution.
