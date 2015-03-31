@@ -1,10 +1,9 @@
 ﻿using System;
 using Autofac;
-using Thycotic.DistributedEngine.Heartbeat;
+using Thycotic.DistributedEngine.Service.Heartbeat;
 using Thycotic.Logging;
-using Module = Autofac.Module;
 
-namespace Thycotic.DistributedEngine.IoC
+namespace Thycotic.DistributedEngine.Service.IoC
 {
     class HeartbeatModule : Module
     {

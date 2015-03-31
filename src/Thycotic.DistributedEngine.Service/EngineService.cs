@@ -2,11 +2,11 @@
 using System.Diagnostics;
 using System.ServiceProcess;
 using Autofac;
-using Thycotic.DistributedEngine.Configuration;
+using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.Wrappers;
 
-namespace Thycotic.DistributedEngine
+namespace Thycotic.DistributedEngine.Service
 {
     /// <summary>
     /// Engine windows service

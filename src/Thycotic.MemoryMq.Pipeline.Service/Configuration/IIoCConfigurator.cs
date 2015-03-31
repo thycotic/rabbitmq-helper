@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
+using Thycotic.DistributedEngine;
 
-namespace Thycotic.DistributedEngine.Configuration
+namespace Thycotic.MemoryMq.Pipeline.Service.Configuration
 {
     /// <summary>
     /// Interface for an IoC Configirator

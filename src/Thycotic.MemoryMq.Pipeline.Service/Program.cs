@@ -1,6 +1,7 @@
 ﻿using System.ServiceProcess;
+using Thycotic.DistributedEngine;
 
-namespace Thycotic.DistributedEngine
+namespace Thycotic.MemoryMq.Pipeline.Service
 {
     internal static class Program
     {

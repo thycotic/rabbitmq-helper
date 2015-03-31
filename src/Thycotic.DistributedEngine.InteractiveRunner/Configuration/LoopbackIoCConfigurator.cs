@@ -1,8 +1,9 @@
 ﻿using Autofac;
 using NSubstitute;
-using Thycotic.DistributedEngine.Configuration;
-using Thycotic.DistributedEngine.EngineToServer;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
+using Thycotic.DistributedEngine.Service;
+using Thycotic.DistributedEngine.Service.Configuration;
+using Thycotic.DistributedEngine.Service.EngineToServer;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
 {

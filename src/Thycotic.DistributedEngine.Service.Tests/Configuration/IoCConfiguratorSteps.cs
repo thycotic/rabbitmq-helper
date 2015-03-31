@@ -1,8 +1,8 @@
 ﻿using TechTalk.SpecFlow;
-using Thycotic.DistributedEngine.Configuration;
+using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.Utility.Specflow;
 
-namespace Thycotic.DistributedEngine.Tests.Configuration
+namespace Thycotic.DistributedEngine.Service.Tests.Configuration
 {
     [Binding]
     public class IoCConfiguratorSteps

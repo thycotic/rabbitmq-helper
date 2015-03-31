@@ -1,4 +1,4 @@
-﻿namespace Thycotic.DistributedEngine.Heartbeat
+﻿namespace Thycotic.DistributedEngine.Service.Heartbeat
 {
     class HeartbeatConfigurationProvider : IHeartbeatConfigurationProvider
     {

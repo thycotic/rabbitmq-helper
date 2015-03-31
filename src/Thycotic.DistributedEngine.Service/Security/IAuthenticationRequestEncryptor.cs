@@ -1,7 +1,7 @@
 ﻿using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Security;
 using Thycotic.Encryption;
 
-namespace Thycotic.DistributedEngine.Security
+namespace Thycotic.DistributedEngine.Service.Security
 {
     /// <summary>
     /// Authentication encryptor

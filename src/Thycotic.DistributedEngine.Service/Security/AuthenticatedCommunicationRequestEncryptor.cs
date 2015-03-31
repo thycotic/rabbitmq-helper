@@ -1,8 +1,7 @@
-﻿using System;
-using Thycotic.Encryption;
+﻿using Thycotic.Encryption;
 using Thycotic.Logging;
 
-namespace Thycotic.DistributedEngine.Security
+namespace Thycotic.DistributedEngine.Service.Security
 {
     class AuthenticatedCommunicationRequestEncryptor : IAuthenticatedCommunicationRequestEncryptor
     {

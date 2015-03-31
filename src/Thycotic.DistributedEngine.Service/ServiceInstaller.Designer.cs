@@ -1,4 +1,4 @@
-﻿namespace Thycotic.DistributedEngine
+﻿namespace Thycotic.DistributedEngine.Service
 {
     partial class ServiceInstaller
     {

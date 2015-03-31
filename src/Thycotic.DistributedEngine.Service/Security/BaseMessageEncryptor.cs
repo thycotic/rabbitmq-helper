@@ -1,9 +1,8 @@
-﻿using System;
-using Thycotic.Encryption;
+﻿using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 
-namespace Thycotic.DistributedEngine.Security
+namespace Thycotic.DistributedEngine.Service.Security
 {
     /// <summary>
     /// Message encryptor which encrypts and decrypts based on exchange name

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Reflection;
 using Autofac;
+using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
-using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.Utility.Reflection;
 using Module = Autofac.Module;
 
-namespace Thycotic.DistributedEngine.IoC
+namespace Thycotic.DistributedEngine.Service.IoC
 {
     class LogicModule : Module
     {

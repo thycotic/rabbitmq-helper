@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using Thycotic.Encryption;
 using Thycotic.Logging;
 
-namespace Thycotic.DistributedEngine.Security
+namespace Thycotic.DistributedEngine.Service.Security
 {
     /// <summary>
     /// Message encryptor which encrypts and decrypts based on exchange name

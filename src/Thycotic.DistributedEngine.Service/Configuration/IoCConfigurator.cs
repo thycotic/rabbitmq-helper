@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using Autofac;
-using Thycotic.DistributedEngine.EngineToServer;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
-using Thycotic.DistributedEngine.IoC;
 using Thycotic.DistributedEngine.Logic;
-using Thycotic.DistributedEngine.Security;
+using Thycotic.DistributedEngine.Service.EngineToServer;
+using Thycotic.DistributedEngine.Service.IoC;
+using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
 using Thycotic.MessageQueue.Client.Wrappers.IoC;
 using Thycotic.Utility;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.DistributedEngine.Configuration
+namespace Thycotic.DistributedEngine.Service.Configuration
 {
     /// <summary>
     /// IoC configurator

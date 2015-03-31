@@ -4,16 +4,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using Thycotic.DistributedEngine.Configuration;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Logging;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
+using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
 using Thycotic.Logging.Models;
 using Thycotic.Utility;
 
-namespace Thycotic.DistributedEngine.Heartbeat
+namespace Thycotic.DistributedEngine.Service.Heartbeat
 {
     /// <summary>
     /// Startup message writer. Mostly to ensure Autofac is working properly.

@@ -1,9 +1,7 @@
 ﻿using Autofac;
-using Thycotic.Logging;
-using Thycotic.MemoryMq;
 using Thycotic.Wcf;
 
-namespace Thycotic.DistributedEngine.MemoryMq
+namespace Thycotic.MemoryMq.Pipeline.Service.MemoryMq
 {
     /// <summary>
     /// Memory mq WCF server wrapper.

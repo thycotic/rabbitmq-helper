@@ -1,11 +1,10 @@
 ﻿using System;
 using Autofac;
-using Thycotic.DistributedEngine.Security;
+using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
 using Thycotic.Logging;
-using Module = Autofac.Module;
 
-namespace Thycotic.DistributedEngine.IoC
+namespace Thycotic.DistributedEngine.Service.IoC
 {
     class EngineToServerModule : Module
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Thycotic.DistributedEngine.Configuration
+namespace Thycotic.DistributedEngine.Service.Configuration
 {
     /// <summary>
     /// Interface for an engine identification provider

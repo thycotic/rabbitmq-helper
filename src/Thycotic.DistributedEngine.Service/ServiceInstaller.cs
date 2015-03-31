@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Thycotic.DistributedEngine
+namespace Thycotic.DistributedEngine.Service
 {
     /// <summary>
     /// Service installer

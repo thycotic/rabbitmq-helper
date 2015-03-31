@@ -1,15 +1,15 @@
 using System;
-using Thycotic.DistributedEngine.EngineToServer;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic;
-using Thycotic.DistributedEngine.Security;
+using Thycotic.DistributedEngine.Service.EngineToServer;
+using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.DistributedEngine
+namespace Thycotic.DistributedEngine.Service
 {
     /// <summary>
     /// Engine to server communication provider

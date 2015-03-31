@@ -2,8 +2,8 @@
 using System.Diagnostics;
 using System.ServiceProcess;
 using Autofac;
-using Thycotic.DistributedEngine.Configuration;
 using Thycotic.Logging;
+using Thycotic.MemoryMq.Pipeline.Service.Configuration;
 using Thycotic.MessageQueue.Client.Wrappers;
 
 namespace Thycotic.DistributedEngine

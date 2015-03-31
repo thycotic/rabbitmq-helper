@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Autofac;
 
-namespace Thycotic.DistributedEngine.Configuration
+namespace Thycotic.DistributedEngine.Service.Configuration
 {
     /// <summary>
-    /// Interface for an IoC Configirator
+    /// Interface for an IoC configurator
     /// </summary>
     public interface IIoCConfigurator
     {

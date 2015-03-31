@@ -1,7 +1,7 @@
-﻿namespace Thycotic.DistributedEngine.Heartbeat
+﻿namespace Thycotic.DistributedEngine.Service.Heartbeat
 {
     /// <summary>
-    /// Interface for heartheat configuration provider
+    /// Interface for heartbeat configuration provider
     /// </summary>
     public interface IHeartbeatConfigurationProvider
     {

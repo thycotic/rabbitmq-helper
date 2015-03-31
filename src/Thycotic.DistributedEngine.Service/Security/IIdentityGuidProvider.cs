@@ -1,6 +1,6 @@
 using System;
 
-namespace Thycotic.DistributedEngine.Security
+namespace Thycotic.DistributedEngine.Service.Security
 {
     /// <summary>
     /// Interface for an identity guid provider

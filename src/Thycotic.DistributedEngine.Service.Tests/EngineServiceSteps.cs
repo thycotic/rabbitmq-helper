@@ -1,9 +1,9 @@
 ﻿using NSubstitute;
 using TechTalk.SpecFlow;
-using Thycotic.DistributedEngine.Configuration;
+using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.Utility.Specflow;
 
-namespace Thycotic.DistributedEngine.Tests
+namespace Thycotic.DistributedEngine.Service.Tests
 {
     [Binding]
     public class EngineServiceSteps

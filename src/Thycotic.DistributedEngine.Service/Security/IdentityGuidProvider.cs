@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Thycotic.Logging;
 
-namespace Thycotic.DistributedEngine.Security
+namespace Thycotic.DistributedEngine.Service.Security
 {
     /// <summary>
     /// Identifier provider

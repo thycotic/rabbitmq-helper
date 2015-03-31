@@ -1,6 +1,6 @@
 ﻿using Thycotic.Encryption;
 
-namespace Thycotic.DistributedEngine.Security
+namespace Thycotic.DistributedEngine.Service.Security
 {
     /// <summary>
     /// Local key provider

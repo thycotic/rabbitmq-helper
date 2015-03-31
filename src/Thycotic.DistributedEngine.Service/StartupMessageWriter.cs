@@ -6,7 +6,7 @@ using Autofac;
 using Thycotic.Logging;
 using Thycotic.Utility;
 
-namespace Thycotic.DistributedEngine
+namespace Thycotic.DistributedEngine.Service
 {
     /// <summary>
     /// Startup message writer. Mostly to ensure Autofac is working properly.
@@ -31,7 +31,7 @@ namespace Thycotic.DistributedEngine
             {
                 //from http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Dobri is awesome
                 var logoStream =
-                    Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.DistributedEngine.logo.txt");
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.DistributedEngine.Service.logo.txt");
 
                 if (logoStream != null)
                 {

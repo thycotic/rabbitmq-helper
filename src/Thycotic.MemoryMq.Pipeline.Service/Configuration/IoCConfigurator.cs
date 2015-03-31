@@ -2,15 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using Autofac;
-using Thycotic.DistributedEngine.IoC;
-using Thycotic.DistributedEngine.Logic;
+using Thycotic.DistributedEngine;
 using Thycotic.Logging;
-using Thycotic.Logging.LogTail;
-using Thycotic.MessageQueue.Client.Wrappers.IoC;
+using Thycotic.MemoryMq.Pipeline.Service.IoC;
 using Thycotic.Utility;
-using Thycotic.Utility.Serialization;
 
-namespace Thycotic.DistributedEngine.Configuration
+namespace Thycotic.MemoryMq.Pipeline.Service.Configuration
 {
     /// <summary>
     /// IoC configurator

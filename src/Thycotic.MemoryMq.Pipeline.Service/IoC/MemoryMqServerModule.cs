@@ -1,10 +1,9 @@
 ﻿using System;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.DistributedEngine.MemoryMq;
 using Thycotic.Utility;
 
-namespace Thycotic.DistributedEngine.IoC
+namespace Thycotic.MemoryMq.Pipeline.Service.IoC
 {
     class MemoryMqServerModule : Module
     {
@@ -48,14 +47,14 @@ namespace Thycotic.DistributedEngine.IoC
                     _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
 
 
-                    builder.Register(context => new MemoryMqServiceHost(connectionString, thumbprint))
+                    builder.Register(context => new MemoryMq.MemoryMqServiceHost(connectionString, thumbprint))
                         .As<IStartable>()
                         .SingleInstance();
                 }
                 else
                 {
 
-                    builder.Register(context => new MemoryMqServiceHost(connectionString))
+                    builder.Register(context => new MemoryMq.MemoryMqServiceHost(connectionString))
                         .As<IStartable>()
                         .SingleInstance();
                 }

@@ -1,12 +1,9 @@
 using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
-using Thycotic.DistributedEngine.Security;
-using Thycotic.Encryption;
 using Thycotic.Logging;
-using Thycotic.Utility.Serialization;
 using Thycotic.Wcf;
 
-namespace Thycotic.DistributedEngine.EngineToServer
+namespace Thycotic.DistributedEngine.Service.EngineToServer
 {
     /// <summary>
     /// Wrapper for users of <see cref="IEngineToServerCommunicationWcfService"/> channels

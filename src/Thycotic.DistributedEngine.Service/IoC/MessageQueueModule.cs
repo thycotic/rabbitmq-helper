@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
-using Thycotic.DistributedEngine.EngineToServer;
+using Thycotic.DistributedEngine.Service.EngineToServer;
+using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
-using Thycotic.DistributedEngine.Security;
 
-namespace Thycotic.DistributedEngine.IoC
+namespace Thycotic.DistributedEngine.Service.IoC
 {
     class MessageQueueModule : Module
     {

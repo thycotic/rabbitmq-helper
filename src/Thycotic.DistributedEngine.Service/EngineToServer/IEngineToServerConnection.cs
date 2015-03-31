@@ -1,7 +1,7 @@
 using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 
-namespace Thycotic.DistributedEngine.EngineToServer
+namespace Thycotic.DistributedEngine.Service.EngineToServer
 {
     /// <summary>
     /// Interface for an engine to service connection

@@ -5,11 +5,11 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
-using Thycotic.DistributedEngine.Security;
+using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
 using Thycotic.Utility.Serialization;
 
-namespace Thycotic.DistributedEngine.EngineToServer
+namespace Thycotic.DistributedEngine.Service.EngineToServer
 {
     /// <summary>
     /// Engine to server communication provider
