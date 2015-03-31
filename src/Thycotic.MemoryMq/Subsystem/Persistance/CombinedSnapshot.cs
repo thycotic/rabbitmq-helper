@@ -11,6 +11,6 @@ namespace Thycotic.MemoryMq.Subsystem.Persistance
         /// <value>
         /// The exchanges.
         /// </value>
-        public ExchangeSnapshot[] Exchanges { get; set; }
+        public MailboxSnapshot[] Mailboxes { get; set; }
     }
 }

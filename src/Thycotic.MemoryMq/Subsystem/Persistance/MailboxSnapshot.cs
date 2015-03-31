@@ -3,16 +3,8 @@ namespace Thycotic.MemoryMq.Subsystem.Persistance
     /// <summary>
     /// 
     /// </summary>
-    public class ExchangeSnapshot
+    public class MailboxSnapshot
     {
-        /// <summary>
-        /// Gets or sets the routing slip.
-        /// </summary>
-        /// <value>
-        /// The routing slip.
-        /// </value>
-        public RoutingSlip RoutingSlip { get; set; }
-
         /// <summary>
         /// Gets or sets the delivery event arguments.
         /// </summary>

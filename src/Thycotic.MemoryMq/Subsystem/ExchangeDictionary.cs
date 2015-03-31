@@ -85,37 +85,43 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <summary>
         /// Restores the persisted messages from disk to memory.
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void RestorePersistedMessages()
         {
             try
             {
-                var path = GetPersistPath();
-                if (!File.Exists(path))
+
+                using (LogContext.Create("Restore messages"))
                 {
-                    //nothing to restore
-                    return;
+                    var path = GetPersistPath();
+                    if (!File.Exists(path))
+                    {
+                        //nothing to restore
+                        return;
+                    }
+
+                    _log.Info("There are messages on disk...");
+
+                    CombinedSnapshot snapshot;
+
+                    using (var fs = File.Open(path, FileMode.Open))
+                    using (var sw = new StreamReader(fs))
+                    using (var jw = new JsonTextReader(sw))
+                    {
+                        var serializer = new JsonSerializer();
+                        snapshot = serializer.Deserialize<CombinedSnapshot>(jw);
+                    }
+
+                    if (snapshot != null && snapshot.Mailboxes.Length > 0)
+                    {
+                        snapshot.Mailboxes.ToList()
+                            .ForEach(e => e.DeliveryEventArguments.ToList().ForEach(dea => Publish(new RoutingSlip(dea.Exchange, dea.RoutingKey), dea)));
+
+                        _log.Info(string.Format("Restored {0} message(s)", snapshot.Mailboxes.Sum(e => e.DeliveryEventArguments.Length)));
+                    }
+
+                    //remove the file
+                    File.Delete(path);
                 }
-
-                _log.Info("Restoring messages from disk...");
-
-                CombinedSnapshot snapshot;
-
-                using (var fs = File.Open(path, FileMode.Open))
-                using (var sw = new StreamReader(fs))
-                using (var jw = new JsonTextReader(sw))
-                {
-                    var serializer = new JsonSerializer();
-                    snapshot = serializer.Deserialize<CombinedSnapshot>(jw);
-                }
-
-                if (snapshot != null && snapshot.Exchanges.Length > 0)
-                {
-                    snapshot.Exchanges.ToList().ForEach(e => e.DeliveryEventArguments.ToList().ForEach(dea => Publish(e.RoutingSlip, dea)));
-                }
-
-                //remove the file
-                File.Delete(path);
             }
             catch (Exception ex)
             {
@@ -131,36 +137,42 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             try
             {
-                var path = GetPersistPath();
-                if (File.Exists(path))
+                using (LogContext.Create("Persist messages"))
                 {
-                    //delete any previous snapshots
-                    File.Delete(path);
+
+                    var path = GetPersistPath();
+                    if (File.Exists(path))
+                    {
+                        //delete any previous snapshots
+                        File.Delete(path);
+                    }
+
+                    if (IsEmpty)
+                    {
+                        //nothing to persist
+                        return;
+                    }
+
+                    _log.Info("There are messages in the exchange. Persisting to disk...");
+
+                    var snapshot = GenerateSnapshot();
+
+                    using (var fs = File.Open(path, FileMode.Create))
+                    using (var sw = new StreamWriter(fs))
+                    using (var jw = new JsonTextWriter(sw))
+                    {
+                        jw.Formatting = Formatting.None;
+
+                        var serializer = new JsonSerializer();
+                        serializer.Serialize(jw, snapshot);
+                    }
+
+                    _log.Info(string.Format("Persisted {0} message(s)",
+                        snapshot.Mailboxes.Sum(e => e.DeliveryEventArguments.Length)));
+
+                    //remove all messages
+                    _data.Clear();
                 }
-
-                if (IsEmpty)
-                {
-                    //nothing to persist
-                    return;
-                }
-
-                _log.Info("There are messages in the exchange. Persisting to disk...");
-
-
-                var snapshot = GenerateSnapshot();
-
-                using (var fs = File.Open(path, FileMode.Create))
-                using (var sw = new StreamWriter(fs))
-                using (var jw = new JsonTextWriter(sw))
-                {
-                    jw.Formatting = Formatting.None;
-
-                    var serializer = new JsonSerializer();
-                    serializer.Serialize(jw, snapshot);
-                }
-
-                //remove all messages
-                _data.Clear();
             }
             catch (Exception ex)
             {
@@ -170,7 +182,7 @@ namespace Thycotic.MemoryMq.Subsystem
 
         private CombinedSnapshot GenerateSnapshot()
         {
-            var exchangeSnapshotList = new List<ExchangeSnapshot>();
+            var exchangeSnapshotList = new List<MailboxSnapshot>();
 
             _data.ToList().ForEach(kvp =>
             {
@@ -186,9 +198,8 @@ namespace Thycotic.MemoryMq.Subsystem
                     routingSlipSnapshotList.Add(deliveryArgs);
                 }
 
-                exchangeSnapshotList.Add(new ExchangeSnapshot
+                exchangeSnapshotList.Add(new MailboxSnapshot
                 {
-                    RoutingSlip = routingSlip,
                     DeliveryEventArguments = routingSlipSnapshotList.ToArray()
                 });
 
@@ -196,7 +207,7 @@ namespace Thycotic.MemoryMq.Subsystem
 
             return new CombinedSnapshot
             {
-                Exchanges = exchangeSnapshotList.ToArray()
+                Mailboxes = exchangeSnapshotList.ToArray()
             };
         }
 
