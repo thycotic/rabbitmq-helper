@@ -28,18 +28,18 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("RabbitMq"))
             {
                 var connectionString =
-                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.ConnectionString);
+                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.ConnectionString);
                 _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-                var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.UserName);
+                var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.UserName);
                 _log.Info(string.Format("RabbitMq username is {0}", userName));
 
-                var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.Password);
+                var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.Password);
                 _log.Info(string.Format("RabbitMq password is {0}",
                     string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.RabbitMq.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.UseSsl));
                 if (useSsl)
                 {
                     _log.Info("RabbitMq using encryption");
@@ -60,18 +60,18 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("MemoryMq"))
             {
                 var connectionString =
-                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
+                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-                var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UserName);
+                var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.UserName);
                 _log.Info(string.Format("MemoryMq username is {0}", userName));
 
-                var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.Password);
+                var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.Password);
                 _log.Info(string.Format("MemoryMq password is {0}",
                     string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.UseSsl));
                 if (useSsl)
                 {
                     _log.Info("MemoryMq using encryption");

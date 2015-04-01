@@ -151,6 +151,7 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="Collections\ConcurrentPriorityQueue.cs" />
+    <Compile Include="ConfigurationKeys.cs" />
     <Compile Include="MemoryMqProperties.cs" />
     <Compile Include="MemoryMqServiceHost.cs" />
     <Compile Include="Subsystem\BindingDictionary.cs" />

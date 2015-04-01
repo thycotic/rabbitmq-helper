@@ -41,22 +41,22 @@ namespace Thycotic.MessageQueue.Client
             /// <summary>
             /// The connection string
             /// </summary>
-            public const string ConnectionString = "Pipeline.ConnectionString";
+            public const string ConnectionString = Thycotic.MemoryMq.ConfigurationKeys.ConnectionString;
 
             /// <summary>
             /// The user name
             /// </summary>
-            public const string UserName = "Pipeline.UserName";
+            public const string UserName = Thycotic.MemoryMq.ConfigurationKeys.UserName;
 
             /// <summary>
             /// The password
             /// </summary>
-            public const string Password = "Pipeline.Password";
+            public const string Password = Thycotic.MemoryMq.ConfigurationKeys.Password;
 
             /// <summary>
             /// Whether or not to use SSL
             /// </summary>
-            public static string UseSsl = "Pipeline.UseSSL";
+            public static string UseSsl = Thycotic.MemoryMq.ConfigurationKeys.UseSsl;
         }
 
         /// <summary>
@@ -80,71 +80,5 @@ namespace Thycotic.MessageQueue.Client
             public const string InitializationVector = "Exchange.InitializationVector";
         }
 
-        /// <summary>
-        /// Rabbit Mq
-        /// </summary>
-        //[Obsolete("Use Pipeline constants instead")]
-        public static class RabbitMq
-        {
-            /// <summary>
-            /// The connection string
-            /// </summary>
-            public const string ConnectionString = "RabbitMq.ConnectionString";
-
-            /// <summary>
-            /// The user name
-            /// </summary>
-            public const string UserName = "RabbitMq.UserName";
-
-            /// <summary>
-            /// The password
-            /// </summary>
-            public const string Password = "RabbitMq.Password";
-
-            /// <summary>
-            /// Whether or not to use SSL
-            /// </summary>
-            public static string UseSsl = "RabbitMq.UseSSL";
-        }
-
-        /// <summary>
-        /// Memory Mq
-        /// </summary>
-        //[Obsolete("Use Pipeline constants instead")]
-        public static class MemoryMq
-        {
-            /// <summary>
-            /// The connection string
-            /// </summary>
-            public const string ConnectionString = "MemoryMq.ConnectionString";
-
-            /// <summary>
-            /// The user name
-            /// </summary>
-            public const string UserName = "MemoryMq.UserName";
-
-            /// <summary>
-            /// The password
-            /// </summary>
-            public const string Password = "MemoryMq.Password";
-
-            /// <summary>
-            /// Whether or not to use SSL
-            /// </summary>
-            public static string UseSsl = "MemoryMq.UseSSL";
-
-            /// <summary>
-            /// Service related
-            /// </summary>
-            public static class Server
-            {
-
-                /// <summary>
-                /// The thumb print
-                /// </summary>
-                public const string Thumbprint = "MemoryMq.Service.Thumbprint";
-
-            }
-        }
     }
 }

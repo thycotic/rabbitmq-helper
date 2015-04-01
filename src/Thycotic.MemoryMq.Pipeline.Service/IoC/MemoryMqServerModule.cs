@@ -23,7 +23,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service.IoC
             using (LogContext.Create("MemoryMq Service"))
             {
                 var connectionString =
-                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.ConnectionString);
+                    _configurationProvider(ConfigurationKeys.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
                 var uri = new Uri(connectionString);
@@ -40,11 +40,11 @@ namespace Thycotic.MemoryMq.Pipeline.Service.IoC
                 _log.Debug("Initializing Memory Mq server...");
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.UseSsl));
                 if (useSsl)
                 {
                     var thumbprint =
-                        _configurationProvider(MessageQueue.Client.ConfigurationKeys.MemoryMq.Server.Thumbprint);
+                        _configurationProvider(ConfigurationKeys.Thumbprint);
                     _log.Info(string.Format("MemoryMq server thumbprint is {0}", thumbprint));
 
 
