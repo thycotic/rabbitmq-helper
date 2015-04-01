@@ -54,6 +54,9 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             var routingSlip = this.GetScenarioContext().Get<RoutingSlip>(routingSlipName);
             var messageDeliveryArguments = this.GetScenarioContext().Get<MemoryMqDeliveryEventArgs>(deliveryArgumentsName);
 
+            messageDeliveryArguments.Exchange = routingSlip.Exchange;
+            messageDeliveryArguments.RoutingKey = routingSlip.RoutingKey;
+
             exchangeDictionary.Publish(routingSlip, messageDeliveryArguments);
         }
 
