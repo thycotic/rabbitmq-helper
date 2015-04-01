@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using System.ServiceModel.Channels;
 
 namespace Thycotic.Wcf
@@ -15,7 +16,6 @@ namespace Thycotic.Wcf
             if (useSsl)
             {
                 clientBinding = new NetTcpBinding(SecurityMode.Transport);
-                clientBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
             }
             else
             {
@@ -45,8 +45,13 @@ namespace Thycotic.Wcf
             
             var channelFactory = new ChannelFactory<TServer>(GetBinding(useSsl, useEnvelopeAuth), uri);
 
-            if (useEnvelopeAuth && channelFactory.Credentials != null)
+            if (useEnvelopeAuth)
             {
+                if (channelFactory.Credentials == null)
+                {
+                    throw new InvalidOperationException("No credentials available");
+                }
+
                 channelFactory.Credentials.UserName.UserName = userName;
                 channelFactory.Credentials.UserName.Password = password;
             }
@@ -75,7 +80,6 @@ namespace Thycotic.Wcf
                 channelFactory.Credentials.UserName.UserName = userName;
                 channelFactory.Credentials.UserName.Password = password;
             }
-
 
             //TODO: Do i need to worry about that since this is ephemeral? -dkk
             //channelFactory.Closed += new EventHandler(DuplexChannelFactory_Closed);

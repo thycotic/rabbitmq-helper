@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using System.ServiceModel.Channels;
 
 namespace Thycotic.Wcf
@@ -14,12 +15,11 @@ namespace Thycotic.Wcf
 
             if (useSsl)
             {
-                clientBinding = new BasicHttpBinding(BasicHttpSecurityMode.Transport);
-                clientBinding.Security.Transport.ClientCredentialType = HttpClientCredentialType.None;
+                clientBinding = new BasicHttpBinding(useEnvelopeAuth ? BasicHttpSecurityMode.TransportWithMessageCredential : BasicHttpSecurityMode.Transport);
             }
             else
             {
-                clientBinding = new BasicHttpBinding(BasicHttpSecurityMode.None);
+                clientBinding = new BasicHttpBinding(useEnvelopeAuth ? BasicHttpSecurityMode.TransportCredentialOnly : BasicHttpSecurityMode.None);
             }
 
             if (useEnvelopeAuth)
@@ -45,8 +45,13 @@ namespace Thycotic.Wcf
 
             var channelFactory = new ChannelFactory<TServer>(GetBinding(useSsl, useEnvelopeAuth), uri);
 
-            if (useEnvelopeAuth && channelFactory.Credentials != null)
+            if (useEnvelopeAuth)
             {
+                if (channelFactory.Credentials == null)
+                {
+                    throw new InvalidOperationException("No credentials available");
+                }
+
                 channelFactory.Credentials.UserName.UserName = userName;
                 channelFactory.Credentials.UserName.Password = password;
             }

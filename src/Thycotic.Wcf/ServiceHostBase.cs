@@ -42,6 +42,7 @@ namespace Thycotic.Wcf
             _connectionString = connectionString;
             _useSsl = true;
             _thumbprint = thumbprint;
+            _userNamePasswordValidator = userNamePasswordValidator;
         }
 
         /// <summary>
@@ -62,7 +63,6 @@ namespace Thycotic.Wcf
                 if (_useSsl)
                 {
                     serviceBinding = new NetTcpBinding(SecurityMode.Transport);
-                    serviceBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
                 }
                 else
                 {
@@ -72,7 +72,10 @@ namespace Thycotic.Wcf
                 if (_userNamePasswordValidator != null)
                 {
                     serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
-                    
+                }
+                else
+                {
+                    serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.None;
                 }
 
                 _host = new ServiceHost(typeof(TServer));
@@ -86,7 +89,7 @@ namespace Thycotic.Wcf
                         X509FindType.FindByThumbprint,
                         _thumbprint);
                 }
-
+                
                 if (_userNamePasswordValidator != null)
                 {
                     _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode =
@@ -105,7 +108,7 @@ namespace Thycotic.Wcf
                 }
             });
         }
-
+        
         /// <summary>
         /// Stops this instance.
         /// </summary>
