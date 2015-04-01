@@ -28,6 +28,6 @@
         /// <summary>
         /// The thumbprint
         /// </summary>
-        public static string Thumbprint = "Pipeline.UseSSL";
+        public static string Thumbprint = "Pipeline.Thumbprint";
     }
 }
