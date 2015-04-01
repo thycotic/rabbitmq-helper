@@ -157,7 +157,9 @@
     <None Include="..\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
-    <None Include="Thycotic.Wcf.nuspec" />
+    <None Include="Thycotic.Wcf.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
