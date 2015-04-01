@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
+using Thycotic.Logging;
 
 namespace Thycotic.Wcf
 {
@@ -9,6 +10,8 @@ namespace Thycotic.Wcf
     /// </summary>
     public static class HttpChannelFactory
     {
+        private static readonly ILogWriter Log = Logging.Log.Get(typeof(HttpChannelFactory));
+        
         private static Binding GetBinding(bool useSsl, bool useEnvelopeAuth)
         {
             BasicHttpBinding clientBinding;
@@ -19,7 +22,7 @@ namespace Thycotic.Wcf
             }
             else
             {
-                clientBinding = new BasicHttpBinding(useEnvelopeAuth ? BasicHttpSecurityMode.TransportCredentialOnly : BasicHttpSecurityMode.None);
+                clientBinding = new BasicHttpBinding(BasicHttpSecurityMode.None);
             }
 
             if (useEnvelopeAuth)
@@ -45,15 +48,22 @@ namespace Thycotic.Wcf
 
             var channelFactory = new ChannelFactory<TServer>(GetBinding(useSsl, useEnvelopeAuth), uri);
 
-            if (useEnvelopeAuth)
+            if (useSsl)
             {
-                if (channelFactory.Credentials == null)
+                if (useEnvelopeAuth)
                 {
-                    throw new InvalidOperationException("No credentials available");
-                }
+                    if (channelFactory.Credentials == null)
+                    {
+                        throw new InvalidOperationException("No credentials available");
+                    }
 
-                channelFactory.Credentials.UserName.UserName = userName;
-                channelFactory.Credentials.UserName.Password = password;
+                    channelFactory.Credentials.UserName.UserName = userName;
+                    channelFactory.Credentials.UserName.Password = password;
+                }
+            }
+            else
+            {
+                Log.Warn("Channel will not send client credentials. Use SSL for increased security");
             }
 
             return channelFactory.CreateChannel();

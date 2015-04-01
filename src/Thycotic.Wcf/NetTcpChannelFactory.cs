@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
+using Thycotic.Logging;
 
 namespace Thycotic.Wcf
 {
@@ -9,13 +10,15 @@ namespace Thycotic.Wcf
     /// </summary>
     public static class NetTcpChannelFactory
     {
+        private static readonly ILogWriter Log = Logging.Log.Get(typeof(NetTcpChannelFactory));
+
         private static Binding GetBinding(bool useSsl, bool useEnvelopeAuth)
         {
             NetTcpBinding clientBinding;
 
             if (useSsl)
             {
-                clientBinding = new NetTcpBinding(SecurityMode.Transport);
+                clientBinding = new NetTcpBinding(useEnvelopeAuth ? SecurityMode.TransportWithMessageCredential : SecurityMode.Transport);
             }
             else
             {
@@ -45,15 +48,22 @@ namespace Thycotic.Wcf
             
             var channelFactory = new ChannelFactory<TServer>(GetBinding(useSsl, useEnvelopeAuth), uri);
 
-            if (useEnvelopeAuth)
+            if (useSsl)
             {
-                if (channelFactory.Credentials == null)
+                if (useEnvelopeAuth)
                 {
-                    throw new InvalidOperationException("No credentials available");
-                }
+                    if (channelFactory.Credentials == null)
+                    {
+                        throw new InvalidOperationException("No credentials available");
+                    }
 
-                channelFactory.Credentials.UserName.UserName = userName;
-                channelFactory.Credentials.UserName.Password = password;
+                    channelFactory.Credentials.UserName.UserName = userName;
+                    channelFactory.Credentials.UserName.Password = password;
+                }
+            }
+            else
+            {
+                Log.Warn("Channel will not send client credentials. Use SSL for increased security");
             }
 
             return channelFactory.CreateChannel();
@@ -74,11 +84,22 @@ namespace Thycotic.Wcf
             var useEnvelopeAuth = !string.IsNullOrWhiteSpace(userName);
 
             var channelFactory = new DuplexChannelFactory<TServer>(callback, GetBinding(useSsl, useEnvelopeAuth), uri);
-
-            if (useEnvelopeAuth && channelFactory.Credentials != null)
+            if (useSsl)
             {
-                channelFactory.Credentials.UserName.UserName = userName;
-                channelFactory.Credentials.UserName.Password = password;
+                if (useEnvelopeAuth)
+                {
+                    if (channelFactory.Credentials == null)
+                    {
+                        throw new InvalidOperationException("No credentials available");
+                    }
+
+                    channelFactory.Credentials.UserName.UserName = userName;
+                    channelFactory.Credentials.UserName.Password = password;
+                }
+            }
+            else
+            {
+                Log.Warn("Channel will not send client credentials. Use SSL for increased security");
             }
 
             //TODO: Do i need to worry about that since this is ephemeral? -dkk
