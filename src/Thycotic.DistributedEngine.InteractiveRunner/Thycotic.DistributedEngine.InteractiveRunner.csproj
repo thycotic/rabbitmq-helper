@@ -145,6 +145,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -179,6 +183,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.51\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.Wcf">
       <HintPath>..\packages\Thycotic.Wcf.5.0.0.45\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
@@ -211,7 +219,9 @@
     <None Include="..\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -220,10 +230,6 @@
     <ProjectReference Include="..\Thycotic.DistributedEngine.Logic\Thycotic.DistributedEngine.Logic.csproj">
       <Project>{74ec374a-729a-4707-8586-32d10cdc3ecc}</Project>
       <Name>Thycotic.DistributedEngine.Logic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Logging\Thycotic.Logging.csproj">
-      <Project>{fe8be3ea-3f69-488e-8ac8-cfe47525d93f}</Project>
-      <Name>Thycotic.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.MemoryMq.Pipeline.Service\Thycotic.MemoryMq.Pipeline.Service.csproj">
       <Project>{88bda5ed-1bca-4227-b838-681a709f4ea1}</Project>

@@ -128,6 +128,10 @@
     <AssemblyOriginatorKeyFile>..\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -142,6 +146,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.51\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.Wcf">
       <HintPath>..\packages\Thycotic.Wcf.5.0.0.45\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
@@ -200,10 +208,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.Logging\Thycotic.Logging.csproj">
-      <Project>{fe8be3ea-3f69-488e-8ac8-cfe47525d93f}</Project>
-      <Name>Thycotic.Logging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">
       <Project>{60af5da6-343c-4c6f-9cd5-2b5f04d9af92}</Project>
       <Name>Thycotic.MemoryMq</Name>
