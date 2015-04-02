@@ -21,6 +21,11 @@ namespace Thycotic.Messages.PasswordChanging.Request
         public int SecretId { get; set; }
 
         /// <summary>
+        /// Gets or sets the NewPassword
+        /// </summary>
+        public string NewPassword { get; set; }
+
+        /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>
