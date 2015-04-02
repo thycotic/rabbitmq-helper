@@ -60,6 +60,6 @@
         /// <summary>
         /// 
         /// </summary>
-        public string PasswordTypeId { get; set; }
+        public int PasswordTypeId { get; set; }
     }
 }
