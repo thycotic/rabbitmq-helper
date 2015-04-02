@@ -1,5 +1,4 @@
-﻿using Thycotic.AppCore.Federator;
-using Thycotic.Messages.Common;
+﻿using Thycotic.Messages.Common;
 
 namespace Thycotic.Messages.PasswordChanging.Request
 {
@@ -8,14 +7,13 @@ namespace Thycotic.Messages.PasswordChanging.Request
     /// </summary>
     public class SecretChangeDependencyMessage : IBasicConsumable
     {
-        //TODO: Uncomment
-        ///// <summary>
-        ///// Gets or sets the password information provider.
-        ///// </summary>
-        ///// <value>
-        ///// The password information provider.
-        ///// </value>
-        //public IDependencyChangerInfo PasswordInfoProvider { get; set; }
+        /// <summary>
+        /// Gets or sets the dependency changer infos.
+        /// </summary>
+        /// <value>
+        /// The dependencies and what to change them with.
+        /// </value>
+        public IDependencyChangerInfo[] DependencyChangerInfos { get; set; }
 
         /// <summary>
         /// Gets or sets the Secret Id
