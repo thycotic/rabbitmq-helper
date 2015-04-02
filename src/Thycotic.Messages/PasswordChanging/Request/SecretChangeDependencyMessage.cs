@@ -8,13 +8,14 @@ namespace Thycotic.Messages.PasswordChanging.Request
     /// </summary>
     public class SecretChangeDependencyMessage : IBasicConsumable
     {
-        /// <summary>
-        /// Gets or sets the password information provider.
-        /// </summary>
-        /// <value>
-        /// The password information provider.
-        /// </value>
-        public IDependencyChangerInfo PasswordInfoProvider { get; set; }
+        //TODO: Uncomment
+        ///// <summary>
+        ///// Gets or sets the password information provider.
+        ///// </summary>
+        ///// <value>
+        ///// The password information provider.
+        ///// </value>
+        //public IDependencyChangerInfo PasswordInfoProvider { get; set; }
 
         /// <summary>
         /// Gets or sets the Secret Id

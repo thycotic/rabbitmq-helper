@@ -10,7 +10,7 @@ namespace Thycotic.Utility.Serialization
     {
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.All
+            TypeNameHandling = TypeNameHandling.Objects
         };
 
         /// <summary>
