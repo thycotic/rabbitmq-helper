@@ -144,7 +144,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Thycotic.Logging">
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.54\lib\net451\Thycotic.Logging.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.57\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />

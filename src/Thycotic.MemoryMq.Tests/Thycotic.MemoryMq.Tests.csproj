@@ -147,7 +147,7 @@
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Wcf">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.54\lib\net451\Thycotic.Wcf.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.57\lib\net451\Thycotic.Wcf.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
