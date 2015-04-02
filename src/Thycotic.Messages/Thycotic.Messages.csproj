@@ -149,10 +149,10 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="Areas\Discovery\ScanDependencyMessage.cs" />
-    <Compile Include="Areas\Discovery\ScanHostRangeMessage.cs" />
-    <Compile Include="Areas\Discovery\ScanLocalAccountMessage.cs" />
-    <Compile Include="Areas\Discovery\ScanMachineMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanHostRangeMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanLocalAccountMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanMachineMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
     <Compile Include="Areas\POC\Request\ChainMessage.cs" />
