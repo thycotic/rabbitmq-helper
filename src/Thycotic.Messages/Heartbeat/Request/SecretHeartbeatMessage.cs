@@ -1,12 +1,12 @@
 ﻿using Thycotic.AppCore.Federator;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.Areas.PasswordChanging.Request
+namespace Thycotic.Messages.Heartbeat.Request
 {
     /// <summary>
     /// Secret heartbeat message
     /// </summary>
-    public class SecretChangePasswordMessage : IBasicConsumable
+    public class SecretHeartbeatMessage : IBasicConsumable
     {
         /// <summary>
         /// Gets or sets the password information provider.

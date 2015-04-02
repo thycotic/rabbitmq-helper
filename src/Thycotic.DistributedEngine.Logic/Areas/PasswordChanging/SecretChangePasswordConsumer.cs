@@ -5,8 +5,8 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChang
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.ihawu.Business.Federator;
 using Thycotic.Logging;
-using Thycotic.Messages.Areas.PasswordChanging.Request;
 using Thycotic.Messages.Common;
+using Thycotic.Messages.PasswordChanging.Request;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 {
