@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Logging;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.Configuration;
@@ -71,7 +72,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 //LogEntries = logEntries
             };
 
-            var response = _responseBus.SendHeartbeat(request);
+            var response = _responseBus.Execute<EngineHeartbeatRequest, EngineHeartbeatResponse>(request);
 
             if (!response.Success)
             {
