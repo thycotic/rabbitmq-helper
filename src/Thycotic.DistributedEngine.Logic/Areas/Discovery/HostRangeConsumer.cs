@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Thycotic.Discovery.Core.Inputs;
 using Thycotic.Discovery.Core.Results;
 using Thycotic.Discovery.Sources.Scanners;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.MessageQueue.Client;
@@ -63,12 +65,18 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 
             var scanner = ScannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
             var result = scanner.ScanForHostRanges(request.ScanHostRangeInput);
-
-
+            var response = new ScanHostRangeResponse
+            {
+                HostRangeItems = result.HostRangeItems,
+                Success = result.Success,
+                ErrorCode = result.ErrorCode,
+                StatusMessages = { },
+                Logs = result.Logs,
+                ErrorMessage = result.ErrorMessage
+            };
 
             // call back to server
-
-            // queue up the next process
+            _responseBus.Execute(response);
         }
     }
 }
