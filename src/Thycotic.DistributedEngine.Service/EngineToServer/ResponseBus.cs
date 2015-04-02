@@ -135,7 +135,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             return WrapInteraction(() =>
             {
                 var wrappedRequest = WrapRequest<TResponse>(request);
-                var wrapperResponse = _channel.Execute(wrappedRequest);
+                var wrapperResponse = _channel.ExecuteAndRespond(wrappedRequest);
 
                 return UnwrapResponse<TResponse>(wrapperResponse);
             });
