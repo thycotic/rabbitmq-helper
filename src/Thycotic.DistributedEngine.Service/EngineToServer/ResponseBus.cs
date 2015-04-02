@@ -54,7 +54,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
 
             return new SymmetricEnvelopeNeedingResponse
             {
-                ResponseTypeName = typeof(TResponse).FullName,
+                ResponseTypeName = typeof(TResponse).AssemblyQualifiedName,
                 KeyHash = _authenticatedCommunicationKeyProvider.SymmetricKey.GetHashString(),
                 Body = _authenticatedCommunicationRequestEncryptor.Encrypt((SymmetricKeyPair)_authenticatedCommunicationKeyProvider, requestString)
             };
