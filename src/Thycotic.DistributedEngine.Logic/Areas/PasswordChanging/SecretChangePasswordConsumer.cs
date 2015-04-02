@@ -65,12 +65,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         Response = cer.Response,
                         Comment = cer.Comment
                     }).ToArray(),
-                    StatusMessages = passwordChangeResult.StatusMessages
+                    StatusMessages = passwordChangeResult.StatusMessages,
+                    NewPassword = request.PasswordInfoProvider.NewPassword,
+                    OldPassword = request.PasswordInfoProvider["password"]
                 };
 
                 try
                 {
-                    _responseBus.SendRemotePasswordChangeResponse(response);
+                    _responseBus.Execute(response);
                     _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, passwordChangeResult.ErrorCode));
                 }
                 catch (Exception)

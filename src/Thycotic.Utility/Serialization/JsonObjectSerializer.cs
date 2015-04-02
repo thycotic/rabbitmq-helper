@@ -10,7 +10,7 @@ namespace Thycotic.Utility.Serialization
     {
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.Auto
+            TypeNameHandling = TypeNameHandling.Objects
         };
 
         /// <summary>
@@ -21,8 +21,19 @@ namespace Thycotic.Utility.Serialization
         /// <returns></returns>
         public TRequest ToObject<TRequest>(byte[] bytes)
         {
-            //TODO: Blow up if you can't reserialize!!!!
+            //TODO: Blow up if you can't deserialize!!!!
             return JsonConvert.DeserializeObject<TRequest>(Encoding.UTF8.GetString(bytes), _serializerSettings);
+        }
+
+        /// <summary>
+        /// Turns the array of bytes into an object.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns></returns>
+        public object ToObject(byte[] bytes)
+        {
+            //TODO: Blow up if you can't deserialize!!!!
+            return JsonConvert.DeserializeObject<object>(Encoding.UTF8.GetString(bytes), _serializerSettings);
         }
 
         /// <summary>

@@ -14,6 +14,13 @@
         TRequest ToObject<TRequest>(byte[] bytes);
 
         /// <summary>
+        /// Turns the array of bytes into an object.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns></returns>
+        object ToObject(byte[] bytes);
+
+        /// <summary>
         /// Turns the object into an array of bytes.
         /// </summary>
         /// <param name="message">The message.</param>
