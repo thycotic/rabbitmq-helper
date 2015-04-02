@@ -5,8 +5,8 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Res
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.ihawu.Business.Federator;
 using Thycotic.Logging;
+using Thycotic.Messages.Areas.Heartbeat.Request;
 using Thycotic.Messages.Common;
-using Thycotic.Messages.Heartbeat.Request;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
 {

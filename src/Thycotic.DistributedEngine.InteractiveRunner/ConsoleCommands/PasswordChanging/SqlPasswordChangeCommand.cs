@@ -5,8 +5,7 @@ using Thycotic.AppCore.Federator;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.PasswordChanging.Request;
-using Thycotic.Messages.PasswordChanging.Response;
+using Thycotic.Messages.Areas.PasswordChanging.Request;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordChanging
 {

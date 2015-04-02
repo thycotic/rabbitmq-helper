@@ -1,6 +1,6 @@
 ﻿using Thycotic.AppCore.Federator;
 
-namespace Thycotic.Messages.PasswordChanging.Response
+namespace Thycotic.Messages.Areas.PasswordChanging.Response
 {
     /// <summary>
     /// Secret heartbeat response

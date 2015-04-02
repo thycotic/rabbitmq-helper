@@ -143,6 +143,7 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\Discovery\Request\HostRangeMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
     <Compile Include="Areas\POC\Request\ChainMessage.cs" />
@@ -152,9 +153,9 @@
     <Compile Include="Areas\POC\Request\StepMessage.cs" />
     <Compile Include="Areas\POC\Request\HelloWorldMessage.cs" />
     <Compile Include="Areas\POC\Response\SortListResponse.cs" />
-    <Compile Include="Heartbeat\Request\SecretHeartbeatMessage.cs" />
-    <Compile Include="PasswordChanging\Request\SecretChangePasswordMessage.cs" />
-    <Compile Include="PasswordChanging\Response\SecretChangePasswordResponse.cs" />
+    <Compile Include="Areas\Heartbeat\Request\SecretHeartbeatMessage.cs" />
+    <Compile Include="Areas\PasswordChanging\Request\SecretChangePasswordMessage.cs" />
+    <Compile Include="Areas\PasswordChanging\Response\SecretChangePasswordResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +169,9 @@
       <Name>Thycotic.Messages.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Discovery\Response\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

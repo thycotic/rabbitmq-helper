@@ -4,7 +4,7 @@ using Thycotic.AppCore.Federator;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.Heartbeat.Request;
+using Thycotic.Messages.Areas.Heartbeat.Request;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
 {
