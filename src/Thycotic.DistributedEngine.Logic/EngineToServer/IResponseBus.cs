@@ -1,8 +1,5 @@
 ﻿using System;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 
 namespace Thycotic.DistributedEngine.Logic.EngineToServer
 {
@@ -12,29 +9,29 @@ namespace Thycotic.DistributedEngine.Logic.EngineToServer
     public interface IResponseBus : IDisposable
     {
         /// <summary>
-        /// Sends a heartbeat request to server
+        /// Gets results of the specified request.
         /// </summary>
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request);
+        TResponse Get<TRequest, TResponse>(TRequest request) where TRequest : IEngineQueryRequest;
 
         /// <summary>
-        /// Pings the specified envelope.
+        /// Executes the request.
         /// </summary>
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
         /// <param name="request">The request.</param>
-        void Ping(EnginePingRequest request);
+        void Execute<TRequest>(TRequest request) where TRequest : IEngineCommandRequest;
 
         /// <summary>
-        /// Sends the secret heartbeat response.
+        /// Executes the request and returns a response.
         /// </summary>
-        /// <param name="response">The response.</param>
-        void SendSecretHeartbeatResponse(SecretHeartbeatResponse response);
-
-        /// <summary>
-        /// Sends the remote password change response.
-        /// </summary>
-        /// <param name="response">The response.</param>
-        void SendRemotePasswordChangeResponse(RemotePasswordChangeResponse response);
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        TResponse Execute<TRequest, TResponse>(TRequest request) where TRequest : IEngineCommandRequest;
     }
 }
 

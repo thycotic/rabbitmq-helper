@@ -44,7 +44,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
                 var federator = _federatorProvider.GetFederatorByType(passwordTypeName);
                 var verifyResult = federator.VerifyCurrentPasswordIsValid(request.PasswordInfoProvider);
 
-                var response = new SecretHeartbeatResponse
+                var response = new SecretHeartbeatResponseStoreRequest
                 {
                     Success = verifyResult.Success,
                     SecretId = request.SecretId,
@@ -60,7 +60,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
 
                 try
                 {
-                    _responseBus.SendSecretHeartbeatResponse(response);
+                    _responseBus.Execute(response);
                     _log.Info(string.Format("Heartbeat Result for Secret Id {0}: {1}", request.SecretId, verifyResult.ErrorCode));
                 }
                 catch (Exception)

@@ -54,7 +54,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                     passwordChangeResult = federator.SetPassword(infoProvider);
                 }
 
-                var response = new RemotePasswordChangeResponse()
+                var response = new RemotePasswordChangeResponseStoreRequest()
                 {
                     Success = passwordChangeResult.Success,
                     SecretId = request.SecretId,
@@ -70,7 +70,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                 try
                 {
-                    _responseBus.SendRemotePasswordChangeResponse(response);
+                    _responseBus.Execute(response);
                     _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, passwordChangeResult.ErrorCode));
                 }
                 catch (Exception)

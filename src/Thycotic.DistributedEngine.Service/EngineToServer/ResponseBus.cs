@@ -1,10 +1,7 @@
 using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
@@ -51,20 +48,26 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             };
         }
 
-        private T UnwrapRequest<T>(byte[] bytes)
+        private SymmetricEnvelopeNeedingResponse WrapRequest<TResponse>(object response)
         {
-            var unencryptedBytes = _authenticatedCommunicationRequestEncryptor.Decrypt((SymmetricKeyPair) _authenticatedCommunicationKeyProvider, bytes);
+            var requestString = _objectSerializer.ToBytes(response);
+
+            return new SymmetricEnvelopeNeedingResponse
+            {
+                ResponseTypeName = typeof(TResponse).FullName,
+                KeyHash = _authenticatedCommunicationKeyProvider.SymmetricKey.GetHashString(),
+                Body = _authenticatedCommunicationRequestEncryptor.Encrypt((SymmetricKeyPair)_authenticatedCommunicationKeyProvider, requestString)
+            };
+        }
+
+        private T UnwrapResponse<T>(byte[] bytes)
+        {
+            var unencryptedBytes = _authenticatedCommunicationRequestEncryptor.Decrypt((SymmetricKeyPair)_authenticatedCommunicationKeyProvider, bytes);
 
             return _objectSerializer.ToObject<T>(unencryptedBytes);
         }
 
-        /// <summary>
-        /// Wraps the channel interaction
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        public T WrapInteraction<T>(Func<T> func)
+        private static T WrapInteraction<T>(Func<T> func)
         {
             try
             {
@@ -76,11 +79,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             }
         }
 
-        /// <summary>
-        /// Wraps the channel interaction
-        /// </summary>
-        /// <param name="action"></param>
-        public void WrapInteraction(Action action)
+        private static void WrapInteraction(Action action)
         {
             try
             {
@@ -91,53 +90,61 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 throw new ApplicationException("Bus broken down", ex);
             }
         }
-
+        
         /// <summary>
-        /// Sends a heartbeat request to server
+        /// Gets the specified request.
         /// </summary>
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public EngineHeartbeatResponse SendHeartbeat(EngineHeartbeatRequest request)
+        public TResponse Get<TRequest, TResponse>(TRequest request) where TRequest : IEngineQueryRequest
         {
-            var response = WrapInteraction(() => _channel.SendHeartbeat(WrapRequest(request)));
+            return WrapInteraction(() =>
+            {
+                var wrappedRequest = WrapRequest<TResponse>(request);
+                var wrapperResponse = _channel.Get(wrappedRequest);
 
-            return UnwrapRequest<EngineHeartbeatResponse>(response);
+                return UnwrapResponse<TResponse>(wrapperResponse);
+            });
         }
 
         /// <summary>
-        /// Pings the specified envelope.
+        /// Executes the request.
         /// </summary>
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
         /// <param name="request">The request.</param>
-        public void Ping(EnginePingRequest request)
+        public void Execute<TRequest>(TRequest request) where TRequest : IEngineCommandRequest
         {
-           WrapInteraction(() => _channel.Ping(WrapRequest(request)));   
+            WrapInteraction(() =>
+            {
+                var wrappedRequest = WrapRequest(request);
+                _channel.Execute(wrappedRequest);
+            });
         }
 
         /// <summary>
-        /// Sends the secret heartbeat response.
+        /// Executes the specified request.
         /// </summary>
-        /// <param name="response">The response.</param>
-        public void SendSecretHeartbeatResponse(SecretHeartbeatResponse response)
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public TResponse Execute<TRequest, TResponse>(TRequest request) where TRequest : IEngineCommandRequest
         {
-            WrapInteraction(() => _channel.SendSecretHeartbeatResponse(WrapRequest(response)));
+            return WrapInteraction(() =>
+            {
+                var wrappedRequest = WrapRequest<TResponse>(request);
+                var wrapperResponse = _channel.Execute(wrappedRequest);
+
+                return UnwrapResponse<TResponse>(wrapperResponse);
+            });
         }
 
-        /// <summary>
-        /// Sends the remote password change response.
-        /// </summary>
-        /// <param name="response">The response.</param>
-        public void SendRemotePasswordChangeResponse(RemotePasswordChangeResponse response)
-        {
-           WrapInteraction(() =>  _channel.SendRemotePasswordChangeResponse(WrapRequest(response)));
-        }
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
         public void Dispose()
         {
             WrapInteraction(() => _channel.Dispose());
         }
-
     }
 }
