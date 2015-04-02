@@ -138,6 +138,9 @@
     <Reference Include="Thycotic.AppCore">
       <HintPath>..\..\lib\Thycotic.AppCore.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.ihawu.Business">
+      <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ProductInfo.cs">

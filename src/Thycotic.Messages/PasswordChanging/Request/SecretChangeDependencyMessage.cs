@@ -13,7 +13,7 @@ namespace Thycotic.Messages.PasswordChanging.Request
         /// <value>
         /// The dependencies and what to change them with.
         /// </value>
-        public IDependencyChangerInfo[] DependencyChangerInfos { get; set; }
+        public Thycotic.ihawu.Business.IDependencyChangerInfo[] DependencyChangerInfos { get; set; }
 
         /// <summary>
         /// Gets or sets the Secret Id
