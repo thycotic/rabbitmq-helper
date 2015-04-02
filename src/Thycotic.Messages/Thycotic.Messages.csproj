@@ -153,6 +153,7 @@
     <Compile Include="Areas\POC\Request\HelloWorldMessage.cs" />
     <Compile Include="Areas\POC\Response\SortListResponse.cs" />
     <Compile Include="Heartbeat\Request\SecretHeartbeatMessage.cs" />
+    <Compile Include="PasswordChanging\Request\SecretChangeDependencyMessage.cs" />
     <Compile Include="PasswordChanging\Request\SecretChangePasswordMessage.cs" />
     <Compile Include="PasswordChanging\Response\SecretChangePasswordResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

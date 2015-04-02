@@ -65,7 +65,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         Response = cer.Response,
                         Comment = cer.Comment
                     }).ToArray(),
-                    StatusMessages = passwordChangeResult.StatusMessages
+                    StatusMessages = passwordChangeResult.StatusMessages,
+                    NewPassword = request.PasswordInfoProvider.NewPassword,
+                    OldPassword = request.PasswordInfoProvider["password"]
                 };
 
                 try
