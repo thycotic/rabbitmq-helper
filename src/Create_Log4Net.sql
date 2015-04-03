@@ -6,17 +6,19 @@ USE SSDELog4Net;
 
 GO
 
+-- DROP TABLE [dbo].[Log]
+
 CREATE TABLE [dbo].[Log]
 (
 [Id] [int] NOT NULL IDENTITY(1, 1),
 [Date] [datetime] NOT NULL,
 [UserID] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [ServiceRole] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[Correlation] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[Correlation] [nvarchar] (350) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [Context] [nvarchar] (1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [Thread] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 [Level] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[Logger] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Logger] [nvarchar] (1000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 [Message] [nvarchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 [Exception] [nvarchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
