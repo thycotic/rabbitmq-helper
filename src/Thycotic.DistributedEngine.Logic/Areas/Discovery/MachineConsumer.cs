@@ -13,9 +13,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
     /// </summary>
     public class MachineConsumer : IBasicConsumer<ScanMachineMessage>
     {
-        private readonly IRequestBus _requestBus;
         private readonly IResponseBus _responseBus;
-        private readonly IExchangeNameProvider _exchangeNameProvider;
 
         /// <summary>
         /// Version
@@ -27,20 +25,13 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// </summary>
         public int RetryCount { get; set; }
 
-
-        //private readonly ILogWriter _log = Log.Get(typeof(ChainMessage));
-
         /// <summary>
         /// Machine Consumer
         /// </summary>
-        /// <param name="exchangeNameProvider"></param>
-        /// <param name="requestBus"></param>
         /// <param name="responseBus"></param>
-        public MachineConsumer(IExchangeNameProvider exchangeNameProvider, IRequestBus requestBus, IResponseBus responseBus)
+        public MachineConsumer(IResponseBus responseBus)
         {
-            _requestBus = requestBus;
             _responseBus = responseBus;
-            _exchangeNameProvider = exchangeNameProvider;
         }
 
         /// <summary>
@@ -49,7 +40,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanMachineMessage request)
         {
-            // do the scanning
             var scanner = ScannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
             var result = scanner.ScanForMachines(request.Input);
             var response = new ScanMachineResponse
@@ -61,8 +51,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 Logs = result.Logs,
                 ErrorMessage = result.ErrorMessage
             };
-
-            // call back to server
             _responseBus.Execute(response);
         }
     }
