@@ -185,12 +185,6 @@
     <Compile Include="IoC\MemoryMqServerModule.cs" />
     <Compile Include="MemoryMq\MemoryMqServiceHost.cs" />
     <Compile Include="Security\CustomUserNamePasswordValidator.cs" />
-    <Compile Include="ServiceInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ServiceInstaller.Designer.cs">
-      <DependentUpon>ServiceInstaller.cs</DependentUpon>
-    </Compile>
     <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -223,8 +217,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="logo.txt" />
-    <EmbeddedResource Include="ServiceInstaller.resx">
-      <DependentUpon>ServiceInstaller.cs</DependentUpon>
+    <EmbeddedResource Include="PipelineService.resx">
+      <DependentUpon>PipelineService.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -215,12 +215,6 @@
     <Compile Include="Security\AuthenticationKeyProvider.cs" />
     <Compile Include="Security\MessageEncryptor.cs" />
     <Compile Include="Heartbeat\HeartbeatRunner.cs" />
-    <Compile Include="ServiceInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ServiceInstaller.Designer.cs">
-      <DependentUpon>ServiceInstaller.cs</DependentUpon>
-    </Compile>
     <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="IoC\LogicModule.cs" />
     <Compile Include="IoC\MessageQueueModule.cs" />
@@ -270,10 +264,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="logo.txt" />
-    <EmbeddedResource Include="ServiceInstaller.resx">
-      <DependentUpon>ServiceInstaller.cs</DependentUpon>
+    <EmbeddedResource Include="EngineService.resx">
+      <DependentUpon>EngineService.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="logo.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

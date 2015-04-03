@@ -32,6 +32,8 @@ namespace Thycotic.DistributedEngine.Service
 
 
         private readonly ILogWriter _log = Log.Get(typeof(EngineService));
+        private ServiceInstaller _serviceInstaller;
+        private ServiceProcessInstaller _serviceProcessInstaller;
         private LogCorrelation _correlation;
 
 
@@ -181,6 +183,25 @@ namespace Thycotic.DistributedEngine.Service
 
                 _log.Info("Engine stopped");
             }
+        }
+
+        private void InitializeComponent()
+        {
+            this._serviceInstaller = new System.ServiceProcess.ServiceInstaller();
+            this._serviceProcessInstaller = new System.ServiceProcess.ServiceProcessInstaller();
+            // 
+            // _serviceInstaller
+            // 
+            this._serviceInstaller.DisplayName = "Thycotic.DistributedEngine.Service";
+            this._serviceInstaller.ServiceName = "Thycotic.DistributedEngine.Service";
+            this._serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
+            // 
+            // _serviceProcessInstaller
+            // 
+            this._serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
+            this._serviceProcessInstaller.Password = null;
+            this._serviceProcessInstaller.Username = null;
+
         }
     }
 }

@@ -28,6 +28,8 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         private IContainer _ioCContainer;
 
         private readonly ILogWriter _log = Log.Get(typeof(PipelineService));
+        private ServiceProcessInstaller _serviceProcessInstaller;
+        private ServiceInstaller _serviceInstaller;
         private LogCorrelation _correlation;
 
 
@@ -154,6 +156,25 @@ namespace Thycotic.MemoryMq.Pipeline.Service
 
                 _log.Info("Pipeline stopped");
             }
+        }
+
+        private void InitializeComponent()
+        {
+            this._serviceProcessInstaller = new System.ServiceProcess.ServiceProcessInstaller();
+            this._serviceInstaller = new System.ServiceProcess.ServiceInstaller();
+            // 
+            // _serviceProcessInstaller
+            // 
+            this._serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
+            this._serviceProcessInstaller.Password = null;
+            this._serviceProcessInstaller.Username = null;
+            // 
+            // _serviceInstaller
+            // 
+            this._serviceInstaller.DisplayName = "Thycotic.MemoryMq.Pipeline.Service";
+            this._serviceInstaller.ServiceName = "Thycotic.MemoryMq.Pipeline.Service";
+            this._serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
+
         }
     }
 }
