@@ -8,6 +8,14 @@ namespace Thycotic.Logging.LogTail
     public interface IRecentLogEntryProvider
     {
         /// <summary>
+        /// Gets or the count.
+        /// </summary>
+        /// <value>
+        /// The count.
+        /// </value>
+        int Count { get; }
+
+        /// <summary>
         /// Lists the recent events.
         /// </summary>
         /// <returns></returns>

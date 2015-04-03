@@ -149,6 +149,7 @@
     <Compile Include="Log.cs" />
     <Compile Include="LogContext.cs" />
     <Compile Include="LogCorrelation.cs" />
+    <Compile Include="LogTail\MemoryAppenderWithCount.cs" />
     <Compile Include="Models\LogEntry.cs" />
     <Compile Include="LogTail\RecentLogEntryProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
