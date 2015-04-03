@@ -42,6 +42,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             var result = scanner.ScanComputerForDependencies(request.Input);
             var response = new ScanDependencyResponse
             {
+                ComputerId = request.ComputerId,
                 DependencyItems = result.DependencyItems,
                 Success = result.Success,
                 ErrorCode = result.ErrorCode,
