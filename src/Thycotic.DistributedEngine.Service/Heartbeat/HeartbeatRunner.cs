@@ -61,15 +61,12 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
 
             _log.Info("Heart beating back to server");
 
-            //var logEntries = _recentLogEntryProvider.GetEntries().Select(MapLogEntries).ToArray();
-
             var request = new EngineHeartbeatRequest
             {
                 IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                 OrganizationId = _engineIdentificationProvider.OrganizationId,
                 Version = ReleaseInformationHelper.GetVersionAsDouble(),
-                LastActivity = DateTime.UtcNow,
-                //LogEntries = logEntries
+                LastActivity = DateTime.UtcNow
             };
 
             var response = _responseBus.Execute<EngineHeartbeatRequest, EngineHeartbeatResponse>(request);
@@ -79,8 +76,10 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 throw new ConfigurationErrorsException(response.ErrorMessage);
             }
 
-            //clear the recent log entries
-            _recentLogEntryProvider.Clear();
+            if (_cts.IsCancellationRequested)
+            {
+                return;
+            }
 
             //the configuration has not changed since it was last consumed
             if (response.LastConfigurationUpdated <= _engineService.IoCConfigurator.LastConfigurationConsumed) return;
@@ -110,6 +109,14 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 .StartNew(() => _cts.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(_heartbeatConfigurationProvider.HeartbeatIntervalSeconds)), _cts.Token)
                 //pump
                 .ContinueWith(task => Pump(), _cts.Token)
+                //react to errors
+                .ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                    {
+                        _log.Error("Failed to send log to server", task.Exception);
+                    }
+                })
                 //schedule
                 .ContinueWith(task => WaitPumpAndSchedule(), _cts.Token);
         }
@@ -119,7 +126,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// </summary>
         public void Start()
         {
-            _log.Info(string.Format("SendHeartbeat is starting for every {0} seconds...", _heartbeatConfigurationProvider.HeartbeatIntervalSeconds));
+            _log.Info(string.Format("Heartbeat runner is starting for every {0} seconds...", _heartbeatConfigurationProvider.HeartbeatIntervalSeconds));
 
             Task.Factory.StartNew(WaitPumpAndSchedule);
         }
@@ -129,11 +136,11 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// </summary>
         public void Dispose()
         {
-            _log.Info("SendHeartbeat is stopping...");
+            _log.Info("Heartbeat runner is stopping...");
 
             _cts.Cancel();
 
-            _log.Debug("Waiting for heartbeat to complete...");
+            _log.Debug("Waiting for heartbeat runner to complete...");
 
             try
             {
@@ -143,24 +150,6 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             {
                 ex.InnerExceptions.Where(e => !(e is TaskCanceledException)).ToList().ForEach(e => _log.Error(e.Message, e));
             }
-        }
-
-        private static EngineLogEntry MapLogEntries(LogEntry logEntry)
-        {
-            return new EngineLogEntry
-            {
-                Id = logEntry.Id,
-                Date = logEntry.Date,
-                UserId = logEntry.UserId,
-                ServiceRole = logEntry.ServiceRole,
-                Correlation = logEntry.Correlation,
-                Context = logEntry.Context,
-                Thread = logEntry.Thread,
-                Level = logEntry.Level,
-                Logger = logEntry.Logger,
-                Message = logEntry.Message,
-                Exception = logEntry.Exception
-            };
         }
     }
 }
