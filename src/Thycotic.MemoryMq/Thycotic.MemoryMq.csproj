@@ -150,8 +150,7 @@
       <HintPath>..\packages\Thycotic.Logging.5.0.0.75\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Wcf">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.57\lib\net451\Thycotic.Wcf.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.79\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
