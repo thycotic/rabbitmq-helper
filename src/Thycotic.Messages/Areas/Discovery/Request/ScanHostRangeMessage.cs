@@ -7,12 +7,9 @@ namespace Thycotic.Messages.Areas.Discovery.Request
     /// </summary>
     public class ScanHostRangeMessage : ScanMessageBase
     {
-
         /// <summary>
         /// Scan Host Range Input
         /// </summary>
         public ScanHostRangeInput Input { get; set; }
-
-
     }
 }
