@@ -177,6 +177,9 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\Discovery\DependencyConsumer.cs" />
+    <Compile Include="Areas\Discovery\LocalAccountConsumer.cs" />
+    <Compile Include="Areas\Discovery\MachineConsumer.cs" />
     <Compile Include="Areas\Discovery\HostRangeConsumer.cs">
       <SubType>Code</SubType>
     </Compile>

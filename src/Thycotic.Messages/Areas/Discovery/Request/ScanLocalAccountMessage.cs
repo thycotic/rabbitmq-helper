@@ -1,27 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Thycotic.Messages.Common;
+﻿using Thycotic.Discovery.Core.Inputs;
 
-namespace Thycotic.Messages.Areas.Discovery
+namespace Thycotic.Messages.Areas.Discovery.Request
 {
     /// <summary>
     /// Scan Local Account Message
     /// </summary>
-    public class ScanLocalAccountMessage : IBasicConsumable
+    public class ScanLocalAccountMessage : ScanMessageBase
     {
-
         /// <summary>
-        /// Version
+        /// Scan Computer Input
         /// </summary>
-        public int Version { get; set; }
-
-
-        /// <summary>
-        /// Retry Count
-        /// </summary>
-        public int RetryCount { get; set; }
+        public ScanComputerInput Input { get; set; }
     }
 }

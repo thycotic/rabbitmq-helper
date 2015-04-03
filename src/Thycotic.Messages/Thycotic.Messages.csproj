@@ -152,7 +152,10 @@
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanHostRangeMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanLocalAccountMessage.cs" />
-    <Compile Include="Areas\Discovery\Request\ScanMachineMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanMachineMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Discovery\Request\ScanMessageBase.cs" />
     <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
     <Compile Include="Areas\POC\Request\ChainMessage.cs" />

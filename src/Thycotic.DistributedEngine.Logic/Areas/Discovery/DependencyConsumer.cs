@@ -9,9 +9,9 @@ using Thycotic.Messages.Common;
 namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 {
     /// <summary>
-    /// Host Range Consumer
+    /// Dependency Consumer
     /// </summary>
-    public class HostRangeConsumer : IBasicConsumer<ScanHostRangeMessage>
+    public class DependencyConsumer : IBasicConsumer<ScanDependencyMessage>
     {
         private readonly IRequestBus _requestBus;
         private readonly IResponseBus _responseBus;
@@ -33,12 +33,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         //private readonly ILogWriter _log = Log.Get(typeof(ChainMessage));
 
         /// <summary>
-        /// Host Range Consumer
+        /// Dependency Consumer
         /// </summary>
         /// <param name="exchangeNameProvider"></param>
         /// <param name="requestBus"></param>
         /// <param name="responseBus"></param>
-        public HostRangeConsumer(IExchangeNameProvider exchangeNameProvider, IRequestBus requestBus, IResponseBus responseBus)
+        public DependencyConsumer(IExchangeNameProvider exchangeNameProvider, IRequestBus requestBus, IResponseBus responseBus)
         {
             _requestBus = requestBus;
             _responseBus = responseBus;
@@ -46,18 +46,17 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         }
 
         /// <summary>
-        /// Scan Host Range
+        /// Scan Dependencies
         /// </summary>
         /// <param name="request"></param>
-        public void Consume(ScanHostRangeMessage request)
+        public void Consume(ScanDependencyMessage request)
         {
             // do the scanning
-
             var scanner = ScannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
-            var result = scanner.ScanForHostRanges(request.Input);
-            var response = new ScanHostRangeResponse
+            var result = scanner.ScanComputerForDependencies(request.Input);
+            var response = new ScanDependencyResponse
             {
-                HostRangeItems = result.HostRangeItems,
+                DependencyItems = result.DependencyItems,
                 Success = result.Success,
                 ErrorCode = result.ErrorCode,
                 StatusMessages = { },

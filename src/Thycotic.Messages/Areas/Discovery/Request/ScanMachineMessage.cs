@@ -1,21 +1,15 @@
-﻿using Thycotic.Messages.Common;
+﻿using Thycotic.Discovery.Core.Inputs;
 
-namespace Thycotic.Messages.Areas.Discovery
+namespace Thycotic.Messages.Areas.Discovery.Request
 {
     /// <summary>
     /// Scan Machine Message
     /// </summary>
-    public class ScanMachineMessage : IBasicConsumable
+    public class ScanMachineMessage : ScanMessageBase
     {
         /// <summary>
-        /// Version
+        /// Scan Machines Input
         /// </summary>
-        public int Version { get; set; }
-
-
-        /// <summary>
-        /// Retry Count
-        /// </summary>
-        public int RetryCount { get; set; }
+        public ScanMachinesInput Input { get; set; }
     }
 }

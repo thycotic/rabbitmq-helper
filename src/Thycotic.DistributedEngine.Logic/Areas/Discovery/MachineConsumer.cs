@@ -9,15 +9,13 @@ using Thycotic.Messages.Common;
 namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 {
     /// <summary>
-    /// Host Range Consumer
+    /// Machine Consumer
     /// </summary>
-    public class HostRangeConsumer : IBasicConsumer<ScanHostRangeMessage>
+    public class MachineConsumer : IBasicConsumer<ScanMachineMessage>
     {
         private readonly IRequestBus _requestBus;
         private readonly IResponseBus _responseBus;
         private readonly IExchangeNameProvider _exchangeNameProvider;
-
-
 
         /// <summary>
         /// Version
@@ -33,12 +31,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         //private readonly ILogWriter _log = Log.Get(typeof(ChainMessage));
 
         /// <summary>
-        /// Host Range Consumer
+        /// Machine Consumer
         /// </summary>
         /// <param name="exchangeNameProvider"></param>
         /// <param name="requestBus"></param>
         /// <param name="responseBus"></param>
-        public HostRangeConsumer(IExchangeNameProvider exchangeNameProvider, IRequestBus requestBus, IResponseBus responseBus)
+        public MachineConsumer(IExchangeNameProvider exchangeNameProvider, IRequestBus requestBus, IResponseBus responseBus)
         {
             _requestBus = requestBus;
             _responseBus = responseBus;
@@ -46,18 +44,17 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         }
 
         /// <summary>
-        /// Scan Host Range
+        /// Scan Machines
         /// </summary>
         /// <param name="request"></param>
-        public void Consume(ScanHostRangeMessage request)
+        public void Consume(ScanMachineMessage request)
         {
             // do the scanning
-
             var scanner = ScannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
-            var result = scanner.ScanForHostRanges(request.Input);
-            var response = new ScanHostRangeResponse
+            var result = scanner.ScanForMachines(request.Input);
+            var response = new ScanMachineResponse
             {
-                HostRangeItems = result.HostRangeItems,
+                ComputerItems = result.Computers,
                 Success = result.Success,
                 ErrorCode = result.ErrorCode,
                 StatusMessages = { },
