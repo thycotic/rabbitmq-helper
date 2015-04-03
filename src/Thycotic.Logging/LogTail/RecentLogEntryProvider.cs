@@ -64,6 +64,11 @@ namespace Thycotic.Logging.LogTail
             return new LogEntry
             {
                 Date = loggingEvent.TimeStamp,
+                UserId = loggingEvent.UserName,
+                Logger = loggingEvent.LoggerName,
+                Correlation = loggingEvent.Properties.Contains(LogCorrelation.CorrelationName) ? (string)loggingEvent.Properties[LogCorrelation.CorrelationName] : string.Empty,
+                Context = loggingEvent.Properties.Contains(LogContext.ContextName) ? (string)loggingEvent.Properties[LogContext.ContextName] : string.Empty,
+                Thread = loggingEvent.ThreadName,
                 Level = loggingEvent.Level.DisplayName,
                 Message = loggingEvent.RenderedMessage,
                 Exception = loggingEvent.GetExceptionString()
