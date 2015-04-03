@@ -191,6 +191,12 @@
     <Compile Include="EngineToServer\IEngineToServerConnection.cs" />
     <Compile Include="IoC\EngineToServerModule.cs" />
     <Compile Include="Heartbeat\LogRunner.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Security\AuthenticatedCommunicationKeyProvider .cs" />
     <Compile Include="Security\AuthenticatedCommunicationRequestEncryptor.cs" />
     <Compile Include="Security\AuthenticationRequestEncryptor.cs" />
@@ -268,6 +274,9 @@
       <DependentUpon>EngineService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="logo.txt" />
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

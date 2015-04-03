@@ -16,7 +16,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         /// Occurs when the IoC container configured.
         /// </summary>
         public EventHandler<IContainer> IoCContainerConfigured;
-
+        
         /// <summary>
         /// Gets the IoC configurator.
         /// </summary>
@@ -27,12 +27,11 @@ namespace Thycotic.MemoryMq.Pipeline.Service
 
         private IContainer _ioCContainer;
 
-        private readonly ILogWriter _log = Log.Get(typeof(PipelineService));
-        private ServiceProcessInstaller _serviceProcessInstaller;
-        private ServiceInstaller _serviceInstaller;
         private LogCorrelation _correlation;
 
-
+        private readonly ILogWriter _log = Log.Get(typeof(PipelineService));
+        
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelineService"/> class.
         /// </summary>
@@ -156,25 +155,6 @@ namespace Thycotic.MemoryMq.Pipeline.Service
 
                 _log.Info("Pipeline stopped");
             }
-        }
-
-        private void InitializeComponent()
-        {
-            this._serviceProcessInstaller = new System.ServiceProcess.ServiceProcessInstaller();
-            this._serviceInstaller = new System.ServiceProcess.ServiceInstaller();
-            // 
-            // _serviceProcessInstaller
-            // 
-            this._serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
-            this._serviceProcessInstaller.Password = null;
-            this._serviceProcessInstaller.Username = null;
-            // 
-            // _serviceInstaller
-            // 
-            this._serviceInstaller.DisplayName = "Thycotic.MemoryMq.Pipeline.Service";
-            this._serviceInstaller.ServiceName = "Thycotic.MemoryMq.Pipeline.Service";
-            this._serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
-
         }
     }
 }

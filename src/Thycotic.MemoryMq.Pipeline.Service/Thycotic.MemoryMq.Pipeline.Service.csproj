@@ -184,6 +184,12 @@
     <Compile Include="Configuration\IoCConfigurator.cs" />
     <Compile Include="IoC\MemoryMqServerModule.cs" />
     <Compile Include="MemoryMq\MemoryMqServiceHost.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Security\CustomUserNamePasswordValidator.cs" />
     <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="Program.cs" />
@@ -219,6 +225,9 @@
     <EmbeddedResource Include="logo.txt" />
     <EmbeddedResource Include="PipelineService.resx">
       <DependentUpon>PipelineService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
