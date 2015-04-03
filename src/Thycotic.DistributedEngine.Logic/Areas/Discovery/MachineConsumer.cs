@@ -1,8 +1,6 @@
 ﻿using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
-using Thycotic.MessageQueue.Client;
-using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Areas.Discovery.Request;
 using Thycotic.Messages.Common;
 
