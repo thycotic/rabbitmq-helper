@@ -135,14 +135,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.AppCore">
-      <HintPath>..\..\lib\Thycotic.AppCore.dll</HintPath>
-    </Reference>
     <Reference Include="Thycotic.Discovery.Core">
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.7\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.ihawu.Business">
-      <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
+    <Reference Include="Thycotic.SharedTypes">
+      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.5\lib\net451\Thycotic.SharedTypes.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
