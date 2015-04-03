@@ -1,6 +1,6 @@
-﻿namespace Thycotic.DistributedEngine.Service
+﻿namespace Thycotic.MemoryMq.Pipeline.Service
 {
-    partial class ServiceInstaller
+    partial class ProjectInstaller
     {
         /// <summary>
         /// Required designer variable.
@@ -33,8 +33,10 @@
             // 
             // _serviceInstaller
             // 
-            this._serviceInstaller.DisplayName = "Secret Server Distributed Engine";
-            this._serviceInstaller.ServiceName = "Secret Server Distributed Engine";
+            this._serviceInstaller.DisplayName = "Thycotic.MemoryMq.Pipeline.Service";
+            this._serviceInstaller.Installers.AddRange(new System.Configuration.Install.Installer[] {
+            this._serviceProcessInstaller});
+            this._serviceInstaller.ServiceName = "Thycotic.MemoryMq.Pipeline.Service";
             this._serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // _serviceProcessInstaller
@@ -43,7 +45,7 @@
             this._serviceProcessInstaller.Password = null;
             this._serviceProcessInstaller.Username = null;
             // 
-            // ServiceInstaller
+            // ProjectInstaller
             // 
             this.Installers.AddRange(new System.Configuration.Install.Installer[] {
             this._serviceInstaller,
@@ -53,8 +55,7 @@
 
         #endregion
 
-        private System.ServiceProcess.ServiceInstaller _serviceInstaller;
         private System.ServiceProcess.ServiceProcessInstaller _serviceProcessInstaller;
-
+        private System.ServiceProcess.ServiceInstaller _serviceInstaller;
     }
 }

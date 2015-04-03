@@ -16,7 +16,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         /// Occurs when the IoC container configured.
         /// </summary>
         public EventHandler<IContainer> IoCContainerConfigured;
-
+        
         /// <summary>
         /// Gets the IoC configurator.
         /// </summary>
@@ -27,10 +27,11 @@ namespace Thycotic.MemoryMq.Pipeline.Service
 
         private IContainer _ioCContainer;
 
-        private readonly ILogWriter _log = Log.Get(typeof(PipelineService));
         private LogCorrelation _correlation;
 
-
+        private readonly ILogWriter _log = Log.Get(typeof(PipelineService));
+        
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelineService"/> class.
         /// </summary>

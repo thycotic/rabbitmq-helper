@@ -30,10 +30,9 @@ namespace Thycotic.DistributedEngine.Service
 
         private IContainer _ioCContainer;
 
-
-        private readonly ILogWriter _log = Log.Get(typeof(EngineService));
         private LogCorrelation _correlation;
 
+        private readonly ILogWriter _log = Log.Get(typeof(EngineService));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineService"/> class.

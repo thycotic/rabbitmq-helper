@@ -8,7 +8,10 @@ namespace Thycotic.Logging
     /// </summary>
     public sealed class LogCorrelation : IDisposable
     {
-        private const string ContextName = "Correlation";
+        /// <summary>
+        /// The correlation name
+        /// </summary>
+        public const string CorrelationName = "Correlation";
         private readonly IDisposable _context;
 
         /// <summary>
@@ -24,7 +27,7 @@ namespace Thycotic.Logging
         {
             Id = Guid.NewGuid().ToString();
 
-            _context = log4net.ThreadContext.Stacks[ContextName].Push(Id);
+            _context = log4net.ThreadContext.Stacks[CorrelationName].Push(Id);
         }
 
         /// <summary>

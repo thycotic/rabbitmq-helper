@@ -6,6 +6,7 @@ using System.Linq;
 using log4net;
 using log4net.Appender;
 using log4net.Repository.Hierarchy;
+using Thycotic.Logging.LogTail;
 
 namespace Thycotic.Logging
 {
@@ -34,7 +35,7 @@ namespace Thycotic.Logging
         public static void AttachRecentEventsMemoryAppender()
         {
             var repository = (Hierarchy)LogManager.GetRepository();
-            repository.Root.AddAppender(new MemoryAppender
+            repository.Root.AddAppender(new MemoryAppenderWithCount
             {
                 Name = BuiltInLogNames.RecentEventsMemoryAppender
             });

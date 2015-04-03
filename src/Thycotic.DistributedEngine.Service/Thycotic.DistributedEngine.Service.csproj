@@ -173,9 +173,9 @@
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Logging">
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.57\lib\net451\Thycotic.Logging.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.75\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Wcf">
       <HintPath>..\packages\Thycotic.Wcf.5.0.0.68\lib\net451\Thycotic.Wcf.dll</HintPath>
@@ -190,6 +190,13 @@
     <Compile Include="EngineToServer\EngineToServerConnection.cs" />
     <Compile Include="EngineToServer\IEngineToServerConnection.cs" />
     <Compile Include="IoC\EngineToServerModule.cs" />
+    <Compile Include="Heartbeat\LogRunner.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Security\AuthenticatedCommunicationKeyProvider .cs" />
     <Compile Include="Security\AuthenticatedCommunicationRequestEncryptor.cs" />
     <Compile Include="Security\AuthenticationRequestEncryptor.cs" />
@@ -214,12 +221,6 @@
     <Compile Include="Security\AuthenticationKeyProvider.cs" />
     <Compile Include="Security\MessageEncryptor.cs" />
     <Compile Include="Heartbeat\HeartbeatRunner.cs" />
-    <Compile Include="ServiceInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ServiceInstaller.Designer.cs">
-      <DependentUpon>ServiceInstaller.cs</DependentUpon>
-    </Compile>
     <Compile Include="StartupMessageWriter.cs" />
     <Compile Include="IoC\LogicModule.cs" />
     <Compile Include="IoC\MessageQueueModule.cs" />
@@ -236,6 +237,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Thycotic.DistributedEngine.Service.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">
@@ -268,9 +270,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EngineService.resx">
+      <DependentUpon>EngineService.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="logo.txt" />
-    <EmbeddedResource Include="ServiceInstaller.resx">
-      <DependentUpon>ServiceInstaller.cs</DependentUpon>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

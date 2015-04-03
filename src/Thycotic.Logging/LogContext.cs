@@ -9,7 +9,10 @@ namespace Thycotic.Logging
     /// </summary>
     public sealed class LogContext : IDisposable
     {
-        private const string ContextName = "Context";
+        /// <summary>
+        /// The context name
+        /// </summary>
+        public const string ContextName = "Context";
 
         private readonly Stopwatch _stopwatch = new Stopwatch();
         private readonly IDisposable _context;
