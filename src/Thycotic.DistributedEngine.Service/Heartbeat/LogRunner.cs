@@ -26,12 +26,13 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         private readonly IResponseBus _responseBus;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
-        private readonly ILogWriter _log = Log.Get(typeof(LogRunner));
-        private Task _pumpTask;
         private const int IntervalSeconds = 10;
         private const int BufferSize = 100;
 
-        private bool _flush = false;
+        private Task _pumpTask;
+        private bool _flush;
+
+        private readonly ILogWriter _log = Log.Get(typeof(LogRunner));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeartbeatRunner" /> class.
