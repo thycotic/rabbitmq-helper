@@ -16,7 +16,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         /// Occurs when the IoC container configured.
         /// </summary>
         public EventHandler<IContainer> IoCContainerConfigured;
-        
+
         /// <summary>
         /// Gets the IoC configurator.
         /// </summary>
@@ -30,8 +30,8 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         private LogCorrelation _correlation;
 
         private readonly ILogWriter _log = Log.Get(typeof(PipelineService));
-        
-        
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelineService"/> class.
         /// </summary>
@@ -118,7 +118,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         /// </summary>
         public void Start()
         {
-            OnStart(new string []{ });
+            OnStart(new string[] { });
         }
 
         /// <summary>
@@ -129,15 +129,20 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         {
             using (LogContext.Create("Starting"))
             {
-                _log.Info("Pipeline starting...");
+                try
+                {
 
-                base.OnStart(args);
+                    _log.Info("Pipeline starting...");
 
-                BringUp();
+                    BringUp();
 
-                _log.Info("Pipeline started");
+                    _log.Info("Pipeline started");
+                }
+                catch (Exception ex)
+                {
+                    _log.Error("Failed to start pipeline", ex);
+                }
             }
-            
         }
 
         /// <summary>
@@ -147,13 +152,18 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         {
             using (LogContext.Create("Stopping"))
             {
-                _log.Info("Pipeline stopping...");
+                try
+                {
+                    _log.Info("Pipeline stopping...");
 
-                base.OnStop();
+                    TearDown();
 
-                TearDown();
-
-                _log.Info("Pipeline stopped");
+                    _log.Info("Pipeline stopped");
+                }
+                catch (Exception ex)
+                {
+                    _log.Error("Failed to stop pipelne", ex);
+                }
             }
         }
     }

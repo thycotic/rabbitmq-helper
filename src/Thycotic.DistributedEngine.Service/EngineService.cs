@@ -143,7 +143,7 @@ namespace Thycotic.DistributedEngine.Service
         /// </summary>
         public void Start()
         {
-            OnStart(new string []{ });
+            OnStart(new string[] { });
         }
 
         /// <summary>
@@ -154,15 +154,19 @@ namespace Thycotic.DistributedEngine.Service
         {
             using (LogContext.Create("Starting"))
             {
-                _log.Info("Engine starting...");
+                try
+                {
+                    _log.Info("Engine starting...");
 
-                base.OnStart(args);
+                    BringUp();
 
-                BringUp();
-
-                _log.Info("Engine started");
+                    _log.Info("Engine started");
+                }
+                catch (Exception ex)
+                {
+                    _log.Error("Failed to start engine", ex);
+                }
             }
-            
         }
 
         /// <summary>
@@ -172,13 +176,18 @@ namespace Thycotic.DistributedEngine.Service
         {
             using (LogContext.Create("Stopping"))
             {
-                _log.Info("Engine stopping...");
+                try
+                {
+                    _log.Info("Engine stopping...");
 
-                base.OnStop();
+                    TearDown();
 
-                TearDown();
-
-                _log.Info("Engine stopped");
+                    _log.Info("Engine stopped");
+                }
+                catch (Exception ex)
+                {
+                    _log.Error("Failed to stop engine", ex);
+                }
             }
         }
     }
