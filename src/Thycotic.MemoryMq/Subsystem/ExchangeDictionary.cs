@@ -47,7 +47,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="body">The body.</param>
         public void Publish(RoutingSlip routingSlip, MemoryMqDeliveryEventArgs body)
         {
-            _log.Debug(string.Format("Publishing message to {0}", routingSlip));
+            _log.Debug(string.Format("Accepting message to {0}", routingSlip));
 
             _data.GetOrAdd(routingSlip, s => new MessageQueue());
 
