@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Newtonsoft.Json;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Subsystem.Persistance;
@@ -17,6 +18,11 @@ namespace Thycotic.MemoryMq.Subsystem
         private readonly ConcurrentDictionary<RoutingSlip, MessageQueue> _data = new ConcurrentDictionary<RoutingSlip, MessageQueue>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ExchangeDictionary));
+
+        /// <summary>
+        /// Reset event used to ensure we don't restore while storing and vise versa
+        /// </summary>
+        private readonly ManualResetEventSlim _persistResetEvent = new ManualResetEventSlim(true);
 
         /// <summary>
         /// Gets the mailboxes in the exchange
@@ -47,7 +53,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="body">The body.</param>
         public void Publish(RoutingSlip routingSlip, MemoryMqDeliveryEventArgs body)
         {
-            _log.Debug(string.Format("Accepting message to {0}", routingSlip));
+            _log.Debug(string.Format("Accepting message for {0}", routingSlip));
 
             _data.GetOrAdd(routingSlip, s => new MessageQueue());
 
@@ -92,6 +98,10 @@ namespace Thycotic.MemoryMq.Subsystem
 
                 using (LogContext.Create("Restore messages"))
                 {
+                    _persistResetEvent.Wait();
+
+                    _persistResetEvent.Reset();
+
                     var path = GetPersistPath();
                     if (!File.Exists(path))
                     {
@@ -114,9 +124,13 @@ namespace Thycotic.MemoryMq.Subsystem
                     if (snapshot != null && snapshot.Mailboxes.Length > 0)
                     {
                         snapshot.Mailboxes.ToList()
-                            .ForEach(e => e.DeliveryEventArguments.ToList().ForEach(dea => Publish(new RoutingSlip(dea.Exchange, dea.RoutingKey), dea)));
+                            .ForEach(
+                                e =>
+                                    e.DeliveryEventArguments.ToList()
+                                        .ForEach(dea => Publish(new RoutingSlip(dea.Exchange, dea.RoutingKey), dea)));
 
-                        _log.Info(string.Format("Restored {0} message(s)", snapshot.Mailboxes.Sum(e => e.DeliveryEventArguments.Length)));
+                        _log.Info(string.Format("Restored {0} message(s)",
+                            snapshot.Mailboxes.Sum(e => e.DeliveryEventArguments.Length)));
                     }
 
                     //remove the file
@@ -127,7 +141,10 @@ namespace Thycotic.MemoryMq.Subsystem
             {
                 _log.Error("Failed to restore messages", ex);
             }
-
+            finally
+            {
+                _persistResetEvent.Set();
+            }
         }
 
         /// <summary>
@@ -139,6 +156,9 @@ namespace Thycotic.MemoryMq.Subsystem
             {
                 using (LogContext.Create("Persist messages"))
                 {
+                    _persistResetEvent.Wait();
+
+                    _persistResetEvent.Reset();
 
                     var path = GetPersistPath();
                     if (File.Exists(path))
@@ -172,11 +192,16 @@ namespace Thycotic.MemoryMq.Subsystem
 
                     //remove all messages
                     _data.Clear();
+
                 }
             }
             catch (Exception ex)
             {
                 _log.Error("Failed to persist messages", ex);
+            }
+            finally
+            {
+                _persistResetEvent.Set();
             }
         }
 
