@@ -41,6 +41,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC.Matrix
         {
             int left, top;
 
+            if ((Console.LargestWindowHeight == 0) || (Console.LargestWindowWidth == 0))
+            {
+                return;
+            }
 
             lock (SyncRoot)
             {
