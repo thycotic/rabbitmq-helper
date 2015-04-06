@@ -14,6 +14,14 @@ namespace Thycotic.MemoryMq.Collections
         private readonly object _syncRoot = new object();
 
         /// <summary>
+        /// Gets the count.
+        /// </summary>
+        /// <value>
+        /// The count.
+        /// </value>
+        public ulong Count { get; private set; }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is empty.
         /// </summary>
         /// <value>
@@ -56,6 +64,8 @@ namespace Thycotic.MemoryMq.Collections
 
                     _tail.Node = node;
                 }
+
+                Count++;
             }
         }
 
@@ -78,6 +88,8 @@ namespace Thycotic.MemoryMq.Collections
                 {
                     var node = new QueueNode {Item = item, Next = new QueueNodePointer(_head.Node)};
                     _head.Node = node;
+
+                    Count++;
                 }
             }
         }
@@ -99,7 +111,9 @@ namespace Thycotic.MemoryMq.Collections
                 }
 
                 //no empty queue, set result
-                result = _head.Node.Item;
+                var node = _head.Node;
+
+                result = node.Item;
 
                 //last node
                 if (_tail.Node == _head.Node)
@@ -110,6 +124,12 @@ namespace Thycotic.MemoryMq.Collections
                 {
                     _head.Node = _head.Node.Next.Node;
                 }
+
+                //clean up so that GC picks it up
+                node.Item = default(T);
+                node.Next = null;
+
+                Count--;
             }
             return true;
         }
