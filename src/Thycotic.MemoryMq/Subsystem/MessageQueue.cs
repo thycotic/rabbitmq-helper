@@ -9,6 +9,11 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class MessageQueue : IMessageQueue
     {
+        /// <summary>
+        /// The maximum capacity count
+        /// </summary>
+        public const ulong MaxCapacityCount = 50*1000;
+
         private readonly ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs> _queue =
             new ConcurrentPriorityQueue<MemoryMqDeliveryEventArgs>();
 
@@ -71,7 +76,12 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="body">The <see cref="MemoryMqDeliveryEventArgs"/> instance containing the event data.</param>
         public void Enqueue(MemoryMqDeliveryEventArgs body)
         {
-           _queue.Enqueue(body);
+            if (_queue.Count > MaxCapacityCount)
+            {
+                throw new InvalidOperationException("Cannot any more items due to capacity overflow");
+            }
+
+            _queue.Enqueue(body);
         }
 
         /// <summary>
