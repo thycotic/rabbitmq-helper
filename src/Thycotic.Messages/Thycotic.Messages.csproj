@@ -138,8 +138,9 @@
     <Reference Include="Thycotic.AppCore">
       <HintPath>..\..\lib\Thycotic.AppCore.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Core">
-      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.7\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.22\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
@@ -185,6 +186,7 @@
     <None Include="..\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
