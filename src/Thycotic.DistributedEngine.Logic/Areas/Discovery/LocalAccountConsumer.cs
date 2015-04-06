@@ -42,6 +42,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             var result = scanner.ScanComputerForLocalAccounts(request.Input);
             var response = new ScanLocalAccountResponse
             {
+                ComputerId = request.ComputerId,
                 LocalAccounts = result.LocalAccounts,
                 Success = result.Success,
                 ErrorCode = result.ErrorCode,
