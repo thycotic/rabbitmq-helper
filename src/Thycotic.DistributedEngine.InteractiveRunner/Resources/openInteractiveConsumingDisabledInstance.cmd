@@ -1,1 +1,1 @@
-start cmd /k ..\Thycotic.DistributedEngine.InteractiveRunner.exe icd
+start cmd /k ..\Thycotic.DistributedEngine.InteractiveRunner.exe cd
