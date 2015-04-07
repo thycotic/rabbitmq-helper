@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Linq;
-using Thycotic.DistributedEngine.Logic.Areas.POC.Matrix;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.POC
 {
@@ -43,39 +40,5 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         {
             WriteHelper(() => Console.Write(value), foregroundColor);
         }
-
-        #region Matrix
-        private static readonly ConcurrentBag<IConsoleWriter> MainConsoleWriters = new ConcurrentBag<IConsoleWriter>();
-        private static readonly ConcurrentBag<IConsoleWriter> NullConsoleWriters = new ConcurrentBag<IConsoleWriter>();
-       
-        /// <summary>
-        /// Writes the matrix.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="foregroundColor">Color of the foreground.</param>
-        public static void WriteMatrix(char value, ConsoleColor foregroundColor = ConsoleColor.DarkGreen)
-        {
-
-            lock (SyncRoot)
-            {
-                if (MainConsoleWriters.IsEmpty || NullConsoleWriters.IsEmpty)
-                {
-                    Enumerable.Range(0, 100).ToList().ForEach(i =>
-                    {
-                        MainConsoleWriters.Add(new TrailingConsoleWriter());
-                        NullConsoleWriters.Add(new NullConsoleWriter());
-                    });
-                }
-            }
-
-            IConsoleWriter writer;
-            MainConsoleWriters.TryPeek(out writer);
-            writer.WriteMatrix(value);
-
-            NullConsoleWriters.TryPeek(out writer);
-            writer.WriteMatrix(value);
-
-        }
-        #endregion
     }
 }
