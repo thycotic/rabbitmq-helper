@@ -52,8 +52,9 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         {
             Trace.TraceInformation("Configuring logging...");
             Log.Configure();
-            Trace.TraceInformation("Attaching recent events appender...");
-            Log.AttachRecentEventsMemoryAppender();
+            //don't attach the recent events appender since nothing is draining them
+            //Trace.TraceInformation("Attaching recent events appender...");
+            //Log.AttachRecentEventsMemoryAppender();
         }
 
         /// <summary>
