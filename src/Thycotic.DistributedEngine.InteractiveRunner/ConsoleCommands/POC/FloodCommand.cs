@@ -53,6 +53,11 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                         };
 
                         _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
+
+                        if (i%10000 == 0)
+                        {
+                            _log.Info(string.Format("Flooded {0} requests", i));
+                        }
                     }
 
                     _log.Info("Flooding completed");
