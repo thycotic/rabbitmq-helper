@@ -193,10 +193,6 @@
     <Compile Include="Areas\POC\CreateFileHandleHandler.cs" />
     <Compile Include="Areas\POC\ChainMessageConsumer.cs" />
     <Compile Include="Areas\POC\ConsumerConsole.cs" />
-    <Compile Include="Areas\POC\Matrix\BasicConsoleWriter.cs" />
-    <Compile Include="Areas\POC\Matrix\IConsoleWriter.cs" />
-    <Compile Include="Areas\POC\Matrix\NullConsoleWriter.cs" />
-    <Compile Include="Areas\POC\Matrix\TrailingConsoleWriter.cs" />
     <Compile Include="Areas\POC\PingConsumer.cs" />
     <Compile Include="Areas\POC\SortListConsumer.cs" />
     <Compile Include="Areas\POC\ThrowTriggerConsumer.cs" />

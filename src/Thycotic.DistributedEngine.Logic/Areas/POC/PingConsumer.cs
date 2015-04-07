@@ -35,10 +35,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <param name="request">The request.</param>
         public void Consume(PingMessage request)
         {
-            var random = new Random(Guid.NewGuid().GetHashCode());
-            var index = random.Next(0, _characters.Count() - 1);
-
-            ConsumerConsole.WriteMatrix(_characters[index]);
+            _log.Debug(string.Format("Consuming ping sequence #{0}", request.Sequence));
 
             try
             {
