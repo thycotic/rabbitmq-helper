@@ -34,7 +34,6 @@ namespace Thycotic.DistributedEngine.Service.IoC
             }).As<IAuthenticatedCommunicationKeyProvider>().SingleInstance();
            
             builder.RegisterModule(new HeartbeatModule(_configurationProvider, _engineService));
-            
         }
     }
 }

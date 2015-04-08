@@ -151,11 +151,11 @@
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.7, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.25\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.32\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.7, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.25\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.32\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

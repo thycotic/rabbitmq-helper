@@ -2,6 +2,7 @@
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
+using Thycotic.Logging;
 using Thycotic.Messages.Areas.Discovery.Request;
 using Thycotic.Messages.Common;
 
@@ -13,24 +14,18 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
     public class HostRangeConsumer : IBasicConsumer<ScanHostRangeMessage>
     {
         private readonly IResponseBus _responseBus;
-
-        /// <summary>
-        /// Version
-        /// </summary>
-        public int Version { get; set; }
-
-        /// <summary>
-        /// Retry Count
-        /// </summary>
-        public int RetryCount { get; set; }
+        private readonly IScannerFactory _scannerFactory;
+        private readonly ILogWriter _log = Log.Get(typeof(HostRangeConsumer));
 
         /// <summary>
         /// Host Range Consumer
         /// </summary>
         /// <param name="responseBus"></param>
-        public HostRangeConsumer(IResponseBus responseBus)
+        /// <param name="scannerFactory"></param>
+        public HostRangeConsumer(IResponseBus responseBus, IScannerFactory scannerFactory)
         {
             _responseBus = responseBus;
+            _scannerFactory = scannerFactory;
         }
 
         /// <summary>
@@ -39,7 +34,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanHostRangeMessage request)
         {
-            var scanner = ScannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+            var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+            _log.Info(string.Format("{0}: Scan Host Range", request.Input.NameForLog));
             var result = scanner.ScanForHostRanges(request.Input);
             var response = new ScanHostRangeResponse
             {
@@ -52,11 +48,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             };
             try
             {
+                _log.Info(string.Format("{0}: Send Host Range Results", request.Input.NameForLog));
                 _responseBus.Execute(response);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                // ignored
+                _log.Info(string.Format("{0}: Send Host Range Results Failed", request.Input.NameForLog), exception);
             }
         }
     }
