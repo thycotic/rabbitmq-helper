@@ -144,6 +144,7 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="BuiltInLogNames.cs" />
+    <Compile Include="ILogWriterFactory.cs" />
     <Compile Include="LogTail\IRecentLogEntryProvider.cs" />
     <Compile Include="ILogWriter.cs" />
     <Compile Include="Log.cs" />
