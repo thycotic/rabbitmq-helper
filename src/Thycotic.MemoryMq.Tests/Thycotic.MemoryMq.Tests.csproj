@@ -183,11 +183,6 @@
       <DependentUpon>MemoryMqWcfService.feature</DependentUpon>
     </Compile>
     <Compile Include="MemoryMqWcfServiceSteps.cs" />
-    <Compile Include="Subsystem\BindingDictionary.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BindingDictionary.feature</DependentUpon>
-    </Compile>
     <Compile Include="Subsystem\ClientDictionary.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -227,10 +222,6 @@
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Subsystem\BindingDictionary.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>BindingDictionary.feature.cs</LastGenOutput>
     </None>
     <None Include="Subsystem\ClientDictionary.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

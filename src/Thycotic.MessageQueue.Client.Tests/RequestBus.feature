@@ -9,4 +9,4 @@ Background:
 
 Scenario: Basic publish
 	Given there exists a substitute object for IBasicConsumable stored in the scenario as ConsumableTest
-	When the method BasicPublish on RequestBus RequestBusTest is called with exchange TestExchange and consumable ConsumableTest
+	When the method BasicPublish on IRequestBus RequestBusTest is called with exchange TestExchange and consumable ConsumableTest

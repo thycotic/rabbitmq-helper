@@ -99,7 +99,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 14
- testRunner.Then("the method Start on MessageDispatcher substitute MessageDispatcherTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method Start on IMessageDispatcher substitute MessageDispatcherTest is called" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -114,11 +115,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 17
- testRunner.When("the method BasicPublish on MemoryMqWcfService MemoryMqWcfServiceTest is called wi" +
-                    "th exchange ExchangeTest and routing key RoutingKeyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method BasicPublish on IMemoryMqWcfService MemoryMqWcfServiceTest is called w" +
+                    "ith exchange ExchangeTest and routing key RoutingKeyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 18
- testRunner.Then("the method Publish on ExchangeDictionary substitute ExchangeDictionaryTest is cal" +
-                    "led with exchange ExchangeTest and routing key RoutingKeyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method Publish on IExchangeDictionary substitute ExchangeDictionaryTest is ca" +
+                    "lled with exchange ExchangeTest and routing key RoutingKeyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -133,10 +134,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 21
- testRunner.When("the method QueueBind on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method QueueBind on IMemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 22
- testRunner.Then("the method AddBinding on BindingDictionary substitute BindingDictionaryTest is ca" +
-                    "lled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method AddBinding on IBindingDictionary substitute BindingDictionaryTest is c" +
+                    "alled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -151,10 +152,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 25
- testRunner.When("the method BasicConsume on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method BasicConsume on IMemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 26
- testRunner.Then("the method AddClient on ClientDictionary substitute ClientDictionaryTest is calle" +
-                    "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method AddClient on IClientDictionary substitute ClientDictionaryTest is call" +
+                    "ed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -169,10 +170,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 29
- testRunner.When("the method BasicAck on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method BasicAck on IMemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 30
- testRunner.Then("the method Acknowledge on ExchangeDictionary substitute ExchangeDictionaryTest is" +
-                    " called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method Acknowledge on IExchangeDictionary substitute ExchangeDictionaryTest i" +
+                    "s called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -187,10 +188,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 33
- testRunner.When("the method BasicNack on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method BasicNack on IMemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 34
- testRunner.Then("the method NegativelyAcknowledge on ExchangeDictionary substitute ExchangeDiction" +
-                    "aryTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method NegativelyAcknowledge on IExchangeDictionary substitute ExchangeDictio" +
+                    "naryTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -205,10 +206,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 37
- testRunner.When("the method Dispose on MemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method Dispose on IMemoryMqWcfService MemoryMqWcfServiceTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 38
- testRunner.Then("the method Dispose on MessageDispatcher substitute MessageDispatcherTest is calle" +
-                    "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method Dispose on IMessageDispatcher substitute MessageDispatcherTest is call" +
+                    "ed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

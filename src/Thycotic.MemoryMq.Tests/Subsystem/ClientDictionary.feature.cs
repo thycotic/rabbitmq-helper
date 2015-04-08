@@ -68,8 +68,8 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         {
 #line 3
 #line 4
- testRunner.Given("there exists a substitute object for ICallbackChannelProvider stored in the scenar" +
-                    "io as CallbackChannelProviderTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for ICallbackChannelProvider stored in the scena" +
+                    "rio as CallbackChannelProviderTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 5
  testRunner.And("there exists a ClientDictionary stored in the scenario as ClientDictionaryTest wi" +
                     "th CallbackChennelProvider CallbackChannelProviderTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -91,11 +91,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 10
- testRunner.When("the method AddClient on ClientDictionary ClientDictionaryTest is called with queu" +
-                    "e name queueNameTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method AddClient on IClientDictionary ClientDictionaryTest is called with que" +
+                    "ue name queueNameTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
- testRunner.When("the method TryGetClient on ClientDictionary ClientDictionaryTest is called with q" +
-                    "ueue name queueNameTest and the result is stored in scenario as clientResult", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method TryGetClient on IClientDictionary ClientDictionaryTest is called with " +
+                    "queue name queueNameTest and the result is stored in scenario as clientResult", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 12
  testRunner.Then("the result stored in scenario as clientResult is not null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -112,8 +112,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 15
- testRunner.When("the method TryGetClient on ClientDictionary ClientDictionaryTest is called with q" +
-                    "ueue name queueNameTest and the result is stored in scenario as clientResult", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method TryGetClient on IClientDictionary ClientDictionaryTest is called with " +
+                    "queue name queueNameTest and the result is stored in scenario as clientResult", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
  testRunner.Then("the result stored in scenario as clientResult is null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

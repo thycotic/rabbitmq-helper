@@ -6,7 +6,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// <summary>
     /// Queue proxy. Limits the ability to queuing any new items
     /// </summary>
-    public class MessageQueueProxy
+    public class MessageQueueProxy : IMessageQueueProxy
     {
         private readonly IMessageQueue _queue;
 
@@ -58,7 +58,7 @@ namespace Thycotic.MemoryMq.Subsystem
 
 
         /// <summary>
-        /// Negatively the acknoledges the specified delivery tag.
+        /// Negatively the acknowledges the specified delivery tag.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
         public void NegativelyAcknoledge(ulong deliveryTag)

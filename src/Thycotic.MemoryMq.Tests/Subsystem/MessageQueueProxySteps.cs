@@ -27,31 +27,31 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             });
         }
 
-        [When(@"the method TryDequeue on MessageQueueProxy (\w+) is called")]
-        public void WhenTheMethodTryDequeueOnMessageQueueProxyIsCalled(string messageQueueProxyName)
+        [When(@"the method TryDequeue on IMessageQueueProxy (\w+) is called")]
+        public void WhenTheMethodTryDequeueOnIMessageQueueProxyIsCalled(string messageQueueProxyName)
         {
-            var messageQueueProxy = this.GetScenarioContext().Get<MessageQueueProxy>(messageQueueProxyName);
+            var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
             MemoryMqDeliveryEventArgs throwAway;
             messageQueueProxy.TryDequeue(out throwAway);
         }
 
 
-        [When(@"the method NegativelyAcknoledge on MessageQueueProxy (\w+) is called")]
+        [When(@"the method NegativelyAcknoledge on IMessageQueueProxy (\w+) is called")]
         public void WhenTheMethodNegativelyAcknoledgeOnMessageQueueProxyIsCalled(string messageQueueProxyName)
         {
-            var messageQueueProxy = this.GetScenarioContext().Get<MessageQueueProxy>(messageQueueProxyName);
+            var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
             messageQueueProxy.NegativelyAcknoledge(7);
         }
 
-        [Then(@"the scenario MessageQueueProxy (\w+) is empty")]
-        public void ThenTheScenarioMessageQueueProxyIsEmpty(string messageQueueProxyName)
+        [Then(@"the scenario IMessageQueueProxy (\w+) is empty")]
+        public void ThenTheScenarioIMessageQueueProxyIsEmpty(string messageQueueProxyName)
         {
-            var messageQueueProxy = this.GetScenarioContext().Get<MessageQueueProxy>(messageQueueProxyName);
+            var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
             messageQueueProxy.IsEmpty.Should().BeTrue();
         }
 
-        [Then(@"the method TryDequeue on MessageQueue substitute (\w+) is called")]
-        public void ThenTheMethodTryDequeueOnMessageQueueSubstituteIsCalled(string messageQueueName)
+        [Then(@"the method TryDequeue on IMessageQueue substitute (\w+) is called")]
+        public void ThenTheMethodTryDequeueOnIMessageQueueSubstituteIsCalled(string messageQueueName)
         {
             var messageQueue = this.GetScenarioContext().Get<IMessageQueue>(messageQueueName);
 
@@ -59,8 +59,8 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             messageQueue.ReceivedWithAnyArgs().TryDequeue(out throwAway);
         }
 
-        [Then(@"the method NegativelyAcknoledge on MessageQueue substitute (\w+) is called")]
-        public void ThenTheMethodNegativelyAcknoledgeOnMessageQueueSubstituteIsCalled(string messageQueueName)
+        [Then(@"the method NegativelyAcknoledge on IMessageQueue substitute (\w+) is called")]
+        public void ThenTheMethodNegativelyAcknoledgeOnIMessageQueueSubstituteIsCalled(string messageQueueName)
         {
             var messageQueue = this.GetScenarioContext().Get<IMessageQueue>(messageQueueName);
             messageQueue.ReceivedWithAnyArgs().NegativelyAcknoledge(Arg.Any<ulong>());

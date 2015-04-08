@@ -25,7 +25,7 @@ namespace Thycotic.MessageQueue.Client.Tests
             this.GetScenarioContext().SetSubstitute<IRequestBus>(requestBusName);
         }
 
-        [When(@"the method BasicPublish on RequestBus (\w+) is called with exchange (\w+) and consumable (\w+)")]
+        [When(@"the method BasicPublish on IRequestBus (\w+) is called with exchange (\w+) and consumable (\w+)")]
         public void WhenTheMethodBasicPublishOnRequestBusIsCalledWithExchangeNameAndConsumable(string requestBusName, string exchangeName, string consumableName)
         {
             var requestBus = this.GetScenarioContext().Get<IRequestBus>(requestBusName);
