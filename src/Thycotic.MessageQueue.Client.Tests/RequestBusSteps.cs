@@ -26,7 +26,7 @@ namespace Thycotic.MessageQueue.Client.Tests
         }
 
         [When(@"the method BasicPublish on RequestBus (\w+) is called with exchange (\w+) and consumable (\w+)")]
-        public void WhenTheMethodBasicPublishOnMemoryMqServerMemoryMqServerTestIsCalled(string requestBusName, string exchangeName, string consumableName)
+        public void WhenTheMethodBasicPublishOnRequestBusIsCalledWithExchangeNameAndConsumable(string requestBusName, string exchangeName, string consumableName)
         {
             var requestBus = this.GetScenarioContext().Get<IRequestBus>(requestBusName);
             var consumable = this.GetScenarioContext().Get<IBasicConsumable>(consumableName);
@@ -35,7 +35,7 @@ namespace Thycotic.MessageQueue.Client.Tests
         }
 
         [Then(@"the method OpenChannel on ICommonConnection substitute (\w+) is called with exchange (\w+) and routing key (\w+)")]
-        public void ThenTheMethodexchangesNameOnExchangeDictionarySubstituteIsCalled(string connectionName, string exchangeName, string routingKey)
+        public void ThenTheMethodOpenChannelOnICommonConnectionSubstituteIsCalledWithExchangeAndRoutingKey(string connectionName, string exchangeName, string routingKey)
         {
             var connection = this.GetScenarioContext().Get<ICommonConnection>(connectionName);
 
