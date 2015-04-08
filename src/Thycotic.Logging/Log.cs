@@ -69,6 +69,7 @@ namespace Thycotic.Logging
         /// Gets the appenders.
         /// </summary>
         /// <returns></returns>
+        [DebuggerStepThrough]
         public static IEnumerable<IAppender> GetAppenders()
         {
             return LogManager.GetRepository().GetAppenders();
@@ -79,6 +80,7 @@ namespace Thycotic.Logging
         /// Sets the log writer factory.
         /// </summary>
         /// <param name="factory">The factory.</param>
+        [DebuggerStepThrough]
         public static void SetLogWriterFactory(ILogWriterFactory factory)
         {
             Contract.Requires<ArgumentNullException>(factory != null);
