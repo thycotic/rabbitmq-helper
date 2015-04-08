@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Thycotic.AppCore.Federator;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Dependency.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.General;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
-using Thycotic.ihawu.Business.Federator;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
