@@ -1,4 +1,6 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
+using NUnit.Framework;
 using TechTalk.SpecFlow;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -22,6 +24,15 @@ namespace Thycotic.DistributedEngine.Logic.Tests.EngineToServer
         public void GivenThereExistsASubstituteObjectForIResponseBusStoredInTheScenario(string responseBusName)
         {
             this.GetScenarioContext().SetSubstitute<IResponseBus>(responseBusName);
+        }
+
+        [Given(@"the method Execute on IResponseBus substitute (\w+) throws and exception")]
+        public void GivenTheMethodExecuteOnIResponseBusSubstituteIsCalled(string responseBusName)
+        {
+            var responseBus = this.GetScenarioContext().Get<IResponseBus>(responseBusName);
+
+            responseBus.When(bus => bus.Execute(Arg.Any<IEngineCommandRequest>()))
+                .Do(info => { throw new Exception(); });
         }
 
         [When(@"the method Execute on IResponseBus (\w+) is called with request (\w+)")]
