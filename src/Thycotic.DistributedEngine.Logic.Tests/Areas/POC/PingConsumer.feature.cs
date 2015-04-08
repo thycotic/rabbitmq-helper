@@ -89,6 +89,38 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Consume test with exception")]
+        public virtual void ConsumeTestWithException()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Consume test with exception", ((string[])(null)));
+#line 11
+this.ScenarioSetup(scenarioInfo);
+#line 12
+ testRunner.Given("that Log returns substitute log writer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 13
+ testRunner.And("there exists a substitute object for IResponseBus stored in the scenario as Respo" +
+                    "nseBusTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 14
+ testRunner.And("there exists a PingMessage stored in the scenario as PingMessageTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
+ testRunner.And("there exists a PingConsumer stored in the scenario as PingConsumerTest with Respo" +
+                    "nseBus ResponseBusTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.And("the method Execute on IResponseBus substitute ResponseBusTest throws and exceptio" +
+                    "n", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+ testRunner.When("the method Consume on IBasicConsumer<PingMessage> PingConsumerTest is called with" +
+                    " consumable PingMessageTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 18
+ testRunner.Then("the method Execute on IResponseBus substitute ResponseBusTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 19
+ testRunner.Then("the method Error on ILogWriter substitute is called with \"Failed to pong back to " +
+                    "server\" and exception", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
