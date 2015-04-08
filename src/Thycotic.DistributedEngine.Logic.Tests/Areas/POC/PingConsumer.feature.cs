@@ -77,8 +77,15 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Given("there exists a substitute object for IResponseBus stored in the scenario as Respo" +
                     "nseBusTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
+ testRunner.And("there exists a PingMessage stored in the scenario as PingMessageTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 7
  testRunner.And("there exists a PingConsumer stored in the scenario as PingConsumerTest with Respo" +
                     "nseBus ResponseBusTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 8
+ testRunner.When("the method Consume on IBasicConsumer<PingMessage> PingConsumerTest is called with" +
+                    " consumable PingMessageTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
+ testRunner.Then("the method Execute on IResponseBus substitute ResponseBusTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

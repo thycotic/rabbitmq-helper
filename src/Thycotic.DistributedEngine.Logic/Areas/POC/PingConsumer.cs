@@ -17,8 +17,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
 
         private readonly ILogWriter _log = Log.Get(typeof(PingConsumer));
 
-        private readonly char[] _characters = Enumerable.Range('a', 'z' - 'a' + 1).Select(i => (Char) i).ToArray();
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PingConsumer" /> class.
         /// </summary>

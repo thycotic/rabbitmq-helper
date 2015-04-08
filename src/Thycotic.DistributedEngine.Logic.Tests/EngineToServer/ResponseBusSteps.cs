@@ -1,4 +1,5 @@
-﻿using TechTalk.SpecFlow;
+﻿using NSubstitute;
+using TechTalk.SpecFlow;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Utility.Specflow;
@@ -24,7 +25,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.EngineToServer
         }
 
         [When(@"the method Execute on IResponseBus (\w+) is called with request (\w+)")]
-        public void WhenTheMethodExecuteOnIResponseIsCalledWithRequest(string responseBusName, string exchangeName, string requestName)
+        public void WhenTheMethodExecuteOnIResponseIsCalledWithRequest(string responseBusName, string requestName)
         {
             var responseBus = this.GetScenarioContext().Get<IResponseBus>(responseBusName);
             var request = this.GetScenarioContext().Get<IEngineCommandRequest>(requestName);
@@ -32,5 +33,12 @@ namespace Thycotic.DistributedEngine.Logic.Tests.EngineToServer
             responseBus.Execute(request);
         }
 
+        [Then(@"the method Execute on IResponseBus substitute (\w+) is called")]
+        public void ThenTheMethodExecuteOnIResponseBusSubstituteIsCalled(string responseBusName)
+        {
+            var responseBus = this.GetScenarioContext().Get<IResponseBus>(responseBusName);
+            
+            responseBus.Received().Execute(Arg.Any<IEngineCommandRequest>());
+        }
     }
 }
