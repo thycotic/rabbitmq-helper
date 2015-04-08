@@ -68,7 +68,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         {
 #line 3
 #line 4
- testRunner.Given("there exists a substitute object for CallbackChannelProvider stored in the scenar" +
+ testRunner.Given("there exists a substitute object for ICallbackChannelProvider stored in the scenar" +
                     "io as CallbackChannelProviderTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 5
  testRunner.And("there exists a ClientDictionary stored in the scenario as ClientDictionaryTest wi" +

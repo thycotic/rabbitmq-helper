@@ -108,8 +108,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 15
- testRunner.Given("there exists a substitute object for MessageQueue stored in the scenario as Messa" +
-                    "geQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for IMessageQueue stored in the scenario as Mess" +
+                    "ageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 16
  testRunner.And("there exists a MessageQueueProxy stored in the scenario as MessageQueueProxyTest " +
                     "with MessageQueue MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -129,8 +129,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 21
 this.ScenarioSetup(scenarioInfo);
 #line 22
- testRunner.Given("there exists a substitute object for MessageQueue stored in the scenario as Messa" +
-                    "geQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for IMessageQueue stored in the scenario as Mess" +
+                    "ageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 23
  testRunner.And("there exists a MessageQueueProxy stored in the scenario as MessageQueueProxyTest " +
                     "with MessageQueue MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

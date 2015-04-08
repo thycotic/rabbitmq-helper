@@ -68,11 +68,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         {
 #line 4
 #line 5
- testRunner.Given("there exists a substitute object for CommonConnection stored in the scenario as C" +
-                    "ommonConnectionTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for ICommonConnection stored in the scenario as " +
+                    "CommonConnectionTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
- testRunner.And("there exists a substitute object for ExchangeNameProvider stored in the scenario " +
-                    "as ExchangeNameProviderTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a substitute object for IExchangeNameProvider stored in the scenario" +
+                    " as ExchangeNameProviderTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 7
  testRunner.And("there exists a ConsumerWrapperBaseDummy stored in the scenario as ConsumerWrapper" +
                     "BaseDummyTest with CommonConnection CommonConnectionTest and ExchangeNameProvide" +

@@ -13,7 +13,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             this.GetScenarioContext().Set(messageQueueName, new MessageQueue());
         }
 
-        [Given(@"there exists a substitute object for MessageQueue stored in the scenario as (\w+)")]
+        [Given(@"there exists a substitute object for IMessageQueue stored in the scenario as (\w+)")]
         public void GivenThereExistsASubstituteObjectForExchangeDictionaryStoredInTheScenario(string messageQueueName)
         {
             this.GetScenarioContext().SetSubstitute<IMessageQueue>(messageQueueName);
