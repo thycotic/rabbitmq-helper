@@ -173,13 +173,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.32\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.233\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.271\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a573cc6dd3295692, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.233\lib\net451\Thycotic.Encryption.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.271\lib\net451\Thycotic.Encryption.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
@@ -188,8 +187,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.173\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.SharedTypes">
+      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.77\lib\net451\Thycotic.SharedTypes.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.Wcf">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.90\lib\net451\Thycotic.Wcf.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.91\lib\net451\Thycotic.Wcf.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

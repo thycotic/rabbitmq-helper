@@ -1,4 +1,5 @@
 ﻿using Thycotic.Messages.Common;
+using Thycotic.SharedTypes.Dependencies;
 
 namespace Thycotic.Messages.PasswordChanging.Request
 {
@@ -13,7 +14,7 @@ namespace Thycotic.Messages.PasswordChanging.Request
         /// <value>
         /// The dependencies and what to change them with.
         /// </value>
-        public Thycotic.ihawu.Business.IDependencyChangerInfo[] DependencyChangerInfos { get; set; }
+        public IDependencyChangeInfo[] DependencyChangeInfos { get; set; }
 
         /// <summary>
         /// Gets or sets the Secret Id
