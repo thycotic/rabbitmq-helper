@@ -37,8 +37,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         public void Consume(ScanLocalAccountMessage request)
         {
             var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
-            _log.Info(string.Format("{0}: Scan Local Accounts", request.Input.NameForLog));
+            _log.Info(string.Format("{0}: Scan Local Accounts", request.Input.ComputerName));
             var result = scanner.ScanComputerForLocalAccounts(request.Input);
+            var batchId = Guid.NewGuid();
             var paging = new Paging
             {
                 Total = result.LocalAccounts.Count()
@@ -54,7 +55,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     ErrorCode = result.ErrorCode,
                     StatusMessages = { },
                     Logs = result.Logs,
-                    ErrorMessage = result.ErrorMessage
+                    ErrorMessage = result.ErrorMessage,
+                    BatchId = batchId,
+                    Paging = paging
                 };
                 try
                 {
