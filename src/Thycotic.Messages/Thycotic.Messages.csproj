@@ -131,6 +131,10 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -158,9 +162,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.185\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.24, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.25, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.24\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.25\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
