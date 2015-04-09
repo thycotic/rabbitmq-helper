@@ -39,6 +39,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
             _log.Info(string.Format("{0}: Scan Dependencies", request.Input.NameForLog));
             var result = scanner.ScanComputerForDependencies(request.Input);
+            var batchId = Guid.NewGuid();
             var paging = new Paging
             {
                 Total = result.DependencyItems.Count()
@@ -54,7 +55,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     ErrorCode = result.ErrorCode,
                     StatusMessages = { },
                     Logs = result.Logs,
-                    ErrorMessage = result.ErrorMessage
+                    ErrorMessage = result.ErrorMessage,
+                    BatchId = batchId,
+                    Paging = paging
                 };
                 try
                 {
