@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Linq;
+using Thycotic.AppCore;
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.Discovery.Request;
 using Thycotic.Messages.Common;
+using Thycotic.SharedTypes.General;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 {
@@ -37,24 +40,38 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
             _log.Info(string.Format("{0}: Scan Host Range", request.Input.NameForLog));
             var result = scanner.ScanForHostRanges(request.Input);
-            var response = new ScanHostRangeResponse
+            var batchId = Guid.NewGuid();
+            var paging = new Paging
             {
-                HostRangeItems = result.HostRangeItems,
-                Success = result.Success,
-                ErrorCode = result.ErrorCode,
-                StatusMessages = { },
-                Logs = result.Logs,
-                ErrorMessage = result.ErrorMessage
+                Take = 100,
+                Total = result.HostRangeItems.Count()
             };
-            try
+            Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
             {
-                _log.Info(string.Format("{0}: Send Host Range Results", request.Input.NameForLog));
-                _responseBus.Execute(response);
-            }
-            catch (Exception exception)
-            {
-                _log.Info(string.Format("{0}: Send Host Range Results Failed", request.Input.NameForLog), exception);
-            }
+                var response = new ScanHostRangeResponse
+                {
+                    DiscoverySourceId = request.DiscoverySourceId,
+                    HostRangeItems = result.HostRangeItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                    Success = result.Success,
+                    ErrorCode = result.ErrorCode,
+                    StatusMessages = { },
+                    Logs = result.Logs,
+                    ErrorMessage = result.ErrorMessage,
+                    BatchId = batchId,
+                    Paging = paging
+                };
+                try
+                {
+                    _log.Info(string.Format("{0}: Send Host Range Results", request.Input.NameForLog));
+                    _responseBus.Execute(response);
+                    paging.Skip = paging.NextSkip;
+                }
+                catch (Exception exception)
+                {
+                    _log.Info(string.Format("{0}: Send Host Range Results Failed", request.Input.NameForLog), exception);
+                }
+
+            });
         }
     }
 }

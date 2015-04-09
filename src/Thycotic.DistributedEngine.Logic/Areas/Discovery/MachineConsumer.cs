@@ -6,6 +6,7 @@ using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.Discovery.Request;
 using Thycotic.Messages.Common;
+using Thycotic.SharedTypes.General;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 {
@@ -38,24 +39,36 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
             _log.Info(string.Format("{0}: Scan Machines", request.Input.NameForLog));
             var result = scanner.ScanForMachines(request.Input);
-            var response = new ScanMachineResponse
+            var batchId = Guid.NewGuid();
+            var paging = new Paging
             {
-                ComputerItems = result.Computers,
-                Success = result.Success,
-                ErrorCode = result.ErrorCode,
-                StatusMessages = { },
-                Logs = result.Logs,
-                ErrorMessage = result.ErrorMessage
+                Total = result.Computers.Count()
             };
-            try
+            Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
             {
-                _log.Info(string.Format("{0}: Send Machine Results", request.Input.NameForLog));
-                _responseBus.Execute(response);
-            }
-            catch (Exception exception)
-            {
-                _log.Info(string.Format("{0}: Send Machine Results Failed", request.Input.NameForLog), exception);
-            }
+                var response = new ScanMachineResponse
+                {
+                    ComputerItems = result.Computers.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                    DiscoverySourceId = request.DiscoverySourceId,
+                    Success = result.Success,
+                    ErrorCode = result.ErrorCode,
+                    StatusMessages = { },
+                    Logs = result.Logs,
+                    ErrorMessage = result.ErrorMessage,
+                    BatchId = batchId,
+                    Paging = paging
+                };
+                try
+                {
+                    _log.Info(string.Format("{0}: Send Machine Results", request.Input.NameForLog));
+                    _responseBus.Execute(response);
+                    paging.Skip = paging.NextSkip;
+                }
+                catch (Exception exception)
+                {
+                    _log.Info(string.Format("{0}: Send Machine Results Failed", request.Input.NameForLog), exception);
+                }
+            });
         }
     }
 }

@@ -168,6 +168,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
             {
                 builder.RegisterModule(new LogicModule());
                 builder.RegisterModule(new WrappersModule());
+                builder.RegisterModule(new DiscoveryModule());
             }
             else
             {
