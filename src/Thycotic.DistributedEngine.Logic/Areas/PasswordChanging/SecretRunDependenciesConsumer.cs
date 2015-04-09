@@ -98,7 +98,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         {
             var machineName = (info.MachineName ?? "").Trim();
             return !string.IsNullOrEmpty(machineName)
-                ? new DependencyChangeResponseMessageToLocalize { Success = result.Success, MessageName = "SuccessfullyUpdatedDependencyOnMachine", Params = new object[] { info.ServiceName, machineName } }
+                ? new DependencyChangeResponseMessageToLocalize { Success = result.Success, MessageName = result.Success ? "SuccessfullyUpdatedDependencyOnMachine" : "FailedToUpdateDependencyOnMachine", Params = new object[] { info.ServiceName, machineName } }
                 : new DependencyChangeResponseMessageToLocalize {Success = result.Success, MessageName = result.Success ? "SuccessfullyUpdatedDependency" : "FailedToUpdateDependency", Params = new object[] {info.ServiceName}};
         }
     }
