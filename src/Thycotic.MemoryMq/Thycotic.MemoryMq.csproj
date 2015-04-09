@@ -147,11 +147,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.181\lib\net451\Thycotic.Logging.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.185\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Wcf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.97\lib\net451\Thycotic.Wcf.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.101\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +170,7 @@
     <Compile Include="Subsystem\IExchangeDictionary.cs" />
     <Compile Include="Subsystem\IMessageDispatcher.cs" />
     <Compile Include="Subsystem\IMessageQueue.cs" />
+    <Compile Include="Subsystem\IMessageQueueProxy.cs" />
     <Compile Include="Subsystem\MessageQueue.cs" />
     <Compile Include="Subsystem\Persistance\MailboxSnapshot.cs" />
     <Compile Include="Subsystem\Persistance\CombinedSnapshot.cs" />
