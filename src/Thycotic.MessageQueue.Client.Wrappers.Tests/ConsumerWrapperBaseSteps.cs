@@ -8,13 +8,13 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
     [Binding]
     public class ConsumerWrapperBaseSteps
     {
-        [Given(@"there exists a substitute object for CommonConnection stored in the scenario as (\w+)")]
+        [Given(@"there exists a substitute object for ICommonConnection stored in the scenario as (\w+)")]
         public void GivenThereExistsASubstituteObjectForCommonConnectionStoredInTheScenario(string commonConnectionName)
         {
             this.GetScenarioContext().SetSubstitute<ICommonConnection>(commonConnectionName);
         }
 
-        [Given(@"there exists a substitute object for ExchangeNameProvider stored in the scenario as (\w+)")]
+        [Given(@"there exists a substitute object for IExchangeNameProvider stored in the scenario as (\w+)")]
         public void GivenThereExistsASubstituteObjectForExchangeNameProviderStoredInTheScenario(string exchangeNameProvider)
         {
             this.GetScenarioContext().SetSubstitute<IExchangeNameProvider>(exchangeNameProvider);

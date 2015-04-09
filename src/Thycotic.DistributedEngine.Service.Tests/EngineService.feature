@@ -11,5 +11,5 @@ Background:
 
 Scenario: Start calls IoC configuration
 	When the method Start on EngineService EngineServiceTest is called
-	Then the method BuildAll on IoCConfigurator substitute IoCConfiguratorTest is called
+	Then the method BuildAll on IIoCConfigurator substitute IoCConfiguratorTest is called
 

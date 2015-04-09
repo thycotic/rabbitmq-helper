@@ -24,10 +24,11 @@ namespace Thycotic.Utility.Specflow
             _baseContext[key] = null;
         }
 
-        public void Set<T>(string key, T data)
+        public T Set<T>(string key, T data)
         {
             //yes, I know, it's backwards... -dkk
             _baseContext.Set(data, key);
+            return data;
         }
 
         public object this[string key]
@@ -60,54 +61,52 @@ namespace Thycotic.Utility.Specflow
         }
 
 
-        public void SetSubstitute<T>(string key)
+        public T SetSubstitute<T>(string key)
             where T : class
         {
-            Set(key, GetSubstituteFor<T>());
+           return Set(key, GetSubstituteFor<T>());
         }
 
-        public void SetSubstitute<T>(string key, Action<T> preparer)
+        public T SetSubstitute<T>(string key, Action<T> preparer)
             where T : class
         {
             var substitute = GetSubstituteFor<T>();
             preparer.Invoke(substitute);
-            Set(key, substitute);
+            return Set(key, substitute);
         }
 
-        public void SetSubstitute<T1, T2>(string key)
+        public T1 SetSubstitute<T1, T2>(string key)
             where T1 : class
             where T2 : class
         {
-            Set(key, GetSubstituteFor<T1, T2>());
+            return Set(key, GetSubstituteFor<T1, T2>());
         }
 
-        public void SetSubstitute<T1, T2>(string key, Action<T1> preparer)
+        public T1 SetSubstitute<T1, T2>(string key, Action<T1> preparer)
             where T1 : class
             where T2 : class
         {
             var substitute = GetSubstituteFor<T1, T2>();
             preparer.Invoke(substitute);
-            Set(key, substitute);
+            return Set(key, substitute);
         }
 
-        public void SetSubstitute<T1, T2, T3>(string key)
+        public T1 SetSubstitute<T1, T2, T3>(string key)
             where T1 : class
             where T2 : class
             where T3 : class
         {
-            Set(key, GetSubstituteFor<T1, T2, T3>());
+            return Set(key, GetSubstituteFor<T1, T2, T3>());
         }
 
-        public void SetSubstitute<T1, T2, T3>(string key, Action<T1> preparer)
+        public T1 SetSubstitute<T1, T2, T3>(string key, Action<T1> preparer)
             where T1 : class
             where T2 : class
             where T3 : class
         {
             var substitute = GetSubstituteFor<T1, T2, T3>();
             preparer.Invoke(substitute);
-            Set(key, substitute);
+            return Set(key, substitute);
         }
-
-
     }
 }

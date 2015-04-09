@@ -79,7 +79,7 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.And("there exists a MessageQueueProxy stored in the scenario as MessageQueueProxyTest " +
                     "with MessageQueue MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 7
- testRunner.Then("the scenario MessageQueueProxy MessageQueueProxyTest is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the scenario IMessageQueueProxy MessageQueueProxyTest is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -108,15 +108,15 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 15
- testRunner.Given("there exists a substitute object for MessageQueue stored in the scenario as Messa" +
-                    "geQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for IMessageQueue stored in the scenario as Mess" +
+                    "ageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 16
  testRunner.And("there exists a MessageQueueProxy stored in the scenario as MessageQueueProxyTest " +
                     "with MessageQueue MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 17
- testRunner.When("the method TryDequeue on MessageQueueProxy MessageQueueProxyTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method TryDequeue on IMessageQueueProxy MessageQueueProxyTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 18
- testRunner.Then("the method TryDequeue on MessageQueue substitute MessageQueueTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method TryDequeue on IMessageQueue substitute MessageQueueTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -129,17 +129,17 @@ this.ScenarioSetup(scenarioInfo);
 #line 21
 this.ScenarioSetup(scenarioInfo);
 #line 22
- testRunner.Given("there exists a substitute object for MessageQueue stored in the scenario as Messa" +
-                    "geQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("there exists a substitute object for IMessageQueue stored in the scenario as Mess" +
+                    "ageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 23
  testRunner.And("there exists a MessageQueueProxy stored in the scenario as MessageQueueProxyTest " +
                     "with MessageQueue MessageQueueTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 24
- testRunner.When("the method NegativelyAcknoledge on MessageQueueProxy MessageQueueProxyTest is cal" +
-                    "led", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method NegativelyAcknoledge on IMessageQueueProxy MessageQueueProxyTest is ca" +
+                    "lled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 25
- testRunner.Then("the method NegativelyAcknoledge on MessageQueue substitute MessageQueueTest is ca" +
-                    "lled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method NegativelyAcknoledge on IMessageQueue substitute MessageQueueTest is c" +
+                    "alled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -12,9 +12,10 @@ namespace Thycotic.Utility.Tests
     [Binding]
     public class JsonObjectSerializerSteps
     {
+        //has to match the handling in JsonObjectSerializer
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.Auto
+            TypeNameHandling = TypeNameHandling.Objects
         };
 
         [Given(@"there exists a substitute object for IObjectSerializer stored in the scenario as (\w+)")]

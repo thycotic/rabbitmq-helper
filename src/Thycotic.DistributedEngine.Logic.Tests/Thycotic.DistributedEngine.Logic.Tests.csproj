@@ -129,6 +129,14 @@
     <Reference Include="FluentAssertions.Core">
       <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NSubstitute">
       <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
       <Private>True</Private>
@@ -143,6 +151,30 @@
     <Reference Include="TechTalk.SpecFlow">
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.7, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.32\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.276\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Encryption">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.276\lib\net451\Thycotic.Encryption.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.57\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.SharedTypes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.83\lib\net451\Thycotic.SharedTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Wcf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.95\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
@@ -161,6 +193,13 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\POC\PingConsumer.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PingConsumer.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\POC\PingConsumerSteps.cs" />
+    <Compile Include="EngineToServer\ResponseBusSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -168,15 +207,38 @@
       <Project>{74ec374a-729a-4707-8586-32d10cdc3ecc}</Project>
       <Name>Thycotic.DistributedEngine.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Thycotic.MessageQueue.Client.Tests\Thycotic.MessageQueue.Client.Tests.csproj">
+      <Project>{9c4e6fbc-bf2b-4099-816c-89098229ea6d}</Project>
+      <Name>Thycotic.MessageQueue.Client.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.MessageQueue.Client\Thycotic.MessageQueue.Client.csproj">
+      <Project>{23d33205-a493-4977-831a-3487ec2042d6}</Project>
+      <Name>Thycotic.MessageQueue.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
+      <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
+      <Name>Thycotic.Messages.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Messages\Thycotic.Messages.csproj">
+      <Project>{bb022c12-4d04-4195-bbb7-baaa0e20fcb7}</Project>
+      <Name>Thycotic.Messages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
       <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
       <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\POC\PingConsumer.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PingConsumer.feature.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

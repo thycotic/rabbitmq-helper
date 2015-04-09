@@ -34,15 +34,15 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         }
 
 
-        [When(@"the method AddClient on ClientDictionary (\w+) is called with queue name (\w+)")]
-        public void WhenTheMethodAddClientOnClientDictionaryIsCalled(string clientDictionaryName, string queueNameTest)
+        [When(@"the method AddClient on IClientDictionary (\w+) is called with queue name (\w+)")]
+        public void WhenTheMethodAddClientOnIClientDictionaryIsCalled(string clientDictionaryName, string queueNameTest)
         {
             var clientDictionary = this.GetScenarioContext().Get<IClientDictionary>(clientDictionaryName);
             clientDictionary.AddClient(queueNameTest);
         }
 
-        [When(@"the method TryGetClient on ClientDictionary (\w+) is called with queue name (\w+) and the result is stored in scenario as (\w+)")]
-        public void WhenTheMethodTryGetClientOnClientDictionaryIsCalledWithQueueNameAndTheResultIsStored(string clientDictionaryName, string queueNameTest, string resultName)
+        [When(@"the method TryGetClient on IClientDictionary (\w+) is called with queue name (\w+) and the result is stored in scenario as (\w+)")]
+        public void WhenTheMethodTryGetClientOnIClientDictionaryIsCalledWithQueueNameAndTheResultIsStored(string clientDictionaryName, string queueNameTest, string resultName)
         {
             var clientDictionary = this.GetScenarioContext().Get<IClientDictionary>(clientDictionaryName);
             IMemoryMqWcfServiceCallback callback;

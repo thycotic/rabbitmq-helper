@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using log4net;
@@ -15,6 +16,7 @@ namespace Thycotic.Logging
     /// </summary>
     public sealed class Log
     {
+        private static ILogWriterFactory _logWriterFactory = new GenericLogWriterFactory();
 
         private static readonly ILogWriter LogInternal = Get(typeof(Log));
 
@@ -67,9 +69,23 @@ namespace Thycotic.Logging
         /// Gets the appenders.
         /// </summary>
         /// <returns></returns>
+        [DebuggerStepThrough]
         public static IEnumerable<IAppender> GetAppenders()
         {
             return LogManager.GetRepository().GetAppenders();
+        }
+
+
+        /// <summary>
+        /// Sets the log writer factory.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        [DebuggerStepThrough]
+        public static void SetLogWriterFactory(ILogWriterFactory factory)
+        {
+            Contract.Requires<ArgumentNullException>(factory != null);
+
+            _logWriterFactory = factory;
         }
 
         /// <summary>
@@ -80,7 +96,20 @@ namespace Thycotic.Logging
         [DebuggerStepThrough]
         public static ILogWriter Get(Type type)
         {
-            return new GenericLogWriter(type);
+            return _logWriterFactory.GetLogWriter(type);
+        }
+
+        private class GenericLogWriterFactory : ILogWriterFactory
+        {
+            /// <summary>
+            /// Gets the specified type.
+            /// </summary>
+            /// <param name="type">The type.</param>
+            /// <returns></returns>
+            public ILogWriter GetLogWriter(Type type)
+            {
+                return new GenericLogWriter(type);
+            }
         }
 
         /// <summary>

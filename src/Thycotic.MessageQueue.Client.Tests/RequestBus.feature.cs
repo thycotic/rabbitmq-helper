@@ -96,8 +96,8 @@ this.FeatureBackground();
  testRunner.Given("there exists a substitute object for IBasicConsumable stored in the scenario as C" +
                     "onsumableTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 12
- testRunner.When("the method BasicPublish on RequestBus RequestBusTest is called with exchange Test" +
-                    "Exchange and consumable ConsumableTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the method BasicPublish on IRequestBus RequestBusTest is called with exchange Tes" +
+                    "tExchange and consumable ConsumableTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             this.ScenarioCleanup();
         }

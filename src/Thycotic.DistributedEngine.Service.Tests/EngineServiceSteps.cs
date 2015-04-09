@@ -34,7 +34,7 @@ namespace Thycotic.DistributedEngine.Service.Tests
             engineService.Start();
         }
 
-        [Then(@"the method BuildAll on IoCConfigurator substitute (\w+) is called")]
+        [Then(@"the method BuildAll on IIoCConfigurator substitute (\w+) is called")]
         public void ThenTheMethodBuildOnIoCConfiguratorSubstituteIsCalled(string ioCConfiguratorName)
         {
             var ioCConfigurator = this.GetScenarioContext().Get<IIoCConfigurator>(ioCConfiguratorName);
