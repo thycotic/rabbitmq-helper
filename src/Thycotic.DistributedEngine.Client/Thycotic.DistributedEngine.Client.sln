@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Common", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Utility", "..\Thycotic.Utility\Thycotic.Utility.csproj", "{05CF5726-55EE-4B49-9820-1ACD32B83711}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq", "..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj", "{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
