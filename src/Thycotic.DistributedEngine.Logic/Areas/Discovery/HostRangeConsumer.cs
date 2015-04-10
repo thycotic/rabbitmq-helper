@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Linq;
+using Thycotic.AppCore;
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.Discovery.Request;
 using Thycotic.Messages.Common;
+using Thycotic.SharedTypes.General;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 {
@@ -34,26 +37,47 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanHostRangeMessage request)
         {
-            var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
-            _log.Info(string.Format("{0}: Scan Host Range", request.Input.NameForLog));
-            var result = scanner.ScanForHostRanges(request.Input);
-            var response = new ScanHostRangeResponse
-            {
-                HostRangeItems = result.HostRangeItems,
-                Success = result.Success,
-                ErrorCode = result.ErrorCode,
-                StatusMessages = { },
-                Logs = result.Logs,
-                ErrorMessage = result.ErrorMessage
-            };
             try
             {
-                _log.Info(string.Format("{0}: Send Host Range Results", request.Input.NameForLog));
-                _responseBus.Execute(response);
+                _log.Info(string.Format("{0} : Scan Host Range", request.Input.Domain));
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+                var result = scanner.ScanForHostRanges(request.Input);
+                var batchId = Guid.NewGuid();
+                var paging = new Paging
+                {
+                    Take = 100,
+                    Total = result.HostRangeItems.Count()
+                };
+                Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
+                {
+                    var response = new ScanHostRangeResponse
+                    {
+                        DiscoverySourceId = request.DiscoverySourceId,
+                        HostRangeItems = result.HostRangeItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        Success = result.Success,
+                        ErrorCode = result.ErrorCode,
+                        StatusMessages = { },
+                        Logs = result.Logs,
+                        ErrorMessage = result.ErrorMessage,
+                        BatchId = batchId,
+                        Paging = paging
+                    };
+                    try
+                    {
+                        _log.Info(string.Format("{0} : Send Host Range Results", request.Input.Domain));
+                        _responseBus.Execute(response);
+                        paging.Skip = paging.NextSkip;
+                    }
+                    catch (Exception exception)
+                    {
+                        _log.Info(string.Format("{0} : Send Host Range Results Failed", request.Input.Domain), exception);
+                    }
+
+                });
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                _log.Info(string.Format("{0}: Send Host Range Results Failed", request.Input.NameForLog), exception);
+                _log.Info(string.Format("{0} : Scan Host Range Failed using ScannerId: {1}", request.Input.Domain, request.DiscoveryScannerId), e);
             }
         }
     }

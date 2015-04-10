@@ -16,7 +16,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("Engine Discovery"))
             {
                 _log.Debug("Initializing Discovery...");
-                builder.RegisterType<IScannerFactory>().SingleInstance();
+                builder.RegisterType<ScannerFactory>().AsImplementedInterfaces().SingleInstance();
             }
         }
     }
