@@ -8,8 +8,8 @@ using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.Messages.PasswordChanging.Request;
 using Thycotic.PasswordChangers;
-using Thycotic.PasswordChangers.Core;
 using Thycotic.SharedTypes.Federator;
+using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 {
