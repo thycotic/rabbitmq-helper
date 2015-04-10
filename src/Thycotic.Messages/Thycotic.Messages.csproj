@@ -125,15 +125,11 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\Thycotic.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -161,21 +157,15 @@
     <Reference Include="Thycotic.Logging">
       <HintPath>..\packages\Thycotic.Logging.5.0.0.187\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.25, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.SharedTypes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.25\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.SharedTypes">
-      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.89\lib\net451\Thycotic.SharedTypes.dll</HintPath>
+      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.101\lib\net451\Thycotic.SharedTypes.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Wcf">
       <HintPath>..\packages\Thycotic.Wcf.5.0.0.103\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanHostRangeMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanLocalAccountMessage.cs" />
@@ -211,7 +201,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Thycotic.snk">
+    <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
     <None Include="app.config" />

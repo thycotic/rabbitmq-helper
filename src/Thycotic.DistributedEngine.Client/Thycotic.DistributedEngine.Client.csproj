@@ -125,7 +125,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\Thycotic.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -137,9 +137,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestBusFactory.cs" />
   </ItemGroup>
@@ -162,7 +159,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Thycotic.snk">
+    <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
     <None Include="Thycotic.DistributedEngine.Client.nuspec" />
