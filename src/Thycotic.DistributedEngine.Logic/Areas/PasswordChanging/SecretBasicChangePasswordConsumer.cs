@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.General;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
@@ -42,7 +44,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                 RemotePasswordChangeResponse response = null;
 
                 var defaultPasswordChangerFactory = new DefaultPasswordChangerFactory();
-                IBasicPasswordChanger passwordChanger = defaultPasswordChangerFactory.ResolveBasicPrivilegedPasswordChanger(request.OperationInfo);
+                IBasicPasswordChanger passwordChanger = defaultPasswordChangerFactory.ResolveBasicPasswordChanger(request.OperationInfo);
 
                 if (passwordChanger != null)
                 {
@@ -60,7 +62,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         Success = changeResult.Success,
                         SecretId = request.SecretId,
                         ErrorCode = changeResult.Success ? (int) FailureCode.NoError : (int) FailureCode.UnknownError,
-                        StatusMessages = changeResult.Errors.Select(e => e.DetailedMessage).ToArray()
+                        StatusMessages = changeResult.Errors.Select(e => e.DetailedMessage).ToArray(),
+                        CommandExecutionResults = new List<CommandExecutionResult>().ToArray(),
+                        OldPassword = info.CurrentPassword,
+                        NewPassword = info.NewPassword
                     };
                 }
                 else
@@ -74,7 +79,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         Success = false,
                         SecretId = request.SecretId,
                         ErrorCode = (int) FailureCode.UnknownError,
-                        StatusMessages = new[] {message}
+                        StatusMessages = new[] {message},
+                        CommandExecutionResults = new List<CommandExecutionResult>().ToArray(),
+                        OldPassword = string.Empty,
+                        NewPassword = string.Empty
                     };
                 }
 
