@@ -45,7 +45,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
-                    Take = 100,
                     Total = result.HostRangeItems.Count()
                 };
                 Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
