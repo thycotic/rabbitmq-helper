@@ -145,9 +145,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="DuplexWcfConnection.cs" />
     <Compile Include="IDuplexWcfConnection.cs" />
     <Compile Include="IRock.cs" />
