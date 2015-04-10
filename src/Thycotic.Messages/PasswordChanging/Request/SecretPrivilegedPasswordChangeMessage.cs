@@ -1,5 +1,5 @@
 ﻿using Thycotic.Messages.Common;
-using Thycotic.PasswordChangers.Core;
+using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.Messages.PasswordChanging.Request
 {
