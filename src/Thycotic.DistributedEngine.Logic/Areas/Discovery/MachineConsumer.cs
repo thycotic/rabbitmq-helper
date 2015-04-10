@@ -36,39 +36,46 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanMachineMessage request)
         {
-            var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
-            _log.Info(string.Format("{0}: Scan Machines", request.Input.NameForLog));
-            var result = scanner.ScanForMachines(request.Input);
-            var batchId = Guid.NewGuid();
-            var paging = new Paging
+            try
             {
-                Total = result.Computers.Count()
-            };
-            Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
-            {
-                var response = new ScanMachineResponse
+                _log.Info(string.Format("{0} : Scan Machines", request.Input.HostRange));
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+                var result = scanner.ScanForMachines(request.Input);
+                var batchId = Guid.NewGuid();
+                var paging = new Paging
                 {
-                    ComputerItems = result.Computers.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                    DiscoverySourceId = request.DiscoverySourceId,
-                    Success = result.Success,
-                    ErrorCode = result.ErrorCode,
-                    StatusMessages = { },
-                    Logs = result.Logs,
-                    ErrorMessage = result.ErrorMessage,
-                    BatchId = batchId,
-                    Paging = paging
+                    Total = result.Computers.Count()
                 };
-                try
+                Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
                 {
-                    _log.Info(string.Format("{0}: Send Machine Results", request.Input.NameForLog));
-                    _responseBus.Execute(response);
-                    paging.Skip = paging.NextSkip;
-                }
-                catch (Exception exception)
-                {
-                    _log.Info(string.Format("{0}: Send Machine Results Failed", request.Input.NameForLog), exception);
-                }
-            });
+                    var response = new ScanMachineResponse
+                    {
+                        ComputerItems = result.Computers.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        DiscoverySourceId = request.DiscoverySourceId,
+                        Success = result.Success,
+                        ErrorCode = result.ErrorCode,
+                        StatusMessages = { },
+                        Logs = result.Logs,
+                        ErrorMessage = result.ErrorMessage,
+                        BatchId = batchId,
+                        Paging = paging
+                    };
+                    try
+                    {
+                        _log.Info(string.Format("{0} : Send Machine Results", request.Input.HostRange));
+                        _responseBus.Execute(response);
+                        paging.Skip = paging.NextSkip;
+                    }
+                    catch (Exception exception)
+                    {
+                        _log.Info(string.Format("{0} : Send Machine Results Failed", request.Input.HostRange), exception);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                _log.Info(string.Format("{0} : Scan Machines Failed using ScannerId: {1}", request.Input.HostRange, request.DiscoveryScannerId), e);
+            }
         }
     }
 }

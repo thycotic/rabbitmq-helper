@@ -36,40 +36,48 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanDependencyMessage request)
         {
-            var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
-            _log.Info(string.Format("{0}: Scan Dependencies", request.Input.NameForLog));
-            var result = scanner.ScanComputerForDependencies(request.Input);
-            var batchId = Guid.NewGuid();
-            var paging = new Paging
+            try
             {
-                Total = result.DependencyItems.Count()
-            };
-            Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
-            {
-                var response = new ScanDependencyResponse
+                _log.Info(string.Format("{0} : Scan Dependencies", request.Input.ComputerName));
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+                var result = scanner.ScanComputerForDependencies(request.Input);
+                var batchId = Guid.NewGuid();
+                var paging = new Paging
                 {
-                    ComputerId = request.ComputerId,
-                    DiscoverySourceId = request.DiscoverySourceId,
-                    DependencyItems = result.DependencyItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                    Success = result.Success,
-                    ErrorCode = result.ErrorCode,
-                    StatusMessages = { },
-                    Logs = result.Logs,
-                    ErrorMessage = result.ErrorMessage,
-                    BatchId = batchId,
-                    Paging = paging
+                    Total = result.DependencyItems.Count()
                 };
-                try
+                Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
                 {
-                    _log.Info(string.Format("{0}: Send Dependency Results", request.Input.NameForLog));
-                    _responseBus.Execute(response);
-                    paging.Skip = paging.NextSkip;
-                }
-                catch (Exception exception)
-                {
-                    _log.Info(string.Format("{0}: Send Dependency Results Failed", request.Input.NameForLog), exception);
-                }
-            });
+                    var response = new ScanDependencyResponse
+                    {
+                        ComputerId = request.ComputerId,
+                        DiscoverySourceId = request.DiscoverySourceId,
+                        DependencyItems = result.DependencyItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        Success = result.Success,
+                        ErrorCode = result.ErrorCode,
+                        StatusMessages = { },
+                        Logs = result.Logs,
+                        ErrorMessage = result.ErrorMessage,
+                        BatchId = batchId,
+                        Paging = paging
+                    };
+                    try
+                    {
+                        _log.Info(string.Format("{0} : Send Dependency Results", request.Input.ComputerName));
+                        _responseBus.Execute(response);
+                        paging.Skip = paging.NextSkip;
+                    }
+                    catch (Exception exception)
+                    {
+                        _log.Info(string.Format("{0} : Send Dependency Results Failed", request.Input.ComputerName),
+                            exception);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                _log.Info(string.Format("{0} : Scan Dependencies with ScannerType: {2} Failed using ScannerId: {1}", request.Input.ComputerName, request.DiscoveryScannerId, request.Input.DependencyScannerType), e);
+            }
         }
     }
 }

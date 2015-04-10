@@ -37,41 +37,48 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanHostRangeMessage request)
         {
-            var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
-            _log.Info(string.Format("{0}: Scan Host Range", request.Input.NameForLog));
-            var result = scanner.ScanForHostRanges(request.Input);
-            var batchId = Guid.NewGuid();
-            var paging = new Paging
+            try
             {
-                Take = 100,
-                Total = result.HostRangeItems.Count()
-            };
-            Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
-            {
-                var response = new ScanHostRangeResponse
+                _log.Info(string.Format("{0} : Scan Host Range", request.Input.Domain));
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+                var result = scanner.ScanForHostRanges(request.Input);
+                var batchId = Guid.NewGuid();
+                var paging = new Paging
                 {
-                    DiscoverySourceId = request.DiscoverySourceId,
-                    HostRangeItems = result.HostRangeItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                    Success = result.Success,
-                    ErrorCode = result.ErrorCode,
-                    StatusMessages = { },
-                    Logs = result.Logs,
-                    ErrorMessage = result.ErrorMessage,
-                    BatchId = batchId,
-                    Paging = paging
+                    Take = 100,
+                    Total = result.HostRangeItems.Count()
                 };
-                try
+                Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
                 {
-                    _log.Info(string.Format("{0}: Send Host Range Results", request.Input.NameForLog));
-                    _responseBus.Execute(response);
-                    paging.Skip = paging.NextSkip;
-                }
-                catch (Exception exception)
-                {
-                    _log.Info(string.Format("{0}: Send Host Range Results Failed", request.Input.NameForLog), exception);
-                }
+                    var response = new ScanHostRangeResponse
+                    {
+                        DiscoverySourceId = request.DiscoverySourceId,
+                        HostRangeItems = result.HostRangeItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        Success = result.Success,
+                        ErrorCode = result.ErrorCode,
+                        StatusMessages = { },
+                        Logs = result.Logs,
+                        ErrorMessage = result.ErrorMessage,
+                        BatchId = batchId,
+                        Paging = paging
+                    };
+                    try
+                    {
+                        _log.Info(string.Format("{0} : Send Host Range Results", request.Input.Domain));
+                        _responseBus.Execute(response);
+                        paging.Skip = paging.NextSkip;
+                    }
+                    catch (Exception exception)
+                    {
+                        _log.Info(string.Format("{0} : Send Host Range Results Failed", request.Input.Domain), exception);
+                    }
 
-            });
+                });
+            }
+            catch (Exception e)
+            {
+                _log.Info(string.Format("{0} : Scan Host Range Failed using ScannerId: {1}", request.Input.Domain, request.DiscoveryScannerId), e);
+            }
         }
     }
 }
