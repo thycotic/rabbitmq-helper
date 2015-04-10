@@ -76,7 +76,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             }
             catch (Exception e)
             {
-                _log.Info(string.Format("{0} : Scan Dependencies with ScannerType: {2} Failed using ScannerId: {1}", request.Input.ComputerName, request.DiscoveryScannerId, request.Input.DependencyScannerType), e);
+                _log.Info(string.Format("{0} : Scan Dependencies for DependencyScannerType: {1} Failed using ScannerId: {2}", request.Input.ComputerName, request.Input.DependencyScannerType, request.DiscoveryScannerId), e);
             }
         }
     }

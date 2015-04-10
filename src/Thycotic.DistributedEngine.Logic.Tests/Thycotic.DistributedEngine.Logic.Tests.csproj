@@ -154,7 +154,7 @@
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.7, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.32\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.33\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
       <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.282\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
