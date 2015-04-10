@@ -159,17 +159,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.33\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.282\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.300\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Encryption">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.282\lib\net451\Thycotic.Encryption.dll</HintPath>
+    <Reference Include="Thycotic.Encryption, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Encryption.5.0.0.1\lib\net451\Thycotic.Encryption.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.ihawu.Business">
       <HintPath>..\..\lib\Thycotic.ihawu.Business.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Logging">
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.187\lib\net451\Thycotic.Logging.dll</HintPath>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.199\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.27, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -179,8 +182,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.101\lib\net451\Thycotic.SharedTypes.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Wcf">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.103\lib\net451\Thycotic.Wcf.dll</HintPath>
+    <Reference Include="Thycotic.Wcf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.115\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
