@@ -6,6 +6,13 @@
 [assembly: AssemblyTitle("Thycotic.MessageQueue.Client")]
 [assembly: AssemblyDescription("")]
 
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Thycotic")]
+[assembly: AssemblyProduct("")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
