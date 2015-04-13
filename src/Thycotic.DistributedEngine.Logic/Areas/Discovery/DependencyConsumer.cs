@@ -63,7 +63,23 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     };
                     try
                     {
-                        _log.Info(string.Format("{0} : Send Dependency Results", request.Input.ComputerName));
+                        var dependencyType = "";
+                        switch (result.DependencyScannerType)
+                        {
+                            case 1:
+                                dependencyType = "ApplicationPool";
+                                break;
+                            case 2:
+                                dependencyType = "WindowsService";
+                                break;
+                            case 3:
+                                dependencyType = "ScheduledTask";
+                                break;
+                            default:
+                                dependencyType = string.Format("Unknown ({0})", result.DependencyScannerType);
+                                break;
+                        }
+                        _log.Info(string.Format("{0} : Send Dependency ({1}) Results", request.Input.ComputerName, dependencyType));
                         _responseBus.Execute(response);
                         paging.Skip = paging.NextSkip;
                     }
