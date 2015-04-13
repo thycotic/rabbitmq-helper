@@ -174,9 +174,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.199\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.29, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.29\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+    <Reference Include="Thycotic.PasswordChangers">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.31\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
