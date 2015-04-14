@@ -69,12 +69,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.Pipeline.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.Pipeline.Service.Tests", "Thycotic.MemoryMq.Pipeline.Service.Tests\Thycotic.MemoryMq.Pipeline.Service.Tests.csproj", "{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator", "Thycotic.InstallerGenerator\Thycotic.InstallerGenerator.csproj", "{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.InteractiveRunner", "Thycotic.InstallerGenerator.InteractiveRunner\Thycotic.InstallerGenerator.InteractiveRunner.csproj", "{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{3F6273E3-FB51-470F-B800-03A1E56CF1D3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -173,14 +167,6 @@ Global
 		{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -203,7 +189,5 @@ Global
 		{B8F73DAD-1146-4E09-914A-035D2BA99476} = {7D0ED7EF-9B42-425F-ADD4-260565FF231A}
 		{88BDA5ED-1BCA-4227-B838-681A709F4EA1} = {B8F73DAD-1146-4E09-914A-035D2BA99476}
 		{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857} = {B8F73DAD-1146-4E09-914A-035D2BA99476}
-		{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8} = {3F6273E3-FB51-470F-B800-03A1E56CF1D3}
-		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D} = {3F6273E3-FB51-470F-B800-03A1E56CF1D3}
 	EndGlobalSection
 EndGlobal
