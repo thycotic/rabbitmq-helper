@@ -4,16 +4,9 @@
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Languages='1033'/>
 
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
-    
-    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
-	
-    <Upgrade Id="D19B8142-9548-4C64-BEEB-BB7194D65E7C">
-        <UpgradeVersion
-            Minimum="1.0.0.0" Maximum="99.0.0.0"
-            Property="PREVIOUSVERSIONSINSTALLED"
-            IncludeMinimum="yes" IncludeMaximum="no" />
-    </Upgrade>
-	
+
+
+
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder" Name="PFiles">
         <Directory Id="ThycoticInstall" Name="Thycotic Software Ltd" ComponentGuidGenerationSeed="C1D4C69B-7A26-40FC-8D9A-4EEF969E88E5">
@@ -21,27 +14,27 @@
         </Directory>
       </Directory>
     </Directory>
-	
+
     <Icon Id="icon.ico" SourceFile="icon.ico"/>
-    <Property Id="ARPPRODUCTICON" Value="icon.ico"/>  <!-- the Add/Remove program icon -->
-	
+    <Property Id="ARPPRODUCTICON" Value="icon.ico"/>
+
     <Feature Id="Complete" Title="All Services" Level="1">
       <ComponentGroupRef Id="main_component_group" />
     </Feature>
 
-	<CustomAction Id='SetRootDrive' Property='ROOTDRIVE' Value='[%SystemDrive]\'/>
-	
+    <CustomAction Id='SetRootDrive' Property='ROOTDRIVE' Value='[%SystemDrive]\'/>
+
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
 
     <InstallExecuteSequence>
-        <RemoveExistingProducts After="InstallInitialize" />
+      <RemoveExistingProducts After="InstallInitialize" />
     </InstallExecuteSequence>
 
     <InstallUISequence>
-        <!-- App search is what does FindInstallLocation, and it is dependent on FindRelatedProducts -->
-        <AppSearch After="FindRelatedProducts"/>
-        <Custom Action="SetRootDrive" Before="CostInitialize"></Custom>
+      <!-- App search is what does FindInstallLocation, and it is dependent on FindRelatedProducts -->
+      <AppSearch After="FindRelatedProducts"/>
+      <Custom Action="SetRootDrive" Before="CostInitialize"></Custom>
     </InstallUISequence>
-
+    
   </Product>
 </Wix>
