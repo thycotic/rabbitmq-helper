@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using Thycotic.InstallerGenerator.Core;
+using Thycotic.InstallerGenerator.Core.Steps;
 
 namespace Thycotic.InstallerGenerator
 {
-    public class InstallerGeneratorWrapper<TSteps> where TSteps : IInstallerGeneratorSteps
+    public class InstallerGeneratorWrapper<TSteps> where TSteps : IInstallerGeneratorRunbook
     {
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
@@ -44,12 +45,12 @@ namespace Thycotic.InstallerGenerator
         }
 
 
-        private static void CoreRecipeResources(IInstallerGeneratorSteps steps)
+        private static void CoreRecipeResources(IInstallerGeneratorRunbook steps)
         {
             DirectoryCopy(steps.RecipePath, steps.WorkingPath, true);
         }
         
-        private static void CoreSourceResources(IInstallerGeneratorSteps steps)
+        private static void CoreSourceResources(IInstallerGeneratorRunbook steps)
         {
             var sourcePath = Path.Combine(steps.WorkingPath, "raw");
 

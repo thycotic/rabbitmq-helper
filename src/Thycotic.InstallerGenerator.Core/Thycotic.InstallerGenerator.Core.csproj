@@ -39,17 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MSI\WiX\ToolPaths.cs" />
+    <Compile Include="Steps\ConfigurationTransformInstallerGeneratorStep.cs" />
+    <Compile Include="Configuration\Transformation\Xml\XsltTransformer.cs" />
     <Compile Include="IInstallerGenerator.cs" />
-    <Compile Include="IInstallerGeneratorSteps.cs" />
+    <Compile Include="Steps\ExternalProcessInstallerGeneratorStep.cs" />
+    <Compile Include="Steps\IInstallerGeneratorStep.cs" />
+    <Compile Include="IInstallerGeneratorRunbook.cs" />
     <Compile Include="InstallerGeneratorExternalProcessExtensions.cs" />
-    <Compile Include="InstallerGeneratorSteps.cs" />
+    <Compile Include="InstallerGeneratorRunbook.cs" />
     <Compile Include="MSI\WiX\WiXMsiGeneratorSteps.cs" />
     <Compile Include="MSI\WiX\WiXMsiGeneratorSubsteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemporaryFileCleaner.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configuration\Transformation\Xml\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,9 @@
-﻿namespace Thycotic.InstallerGenerator.Core
+﻿using Thycotic.InstallerGenerator.Core.Steps;
+
+namespace Thycotic.InstallerGenerator.Core
 {
     public interface IInstallerGenerator<in TSteps> 
-        where TSteps : IInstallerGeneratorSteps
+        where TSteps : IInstallerGeneratorRunbook
     {
         string Generate(TSteps steps);
     }
