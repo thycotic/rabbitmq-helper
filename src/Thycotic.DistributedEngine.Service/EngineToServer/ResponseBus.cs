@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
@@ -20,6 +22,9 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         private readonly IAuthenticatedCommunicationKeyProvider _authenticatedCommunicationKeyProvider;
         private readonly IAuthenticatedCommunicationRequestEncryptor _authenticatedCommunicationRequestEncryptor;
         private readonly IEngineToServerCommunicationWcfService _channel;
+
+        private readonly object _syncRoot = new object();
+        private readonly HashSet<Task> _pendingResponseTasks = new HashSet<Task>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ResponseBus));
 
@@ -155,7 +160,8 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <returns></returns>
         public Task ExecuteAsync<TRequest>(TRequest request, int maxRetryCount = 3, int retryDelaySeconds = 5) where TRequest : IEngineCommandRequest
         {
-            return Task.Factory.StartNew(() =>
+            //start the response task
+            var pendingTask = Task.Factory.StartNew(() =>
             {
                 WrapInteraction(() =>
                 {
@@ -164,7 +170,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                     {
                         try
                         {
-                            Task.Delay(TimeSpan.FromSeconds(tries * retryDelaySeconds)).Wait();
+                            Task.Delay(TimeSpan.FromSeconds(tries*retryDelaySeconds)).Wait();
 
                             var wrappedRequest = WrapRequest(request);
                             _channel.Execute(wrappedRequest);
@@ -176,7 +182,9 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                             tries++;
                             if (tries < maxRetryCount)
                             {
-                                _log.Warn(string.Format("Failed to execute on try {0}. Will retry in {1} seconds", tries, tries * retryDelaySeconds), ex);
+                                _log.Warn(
+                                    string.Format("Failed to execute on try {0}. Will retry in {1} seconds", tries,
+                                        tries*retryDelaySeconds), ex);
                             }
                             else
                             {
@@ -186,6 +194,29 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                     } while (tries < maxRetryCount);
                 });
             });
+
+            //add the task
+            lock (_syncRoot)
+            {
+                _pendingResponseTasks.Add(pendingTask);
+            }
+
+            //clean up when the task is done
+            pendingTask.ContinueWith(task =>
+            {
+                lock (_syncRoot)
+                {
+                    _pendingResponseTasks.Remove(task);
+                }
+            }).ContinueWith(task =>
+            {
+                if (task.Exception != null)
+                {
+                    _log.Error("Failed to clean up response task", task.Exception);
+                }
+            });
+
+            return pendingTask;
         }
 
 
@@ -194,6 +225,15 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// </summary>
         public void Dispose()
         {
+            lock (_syncRoot)
+            {
+                if (_pendingResponseTasks.Any())
+                {
+                    _log.Debug("Waiting for remaining response tasks to complete");
+                    Task.WaitAll(_pendingResponseTasks.ToArray());
+                }
+            }
+
             WrapInteraction(() => _channel.Dispose());
         }
     }
