@@ -5,7 +5,13 @@
 
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
-
+	<Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Upgrade Id="D19B8142-9548-4C64-BEEB-BB7194D65E7C">
+        <UpgradeVersion
+            Minimum="1.0.0.0" Maximum="99.0.0.0"
+            Property="PREVIOUSVERSIONSINSTALLED"
+            IncludeMinimum="yes" IncludeMaximum="no" />
+    </Upgrade>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder" Name="PFiles">
