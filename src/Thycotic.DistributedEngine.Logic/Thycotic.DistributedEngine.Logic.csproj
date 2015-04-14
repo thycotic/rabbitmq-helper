@@ -200,6 +200,7 @@
     <Compile Include="Areas\PasswordChanging\SecretBasicChangePasswordConsumer.cs" />
     <Compile Include="Areas\PasswordChanging\SecretChangePasswordConsumer.cs" />
     <Compile Include="Areas\PasswordChanging\SecretPrivilegeChangePasswordConsumer.cs" />
+    <Compile Include="Areas\PasswordChanging\SecretTestDependencyConsumer.cs" />
     <Compile Include="Areas\PasswordChanging\SecretRunDependenciesConsumer.cs" />
     <Compile Include="Areas\POC\CreateFileHandleHandler.cs" />
     <Compile Include="Areas\POC\ChainMessageConsumer.cs" />
