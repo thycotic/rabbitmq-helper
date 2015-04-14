@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Thycotic.InstallerGenerator.Core;
 
 namespace Thycotic.InstallerGenerator.MSI.WiX
 {

@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 
-namespace Thycotic.InstallerGenerator
+namespace Thycotic.InstallerGenerator.Core
 {
-    public class InstallerGeneratorSteps : IInstallerGeneratorSteps
+    public abstract class InstallerGeneratorSteps : IInstallerGeneratorSteps
     {
         public string WorkingPath { get; set; }
         public string RecipePath { get; set; }
@@ -11,7 +11,7 @@ namespace Thycotic.InstallerGenerator
         public string ArtifactPath { get; set; }
         public string ArtifactName { get; set; }
 
-        public InstallerGeneratorSteps()
+        protected InstallerGeneratorSteps()
         {
             WorkingPath = Path.Combine("temp", Guid.NewGuid().ToString());
             ArtifactPath = @"artifact";

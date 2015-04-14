@@ -1,3 +1,5 @@
+using Thycotic.InstallerGenerator.Core;
+
 namespace Thycotic.InstallerGenerator.MSI.WiX
 {
     /// <summary>

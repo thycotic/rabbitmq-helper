@@ -1,4 +1,4 @@
-namespace Thycotic.InstallerGenerator
+namespace Thycotic.InstallerGenerator.Core
 {
     public interface IInstallerGeneratorSteps
     {

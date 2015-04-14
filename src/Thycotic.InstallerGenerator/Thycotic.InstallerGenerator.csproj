@@ -39,17 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IInstallerGenerator.cs" />
-    <Compile Include="IInstallerGeneratorSteps.cs" />
-    <Compile Include="InstallerGeneratorSteps.cs" />
-    <Compile Include="InstallerGeneratorExternalProcessExtensions.cs" />
     <Compile Include="InstallerGeneratorWrapper.cs" />
     <Compile Include="MSI\WiX\ToolPaths.cs" />
     <Compile Include="MSI\WiX\WiXMsiGeneratorSteps.cs" />
     <Compile Include="MSI\WiX\WiXMsiGeneratorSubsteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MSI\WiX\WiXMsiGenerator.cs" />
-    <Compile Include="TemporaryFileCleaner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\WiX\candle.exe">
@@ -256,6 +251,12 @@
     <Content Include="lib\WiX\wix2010.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Thycotic.InstallerGenerator.Core\Thycotic.InstallerGenerator.Core.csproj">
+      <Project>{3c2d28be-dda0-4768-b968-4ec89b52bb9e}</Project>
+      <Name>Thycotic.InstallerGenerator.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

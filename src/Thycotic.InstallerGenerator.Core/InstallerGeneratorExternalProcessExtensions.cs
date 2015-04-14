@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Thycotic.InstallerGenerator
+namespace Thycotic.InstallerGenerator.Core
 {
     public static class InstallerGeneratorExternalProcessExtensions
     {
