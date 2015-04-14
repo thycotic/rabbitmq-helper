@@ -27,6 +27,11 @@ namespace Thycotic.Messages.PasswordChanging.Request
         public string NewPassword { get; set; }
 
         /// <summary>
+        /// Gets or sets the WMI Timeout
+        /// </summary>
+        public int WmiTimeout { get; set; }
+
+        /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>
