@@ -187,7 +187,9 @@
     <Compile Include="Heartbeat\Request\SecretHeartbeatMessage.cs" />
     <Compile Include="PasswordChanging\IDependencyChangerInfo.cs" />
     <Compile Include="PasswordChanging\Request\SecretBasicPasswordChangeMessage.cs" />
+    <Compile Include="PasswordChanging\Request\SecretTestDependencyMessage.cs" />
     <Compile Include="PasswordChanging\Request\SecretPrivilegedPasswordChangeMessage.cs" />
+    <Compile Include="PasswordChanging\Response\SecretTestDependencyResponse.cs" />
     <Compile Include="PasswordChanging\SqlScriptDependencyChangerInfo.cs" />
     <Compile Include="PasswordChanging\SshScriptDependencyChangerInfo.cs" />
     <Compile Include="PasswordChanging\PowershellScriptDependencyChangerInfo.cs" />
