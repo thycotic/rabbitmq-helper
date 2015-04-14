@@ -19,9 +19,9 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 const string currentSnapshottedVersion = "5.0.0.0";
 
                  
-                var steps = new MemoryMqPiplineServiceWiXMsiGeneratorSteps(someSecretServerArbitraryPathForWixRecipe, someSecretServerArbitraryPathForBits, currentSnapshottedVersion);
+                var steps = new MemoryMqPiplineServiceWiXMsiGeneratorRunbook(someSecretServerArbitraryPathForWixRecipe, someSecretServerArbitraryPathForBits, currentSnapshottedVersion);
 
-                var wrapper = new InstallerGeneratorWrapper<WiXMsiGeneratorSteps>();
+                var wrapper = new InstallerGeneratorWrapper<WiXMsiGeneratorRunbook>();
                 
                 var path = wrapper.Generate(new WiXMsiGenerator(), steps);
                 

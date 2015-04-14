@@ -6,14 +6,14 @@ using Thycotic.InstallerGenerator.MSI.WiX;
 
 namespace Thycotic.InstallerGenerator.Steps.Services
 {
-    public abstract class BaseServiceWiXMsiGeneratorSteps : WiXMsiGeneratorSteps
+    public abstract class BaseServiceWiXMsiGeneratorRunbook : WiXMsiGeneratorRunbook
     {
         protected static string GetArtifactFileName(string artifactName, string version)
         {
             return string.Format("{0}.{1}.msi", artifactName, version);
         }
 
-        protected BaseServiceWiXMsiGeneratorSteps(string recipePath, string sourcePath, string artifactName,
+        protected BaseServiceWiXMsiGeneratorRunbook(string recipePath, string sourcePath, string artifactName,
             string version)
         {
 

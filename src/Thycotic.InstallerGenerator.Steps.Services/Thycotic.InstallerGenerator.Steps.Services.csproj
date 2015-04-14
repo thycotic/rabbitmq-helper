@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseServiceWiXMsiGeneratorSteps.cs" />
-    <Compile Include="DistributedEngineServiceWiXMsiGeneratorSteps.cs" />
-    <Compile Include="MemoryMqPiplineServiceWiXMsiGeneratorSteps.cs" />
+    <Compile Include="BaseServiceWiXMsiGeneratorRunbook.cs" />
+    <Compile Include="DistributedEngineServiceWiXMsiGeneratorRunbook.cs" />
+    <Compile Include="MemoryMqPiplineServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,11 +2,11 @@
 
 namespace Thycotic.InstallerGenerator.Steps.Services
 {
-    public class DistributedEngineServiceWiXMsiGeneratorSteps : BaseServiceWiXMsiGeneratorSteps
+    public class DistributedEngineServiceWiXMsiGeneratorRunbook : BaseServiceWiXMsiGeneratorRunbook
     {
         public const string DefaultArtifactName = "Thycotic.DistributedEngine.Service";
 
-        public DistributedEngineServiceWiXMsiGeneratorSteps(string recipePath, string sourcePath, string version)
+        public DistributedEngineServiceWiXMsiGeneratorRunbook(string recipePath, string sourcePath, string version)
             : base(recipePath, sourcePath, GetArtifactFileName(DefaultArtifactName, version), version)
         {
         }

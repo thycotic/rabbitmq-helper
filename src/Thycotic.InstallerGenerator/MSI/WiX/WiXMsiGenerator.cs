@@ -5,13 +5,13 @@ using Thycotic.InstallerGenerator.Core.MSI.WiX;
 
 namespace Thycotic.InstallerGenerator.MSI.WiX
 {
-    public class WiXMsiGenerator : IInstallerGenerator<WiXMsiGeneratorSteps>
+    public class WiXMsiGenerator : IInstallerGenerator<WiXMsiGeneratorRunbook>
     {
-        public string Generate(WiXMsiGeneratorSteps steps)
+        public string Generate(WiXMsiGeneratorRunbook runbook)
         {
-            steps.Steps.ToList().ForEach(s=> s.Execute() );
+            runbook.Steps.ToList().ForEach(s=> s.Execute() );
             
-            return Path.Combine(steps.WorkingPath, steps.ArtifactName);
+            return Path.Combine(runbook.WorkingPath, runbook.ArtifactName);
         }
     }
 }
