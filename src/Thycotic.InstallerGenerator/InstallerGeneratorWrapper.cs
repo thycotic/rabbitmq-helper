@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thycotic.InstallerGenerator.Core;
-using Thycotic.InstallerGenerator.MSI.WiX;
 
 namespace Thycotic.InstallerGenerator
 {

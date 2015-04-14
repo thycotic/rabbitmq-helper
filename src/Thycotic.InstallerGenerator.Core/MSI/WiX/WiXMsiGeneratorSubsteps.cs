@@ -1,4 +1,4 @@
-namespace Thycotic.InstallerGenerator.MSI.WiX
+namespace Thycotic.InstallerGenerator.Core.MSI.WiX
 {
     /// <summary>
     /// Substeps used in WiX. There are more tools but this only uses a handful.

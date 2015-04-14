@@ -1,6 +1,4 @@
-using Thycotic.InstallerGenerator.Core;
-
-namespace Thycotic.InstallerGenerator.MSI.WiX
+namespace Thycotic.InstallerGenerator.Core.MSI.WiX
 {
     /// <summary>
     /// Sets to generate a Wix MSI. 

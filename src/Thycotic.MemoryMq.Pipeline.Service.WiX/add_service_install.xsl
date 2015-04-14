@@ -9,7 +9,7 @@
         <xsl:copy>
             <xsl:apply-templates select="@*" />
             <xsl:apply-templates select="*" />
-            <ServiceInstall Arguments="Thycotic.MemoryMq.Pipeline.Service" Account="[SERVICECREDENTIALS_USERLOGIN]" Password="[SERVICECREDENTIALS_PASSWORD]" Id="ServiceInstallMemoryMqPipelineService" Name="Thycotic.MemoryMq.Pipeline.Service" Type="ownProcess" Start="auto" ErrorControl="normal" DisplayName="Thycotic MemoryMq Pipeline Service">
+            <ServiceInstall Arguments="-v=$(var.InstallerVersion)" Account="[SERVICE_USERNAME]" Password="[SERVICE_PASSWORD]" Id="ServiceInstallMemoryMqPipelineService" Name="Thycotic.MemoryMq.Pipeline.Service" Type="ownProcess" Start="auto" ErrorControl="normal" DisplayName="Thycotic MemoryMq Pipeline Service">
                 <util:ServiceConfig FirstFailureActionType="restart" SecondFailureActionType="restart" ThirdFailureActionType="none" RestartServiceDelayInSeconds="60" ResetPeriodInDays="0" />
             </ServiceInstall>
             <ServiceControl Id="ServiceControlMemoryMqPipelineService" Name="Thycotic.MemoryMq.Pipeline.Service" Start="install" Stop="uninstall" Remove="uninstall"/>
