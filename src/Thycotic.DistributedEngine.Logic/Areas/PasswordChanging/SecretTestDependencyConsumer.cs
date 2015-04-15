@@ -33,7 +33,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         /// <returns></returns>
         public SecretTestDependencyResponse Consume(SecretTestDependencyMessage request)
         {
-            _log.Info(string.Format("Got a Test Dependency request for Secret Id {0}:", request.SecretId));
+            _log.Info(string.Format("Got a Test Dependency request for Secret Id {0} (Dependency Id {1})", request.SecretId, request.DependencyChangeInfo.SecretDependencyId));
             var response = new SecretTestDependencyResponse();
             try
             {
