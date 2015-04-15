@@ -113,7 +113,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                     OrganizationId =
                         Convert.ToInt32(
                             GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.OrganizationId)),
-                    FriendlyName = GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.FriendlyName),
+                    FriendlyName = DnsEx.GetDnsHostName(),
                     IdentityGuid = identityGuidProvider.IdentityGuid
                 };
             }).As<IEngineIdentificationProvider>().SingleInstance();

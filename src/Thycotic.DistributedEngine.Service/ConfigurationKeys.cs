@@ -31,11 +31,6 @@
             public const string OrganizationId = "EngineToServerCommunication.OrganizationId";
 
             /// <summary>
-            /// The friendly name of the engine
-            /// </summary>
-            public const string FriendlyName = "EngineToServerCommunication.FriendlyName";
-            
-            /// <summary>
             /// The identity unique identifier
             /// </summary>
             public const string IdentityGuid = "EngineToServerCommunication.IdentityGuid";
