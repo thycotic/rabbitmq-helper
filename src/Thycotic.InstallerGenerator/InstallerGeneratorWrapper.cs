@@ -1,17 +1,14 @@
 ﻿using System;
 using System.IO;
 using Thycotic.InstallerGenerator.Core;
-using Thycotic.InstallerGenerator.Core.Steps;
 using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator
 {
     public class InstallerGeneratorWrapper<TSteps> where TSteps : IInstallerGeneratorRunbook
     {
-
         private readonly ILogWriter _log = Log.Get(typeof(InstallerGeneratorWrapper<TSteps>));
-
-
+        
         private void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
             _log.Debug(string.Format("Copying contents of {0} to {1}", sourceDirName, destDirName));
@@ -54,23 +51,30 @@ namespace Thycotic.InstallerGenerator
 
         private void CoreRecipeResources(IInstallerGeneratorRunbook steps)
         {
+            _log.Info("Copying recipes");
+
             DirectoryCopy(steps.RecipePath, steps.WorkingPath, true);
         }
         
         private void CoreSourceResources(IInstallerGeneratorRunbook steps)
         {
+            _log.Info("Copying sources");
+
             var sourcePath = Path.Combine(steps.WorkingPath, "raw");
 
             DirectoryCopy(steps.SourcePath, sourcePath, true);
 
-            steps.SourcePath = sourcePath;
+            steps.SourcePath = Path.GetFullPath(sourcePath);
         }
 
         public string Generate(IInstallerGenerator<TSteps> generator, TSteps steps, bool overwriteExistingArtifact = true)
         {
+            try
+            {
+
             _log.Info("Generating installer");
 
-            using (new TemporaryFileCleaner(steps.WorkingPath))
+            using (new TemporaryFileCleaner(Path.GetFullPath(steps.WorkingPath)))
             {
                 CoreRecipeResources(steps);
 
@@ -83,18 +87,25 @@ namespace Thycotic.InstallerGenerator
                     throw new ApplicationException("Generator did not produce an artifact");
                 }
 
-                if (!Directory.Exists(steps.ArtifactPath))
+                if (!Directory.Exists(Path.GetFullPath(steps.ArtifactPath)))
                 {
                     Directory.CreateDirectory(steps.ArtifactPath);
                 }
 
-                var artifactPath = Path.Combine(steps.ArtifactPath, steps.ArtifactName);
+                var artifactPath = Path.GetFullPath(Path.Combine(steps.ArtifactPath, steps.ArtifactName));
 
                 File.Copy(temporaryArtifactPath, artifactPath, overwriteExistingArtifact);
 
                 _log.Info("Generation completed");
 
                 return artifactPath;
+            }
+
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Generation failed", ex);
+                throw;
             }
         }
     }

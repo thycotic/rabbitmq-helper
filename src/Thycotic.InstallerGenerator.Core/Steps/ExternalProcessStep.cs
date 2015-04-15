@@ -1,19 +1,21 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.Core.Steps
 {
-    public class ExternalProcessInstallerGeneratorStep : IInstallerGeneratorStep
+    public class ExternalProcessStep : IInstallerGeneratorStep
     {
         public string Name { get; set; }
         public string WorkingPath { get; set; }
         public string ExecutablePath { get; set; }
         public string Parameters { get; set; }
-
+        
+        private readonly ILogWriter _log = Log.Get(typeof(ExternalProcessStep));
+        
         public void Execute()
         {
-
             try
             {
                 var processInfo = new ProcessStartInfo(ExecutablePath, this.SanitizeExternalProcessArguments(Parameters))
@@ -28,6 +30,8 @@ namespace Thycotic.InstallerGenerator.Core.Steps
 
                 var task = Task.Factory.StartNew(() =>
                 {
+                    _log.Debug(string.Format("Starting process {0} inside {1}", ExecutablePath, WorkingPath));
+
                     process = Process.Start(processInfo);
 
                     if (process == null)
@@ -52,6 +56,7 @@ namespace Thycotic.InstallerGenerator.Core.Steps
                 {
                     if (!process.HasExited)
                     {
+                        _log.Warn("Process has not exited. Forcing exit");
                         process.Kill();
                     }
 

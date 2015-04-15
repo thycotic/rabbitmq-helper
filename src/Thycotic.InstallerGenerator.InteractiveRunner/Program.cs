@@ -15,14 +15,21 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             try
             {
                 const string someSecretServerArbitraryPathForWixRecipe =
-                    @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service.Wix";
+                    //@"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service.Wix";
+                    @"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service.Wix";
 
                 const string someSecretServerArbitraryPathForBits =
-                       @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
+                       //@"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
+                       @"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
                 const string currentSnapshottedVersion = "5.0.0.0";
 
                  
-                var steps = new MemoryMqPiplineServiceWiXMsiGeneratorRunbook(someSecretServerArbitraryPathForWixRecipe, someSecretServerArbitraryPathForBits, currentSnapshottedVersion);
+                var steps = new MemoryMqPiplineServiceWiXMsiGeneratorRunbook
+                {
+                    RecipePath = someSecretServerArbitraryPathForWixRecipe, 
+                    SourcePath = someSecretServerArbitraryPathForBits,
+                    Version = currentSnapshottedVersion
+                };
 
                 var wrapper = new InstallerGeneratorWrapper<WiXMsiGeneratorRunbook>();
                 
@@ -37,11 +44,10 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             {
                 Console.WriteLine("Generator failed");
                 Console.WriteLine(ex.Message);
-                
             }
 
             Console.WriteLine("Press any key to exit.");
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
 }

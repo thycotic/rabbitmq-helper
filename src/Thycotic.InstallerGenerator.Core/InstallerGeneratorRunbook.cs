@@ -11,16 +11,16 @@ namespace Thycotic.InstallerGenerator.Core
         public string SourcePath { get; set; }
         public string ArtifactPath { get; set; }
         public string ArtifactName { get; set; }
-
-        public string TransformPath { get; set; }
-
+        public string Version { get; set; }
+    
         public IInstallerGeneratorStep[] Steps { get; protected set; }
 
         protected InstallerGeneratorRunbook()
         {
-            WorkingPath = Path.Combine("temp", Guid.NewGuid().ToString());
-            ArtifactPath = @"artifact";
-
+            WorkingPath = Path.GetFullPath(Path.Combine("temp", Guid.NewGuid().ToString()));
+            ArtifactPath = Path.GetFullPath(@"artifact");
         }
+
+        public abstract void BakeSteps();
     }
 }

@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="DistributedEngineServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="MemoryMqPiplineServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
