@@ -10,7 +10,7 @@
             <xsl:apply-templates select="@*" />
             <xsl:apply-templates select="*" />
             <ServiceInstall Arguments="-installerVersion=$(var.InstallerVersion)" Account="[SERVICE_USERNAME]" Password="[SERVICE_PASSWORD]" Id="ServiceInstallDistributedEngineService" Name="Thycotic.DistributedEngine.Service" Type="ownProcess" Start="auto" ErrorControl="normal" DisplayName="Thycotic Distributed Engine Service">
-                <util:ServiceConfig FirstFailureActionType="restart" SecondFailureActionType="restart" ThirdFailureActionType="none" RestartServiceDelayInSeconds="60" ResetPeriodInDays="0" />
+                <util:ServiceConfig FirstFailureActionType="restart" SecondFailureActionType="restart" ThirdFailureActionType="restart" RestartServiceDelayInSeconds="60" ResetPeriodInDays="0" />
             </ServiceInstall>
             <ServiceControl Id="ServiceControlDistributedEngineService" Name="Thycotic.DistributedEngine.Service" Start="install" Stop="uninstall" Remove="uninstall"/>
         </xsl:copy>
