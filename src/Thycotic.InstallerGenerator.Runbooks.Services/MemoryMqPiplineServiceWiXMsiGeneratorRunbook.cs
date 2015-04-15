@@ -1,4 +1,4 @@
-﻿namespace Thycotic.InstallerGenerator.Steps.Services
+﻿namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
     public class MemoryMqPiplineServiceWiXMsiGeneratorRunbook : BaseServiceWiXMsiGeneratorRunbook
     {

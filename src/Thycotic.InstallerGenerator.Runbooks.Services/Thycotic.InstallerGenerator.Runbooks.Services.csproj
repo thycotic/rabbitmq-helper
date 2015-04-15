@@ -7,8 +7,8 @@
     <ProjectGuid>{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.InstallerGenerator.Steps.Services</RootNamespace>
-    <AssemblyName>B</AssemblyName>
+    <RootNamespace>Thycotic.InstallerGenerator.Runbooks.Services</RootNamespace>
+    <AssemblyName>Thycotic.InstallerGenerator.Runbooks.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

@@ -2,7 +2,7 @@
 using Thycotic.InstallerGenerator.Core.Steps;
 using Thycotic.InstallerGenerator.MSI.WiX;
 
-namespace Thycotic.InstallerGenerator.Steps.Services
+namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
     public abstract class BaseServiceWiXMsiGeneratorRunbook : WiXMsiGeneratorRunbook
     {

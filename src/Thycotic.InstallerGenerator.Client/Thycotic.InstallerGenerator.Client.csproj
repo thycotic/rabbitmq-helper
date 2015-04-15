@@ -53,9 +53,9 @@
       <Project>{3c2d28be-dda0-4768-b968-4ec89b52bb9e}</Project>
       <Name>Thycotic.InstallerGenerator.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Thycotic.InstallerGenerator.Steps.Services\Thycotic.InstallerGenerator.Steps.Services.csproj">
+    <ProjectReference Include="..\Thycotic.InstallerGenerator.Runbooks.Services\Thycotic.InstallerGenerator.Runbooks.Services.csproj">
       <Project>{d9a5cff6-89d2-4801-ad50-2ff3b147dff4}</Project>
-      <Name>Thycotic.InstallerGenerator.Steps.Services</Name>
+      <Name>Thycotic.InstallerGenerator.Runbooks.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.InstallerGenerator\Thycotic.InstallerGenerator.csproj">
       <Project>{2ea4777c-e2aa-4ccc-94a1-9cef50c29ae8}</Project>

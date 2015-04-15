@@ -1,7 +1,7 @@
 ﻿using System;
 using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.InstallerGenerator.MSI.WiX;
-using Thycotic.InstallerGenerator.Steps.Services;
+using Thycotic.InstallerGenerator.Runbooks.Services;
 using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.InteractiveRunner
