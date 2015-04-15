@@ -1,6 +1,9 @@
-﻿using Thycotic.InstallerGenerator.Core.MSI.WiX;
+﻿using System;
+using System.Collections.Generic;
+using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.InstallerGenerator.Core.Steps;
 using Thycotic.InstallerGenerator.MSI.WiX;
+using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
 
 namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
@@ -8,12 +11,31 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
     {
         public const string DefaultArtifactName = "Thycotic.DistributedEngine.Service";
 
+        public EngineToServerCommunication EngineToServerCommunication { get; set; }
+
         public override void BakeSteps()
         {
+            if (EngineToServerCommunication == null)
+            {
+                throw new ArgumentException("Engine to server communication ingredients missing.");
+            }
+
             ArtifactName = GetArtifactFileName(DefaultArtifactName, Version);
 
             Steps = new IInstallerGeneratorStep[]
             {
+                new AppSettingConfigurationChangeStep
+                {
+                    Name = "App.config changes",
+                    ConfigurationFilePath = GetPathToFileInSourcePath(string.Format("{0}.exe.config", DefaultArtifactName)),
+                    Settings = new Dictionary<string, string>
+                    {
+                        {"EngineToServerCommunication.ConnectionString", EngineToServerCommunication.ConnectionString},
+                        {"EngineToServerCommunication.UseSsl", EngineToServerCommunication.UseSsl},
+                        {"EngineToServerCommunication.ExchangeId", EngineToServerCommunication.ExchangeId},
+                        {"EngineToServerCommunication.OrganizationId", EngineToServerCommunication.OrganizationId}
+                    }
+                },
                 new ExternalProcessStep
                 {
                     Name = "Heat process",

@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.InstallerGenerator.Core.Steps;
 using Thycotic.InstallerGenerator.MSI.WiX;
+using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
 
 namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
@@ -12,12 +13,12 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         public const string DefaultArtifactName = "Thycotic.MemoryMq.Pipeline.Service";
 
         public PipelineSettings PipelineSettings { get; set; }
-        
+
         public override void BakeSteps()
         {
             if (PipelineSettings == null)
             {
-                throw new ArgumentException("PipelineSettings");
+                throw new ArgumentException("Pipeline settings ingredients missing");
             }
 
             ArtifactName = GetArtifactFileName(DefaultArtifactName, Version);
@@ -31,7 +32,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                     Settings = new Dictionary<string, string>
                     {
                         {"Pipeline.ConnectionString", PipelineSettings.ConnectionString},
-                        {"Pipeline.UseSSL", PipelineSettings.UseSSL},
+                        {"Pipeline.UseSSL", PipelineSettings.UseSsl},
                         {"Pipeline.Thumbprint", PipelineSettings.Thumbprint}
                     }
                 },
