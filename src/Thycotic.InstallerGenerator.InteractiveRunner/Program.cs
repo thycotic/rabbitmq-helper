@@ -2,6 +2,7 @@
 using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.InstallerGenerator.MSI.WiX;
 using Thycotic.InstallerGenerator.Steps.Services;
+using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.InteractiveRunner
 {
@@ -9,6 +10,8 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
     {
         private static void Main(string[] args)
         {
+            Log.Configure();
+
             try
             {
                 const string someSecretServerArbitraryPathForWixRecipe =
@@ -27,14 +30,18 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 
                 Console.WriteLine("Artifact generator and stored in {0}", path);
 
+
                 
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Generator failed");
                 Console.WriteLine(ex.Message);
-                Console.ReadLine();
+                
             }
+
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadLine();
         }
     }
 }

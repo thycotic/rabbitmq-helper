@@ -2,13 +2,20 @@
 using System.IO;
 using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.Core.Steps;
+using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator
 {
     public class InstallerGeneratorWrapper<TSteps> where TSteps : IInstallerGeneratorRunbook
     {
-        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+
+        private readonly ILogWriter _log = Log.Get(typeof(InstallerGeneratorWrapper<TSteps>));
+
+
+        private void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
+            _log.Debug(string.Format("Copying contents of {0} to {1}", sourceDirName, destDirName));
+
             // Get the subdirectories for the specified directory.
             var dir = new DirectoryInfo(sourceDirName);
             var dirs = dir.GetDirectories();
@@ -45,12 +52,12 @@ namespace Thycotic.InstallerGenerator
         }
 
 
-        private static void CoreRecipeResources(IInstallerGeneratorRunbook steps)
+        private void CoreRecipeResources(IInstallerGeneratorRunbook steps)
         {
             DirectoryCopy(steps.RecipePath, steps.WorkingPath, true);
         }
         
-        private static void CoreSourceResources(IInstallerGeneratorRunbook steps)
+        private void CoreSourceResources(IInstallerGeneratorRunbook steps)
         {
             var sourcePath = Path.Combine(steps.WorkingPath, "raw");
 
@@ -61,6 +68,8 @@ namespace Thycotic.InstallerGenerator
 
         public string Generate(IInstallerGenerator<TSteps> generator, TSteps steps, bool overwriteExistingArtifact = true)
         {
+            _log.Info("Generating installer");
+
             using (new TemporaryFileCleaner(steps.WorkingPath))
             {
                 CoreRecipeResources(steps);
@@ -82,6 +91,8 @@ namespace Thycotic.InstallerGenerator
                 var artifactPath = Path.Combine(steps.ArtifactPath, steps.ArtifactName);
 
                 File.Copy(temporaryArtifactPath, artifactPath, overwriteExistingArtifact);
+
+                _log.Info("Generation completed");
 
                 return artifactPath;
             }
