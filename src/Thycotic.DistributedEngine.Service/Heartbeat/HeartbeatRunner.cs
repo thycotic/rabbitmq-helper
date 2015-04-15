@@ -112,10 +112,11 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 //react to errors
                 .ContinueWith(task =>
                 {
-                    if (task.Exception != null)
-                    {
-                        _log.Error("Failed to send log to server", task.Exception);
-                    }
+                    if (task.Exception == null) return;
+
+                    //exit and let service manager restart the service
+                    _log.Error("Failed to send heart beat to server", task.Exception);
+                    _engineService.HandleUnrecoverableEvent(task.Exception);
                 })
                 //schedule
                 .ContinueWith(task => WaitPumpAndSchedule(), _cts.Token);

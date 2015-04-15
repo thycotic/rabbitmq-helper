@@ -125,7 +125,14 @@ namespace Thycotic.DistributedEngine.Service
 
             ResetIoCContainer();
 
-            ConfigureIoC();
+            try
+            {
+                ConfigureIoC();
+            }
+            catch (Exception ex)
+            {
+                HandleUnrecoverableEvent(ex);
+            }
         }
 
         private void TearDown()
@@ -189,6 +196,20 @@ namespace Thycotic.DistributedEngine.Service
                     _log.Error("Failed to stop engine", ex);
                 }
             }
+        }
+
+        /// <summary>
+        /// Handles the unrecoverable event.
+        /// </summary>
+        /// <param name="ex">The exception.</param>
+        public void HandleUnrecoverableEvent(Exception ex)
+        {
+            _log.Error("Encountered an unrecoverable event. Exiting");
+
+            TearDown();
+
+            //exit and let service manager restart the service
+            Environment.Exit(-1);
         }
     }
 }
