@@ -5,9 +5,9 @@ using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator
 {
-    public class InstallerGeneratorWrapper<TSteps> where TSteps : IInstallerGeneratorRunbook
+    public class InstallerGeneratorWrapper
     {
-        private readonly ILogWriter _log = Log.Get(typeof(InstallerGeneratorWrapper<TSteps>));
+        private readonly ILogWriter _log = Log.Get(typeof(InstallerGeneratorWrapper));
         
         private void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
@@ -67,7 +67,8 @@ namespace Thycotic.InstallerGenerator
             steps.SourcePath = Path.GetFullPath(sourcePath);
         }
 
-        public string Generate(IInstallerGenerator<TSteps> generator, TSteps steps, bool overwriteExistingArtifact = true)
+        public string Generate<TSteps>(IInstallerGenerator<TSteps> generator, TSteps steps, bool overwriteExistingArtifact = true)
+            where TSteps: IInstallerGeneratorRunbook
         {
             try
             {

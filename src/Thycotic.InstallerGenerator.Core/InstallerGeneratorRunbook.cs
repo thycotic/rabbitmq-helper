@@ -22,5 +22,20 @@ namespace Thycotic.InstallerGenerator.Core
         }
 
         public abstract void BakeSteps();
+        
+        private static string GetPathToFile(string path, string filename)
+        {
+            return Path.GetFullPath(Path.Combine(path, filename));
+        }
+
+        protected string GetPathToFileInWorkingPath(string filename)
+        {
+            return GetPathToFile(WorkingPath, filename);
+        }
+
+        protected string GetPathToFileInSourcePath(string filename)
+        {
+            return GetPathToFile(SourcePath, filename);
+        }
     }
 }

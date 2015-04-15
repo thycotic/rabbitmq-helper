@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="DistributedEngineServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="MemoryMqPiplineServiceWiXMsiGeneratorRunbook.cs" />
+    <Compile Include="PipelineSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

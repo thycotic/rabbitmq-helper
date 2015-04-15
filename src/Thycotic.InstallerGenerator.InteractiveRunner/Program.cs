@@ -28,10 +28,19 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 {
                     RecipePath = someSecretServerArbitraryPathForWixRecipe, 
                     SourcePath = someSecretServerArbitraryPathForBits,
-                    Version = currentSnapshottedVersion
+                    Version = currentSnapshottedVersion,
+
+                    PipelineSettings = new PipelineSettings
+                    {
+                        ConnectionString = "net.tcp://localhost:8671",
+                        UseSSL = "true",
+                        Thumbprint = "f1faa2aa00f1350edefd9490e3fc95017db3c897"
+                    }
+
+                    
                 };
 
-                var wrapper = new InstallerGeneratorWrapper<WiXMsiGeneratorRunbook>();
+                var wrapper = new InstallerGeneratorWrapper();
                 
                 var path = wrapper.Generate(new WiXMsiGenerator(), steps);
                 

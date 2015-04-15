@@ -17,7 +17,7 @@ namespace Thycotic.InstallerGenerator.MSI.WiX
 
             runbook.Steps.ToList().ForEach(s =>
             {
-                _log.Info(string.Format("Executing step: {0}", s.Name ?? "Unnamed"));
+                _log.Info(string.Format("Executing {0}", s.Name ?? "Unnamed step"));
 
                 s.Execute();
             });
