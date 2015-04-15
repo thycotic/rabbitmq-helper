@@ -30,11 +30,6 @@
             /// </summary>
             public const string OrganizationId = "EngineToServerCommunication.OrganizationId";
 
-            /// <summary>
-            /// The identity unique identifier
-            /// </summary>
-            public const string IdentityGuid = "EngineToServerCommunication.IdentityGuid";
-
             
         }
     }
