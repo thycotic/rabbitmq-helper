@@ -35,6 +35,16 @@ namespace Thycotic.DistributedEngine.Logic.Tests.EngineToServer
                 .Do(info => { throw new Exception(); });
         }
 
+        [Given(@"the method ExecuteAsync on IResponseBus substitute (\w+) throws and exception")]
+        public void GivenTheMethodExecuteAsyncOnIResponseBusSubstituteIsCalled(string responseBusName)
+        {
+            var responseBus = this.GetScenarioContext().Get<IResponseBus>(responseBusName);
+
+            responseBus.When(bus => bus.ExecuteAsync(Arg.Any<IEngineCommandRequest>()))
+                .Do(info => { throw new Exception(); });
+        }
+
+
         [When(@"the method Execute on IResponseBus (\w+) is called with request (\w+)")]
         public void WhenTheMethodExecuteOnIResponseIsCalledWithRequest(string responseBusName, string requestName)
         {
@@ -50,6 +60,14 @@ namespace Thycotic.DistributedEngine.Logic.Tests.EngineToServer
             var responseBus = this.GetScenarioContext().Get<IResponseBus>(responseBusName);
             
             responseBus.Received().Execute(Arg.Any<IEngineCommandRequest>());
+        }
+
+        [Then(@"the method ExecuteAsync on IResponseBus substitute (\w+) is called")]
+        public void ThenTheMethodExecuteAsyncOnIResponseBusSubstituteIsCalled(string responseBusName)
+        {
+            var responseBus = this.GetScenarioContext().Get<IResponseBus>(responseBusName);
+
+            responseBus.Received().ExecuteAsync(Arg.Any<IEngineCommandRequest>());
         }
     }
 }
