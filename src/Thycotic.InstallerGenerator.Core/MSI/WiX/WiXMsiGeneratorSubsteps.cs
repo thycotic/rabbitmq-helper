@@ -12,7 +12,7 @@ namespace Thycotic.InstallerGenerator.Core.MSI.WiX
         /// <remarks>Generates WiX authoring from various input formats. It is used for harvesting files, 
         /// Visual Studio projects and Internet Information Server web sites, "harvesting" these files 
         /// into components and generating Windows Installer XML Source files (.wxs). 
-        /// Heat is good to use when you begin authoring your first Windows Installer package for a product.</remarks>
+        /// GetHeatPath is good to use when you begin authoring your first Windows Installer package for a product.</remarks>
         /// <value>
         /// The heat.
         /// </value>
@@ -32,7 +32,7 @@ namespace Thycotic.InstallerGenerator.Core.MSI.WiX
         /// Gets or sets the light.
         /// </summary>
         /// <remarks>Links and binds one or more .wixobj files and creates a Windows Installer 
-        /// database (.msi or .msm). When necessary, Light will also create cabinets and embed 
+        /// database (.msi or .msm). When necessary, GetLightPath will also create cabinets and embed 
         /// streams into the Windows Installer database it creates. For more information on linking, see Linker.</remarks>
         /// <value>
         /// The light.

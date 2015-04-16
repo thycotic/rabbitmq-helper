@@ -32,7 +32,15 @@ namespace Thycotic.InstallerGenerator.Core.Steps
                 {
                     _log.Debug(string.Format("Starting process {0} inside {1}", ExecutablePath, WorkingPath));
 
-                    process = Process.Start(processInfo);
+                    try
+                    {
+                        process = Process.Start(processInfo);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ApplicationException(string.Format("Could not start process from {0}", ExecutablePath), ex);
+                    }
+                    
 
                     if (process == null)
                     {

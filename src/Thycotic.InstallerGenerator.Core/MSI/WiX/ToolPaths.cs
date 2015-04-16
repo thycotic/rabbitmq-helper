@@ -1,24 +1,24 @@
 ﻿using System.IO;
 
-namespace Thycotic.InstallerGenerator.MSI.WiX
+namespace Thycotic.InstallerGenerator.Core.MSI.WiX
 {
     public static class ToolPaths
     {
         private static readonly string LibPath = Path.Combine("lib", "WiX");
 
-        public static string Heat
+        public static string GetHeatPath(string applicationPath)
         {
-            get { return Path.Combine(Directory.GetCurrentDirectory(), LibPath, "heat.exe"); }
+            return Path.Combine(applicationPath, LibPath, "heat.exe"); 
         }
 
-        public static string Candle
+        public static string GetCandlePath(string applicationPath)
         {
-            get { return Path.Combine(Directory.GetCurrentDirectory(), LibPath, "candle.exe"); }
+             return Path.Combine(applicationPath, LibPath, "candle.exe"); 
         }
 
-        public static string Light
+        public static string GetLightPath(string applicationPath)
         {
-            get { return Path.Combine(Directory.GetCurrentDirectory(), LibPath, "light.exe"); }
+             return Path.Combine(applicationPath, LibPath, "light.exe"); 
         }
 
     }

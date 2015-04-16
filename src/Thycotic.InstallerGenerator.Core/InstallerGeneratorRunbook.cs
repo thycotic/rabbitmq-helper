@@ -6,6 +6,7 @@ namespace Thycotic.InstallerGenerator.Core
 {
     public abstract class InstallerGeneratorRunbook : IInstallerGeneratorRunbook
     {
+        public string ApplicationPath { get; set; }
         public string WorkingPath { get; set; }
         public string RecipePath { get; set; }
         public string SourcePath { get; set; }
@@ -17,6 +18,7 @@ namespace Thycotic.InstallerGenerator.Core
 
         protected InstallerGeneratorRunbook()
         {
+            ApplicationPath = Directory.GetCurrentDirectory();
             WorkingPath = Path.GetFullPath(Path.Combine("temp", Guid.NewGuid().ToString()));
             ArtifactPath = Path.GetFullPath(@"artifact");
         }

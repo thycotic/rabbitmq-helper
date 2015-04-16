@@ -15,8 +15,8 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             try
             {
-                //var path = GenerateMemoryMqMsi();
-                var path = GenerateDistributedEngineMsi();
+                var path = GenerateMemoryMqMsi();
+                //var path = GenerateDistributedEngineMsi();
                 Console.WriteLine("Artifact generator and stored in {0}", path);
 
 
@@ -35,12 +35,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         private static string GenerateMemoryMqMsi()
         {
             const string someSecretServerArbitraryPathForWixRecipe =
-                //@"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service.Wix";
-                @"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service.Wix";
+                 @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service.Wix";
+                //@"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service.Wix";
 
             const string someSecretServerArbitraryPathForBits =
-                //@"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
-                @"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
+                @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
+                //@"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
             const string currentSnapshottedVersion = "5.0.0.0";
 
 
@@ -68,12 +68,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         private static string GenerateDistributedEngineMsi()
         {
             const string someSecretServerArbitraryPathForWixRecipe =
-                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
-                @"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+                @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+                //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
 
             const string someSecretServerArbitraryPathForBits =
-                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
-                @"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+                @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+                //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
             const string currentSnapshottedVersion = "5.0.0.0";
 
 

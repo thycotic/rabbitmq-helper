@@ -8,7 +8,7 @@ namespace Thycotic.InstallerGenerator
     public class InstallerGeneratorWrapper
     {
         private readonly ILogWriter _log = Log.Get(typeof(InstallerGeneratorWrapper));
-        
+
         private void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
             _log.Debug(string.Format("Copying contents of {0} to {1}", sourceDirName, destDirName));
@@ -55,7 +55,7 @@ namespace Thycotic.InstallerGenerator
 
             DirectoryCopy(steps.RecipePath, steps.WorkingPath, true);
         }
-        
+
         private void CoreSourceResources(IInstallerGeneratorRunbook steps)
         {
             _log.Info("Copying sources");
@@ -68,39 +68,38 @@ namespace Thycotic.InstallerGenerator
         }
 
         public string Generate<TSteps>(IInstallerGenerator<TSteps> generator, TSteps steps, bool overwriteExistingArtifact = true)
-            where TSteps: IInstallerGeneratorRunbook
+            where TSteps : IInstallerGeneratorRunbook
         {
             try
             {
+                _log.Info("Generating installer");
 
-            _log.Info("Generating installer");
-
-            using (new TemporaryFileCleaner(Path.GetFullPath(steps.WorkingPath)))
-            {
-                CoreRecipeResources(steps);
-
-                CoreSourceResources(steps);
-                
-                var temporaryArtifactPath = generator.Generate(steps);
-
-                if (!File.Exists(temporaryArtifactPath))
+                using (new TemporaryFileCleaner(Path.GetFullPath(steps.WorkingPath)))
                 {
-                    throw new ApplicationException("Generator did not produce an artifact");
+                    CoreRecipeResources(steps);
+
+                    CoreSourceResources(steps);
+
+                    var temporaryArtifactPath = generator.Generate(steps);
+
+                    if (!File.Exists(temporaryArtifactPath))
+                    {
+                        throw new ApplicationException("Generator did not produce an artifact");
+                    }
+
+                    if (!Directory.Exists(Path.GetFullPath(steps.ArtifactPath)))
+                    {
+                        Directory.CreateDirectory(steps.ArtifactPath);
+                    }
+
+                    var artifactPath = Path.GetFullPath(Path.Combine(steps.ArtifactPath, steps.ArtifactName));
+
+                    File.Copy(temporaryArtifactPath, artifactPath, overwriteExistingArtifact);
+
+                    _log.Info("Generation completed");
+
+                    return artifactPath;
                 }
-
-                if (!Directory.Exists(Path.GetFullPath(steps.ArtifactPath)))
-                {
-                    Directory.CreateDirectory(steps.ArtifactPath);
-                }
-
-                var artifactPath = Path.GetFullPath(Path.Combine(steps.ArtifactPath, steps.ArtifactName));
-
-                File.Copy(temporaryArtifactPath, artifactPath, overwriteExistingArtifact);
-
-                _log.Info("Generation completed");
-
-                return artifactPath;
-            }
 
             }
             catch (Exception ex)
