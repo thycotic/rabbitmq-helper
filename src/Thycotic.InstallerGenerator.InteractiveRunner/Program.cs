@@ -15,8 +15,8 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             try
             {
-                var path = GenerateMemoryMqMsi();
-                //var path = GenerateDistributedEngineMsi();
+                //var path = GenerateMemoryMqMsi();
+                var path = GenerateDistributedEngineMsi();
                 Console.WriteLine("Artifact generator and stored in {0}", path);
 
 
@@ -41,7 +41,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             const string someSecretServerArbitraryPathForBits =
                 @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
                 //@"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
-            const string currentSnapshottedVersion = "5.0.0.0";
+            const string currentSnapshottedVersion = "5.0.0.1";
 
 
             var steps = new MemoryMqPiplineServiceWiXMsiGeneratorRunbook
@@ -52,9 +52,9 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
                 PipelineSettings = new PipelineSettings
                 {
-                    ConnectionString = "net.tcp://localhost:8671",
-                    UseSsl = "true",
-                    Thumbprint = "f1faa2aa00f1350edefd9490e3fc95017db3c897"
+                    ConnectionString = "net.tcp://localhost:8672",
+                    UseSsl = "false",// "true",
+                    Thumbprint = string.Empty//"f1faa2aa00f1350edefd9490e3fc95017db3c897"
                 }
 
 
@@ -74,7 +74,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             const string someSecretServerArbitraryPathForBits =
                 @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
                 //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
-            const string currentSnapshottedVersion = "5.0.0.0";
+            const string currentSnapshottedVersion = "5.0.0.1";
 
 
             var steps = new DistributedEngineServiceWiXMsiGeneratorRunbook
@@ -85,9 +85,9 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
                 EngineToServerCommunication = new EngineToServerCommunication
                 {
-                    ConnectionString = "net.tcp://thycopair24.testparent.thycotic.com:8881",
+                    ConnectionString = "net.tcp://localhost:8881",
                     UseSsl = "false",
-                    ExchangeId = "1",
+                    ExchangeId = "5",
                     OrganizationId = "1"
                 }
 

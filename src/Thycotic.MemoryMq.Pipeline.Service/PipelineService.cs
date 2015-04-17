@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.ServiceProcess;
+using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Pipeline.Service.Configuration;
@@ -26,6 +28,8 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         public IIoCConfigurator IoCConfigurator { get; private set; }
 
         private IContainer _ioCContainer;
+
+        private CancellationTokenSource _runningTokenSource;
 
         private LogCorrelation _correlation;
 
@@ -99,20 +103,45 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         {
             _correlation = LogCorrelation.Create();
 
+            _runningTokenSource = new CancellationTokenSource();
+
             ResetIoCContainer();
 
-            try
+            var configured = false;
+
+            Task.Factory.StartNew(() =>
             {
-                ConfigureIoC();
-            }
-            catch (Exception ex)
+                //keep trying to configure until success or the running source is cancelled
+                while (!configured && !_runningTokenSource.Token.IsCancellationRequested)
+                {
+                    try
+                    {
+                        ConfigureIoC();
+
+                        configured = true;
+                    }
+                    catch
+                    {
+                        _log.Warn("Could not configure, trying in 30 seconds");
+                        Task.Delay(TimeSpan.FromSeconds(30)).Wait(_runningTokenSource.Token);
+                    }
+                }
+            }, _runningTokenSource.Token).ContinueWith(task =>
             {
-                HandleUnrecoverableEvent(ex);
-            }
+                if (task.Exception != null)
+                {
+                    _log.Error("Failed to bring up pipeline", task.Exception);
+                }
+            });
         }
 
         private void TearDown()
         {
+            if (_runningTokenSource != null)
+            {
+                _runningTokenSource.Dispose();
+            }
+
             ResetIoCContainer();
 
             if (_correlation != null)
@@ -170,23 +199,9 @@ namespace Thycotic.MemoryMq.Pipeline.Service
                 }
                 catch (Exception ex)
                 {
-                    _log.Error("Failed to stop pipelne", ex);
+                    _log.Error("Failed to stop pipeline", ex);
                 }
             }
-        }
-
-        /// <summary>
-        /// Handles the unrecoverable event.
-        /// </summary>
-        /// <param name="ex">The exception.</param>
-        public void HandleUnrecoverableEvent(Exception ex)
-        {
-            _log.Error("Encountered an unrecoverable event. Exiting");
-
-            TearDown();
-
-            //exit and let service manager restart the service
-            Environment.Exit(-1);
         }
     }
 }

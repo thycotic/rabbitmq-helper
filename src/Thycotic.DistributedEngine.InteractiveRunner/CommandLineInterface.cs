@@ -14,7 +14,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 {
     internal class CommandLineInterface
     {
-        private CancellationTokenSource _cts = new CancellationTokenSource();
+        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
         private readonly HashSet<IConsoleCommand> _commandBuiltInMappings = new HashSet<IConsoleCommand>();
         private readonly HashSet<IConsoleCommand> _commandCustomMappings = new HashSet<IConsoleCommand>();
 
@@ -94,10 +94,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
         public void ClearCommands()
         {
-            _cts.Cancel();
-
-            _cts = new CancellationTokenSource();
-
             _commandCustomMappings.Clear();
         }
 

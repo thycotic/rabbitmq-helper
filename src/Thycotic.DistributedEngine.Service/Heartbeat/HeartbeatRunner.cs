@@ -84,15 +84,11 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             //the configuration has not changed since it was last consumed
             if (response.LastConfigurationUpdated <= _engineService.IoCConfigurator.LastConfigurationConsumed) return;
 
-            _engineService.Stop();
-
-            Console.WriteLine();
-            Console.WriteLine("@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @");
-            Console.WriteLine();
+            _log.Info("Configuration changed. Recycling...");
 
             _engineService.IoCConfigurator.TryAssignConfiguration(response.NewConfiguration);
 
-            _engineService.Start();
+            _engineService.Recycle();
         }
 
 
@@ -115,8 +111,9 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                     if (task.Exception == null) return;
 
                     //exit and let service manager restart the service
-                    _log.Error("Failed to send heart beat to server", task.Exception);
-                    _engineService.HandleUnrecoverableEvent(task.Exception);
+                    _log.Error("Failed to send heart beat to server. Recycling...", task.Exception);
+                    _engineService.Recycle(true);
+
                 })
                 //schedule
                 .ContinueWith(task => WaitPumpAndSchedule(), _cts.Token);
