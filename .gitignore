@@ -4,3 +4,4 @@
 
 /src/.nuget
 /src/**/packages
+/src/**/*.WiX/Output

@@ -85,7 +85,7 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("the method Consume on IBasicConsumer<PingMessage> PingConsumerTest is called with" +
                     " consumable PingMessageTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
- testRunner.Then("the method Execute on IResponseBus substitute ResponseBusTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method ExecuteAsync on IResponseBus substitute ResponseBusTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -108,13 +108,13 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.And("there exists a PingConsumer stored in the scenario as PingConsumerTest with Respo" +
                     "nseBus ResponseBusTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
- testRunner.And("the method Execute on IResponseBus substitute ResponseBusTest throws and exceptio" +
-                    "n", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the method ExecuteAsync on IResponseBus substitute ResponseBusTest throws and exc" +
+                    "eption", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 17
  testRunner.When("the method Consume on IBasicConsumer<PingMessage> PingConsumerTest is called with" +
                     " consumable PingMessageTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 18
- testRunner.Then("the method Execute on IResponseBus substitute ResponseBusTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the method ExecuteAsync on IResponseBus substitute ResponseBusTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 19
  testRunner.Then("the method Error on ILogWriter substitute is called with \"Failed to pong back to " +
                     "server\" and exception", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

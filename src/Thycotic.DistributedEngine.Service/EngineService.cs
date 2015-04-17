@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.ServiceProcess;
+using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.Logging;
@@ -29,6 +31,8 @@ namespace Thycotic.DistributedEngine.Service
         private readonly bool _startConsuming;
 
         private IContainer _ioCContainer;
+
+        private CancellationTokenSource _runningTokenSource;
 
         private LogCorrelation _correlation;
 
@@ -123,13 +127,46 @@ namespace Thycotic.DistributedEngine.Service
         {
             _correlation = LogCorrelation.Create();
 
+            _runningTokenSource = new CancellationTokenSource();
+
             ResetIoCContainer();
 
-            ConfigureIoC();
+            var configured = false;
+
+            Task.Factory.StartNew(() =>
+            {
+                //keep trying to configure until success or the running source is cancelled
+                while (!configured && !_runningTokenSource.Token.IsCancellationRequested)
+                {
+                    try
+                    {
+                        ConfigureIoC();
+
+                        configured = true;
+                    }
+                    catch
+                    {
+                        _log.Warn("Could not configure, trying in 30 seconds");
+                        Task.Delay(TimeSpan.FromSeconds(30)).Wait(_runningTokenSource.Token);
+                    }
+                }
+            }, _runningTokenSource.Token).ContinueWith(task =>
+            {
+                if (task.Exception != null)
+                {
+                    _log.Error("Failed to bring up engine", task.Exception);
+                }
+            });
         }
 
         private void TearDown()
         {
+
+            if (_runningTokenSource != null)
+            {
+                _runningTokenSource.Dispose();
+            }
+
             ResetIoCContainer();
 
             if (_correlation != null)
@@ -190,5 +227,30 @@ namespace Thycotic.DistributedEngine.Service
                 }
             }
         }
+
+        /// <summary>
+        /// Recycles this instance.
+        /// </summary>
+        public void Recycle(bool removeInstanceConfiguration = false)
+        {
+            try
+            {
+                TearDown();
+
+                if (removeInstanceConfiguration)
+                {
+                    _log.Info("Removing instance configuration");
+                    IoCConfigurator.TryAssignConfiguration(null);
+                }
+
+                BringUp();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Failed to recycle engine", ex);
+                Environment.Exit(-1);
+            }
+        }
+
     }
 }

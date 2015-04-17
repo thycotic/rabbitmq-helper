@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using Thycotic.Logging;
 using Thycotic.Wcf;
@@ -16,6 +17,7 @@ namespace Thycotic.MemoryMq.Subsystem
             new ConcurrentDictionary<string, ClientList>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ClientDictionary));
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientDictionary"/> class.
@@ -86,8 +88,11 @@ namespace Thycotic.MemoryMq.Subsystem
                 var channel = callback.ToContextChannel();
 
                 _log.Debug(string.Format("Adding consumer with session ID {0}", channel.SessionId));
-                
-                _data.TryAdd(channel.SessionId, callback);
+
+                lock (_data)
+                {
+                    _data.TryAdd(channel.SessionId, callback);
+                }
             }
 
             /// <summary>
@@ -99,7 +104,10 @@ namespace Thycotic.MemoryMq.Subsystem
                 var channel = callback.ToContextChannel();
                 
                 IMemoryMqWcfServiceCallback temp;
-                _data.TryRemove(channel.SessionId, out temp);
+                lock (_data)
+                {
+                    _data.TryRemove(channel.SessionId, out temp);
+                }
             }
 
             /// <summary>
@@ -109,19 +117,22 @@ namespace Thycotic.MemoryMq.Subsystem
             /// <returns></returns>
             public bool TryGetClient(out IMemoryMqWcfServiceCallback clientProxy)
             {
-                var count = _data.Count;
-                //simple round robin 
-                if (count > 0)
+                lock (_data)
                 {
-                    _robin = _robin % count;
-                    clientProxy = _data.Values.Skip(_robin).First();
-                    _robin++;
-                    return true;
-                }
+                    var count = _data.Count;
+                    //simple round robin 
+                    if (count > 0)
+                    {
+                        _robin = _robin%count;
+                        clientProxy = _data.Values.Skip(_robin).First();
+                        _robin++;
+                        return true;
+                    }
 
-                clientProxy = null;
-                _robin = 0;
-                return false;
+                    clientProxy = null;
+                    _robin = 0;
+                    return false;
+                }
             }
 
             /// <summary>
@@ -129,7 +140,10 @@ namespace Thycotic.MemoryMq.Subsystem
             /// </summary>
             public void RemoveAll()
             {
-                _data.Values.ToList().ForEach(RemoveClient);
+                lock (_data)
+                {
+                    _data.Values.ToList().ForEach(RemoveClient);
+                }
             }
         }
 
@@ -138,7 +152,10 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public void Dispose()
         {
-            _data.Values.ToList().ForEach(cl => cl.RemoveAll());
+            lock (_data)
+            {
+                _data.Values.ToList().ForEach(cl => cl.RemoveAll());
+            }
         }
     }
 }

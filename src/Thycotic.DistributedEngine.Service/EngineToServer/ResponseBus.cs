@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
+using Thycotic.Logging;
 using Thycotic.Utility.Serialization;
 
 namespace Thycotic.DistributedEngine.Service.EngineToServer
@@ -18,6 +22,11 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         private readonly IAuthenticatedCommunicationKeyProvider _authenticatedCommunicationKeyProvider;
         private readonly IAuthenticatedCommunicationRequestEncryptor _authenticatedCommunicationRequestEncryptor;
         private readonly IEngineToServerCommunicationWcfService _channel;
+
+        private readonly object _syncRoot = new object();
+        private readonly HashSet<Task> _pendingResponseTasks = new HashSet<Task>();
+
+        private readonly ILogWriter _log = Log.Get(typeof(ResponseBus));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineConfigurationBus" /> class.
@@ -90,7 +99,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 throw new ApplicationException("Bus broken down", ex);
             }
         }
-        
+
         /// <summary>
         /// Gets the specified request.
         /// </summary>
@@ -141,12 +150,90 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             });
         }
 
+        /// <summary>
+        /// Executes asynchronously and reports any errors. Retries several times and then gives up.
+        /// </summary>
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <param name="maxRetryCount">The maximum retry count.</param>
+        /// <param name="retryDelaySeconds">The retry delay seconds.</param>
+        /// <returns></returns>
+        public Task ExecuteAsync<TRequest>(TRequest request, int maxRetryCount = 3, int retryDelaySeconds = 5) where TRequest : IEngineCommandRequest
+        {
+            //start the response task
+            var pendingTask = Task.Factory.StartNew(() =>
+            {
+                WrapInteraction(() =>
+                {
+                    var tries = 0;
+                    do
+                    {
+                        try
+                        {
+                            Task.Delay(TimeSpan.FromSeconds(tries*retryDelaySeconds)).Wait();
+
+                            var wrappedRequest = WrapRequest(request);
+                            _channel.Execute(wrappedRequest);
+
+                            return;
+                        }
+                        catch (Exception ex)
+                        {
+                            tries++;
+                            if (tries < maxRetryCount)
+                            {
+                                _log.Warn(
+                                    string.Format("Failed to execute on try {0}. Will retry in {1} seconds", tries,
+                                        tries*retryDelaySeconds), ex);
+                            }
+                            else
+                            {
+                                _log.Error(string.Format("Failed to execute on try {0}. Giving up.", tries), ex);
+                            }
+                        }
+                    } while (tries < maxRetryCount);
+                });
+            });
+
+            //add the task
+            lock (_syncRoot)
+            {
+                _pendingResponseTasks.Add(pendingTask);
+            }
+
+            //clean up when the task is done
+            pendingTask.ContinueWith(task =>
+            {
+                lock (_syncRoot)
+                {
+                    _pendingResponseTasks.Remove(task);
+                }
+            }).ContinueWith(task =>
+            {
+                if (task.Exception != null)
+                {
+                    _log.Error("Failed to clean up response task", task.Exception);
+                }
+            });
+
+            return pendingTask;
+        }
+
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
+            lock (_syncRoot)
+            {
+                if (_pendingResponseTasks.Any())
+                {
+                    _log.Debug("Waiting for remaining response tasks to complete");
+                    Task.WaitAll(_pendingResponseTasks.ToArray());
+                }
+            }
+
             WrapInteraction(() => _channel.Dispose());
         }
     }
