@@ -1,5 +1,4 @@
 ﻿using System;
-using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.InstallerGenerator.MSI.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
 using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
@@ -9,14 +8,20 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 {
     class Program
     {
+        private const string Version = "5.0.0.2";
+
         private static void Main(string[] args)
         {
             Log.Configure();
 
             try
             {
-                //var path = GenerateMemoryMqMsi();
-                var path = GenerateDistributedEngineMsi();
+                var path = GenerateMemoryMqMsi();
+                Console.WriteLine("Artifact generator and stored in {0}", path);
+
+                Console.WriteLine();
+
+                path = GenerateDistributedEngineMsi();
                 Console.WriteLine("Artifact generator and stored in {0}", path);
 
 
@@ -41,7 +46,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             const string someSecretServerArbitraryPathForBits =
                 @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
                 //@"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
-            const string currentSnapshottedVersion = "5.0.0.1";
+            const string currentSnapshottedVersion = Version;
 
 
             var steps = new MemoryMqPiplineServiceWiXMsiGeneratorRunbook
@@ -74,7 +79,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             const string someSecretServerArbitraryPathForBits =
                 @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
                 //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
-            const string currentSnapshottedVersion = "5.0.0.1";
+            const string currentSnapshottedVersion = Version;
 
 
             var steps = new DistributedEngineServiceWiXMsiGeneratorRunbook
