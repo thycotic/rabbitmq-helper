@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Thycotic.Discovery.Core.Results;
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -38,7 +39,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         {
             try
             {
-                _log.Info(string.Format("{0} : Scan Dependencies", request.Input.ComputerName));
+                _log.Info(string.Format("{0} : Scan Dependencies ({1})", request.Input.ComputerName, GetDependencyTypeName(request.Input.DependencyScannerType)));
                 var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
                 var result = scanner.ScanComputerForDependencies(request.Input);
                 var batchId = Guid.NewGuid();
@@ -59,40 +60,40 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                         Logs = result.Logs,
                         ErrorMessage = result.ErrorMessage,
                         BatchId = batchId,
-                        Paging = paging
+                        Paging = paging,
+                        DependencyScannerType = request.Input.DependencyScannerType
                     };
                     try
                     {
-                        var dependencyType = "";
-                        switch (result.DependencyScannerType)
-                        {
-                            case 1:
-                                dependencyType = "ApplicationPool";
-                                break;
-                            case 2:
-                                dependencyType = "WindowsService";
-                                break;
-                            case 3:
-                                dependencyType = "ScheduledTask";
-                                break;
-                            default:
-                                dependencyType = string.Format("Unknown ({0})", result.DependencyScannerType);
-                                break;
-                        }
-                        _log.Info(string.Format("{0} : Send Dependency ({1}) Results", request.Input.ComputerName, dependencyType));
+                        _log.Info(string.Format("{0} : Send Dependency ({1}) Results", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType)));
                         _responseBus.Execute(response);
                         paging.Skip = paging.NextSkip;
                     }
                     catch (Exception exception)
                     {
-                        _log.Info(string.Format("{0} : Send Dependency Results Failed", request.Input.ComputerName),
+                        _log.Info(string.Format("{0} : Send Dependency ({1}) Results Failed", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType)),
                             exception);
                     }
                 });
             }
             catch (Exception e)
             {
-                _log.Info(string.Format("{0} : Scan Dependencies for DependencyScannerType: {1} Failed using ScannerId: {2}", request.Input.ComputerName, request.Input.DependencyScannerType, request.DiscoveryScannerId), e);
+                _log.Info(string.Format("{0} : Scan Dependencies for DependencyScannerType: {1} Failed using ScannerId: {2}", request.Input.ComputerName, GetDependencyTypeName(request.Input.DependencyScannerType), request.DiscoveryScannerId), e);
+            }
+        }
+
+        private static string GetDependencyTypeName(int dependencyScannerTypeId)
+        {
+            switch (dependencyScannerTypeId)
+            {
+                case 1:
+                    return "ApplicationPool";
+                case 2:
+                    return "WindowsService";
+                case 3:
+                    return "ScheduledTask";
+                default:
+                    return string.Format("Unknown ({0})", dependencyScannerTypeId);
             }
         }
     }
