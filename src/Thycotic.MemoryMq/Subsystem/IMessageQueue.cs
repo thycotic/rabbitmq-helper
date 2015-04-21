@@ -42,9 +42,14 @@
         void Acknowledge(ulong deliveryTag);
 
         /// <summary>
-        /// Negatively the acknoledges the specified delivery tag.
+        /// Negatively acknowledges the specified delivery tag.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
         void NegativelyAcknoledge(ulong deliveryTag);
+
+        /// <summary>
+        /// Negatively acknowledge all pending delivery tags.
+        /// </summary>
+        void NegativelyAcknoledgeAllPending();
     }
 }

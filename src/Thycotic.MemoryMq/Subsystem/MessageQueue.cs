@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using Thycotic.MemoryMq.Collections;
 
 namespace Thycotic.MemoryMq.Subsystem
@@ -60,14 +62,16 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="message">The <see cref="MemoryMqDeliveryEventArgs"/> instance containing the event data.</param>
         private void AddUnacknowledgedMessage(MemoryMqDeliveryEventArgs message)
         {
-            var deliveryTag = GetNextDeliveryTag();
-            if (!_unackedMessages.TryAdd(deliveryTag, message))
+            lock (_unackedMessages)
             {
-                throw new ApplicationException(string.Format("Could not add delivery tag {0}", deliveryTag));
+                var deliveryTag = GetNextDeliveryTag();
+                if (!_unackedMessages.TryAdd(deliveryTag, message))
+                {
+                    throw new ApplicationException(string.Format("Could not add delivery tag {0}", deliveryTag));
+                }
+
+                message.DeliveryTag = deliveryTag;
             }
-
-            message.DeliveryTag = deliveryTag;
-
         }
 
         /// <summary>
@@ -108,13 +112,16 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <exception cref="System.ApplicationException"></exception>
         public void Acknowledge(ulong deliveryTag)
         {
-            MemoryMqDeliveryEventArgs eventArgs;
-            if (!_unackedMessages.TryRemove(deliveryTag, out eventArgs))
+            lock (_unackedMessages)
             {
-                throw new ApplicationException(string.Format("Failed to acknowledge delivery tag {0}", deliveryTag));
-            }
+                MemoryMqDeliveryEventArgs eventArgs;
+                if (!_unackedMessages.TryRemove(deliveryTag, out eventArgs))
+                {
+                    throw new ApplicationException(string.Format("Failed to acknowledge delivery tag {0}", deliveryTag));
+                }
 
-            //just remove, nothing more is needed
+                //just remove, nothing more is needed
+            }
         }
 
         /// <summary>
@@ -123,15 +130,46 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="deliveryTag">The delivery tag.</param>
         public void NegativelyAcknoledge(ulong deliveryTag)
         {
-            MemoryMqDeliveryEventArgs eventArgs;
-            if (!_unackedMessages.TryRemove(deliveryTag, out eventArgs))
+            lock (_unackedMessages)
             {
-                throw new ApplicationException(string.Format("Failed to negatively acknowledge delivery tag {0}",
-                    deliveryTag));
+                MemoryMqDeliveryEventArgs eventArgs;
+                if (!_unackedMessages.TryRemove(deliveryTag, out eventArgs))
+                {
+                    throw new ApplicationException(string.Format("Failed to negatively acknowledge delivery tag {0}",
+                        deliveryTag));
+                }
+
+                eventArgs.Redelivered = true;
+
+                //requeue at the front of the list
+                _queue.PriorityEnqueue(eventArgs);
+            }
+        }
+
+        /// <summary>
+        /// Negatively acknowledge all pending delivery tags.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void NegativelyAcknoledgeAllPending()
+        {
+            List<ulong> unackedDeliveryTags;
+
+            lock (_unackedMessages)
+            {
+                unackedDeliveryTags = _unackedMessages.Keys.ToList();
             }
 
-            //requeue at the front of the list
-            _queue.PriorityEnqueue(eventArgs);
+            unackedDeliveryTags.ForEach(dt =>
+            {
+                try
+                {
+                    NegativelyAcknoledge(dt);
+                }
+                catch (Exception)
+                {
+                    //couldn't nack
+                }
+            });
         }
     }
 }

@@ -213,9 +213,9 @@ namespace Thycotic.MemoryMq.Subsystem
             {
                 var routingSlipSnapshotList = new List<MemoryMqDeliveryEventArgs>();
 
-                var routingSlip = kvp.Key;
-
                 var queue = kvp.Value;
+
+                queue.NegativelyAcknoledgeAllPending();
 
                 MemoryMqDeliveryEventArgs deliveryArgs;
                 while (queue.TryDequeue(out deliveryArgs))
