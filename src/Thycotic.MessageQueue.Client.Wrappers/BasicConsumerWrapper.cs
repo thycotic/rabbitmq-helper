@@ -56,17 +56,18 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
             string routingKey, ICommonModelProperties properties, byte[] body)
         {
-            Task.Run(() => ExecuteMessage(deliveryTag, exchange, routingKey, body));
+            Task.Run(() => ExecuteMessage(deliveryTag, redelivered, exchange, routingKey, body));
         }
 
         /// <summary>
         /// Executes the message.
         /// </summary>
+        /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="redelivered"></param>
         /// <param name="exchangeName">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
-        /// <param name="deliveryTag">The delivery tag.</param>
         /// <param name="body">The body.</param>
-        private void ExecuteMessage(ulong deliveryTag, string exchangeName, string routingKey, byte[] body)
+        private void ExecuteMessage(ulong deliveryTag, bool redelivered, string exchangeName, string routingKey, byte[] body)
         {
             const bool multiple = false;
 
@@ -80,6 +81,13 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     try
                     {
                         message = _objectSerializer.ToObject<TRequest>(_messageEncryptor.Decrypt(exchangeName, body));
+
+                        //account for whether this message was redelivered
+                        if (redelivered)
+                        {
+                            _log.Debug("Attempting to process redelivered message");
+                            message.Redelivered = true;
+                        }
 
                     }
                     catch (Exception ex)
