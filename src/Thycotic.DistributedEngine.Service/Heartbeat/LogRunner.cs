@@ -27,7 +27,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         private const int IntervalSeconds = 10;
-        private const int BufferSize = 100;
+        private const int BufferSize = 25;
 
         private Task _pumpTask;
         private bool _flush;
@@ -70,19 +70,17 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             //clear the recent log entries
             _log.Debug("Clearing log entries from provider");
             _recentLogEntryProvider.Clear();
+            
+            _log.Debug(string.Format("Breaking log dump into batches of {0}", BufferSize));
 
-            const int batchSize = 25;
-
-            _log.Debug(string.Format("Breaking log dump into batches of {0}", batchSize));
-
-            var batches = logEntries.Count/batchSize;
+            var batches = logEntries.Count / BufferSize;
 
             //there isn't a full batch left, send it anyway
-            if (logEntries.Count%batchSize > 0) batches++;
+            if (logEntries.Count % BufferSize > 0) batches++;
             
             Enumerable.Range(0, batches).ToList().ForEach(i =>
             {
-                var batch = logEntries.Skip(i*batchSize).Take(batchSize).ToArray();
+                var batch = logEntries.Skip(i * BufferSize).Take(BufferSize).ToArray();
 
                 var request = new EngineLogRequest
                 {
@@ -132,7 +130,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// </summary>
         public void Start()
         {
-            _log.Info(string.Format("SendHeartbeat is starting for every {0} seconds with a buffer size of {1}...", IntervalSeconds, BufferSize));
+            _log.Info(string.Format("Log runner starting for every {0} seconds with a buffer size of {1}...", IntervalSeconds, BufferSize));
 
             Task.Factory.StartNew(WaitPumpAndSchedule);
         }
