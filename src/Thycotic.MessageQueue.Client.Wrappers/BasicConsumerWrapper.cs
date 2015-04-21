@@ -92,11 +92,21 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     }
                     catch (Exception ex)
                     {
-                        _log.Error("Failed to decrypt or deserialize message. Message will not be requeued", ex);
-
                         requeue = false;
 
-                        throw;
+                        throw new ApplicationException("Failed to decrypt or deserialize message. Message will not be requeued", ex);
+                    }
+
+                    //message has expiration date
+                    if (message.ExpiresOn != null)
+                    {
+                        //message has expired and should not be relayed when expired
+                        if (message.ExpiresOn < DateTime.UtcNow && !message.RelayEvenIfExpired)
+                        {
+                            requeue = false;
+
+                            throw new ApplicationException("Message has expired");
+                        }
                     }
 
                     using (var handler = _handlerFactory())
