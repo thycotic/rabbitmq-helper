@@ -21,14 +21,33 @@ namespace Thycotic.DistributedEngine.Service.Configuration
     public class IoCConfigurator : IIoCConfigurator
     {
         #region Expensive/reusable through restarts
-        private static readonly IAuthenticationKeyProvider AuthenticationKeyProvider = new AuthenticationKeyProvider();
-        private static readonly IIdentityGuidProvider IdentityGuidProvider = new IdentityGuidProvider();
+        private static IAuthenticationKeyProvider _authenticationKeyProvider = new AuthenticationKeyProvider();
+
+        private static IIdentityGuidProvider _identityGuidProvider = new IdentityGuidProvider();
         #endregion
 
         private Dictionary<string, string> _instanceConfiguration;
 
         private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
-        
+
+        /// <summary>
+        /// The authentication key provider
+        /// </summary>
+        public IAuthenticationKeyProvider AuthenticationKeyProvider
+        {
+            get { return _authenticationKeyProvider; }
+            set { _authenticationKeyProvider = value; }
+        }
+
+        /// <summary>
+        /// The identity unique identifier provider
+        /// </summary>
+        public IIdentityGuidProvider IdentityGuidProvider
+        {
+            get { return _identityGuidProvider; }
+            set { _identityGuidProvider = value; }
+        }
+
 
         /// <summary>
         /// Gets or sets the last configuration consume.
@@ -96,7 +115,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
 
             builder.RegisterType<RecentLogEntryProvider>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<JsonObjectSerializer>().AsImplementedInterfaces().SingleInstance();
-           
+
             builder.Register(context =>
             {
                 var identityGuidProvider = context.Resolve<IIdentityGuidProvider>();
@@ -128,7 +147,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         {
             builder.RegisterType<AuthenticationRequestEncryptor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<AuthenticatedCommunicationRequestEncryptor>().AsImplementedInterfaces().SingleInstance();
-       
+
             builder.Register(context =>
             {
                 var connectionString =
@@ -136,7 +155,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
 
                 var useSsl =
                     Convert.ToBoolean(GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.UseSsl));
-                
+
                 if (useSsl)
                 {
                     _log.Info("Connection to server is using encryption");
@@ -190,7 +209,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 RegisterCore(builder);
 
                 RegisterPreAuthorization(builder);
-                
+
                 return builder.Build();
             }
         }
@@ -212,7 +231,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
 
                 RegisterCore(builder);
-                
+
                 RegisterPreAuthorization(builder);
 
                 RegisterPostAuthorization(builder, engineService, startConsuming);

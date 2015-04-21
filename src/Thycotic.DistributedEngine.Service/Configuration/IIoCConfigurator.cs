@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
+using Thycotic.DistributedEngine.Service.Security;
 
 namespace Thycotic.DistributedEngine.Service.Configuration
 {
@@ -9,6 +10,16 @@ namespace Thycotic.DistributedEngine.Service.Configuration
     /// </summary>
     public interface IIoCConfigurator
     {
+        /// <summary>
+        /// The authentication key provider
+        /// </summary>
+        IAuthenticationKeyProvider AuthenticationKeyProvider { get; set; }
+
+        /// <summary>
+        /// The identity unique identifier provider
+        /// </summary>
+        IIdentityGuidProvider IdentityGuidProvider { get; set; }
+
         /// <summary>
         /// Gets or sets the last configuration consume.
         /// </summary>
@@ -37,7 +48,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// <param name="startConsuming">if set to <c>true</c> [start engineService].</param>
         /// <returns></returns>
         IContainer BuildAll(EngineService engineService, bool startConsuming);
-        
-        
+
+
     }
 }

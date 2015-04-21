@@ -13,6 +13,7 @@ using Thycotic.MemoryMq.Pipeline.Service;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
+using Thycotic.DistributedEngine.Service.Security;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner
 {
@@ -52,7 +53,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 }
                 else
                 {
-                    //Trace.TraceInformation("Pipeline is disabled...");
+                    Trace.TraceInformation("Pipeline is disabled...");
                 }
 
                 EngineService engineService;
@@ -63,7 +64,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
                     engineService = new EngineService(startConsuming);
 
-                    ConfigureMockConfiguration();
+                    ConfigureMockConfiguration(engineService);
 
                     //every time engine IoCContainer changes reconfigure the CLI
                     engineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
@@ -156,8 +157,15 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             commands.ToList().ForEach(c => cli.AddCustomCommand((IConsoleCommand)tempContainer.Resolve(c.Activator.LimitType)));
         }
 
-        private static void ConfigureMockConfiguration()
+        private static void ConfigureMockConfiguration(EngineService engineService)
         {
+            var staticIdentityGuid = new Guid("f00abcde-1337-1337-1337-d235bc2ce1b1");
+            Log.Warn("Using static/development identity guid");
+
+            var staticIdentityGuidProvider = Substitute.For<IIdentityGuidProvider>();
+            staticIdentityGuidProvider.IdentityGuid.Returns(staticIdentityGuid);
+            engineService.IoCConfigurator.IdentityGuidProvider = staticIdentityGuidProvider;
+
             var configurationProvider = Substitute.For<IConfigurationProvider>();
             ServiceLocator.ConfigurationProvider = configurationProvider;
 
