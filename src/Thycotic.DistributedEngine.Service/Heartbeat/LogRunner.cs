@@ -71,7 +71,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             _log.Debug("Clearing log entries from provider");
             _recentLogEntryProvider.Clear();
 
-            const int batchSize = 50;
+            const int batchSize = 25;
 
             _log.Debug(string.Format("Breaking log dump into batches of {0}", batchSize));
 
