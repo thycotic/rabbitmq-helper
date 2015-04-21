@@ -46,6 +46,25 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 {
                     Total = result.LocalAccounts.Count()
                 };
+                if (paging.PageCount == 0)
+                {
+                    _log.Info(string.Format("{0} : {1}", request.Input.NameForLog, string.Join(Environment.NewLine, result.Logs)));
+
+                    var response = new ScanLocalAccountResponse
+                    {
+                        ComputerId = request.ComputerId,
+                        DiscoverySourceId = request.DiscoverySourceId,
+                        LocalAccounts = result.LocalAccounts.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        Success = result.Success,
+                        ErrorCode = result.ErrorCode,
+                        StatusMessages = { },
+                        Logs = result.Logs,
+                        ErrorMessage = result.ErrorMessage,
+                        BatchId = batchId,
+                        Paging = paging
+                    };
+                    TryReturnResult(request, response, paging);
+                }
                 Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
                 {
                     var response = new ScanLocalAccountResponse
@@ -61,22 +80,27 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                         BatchId = batchId,
                         Paging = paging
                     };
-                    try
-                    {
-                        _log.Info(string.Format("{0}: Send Local Account Results", request.Input.NameForLog));
-                        _responseBus.Execute(response);
-                        paging.Skip = paging.NextSkip;
-                    }
-                    catch (Exception exception)
-                    {
-                        _log.Info(string.Format("{0}: Send Local Account Results Failed", request.Input.NameForLog),
-                            exception);
-                    }
+                    TryReturnResult(request, response, paging);
                 });
             }
             catch (Exception e)
             {
                 _log.Info(string.Format("{0} : Scan Local Accounts Failed", request.Input.ComputerName), e);
+            }
+        }
+
+        private void TryReturnResult(ScanLocalAccountMessage request, ScanLocalAccountResponse response, Paging paging)
+        {
+            try
+            {
+                _log.Info(string.Format("{0}: Send Local Account Results", request.Input.NameForLog));
+                _responseBus.Execute(response);
+                paging.Skip = paging.NextSkip;
+            }
+            catch (Exception exception)
+            {
+                _log.Info(string.Format("{0}: Send Local Account Results Failed", request.Input.NameForLog),
+                    exception);
             }
         }
     }
