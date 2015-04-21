@@ -1,8 +1,6 @@
 ﻿namespace Thycotic.Messages.Common.Tests
 {
-    internal class BlockingConsumableDummy : IBlockingConsumable
+    internal class BlockingConsumableDummy : BlockingConsumableBase
     {
-        public int Version { get; set; }
-        public int RetryCount { get; set; }
     }
 }

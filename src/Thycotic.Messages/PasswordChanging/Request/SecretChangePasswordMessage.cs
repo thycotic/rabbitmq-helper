@@ -6,7 +6,7 @@ namespace Thycotic.Messages.PasswordChanging.Request
     /// <summary>
     /// Secret heartbeat message
     /// </summary>
-    public class SecretChangePasswordMessage : IBasicConsumable
+    public class SecretChangePasswordMessage : BasicConsumableBase
     {
         /// <summary>
         /// Gets or sets the password information provider.
@@ -21,20 +21,5 @@ namespace Thycotic.Messages.PasswordChanging.Request
         /// </summary>
         public int SecretId { get; set; }
 
-        /// <summary>
-        /// Gets the version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
-        public int Version { get; set; }
-
-        /// <summary>
-        /// Gets or sets the retry count.
-        /// </summary>
-        /// <value>
-        /// The retry count.
-        /// </value>
-        public int RetryCount { get; set; }
     }
 }

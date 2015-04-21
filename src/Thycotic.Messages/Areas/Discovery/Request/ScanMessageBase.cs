@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.Discovery.Request
     /// <summary>
     /// Scan Message Base
     /// </summary>
-    public abstract class ScanMessageBase : IBasicConsumable
+    public abstract class ScanMessageBase : BasicConsumableBase
     {
         /// <summary>
         /// Discovery Source Id
@@ -16,15 +16,5 @@ namespace Thycotic.Messages.Areas.Discovery.Request
         /// Discover Scannery Id
         /// </summary>
         public int DiscoveryScannerId { get; set; }
-
-        /// <summary>
-        /// Version
-        /// </summary>
-        public int Version { get; set; }
-
-        /// <summary>
-        /// Retry Count
-        /// </summary>
-        public int RetryCount { get; set; }
     }
 }

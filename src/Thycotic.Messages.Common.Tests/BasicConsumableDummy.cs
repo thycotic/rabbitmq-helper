@@ -1,8 +1,7 @@
 ﻿namespace Thycotic.Messages.Common.Tests
 {
-    internal class BasicConsumableDummy : IBasicConsumable
+    internal class BasicConsumableDummy : BasicConsumableBase
     {
-        public int Version { get; set; }
-        public int RetryCount { get; set; }
+
     }
 }

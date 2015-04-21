@@ -137,6 +137,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicConsumableBase.cs" />
+    <Compile Include="BlockingConsumableBase.cs" />
     <Compile Include="BlockingConsumerResponseTypes.cs" />
     <Compile Include="IBasicConsumable.cs" />
     <Compile Include="IBlockingConsumable.cs" />

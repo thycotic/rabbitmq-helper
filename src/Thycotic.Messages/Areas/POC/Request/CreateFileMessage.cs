@@ -5,7 +5,7 @@ namespace Thycotic.Messages.Areas.POC.Request
     /// <summary>
     /// Chain message
     /// </summary>
-    public class CreateFileMessage : IBasicConsumable
+    public class CreateFileMessage : BasicConsumableBase
     {
         /// <summary>
         /// Gets or sets the path.
@@ -14,22 +14,5 @@ namespace Thycotic.Messages.Areas.POC.Request
         /// The path.
         /// </value>
         public string FileName { get; set; }
-
-        /// <summary>
-        /// Gets the version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
-        public int Version { get; set; }
-
-        /// <summary>
-        /// Gets or sets the retry count.
-        /// </summary>
-        /// <value>
-        /// The retry count.
-        /// </value>
-        public int RetryCount { get; set; }
-        
     }
 }

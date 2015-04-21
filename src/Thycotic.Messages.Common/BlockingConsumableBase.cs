@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Thycotic.Messages.Common
+﻿namespace Thycotic.Messages.Common
 {
     /// <summary>
-    /// Interface for a consumable
+    /// Blocking consumable base
     /// </summary>
-    public interface IConsumable
+    public abstract class BlockingConsumableBase : IBlockingConsumable
     {
         /// <summary>
         /// Gets the version.
@@ -13,6 +11,6 @@ namespace Thycotic.Messages.Common
         /// <value>
         /// The version.
         /// </value>
-        int Version { get; }
+        public int Version { get; set; }
     }
 }

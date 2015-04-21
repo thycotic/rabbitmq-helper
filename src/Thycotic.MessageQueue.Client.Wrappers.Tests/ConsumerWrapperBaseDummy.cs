@@ -11,7 +11,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         }
 
         public int Version { get; private set; }
-        public int RetryCount { get; set; }
     }
 
     internal class ConsumerWrapperBaseDummy : ConsumerWrapperBase<RequestDummy, object>
