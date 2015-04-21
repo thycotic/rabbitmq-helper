@@ -15,7 +15,7 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class ExchangeDictionary : IExchangeDictionary
     {
-        private readonly ConcurrentDictionary<RoutingSlip, MessageQueue> _data = new ConcurrentDictionary<RoutingSlip, MessageQueue>();
+        private readonly ConcurrentDictionary<RoutingSlip, IMessageQueue> _data = new ConcurrentDictionary<RoutingSlip, IMessageQueue>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ExchangeDictionary));
 
@@ -76,10 +76,11 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
         /// <param name="routingSlip">The routing slip.</param>
+        /// <param name="requeue"></param>
         /// <exception cref="System.ApplicationException">Delivery tag was not found</exception>
-        public void NegativelyAcknowledge(ulong deliveryTag, RoutingSlip routingSlip)
+        public void NegativelyAcknowledge(ulong deliveryTag, RoutingSlip routingSlip, bool requeue)
         {
-            _data[routingSlip].NegativelyAcknoledge(deliveryTag);
+            _data[routingSlip].NegativelyAcknoledge(deliveryTag, requeue);
         }
 
         private static string GetPersistPath()

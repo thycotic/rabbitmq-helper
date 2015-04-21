@@ -85,7 +85,7 @@ namespace Thycotic.MemoryMq.Subsystem
                         {
                             _log.Error("Failed to send message to client. Requeing message", ex);
 
-                            mailbox.Queue.NegativelyAcknoledge(body.DeliveryTag);
+                            mailbox.Queue.NegativelyAcknoledge(body.DeliveryTag, true);
                         }
                         
 

@@ -61,7 +61,7 @@ namespace Thycotic.MemoryMq.Tests
             const ulong deliveryTag = 0;
             var exchange = Guid.NewGuid().ToString();
             var routingKey = Guid.NewGuid().ToString();
-            server.BasicNack(deliveryTag, exchange, routingKey, false);
+            server.BasicNack(deliveryTag, exchange, routingKey, false, false);
         }
 
         [When(@"the method Dispose on IMemoryMqWcfService (\w+) is called")]
@@ -112,7 +112,7 @@ namespace Thycotic.MemoryMq.Tests
         public void ThenTheMethodNegativelyAcknowledgeOnIExchangeDictionarySubstituteIsCalled(string exchangeName)
         {
             var messages = this.GetScenarioContext().Get<IExchangeDictionary>(exchangeName);
-            messages.Received().NegativelyAcknowledge(Arg.Any<ulong>(), Arg.Any<RoutingSlip>());
+            messages.Received().NegativelyAcknowledge(Arg.Any<ulong>(), Arg.Any<RoutingSlip>(), Arg.Any<bool>());
         }
 
         [Then(@"the method Dispose on IMessageDispatcher substitute (\w+) is called")]

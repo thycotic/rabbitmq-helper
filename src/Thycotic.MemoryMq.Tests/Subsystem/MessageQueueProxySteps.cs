@@ -40,7 +40,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         public void WhenTheMethodNegativelyAcknoledgeOnMessageQueueProxyIsCalled(string messageQueueProxyName)
         {
             var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
-            messageQueueProxy.NegativelyAcknoledge(7);
+            messageQueueProxy.NegativelyAcknoledge(7, false);
         }
 
         [Then(@"the scenario IMessageQueueProxy (\w+) is empty")]
@@ -63,7 +63,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         public void ThenTheMethodNegativelyAcknoledgeOnIMessageQueueSubstituteIsCalled(string messageQueueName)
         {
             var messageQueue = this.GetScenarioContext().Get<IMessageQueue>(messageQueueName);
-            messageQueue.ReceivedWithAnyArgs().NegativelyAcknoledge(Arg.Any<ulong>());
+            messageQueue.ReceivedWithAnyArgs().NegativelyAcknoledge(Arg.Any<ulong>(), Arg.Any<bool>());
         }
 
     }

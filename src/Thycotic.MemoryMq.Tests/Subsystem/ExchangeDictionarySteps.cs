@@ -99,7 +99,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             var contentObject = this.GetScenarioContext().Get<MemoryMqDeliveryEventArgs>(contentObjectName);
             var routingSlip = this.GetScenarioContext().Get<RoutingSlip>(routingSlipName);
 
-            exchangeDictionary.NegativelyAcknowledge(contentObject.DeliveryTag, routingSlip);
+            exchangeDictionary.NegativelyAcknowledge(contentObject.DeliveryTag, routingSlip, true);
 
         }
 

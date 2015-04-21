@@ -56,14 +56,14 @@ namespace Thycotic.MemoryMq.Subsystem
             return _queue.TryDequeue(out body);
         }
 
-
         /// <summary>
         /// Negatively the acknowledges the specified delivery tag.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
-        public void NegativelyAcknoledge(ulong deliveryTag)
+        /// <param name="requeue">if set to <c>true</c> [requeue].</param>
+        public void NegativelyAcknoledge(ulong deliveryTag, bool requeue)
         {
-            _queue.NegativelyAcknoledge(deliveryTag);
+            _queue.NegativelyAcknoledge(deliveryTag, requeue);
         }
     }
 }

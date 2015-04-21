@@ -170,7 +170,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <exception cref="System.NotImplementedException"></exception>
         public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
-            _server.BasicNack(deliveryTag, exchange, routingKey, multiple);
+            _server.BasicNack(deliveryTag, exchange, routingKey, multiple, requeue);
         }
 
         /// <summary>

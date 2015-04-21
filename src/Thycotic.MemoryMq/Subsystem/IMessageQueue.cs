@@ -45,7 +45,8 @@
         /// Negatively acknowledges the specified delivery tag.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
-        void NegativelyAcknoledge(ulong deliveryTag);
+        /// <param name="requeue">if set to <c>true</c> [requeue].</param>
+        void NegativelyAcknoledge(ulong deliveryTag, bool requeue);
 
         /// <summary>
         /// Negatively acknowledge all pending delivery tags.

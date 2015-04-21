@@ -128,7 +128,8 @@ namespace Thycotic.MemoryMq.Subsystem
         /// Negatively the acknoledges the specified delivery tag.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
-        public void NegativelyAcknoledge(ulong deliveryTag)
+        /// <param name="requeue"></param>
+        public void NegativelyAcknoledge(ulong deliveryTag, bool requeue)
         {
             lock (_unackedMessages)
             {
@@ -138,6 +139,9 @@ namespace Thycotic.MemoryMq.Subsystem
                     throw new ApplicationException(string.Format("Failed to negatively acknowledge delivery tag {0}",
                         deliveryTag));
                 }
+
+                //no need to requeue
+                if (!requeue) return;
 
                 eventArgs.Redelivered = true;
 
@@ -163,7 +167,7 @@ namespace Thycotic.MemoryMq.Subsystem
             {
                 try
                 {
-                    NegativelyAcknoledge(dt);
+                    NegativelyAcknoledge(dt, true);
                 }
                 catch (Exception)
                 {

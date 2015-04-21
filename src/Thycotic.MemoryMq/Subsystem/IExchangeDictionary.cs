@@ -44,8 +44,9 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
         /// <param name="routingSlip">The routing slip.</param>
+        /// <param name="requeue"></param>
         /// <exception cref="System.ApplicationException">Delivery tag was not found</exception>
-        void NegativelyAcknowledge(ulong deliveryTag, RoutingSlip routingSlip);
+        void NegativelyAcknowledge(ulong deliveryTag, RoutingSlip routingSlip, bool requeue);
 
         /// <summary>
         /// Restores the persisted messages from disk to memory.

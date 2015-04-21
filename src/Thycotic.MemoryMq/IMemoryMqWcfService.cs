@@ -54,8 +54,9 @@ namespace Thycotic.MemoryMq
         /// <param name="exchange">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
+        /// <param name="requeue">if set to <c>true</c> [requeue].</param>
         [OperationContract(IsOneWay = true)]
-        void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple);
+        void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue);
 
 
         
