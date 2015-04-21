@@ -74,32 +74,31 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="body">The body.</param>
         private void ExecuteMessage(ulong deliveryTag, string exchangeName, string routingKey, ICommonModelProperties properties, byte[] body)
         {
+            var responseType = BlockingConsumerResponseTypes.Success;
+            object response;
+
             try
             {
 
-                var message = _objectSerializer.ToObject<TRequest>(_messageEncryptor.Decrypt(exchangeName,body));
-                var responseType = BlockingConsumerResponseTypes.Success;
-                object response;
+                TRequest message;
+
+                try
+                {
+                    message = _objectSerializer.ToObject<TRequest>(_messageEncryptor.Decrypt(exchangeName, body));
+
+                }
+                catch (Exception ex)
+                {
+                    _log.Error("Failed to decrypt or deserialize message", ex);
+
+                    throw;
+                }
 
                 using (var handler = _handlerFactory())
                 {
-                    try
-                    {
-                        response = handler.Value.Consume(message);
+                    response = handler.Value.Consume(message);
 
-                        _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
-                    }
-                    catch (Exception ex)
-                    {
-                        _log.Error(ex.Message, ex);
-                        response = new BlockingConsumerError { Message = ex.Message };
-                        responseType = BlockingConsumerResponseTypes.Error;
-                    }
-                }
-
-                if (properties.IsReplyToPresent())
-                {
-                    Respond(exchangeName, properties.ReplyTo, response, properties.CorrelationId, responseType);
+                    _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
                 }
 
                 CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, false);
@@ -109,29 +108,46 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 _log.Error(string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TRequest)), ex.Message), ex);
 
                 CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, false, requeue: false);
+
+                response = new BlockingConsumerError { Message = ex.Message };
+                responseType = BlockingConsumerResponseTypes.Error;
+            }
+
+            if (properties.IsReplyToPresent())
+            {
+                Respond(exchangeName, properties.ReplyTo, response, properties.CorrelationId, responseType);
             }
         }
 
         private void Respond(string originatingExchangeName, string replyTo, object response, string correlationId, string type)
         {
-            var routingKey = replyTo;
-
-            using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
+            try
             {
-                channel.ConfirmSelect();
+                var routingKey = replyTo;
 
-                var properties = channel.CreateBasicProperties();
+                using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
+                {
+                    channel.ConfirmSelect();
 
-                properties.CorrelationId = correlationId;
-                properties.Type = type;
+                    var properties = channel.CreateBasicProperties();
 
-                //reply-to's do not use exchange names since there is a reply-to address
-                var replyToExchangeName = string.Empty;
+                    properties.CorrelationId = correlationId;
+                    properties.Type = type;
 
-                channel.BasicPublish(replyToExchangeName, routingKey, DefaultConfigValues.Model.Publish.NotMandatory, DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties,
-                    _messageEncryptor.Encrypt(originatingExchangeName, _objectSerializer.ToBytes(response)));
+                    //reply-to's do not use exchange names since there is a reply-to address
+                    var replyToExchangeName = string.Empty;
 
-                channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
+                    channel.BasicPublish(replyToExchangeName, routingKey, DefaultConfigValues.Model.Publish.NotMandatory,
+                        DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties,
+                        _messageEncryptor.Encrypt(originatingExchangeName, _objectSerializer.ToBytes(response)));
+
+                    channel.WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Failed to respond to caller", ex);
             }
         }
     }

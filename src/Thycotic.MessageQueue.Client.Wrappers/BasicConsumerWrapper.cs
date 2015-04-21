@@ -70,27 +70,45 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         {
             const bool multiple = false;
 
+            var requeue = true;
+
             using (LogContext.Create("Processing message..."))
             {
                 try
                 {
-                    var message = _objectSerializer.ToObject<TRequest>(_messageEncryptor.Decrypt(exchangeName, body));
+                    TRequest message;
+                    try
+                    {
+                        message = _objectSerializer.ToObject<TRequest>(_messageEncryptor.Decrypt(exchangeName, body));
+
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Error("Failed to decrypt or deserialize message. Message will not be requeued", ex);
+
+                        requeue = false;
+
+                        throw;
+                    }
 
                     using (var handler = _handlerFactory())
                     {
                         handler.Value.Consume(message);
                     }
-
+                    
                     _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
 
+                    
                     CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, multiple);
 
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TRequest)), ex.Message), ex);
+                    _log.Error(
+                        string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TRequest)),
+                            ex.Message), ex);
 
-                    CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, multiple, requeue: true);
+                    CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, multiple, requeue);
                 }
             }
         }
