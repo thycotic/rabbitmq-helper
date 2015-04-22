@@ -46,7 +46,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 {
                     Total = result.Computers.Count()
                 };
-                Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
+                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
                     var response = new ScanMachineResponse
                     {
