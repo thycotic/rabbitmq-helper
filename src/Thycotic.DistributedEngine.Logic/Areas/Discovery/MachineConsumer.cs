@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Thycotic.Discovery.Core.Results;
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -46,35 +47,48 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 {
                     Total = result.Computers.Count()
                 };
-                Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
+                if (result.Computers == null || !result.Computers.Any())
                 {
-                    var response = new ScanMachineResponse
+                    Respond(request, result, paging, batchId);
+                }
+                else
+                {
+                    Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
                     {
-                        ComputerItems = result.Computers.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                        DiscoverySourceId = request.DiscoverySourceId,
-                        Success = result.Success,
-                        ErrorCode = result.ErrorCode,
-                        StatusMessages = { },
-                        Logs = result.Logs,
-                        ErrorMessage = result.ErrorMessage,
-                        BatchId = batchId,
-                        Paging = paging
-                    };
-                    try
-                    {
-                        _log.Info(string.Format("{0} : Send Machine Results", request.Input.HostRange));
-                        _responseBus.Execute(response);
-                        paging.Skip = paging.NextSkip;
-                    }
-                    catch (Exception exception)
-                    {
-                        _log.Info(string.Format("{0} : Send Machine Results Failed", request.Input.HostRange), exception);
-                    }
-                });
+                        Respond(request, result, paging, batchId);
+                    });
+                }
             }
             catch (Exception e)
             {
                 _log.Info(string.Format("{0} : Scan Machines Failed using ScannerId: {1}", request.Input.HostRange, request.DiscoveryScannerId), e);
+            }
+        }
+
+        private void Respond(ScanMachineMessage request, ScanMachineResult result, Paging paging, Guid batchId)
+        {
+            var response = new ScanMachineResponse
+            {
+                ComputerItems = result.Computers.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                DiscoverySourceId = request.DiscoverySourceId,
+                HostRangeName = result.RangeName,
+                Success = result.Success,
+                ErrorCode = result.ErrorCode,
+                StatusMessages = { },
+                Logs = result.Logs,
+                ErrorMessage = result.ErrorMessage,
+                BatchId = batchId,
+                Paging = paging
+            };
+            try
+            {
+                _log.Info(string.Format("{0} : Send Machine Results", request.Input.HostRange));
+                _responseBus.Execute(response);
+                paging.Skip = paging.NextSkip;
+            }
+            catch (Exception exception)
+            {
+                _log.Info(string.Format("{0} : Send Machine Results Failed", request.Input.HostRange), exception);
             }
         }
     }
