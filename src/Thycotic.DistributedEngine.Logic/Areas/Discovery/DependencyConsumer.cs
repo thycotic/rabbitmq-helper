@@ -47,6 +47,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 {
                     Total = result.DependencyItems.Count()
                 };
+                var truncatedLog = result.Logs.Truncate();
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
                     var response = new ScanDependencyResponse
@@ -57,7 +58,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                         Success = result.Success,
                         ErrorCode = result.ErrorCode,
                         StatusMessages = { },
-                        Logs = result.Logs,
+                        Logs = truncatedLog,
                         ErrorMessage = result.ErrorMessage,
                         BatchId = batchId,
                         Paging = paging,
