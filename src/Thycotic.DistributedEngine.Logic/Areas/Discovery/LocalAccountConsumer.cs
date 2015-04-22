@@ -55,10 +55,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     Total = result.LocalAccounts.Count(),
                     Take = 3
                 };
-                if (paging.PageCount == 0)
-                {
-                    _log.Info(string.Format("{0} : {1}", request.Input.NameForLog, string.Join(Environment.NewLine, result.Logs)));
 
+                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
+                {
                     var response = new ScanLocalAccountResponse
                     {
                         ComputerId = request.ComputerId,
@@ -72,28 +71,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                         BatchId = batchId,
                         Paging = paging
                     };
-                    TryReturnResult(request, response, paging);
-                }
-                Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
-                {
-                    var response = new ScanLocalAccountResponse
-                    {
-                        ComputerId = request.ComputerId,
-                        DiscoverySourceId = request.DiscoverySourceId,
-                        LocalAccounts = result.LocalAccounts.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                        Success = result.Success,
-                        ErrorCode = result.ErrorCode,
-                        StatusMessages = { },
-                        Logs = new List<Thycotic.Discovery.Core.Results.DiscoveryLog>(){},//result.Logs.Skip(paging.Skip).Take(paging.Take).ToList(),
-                        ErrorMessage = result.ErrorMessage,
-                        BatchId = batchId,
-                        Paging = paging
-                    };
 
                     if (!response.Paging.HasNext)
                     {
-                        
-                        var logBytes = GetBytes(string.Join(TOKEN_SEPARATOR, result.Logs.Select(log=>log.Message)));
+
+                        var logBytes = GetBytes(string.Join(TOKEN_SEPARATOR, result.Logs.Select(log => log.Message)));
                         if (logBytes.Length < _maxLogByteSize)
                         {
                             response.Logs = result.Logs;
@@ -103,12 +85,22 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                             var logString = GetString(logBytes);
                             var logs = new StringSplitter().Split(TOKEN_SEPARATOR, logString).ToList();
                             logs.Add("...(Logs truncated due to size limitations)");
-                            var logList = logs.Select(log => new DiscoveryLog {Message = log}).ToList();
+                            var logList = logs.Select(log => new DiscoveryLog { Message = log }).ToList();
                             response.Logs = logList;
                         }
                     }
 
-                    TryReturnResult(request, response, paging);
+                    try
+                    {
+                        _log.Info(string.Format("{0}: Send Local Account Results", request.Input.NameForLog));
+                        _responseBus.Execute(response);
+                        paging.Skip = paging.NextSkip;
+                    }
+                    catch (Exception exception)
+                    {
+                        _log.Info(string.Format("{0}: Send Local Account Results Failed", request.Input.NameForLog),
+                            exception);
+                    }
                 });
             }
             catch (Exception e)
@@ -129,21 +121,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             char[] chars = new char[bytes.Length / sizeof(char)];
             System.Buffer.BlockCopy(bytes, 0, chars, 0, _maxLogByteSize);
             return new string(chars);
-        }
-
-        private void TryReturnResult(ScanLocalAccountMessage request, ScanLocalAccountResponse response, Paging paging)
-        {
-            try
-            {
-                _log.Info(string.Format("{0}: Send Local Account Results", request.Input.NameForLog));
-                _responseBus.Execute(response);
-                paging.Skip = paging.NextSkip;
-            }
-            catch (Exception exception)
-            {
-                _log.Info(string.Format("{0}: Send Local Account Results Failed", request.Input.NameForLog),
-                    exception);
-            }
         }
     }
 }

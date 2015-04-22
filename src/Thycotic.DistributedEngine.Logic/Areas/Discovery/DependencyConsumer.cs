@@ -47,7 +47,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 {
                     Total = result.DependencyItems.Count()
                 };
-                Enumerable.Range(0, paging.PageCount).ToList().ForEach(x =>
+                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
                     var response = new ScanDependencyResponse
                     {
