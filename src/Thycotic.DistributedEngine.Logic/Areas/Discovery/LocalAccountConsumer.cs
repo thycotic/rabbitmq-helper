@@ -51,7 +51,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 var paging = new Paging
                 {
                     Total = result.LocalAccounts.Count(),
-                    Take = 3
+                    Take = request.Input.PageSize
                 };
                 var truncatedLog = result.Logs.Truncate();
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
@@ -72,7 +72,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 
                     try
                     {
-                        _log.Info(string.Format("{0}: Send Local Account Results", request.Input.NameForLog));
+                        _log.Info(string.Format("{0}: Send Local Account Results Batch {1} of {2}", request.Input.NameForLog, x + 1, paging.BatchCount));
                         _responseBus.Execute(response);
                         paging.Skip = paging.NextSkip;
                     }

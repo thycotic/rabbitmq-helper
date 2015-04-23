@@ -45,7 +45,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
-                    Total = result.HostRangeItems.Count()
+                    Total = result.HostRangeItems.Count(),
+                    Take = request.Input.PageSize
                 };
                 var truncatedLog = result.Logs.Truncate();
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
@@ -64,7 +65,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     };
                     try
                     {
-                        _log.Info(string.Format("{0} : Send Host Range Results", request.Input.Domain));
+                        _log.Info(string.Format("{0} : Send Host Range Results Batch {1} of {2}", request.Input.Domain, x + 1, paging.BatchCount));
                         _responseBus.Execute(response);
                         paging.Skip = paging.NextSkip;
                     }

@@ -45,7 +45,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
-                    Total = result.Computers.Count()
+                    Total = result.Computers.Count(),
+                    Take = request.Input.PageSize
                 };
                 var truncatedLog = result.Logs.Truncate();
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
@@ -65,7 +66,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     };
                     try
                     {
-                        _log.Info(string.Format("{0} : Send Machine Results", request.Input.HostRange));
+                        _log.Info(string.Format("{0} : Send Machine Results Batch {1} of {2}", request.Input.HostRange, x + 1, paging.BatchCount));
                         _responseBus.Execute(response);
                         paging.Skip = paging.NextSkip;
                     }

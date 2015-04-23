@@ -45,7 +45,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
-                    Total = result.DependencyItems.Count()
+                    Total = result.DependencyItems.Count(),
+                    Take = request.Input.PageSize
                 };
                 var truncatedLog = result.Logs.Truncate();
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
@@ -66,7 +67,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     };
                     try
                     {
-                        _log.Info(string.Format("{0} : Send Dependency ({1}) Results", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType)));
+                        _log.Info(string.Format("{0} : Send Dependency ({1}) Results Batch {2} of {3}", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType), x + 1, paging.BatchCount));
                         _responseBus.Execute(response);
                         paging.Skip = paging.NextSkip;
                     }
