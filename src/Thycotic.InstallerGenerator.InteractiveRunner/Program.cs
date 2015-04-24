@@ -8,7 +8,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 {
     class Program
     {
-        private const string Version = "5.0.0.6";
+        private const string Version = "5.0.0.7";
 
         private static void Main(string[] args)
         {
@@ -22,10 +22,10 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
                 //Console.WriteLine();
 
-                path = GenerateDistributedEngineMsi();
-                Console.WriteLine("Artifact generator and stored in {0}", path);
+                //path = GenerateDistributedEngineMsi();
+                //Console.WriteLine("Artifact generator and stored in {0}", path);
 
-                Console.WriteLine();
+                //Console.WriteLine();
 
                 path = GenerateDistributedEngineUpdateMsi();
                 Console.WriteLine("Artifact generator and stored in {0}", path);
