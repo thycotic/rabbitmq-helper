@@ -12,6 +12,7 @@ namespace Thycotic.InstallerGenerator.Core
         public string SourcePath { get; set; }
         public string ArtifactPath { get; set; }
         public string ArtifactName { get; set; }
+        public string ArtifactNameSuffix { get; set; }
         public string Version { get; set; }
     
         public IInstallerGeneratorStep[] Steps { get; protected set; }

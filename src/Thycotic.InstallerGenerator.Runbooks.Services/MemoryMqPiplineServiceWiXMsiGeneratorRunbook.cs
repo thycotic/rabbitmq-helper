@@ -20,7 +20,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                 throw new ArgumentException("Pipeline settings ingredients missing");
             }
 
-            ArtifactName = GetArtifactFileName(DefaultArtifactName, Version);
+            ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Version);
 
             Steps = new IInstallerGeneratorStep[]
             {

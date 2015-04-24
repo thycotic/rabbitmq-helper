@@ -11,7 +11,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         public const string DefaultArtifactName = "Thycotic.DistributedEngine.Service";
 
         public EngineToServerCommunication EngineToServerCommunication { get; set; }
-
+        
         public override void BakeSteps()
         {
             if (EngineToServerCommunication == null)
@@ -19,7 +19,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                 throw new ArgumentException("Engine to server communication ingredients missing.");
             }
 
-            ArtifactName = GetArtifactFileName(DefaultArtifactName, Version);
+            ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Version);
 
             Steps = new IInstallerGeneratorStep[]
             {

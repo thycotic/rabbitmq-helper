@@ -5,9 +5,11 @@ namespace Thycotic.InstallerGenerator.Core.MSI.WiX
     /// </summary>
     public abstract class WiXMsiGeneratorRunbook : InstallerGeneratorRunbook
     {
-        public static string GetArtifactFileName(string artifactName, string version)
+        public static string GetArtifactFileName(string artifactName, string suffix, string version)
         {
-            return string.Format("{0}.{1}.msi", artifactName, version);
+            return (!string.IsNullOrEmpty(suffix))
+                ? string.Format("{0}-{1}.{2}.msi", artifactName, suffix, version)
+                : string.Format("{0}.{1}.msi", artifactName, version);
         }
     }
 }
