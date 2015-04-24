@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-  <Product Id="*" Language="1033" Manufacturer="Thycotic Software Ltd" Name="Thycotic Distributed Engine Service" Version="$(var.InstallerVersion)" UpgradeCode="A45158D7-7AC9-4EE8-A739-684ED67B96FC">
+  <Product Id="*" Language="1033" Manufacturer="Thycotic Software Ltd" Name="Thycotic Distributed Engine Service Limited Updater" Version="$(var.InstallerVersion)" UpgradeCode="A45158D7-7AC9-4EE8-A739-684ED67B96FC">
     <Package InstallerVersion="200" Compressed="yes" InstallPrivileges="limited" Languages='1033'/>
 
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
