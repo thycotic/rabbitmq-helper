@@ -13,6 +13,32 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Client", "..\Thycotic.InstallerGenerator.Client\Thycotic.InstallerGenerator.Client.csproj", "{32AD995B-6A60-4136-A015-3E053E205A39}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Recipies", "Recipies", "{2E39DFBC-859B-4873-9B8A-E62704DA7FCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.DistributedEngine.Service.WiX", "Thycotic.DistributedEngine.Service.WiX", "{04626335-681F-44E0-BD23-EDD8F666A2C1}"
+	ProjectSection(SolutionItems) = preProject
+		..\Thycotic.DistributedEngine.Service.WiX\add_service_install.xsl = ..\Thycotic.DistributedEngine.Service.WiX\add_service_install.xsl
+		..\Thycotic.DistributedEngine.Service.WiX\generate_msi.cmd = ..\Thycotic.DistributedEngine.Service.WiX\generate_msi.cmd
+		..\Thycotic.DistributedEngine.Service.WiX\icon.ico = ..\Thycotic.DistributedEngine.Service.WiX\icon.ico
+		..\Thycotic.DistributedEngine.Service.WiX\Product.wxs = ..\Thycotic.DistributedEngine.Service.WiX\Product.wxs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.DistributedEngine.Service.WiX.Update", "Thycotic.DistributedEngine.Service.WiX.Update", "{0124A40D-83A3-4E80-BFA3-099FB41EA87A}"
+	ProjectSection(SolutionItems) = preProject
+		..\Thycotic.DistributedEngine.Service.WiX.Update\add_service_install.xsl = ..\Thycotic.DistributedEngine.Service.WiX.Update\add_service_install.xsl
+		..\Thycotic.DistributedEngine.Service.WiX.Update\generate_msi.cmd = ..\Thycotic.DistributedEngine.Service.WiX.Update\generate_msi.cmd
+		..\Thycotic.DistributedEngine.Service.WiX.Update\icon.ico = ..\Thycotic.DistributedEngine.Service.WiX.Update\icon.ico
+		..\Thycotic.DistributedEngine.Service.WiX.Update\Product.wxs = ..\Thycotic.DistributedEngine.Service.WiX.Update\Product.wxs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.MemoryMq.Pipeline.Service.WiX", "Thycotic.MemoryMq.Pipeline.Service.WiX", "{35BF3D00-A1C0-432A-9203-F7C2C0FC3ADB}"
+	ProjectSection(SolutionItems) = preProject
+		..\Thycotic.MemoryMq.Pipeline.Service.WiX\add_service_install.xsl = ..\Thycotic.MemoryMq.Pipeline.Service.WiX\add_service_install.xsl
+		..\Thycotic.MemoryMq.Pipeline.Service.WiX\generate_msi.cmd = ..\Thycotic.MemoryMq.Pipeline.Service.WiX\generate_msi.cmd
+		..\Thycotic.MemoryMq.Pipeline.Service.WiX\icon.ico = ..\Thycotic.MemoryMq.Pipeline.Service.WiX\icon.ico
+		..\Thycotic.MemoryMq.Pipeline.Service.WiX\Product.wxs = ..\Thycotic.MemoryMq.Pipeline.Service.WiX\Product.wxs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +68,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{04626335-681F-44E0-BD23-EDD8F666A2C1} = {2E39DFBC-859B-4873-9B8A-E62704DA7FCC}
+		{0124A40D-83A3-4E80-BFA3-099FB41EA87A} = {2E39DFBC-859B-4873-9B8A-E62704DA7FCC}
+		{35BF3D00-A1C0-432A-9203-F7C2C0FC3ADB} = {2E39DFBC-859B-4873-9B8A-E62704DA7FCC}
 	EndGlobalSection
 EndGlobal
