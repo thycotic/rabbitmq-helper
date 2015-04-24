@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Management;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Thycotic.WindowsService.Bootstraper
@@ -64,7 +65,13 @@ namespace Thycotic.WindowsService.Bootstraper
 
         static void Main(string[] args)
         {
-            const string serviceName = "Thycotic.DistributedEngine.Service";
+            var serviceName = args[0];
+            var msiPath = args[1];
+
+            if (!File.Exists(msiPath))
+            {
+                throw new FileNotFoundException("MSI does not exist");
+            }
 
             InteractiveWithService(serviceName, service =>
             {
@@ -78,11 +85,16 @@ namespace Thycotic.WindowsService.Bootstraper
 
             Console.WriteLine("Service stopped");
 
+            CleanDirectory(Directory.GetCurrentDirectory());
 
-            //Directory.CreateDirectory("dummyaction");
-            //File.Create(Path.Combine("dummyaction", Guid.NewGuid().ToString()));
-            //Task.Delay(TimeSpan.FromSeconds(15)).Wait();
+            var processStartInfo = new ProcessStartInfo("msiexec")
+            {
+                Arguments = string.Format("/i {0} /log update.log", msiPath)
+            };
 
+
+            Process.Start(processStartInfo);
+            
             //Configuration configuration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Path.Combine(parentDirectory.ToString(), "SecretServerAgentService.exe"));
             //configuration.AppSettings.Settings["RPCAgentVersion"].Value = args[0];
             //configuration.Save();
@@ -99,6 +111,15 @@ namespace Thycotic.WindowsService.Bootstraper
             }
 
             Console.WriteLine("Service started");
+        }
+
+        private static void CleanDirectory(string path)
+        {
+            var directoryInfo = new DirectoryInfo(path);
+
+            directoryInfo.GetFiles().ToList().ForEach(f => f.Delete());
+
+            directoryInfo.GetDirectories().ToList().ForEach(d => d.Delete(true));
         }
     }
 }
