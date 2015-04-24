@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
+    //TODO: Log4net
+    //TODO: Improve checking for service state
+    //TODO: Hook into engine
+    
     public class Program
     {
         static ManagementObject GetManagementObject(ManagementPath computerPath)
@@ -21,7 +25,7 @@ namespace Thycotic.WindowsService.Bootstraper
             var computerPath = Win32Service.GetLocalServiceManagementPath(serviceName);
             var managementObject = GetManagementObject(new ManagementPath(computerPath));
 
-            Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+            //Task.Delay(TimeSpan.FromSeconds(5)).Wait();
 
             managementObject.Scope.Connect();
 
@@ -89,7 +93,7 @@ namespace Thycotic.WindowsService.Bootstraper
 
             var processStartInfo = new ProcessStartInfo("msiexec")
             {
-                Arguments = string.Format("/i {0} /log update.log", msiPath)
+                Arguments = string.Format("/i {0} /qn /log update.log", msiPath)
             };
 
 
