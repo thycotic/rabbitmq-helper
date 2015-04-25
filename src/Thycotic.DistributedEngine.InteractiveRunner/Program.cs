@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using NSubstitute;
-using Thycotic.AppCore;
 using Thycotic.DistributedEngine.Service;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Pipeline.Service;
@@ -164,18 +163,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
             var staticIdentityGuidProvider = Substitute.For<IIdentityGuidProvider>();
             staticIdentityGuidProvider.IdentityGuid.Returns(staticIdentityGuid);
-            engineService.IoCConfigurator.IdentityGuidProvider = staticIdentityGuidProvider;
-
-            var configurationProvider = Substitute.For<IConfigurationProvider>();
-            ServiceLocator.ConfigurationProvider = configurationProvider;
-
-            var configuration = Substitute.For<IConfiguration>();
-            configuration.FipsEnabled.Returns(false);
-
-            configurationProvider.GetCurrentConfiguration().Returns(configuration);
-
-
-
+            engineService.IoCConfigurator.IdentityGuidProvider = staticIdentityGuidProvider;            
         }
     }
 }

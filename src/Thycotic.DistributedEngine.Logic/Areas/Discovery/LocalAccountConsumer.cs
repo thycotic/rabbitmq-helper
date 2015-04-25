@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using Thycotic.AppCore;
-using Thycotic.Discovery.Core.Results;
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;

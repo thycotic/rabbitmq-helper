@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Thycotic.AppCore.Federator;
+﻿using System.Collections.Generic;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.PasswordChanging.Request;
-using Thycotic.Messages.PasswordChanging.Response;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordChanging
 {
@@ -36,7 +31,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordC
 
             Action = parameters =>
             {
-                _log.Info("Posting message to exchange");
+                _log.Info("DEPRECATED - DOES NOTHING. Posting message to exchange");
 
                 string server;
                 string username;
@@ -47,34 +42,14 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordC
                 if (!parameters.TryGet("password", out password)) return;
                 if (!parameters.TryGet("newpassword", out newPassword)) return;
 
-                var message = new SecretChangePasswordMessage
-                {
-                    PasswordInfoProvider =
-                        new GenericPasswordInfoProvider
-                        {
-                            PasswordTypeName = "Thycotic.AppCore.Federator.SqlAccountFederator",
-                            PasswordTypeId = 2
-                        }
-                };
+               
 
                 var itemValues = new Dictionary<string, string>();
                 itemValues["server"] = server;
                 itemValues["username"] = username;
                 itemValues["password"] = password;
 
-                message.PasswordInfoProvider.ItemValues = itemValues;
-                message.PasswordInfoProvider["server"] = server;
-                message.PasswordInfoProvider["username"] = username;
-                message.PasswordInfoProvider["password"] = password;
-                message.PasswordInfoProvider.NewPassword = newPassword;
-                try
-                {
-                    _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
-                }
-                catch (Exception ex)
-                {
-                    _log.Error("Password Change failed", ex);
-                }
+               
 
 
                 _log.Info("Posting completed");

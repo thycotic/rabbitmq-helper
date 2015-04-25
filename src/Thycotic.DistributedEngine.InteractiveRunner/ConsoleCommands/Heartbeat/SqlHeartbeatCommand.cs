@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Thycotic.AppCore.Federator;
-using Thycotic.Logging;
+﻿using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.Heartbeat.Request;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
 {

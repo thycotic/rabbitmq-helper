@@ -15,7 +15,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
     public class SecretTestDependencyConsumer : IBlockingConsumer<SecretTestDependencyMessage, SecretTestDependencyResponse>
     {
         private readonly IResponseBus _responseBus;
-        private readonly ILogWriter _log = Log.Get(typeof(SecretChangePasswordConsumer));
+        private readonly ILogWriter _log = Log.Get(typeof(SecretTestDependencyConsumer));
 
         /// <summary>
         /// 

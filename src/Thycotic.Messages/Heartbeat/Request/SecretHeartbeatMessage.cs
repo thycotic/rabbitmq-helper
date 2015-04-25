@@ -1,5 +1,4 @@
-﻿using Thycotic.AppCore.Federator;
-using Thycotic.Messages.Common;
+﻿using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.Messages.Heartbeat.Request

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Linq;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.General;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
-using Thycotic.ihawu.Business.Federator;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.Messages.Heartbeat.Request;
 using Thycotic.PasswordChangers;
-using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
 {
@@ -18,7 +14,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
     public class SecretHeartbeatConsumer : IBasicConsumer<SecretHeartbeatMessage>
     {
         private readonly IResponseBus _responseBus;
-        private readonly FederatorProvider _federatorProvider = new FederatorProvider();
 
         private readonly ILogWriter _log = Log.Get(typeof(SecretHeartbeatConsumer));
 
