@@ -34,7 +34,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
 
             Action = parameters =>
             {
-                _log.Info("Posting message to exchange");
+                _log.Info("DEPRECATED - CURRENTLY DOES NOTHING");
 
                 string server;
                 string username;
@@ -43,38 +43,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
                 if (!parameters.TryGet("username", out username)) return;
                 if (!parameters.TryGet("password", out password)) return;
 
-                var message = new SecretHeartbeatMessage
-                {
-                    PasswordInfoProvider =
-                        new GenericPasswordInfoProvider
-                        {
-                            PasswordTypeName = "Thycotic.AppCore.Federator.SqlAccountFederator",
-                            PasswordTypeId = 2
-                        }
-                };
-
-                var itemValues = new Dictionary<string, string>();
-                itemValues["server"] = server;
-                itemValues["username"] = username;
-                itemValues["password"] = password;
-
-                message.PasswordInfoProvider.ItemValues = itemValues;
-                message.PasswordInfoProvider["server"] = server;
-                message.PasswordInfoProvider["username"] = username;
-                message.PasswordInfoProvider["password"] = password;
-                try
-                {
-
-                    _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
-                    //if (!response.Success)
-                    //{
-                    //    _log.Error(response.StatusMessages.First());
-                    //}
-                }
-                catch (Exception ex)
-                {
-                    _log.Error("Heartbeat failed", ex);
-                }
+               
 
 
                 _log.Info("Posting completed");

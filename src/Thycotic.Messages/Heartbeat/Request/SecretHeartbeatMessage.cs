@@ -1,5 +1,6 @@
 ﻿using Thycotic.AppCore.Federator;
 using Thycotic.Messages.Common;
+using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.Messages.Heartbeat.Request
 {
@@ -14,7 +15,7 @@ namespace Thycotic.Messages.Heartbeat.Request
         /// <value>
         /// The password information provider.
         /// </value>
-        public IPasswordInfoProvider PasswordInfoProvider { get; set; }
+        public IVerifyCredentialsInfo VerifyCredentialsInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the Secret Id

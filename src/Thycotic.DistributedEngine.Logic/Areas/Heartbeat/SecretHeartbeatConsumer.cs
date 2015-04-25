@@ -7,6 +7,8 @@ using Thycotic.ihawu.Business.Federator;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.Messages.Heartbeat.Request;
+using Thycotic.PasswordChangers;
+using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
 {
@@ -38,30 +40,24 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
         {
             _log.Info(string.Format("Got a heartbeat request for Secret Id {0}:", request.SecretId));
 
-            var passwordTypeName = request.PasswordInfoProvider.PasswordTypeName;
             try
             {
-                var federator = _federatorProvider.GetFederatorByType(passwordTypeName);
-                var verifyResult = federator.VerifyCurrentPasswordIsValid(request.PasswordInfoProvider);
+                var verifier =
+                    new DefaultPasswordChangerFactory().ResolveCredentialVerifier(request.VerifyCredentialsInfo);
+                var verifyResult = verifier.VerifyCredentials(request.VerifyCredentialsInfo);
 
                 var response = new SecretHeartbeatResponse
                 {
                     Success = verifyResult.Success,
                     SecretId = request.SecretId,
-                    ErrorCode = (int)verifyResult.ErrorCode,
-                    CommandExecutionResults = (verifyResult.CommandExecutionResults ?? new AppCore.Federator.CommandExecutionResult[0]).Select(cer => new CommandExecutionResult
-                    {
-                        Command = cer.Command,
-                        Response = cer.Response,
-                        Comment = cer.Comment
-                    }).ToArray(),
-                    StatusMessages = verifyResult.StatusMessages
+                    Errors = verifyResult.Errors,
+                    Log = verifyResult.Log
                 };
 
                 try
                 {
-                    _responseBus.Execute(response);
-                    _log.Info(string.Format("Heartbeat Result for Secret Id {0}: {1}", request.SecretId, verifyResult.ErrorCode));
+                    _responseBus.ExecuteAsync(response);
+                    _log.Info(string.Format("Heartbeat Result for Secret Id {0}: Success: {1}", request.SecretId, verifyResult.Success));
                 }
                 catch (Exception)
                 {
