@@ -1,9 +1,9 @@
 using System;
 using System.Management;
 
-namespace Thycotic.WindowsService.Bootstraper
+namespace Thycotic.WindowsService.Bootstraper.Wmi
 {
-	public partial interface IWin32Service
+	internal partial interface IWin32Service
 	{
 		string OriginatingNamespace { get; }
 		string ManagementClassName { get; }

@@ -6,10 +6,10 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Management;
 
-namespace Thycotic.WindowsService.Bootstraper
+namespace Thycotic.WindowsService.Bootstraper.Wmi
 {
 	[System.CodeDom.Compiler.GeneratedCode("WMI CodeDom", "3.5.0.0")]
-	public partial class Win32Service : Component, IWin32Service
+	internal partial class Win32Service : Component, IWin32Service
 	{
 		// Private property to hold the WMI namespace in which the class resides.
 		private static string CreatedWmiNamespace = "root\\cimv2";

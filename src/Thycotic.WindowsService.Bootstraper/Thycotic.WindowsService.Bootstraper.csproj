@@ -67,15 +67,17 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="IWin32Service.cs" />
-    <Compile Include="IWin32ServiceGenerated.cs" />
+    <Compile Include="Wmi\IWin32Service.cs" />
+    <Compile Include="Wmi\IWin32ServiceGenerated.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceWin32ReturnCode.cs" />
-    <Compile Include="Win32Service.cs">
+    <Compile Include="ServiceStates.cs" />
+    <Compile Include="ServiceUpdater.cs" />
+    <Compile Include="Wmi\ServiceWin32ReturnCode.cs" />
+    <Compile Include="Wmi\Win32Service.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Win32ServiceGenerated.cs">
+    <Compile Include="Wmi\Win32ServiceGenerated.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

@@ -1,8 +1,8 @@
 using System;
 
-namespace Thycotic.WindowsService.Bootstraper
+namespace Thycotic.WindowsService.Bootstraper.Wmi
 {
-	public partial interface IWin32Service : IDisposable
+	internal partial interface IWin32Service : IDisposable
 	{
 		IWin32Service[] GetDependentServices();
 		void Refresh();

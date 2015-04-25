@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Management;
 
-namespace Thycotic.WindowsService.Bootstraper
+namespace Thycotic.WindowsService.Bootstraper.Wmi
 {
-	public partial class Win32Service
+	internal partial class Win32Service
 	{
 
 		public class States

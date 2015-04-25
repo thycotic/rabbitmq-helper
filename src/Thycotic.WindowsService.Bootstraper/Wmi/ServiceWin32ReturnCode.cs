@@ -1,4 +1,4 @@
-namespace Thycotic.WindowsService.Bootstraper
+namespace Thycotic.WindowsService.Bootstraper.Wmi
 {
 	public enum ServiceWin32ReturnCode : uint
 	{
