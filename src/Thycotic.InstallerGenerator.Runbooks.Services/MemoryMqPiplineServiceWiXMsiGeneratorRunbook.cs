@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.InstallerGenerator.Core.Steps;
 using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;

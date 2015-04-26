@@ -1,4 +1,3 @@
-using System;
 using Thycotic.InstallerGenerator.Core.Steps;
 
 namespace Thycotic.InstallerGenerator.Core
