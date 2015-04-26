@@ -1,9 +1,9 @@
 ﻿namespace Thycotic.InstallerGenerator.Runbooks.Services.Ingredients
 {
     /// <summary>
-    /// Pipeline settings
+    /// Engine to server communication settings
     /// </summary>
-    public class PipelineSettings
+    public class EngineToServerCommunicationSettings
     {
         /// <summary>
         /// Gets or sets the connection string.
@@ -22,11 +22,19 @@
         public string UseSsl { get; set; }
 
         /// <summary>
-        /// Gets or sets the thumbprint.
+        /// Gets or sets the exchange identifier.
         /// </summary>
         /// <value>
-        /// The thumbprint.
+        /// The exchange identifier.
         /// </value>
-        public string Thumbprint { get; set; }
+        public string ExchangeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the organization identifier.
+        /// </summary>
+        /// <value>
+        /// The organization identifier.
+        /// </value>
+        public string OrganizationId { get; set; }
     }
 }

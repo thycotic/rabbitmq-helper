@@ -1,10 +1,17 @@
-﻿using Thycotic.InstallerGenerator.Core.Steps;
-
-namespace Thycotic.InstallerGenerator.Core
+﻿namespace Thycotic.InstallerGenerator.Core
 {
-    public interface IInstallerGenerator<in TSteps> 
-        where TSteps : IInstallerGeneratorRunbook
+    /// <summary>
+    /// Interface for an installer generator
+    /// </summary>
+    /// <typeparam name="TRunbook">The type of the runbook.</typeparam>
+    public interface IInstallerGenerator<in TRunbook> 
+        where TRunbook : IInstallerGeneratorRunbook
     {
-        string Generate(TSteps steps);
+        /// <summary>
+        /// Generates an installer using the specified runbook and returns the artifact path.
+        /// </summary>
+        /// <param name="runbook">The runbook.</param>
+        /// <returns></returns>
+        string Generate(TRunbook runbook);
     }
 }

@@ -6,15 +6,31 @@ using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
 
 namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
+    /// <summary>
+    /// Distributed engine service WiX MSI generator runbook
+    /// </summary>
     public class DistributedEngineServiceWiXMsiGeneratorRunbook : WiXMsiGeneratorRunbook
     {
+        /// <summary>
+        /// The default artifact name
+        /// </summary>
         public const string DefaultArtifactName = "Thycotic.DistributedEngine.Service";
 
-        public EngineToServerCommunication EngineToServerCommunication { get; set; }
-        
+        /// <summary>
+        /// Gets or sets the engine to server communication settings.
+        /// </summary>
+        /// <value>
+        /// The engine to server communication.
+        /// </value>
+        public EngineToServerCommunicationSettings EngineToServerCommunicationSettings { get; set; }
+
+        /// <summary>
+        /// Bakes the steps.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Engine to server communication ingredients missing.</exception>
         public override void BakeSteps()
         {
-            if (EngineToServerCommunication == null)
+            if (EngineToServerCommunicationSettings == null)
             {
                 throw new ArgumentException("Engine to server communication ingredients missing.");
             }
@@ -29,10 +45,10 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                     ConfigurationFilePath = GetPathToFileInSourcePath(string.Format("{0}.exe.config", DefaultArtifactName)),
                     Settings = new Dictionary<string, string>
                     {
-                        {"EngineToServerCommunication.ConnectionString", EngineToServerCommunication.ConnectionString},
-                        {"EngineToServerCommunication.UseSsl", EngineToServerCommunication.UseSsl},
-                        {"EngineToServerCommunication.ExchangeId", EngineToServerCommunication.ExchangeId},
-                        {"EngineToServerCommunication.OrganizationId", EngineToServerCommunication.OrganizationId}
+                        {"EngineToServerCommunication.ConnectionString", EngineToServerCommunicationSettings.ConnectionString},
+                        {"EngineToServerCommunication.UseSsl", EngineToServerCommunicationSettings.UseSsl},
+                        {"EngineToServerCommunication.ExchangeId", EngineToServerCommunicationSettings.ExchangeId},
+                        {"EngineToServerCommunication.OrganizationId", EngineToServerCommunicationSettings.OrganizationId}
                     }
                 },
                 new ExternalProcessStep

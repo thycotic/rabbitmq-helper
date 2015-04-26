@@ -5,15 +5,53 @@ using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.Core.Steps
 {
+    /// <summary>
+    /// External process step
+    /// </summary>
     public class ExternalProcessStep : IInstallerGeneratorStep
     {
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the working path.
+        /// </summary>
+        /// <value>
+        /// The working path.
+        /// </value>
         public string WorkingPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the executable path.
+        /// </summary>
+        /// <value>
+        /// The executable path.
+        /// </value>
         public string ExecutablePath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parameters.
+        /// </summary>
+        /// <value>
+        /// The parameters.
+        /// </value>
         public string Parameters { get; set; }
         
         private readonly ILogWriter _log = Log.Get(typeof(ExternalProcessStep));
-        
+
+        /// <summary>
+        /// Executes the step.
+        /// </summary>
+        /// <exception cref="System.ApplicationException">
+        /// Process failed
+        /// or
+        /// </exception>
+        /// <exception cref="System.Exception"></exception>
         public void Execute()
         {
             try

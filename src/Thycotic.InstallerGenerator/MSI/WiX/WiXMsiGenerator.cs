@@ -6,10 +6,18 @@ using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.MSI.WiX
 {
+    /// <summary>
+    /// WiX MSI generator
+    /// </summary>
     public class WiXMsiGenerator : IInstallerGenerator<WiXMsiGeneratorRunbook>
     {
         private readonly ILogWriter _log = Log.Get(typeof(WiXMsiGenerator));
 
+        /// <summary>
+        /// Generates the specified runbook.
+        /// </summary>
+        /// <param name="runbook">The runbook.</param>
+        /// <returns></returns>
         public string Generate(WiXMsiGeneratorRunbook runbook)
         {
             _log.Info("Baking steps");

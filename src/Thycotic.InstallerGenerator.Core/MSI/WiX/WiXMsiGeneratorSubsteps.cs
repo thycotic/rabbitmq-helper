@@ -1,9 +1,9 @@
 namespace Thycotic.InstallerGenerator.Core.MSI.WiX
 {
     /// <summary>
-    /// Substeps used in WiX. There are more tools but this only uses a handful.
+    /// Sub-steps used in WiX. There are more tools but this only uses a handful.
     /// </summary>
-    /// <seealso cref="http://wixtoolset.org/documentation/manual/v3/overview/alltools.html"/>
+    /// <remarks>See http://wixtoolset.org/documentation/manual/v3/overview/alltools.html for full list of tools.</remarks>
     public class WiXMsiGeneratorSubsteps
     {
         /// <summary>

@@ -7,12 +7,28 @@ using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
 
 namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
+    /// <summary>
+    /// Memory Mq pipeline service WiX MSI generator runbook
+    /// </summary>
     public class MemoryMqPiplineServiceWiXMsiGeneratorRunbook : WiXMsiGeneratorRunbook
     {
+        /// <summary>
+        /// The default artifact name
+        /// </summary>
         public const string DefaultArtifactName = "Thycotic.MemoryMq.Pipeline.Service";
 
+        /// <summary>
+        /// Gets or sets the pipeline settings.
+        /// </summary>
+        /// <value>
+        /// The pipeline settings.
+        /// </value>
         public PipelineSettings PipelineSettings { get; set; }
 
+        /// <summary>
+        /// Bakes the steps.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Pipeline settings ingredients missing</exception>
         public override void BakeSteps()
         {
             if (PipelineSettings == null)

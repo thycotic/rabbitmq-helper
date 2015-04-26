@@ -5,6 +5,9 @@ using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator
 {
+    /// <summary>
+    /// Installer generation wrapper
+    /// </summary>
     public class InstallerGeneratorWrapper
     {
         private readonly ILogWriter _log = Log.Get(typeof(InstallerGeneratorWrapper));
@@ -67,6 +70,15 @@ namespace Thycotic.InstallerGenerator
             steps.SourcePath = Path.GetFullPath(sourcePath);
         }
 
+        /// <summary>
+        /// Generates the specified generator.
+        /// </summary>
+        /// <typeparam name="TSteps">The type of the steps.</typeparam>
+        /// <param name="generator">The generator.</param>
+        /// <param name="steps">The steps.</param>
+        /// <param name="overwriteExistingArtifact">if set to <c>true</c> [overwrite existing artifact].</param>
+        /// <returns></returns>
+        /// <exception cref="System.ApplicationException">Generator did not produce an artifact</exception>
         public string Generate<TSteps>(IInstallerGenerator<TSteps> generator, TSteps steps, bool overwriteExistingArtifact = true)
             where TSteps : IInstallerGeneratorRunbook
         {
