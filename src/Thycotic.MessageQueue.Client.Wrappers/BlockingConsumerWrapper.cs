@@ -11,30 +11,31 @@ namespace Thycotic.MessageQueue.Client.Wrappers
     /// <summary>
     /// RPC consumer wrapper
     /// </summary>
-    /// <typeparam name="TRequest">The type of the request.</typeparam>
+    /// <typeparam name="TConsumable">The type of the request.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
-    /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public class BlockingConsumerWrapper<TRequest, TResponse, THandler> : ConsumerWrapperBase<TRequest, THandler>
-        where TRequest : class, IBlockingConsumable
+    /// <typeparam name="TConsumer">The type of the handler.</typeparam>
+    public class BlockingConsumerWrapper<TConsumable, TResponse, TConsumer> : ConsumerWrapperBase<TConsumable, TConsumer>
+        where TConsumable : class, IBlockingConsumable
         where TResponse : class
-        where THandler : IBlockingConsumer<TRequest, TResponse>
+        where TConsumer : IBlockingConsumer<TConsumable, TResponse>
     {
         private readonly IObjectSerializer _objectSerializer;
         private readonly IMessageEncryptor _messageEncryptor;
-        private readonly Func<Owned<THandler>> _handlerFactory;
+        private readonly Func<Owned<TConsumer>> _handlerFactory;
         private readonly ICommonConnection _connection;
-        private readonly ILogWriter _log = Log.Get(typeof(BlockingConsumerWrapper<TRequest, TResponse, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof(BlockingConsumerWrapper<TConsumable, TResponse, TConsumer>));
+
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TRequest,TResponse,THandler}" /> class.
+        /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TConsumable, TResponse, TConsumer}"/> class.
         /// </summary>
-        /// <param name="connection">The RMQ.</param>
-        /// <param name="exchangeNameProvider">The exchange provider.</param>
-        /// <param name="objectSerializer">The serializer.</param>
+        /// <param name="connection">The connection.</param>
+        /// <param name="exchangeNameProvider">The exchange name provider.</param>
+        /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
         /// <param name="handlerFactory">The handler factory.</param>
         public BlockingConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IObjectSerializer objectSerializer,
-            IMessageEncryptor messageEncryptor, Func<Owned<THandler>> handlerFactory)
+            IMessageEncryptor messageEncryptor, Func<Owned<TConsumer>> handlerFactory)
             : base(connection, exchangeNameProvider)
         {
 
@@ -80,11 +81,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             try
             {
 
-                TRequest message;
+                TConsumable message;
 
                 try
                 {
-                    message = _objectSerializer.ToObject<TRequest>(_messageEncryptor.Decrypt(exchangeName, body));
+                    message = _objectSerializer.ToObject<TConsumable>(_messageEncryptor.Decrypt(exchangeName, body));
 
                 }
                 catch (Exception ex)
@@ -98,14 +99,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 {
                     response = handler.Value.Consume(message);
 
-                    _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TRequest))));
+                    _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TConsumable))));
                 }
 
                 CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, false);
             }
             catch (Exception ex)
             {
-                _log.Error(string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TRequest)), ex.Message), ex);
+                _log.Error(string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TConsumable)), ex.Message), ex);
 
                 CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, false, requeue: false);
 
