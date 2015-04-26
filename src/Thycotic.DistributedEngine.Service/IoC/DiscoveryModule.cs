@@ -1,7 +1,5 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using Thycotic.Discovery.Sources.Scanners;
-using Thycotic.DistributedEngine.Service.Heartbeat;
 using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.Service.IoC

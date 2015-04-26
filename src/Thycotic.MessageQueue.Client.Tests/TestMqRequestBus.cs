@@ -8,7 +8,7 @@ namespace Thycotic.MessageQueue.Client.Tests
     /// <summary>
     /// Memory message queue that is volatile and non-persistent
     /// </summary>
-    public class TestMqRequestBus : IRequestBus, IDisposable
+    public class TestMqRequestBus : IRequestBus
     {
         private readonly ITestConsumerInvoker _consumerInvoker;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();

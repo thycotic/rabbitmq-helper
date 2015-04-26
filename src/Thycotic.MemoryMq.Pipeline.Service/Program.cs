@@ -1,5 +1,4 @@
 ﻿using System.ServiceProcess;
-using Thycotic.DistributedEngine;
 
 namespace Thycotic.MemoryMq.Pipeline.Service
 {

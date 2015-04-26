@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Thycotic.MessageQueue.Client
+﻿namespace Thycotic.MessageQueue.Client
 {
     /// <summary>
     /// Configuration keys
@@ -41,22 +39,22 @@ namespace Thycotic.MessageQueue.Client
             /// <summary>
             /// The connection string
             /// </summary>
-            public const string ConnectionString = Thycotic.MemoryMq.ConfigurationKeys.ConnectionString;
+            public const string ConnectionString = MemoryMq.ConfigurationKeys.ConnectionString;
 
             /// <summary>
             /// The user name
             /// </summary>
-            public const string UserName = Thycotic.MemoryMq.ConfigurationKeys.UserName;
+            public const string UserName = MemoryMq.ConfigurationKeys.UserName;
 
             /// <summary>
             /// The password
             /// </summary>
-            public const string Password = Thycotic.MemoryMq.ConfigurationKeys.Password;
+            public const string Password = MemoryMq.ConfigurationKeys.Password;
 
             /// <summary>
             /// Whether or not to use SSL
             /// </summary>
-            public static string UseSsl = Thycotic.MemoryMq.ConfigurationKeys.UseSsl;
+            public static string UseSsl = MemoryMq.ConfigurationKeys.UseSsl;
         }
 
         /// <summary>

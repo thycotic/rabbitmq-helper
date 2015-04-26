@@ -2,8 +2,6 @@
 using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
-using Thycotic.MessageQueue.Client;
-using Thycotic.Messages.Common;
 
 namespace Thycotic.DistributedEngine.Logic.EngineToServer
 {

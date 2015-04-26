@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Thycotic.AppCore;
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;

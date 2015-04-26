@@ -1,6 +1,5 @@
 ﻿using System;
 using NSubstitute;
-using NUnit.Framework;
 using TechTalk.SpecFlow;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
