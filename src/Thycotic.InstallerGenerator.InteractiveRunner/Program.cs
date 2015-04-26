@@ -8,7 +8,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 {
     class Program
     {
-        private const string Version = "5.0.0.7";
+        private const string Version = "5.0.0.8";
 
         private static void Main(string[] args)
         {
@@ -96,7 +96,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 SourcePath = someSecretServerArbitraryPathForBits,
                 Version = currentSnapshottedVersion,
 
-                EngineToServerCommunication = new EngineToServerCommunication
+                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
                 {
                     ConnectionString = "net.tcp://localhost:8881",
                     UseSsl = "false",
@@ -132,7 +132,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 SourcePath = someSecretServerArbitraryPathForBits,
                 Version = currentSnapshottedVersion,
 
-                EngineToServerCommunication = new EngineToServerCommunication
+                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
                 {
                     ConnectionString = "net.tcp://localhost:8881",
                     UseSsl = "false",
