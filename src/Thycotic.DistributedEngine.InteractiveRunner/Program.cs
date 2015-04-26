@@ -6,14 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using NSubstitute;
-using Thycotic.AppCore;
+using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.DistributedEngine.Service;
+using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Pipeline.Service;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
-using Thycotic.DistributedEngine.Service.Security;
+using StartupMessageWriter = Thycotic.DistributedEngine.Service.StartupMessageWriter;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner
 {
@@ -73,7 +73,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                
 
                 //begin the input loop but after the logo prints
-                Task.Delay(Service.StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
+                Task.Delay(StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
                     .ContinueWith(task =>
                     {
                         var initialCommand =
@@ -166,13 +166,14 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             staticIdentityGuidProvider.IdentityGuid.Returns(staticIdentityGuid);
             engineService.IoCConfigurator.IdentityGuidProvider = staticIdentityGuidProvider;
 
-            var configurationProvider = Substitute.For<IConfigurationProvider>();
-            ServiceLocator.ConfigurationProvider = configurationProvider;
+            //TODO: Do we need this?
+            //var configurationProvider = Substitute.For<IConfigurationProvider>();
+            //ServiceLocator.ConfigurationProvider = configurationProvider;
 
-            var configuration = Substitute.For<IConfiguration>();
-            configuration.FipsEnabled.Returns(false);
+            //var configuration = Substitute.For<IConfiguration>();
+            //configuration.FipsEnabled.Returns(false);
 
-            configurationProvider.GetCurrentConfiguration().Returns(configuration);
+            //configurationProvider.GetCurrentConfiguration().Returns(configuration);
 
 
 
