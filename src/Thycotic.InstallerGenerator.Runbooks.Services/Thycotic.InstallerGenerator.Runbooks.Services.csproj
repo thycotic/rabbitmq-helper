@@ -21,6 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Debug\Thycotic.InstallerGenerator.Runbooks.Services.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Release\Thycotic.InstallerGenerator.Runbooks.Services.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -46,8 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServiceInstallerRunbookProvider.cs" />
     <Compile Include="DistributedEngineServiceWiXMsiGeneratorRunbook.cs" />
-    <Compile Include="Ingredients\EngineToServerCommunication.cs" />
+    <Compile Include="Ingredients\EngineToServerCommunicationSettings.cs" />
     <Compile Include="MemoryMqPiplineServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="Ingredients\PipelineSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

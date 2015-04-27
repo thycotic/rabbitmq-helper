@@ -9,10 +9,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers
     /// <summary>
     /// Base consumer wrapper
     /// </summary>
-    /// <typeparam name="TRequest">The type of the request.</typeparam>
-    /// <typeparam name="THandler">The type of the handler.</typeparam>
-    public abstract class ConsumerWrapperBase<TRequest, THandler> : IConsumerWrapperBase
-        where TRequest : IConsumable
+    /// <typeparam name="TConsumable">The type of the request.</typeparam>
+    /// <typeparam name="TConsumer">The type of the handler.</typeparam>
+    public abstract class ConsumerWrapperBase<TConsumable, TConsumer> : IConsumerWrapperBase
+        where TConsumable : IConsumable
     {
         /// <summary>
         /// Retrieve the IModel this consumer is associated
@@ -26,14 +26,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
         private bool _terminated;
 
-        private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TRequest, THandler>));
+        private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TConsumable, TConsumer>));
         private bool _disposed;
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TRequest,THandler}" /> class.
+        /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TConsumable, TConsumer}"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        /// <param name="exchangeNameProvider">The exchange provider.</param>
+        /// <param name="exchangeNameProvider">The exchange name provider.</param>
         protected ConsumerWrapperBase(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider)
         {
             _connection = connection;
@@ -47,9 +47,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             {
                 var exchangeName = _exchangeNameProvider.GetCurrentExchange();
 
-                var routingKey = this.GetRoutingKey(typeof(TRequest));
+                var routingKey = this.GetRoutingKey(typeof(TConsumable));
 
-                var queueName = this.GetQueueName(exchangeName, typeof(THandler), typeof(TRequest));
+                var queueName = this.GetQueueName(exchangeName, typeof(TConsumer), typeof(TConsumable));
 
                 const int retryAttempts = -1; //forever
                 const int retryDelayGrowthFactor = 1;

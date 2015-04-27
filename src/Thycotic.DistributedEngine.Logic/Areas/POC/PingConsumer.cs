@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;

@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 using Autofac;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Logging;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
-using Thycotic.Logging.Models;
 using Thycotic.Utility;
 
 namespace Thycotic.DistributedEngine.Service.Heartbeat

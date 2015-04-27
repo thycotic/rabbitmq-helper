@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Thycotic.AppCore.Federator;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.PasswordChanging.Request;
-using Thycotic.Messages.PasswordChanging.Response;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordChanging
 {
@@ -36,45 +33,47 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordC
 
             Action = parameters =>
             {
+                throw new NotImplementedException();
+
                 _log.Info("Posting message to exchange");
 
-                string server;
-                string username;
-                string password;
-                string newPassword;
-                if (!parameters.TryGet("server", out server)) return;
-                if (!parameters.TryGet("username", out username)) return;
-                if (!parameters.TryGet("password", out password)) return;
-                if (!parameters.TryGet("newpassword", out newPassword)) return;
+                //string server;
+                //string username;
+                //string password;
+                //string newPassword;
+                //if (!parameters.TryGet("server", out server)) return;
+                //if (!parameters.TryGet("username", out username)) return;
+                //if (!parameters.TryGet("password", out password)) return;
+                //if (!parameters.TryGet("newpassword", out newPassword)) return;
 
-                var message = new SecretChangePasswordMessage
-                {
-                    PasswordInfoProvider =
-                        new GenericPasswordInfoProvider
-                        {
-                            PasswordTypeName = "Thycotic.AppCore.Federator.SqlAccountFederator",
-                            PasswordTypeId = 2
-                        }
-                };
+                //var message = new SecretChangePasswordMessage
+                //{
+                //    PasswordInfoProvider =
+                //        new GenericPasswordInfoProvider
+                //        {
+                //            PasswordTypeName = "Thycotic.AppCore.Federator.SqlAccountFederator",
+                //            PasswordTypeId = 2
+                //        }
+                //};
 
-                var itemValues = new Dictionary<string, string>();
-                itemValues["server"] = server;
-                itemValues["username"] = username;
-                itemValues["password"] = password;
+                //var itemValues = new Dictionary<string, string>();
+                //itemValues["server"] = server;
+                //itemValues["username"] = username;
+                //itemValues["password"] = password;
 
-                message.PasswordInfoProvider.ItemValues = itemValues;
-                message.PasswordInfoProvider["server"] = server;
-                message.PasswordInfoProvider["username"] = username;
-                message.PasswordInfoProvider["password"] = password;
-                message.PasswordInfoProvider.NewPassword = newPassword;
-                try
-                {
-                    _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
-                }
-                catch (Exception ex)
-                {
-                    _log.Error("Password Change failed", ex);
-                }
+                //message.PasswordInfoProvider.ItemValues = itemValues;
+                //message.PasswordInfoProvider["server"] = server;
+                //message.PasswordInfoProvider["username"] = username;
+                //message.PasswordInfoProvider["password"] = password;
+                //message.PasswordInfoProvider.NewPassword = newPassword;
+                //try
+                //{
+                //    _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
+                //}
+                //catch (Exception ex)
+                //{
+                //    _log.Error("Password Change failed", ex);
+                //}
 
 
                 _log.Info("Posting completed");

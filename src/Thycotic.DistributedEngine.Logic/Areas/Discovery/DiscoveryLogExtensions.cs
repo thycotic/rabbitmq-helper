@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Thycotic.AppCore;
 using Thycotic.Discovery.Core.Results;
 
@@ -42,15 +39,15 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 
         private static byte[] GetBytes(string str)
         {
-            byte[] bytes = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            var bytes = new byte[str.Length * sizeof(char)];
+            Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
             return bytes;
         }
 
         private static string GetString(byte[] bytes)
         {
-            char[] chars = new char[MaxLogByteSize];
-            System.Buffer.BlockCopy(bytes, 0, chars, 0, MaxLogByteSize);
+            var chars = new char[MaxLogByteSize];
+            Buffer.BlockCopy(bytes, 0, chars, 0, MaxLogByteSize);
             return new string(chars);
         }
     }

@@ -5,16 +5,16 @@
 
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
-	<Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
     <Upgrade Id="A45158D7-7AC9-4EE8-A739-684ED67B96FC">
-        <UpgradeVersion
-            Minimum="1.0.0.0" Maximum="99.0.0.0"
-            Property="PREVIOUSVERSIONSINSTALLED"
-            IncludeMinimum="yes" IncludeMaximum="no" />
+      <UpgradeVersion
+          Minimum="1.0.0.0" Maximum="99.0.0.0"
+          Property="PREVIOUSVERSIONSINSTALLED"
+          IncludeMinimum="yes" IncludeMaximum="no" />
     </Upgrade>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFilesFolder" Name="PFiles">
+      <Directory Id="ProgramFiles64Folder" Name="PFiles">
         <Directory Id="ThycoticInstall" Name="Thycotic Software Ltd" ComponentGuidGenerationSeed="B2048F39-ADFF-4D70-8270-4DD4D40C217E">
           <Directory Id="INSTALLLOCATION" Name="Distributed Engine"/>
         </Directory>
@@ -41,6 +41,6 @@
       <AppSearch After="FindRelatedProducts"/>
       <Custom Action="SetRootDrive" Before="CostInitialize"></Custom>
     </InstallUISequence>
-    
+
   </Product>
 </Wix>

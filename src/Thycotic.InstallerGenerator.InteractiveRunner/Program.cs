@@ -8,7 +8,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 {
     class Program
     {
-        private const string Version = "5.0.0.2";
+        private const string Version = "5.0.0.8";
 
         private static void Main(string[] args)
         {
@@ -16,12 +16,18 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             try
             {
-                var path = GenerateMemoryMqMsi();
-                Console.WriteLine("Artifact generator and stored in {0}", path);
+                string path;
+                //path = GenerateMemoryMqMsi();
+                //Console.WriteLine("Artifact generator and stored in {0}", path);
 
-                Console.WriteLine();
+                //Console.WriteLine();
 
-                path = GenerateDistributedEngineMsi();
+                //path = GenerateDistributedEngineMsi();
+                //Console.WriteLine("Artifact generator and stored in {0}", path);
+
+                //Console.WriteLine();
+
+                path = GenerateDistributedEngineUpdateMsi();
                 Console.WriteLine("Artifact generator and stored in {0}", path);
 
 
@@ -31,10 +37,11 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             {
                 Console.WriteLine("Generator failed");
                 Console.WriteLine(ex.Message);
+                Console.ReadKey();
             }
 
-            Console.WriteLine("Press any key to exit.");
-            Console.ReadKey();
+            //Console.WriteLine("Press any key to exit.");
+            //Console.ReadKey();
         }
 
         private static string GenerateMemoryMqMsi()
@@ -73,6 +80,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         private static string GenerateDistributedEngineMsi()
         {
             const string someSecretServerArbitraryPathForWixRecipe =
+                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
                 @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
                 //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
 
@@ -88,7 +96,43 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 SourcePath = someSecretServerArbitraryPathForBits,
                 Version = currentSnapshottedVersion,
 
-                EngineToServerCommunication = new EngineToServerCommunication
+                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
+                {
+                    ConnectionString = "net.tcp://localhost:8881",
+                    UseSsl = "false",
+                    ExchangeId = "5",
+                    OrganizationId = "1"
+                }
+
+
+            };
+
+            var wrapper = new InstallerGeneratorWrapper();
+
+            return wrapper.Generate(new WiXMsiGenerator(), steps);
+        }
+
+        private static string GenerateDistributedEngineUpdateMsi()
+        {
+            const string someSecretServerArbitraryPathForWixRecipe =
+                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+                @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+
+            const string someSecretServerArbitraryPathForBits =
+                @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+            const string currentSnapshottedVersion = Version;
+
+
+            var steps = new DistributedEngineServiceWiXMsiGeneratorRunbook
+            {
+                ArtifactNameSuffix = "Update",
+                RecipePath = someSecretServerArbitraryPathForWixRecipe,
+                SourcePath = someSecretServerArbitraryPathForBits,
+                Version = currentSnapshottedVersion,
+
+                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
                 {
                     ConnectionString = "net.tcp://localhost:8881",
                     UseSsl = "false",

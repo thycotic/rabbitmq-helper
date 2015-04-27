@@ -5,16 +5,16 @@
 
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
-	<Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
     <Upgrade Id="D19B8142-9548-4C64-BEEB-BB7194D65E7C">
-        <UpgradeVersion
-            Minimum="1.0.0.0" Maximum="99.0.0.0"
-            Property="PREVIOUSVERSIONSINSTALLED"
-            IncludeMinimum="yes" IncludeMaximum="no" />
+      <UpgradeVersion
+          Minimum="1.0.0.0" Maximum="99.0.0.0"
+          Property="PREVIOUSVERSIONSINSTALLED"
+          IncludeMinimum="yes" IncludeMaximum="no" />
     </Upgrade>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFilesFolder" Name="PFiles">
+      <Directory Id="ProgramFiles64Folder" Name="PFiles">
         <Directory Id="ThycoticInstall" Name="Thycotic Software Ltd" ComponentGuidGenerationSeed="C1D4C69B-7A26-40FC-8D9A-4EEF969E88E5">
           <Directory Id="INSTALLLOCATION" Name="MemoryMq Pipeline"/>
         </Directory>
@@ -41,6 +41,6 @@
       <AppSearch After="FindRelatedProducts"/>
       <Custom Action="SetRootDrive" Before="CostInitialize"></Custom>
     </InstallUISequence>
-    
+
   </Product>
 </Wix>

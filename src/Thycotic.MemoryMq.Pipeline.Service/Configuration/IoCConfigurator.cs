@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Configuration;
 using Autofac;
-using Thycotic.DistributedEngine;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Pipeline.Service.IoC;
-using Thycotic.Utility;
 
 namespace Thycotic.MemoryMq.Pipeline.Service.Configuration
 {

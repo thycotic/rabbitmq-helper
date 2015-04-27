@@ -34,6 +34,8 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 .AsSelf() //wrappers use explicit names through constructor types
                 .AsImplementedInterfaces() //all other resolution
                 .InstancePerDependency();
+
+            builder.RegisterModule(new DiscoveryModule());
         }
     }
 }

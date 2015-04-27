@@ -41,10 +41,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
             try
             {
-                RemotePasswordChangeResponse response = null;
+                RemotePasswordChangeResponse response;
 
                 var defaultPasswordChangerFactory = new DefaultPasswordChangerFactory();
-                IBasicPasswordChanger passwordChanger = defaultPasswordChangerFactory.ResolveBasicPasswordChanger(request.OperationInfo);
+                var passwordChanger = defaultPasswordChangerFactory.ResolveBasicPasswordChanger(request.OperationInfo);
 
                 if (passwordChanger != null)
                 {

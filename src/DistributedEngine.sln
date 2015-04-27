@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.Pipeline.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.Pipeline.Service.Tests", "Thycotic.MemoryMq.Pipeline.Service.Tests\Thycotic.MemoryMq.Pipeline.Service.Tests.csproj", "{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.WindowsService.Bootstraper", "Thycotic.WindowsService.Bootstraper\Thycotic.WindowsService.Bootstraper.csproj", "{CF3EC07E-EA34-4D65-B6F3-C6335F2588EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,10 @@ Global
 		{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF3EC07E-EA34-4D65-B6F3-C6335F2588EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF3EC07E-EA34-4D65-B6F3-C6335F2588EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF3EC07E-EA34-4D65-B6F3-C6335F2588EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF3EC07E-EA34-4D65-B6F3-C6335F2588EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
