@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Thycotic.AppCore;
 using Thycotic.Discovery.Core.Results;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.Discovery

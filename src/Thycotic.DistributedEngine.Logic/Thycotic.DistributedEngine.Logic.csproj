@@ -172,7 +172,7 @@
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.303\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.304\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -211,7 +211,6 @@
     </Compile>
     <Compile Include="Areas\Heartbeat\SecretHeartbeatConsumer.cs" />
     <Compile Include="Areas\PasswordChanging\SecretBasicChangePasswordConsumer.cs" />
-    <Compile Include="Areas\PasswordChanging\SecretChangePasswordConsumer.cs" />
     <Compile Include="Areas\PasswordChanging\SecretPrivilegeChangePasswordConsumer.cs" />
     <Compile Include="Areas\PasswordChanging\SecretTestDependencyConsumer.cs" />
     <Compile Include="Areas\PasswordChanging\SecretRunDependenciesConsumer.cs" />
@@ -226,6 +225,7 @@
     <Compile Include="IEngineConfigurationBus.cs" />
     <Compile Include="EngineToServer\IResponseBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringSplitter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.MessageQueue.Client\Thycotic.MessageQueue.Client.csproj">

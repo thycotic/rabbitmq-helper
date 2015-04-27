@@ -199,8 +199,6 @@
     <Compile Include="PasswordChanging\ScheduledTaskDependencyChangerInfo.cs" />
     <Compile Include="PasswordChanging\AppPoolDependencyChangerInfo.cs" />
     <Compile Include="PasswordChanging\Request\SecretChangeDependencyMessage.cs" />
-    <Compile Include="PasswordChanging\Request\SecretChangePasswordMessage.cs" />
-    <Compile Include="PasswordChanging\Response\SecretChangePasswordResponse.cs" />
     <Compile Include="PasswordChanging\WindowsServiceDependencyChangerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

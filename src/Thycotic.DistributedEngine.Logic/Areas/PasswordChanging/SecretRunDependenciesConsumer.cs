@@ -22,7 +22,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
     {
         private readonly IExchangeNameProvider _exchangeNameProvider;
         private readonly IResponseBus _responseBus;
-        private readonly ILogWriter _log = Log.Get(typeof(SecretChangePasswordConsumer));
+        private readonly ILogWriter _log = Log.Get(typeof(SecretRunDependenciesConsumer));
 
         /// <summary>
         /// 
