@@ -52,16 +52,16 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 {
                     var response = new ScanMachineResponse
                     {
+                        BatchId = batchId,
                         ComputerItems = result.Computers.Skip(paging.Skip).Take(paging.Take).ToArray(),
                         DiscoverySourceId = request.DiscoverySourceId,
-                        HostRangeName = result.RangeName,
-                        Success = result.Success,
                         ErrorCode = result.ErrorCode,
-                        StatusMessages = { },
-                        Logs = truncatedLog,
                         ErrorMessage = result.ErrorMessage,
-                        BatchId = batchId,
-                        Paging = paging
+                        HostRangeName = result.RangeName,
+                        Logs = truncatedLog,
+                        Paging = paging,
+                        StatusMessages = { },
+                        Success = result.Success
                     };
                     try
                     {
@@ -71,13 +71,13 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     }
                     catch (Exception exception)
                     {
-                        _log.Info(string.Format("{0} : Send Machine Results Failed", request.Input.HostRange), exception);
+                        _log.Error(string.Format("{0} : Send Machine Results Failed", request.Input.HostRange), exception);
                     }
                 });
             }
             catch (Exception e)
             {
-                _log.Info(string.Format("{0} : Scan Machines Failed using ScannerId: {1}", request.Input.HostRange, request.DiscoveryScannerId), e);
+                _log.Error(string.Format("{0} : Scan Machines Failed using ScannerId: {1}", request.Input.HostRange, request.DiscoveryScannerId), e);
             }
         }
     }

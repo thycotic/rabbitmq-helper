@@ -41,7 +41,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 _log.Info(string.Format("{0} : Scan Local Accounts", request.Input.ComputerName));
                 var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
                 var result = scanner.ScanComputerForLocalAccounts(request.Input);
-
+                _log.Info(string.Format("{0} : Found {1} Local Accounts (Log: {2})",
+                    request.Input.ComputerName,
+                    result != null ? result.LocalAccounts.Length : -1,
+                    result != null ? string.Join("; ", result.Logs.Select(l => l.Message)) : string.Empty));
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
@@ -53,18 +56,18 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 {
                     var response = new ScanLocalAccountResponse
                     {
+                        BatchId = batchId,
+                        ComputerAvailable = result.ComputerAvailable,
                         ComputerId = request.ComputerId,
                         DiscoverySourceId = request.DiscoverySourceId,
-                        LocalAccounts = result.LocalAccounts.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                        Success = result.Success,
                         ErrorCode = result.ErrorCode,
-                        StatusMessages = { },
-                        Logs = truncatedLog,
                         ErrorMessage = result.ErrorMessage,
-                        BatchId = batchId,
-                        Paging = paging
+                        LocalAccounts = result.LocalAccounts.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        Logs = truncatedLog,
+                        Paging = paging,
+                        StatusMessages = { },
+                        Success = result.Success
                     };
-
                     try
                     {
                         _log.Info(string.Format("{0}: Send Local Account Results Batch {1} of {2}", request.Input.ComputerName, x + 1, paging.BatchCount));
@@ -73,14 +76,13 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     }
                     catch (Exception exception)
                     {
-                        _log.Info(string.Format("{0}: Send Local Account Results Failed", request.Input.ComputerName),
-                            exception);
+                        _log.Error(string.Format("{0}: Send Local Account Results Failed", request.Input.ComputerName), exception);
                     }
                 });
             }
             catch (Exception e)
             {
-                _log.Info(string.Format("{0} : Scan Local Accounts Failed", request.Input.ComputerName), e);
+                _log.Error(string.Format("{0} : Scan Local Accounts Failed", request.Input.ComputerName), e);
             }
         }
     }
