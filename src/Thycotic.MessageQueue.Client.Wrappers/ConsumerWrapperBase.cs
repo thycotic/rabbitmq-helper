@@ -58,11 +58,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                 _log.Debug(string.Format("Channel opened for {0}", queueName));
 
-                const int prefetchSize = 0;
-                const int prefetchCount = 1;
-                const bool global = false;
+                //TODO: Re-enable when Memory Mq honors this -dkk
+                //const int prefetchSize = 0;
+                //const int prefetchCount = 1;
+                //const bool global = false;
 
-                model.BasicQos(prefetchSize, prefetchCount, global);
+                //model.BasicQos(prefetchSize, prefetchCount, global);
 
                 model.ModelShutdown += RecoverConnection;
 
