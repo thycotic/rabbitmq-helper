@@ -52,17 +52,17 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 {
                     var response = new ScanDependencyResponse
                     {
-                        ComputerId = request.ComputerId,
-                        DiscoverySourceId = request.DiscoverySourceId,
-                        DependencyItems = result.DependencyItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                        Success = result.Success,
-                        ErrorCode = result.ErrorCode,
-                        StatusMessages = { },
-                        Logs = truncatedLog,
-                        ErrorMessage = result.ErrorMessage,
                         BatchId = batchId,
+                        ComputerId = request.ComputerId,
+                        DependencyItems = result.DependencyItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        DependencyScannerType = request.Input.DependencyScannerType,
+                        DiscoverySourceId = request.DiscoverySourceId,
+                        ErrorCode = result.ErrorCode,
+                        ErrorMessage = result.ErrorMessage,
+                        Logs = truncatedLog,
                         Paging = paging,
-                        DependencyScannerType = request.Input.DependencyScannerType
+                        StatusMessages = { },
+                        Success = result.Success
                     };
                     try
                     {
@@ -72,14 +72,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     }
                     catch (Exception exception)
                     {
-                        _log.Info(string.Format("{0} : Send Dependency ({1}) Results Failed", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType)),
+                        _log.Error(string.Format("{0} : Send Dependency ({1}) Results Failed", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType)),
                             exception);
                     }
                 });
             }
             catch (Exception e)
             {
-                _log.Info(string.Format("{0} : Scan Dependencies for DependencyScannerType: {1} Failed using ScannerId: {2}", request.Input.ComputerName, GetDependencyTypeName(request.Input.DependencyScannerType), request.DiscoveryScannerId), e);
+                _log.Error(string.Format("{0} : Scan Dependencies for DependencyScannerType: {1} Failed using ScannerId: {2}", request.Input.ComputerName, GetDependencyTypeName(request.Input.DependencyScannerType), request.DiscoveryScannerId), e);
             }
         }
 

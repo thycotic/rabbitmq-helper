@@ -52,15 +52,15 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 {
                     var response = new ScanHostRangeResponse
                     {
-                        DiscoverySourceId = request.DiscoverySourceId,
-                        HostRangeItems = result.HostRangeItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                        Success = result.Success,
-                        ErrorCode = result.ErrorCode,
-                        StatusMessages = { },
-                        Logs = truncatedLog,
-                        ErrorMessage = result.ErrorMessage,
                         BatchId = batchId,
-                        Paging = paging
+                        DiscoverySourceId = request.DiscoverySourceId,
+                        ErrorCode = result.ErrorCode,
+                        ErrorMessage = result.ErrorMessage,
+                        HostRangeItems = result.HostRangeItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        Logs = truncatedLog,
+                        Paging = paging,
+                        StatusMessages = { },
+                        Success = result.Success
                     };
                     try
                     {
@@ -70,14 +70,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     }
                     catch (Exception exception)
                     {
-                        _log.Info(string.Format("{0} : Send Host Range Results Failed", request.Input.Domain), exception);
+                        _log.Error(string.Format("{0} : Send Host Range Results Failed", request.Input.Domain), exception);
                     }
 
                 });
             }
             catch (Exception e)
             {
-                _log.Info(string.Format("{0} : Scan Host Range Failed using ScannerId: {1}", request.Input.Domain, request.DiscoveryScannerId), e);
+                _log.Error(string.Format("{0} : Scan Host Range Failed using ScannerId: {1}", request.Input.Domain, request.DiscoveryScannerId), e);
             }
         }
     }
