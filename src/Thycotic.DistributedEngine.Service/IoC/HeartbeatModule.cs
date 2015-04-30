@@ -37,7 +37,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 builder.Register(content => new HeartbeatConfigurationProvider
                 {
                     HeartbeatIntervalSeconds = heartbeatIntervalSeconds
-                }).As<IHeartbeatConfigurationProvider>();
+                }).As<IHeartbeatConfigurationProvider>().SingleInstance();
                 builder.RegisterType<HeartbeatRunner>().As<IStartable>().SingleInstance();
                 builder.RegisterType<LogRunner>().As<IStartable>().SingleInstance();
             }

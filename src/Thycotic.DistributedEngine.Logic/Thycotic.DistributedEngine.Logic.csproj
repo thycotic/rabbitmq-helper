@@ -171,8 +171,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.306\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.308\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -224,6 +224,16 @@
     <Compile Include="Areas\POC\HelloWorldConsumer.cs" />
     <Compile Include="IEngineConfigurationBus.cs" />
     <Compile Include="EngineToServer\IResponseBus.cs" />
+    <Compile Include="Licensing\DiscoveryLibraryLicenser.cs" />
+    <Compile Include="Licensing\ILibraryLicenser.cs" />
+    <Compile Include="Licensing\ArbitraryThirdPartyLicenser.cs" />
+    <Compile Include="Licensing\Providers\ILicenseKeyProvider.cs" />
+    <Compile Include="Licensing\Providers\IThirdPartyLicenseKeyProvider.cs" />
+    <Compile Include="Licensing\Providers\IThycoticLicenseKeyProvider.cs" />
+    <Compile Include="Licensing\Providers\LicenseKeyProvider.cs" />
+    <Compile Include="Licensing\PasswordChangersLibraryLicenser.cs" />
+    <Compile Include="Licensing\Providers\ThirdPartyLicenseKeyProvider.cs" />
+    <Compile Include="Licensing\Providers\ThycoticLicenseKeyProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringSplitter.cs" />
   </ItemGroup>
