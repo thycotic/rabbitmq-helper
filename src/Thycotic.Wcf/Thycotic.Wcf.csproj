@@ -145,9 +145,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CallbackChannelProvider.cs" />
     <Compile Include="DuplexWcfConnection.cs" />
+    <Compile Include="ICallbackChannelProvider.cs" />
     <Compile Include="IDuplexWcfConnection.cs" />
-    <Compile Include="IRock.cs" />
     <Compile Include="IWcfService.cs" />
     <Compile Include="IWcfServerCallback.cs" />
     <Compile Include="HttpChannelFactory.cs" />
