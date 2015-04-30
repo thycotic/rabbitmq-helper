@@ -160,9 +160,7 @@
     <Compile Include="MemoryMqProperties.cs" />
     <Compile Include="MemoryMqServiceHost.cs" />
     <Compile Include="Subsystem\BindingDictionary.cs" />
-    <Compile Include="Subsystem\CallbackChannelProvider.cs" />
     <Compile Include="Subsystem\IBindingDictionary.cs" />
-    <Compile Include="Subsystem\ICallbackChannelProvider.cs" />
     <Compile Include="Subsystem\IClientDictionary.cs" />
     <Compile Include="Subsystem\IExchangeDictionary.cs" />
     <Compile Include="Subsystem\IMessageDispatcher.cs" />
