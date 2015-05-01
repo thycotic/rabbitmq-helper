@@ -86,21 +86,23 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                     };
                 }
 
-                try
-                {
-                    _responseBus.ExecuteAsync(response);
-                    _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.ErrorCode));
-                }
-                catch (Exception)
-                {
-                    _log.Error("Failed to record the secret change password response back to server");
-                    //TODO: Retry?
-                }
+                _responseBus.ExecuteAsync(response);
+                _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.ErrorCode));                
             }
             catch (Exception ex)
             {
-                _log.Error("Handle specific error here", ex);
-                throw;
+                var response = new RemotePasswordChangeResponse()
+                {
+                    Success = false,
+                    SecretId = request.SecretId,
+                    ErrorCode = (int)FailureCode.UnknownError,
+                    StatusMessages = new[] { ex.ToString() },
+                    CommandExecutionResults = new List<CommandExecutionResult>().ToArray(),
+                    OldPassword = string.Empty,
+                    NewPassword = string.Empty
+                };
+                _responseBus.ExecuteAsync(response);
+                _log.Error(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.ErrorCode));
             }
         }
     }

@@ -67,11 +67,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
             }
             catch (Exception ex)
             {
-                var failResp = new SecretHeartbeatResponse()
+                var failResp = new SecretHeartbeatResponse
                 {
                     Success = false,
                     SecretId = request.SecretId,
-                    Errors = new List<Error>() {new ThycoticError(ThycoticErrorType.Unknown, ex.ToString())},
+                    Errors = new List<Error> {new ThycoticError(ThycoticErrorType.Unknown, ex.ToString())},
                     Log = new List<LogEntry>()
                 };
                 _log.Info(string.Format("Heartbeat Result for Secret Id {0}: Success: False ({1})", request.SecretId, ex ));

@@ -44,15 +44,16 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         {
             _log.Info(string.Format("Got a change dependency request for Secret Id {0}:", request.SecretId));
 
-            try
+            var guid = Guid.NewGuid();
+            // TODO: Fix 30 second wire-up problem.  This needs to be part of the individual message as well?                
+            var messages = new List<DependencyChangeResponseMessageToLocalize>();
+            for (int index = 0; index < request.DependencyChangeInfos.Length; index++)
             {
-                // TODO: Fix 30 second wire-up problem.  This needs to be part of the individual message as well?
-                var guid = Guid.NewGuid();
-                for (int index = 0; index < request.DependencyChangeInfos.Length; index++)
+                try
                 {
+                    messages =  new List<DependencyChangeResponseMessageToLocalize>();
                     var info = request.DependencyChangeInfos[index];
                     var response = new DependencyChangeResponse();
-                    var messages = new List<DependencyChangeResponseMessageToLocalize>();
                     response.SecretId = request.SecretId;
                     response.SecretDependencyId = info.SecretDependencyId;
                     response.TransactionGuid = guid;
@@ -66,22 +67,22 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                     response.StatusMessages = result.Errors.Select(s => s.DetailedMessage).ToArray();
                     response.LogMessages = messages.ToArray();
                     response.Last = index == request.DependencyChangeInfos.Length - 1;
-                    try
-                    {
-                        _responseBus.ExecuteAsync(response);
-                    }
-                    catch (Exception)
-                    {
-                        _log.Error("Failed to record the change dependency response back to server");
-                        //TODO: Retry?
-                    }
+
+                    _responseBus.ExecuteAsync(response);
                 }
-            }
-            catch (Exception ex)
-            {
-                _log.Error("Handle specific error here", ex);
-                // don't throw, instead report it.
-                throw;
+                catch (Exception ex)
+                {
+                    var response = new DependencyChangeResponse
+                    {
+                        Success = false,
+                        SecretId = request.SecretId,
+                        TransactionGuid = guid,
+                        StatusMessages = new[] {ex.ToString()},
+                        Last = index == request.DependencyChangeInfos.Length - 1,
+                        LogMessages = messages.ToArray(),
+                    };
+                    _responseBus.ExecuteAsync(response);
+                }
             }
         }
 

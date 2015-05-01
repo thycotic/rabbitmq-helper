@@ -63,16 +63,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                         StatusMessages = { },
                         Success = result.Success
                     };
-                    try
-                    {
-                        _log.Info(string.Format("{0} : Send Machine Results Batch {1} of {2}", request.Input.HostRange, x + 1, paging.BatchCount));
-                        _responseBus.ExecuteAsync(response);
-                        paging.Skip = paging.NextSkip;
-                    }
-                    catch (Exception exception)
-                    {
-                        _log.Error(string.Format("{0} : Send Machine Results Failed", request.Input.HostRange), exception);
-                    }
+                    _log.Info(string.Format("{0} : Send Machine Results Batch {1} of {2}", request.Input.HostRange, x + 1, paging.BatchCount));
+                    _responseBus.ExecuteAsync(response);
+                    paging.Skip = paging.NextSkip;                        
                 });
             }
             catch (Exception e)
