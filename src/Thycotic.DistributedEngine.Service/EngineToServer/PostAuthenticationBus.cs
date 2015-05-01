@@ -17,11 +17,22 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         private readonly IObjectSerializer _objectSerializer;
         private readonly IAuthenticatedCommunicationKeyProvider _authenticatedCommunicationKeyProvider;
         private readonly IAuthenticatedCommunicationRequestEncryptor _authenticatedCommunicationRequestEncryptor;
-
+        
         /// <summary>
-        /// The channel
+        /// Gets the callback.
         /// </summary>
-        protected readonly IEngineToServerCommunicationWcfService Channel;
+        /// <value>
+        /// The callback.
+        /// </value>
+        protected IEngineToServerCommunicationCallback Callback { get; private set; }
+        
+        /// <summary>
+        /// Gets the channel.
+        /// </summary>
+        /// <value>
+        /// The channel.
+        /// </value>
+        protected IEngineToServerCommunicationWcfService Channel { get; private set; }
 
         private readonly ILogWriter _log = Log.Get(typeof(PostAuthenticationBus));
 
@@ -40,9 +51,9 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             _objectSerializer = objectSerializer;
             _authenticatedCommunicationKeyProvider = authenticatedCommunicationKeyProvider;
             _authenticatedCommunicationRequestEncryptor = authenticatedCommunicationRequestEncryptor;
-            //callback is not used in the response bus
-            var noOpCallback = new EngineToServerCommunicationCallback();
-            Channel = engineToServerConnection.OpenChannel(noOpCallback);
+
+            Callback = new EngineToServerCommunicationCallback();
+            Channel = engineToServerConnection.OpenChannel(Callback);
         }
 
         /// <summary>
@@ -91,8 +102,6 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
 
             return _objectSerializer.ToObject<T>(unencryptedBytes);
         }
-
-      
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
