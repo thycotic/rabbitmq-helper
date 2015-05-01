@@ -122,11 +122,6 @@ namespace Thycotic.DistributedEngine.Service.IoC
             builder.RegisterType<RequestBus>().AsImplementedInterfaces().SingleInstance();
         }
 
-        private void LoadResponseBus(ContainerBuilder builder)
-        {
-            builder.RegisterType<ResponseBus>().AsImplementedInterfaces().SingleInstance();
-        }
-
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
@@ -144,7 +139,6 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 LoadMemoryMq(builder);
             }
 
-            LoadResponseBus(builder);
             LoadRequestBus(builder);
         }
     }

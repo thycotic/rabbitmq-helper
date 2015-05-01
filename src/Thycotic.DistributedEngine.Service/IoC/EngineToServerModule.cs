@@ -1,8 +1,10 @@
 ﻿using System;
 using Autofac;
+using Thycotic.DistributedEngine.Service.EngineToServer;
 using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
 using Thycotic.Logging;
+using Thycotic.MessageQueue.Client.QueueClient;
 
 namespace Thycotic.DistributedEngine.Service.IoC
 {
@@ -34,6 +36,10 @@ namespace Thycotic.DistributedEngine.Service.IoC
             }).As<IAuthenticatedCommunicationKeyProvider>().SingleInstance();
            
             builder.RegisterModule(new HeartbeatModule(_configurationProvider, _engineService));
+
+
+            builder.RegisterType<ResponseBus>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<UpdateBus>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }

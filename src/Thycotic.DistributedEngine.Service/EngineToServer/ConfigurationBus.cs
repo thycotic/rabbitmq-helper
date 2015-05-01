@@ -4,7 +4,6 @@ using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
-using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Logic.Update;
 using Thycotic.DistributedEngine.Service.Security;
