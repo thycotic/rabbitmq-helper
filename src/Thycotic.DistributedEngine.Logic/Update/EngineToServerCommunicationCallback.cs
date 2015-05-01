@@ -1,6 +1,6 @@
 ﻿using System;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Update;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Update;
 
 namespace Thycotic.DistributedEngine.Logic.Update
 {

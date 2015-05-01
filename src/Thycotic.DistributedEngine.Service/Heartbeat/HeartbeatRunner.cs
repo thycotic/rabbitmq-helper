@@ -80,6 +80,11 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 return;
             }
 
+            //if (response.UpgradeNeeded)
+            //{
+            //    _updateBus.GetUpdate();
+            //}
+
             //the configuration has not changed since it was last consumed
             if (response.LastConfigurationUpdated <= _engineService.IoCConfigurator.LastConfigurationConsumed) return;
 

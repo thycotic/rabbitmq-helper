@@ -39,11 +39,11 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             {
                 case "net.tcp":
                     _log.Info(string.Format("Using Net/TCP channel to {0}", _connectionString));
-                    return NetTcpChannelFactory.CreateDuplexChannel<IEngineToServerCommunicationWcfService>(_connectionString, callback, _useSsl);
+                    return NetTcpChannelFactory.CreateDuplexChannel<IDuplexEngineToServerCommunicationWcfService>(_connectionString, callback, _useSsl);
                 case "http":
                 case "https":
                     _log.Info(string.Format("Using HTTP channel to {0}", _connectionString));
-                    return HttpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
+                    return HttpChannelFactory.CreateChannel<IUnidirectionalEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
                 default:
                     throw new NotSupportedException("Requested schema does not have a supported channel");
             }

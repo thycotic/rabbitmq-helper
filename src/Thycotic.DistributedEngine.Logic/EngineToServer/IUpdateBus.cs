@@ -9,7 +9,10 @@ namespace Thycotic.DistributedEngine.Logic.EngineToServer
     [ContractClass(typeof(UpdateBusContract))]
     public interface IUpdateBus : IDisposable
     {
-        
+        /// <summary>
+        /// Gets the update.
+        /// </summary>
+        void GetUpdate();
     }
 
 
@@ -19,16 +22,22 @@ namespace Thycotic.DistributedEngine.Logic.EngineToServer
     [ContractClassFor(typeof(IUpdateBus))]
     public abstract class UpdateBusContract : IUpdateBus
     {
+        /// <summary>
+        /// Gets the update.
+        /// </summary>
+        public void GetUpdate()
+        {
+        }
 
-       
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
-            
+
         }
+
     }
 }
 
