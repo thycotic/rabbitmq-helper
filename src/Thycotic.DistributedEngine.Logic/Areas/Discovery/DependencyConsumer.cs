@@ -67,7 +67,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     try
                     {
                         _log.Info(string.Format("{0} : Send Dependency ({1}) Results Batch {2} of {3}", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType), x + 1, paging.BatchCount));
-                        _responseBus.Execute(response);
+                        _responseBus.ExecuteAsync(response);
                         paging.Skip = paging.NextSkip;
                     }
                     catch (Exception exception)

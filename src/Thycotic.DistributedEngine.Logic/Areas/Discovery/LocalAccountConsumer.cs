@@ -71,7 +71,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     try
                     {
                         _log.Info(string.Format("{0}: Send Local Account Results Batch {1} of {2}", request.Input.ComputerName, x + 1, paging.BatchCount));
-                        _responseBus.Execute(response);
+                        _responseBus.ExecuteAsync(response);
                         paging.Skip = paging.NextSkip;
                     }
                     catch (Exception exception)

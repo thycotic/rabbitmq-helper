@@ -68,7 +68,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                     response.Last = index == request.DependencyChangeInfos.Length - 1;
                     try
                     {
-                        _responseBus.Execute(response);
+                        _responseBus.ExecuteAsync(response);
                     }
                     catch (Exception)
                     {

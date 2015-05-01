@@ -88,7 +88,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                 try
                 {
-                    _responseBus.Execute(response);
+                    _responseBus.ExecuteAsync(response);
                     _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.ErrorCode));
                 }
                 catch (Exception)
