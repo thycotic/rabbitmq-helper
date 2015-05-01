@@ -164,6 +164,18 @@
     <Reference Include="NSubstitute">
       <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
     </Reference>
+    <Reference Include="SecureBlackbox">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.8\lib\net451\SecureBlackbox.dll</HintPath>
+    </Reference>
+    <Reference Include="SecureBlackbox.SSHClient">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.8\lib\net451\SecureBlackbox.SSHClient.dll</HintPath>
+    </Reference>
+    <Reference Include="SecureBlackbox.SSHCommon">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.8\lib\net451\SecureBlackbox.SSHCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="SecureBlackbox.SSHServer">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.8\lib\net451\SecureBlackbox.SSHServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -177,6 +189,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Thycotic.BlackBox">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.8\lib\net451\Thycotic.BlackBox.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.7, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.56\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
