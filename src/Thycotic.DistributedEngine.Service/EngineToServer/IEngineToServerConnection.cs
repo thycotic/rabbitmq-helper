@@ -12,7 +12,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// Opens the channel.
         /// </summary>
         /// <returns></returns>
-        IEngineToServerCommunicationWcfService OpenChannel();
+        IEngineToServerCommunicationWcfService OpenChannel(IEngineToServerCommunicationCallback callback);
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using TechTalk.SpecFlow;
 using Thycotic.MemoryMq.Subsystem;
 using Thycotic.Utility.Specflow;
+using Thycotic.Wcf;
 
 namespace Thycotic.MemoryMq.Tests.Subsystem
 {

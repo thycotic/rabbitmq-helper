@@ -33,7 +33,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queueName">Name of the queue.</param>
         public void AddClient(string queueName)
         {
-            var callback = _callbackChannelProvider.GetCallbackChannel();
+            var callback = _callbackChannelProvider.GetCallbackChannel<IMemoryMqWcfServiceCallback>();
 
             var channel = callback.ToContextChannel();
 
@@ -101,10 +101,10 @@ namespace Thycotic.MemoryMq.Subsystem
             public void RemoveClient(IMemoryMqWcfServiceCallback callback)
             {
                 var channel = callback.ToContextChannel();
-                
-                IMemoryMqWcfServiceCallback temp;
+
                 lock (_data)
                 {
+                    IMemoryMqWcfServiceCallback temp;
                     _data.TryRemove(channel.SessionId, out temp);
                 }
             }

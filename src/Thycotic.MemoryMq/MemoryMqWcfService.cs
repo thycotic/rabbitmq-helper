@@ -1,6 +1,7 @@
 ﻿using System.ServiceModel;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Subsystem;
+using Thycotic.Wcf;
 
 namespace Thycotic.MemoryMq
 {

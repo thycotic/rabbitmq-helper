@@ -3,6 +3,7 @@ using NSubstitute;
 using TechTalk.SpecFlow;
 using Thycotic.MemoryMq.Subsystem;
 using Thycotic.Utility.Specflow;
+using Thycotic.Wcf;
 
 namespace Thycotic.MemoryMq.Tests.Subsystem
 {
@@ -30,7 +31,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             var callbackChannelProvider = this.GetScenarioContext().Get<ICallbackChannelProvider>(callbackChannelProviderName);
 
 // ReSharper disable once SuspiciousTypeConversion.Global
-            callbackChannelProvider.GetCallbackChannel().Returns(this.GetScenarioContext().GetSubstituteFor<IMemoryMqWcfServiceCallback, IContextChannel>());
+            callbackChannelProvider.GetCallbackChannel<IMemoryMqWcfServiceCallback>().Returns(this.GetScenarioContext().GetSubstituteFor<IMemoryMqWcfServiceCallback, IContextChannel>());
         }
 
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
+using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.Logging;
@@ -21,9 +22,9 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
     {
         private readonly IHeartbeatConfigurationProvider _heartbeatConfigurationProvider;
         private readonly EngineService _engineService;
-        private readonly IRecentLogEntryProvider _recentLogEntryProvider;
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly IResponseBus _responseBus;
+        private readonly IUpdateBus _updateBus;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly ILogWriter _log = Log.Get(typeof(HeartbeatRunner));
@@ -34,20 +35,20 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// </summary>
         /// <param name="heartbeatConfigurationProvider">The heartbeat configuration provider.</param>
         /// <param name="engineService">The engine service.</param>
-        /// <param name="recentLogEntryProvider">The recent log entry provider.</param>
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
-        /// <param name="responseBus">The rest communication provider.</param>
+        /// <param name="responseBus">The response bus.</param>
+        /// <param name="updateBus">The update bus.</param>
         public HeartbeatRunner(IHeartbeatConfigurationProvider heartbeatConfigurationProvider, 
             EngineService engineService, 
-            IRecentLogEntryProvider recentLogEntryProvider, 
             IEngineIdentificationProvider engineIdentificationProvider, 
-            IResponseBus responseBus)
+            IResponseBus responseBus,
+            IUpdateBus updateBus)
         {
             _heartbeatConfigurationProvider = heartbeatConfigurationProvider;
             _engineService = engineService;
-            _recentLogEntryProvider = recentLogEntryProvider;
             _engineIdentificationProvider = engineIdentificationProvider;
-            _responseBus = responseBus;            
+            _responseBus = responseBus;
+            _updateBus = updateBus;
         }
 
         private void Pump()
@@ -78,6 +79,11 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             {
                 return;
             }
+
+            //if (response.UpgradeNeeded)
+            //{
+            //    _updateBus.GetUpdate();
+            //}
 
             //the configuration has not changed since it was last consumed
             if (response.LastConfigurationUpdated <= _engineService.IoCConfigurator.LastConfigurationConsumed) return;
