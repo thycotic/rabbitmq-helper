@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.Messages.Heartbeat.Request;
 using Thycotic.PasswordChangers;
+using Thycotic.SharedTypes.Logging;
+using Thycotic.SharedTypes.PasswordChangers;
+using Error = Thycotic.SharedTypes.PasswordChangers.Error;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
 {
@@ -57,14 +61,21 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
                 catch (Exception)
                 {
                     _log.Error("Failed to record the secret heartbeat response back to server");
-                    //TODO: Retry based on heartbeat status?
+                    // May not have to do this anymore.
                 }
 
             }
             catch (Exception ex)
             {
-                _log.Error("Handle specific error here", ex);
-                throw;
+                var failResp = new SecretHeartbeatResponse
+                {
+                    Success = false,
+                    SecretId = request.SecretId,
+                    Errors = new List<Error> {new ThycoticError(ThycoticErrorType.Unknown, ex.ToString())},
+                    Log = new List<LogEntry>()
+                };
+                _log.Info(string.Format("Heartbeat Result for Secret Id {0}: Success: False ({1})", request.SecretId, ex ));
+                _responseBus.ExecuteAsync(failResp);
             }
         }
     }
