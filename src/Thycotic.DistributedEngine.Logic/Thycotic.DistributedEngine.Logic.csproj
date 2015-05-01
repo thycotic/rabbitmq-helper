@@ -222,7 +222,9 @@
     <Compile Include="Areas\POC\ThrowTriggerConsumer.cs" />
     <Compile Include="Areas\POC\StepConsumer.cs" />
     <Compile Include="Areas\POC\HelloWorldConsumer.cs" />
-    <Compile Include="IEngineConfigurationBus.cs" />
+    <Compile Include="EngineToServer\BasicBus.cs" />
+    <Compile Include="EngineToServer\IUpdateBus.cs" />
+    <Compile Include="EngineToServer\IConfigurationBus.cs" />
     <Compile Include="EngineToServer\IResponseBus.cs" />
     <Compile Include="Licensing\DiscoveryLibraryLicenser.cs" />
     <Compile Include="Licensing\ILibraryLicenser.cs" />

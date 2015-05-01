@@ -16,7 +16,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         private readonly ILogWriter _log = Log.Get(typeof(EngineToServerConnection));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineConfigurationBus"/> class.
+        /// Initializes a new instance of the <see cref="ConfigurationBus"/> class.
         /// </summary>
         /// <param name="connectionString">The URI.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
@@ -31,7 +31,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotSupportedException">Requested schema does not have a supported channel</exception>
-        public IEngineToServerCommunicationWcfService OpenChannel()
+        public IEngineToServerCommunicationWcfService OpenChannel(IEngineToServerCommunicationCallback callback)
         {
             var uri = new Uri(_connectionString);
 
@@ -39,7 +39,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             {
                 case "net.tcp":
                     _log.Info(string.Format("Using Net/TCP channel to {0}", _connectionString));
-                    return NetTcpChannelFactory.CreateChannel<IEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
+                    return NetTcpChannelFactory.CreateDuplexChannel<IEngineToServerCommunicationWcfService>(_connectionString, callback, _useSsl);
                 case "http":
                 case "https":
                     _log.Info(string.Format("Using HTTP channel to {0}", _connectionString));

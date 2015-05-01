@@ -5,6 +5,7 @@ using System.Linq;
 using Autofac;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic;
+using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.EngineToServer;
 using Thycotic.DistributedEngine.Service.IoC;
 using Thycotic.DistributedEngine.Service.Security;
@@ -170,7 +171,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 return new EngineToServerConnection(connectionString, useSsl);
             }).As<IEngineToServerConnection>();
 
-            builder.RegisterType<EngineConfigurationBus>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<ConfigurationBus>().AsImplementedInterfaces().SingleInstance();
         }
 
         /// <summary>
@@ -303,7 +304,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 _log.Info(string.Format("Running engine on {0}", DnsEx.GetDnsHostName()));
 
                 var engineIdentificationProvider = tempContainer.Resolve<IEngineIdentificationProvider>();
-                var engineConfigurationBus = tempContainer.Resolve<IEngineConfigurationBus>();
+                var engineConfigurationBus = tempContainer.Resolve<IConfigurationBus>();
 
                 var request = new EngineConfigurationRequest
                 {

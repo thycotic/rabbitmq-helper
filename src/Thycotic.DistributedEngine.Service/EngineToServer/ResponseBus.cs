@@ -2,12 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Thycotic.DistributedEngine.EngineToServerCommunication;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.Security;
-using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.Utility.Serialization;
 
@@ -16,20 +13,15 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
     /// <summary>
     /// Engine to server communication provider
     /// </summary>
-    public class ResponseBus : IResponseBus
+    public class ResponseBus : PostAuthenticationBus, IResponseBus
     {
-        private readonly IObjectSerializer _objectSerializer;
-        private readonly IAuthenticatedCommunicationKeyProvider _authenticatedCommunicationKeyProvider;
-        private readonly IAuthenticatedCommunicationRequestEncryptor _authenticatedCommunicationRequestEncryptor;
-        private readonly IEngineToServerCommunicationWcfService _channel;
-
         private readonly object _syncRoot = new object();
         private readonly HashSet<Task> _pendingResponseTasks = new HashSet<Task>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ResponseBus));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineConfigurationBus" /> class.
+        /// Initializes a new instance of the <see cref="ConfigurationBus" /> class.
         /// </summary>
         /// <param name="engineToServerConnection">The engine to server connection.</param>
         /// <param name="objectSerializer">The object serializer.</param>
@@ -39,65 +31,9 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             IObjectSerializer objectSerializer,
             IAuthenticatedCommunicationKeyProvider authenticatedCommunicationKeyProvider,
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
+            : base(engineToServerConnection, objectSerializer, authenticatedCommunicationKeyProvider, authenticatedCommunicationRequestEncryptor)
         {
-            _objectSerializer = objectSerializer;
-            _authenticatedCommunicationKeyProvider = authenticatedCommunicationKeyProvider;
-            _authenticatedCommunicationRequestEncryptor = authenticatedCommunicationRequestEncryptor;
-            _channel = engineToServerConnection.OpenChannel();
-        }
 
-        private SymmetricEnvelope WrapRequest(object response)
-        {
-            var requestString = _objectSerializer.ToBytes(response);
-
-            return new SymmetricEnvelope
-            {
-                KeyHash = _authenticatedCommunicationKeyProvider.SymmetricKey.GetHashString(),
-                Body = _authenticatedCommunicationRequestEncryptor.Encrypt((SymmetricKeyPair)_authenticatedCommunicationKeyProvider, requestString)
-            };
-        }
-
-        private SymmetricEnvelopeNeedingResponse WrapRequest<TResponse>(object response)
-        {
-            var requestString = _objectSerializer.ToBytes(response);
-
-            return new SymmetricEnvelopeNeedingResponse
-            {
-                ResponseTypeName = typeof(TResponse).AssemblyQualifiedName,
-                KeyHash = _authenticatedCommunicationKeyProvider.SymmetricKey.GetHashString(),
-                Body = _authenticatedCommunicationRequestEncryptor.Encrypt((SymmetricKeyPair)_authenticatedCommunicationKeyProvider, requestString)
-            };
-        }
-
-        private T UnwrapResponse<T>(byte[] bytes)
-        {
-            var unencryptedBytes = _authenticatedCommunicationRequestEncryptor.Decrypt((SymmetricKeyPair)_authenticatedCommunicationKeyProvider, bytes);
-
-            return _objectSerializer.ToObject<T>(unencryptedBytes);
-        }
-
-        private static T WrapInteraction<T>(Func<T> func)
-        {
-            try
-            {
-                return func.Invoke();
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Bus broken down", ex);
-            }
-        }
-
-        private static void WrapInteraction(Action action)
-        {
-            try
-            {
-                action.Invoke();
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Bus broken down", ex);
-            }
         }
 
         /// <summary>
@@ -112,7 +48,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             return WrapInteraction(() =>
             {
                 var wrappedRequest = WrapRequest<TResponse>(request);
-                var wrapperResponse = _channel.Get(wrappedRequest);
+                var wrapperResponse = Channel.Get(wrappedRequest);
 
                 return UnwrapResponse<TResponse>(wrapperResponse);
             });
@@ -128,7 +64,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             WrapInteraction(() =>
             {
                 var wrappedRequest = WrapRequest(request);
-                _channel.Execute(wrappedRequest);
+                Channel.Execute(wrappedRequest);
             });
         }
 
@@ -144,7 +80,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             return WrapInteraction(() =>
             {
                 var wrappedRequest = WrapRequest<TResponse>(request);
-                var wrapperResponse = _channel.ExecuteAndRespond(wrappedRequest);
+                var wrapperResponse = Channel.ExecuteAndRespond(wrappedRequest);
 
                 return UnwrapResponse<TResponse>(wrapperResponse);
             });
@@ -170,10 +106,10 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                     {
                         try
                         {
-                            Task.Delay(TimeSpan.FromSeconds(tries*retryDelaySeconds)).Wait();
+                            Task.Delay(TimeSpan.FromSeconds(tries * retryDelaySeconds)).Wait();
 
                             var wrappedRequest = WrapRequest(request);
-                            _channel.Execute(wrappedRequest);
+                            Channel.Execute(wrappedRequest);
 
                             return;
                         }
@@ -184,7 +120,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                             {
                                 _log.Warn(
                                     string.Format("Failed to execute on try {0}. Will retry in {1} seconds", tries,
-                                        tries*retryDelaySeconds), ex);
+                                        tries * retryDelaySeconds), ex);
                             }
                             else
                             {
@@ -219,11 +155,10 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             return pendingTask;
         }
 
-
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             lock (_syncRoot)
             {
@@ -234,7 +169,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 }
             }
 
-            WrapInteraction(() => _channel.Dispose());
+            base.Dispose();
         }
     }
 }

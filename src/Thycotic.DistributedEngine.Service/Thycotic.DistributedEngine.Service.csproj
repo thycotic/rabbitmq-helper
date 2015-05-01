@@ -207,6 +207,8 @@
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
     <Compile Include="EngineToServer\EngineToServerConnection.cs" />
     <Compile Include="EngineToServer\IEngineToServerConnection.cs" />
+    <Compile Include="EngineToServer\PostAuthenticationBus.cs" />
+    <Compile Include="EngineToServer\UpdateBus.cs" />
     <Compile Include="IoC\EngineToServerModule.cs" />
     <Compile Include="Heartbeat\LogRunner.cs" />
     <Compile Include="IoC\DiscoveryModule.cs" />
@@ -224,7 +226,7 @@
     <Compile Include="Security\IAuthenticatedCommunicationRequestEncryptor.cs" />
     <Compile Include="Security\IdentityGuidProvider.cs" />
     <Compile Include="EngineToServer\ResponseBus.cs" />
-    <Compile Include="EngineConfigurationBus.cs" />
+    <Compile Include="EngineToServer\ConfigurationBus.cs" />
     <Compile Include="Configuration\IEngineIdentificationProvider.cs" />
     <Compile Include="EngineService.cs">
       <SubType>Component</SubType>
