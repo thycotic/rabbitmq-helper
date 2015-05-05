@@ -17,7 +17,7 @@ namespace Thycotic.DistributedEngine.Logic.Update
         /// Event fired when bytes are received
         /// </summary>
         /// <param name="chunk">The chunk.</param>
-        public void SendUpdateChunk(UpdateChunk chunk)
+        public void SendUpdateChunk(FileChunk chunk)
         {
             
         }
