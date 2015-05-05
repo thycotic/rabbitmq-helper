@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Thycotic.DistributedEngine.Logic.Licensing.Providers;
+﻿using Thycotic.DistributedEngine.Logic.Licensing.Providers;
 using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.Logic.Licensing
@@ -18,8 +17,6 @@ namespace Thycotic.DistributedEngine.Logic.Licensing
         public void Start()
         {
             _log.Debug(string.Format("Applying {0} keys to Discovery library", _thycoticLicenseKeyProvider.Keys.Count));
-            var keyDictionary = _thycoticLicenseKeyProvider.Keys.ToDictionary(x => x.Key, x => x.Value);
-            Discovery.Sources.Aspects.LicenseKeyHelper.LicenseKeys = keyDictionary;
         }
     }
 }
