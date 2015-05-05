@@ -33,8 +33,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordC
 
             Action = parameters =>
             {
-                throw new NotImplementedException();
-
                 _log.Info("Posting message to exchange");
 
                 //string server;
