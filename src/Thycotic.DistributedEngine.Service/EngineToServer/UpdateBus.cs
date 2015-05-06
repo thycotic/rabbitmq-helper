@@ -1,16 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Thycotic.DistributedEngine.EngineToServerCommunication;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Update;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
-using Thycotic.DistributedEngine.Logic.Update;
 using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.DistributedEngine.Service.Security;
-using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.Utility;
 using Thycotic.Utility.Serialization;
@@ -34,11 +28,13 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <param name="authenticatedCommunicationKeyProvider">The authenticated communication key provider.</param>
         /// <param name="authenticatedCommunicationRequestEncryptor">The authenticated communication request encryptor.</param>
         public UpdateBus(IEngineToServerConnection engineToServerConnection,
-                     IEngineIdentificationProvider engineIdentificationProvider,
+            IEngineIdentificationProvider engineIdentificationProvider,
             IObjectSerializer objectSerializer,
             IAuthenticatedCommunicationKeyProvider authenticatedCommunicationKeyProvider,
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
-            : base(engineToServerConnection, objectSerializer, authenticatedCommunicationKeyProvider, authenticatedCommunicationRequestEncryptor)
+            : base(
+                engineToServerConnection, objectSerializer, authenticatedCommunicationKeyProvider,
+                authenticatedCommunicationRequestEncryptor)
         {
             _engineIdentificationProvider = engineIdentificationProvider;
         }
@@ -47,9 +43,9 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <summary>
         /// Gets the update.
         /// </summary>
-        public void GetUpdate()
+        public void GetUpdate(string path)
         {
-            var response = WrapInteraction(() =>
+           var response = WrapInteraction(() =>
             {
                 var request = new EngineUpdateRequest
                 {
@@ -63,6 +59,20 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
 
                 return UnwrapResponse<EngineUpdateResponse>(wrapperResponse);
             });
+
+            if (response.Success)
+            {
+                var chunks = Callback.ExtractUpdate();
+
+                var stitcher = new FileStitcher();
+
+                stitcher.CombineFile(chunks, path);
+            }
+            else
+            {
+                throw new ApplicationException(response.ErrorMessage);
+            }
+
         }
     }
 }

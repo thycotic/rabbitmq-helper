@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Update;
 
@@ -9,9 +11,7 @@ namespace Thycotic.DistributedEngine.Logic.Update
     /// </summary>
     public class EngineToServerCommunicationCallback : IEngineToServerCommunicationCallback
     {
-
-        //public EventHandler<MemoryMqDeliveryEventArgs> BytesReceived;
-
+        private readonly List<FileChunk> _chunks = new List<FileChunk>();
 
         /// <summary>
         /// Event fired when bytes are received
@@ -19,7 +19,22 @@ namespace Thycotic.DistributedEngine.Logic.Update
         /// <param name="chunk">The chunk.</param>
         public void SendUpdateChunk(FileChunk chunk)
         {
-            
+            lock (_chunks)
+            {
+                _chunks.Add(chunk);
+            }
+        }
+
+        /// <summary>
+        /// Extracts the update.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<FileChunk> ExtractUpdate()
+        {
+            lock (_chunks)
+            {
+                return _chunks.OrderBy(c => c.Index);
+            }
         }
 
         /// <summary>

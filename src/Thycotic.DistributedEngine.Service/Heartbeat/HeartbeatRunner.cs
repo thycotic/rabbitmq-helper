@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -81,9 +82,10 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             }
 
             //if (response.UpgradeNeeded)
-            //{
-            //    _updateBus.GetUpdate();
-            //}
+            {
+                _updateBus.GetUpdate(Path.Combine(Directory.GetCurrentDirectory(), "update.msi"));
+
+            }
 
             //the configuration has not changed since it was last consumed
             if (response.LastConfigurationUpdated <= _engineService.IoCConfigurator.LastConfigurationConsumed) return;

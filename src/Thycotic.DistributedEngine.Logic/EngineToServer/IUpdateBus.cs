@@ -12,7 +12,8 @@ namespace Thycotic.DistributedEngine.Logic.EngineToServer
         /// <summary>
         /// Gets the update.
         /// </summary>
-        void GetUpdate();
+        /// <param name="path">The path.</param>
+        void GetUpdate(string path);
     }
 
 
@@ -25,7 +26,8 @@ namespace Thycotic.DistributedEngine.Logic.EngineToServer
         /// <summary>
         /// Gets the update.
         /// </summary>
-        public void GetUpdate()
+        /// <param name="path">The path.</param>
+        public void GetUpdate(string path)
         {
         }
 
