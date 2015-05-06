@@ -130,6 +130,10 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -146,6 +150,10 @@
     </Reference>
     <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.3.2.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskScheduler.1.0.0.2\lib\net20\Microsoft.Win32.TaskScheduler.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -165,6 +173,22 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SecureBlackbox, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SecureBlackbox.SSHClient, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.SSHClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SecureBlackbox.SSHCommon, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.SSHCommon.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SecureBlackbox.SSHServer, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.SSHServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Management" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -172,6 +196,10 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="TechTalk.SpecFlow">
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.BlackBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6faa24c50f43cf8d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.10, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
@@ -186,17 +214,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.9\lib\net451\Thycotic.Encryption.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.Licensing, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Licensing.Common, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Licensing.Public, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.Public.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.84, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.84\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.88, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.88\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.110\lib\net451\Thycotic.SharedTypes.dll</HintPath>
+      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.114\lib\net451\Thycotic.SharedTypes.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Wcf, Version=5.0.0.121, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
