@@ -82,7 +82,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 return;
             }
 
-            if (response.UpgradeNeeded)
+            if (response.UpdateNeeded)
             {
                 _serviceUpdaterWrapper.ApplyLatestUpdate();
             }

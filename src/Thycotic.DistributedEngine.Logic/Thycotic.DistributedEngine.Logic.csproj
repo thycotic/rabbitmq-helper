@@ -143,6 +143,10 @@
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Interop.ActiveDs">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.104\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -192,12 +196,12 @@
       <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.10, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.93, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.93\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.102, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.102\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+    <Reference Include="Thycotic.Discovery.Sources">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.104\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
@@ -207,6 +211,10 @@
     <Reference Include="Thycotic.Encryption, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.9\lib\net451\Thycotic.Encryption.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Foundation, Version=2.5.0.0, Culture=neutral, PublicKeyToken=d3c50e8fc4a39908, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Foundation.2.5.0.0\lib\net451\Thycotic.Foundation.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Licensing, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.dll</HintPath>

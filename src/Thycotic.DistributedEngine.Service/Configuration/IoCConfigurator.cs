@@ -327,7 +327,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                     throw new ConfigurationErrorsException(response.ErrorMessage);
                 }
 
-                updateNeeded = response.UpgradeNeeded;
+                updateNeeded = response.UpdateNeeded;
 
                 return TryAssignConfiguration(response.Configuration) &&
                        TryAssignThycoticKeys(response.ThycoticKeys) &&
