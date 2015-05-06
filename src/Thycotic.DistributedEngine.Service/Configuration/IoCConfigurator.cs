@@ -327,9 +327,6 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                     throw new ConfigurationErrorsException(response.ErrorMessage);
                 }
 
-                //HACK: Do not commit
-                response.UpgradeNeeded = true;
-
                 updateNeeded = response.UpgradeNeeded;
 
                 return TryAssignConfiguration(response.Configuration) &&

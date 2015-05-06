@@ -77,9 +77,6 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 throw new ConfigurationErrorsException(response.ErrorMessage);
             }
 
-            //HACK: Do not commit
-            response.UpgradeNeeded = true;
-
             if (_cts.IsCancellationRequested)
             {
                 return;
