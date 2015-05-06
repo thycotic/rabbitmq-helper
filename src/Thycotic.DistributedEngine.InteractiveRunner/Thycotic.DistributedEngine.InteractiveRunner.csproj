@@ -214,8 +214,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.316\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.317\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Encryption, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
