@@ -38,8 +38,9 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// <summary>
         /// Tries the get remote configuration.
         /// </summary>
+        /// <param name="updateNeeded">if set to <c>true</c> [update needed].</param>
         /// <returns></returns>
-        bool TryGetAndAssignConfiguration();
+        bool TryGetAndAssignConfiguration(out bool updateNeeded);
 
         /// <summary>
         /// Builds the IoC container.

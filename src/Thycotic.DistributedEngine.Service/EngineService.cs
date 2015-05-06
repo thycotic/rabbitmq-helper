@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Thycotic.DistributedEngine.Service.Configuration;
+using Thycotic.DistributedEngine.Service.Update;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.Wrappers;
 
@@ -79,14 +80,14 @@ namespace Thycotic.DistributedEngine.Service
 
             try
             {
-
-                if (!IoCConfigurator.TryGetAndAssignConfiguration())
+                bool updateNeeded;
+                if (!IoCConfigurator.TryGetAndAssignConfiguration(out updateNeeded))
                 {
                     _log.Info("Engine is not enabled/configured. Existing...");
                 }
 
                 // BuildAll the container to finalize registrations and prepare for object resolution.
-                _ioCContainer = IoCConfigurator.BuildAll(this, _startConsuming);
+                _ioCContainer = IoCConfigurator.BuildAll(this, !updateNeeded && _startConsuming);
 
                 //notify any hooks that IoC is configured
                 if (IoCContainerConfigured != null)
@@ -94,14 +95,26 @@ namespace Thycotic.DistributedEngine.Service
                     IoCContainerConfigured(this, _ioCContainer);
                 }
 
-                _log.Debug("Configuring IoC complete");
+                if (!updateNeeded)
+                {
+                    return;
+                }
 
+                _log.Info("Update is pending");
+                ApplyUpdate();
             }
             catch (Exception ex)
             {
                 _log.Error(string.Format("Failed to configure IoC because {0}", ex.Message), ex);
                 throw;
             }
+        }
+
+        private void ApplyUpdate()
+        {
+            var serviceUpdaterWrapper = _ioCContainer.Resolve<IServiceUpdaterWrapper>();
+
+            serviceUpdaterWrapper.ApplyLatestUpdate();
         }
 
         private void ResetIoCContainer()

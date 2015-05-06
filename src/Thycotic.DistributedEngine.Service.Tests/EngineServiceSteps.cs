@@ -23,7 +23,8 @@ namespace Thycotic.DistributedEngine.Service.Tests
         {
             var ioCConfigurator = this.GetScenarioContext().Get<IIoCConfigurator>(ioCConfiguratorName);
 
-            ioCConfigurator.TryGetAndAssignConfiguration().Returns(true);
+            bool updateNeeded;
+            ioCConfigurator.TryGetAndAssignConfiguration(out updateNeeded).Returns(true);
         }
         
         [When(@"the method Start on EngineService (\w+) is called")]

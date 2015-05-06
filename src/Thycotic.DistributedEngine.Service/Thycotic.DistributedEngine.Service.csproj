@@ -237,6 +237,7 @@
     <Compile Include="Heartbeat\LogRunner.cs" />
     <Compile Include="IoC\DiscoveryModule.cs" />
     <Compile Include="IoC\LicensingModule.cs" />
+    <Compile Include="IoC\UpdateModule.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -272,6 +273,8 @@
     <Compile Include="IoC\MessageQueueModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Update\IServiceUpdaterWrapper.cs" />
+    <Compile Include="Update\ServiceUpdaterWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">
@@ -313,6 +316,10 @@
     <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
       <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
       <Name>Thycotic.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.WindowsService.Bootstraper\Thycotic.WindowsService.Bootstraper.csproj">
+      <Project>{cf3ec07e-ea34-4d65-b6f3-c6335f2588ea}</Project>
+      <Name>Thycotic.WindowsService.Bootstraper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

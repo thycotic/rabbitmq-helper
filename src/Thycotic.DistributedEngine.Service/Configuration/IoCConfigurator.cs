@@ -182,9 +182,12 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
         protected virtual void RegisterPostAuthorization(ContainerBuilder builder, EngineService engineService, bool startConsuming)
         {
+            
             builder.RegisterModule(new LicensingModule(_thycoticKeys, _thirdPartyKeys));
 
             builder.RegisterModule(new EngineToServerModule(GetInstanceConfiguration, engineService));
+
+            builder.RegisterModule(new UpdateModule());
 
             builder.RegisterModule(new MessageQueueModule(GetInstanceConfiguration));
 
@@ -288,7 +291,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// Tries the get remote configuration.
         /// </summary>
         /// <returns></returns>
-        public bool TryGetAndAssignConfiguration()
+        public bool TryGetAndAssignConfiguration(out bool updateNeeded)
         {
             using (LogContext.Create("Configuring"))
             {
@@ -296,6 +299,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 if (_instanceConfiguration != null)
                 {
                     //already have a configuration
+                    updateNeeded = false;
                     return true;
                 }
 
@@ -317,11 +321,16 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 };
 
                 var response = engineConfigurationBus.GetConfiguration(request);
-
+                
                 if (!response.Success)
                 {
                     throw new ConfigurationErrorsException(response.ErrorMessage);
                 }
+
+                //HACK: Do not commit
+                response.UpgradeNeeded = true;
+
+                updateNeeded = response.UpgradeNeeded;
 
                 return TryAssignConfiguration(response.Configuration) &&
                        TryAssignThycoticKeys(response.ThycoticKeys) &&

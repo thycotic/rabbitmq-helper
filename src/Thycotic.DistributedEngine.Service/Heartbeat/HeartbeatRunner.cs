@@ -10,6 +10,7 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.Configuration;
+using Thycotic.DistributedEngine.Service.Update;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
 using Thycotic.Utility;
@@ -25,7 +26,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         private readonly EngineService _engineService;
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly IResponseBus _responseBus;
-        private readonly IUpdateBus _updateBus;
+        private readonly IServiceUpdaterWrapper _serviceUpdaterWrapper;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly ILogWriter _log = Log.Get(typeof(HeartbeatRunner));
@@ -38,18 +39,18 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// <param name="engineService">The engine service.</param>
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="responseBus">The response bus.</param>
-        /// <param name="updateBus">The update bus.</param>
+        /// <param name="serviceUpdaterWrapper">The ServiceUpdaterWrapper.</param>
         public HeartbeatRunner(IHeartbeatConfigurationProvider heartbeatConfigurationProvider, 
             EngineService engineService, 
             IEngineIdentificationProvider engineIdentificationProvider, 
             IResponseBus responseBus,
-            IUpdateBus updateBus)
+            IServiceUpdaterWrapper serviceUpdaterWrapper)
         {
             _heartbeatConfigurationProvider = heartbeatConfigurationProvider;
             _engineService = engineService;
             _engineIdentificationProvider = engineIdentificationProvider;
             _responseBus = responseBus;
-            _updateBus = updateBus;
+            _serviceUpdaterWrapper = serviceUpdaterWrapper;
         }
 
         private void Pump()
@@ -76,25 +77,32 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 throw new ConfigurationErrorsException(response.ErrorMessage);
             }
 
+            //HACK: Do not commit
+            response.UpgradeNeeded = true;
+
             if (_cts.IsCancellationRequested)
             {
                 return;
             }
 
-            //if (response.UpgradeNeeded)
+            if (response.UpgradeNeeded)
             {
-                _updateBus.GetUpdate(Path.Combine(Directory.GetCurrentDirectory(), "update.msi"));
-
+                _serviceUpdaterWrapper.ApplyLatestUpdate();
             }
+            else
+            {
+                //the configuration has not changed since it was last consumed
+                if (response.LastConfigurationUpdated <= _engineService.IoCConfigurator.LastConfigurationConsumed)
+                {
+                    return;
+                }
 
-            //the configuration has not changed since it was last consumed
-            if (response.LastConfigurationUpdated <= _engineService.IoCConfigurator.LastConfigurationConsumed) return;
+                _log.Info("Configuration changed. Recycling...");
 
-            _log.Info("Configuration changed. Recycling...");
+                _engineService.IoCConfigurator.TryAssignConfiguration(response.NewConfiguration);
 
-            _engineService.IoCConfigurator.TryAssignConfiguration(response.NewConfiguration);
-
-            _engineService.Recycle();
+                _engineService.Recycle();
+            }
         }
 
 
