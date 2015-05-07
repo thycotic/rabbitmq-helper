@@ -16,7 +16,7 @@ namespace Thycotic.WindowsService.Bootstraper
         private readonly string _workingPath;
         private readonly string _serviceName;
         private readonly string _msiPath;
-        private readonly ILogWriter _log = Log.Get(typeof (ServiceUpdater));
+        private readonly ILogWriter _log = Log.Get(typeof(ServiceUpdater));
 
         public ServiceUpdater(CancellationTokenSource cts, string workingPath, string serviceName, string msiPath)
         {
@@ -100,7 +100,13 @@ namespace Thycotic.WindowsService.Bootstraper
             {
                 try
                 {
-                    _log.Info(string.Format("Running bootstrap process for {0} with {1}", _serviceName, _msiPath));
+                    _log.Info(string.Format("Running bootstrap process for {0}", _serviceName));
+
+                    CheckMsi();
+
+                    CheckWorkingPathAccess();
+                    
+                    _log.Info(string.Format("Update log path will be {0}", Path.Combine(_workingPath, "log", "SSDEUpdate.log")));
 
                     StopService();
 
@@ -112,7 +118,7 @@ namespace Thycotic.WindowsService.Bootstraper
                     {
                         CreateNoWindow = true,
                         RedirectStandardOutput = true,
-                        UseShellExecute = false,
+                        UseShellExecute = true,
                         WorkingDirectory = _workingPath,
                         Arguments = string.Format(@"/i {0} /qn /log log\SSDEUpdate.log", _msiPath)
                     };
@@ -185,6 +191,39 @@ namespace Thycotic.WindowsService.Bootstraper
                     _log.Error("Failed to bootstrap", ex);
                 }
             }
+        }
+
+        private void CheckMsi()
+        {
+            if (!File.Exists(_msiPath))
+            {
+                throw new FileNotFoundException(string.Format("MSI does not exist in {0}", _msiPath));
+            }
+
+            _log.Info(string.Format("MSI is {0}", _msiPath));
+        }
+
+        private void CheckWorkingPathAccess()
+        {
+
+            if (!Directory.Exists(_workingPath))
+            {
+                throw new DirectoryNotFoundException(string.Format("Working directory does not exist in {0}",
+                    _workingPath));
+            }
+            
+            try
+            {
+                Directory.GetAccessControl(_workingPath);
+
+                _log.Info(string.Format("Working path is {0}", _workingPath));
+
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                throw new UnauthorizedAccessException(string.Format("Current user does not have permission to write to {0}", _workingPath));
+            }
+
         }
 
         private void StartService()
