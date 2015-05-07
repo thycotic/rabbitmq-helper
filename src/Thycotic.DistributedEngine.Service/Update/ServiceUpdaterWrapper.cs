@@ -42,19 +42,25 @@ namespace Thycotic.DistributedEngine.Service.Update
 
                 _updating = true;
             }
+            
+            try
+            {
 
-            var msiPath = Path.Combine(Path.GetTempPath(), "Thycotic.DistributedEngine.Service-Update..msi");
+                var msiPath = Path.Combine(Path.GetTempPath(), "Thycotic.DistributedEngine.Service-Update..msi");
 
-            _updateBus.GetUpdate(msiPath);
+                _updateBus.GetUpdate(msiPath);
 
-            var cts = new CancellationTokenSource();
+                var cts = new CancellationTokenSource();
 
-            var serviceUpdater = new ServiceUpdater(cts, Directory.GetCurrentDirectory(),
-                "Thycotic.DistributedEngine.Service", msiPath);
+                var serviceUpdater = new ServiceUpdater(cts, Directory.GetCurrentDirectory(),
+                    "Thycotic.DistributedEngine.Service", msiPath);
 
-            serviceUpdater.Update();
-
-            _updating = false;
+                serviceUpdater.Update();
+            }
+            finally
+            {
+                _updating = false;
+            }
         }
     }
 }
