@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac.Features.OwnedInstances;
+using PostSharp.Extensibility;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.General;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -19,15 +21,18 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
     public class SecretBasicChangePasswordConsumer : IBasicConsumer<SecretBasicPasswordChangeMessage>
     {
         private readonly IResponseBus _responseBus;
+        private readonly Func<Owned<IBasicConsumer<SecretChangeDependencyMessage>>> _consumerFactory;
         private readonly ILogWriter _log = Log.Get(typeof(SecretBasicChangePasswordConsumer));
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="responseBus"></param>
-        public SecretBasicChangePasswordConsumer(IResponseBus responseBus)
+        /// <param name="consumerFactory"></param>
+        public SecretBasicChangePasswordConsumer(IResponseBus responseBus, Func<Owned<IBasicConsumer<SecretChangeDependencyMessage>>> consumerFactory)
         {
             _responseBus = responseBus;
+            _consumerFactory = consumerFactory;
         }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         changeResult = passwordChanger.VerifyNewCredentials(info);
                     }
 
-                    response = new RemotePasswordChangeResponse()
+                    response = new RemotePasswordChangeResponse
                     {
                         Success = changeResult.Success,
                         SecretId = request.SecretId,
@@ -67,6 +72,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         OldPassword = info.CurrentPassword,
                         NewPassword = info.NewPassword
                     };
+
+                    if (changeResult.Success && request.SecretChangeDependencyMessage != null)
+                    {
+                        _consumerFactory().Value.Consume(request.SecretChangeDependencyMessage);
+                    }
                 }
                 else
                 {
@@ -74,7 +84,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                     _log.Info(string.Format("{0} Secret Id {1}:", message, request.SecretId));
 
-                    response = new RemotePasswordChangeResponse()
+                    response = new RemotePasswordChangeResponse
                     {
                         Success = false,
                         SecretId = request.SecretId,
