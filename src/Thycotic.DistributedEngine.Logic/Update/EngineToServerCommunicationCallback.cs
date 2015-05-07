@@ -33,6 +33,11 @@ namespace Thycotic.DistributedEngine.Logic.Update
         {
             lock (_chunks)
             {
+                if (!_chunks.Any() || _chunks.Count() != _chunks.First().TotalChunks)
+                {
+                    throw new ApplicationException("Update is incomplete");
+                }
+                
                 return _chunks.OrderBy(c => c.Index);
             }
         }
