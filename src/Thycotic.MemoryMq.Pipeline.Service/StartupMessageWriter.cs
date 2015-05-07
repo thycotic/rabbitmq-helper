@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using Autofac;
 using Thycotic.Logging;
@@ -26,6 +27,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         public void Start()
         {
             _log.Debug("Application is starting...");
+            _log.Info(string.Format("Running as {0}", GetUserName()));
 
             Task.Delay(StartupMessageDelay).ContinueWith(task => 
             {
@@ -53,7 +55,17 @@ namespace Thycotic.MemoryMq.Pipeline.Service
             });
         }
 
-        
+        private static string GetUserName()
+        {
+            var windowsIdentity = WindowsIdentity.GetCurrent();
+            if (windowsIdentity == null)
+            {
+                throw new ApplicationException("Could not determine the user running the application");
+            }
+
+            return windowsIdentity.Name;
+        }
+
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
