@@ -17,5 +17,10 @@ namespace Thycotic.Messages.PasswordChanging.Request
         /// Gets or sets the Secret Id
         /// </summary>
         public int SecretId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the optional Secret Change Dependency Message.
+        /// </summary>
+        public SecretChangeDependencyMessage SecretChangeDependencyMessage { get; set; }
     }
 }
