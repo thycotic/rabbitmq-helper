@@ -38,7 +38,11 @@ namespace Thycotic.DistributedEngine.Logic.Update
                     throw new ApplicationException("Update is incomplete");
                 }
                 
-                return _chunks.OrderBy(c => c.Index);
+                var orderedChunks = _chunks.OrderBy(c => c.Index).ToArray();
+
+                _chunks.Clear();
+
+                return orderedChunks;
             }
         }
 
