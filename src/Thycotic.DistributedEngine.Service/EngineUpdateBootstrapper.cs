@@ -22,8 +22,9 @@ namespace Thycotic.DistributedEngine.Service
         /// <param name="msiPath">The msi path.</param>
         public void Bootstrap(string msiPath)
         {
-            Debugger.Launch();
-            Debugger.Break();
+            //uncomment when  you need to debug the bootstrap process
+            //Debugger.Launch();
+            //Debugger.Break();
 
             Trace.TraceInformation("Configuring bootstrap logging...");
             Log.Configure();
