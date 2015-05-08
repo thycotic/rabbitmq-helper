@@ -45,6 +45,8 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// </summary>
         public void GetUpdate(string path)
         {
+            _log.Info("Requesting update from server...");
+
            var response = WrapInteraction(() =>
             {
                 var request = new EngineUpdateRequest
@@ -65,6 +67,8 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 var chunks = Callback.ExtractUpdate();
 
                 var stitcher = new FileStitcher();
+
+                _log.Info(string.Format("Saving update to {0}", path));
 
                 stitcher.CombineFile(chunks, path);
             }
