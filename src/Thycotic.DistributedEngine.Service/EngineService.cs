@@ -122,7 +122,7 @@ namespace Thycotic.DistributedEngine.Service
 
             _log.Debug("Cleaning up IoC container");
 
-            if (_startConsuming)
+            if (_startConsuming && _ioCContainer.IsRegistered<ConsumerWrapperFactory>())
             {
                 _log.Info("Stopping all consumers...");
                 var consumerFactory = _ioCContainer.Resolve<ConsumerWrapperFactory>();
