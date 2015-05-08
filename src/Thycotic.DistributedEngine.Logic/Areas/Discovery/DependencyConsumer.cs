@@ -65,7 +65,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                         Success = result.Success
                     };
                     _log.Info(string.Format("{0} : Send Dependency ({1}) Results Batch {2} of {3}", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType), x + 1, paging.BatchCount));
-                    _responseBus.ExecuteAsync(response);
+                    _responseBus.Execute(response);
                     paging.Skip = paging.NextSkip;
                 });
             }

@@ -63,7 +63,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                         Success = result.Success
                     };
                     _log.Info(string.Format("{0} : Send Host Range Results Batch {1} of {2}", request.Input.Domain, x + 1, paging.BatchCount));
-                    _responseBus.ExecuteAsync(response);
+                    _responseBus.Execute(response);
                     paging.Skip = paging.NextSkip;
                 });
             }

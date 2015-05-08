@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac.Features.OwnedInstances;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.General;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -19,15 +20,18 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
     public class SecretPrivilegeChangePasswordConsumer : IBasicConsumer<SecretPrivilegedPasswordChangeMessage>
     {
         private readonly IResponseBus _responseBus;
+        private readonly Func<Owned<IBasicConsumer<SecretChangeDependencyMessage>>> _consumerFactory;
         private readonly ILogWriter _log = Log.Get(typeof(SecretPrivilegeChangePasswordConsumer));
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="responseBus"></param>
-        public SecretPrivilegeChangePasswordConsumer(IResponseBus responseBus)
+        /// <param name="consumerFactory"></param>
+        public SecretPrivilegeChangePasswordConsumer(IResponseBus responseBus, Func<Owned<IBasicConsumer<SecretChangeDependencyMessage>>> consumerFactory)
         {
             _responseBus = responseBus;
+            _consumerFactory = consumerFactory;
         }
 
         /// <summary>
@@ -57,7 +61,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         changeResult = passwordChanger.VerifyNewCredentials(info);
                     }
 
-                    response = new RemotePasswordChangeResponse()
+                    response = new RemotePasswordChangeResponse
                     {
                         Success = changeResult.Success,
                         SecretId = request.SecretId,
@@ -67,6 +71,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         OldPassword = string.Empty,
                         NewPassword = info.TargetNewPassword
                     };
+
+                    if (changeResult.Success && request.SecretChangeDependencyMessage != null)
+                    {
+                        _consumerFactory().Value.Consume(request.SecretChangeDependencyMessage);
+                    }
                 }
                 else
                 {
