@@ -47,7 +47,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
             try
             {
                 RemotePasswordChangeResponse response;
-
+                var runDependencies = false;
                 var defaultPasswordChangerFactory = new DefaultPasswordChangerFactory();
                 var passwordChanger = defaultPasswordChangerFactory.ResolveBasicPasswordChanger(request.OperationInfo);
 
@@ -75,7 +75,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                     if (changeResult.Success && request.SecretChangeDependencyMessage != null)
                     {
-                        _consumerFactory().Value.Consume(request.SecretChangeDependencyMessage);
+                        runDependencies = true;                        
                     }
                 }
                 else
@@ -97,7 +97,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                 }
 
                 _responseBus.ExecuteAsync(response);
-                _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.ErrorCode));                
+                _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.ErrorCode));
+
+                if (runDependencies)
+                {
+                    _consumerFactory().Value.Consume(request.SecretChangeDependencyMessage);
+                }
             }
             catch (Exception ex)
             {
