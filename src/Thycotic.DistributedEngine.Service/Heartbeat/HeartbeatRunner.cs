@@ -26,7 +26,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         private readonly EngineService _engineService;
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly IResponseBus _responseBus;
-        private readonly IServiceUpdaterWrapper _serviceUpdaterWrapper;
+        private readonly IUpdateInitializer _updateInitializer;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly ILogWriter _log = Log.Get(typeof(HeartbeatRunner));
@@ -39,18 +39,18 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// <param name="engineService">The engine service.</param>
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="responseBus">The response bus.</param>
-        /// <param name="serviceUpdaterWrapper">The ServiceUpdaterWrapper.</param>
+        /// <param name="updateInitializer">The UpdateInitializer.</param>
         public HeartbeatRunner(IHeartbeatConfigurationProvider heartbeatConfigurationProvider, 
             EngineService engineService, 
             IEngineIdentificationProvider engineIdentificationProvider, 
             IResponseBus responseBus,
-            IServiceUpdaterWrapper serviceUpdaterWrapper)
+            IUpdateInitializer updateInitializer)
         {
             _heartbeatConfigurationProvider = heartbeatConfigurationProvider;
             _engineService = engineService;
             _engineIdentificationProvider = engineIdentificationProvider;
             _responseBus = responseBus;
-            _serviceUpdaterWrapper = serviceUpdaterWrapper;
+            _updateInitializer = updateInitializer;
         }
 
         private void Pump()
@@ -84,7 +84,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
 
             if (response.UpdateNeeded)
             {
-                _serviceUpdaterWrapper.ApplyLatestUpdate();
+                _updateInitializer.ApplyLatestUpdate();
             }
             else
             {
