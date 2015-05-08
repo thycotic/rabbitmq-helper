@@ -14,7 +14,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
             _log.Debug("Initializing service updater...");
 
-            builder.RegisterType<ServiceUpdaterWrapper>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<UpdateInitializer>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }

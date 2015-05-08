@@ -3,7 +3,7 @@
     /// <summary>
     /// Interface for an updated
     /// </summary>
-    public interface IServiceUpdaterWrapper
+    public interface IUpdateInitializer
     {
         /// <summary>
         /// Applies the latest update.
