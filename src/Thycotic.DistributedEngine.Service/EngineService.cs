@@ -100,7 +100,6 @@ namespace Thycotic.DistributedEngine.Service
                     return;
                 }
 
-                _log.Info("Update is pending");
                 ApplyUpdate();
             }
             catch (Exception ex)
@@ -112,7 +111,7 @@ namespace Thycotic.DistributedEngine.Service
 
         private void ApplyUpdate()
         {
-            var serviceUpdaterWrapper = _ioCContainer.Resolve<IServiceUpdaterWrapper>();
+            var serviceUpdaterWrapper = _ioCContainer.Resolve<IUpdateInitializer>();
 
             serviceUpdaterWrapper.ApplyLatestUpdate();
         }

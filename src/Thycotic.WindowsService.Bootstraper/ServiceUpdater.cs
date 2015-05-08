@@ -12,6 +12,11 @@ namespace Thycotic.WindowsService.Bootstraper
 {
     public class ServiceUpdater
     {
+        /// <summary>
+        /// The clone directory name
+        /// </summary>
+        public const string BackupDirectoryName = "backup";
+
         private readonly CancellationTokenSource _cts;
         private readonly string _workingPath;
         private readonly string _serviceName;
@@ -26,13 +31,21 @@ namespace Thycotic.WindowsService.Bootstraper
             _msiPath = msiPath;
         }
 
-        private static void CleanDirectory(string path)
+        private static void CleanServiceDirectory(string path)
         {
             var directoryInfo = new DirectoryInfo(path);
 
             directoryInfo.GetFiles().ToList().ForEach(f => f.Delete());
 
-            directoryInfo.GetDirectories().ToList().ForEach(d => d.Delete(true));
+            directoryInfo.GetDirectories().ToList().ForEach(d =>
+            {
+                //don't delete the backup directory
+                if (d.FullName == Path.Combine(path, BackupDirectoryName))
+                {
+                    return;
+                }
+                d.Delete(true);
+            });
         }
 
         private static void CreateDirectory(string path)
@@ -110,7 +123,8 @@ namespace Thycotic.WindowsService.Bootstraper
 
                     StopService();
 
-                    CleanDirectory(_workingPath);
+                    CleanServiceDirectory(_workingPath);
+
                     //recreate the log path that was just cleaned up
                     CreateDirectory(Path.Combine(_workingPath, "log"));
 
@@ -118,7 +132,7 @@ namespace Thycotic.WindowsService.Bootstraper
                     {
                         CreateNoWindow = true,
                         RedirectStandardOutput = true,
-                        UseShellExecute = true,
+                        UseShellExecute = false,
                         WorkingDirectory = _workingPath,
                         Arguments = string.Format(@"/i {0} /qn /log log\SSDEUpdate.log", _msiPath)
                     };
@@ -189,6 +203,7 @@ namespace Thycotic.WindowsService.Bootstraper
                 catch (Exception ex)
                 {
                     _log.Error("Failed to bootstrap", ex);
+                    throw;
                 }
             }
         }
