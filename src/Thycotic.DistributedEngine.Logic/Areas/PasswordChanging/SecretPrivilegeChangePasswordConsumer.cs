@@ -10,7 +10,6 @@ using Thycotic.Messages.Common;
 using Thycotic.Messages.PasswordChanging.Request;
 using Thycotic.PasswordChangers;
 using Thycotic.SharedTypes.Federator;
-using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 {
@@ -46,6 +45,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
             try
             {
                 RemotePasswordChangeResponse response;
+                var runDependencies = false;
 
                 var defaultPasswordChangerFactory = new DefaultPasswordChangerFactory();
                 var passwordChanger = defaultPasswordChangerFactory.ResolvePrivilegedPasswordChangerFromInfo(request.OperationInfo);
@@ -74,7 +74,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                     if (changeResult.Success && request.SecretChangeDependencyMessage != null)
                     {
-                        _consumerFactory().Value.Consume(request.SecretChangeDependencyMessage);
+                        runDependencies = true;                        
                     }
                 }
                 else
@@ -83,7 +83,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                     _log.Info(string.Format("{0} Secret Id {1}:", message, request.SecretId));
 
-                    response = new RemotePasswordChangeResponse()
+                    response = new RemotePasswordChangeResponse
                     {
                         Success = false,
                         SecretId = request.SecretId,
@@ -97,10 +97,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                 _responseBus.ExecuteAsync(response);
                 _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.ErrorCode));
+                if (runDependencies)
+                {
+                    _consumerFactory().Value.Consume(request.SecretChangeDependencyMessage);
+                }
             }
             catch (Exception ex)
             {
-                var response = new RemotePasswordChangeResponse()
+                var response = new RemotePasswordChangeResponse
                 {
                     Success = false,
                     SecretId = request.SecretId,

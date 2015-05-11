@@ -45,7 +45,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
             _log.Info(string.Format("Got a change dependency request for Secret Id {0}:", request.SecretId));
 
             var guid = Guid.NewGuid();
-            // TODO: Fix 30 second wire-up problem.  This needs to be part of the individual message as well?                
             var messages = new List<DependencyChangeResponseMessageToLocalize>();
             for (int index = 0; index < request.DependencyChangeInfos.Length; index++)
             {
@@ -60,7 +59,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                     Thread.Sleep(info.WaitBeforeSeconds*1000);
                     messages.Add(GetDependencyStartedLogEntry(info));
-                    var result = new DependencyChangeDispatcher(30).ExecuteDependencyAction(info);
+                    var result = new DependencyChangeDispatcher(request.WmiTimeout).ExecuteDependencyAction(info);
                     messages.Add(GetDependencyFinishedLogEntry(info, result));
 
                     response.Success = result.Success;
