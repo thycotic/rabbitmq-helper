@@ -1,4 +1,6 @@
 using System;
+using System.Net;
+using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Update;
@@ -16,6 +18,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
     /// </summary>
     public class UpdateBus : PostAuthenticationBus, IUpdateBus
     {
+        private readonly IEngineToServerConnection _engineToServerConnection;
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILogWriter _log = Log.Get(typeof(UpdateBus));
 
@@ -36,6 +39,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 engineToServerConnection, objectSerializer, authenticatedCommunicationKeyProvider,
                 authenticatedCommunicationRequestEncryptor)
         {
+            _engineToServerConnection = engineToServerConnection;
             _engineIdentificationProvider = engineIdentificationProvider;
         }
 
@@ -47,7 +51,19 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         {
             _log.Info("Requesting update from server...");
 
-           var response = WrapInteraction(() =>
+            if (Channel is IDuplexEngineToServerCommunicationWcfService)
+            {
+                ExtractOverNetTcp(path);
+            }
+            else if (Channel is IUnidirectionalEngineToServerCommunicationWcfService)
+            {
+                ExtractOverHttp(path);
+            }
+        }
+
+        private void ExtractOverNetTcp(string path)
+        {
+            var response = WrapInteraction(() =>
             {
                 var request = new EngineUpdateRequest
                 {
@@ -71,12 +87,47 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 _log.Info(string.Format("Saving update to {0}", path));
 
                 stitcher.CombineFile(chunks, path);
+
+                _log.Info(string.Format("Saved update to {0}", path));
             }
             else
             {
                 throw new ApplicationException(response.ErrorMessage);
             }
+        }
 
+        private void ExtractOverHttp(string path)
+        {
+            var response = WrapInteraction(() =>
+            {
+                var request = new EngineUpdateRequest
+                {
+                    IdentityGuid = _engineIdentificationProvider.IdentityGuid,
+                    OrganizationId = _engineIdentificationProvider.OrganizationId,
+                    Version = ReleaseInformationHelper.GetVersionAsDouble()
+                };
+
+                var wrappedRequest = WrapRequest<EngineUpdateResponse>(request);
+
+                var updateWebClient = _engineToServerConnection.OpenUpdateWebClient();
+
+                updateWebClient.DownloadUpdate(wrappedRequest, path);
+
+                return new EngineUpdateResponse
+                {
+                    Success = true
+                };
+
+            });
+
+            if (response.Success)
+            {
+                _log.Info(string.Format("Saved update to {0}", path));
+            }
+            else
+            {
+                throw new ApplicationException(response.ErrorMessage);
+            }
         }
     }
 }

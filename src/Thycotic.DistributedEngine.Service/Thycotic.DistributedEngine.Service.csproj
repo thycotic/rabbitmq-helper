@@ -254,8 +254,10 @@
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
     <Compile Include="EngineToServer\EngineToServerConnection.cs" />
     <Compile Include="EngineToServer\IEngineToServerConnection.cs" />
+    <Compile Include="EngineToServer\IUpdateWebClient.cs" />
     <Compile Include="EngineToServer\PostAuthenticationBus.cs" />
     <Compile Include="EngineToServer\UpdateBus.cs" />
+    <Compile Include="EngineToServer\UpdateWebClient.cs" />
     <Compile Include="EngineUpdateBootstrapper.cs" />
     <Compile Include="IoC\EngineToServerModule.cs" />
     <Compile Include="Heartbeat\LogRunner.cs" />

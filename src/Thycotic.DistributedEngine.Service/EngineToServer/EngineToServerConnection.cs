@@ -27,6 +27,17 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         }
 
         /// <summary>
+        /// Gets the connection string.
+        /// </summary>
+        /// <value>
+        /// The connection string.
+        /// </value>
+        public string ConnectionString
+        {
+            get { return _connectionString; }
+        }
+
+        /// <summary>
         /// Opens the channel.
         /// </summary>
         /// <returns></returns>
@@ -44,6 +55,26 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 case "https":
                     _log.Info(string.Format("Using HTTP channel to {0}", _connectionString));
                     return HttpChannelFactory.CreateChannel<IUnidirectionalEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
+                default:
+                    throw new NotSupportedException("Requested schema does not have a supported channel");
+            }
+        }
+
+        /// <summary>
+        /// Opens the update web client.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.NotSupportedException">Requested schema does not have a supported channel</exception>
+        public IUpdateWebClient OpenUpdateWebClient()
+        {
+            var uri = new Uri(_connectionString);
+
+            switch (uri.Scheme)
+            {
+                case "http":
+                case "https":
+                    _log.Info(string.Format("Using HTTP channel to {0}", _connectionString));
+                    return new UpdateWebClient(_connectionString);
                 default:
                     throw new NotSupportedException("Requested schema does not have a supported channel");
             }
