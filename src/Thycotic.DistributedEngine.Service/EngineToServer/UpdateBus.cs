@@ -100,14 +100,14 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         {
             var response = WrapInteraction(() =>
             {
-                var request = new EngineUpdateRequest
+                var request = new EngineUpdateOverHttpRequest
                 {
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
                     Version = ReleaseInformationHelper.GetVersionAsDouble()
                 };
 
-                var wrappedRequest = WrapRequest<EngineUpdateResponse>(request);
+                var wrappedRequest = WrapRequest<EngineUpdateOverHttpResponse>(request);
 
                 var updateWebClient = _engineToServerConnection.OpenUpdateWebClient();
 
