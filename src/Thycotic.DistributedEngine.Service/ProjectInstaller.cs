@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Thycotic.MemoryMq.Pipeline.Service
+namespace Thycotic.DistributedEngine.Service
 {
     /// <summary>
     /// Project installer
