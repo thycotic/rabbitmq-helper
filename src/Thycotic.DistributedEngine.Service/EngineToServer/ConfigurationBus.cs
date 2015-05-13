@@ -21,7 +21,6 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         private readonly IAuthenticationKeyProvider _authenticationKeyProvider;
         private readonly IAuthenticationRequestEncryptor _authenticationRequestEncryptor;
         private readonly IAuthenticatedCommunicationRequestEncryptor _authenticatedCommunicationRequestEncryptor;
-        private readonly IEngineToServerCommunicationCallback _callback;
         private readonly IEngineToServerCommunicationWcfService _channel;
         
 
@@ -39,13 +38,12 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             IAuthenticationRequestEncryptor authenticationRequestEncryptor,
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
         {
-
             _objectSerializer = objectSerializer;
             _authenticationKeyProvider = authenticationKeyProvider;
             _authenticationRequestEncryptor = authenticationRequestEncryptor;
             _authenticatedCommunicationRequestEncryptor = authenticatedCommunicationRequestEncryptor;
-            _callback = new EngineToServerCommunicationCallback();
-            _channel = engineToServerConnection.OpenChannel(_callback);
+            var callback = new EngineToServerCommunicationCallback();
+            _channel = engineToServerConnection.OpenChannel(callback);
         }
 
         /// <summary>
