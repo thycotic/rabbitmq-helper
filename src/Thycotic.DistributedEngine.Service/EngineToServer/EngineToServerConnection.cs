@@ -37,6 +37,38 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             get { return _connectionString; }
         }
 
+        private string GetNetTcpCoreConnectionString()
+        {
+            return _connectionString;
+        }
+
+        private string GetHttpConnectionString(string route)
+        {
+            var baseUri = new Uri(_connectionString, UriKind.Absolute);
+
+            //fixes things like /ihawu or /ss_qa
+            var nestedRoute = string.Format("{0}/{1}", baseUri.AbsolutePath, route);
+
+            var uri = new Uri(baseUri, new Uri(nestedRoute, UriKind.Relative));
+
+            return uri.AbsoluteUri;
+        }
+
+        private string GetHttpCoreConnectionString()
+        {
+            const string route = IisEndPoints.RelativeIisHostedWcfServicePath;
+
+            return GetHttpConnectionString(route);
+        }
+
+        private string GetHttpUpdateConnectionString()
+        {
+            var route = string.Format("{0}/{1}", IisEndPoints.RelativeIisHostedSupplementalControllerPath,
+                IisEndPoints.SupplementalControllerActions.GetUpdate);
+
+            return GetHttpConnectionString(route);
+        }
+
         /// <summary>
         /// Opens the channel.
         /// </summary>
@@ -50,11 +82,11 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             {
                 case "net.tcp":
                     _log.Info(string.Format("Using Net/TCP channel to {0}", _connectionString));
-                    return NetTcpChannelFactory.CreateDuplexChannel<IDuplexEngineToServerCommunicationWcfService>(_connectionString, callback, _useSsl);
+                    return NetTcpChannelFactory.CreateDuplexChannel<IDuplexEngineToServerCommunicationWcfService>(GetNetTcpCoreConnectionString(), callback, _useSsl);
                 case "http":
                 case "https":
                     _log.Info(string.Format("Using HTTP channel to {0}", _connectionString));
-                    return HttpChannelFactory.CreateChannel<IUnidirectionalEngineToServerCommunicationWcfService>(_connectionString, _useSsl);
+                    return HttpChannelFactory.CreateChannel<IUnidirectionalEngineToServerCommunicationWcfService>(GetHttpCoreConnectionString(), _useSsl);
                 default:
                     throw new NotSupportedException("Requested schema does not have a supported channel");
             }
@@ -74,7 +106,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 case "http":
                 case "https":
                     _log.Info(string.Format("Using HTTP channel to {0}", _connectionString));
-                    return new UpdateWebClient(_connectionString);
+                    return new UpdateWebClient(GetHttpUpdateConnectionString());
                 default:
                     throw new NotSupportedException("Requested schema does not have a supported channel");
             }

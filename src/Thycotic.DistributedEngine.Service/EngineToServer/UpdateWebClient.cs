@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.IO;
 using System.Net;
-using System.Text;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.Utility.Serialization;
 
@@ -23,8 +20,6 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         public UpdateWebClient(string connectionString)
         {
             _connectionString = connectionString;
-
-            _connectionString = "http://localhost/ihawu/api/DistributedEngine/EngineUpdate/GetUpdate";
         }
 
         /// <summary>
