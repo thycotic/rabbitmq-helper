@@ -17,7 +17,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         where TConsumable : class, IBasicConsumable
         where TConsumer : IBasicConsumer<TConsumable>
     {
-        private readonly Func<Owned<TConsumer>> _handlerFactory;
+        private readonly Func<Owned<TConsumer>> _consumerFactory;
         private readonly IObjectSerializer _objectSerializer;
         private readonly IMessageEncryptor _messageEncryptor;
         private readonly ILogWriter _log = Log.Get(typeof(BasicConsumerWrapper<TConsumable, TConsumer>));
@@ -29,12 +29,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="exchangeNameProvider">The exchange name provider.</param>
         /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
-        /// <param name="handlerFactory">The handler factory.</param>
+        /// <param name="consumerFactory">The handler factory.</param>
         public BasicConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IObjectSerializer objectSerializer,
-            IMessageEncryptor messageEncryptor, Func<Owned<TConsumer>> handlerFactory)
+            IMessageEncryptor messageEncryptor, Func<Owned<TConsumer>> consumerFactory)
             : base(connection, exchangeNameProvider)
         {
-            _handlerFactory = handlerFactory;
+            _consumerFactory = consumerFactory;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
         }
@@ -109,7 +109,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                         }
                     }
 
-                    using (var handler = _handlerFactory())
+                    using (var handler = _consumerFactory())
                     {
                         handler.Value.Consume(message);
                     }
