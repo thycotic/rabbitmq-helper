@@ -14,7 +14,7 @@
     </Upgrade>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFiles64Folder" Name="PFiles">
+      <Directory Id="ProgramFilesFolder" Name="PFiles">
         <Directory Id="ThycoticInstall" Name="Thycotic Software Ltd" ComponentGuidGenerationSeed="C1D4C69B-7A26-40FC-8D9A-4EEF969E88E5">
           <Directory Id="INSTALLLOCATION" Name="MemoryMq Pipeline"/>
         </Directory>
