@@ -21,5 +21,9 @@ namespace Thycotic.Messages.Heartbeat.Request
         /// </summary>
         public int SecretId { get; set; }
 
+        /// <summary>
+        /// Get or sets the application's url. Used for generating links to the Secret for notifications.
+        /// </summary>
+        public string ApplicationUrl { get; set; }
     }
 }
