@@ -17,15 +17,15 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             try
             {
                 string path;
-                //path = GenerateMemoryMqMsi();
-                //Console.WriteLine("Artifact generator and stored in {0}", path);
+                path = GenerateMemoryMqMsi();
+                Console.WriteLine("Artifact generator and stored in {0}", path);
 
-                //Console.WriteLine();
+                Console.WriteLine();
 
-                //path = GenerateDistributedEngineMsi();
-                //Console.WriteLine("Artifact generator and stored in {0}", path);
+                path = GenerateDistributedEngineMsi();
+                Console.WriteLine("Artifact generator and stored in {0}", path);
 
-                //Console.WriteLine();
+                Console.WriteLine();
 
                 path = GenerateDistributedEngineUpdateMsi();
                 Console.WriteLine("Artifact generator and stored in {0}", path);

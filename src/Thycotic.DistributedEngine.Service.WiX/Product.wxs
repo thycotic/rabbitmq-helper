@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-  <Product Id="*" Language="1033" Manufacturer="Thycotic Software Ltd" Name="Thycotic Distributed Engine Service" Version="$(var.InstallerVersion)" UpgradeCode="A45158D7-7AC9-4EE8-A739-684ED67B96FC">
+  <Product Id="*" Language="1033" Manufacturer="Thycotic Software Ltd" Name="Thycotic Distributed Engine Service" Version="$(var.InstallerVersion)" UpgradeCode="2EE642A5-013F-4F4E-B91F-6D42F9C89CE9">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Languages='1033'/>
 
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
     <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
-    <Upgrade Id="A45158D7-7AC9-4EE8-A739-684ED67B96FC">
+    <Upgrade Id="2EE642A5-013F-4F4E-B91F-6D42F9C89CE9">
       <UpgradeVersion
           Minimum="1.0.0.0" Maximum="99.0.0.0"
           Property="PREVIOUSVERSIONSINSTALLED"
@@ -15,7 +15,7 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder" Name="PFiles">
-        <Directory Id="ThycoticInstall" Name="Thycotic Software Ltd" ComponentGuidGenerationSeed="B2048F39-ADFF-4D70-8270-4DD4D40C217E">
+        <Directory Id="ThycoticInstall" Name="Thycotic Software Ltd" ComponentGuidGenerationSeed="69D8450B-F322-461C-AF3A-225049FF65D2">
           <Directory Id="INSTALLLOCATION" Name="Distributed Engine"/>
         </Directory>
       </Directory>
