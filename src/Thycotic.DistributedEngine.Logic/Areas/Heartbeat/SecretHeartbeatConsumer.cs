@@ -49,6 +49,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
                 {
                     Success = verifyResult.Success,
                     SecretId = request.SecretId,
+                    ApplicationUrl = request.ApplicationUrl,
                     Errors = verifyResult.Errors,
                     Log = verifyResult.Log
                 };
