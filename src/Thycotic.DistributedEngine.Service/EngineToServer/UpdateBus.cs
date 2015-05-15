@@ -69,7 +69,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 {
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
-                    Version = ReleaseInformationHelper.GetVersionAsDouble()
+                    Version = ReleaseInformationHelper.GetVersionAsDouble().ToString() // JA - Added .ToString() to just get it compile
                 };
 
                 var wrappedRequest = WrapRequest<EngineUpdateResponse>(request);
@@ -104,7 +104,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 {
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
-                    Version = ReleaseInformationHelper.GetVersionAsDouble()
+                    Version = ReleaseInformationHelper.GetVersionAsDouble().ToString() // JA - Added .ToString() to just get it compile
                 };
 
                 var wrappedRequest = WrapRequest<EngineUpdateOverHttpResponse>(request);
