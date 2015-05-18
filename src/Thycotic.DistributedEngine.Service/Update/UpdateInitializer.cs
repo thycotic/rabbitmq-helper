@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.WindowsService.Bootstraper;
@@ -47,11 +49,14 @@ namespace Thycotic.DistributedEngine.Service.Update
             
             try
             {
-                _log.Info("Initializing update download...");
+                var msiPath = Path.Combine(Path.GetTempPath(), string.Format("SSDEUpdate-{0}.msi", Guid.NewGuid().ToString("N")));
 
-                var msiPath = Path.Combine(Path.GetTempPath(), string.Format("SSDEUpdate.msi"));
-
-                _updateBus.GetUpdate(msiPath);
+                using (LogContext.Create("Update download"))
+                {
+                    _log.Info("Initializing update download...");
+                    
+                    _updateBus.GetUpdate(msiPath);
+                }
 
                 Bootstrap(msiPath);
             }
@@ -61,47 +66,87 @@ namespace Thycotic.DistributedEngine.Service.Update
             }
         }
 
+        private void CleanBackupDirectory(string path)
+        {
+            using (LogContext.Create("Backup Clean up"))
+            {
+                if (!Directory.Exists(path)) return;
+
+                _log.Info("Cleaning up previous backup directory");
+
+                const int maxCleanupRetries = 5;
+                var cleanupExceptions = new List<Exception>();
+
+                var cleaned = false;
+
+                while (!cleaned)
+                {
+                    if (cleanupExceptions.Count >= maxCleanupRetries)
+                    {
+                        throw new AggregateException("Failed to clean up backup directory", cleanupExceptions);
+                    }
+
+                    try
+                    {
+                        Directory.Delete(path, true);
+
+                        _log.Info("Backup directory cleaned");
+                        cleaned = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        cleanupExceptions.Add(ex);
+
+                        _log.Warn("Failed to clean up backup directory. Will retry...", ex);
+
+                        Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+                    }
+                }
+            }
+        }
+
+
         private void Bootstrap(string msiPath)
         {
-            var sourcePath = GetServiceInstallationPath();
-            var backupPath = Path.Combine(sourcePath, ServiceUpdater.BackupDirectoryName);
-
-            if (Directory.Exists(backupPath))
+            using (LogContext.Create("Update Bootstrap"))
             {
-                _log.Info("Cleaning up previous backup directory");
-                Directory.Delete(backupPath, true);
+
+                var sourcePath = GetServiceInstallationPath();
+                var backupPath = Path.Combine(sourcePath, ServiceUpdater.BackupDirectoryName);
+
+                CleanBackupDirectory(backupPath);
+
+                DirectoryCopy(sourcePath, backupPath, true);
+
+                var entryPath = GetServiceBootstrapEntryPoint();
+
+                //use the clone entry point
+                entryPath = entryPath.Replace(sourcePath, backupPath);
+
+                _log.Info(string.Format("Preparing run bootstrapper at {0}", entryPath));
+
+                var processInfo = new ProcessStartInfo(entryPath)
+                {
+                    CreateNoWindow = true,
+                    UseShellExecute = true,
+                    WorkingDirectory = GetServiceInstallationPath(),
+                    Arguments = string.Format(@"{0} ""{1}""", Program.SupportedSwitches.Boostrap, msiPath)
+                };
+
+                _log.Info(string.Format("Initializing bootstrapper with arguments: {0}", processInfo.Arguments));
+
+                try
+                {
+
+                    Process.Start(processInfo);
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException("Could not start process", ex);
+                }
+
+                _log.Info("Bootstrapper initialized");
             }
-
-            DirectoryCopy(sourcePath, backupPath, true);
-
-            var entryPath = GetServiceBootstrapEntryPoint();
-
-            //use the clone entry point
-            entryPath = entryPath.Replace(sourcePath, backupPath);
-
-            _log.Info(string.Format("Preparing run bootstrapper at {0}", entryPath));
-
-            var processInfo = new ProcessStartInfo(entryPath)
-            {
-                CreateNoWindow = true,
-                UseShellExecute = true,
-                WorkingDirectory = GetServiceInstallationPath(),
-                Arguments = string.Format(@"{0} ""{1}""", Program.SupportedSwitches.Boostrap, msiPath)
-            };
-
-            _log.Info(string.Format("Initializing bootstrapper with arguments: {0}", processInfo.Arguments));
-
-            try
-            {
-
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Could not start process", ex);
-            }
-
-            _log.Info("Bootstrapper initialized");
         }
 
         private void DirectoryCopy(string sourcePath, string destinationPath, bool recursive)

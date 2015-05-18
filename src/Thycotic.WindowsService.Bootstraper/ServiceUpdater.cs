@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -31,21 +32,53 @@ namespace Thycotic.WindowsService.Bootstraper
             _msiPath = msiPath;
         }
 
-        private static void CleanServiceDirectory(string path)
+        private void CleanServiceDirectory(string path)
         {
-            var directoryInfo = new DirectoryInfo(path);
-
-            directoryInfo.GetFiles().ToList().ForEach(f => f.Delete());
-
-            directoryInfo.GetDirectories().ToList().ForEach(d =>
+            using (LogContext.Create("Service Directory Clean up"))
             {
-                //don't delete the backup directory
-                if (d.FullName == Path.Combine(path, BackupDirectoryName))
+
+                const int maxCleanupRetries = 5;
+                var cleanupExceptions = new List<Exception>();
+
+                var cleaned = false;
+
+                while (!cleaned)
                 {
-                    return;
+                    if (cleanupExceptions.Count >= maxCleanupRetries)
+                    {
+                        throw new AggregateException("Failed to clean up service directory", cleanupExceptions);
+                    }
+
+                    try
+                    {
+
+                        var directoryInfo = new DirectoryInfo(path);
+
+                        directoryInfo.GetFiles().ToList().ForEach(f => f.Delete());
+
+                        directoryInfo.GetDirectories().ToList().ForEach(d =>
+                        {
+                            //don't delete the backup directory
+                            if (d.FullName == Path.Combine(path, BackupDirectoryName))
+                            {
+                                return;
+                            }
+                            d.Delete(true);
+                        });
+
+                        _log.Info("Service directory cleaned");
+                        cleaned = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        cleanupExceptions.Add(ex);
+
+                        _log.Warn("Failed to clean up service directory. Will try...", ex);
+
+                        Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+                    }
                 }
-                d.Delete(true);
-            });
+            }
         }
 
         private static void CreateDirectory(string path)
@@ -111,99 +144,104 @@ namespace Thycotic.WindowsService.Bootstraper
         {
             using (LogCorrelation.Create())
             {
-                try
+                using (LogContext.Create("Update"))
                 {
-                    _log.Info(string.Format("Running bootstrap process for {0}", _serviceName));
 
-                    CheckMsi();
-
-                    CheckWorkingPathAccess();
-                    
-                    _log.Info(string.Format("Update log path will be {0}", Path.Combine(_workingPath, "log", "SSDEUpdate.log")));
-
-                    StopService();
-
-                    CleanServiceDirectory(_workingPath);
-
-                    //recreate the log path that was just cleaned up
-                    CreateDirectory(Path.Combine(_workingPath, "log"));
-
-                    var processInfo = new ProcessStartInfo("msiexec")
+                    try
                     {
-                        CreateNoWindow = true,
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        WorkingDirectory = _workingPath,
-                        Arguments = string.Format(@"/i {0} /qn /log log\SSDEUpdate.log", _msiPath)
-                    };
+                        _log.Info(string.Format("Running bootstrap process for {0}", _serviceName));
 
-                    _log.Info(string.Format("Running MSI with arguments: {0}", processInfo.Arguments));
+                        CheckMsi();
 
+                        CheckWorkingPathAccess();
 
-                    Process process = null;
+                        _log.Info(string.Format("Update log path will be {0}",
+                            Path.Combine(_workingPath, "log", "SSDEUpdate.log")));
 
-                    var task = Task.Factory.StartNew(() =>
-                    {
-                        try
+                        StopService();
+
+                        CleanServiceDirectory(_workingPath);
+
+                        //recreate the log path that was just cleaned up
+                        CreateDirectory(Path.Combine(_workingPath, "log"));
+
+                        var processInfo = new ProcessStartInfo("msiexec")
                         {
-                            process = Process.Start(processInfo);
-                        }
-                        catch (Exception ex)
+                            CreateNoWindow = true,
+                            RedirectStandardOutput = true,
+                            UseShellExecute = false,
+                            WorkingDirectory = _workingPath,
+                            Arguments = string.Format(@"/i {0} /qn /log log\SSDEUpdate.log", _msiPath)
+                        };
+
+                        _log.Info(string.Format("Running MSI with arguments: {0}", processInfo.Arguments));
+
+
+                        Process process = null;
+
+                        var task = Task.Factory.StartNew(() =>
                         {
-                            throw new ApplicationException("Could not start process", ex);
-                        }
+                            try
+                            {
+                                process = Process.Start(processInfo);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new ApplicationException("Could not start process", ex);
+                            }
 
 
-                        if (process == null)
+                            if (process == null)
+                            {
+                                throw new ApplicationException("Process could not start");
+                            }
+
+                            process.WaitForExit();
+
+                        }, _cts.Token);
+
+                        //wait for 30 seconds for process to complete
+                        task.Wait(TimeSpan.FromSeconds(30));
+
+                        //there was an exception, rethrow it
+                        if (task.Exception != null)
                         {
-                            throw new ApplicationException("Process could not start");
+                            throw task.Exception;
                         }
 
-                        process.WaitForExit();
+                        if (process != null)
+                        {
+                            if (!process.HasExited)
+                            {
+                                _log.Warn("Process has not exited. Forcing exit");
+                                process.Kill();
+                            }
 
-                    }, _cts.Token);
+                            //process didn't exit correctly, extract output and throw
+                            if (process.ExitCode != 0)
+                            {
+                                var output = process.StandardOutput.ReadToEnd();
 
-                    //wait for 30 seconds for process to complete
-                    task.Wait(TimeSpan.FromSeconds(30));
+                                throw new ApplicationException("Process failed", new Exception(output));
+                            }
+                        }
 
-                    //there was an exception, rethrow it
-                    if (task.Exception != null)
-                    {
-                        throw task.Exception;
+                        _log.Info("MSI finished");
+
+                        //Configuration configuration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Path.Combine(parentDirectory.ToString(), "SecretServerAgentService.exe"));
+                        //configuration.AppSettings.Settings["RPCAgentVersion"].Value = args[0];
+                        //configuration.Save();
+
+                        StartService();
+
+                        _log.Info("Update complete");
+
                     }
-
-                    if (process != null)
+                    catch (Exception ex)
                     {
-                        if (!process.HasExited)
-                        {
-                            _log.Warn("Process has not exited. Forcing exit");
-                            process.Kill();
-                        }
-
-                        //process didn't exit correctly, extract output and throw
-                        if (process.ExitCode != 0)
-                        {
-                            var output = process.StandardOutput.ReadToEnd();
-
-                            throw new ApplicationException("Process failed", new Exception(output));
-                        }
+                        _log.Error("Failed to bootstrap", ex);
+                        throw;
                     }
-
-                    _log.Info("MSI finished");
-
-                    //Configuration configuration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Path.Combine(parentDirectory.ToString(), "SecretServerAgentService.exe"));
-                    //configuration.AppSettings.Settings["RPCAgentVersion"].Value = args[0];
-                    //configuration.Save();
-
-                    StartService();
-
-                    _log.Info("Update complete");
-
-                }
-                catch (Exception ex)
-                {
-                    _log.Error("Failed to bootstrap", ex);
-                    throw;
                 }
             }
         }
@@ -226,7 +264,7 @@ namespace Thycotic.WindowsService.Bootstraper
                 throw new DirectoryNotFoundException(string.Format("Working directory does not exist in {0}",
                     _workingPath));
             }
-            
+
             try
             {
                 Directory.GetAccessControl(_workingPath);
@@ -236,7 +274,7 @@ namespace Thycotic.WindowsService.Bootstraper
             }
             catch (UnauthorizedAccessException ex)
             {
-                throw new UnauthorizedAccessException(string.Format("Current user does not have permission to write to {0}", _workingPath));
+                throw new UnauthorizedAccessException(string.Format("Current user does not have permission to write to {0}", _workingPath), ex);
             }
 
         }
