@@ -28,14 +28,5 @@ namespace Thycotic.Utility
         {
             get { return Assembly.GetExecutingAssembly().GetName().ProcessorArchitecture.ToString(); }
         }
-
-        /// <summary>
-        /// Gets the release version as a double from the major and minor components
-        /// </summary>
-        /// <returns></returns>
-        public static double GetVersionAsDouble()
-        {
-            return Convert.ToDouble(Version.Major) + Convert.ToDouble(Version.Minor)/10;
-        }
     }
 }

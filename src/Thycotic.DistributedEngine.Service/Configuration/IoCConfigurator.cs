@@ -318,7 +318,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                     HostName = engineIdentificationProvider.HostName,
                     FriendlyName = engineIdentificationProvider.FriendlyName,
                     IdentityGuid = engineIdentificationProvider.IdentityGuid,
-                    Version = ReleaseInformationHelper.GetVersionAsDouble().ToString() // JA - Added .ToString() to just get it compile
+                    Version = ReleaseInformationHelper.Version.ToString()
                 };
 
                 var response = engineConfigurationBus.GetConfiguration(request);
