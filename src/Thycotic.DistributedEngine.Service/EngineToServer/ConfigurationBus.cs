@@ -106,7 +106,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
 
                 var configurationBytes = _channel.ExecuteAndRespond(new SymmetricEnvelopeNeedingResponse
                 {
-                    ResponseTypeName = typeof (EngineConfigurationResponse).AssemblyQualifiedName,
+                    ResponseTypeName = typeof (EngineConfigurationResponse).FullName,
                     KeyHash = symmetricKeyPair.SymmetricKey.GetHashString(),
                     Body = _authenticatedCommunicationRequestEncryptor.Encrypt(symmetricKeyPair, requestString),
                 });
