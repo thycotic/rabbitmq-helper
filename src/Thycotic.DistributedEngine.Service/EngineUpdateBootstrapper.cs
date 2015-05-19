@@ -1,8 +1,10 @@
+//#define BREAKINTOVS
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using SBSSHForwarding;
 using Thycotic.DistributedEngine.Service.Update;
 using Thycotic.Logging;
 using Thycotic.WindowsService.Bootstraper;
@@ -16,46 +18,63 @@ namespace Thycotic.DistributedEngine.Service
     {
         private readonly ILogWriter _log = Log.Get(typeof (EngineUpdateBootstrapper));
 
+        [Conditional("BREAKINTOVS")]
+        private static void InterceptChildProcess()
+        {
+            Debugger.Launch();
+            Debugger.Break();
+        }
+
         /// <summary>
         /// Bootstraps the specified msi path and run it as an external process.
         /// </summary>
         /// <param name="msiPath">The msi path.</param>
         public void Bootstrap(string msiPath)
         {
-            //uncomment when  you need to debug the bootstrap process
-            //Debugger.Launch();
-            //Debugger.Break();
+
+            InterceptChildProcess();
 
             Trace.TraceInformation("Configuring bootstrap logging...");
             Log.Configure();
 
-            _log.Info("Running bootstrapper");
-
-            try
+            using (LogContext.Create("Child process"))
             {
-                var cts = new CancellationTokenSource();
 
-                //TODO: Maybe not hardcoded -dkk
-                const string serviceName = "Thycotic.DistributedEngine.Service";
+                _log.Info("Running bootstrapper");
 
-                var serviceUpdater = new ServiceUpdater(cts, GetServiceInstallationPath(),
-                    serviceName, msiPath);
+                try
+                {
+                    var cts = new CancellationTokenSource();
 
-                serviceUpdater.Update();
+                    //TODO: Maybe not hardcoded -dkk
+                    const string serviceName = "Thycotic.DistributedEngine.Service";
 
-                File.Delete(msiPath);
+                    var serviceUpdater = new ServiceUpdater(cts, GetServiceInstallationPath(),
+                        serviceName, msiPath);
 
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Engine update bootstrapper failed", ex);
+                    serviceUpdater.Update();
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException("Engine update bootstrapper failed", ex);
+                }
+                finally
+                {
+                    //delete the update file regardless of update outcome
+                    File.Delete(msiPath);
+                }
             }
         }
 
+        
+
         private static string GetServiceInstallationPath()
         {
+            //return @"C:\Program Files (x86)\Thycotic Software Ltd\Distributed Engine";
+
             var backupEntryPoint = Path.GetDirectoryName(Assembly.GetAssembly(typeof(EngineService)).Location);
 
+            // ReSharper disable once PossibleNullReferenceException
             return backupEntryPoint.Replace(ServiceUpdater.BackupDirectoryName, string.Empty);
         }
         

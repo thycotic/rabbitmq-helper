@@ -1,9 +1,11 @@
-﻿namespace Thycotic.DistributedEngine.Service.Update
+﻿using System;
+
+namespace Thycotic.DistributedEngine.Service.Update
 {
     /// <summary>
     /// Interface for an updated
     /// </summary>
-    public interface IUpdateInitializer
+    public interface IUpdateInitializer : IDisposable
     {
         /// <summary>
         /// Applies the latest update.

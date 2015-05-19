@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
@@ -15,10 +16,12 @@ namespace Thycotic.DistributedEngine.Service.Update
     /// </summary>
     public class UpdateInitializer : IUpdateInitializer
     {
+        private CancellationTokenSource _cts = new CancellationTokenSource();
+
         private readonly IUpdateBus _updateBus;
 
-        private bool _updating;
         private readonly object _syncRoot = new object();
+        private Task _updateTask;
 
         private readonly ILogWriter _log = Log.Get(typeof(UpdateInitializer));
 
@@ -38,37 +41,94 @@ namespace Thycotic.DistributedEngine.Service.Update
         {
             lock (_syncRoot)
             {
-                if (_updating)
+                if (_updateTask != null)
                 {
                     _log.Warn("Update already in progress");
                     return;
                 }
-
-                _updating = true;
             }
-            
-            try
-            {
-                var msiPath = Path.Combine(Path.GetTempPath(), string.Format("SSDEUpdate-{0}.msi", Guid.NewGuid().ToString("N")));
 
-                using (LogContext.Create("Update download"))
+
+            var msiPath = Path.Combine(Path.GetTempPath(),
+                string.Format("SSDEUpdate-{0}.msi", Guid.NewGuid().ToString("N")));
+
+            _updateTask = Task.Factory.StartNew(() =>
+            {
+                try
                 {
-                    _log.Info("Initializing update download...");
-                    
-                    _updateBus.GetUpdate(msiPath);
+                    //cancellation was requested before we did anything, just exit
+                    if (_cts.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    using (LogContext.Create("Update download"))
+                    {
+                        _log.Info("Initializing update download...");
+
+                        _updateBus.GetUpdate(msiPath);
+                    }
+
+                    //don't try to apply the update when cancellation is requested
+                    if (_cts.IsCancellationRequested)
+                    {
+                        //toss an have the catch delete the update file
+                        throw new TaskCanceledException("Update was cancelled");
+                    }
+
+                    Bootstrap(msiPath);
+
+                }
+                catch (Exception ex)
+                {
+                    _log.Error("Bootstrap failed", ex);
+
+                    if (File.Exists(msiPath))
+                    {
+                        _log.Info("Deleting MSI file.");
+                        File.Delete(msiPath);
+                    }
+                }
+            }, _cts.Token).ContinueWith(task =>
+            {
+                if (task.Exception != null)
+                {
+                    throw task.Exception;
                 }
 
-                Bootstrap(msiPath);
-            }
-            finally
-            {
-                _updating = false;
-            }
+                _log.Info("Waiting to update task to complete");
+
+                //wait for the update to complete
+                //the update file will be deleted by the child process when the update is done
+                while (File.Exists(msiPath) && !_cts.IsCancellationRequested)
+                {
+                    //TODO: Hardcode? -dkk
+                    Task.Delay(TimeSpan.FromSeconds(5)).Wait(_cts.Token);
+                }
+
+                if (_cts.IsCancellationRequested)
+                {
+                    //the token is to be cancelled due to normal operation of dispose being called
+                    return;
+                }
+                else
+                {
+                    //the child process has not requested the service to be stopped, so it probably failed
+                    _log.Error("The update most likely failed. Please check the log file in the back up directory");
+                }
+
+                //reset the update task
+                lock (_updateTask)
+                {
+                    _updateTask = null;
+                }
+
+            }, _cts.Token);
         }
 
         private void CleanBackupDirectory(string path)
         {
-            using (LogContext.Create("Backup Clean up"))
+            using (LogContext.Create("Backup clean up"))
             {
                 if (!Directory.Exists(path)) return;
 
@@ -108,7 +168,7 @@ namespace Thycotic.DistributedEngine.Service.Update
 
         private void Bootstrap(string msiPath)
         {
-            using (LogContext.Create("Update Bootstrap"))
+            using (LogContext.Create("Update bootstrap"))
             {
 
                 var sourcePath = GetServiceInstallationPath();
@@ -203,6 +263,24 @@ namespace Thycotic.DistributedEngine.Service.Update
         private static string GetServiceInstallationPath()
         {
             return Path.GetDirectoryName(GetServiceBootstrapEntryPoint());
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            _log.Info("Disposing update initializer");
+
+            _cts.Cancel();
+
+            lock (_updateTask)
+            {
+                if (_updateTask == null || _updateTask.Status != TaskStatus.Running) return;
+
+                _log.Info("Waiting for update task to complete");
+                _updateTask.Wait();
+            }
         }
     }
 }
