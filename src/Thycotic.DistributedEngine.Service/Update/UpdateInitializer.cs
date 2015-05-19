@@ -134,16 +134,16 @@ namespace Thycotic.DistributedEngine.Service.Update
 
                 _log.Info("Cleaning up previous backup directory");
 
-                const int maxCleanupRetries = 5;
-                var cleanupExceptions = new List<Exception>();
+                const int maxRetryCount = 5;
+                var exceptions = new List<Exception>();
 
                 var cleaned = false;
 
                 while (!cleaned)
                 {
-                    if (cleanupExceptions.Count >= maxCleanupRetries)
+                    if (exceptions.Count >= maxRetryCount)
                     {
-                        throw new AggregateException("Failed to clean up backup directory", cleanupExceptions);
+                        throw new AggregateException("Failed to clean up backup directory", exceptions);
                     }
 
                     try
@@ -155,7 +155,7 @@ namespace Thycotic.DistributedEngine.Service.Update
                     }
                     catch (Exception ex)
                     {
-                        cleanupExceptions.Add(ex);
+                        exceptions.Add(ex);
 
                         _log.Warn("Failed to clean up backup directory. Will retry...", ex);
 
