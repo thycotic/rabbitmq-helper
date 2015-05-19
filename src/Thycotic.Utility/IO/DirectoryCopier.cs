@@ -13,9 +13,10 @@ namespace Thycotic.Utility.IO
         /// <param name="sourcePath">The source path.</param>
         /// <param name="destinationPath">The destination path.</param>
         /// <param name="recursive">if set to <c>true</c> [recursive].</param>
-        /// <exception cref="System.IO.DirectoryNotFoundException">Source directory does not exist or could not be found: 
-        ///                     + sourcePath</exception>
-        public void Copy(string sourcePath, string destinationPath, bool recursive)
+        /// <param name="overwrite">if set to <c>true</c> [overwrite].</param>
+        /// <exception cref="System.IO.DirectoryNotFoundException">Source directory does not exist or could not be found:
+        /// + sourcePath</exception>
+        public void Copy(string sourcePath, string destinationPath, bool recursive, bool overwrite = false)
         {
 
             // get the subdirectories for the specified directory.
@@ -40,7 +41,7 @@ namespace Thycotic.Utility.IO
             foreach (var file in files)
             {
                 var temppath = Path.Combine(destinationPath, file.Name);
-                file.CopyTo(temppath, false);
+                file.CopyTo(temppath, overwrite);
             }
 
             // if copying subdirectories, copy them and their contents to new location. 
@@ -56,7 +57,7 @@ namespace Thycotic.Utility.IO
 
                 var temppath = Path.Combine(destinationPath, subdir.Name);
 
-                Copy(subdir.FullName, temppath, true);
+                Copy(subdir.FullName, temppath, true, overwrite);
             }
         }
 

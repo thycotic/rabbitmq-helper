@@ -286,13 +286,16 @@ namespace Thycotic.WindowsService.Bootstraper
             }
         }
 
+        /// <summary>
+        /// Restores from backup.
+        /// </summary>
         private void RestoreFromBackup()
         {
             _log.Info(string.Format("Restoring service from backup in {0}", _backupPath));
 
             var directoryCopier = new DirectoryCopier();
 
-            directoryCopier.Copy(_backupPath, _workingPath, true);
+            directoryCopier.Copy(_backupPath, _workingPath, true, true);
         }
 
         public void Update()
