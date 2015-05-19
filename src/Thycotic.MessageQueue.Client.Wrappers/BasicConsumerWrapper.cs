@@ -73,13 +73,15 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
             var requeue = true;
 
-            using (LogContext.Create("Processing message..."))
+            using (LogCorrelation.Create())
+            using (LogContext.Create("Execute message"))
             {
                 try
                 {
                     TConsumable message;
                     try
                     {
+                        _log.Debug("Decrypting and deserializing");
                         message = _objectSerializer.ToObject<TConsumable>(_messageEncryptor.Decrypt(exchangeName, body));
 
                         //account for whether this message was redelivered
@@ -109,9 +111,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                         }
                     }
 
-                    using (var handler = _consumerFactory())
+                    using (var consumer = _consumerFactory())
+                    using (LogContext.Create(consumer.Value.GetType().FullName))
                     {
-                        handler.Value.Consume(message);
+                        consumer.Value.Consume(message);
                     }
                     
                     _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TConsumable))));

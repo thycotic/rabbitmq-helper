@@ -301,85 +301,83 @@ namespace Thycotic.WindowsService.Bootstraper
         public void Update()
         {
             using (LogCorrelation.Create())
+            using (LogContext.Create("Update"))
             {
-                using (LogContext.Create("Update"))
+
+                try
                 {
+                    _log.Info(string.Format("Running bootstrap process for {0}", _serviceName));
 
-                    try
+                    CheckMsi();
+
+                    CheckWorkingPathAccess();
+
+                    _log.Info(string.Format("Update log path will be {0}",
+                        Path.Combine(_workingPath, "log", "SSDEUpdate.log")));
+
+                    StopService();
+
+                    CleanServiceDirectory();
+
+                    //recreate the log path that was just cleaned up
+                    CreateDirectory(Path.Combine(_workingPath, "log"));
+
+                    const int maxRetryCount = 3;
+                    var exceptions = new List<Exception>();
+                    var installed = false;
+
+                    while (!installed && !_cts.IsCancellationRequested)
                     {
-                        _log.Info(string.Format("Running bootstrap process for {0}", _serviceName));
-
-                        CheckMsi();
-
-                        CheckWorkingPathAccess();
-
-                        _log.Info(string.Format("Update log path will be {0}",
-                            Path.Combine(_workingPath, "log", "SSDEUpdate.log")));
-
-                        StopService();
-
-                        CleanServiceDirectory();
-
-                        //recreate the log path that was just cleaned up
-                        CreateDirectory(Path.Combine(_workingPath, "log"));
-
-                        const int maxRetryCount = 3;
-                        var exceptions = new List<Exception>();
-                        var installed = false;
-
-                        while (!installed && !_cts.IsCancellationRequested)
+                        if (exceptions.Count >= maxRetryCount)
                         {
-                            if (exceptions.Count >= maxRetryCount)
-                            {
-                                throw new AggregateException("Failed to run MSI", exceptions);
-                            }
-
-                            try
-                            {
-
-                                RunMsi(exceptions.Count);
-
-                                installed = true;
-                            }
-
-                            catch (Exception ex)
-                            {
-                                exceptions.Add(ex);
-
-                                _log.Warn("Failed to run MSI. Will try...", ex);
-
-                                Task.Delay(TimeSpan.FromSeconds(5)).Wait();
-                            }
-
+                            throw new AggregateException("Failed to run MSI", exceptions);
                         }
 
-                        if (!installed)
+                        try
                         {
-                            throw new AggregateException("MSI failed to execute successfully", exceptions);
+
+                            RunMsi(exceptions.Count);
+
+                            installed = true;
                         }
 
+                        catch (Exception ex)
+                        {
+                            exceptions.Add(ex);
 
-                        _log.Info("MSI finished");
+                            _log.Warn("Failed to run MSI. Will try...", ex);
 
-                        //Configuration configuration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Path.Combine(parentDirectory.ToString(), "SecretServerAgentService.exe"));
-                        //configuration.AppSettings.Settings["RPCAgentVersion"].Value = args[0];
-                        //configuration.Save();
-
-                        StartService();
-
-                        _log.Info("Update complete");
+                            Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+                        }
 
                     }
-                    catch (Exception ex)
+
+                    if (!installed)
                     {
-                        _log.Error("Failed to bootstrap", ex);
-
-                        RestoreFromBackup();
-
-                        StartService();
-
-                        throw;
+                        throw new AggregateException("MSI failed to execute successfully", exceptions);
                     }
+
+
+                    _log.Info("MSI finished");
+
+                    //Configuration configuration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Path.Combine(parentDirectory.ToString(), "SecretServerAgentService.exe"));
+                    //configuration.AppSettings.Settings["RPCAgentVersion"].Value = args[0];
+                    //configuration.Save();
+
+                    StartService();
+
+                    _log.Info("Update complete");
+
+                }
+                catch (Exception ex)
+                {
+                    _log.Error("Failed to bootstrap", ex);
+
+                    RestoreFromBackup();
+
+                    StartService();
+
+                    throw;
                 }
             }
         }
