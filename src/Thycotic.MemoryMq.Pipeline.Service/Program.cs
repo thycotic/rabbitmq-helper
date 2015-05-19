@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.ServiceProcess;
 
 namespace Thycotic.MemoryMq.Pipeline.Service
 {
@@ -7,13 +8,22 @@ namespace Thycotic.MemoryMq.Pipeline.Service
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main()
+        private static void Main()
         {
-            var servicesToRun = new ServiceBase[]
+            try
             {
-                new PipelineService()
-            };
-            ServiceBase.Run(servicesToRun);
+                var servicesToRun = new ServiceBase[]
+                {
+                    new PipelineService()
+                };
+                ServiceBase.Run(servicesToRun);
+            }
+            catch (Exception ex)
+            {
+                //superfluous, mostly used for testing and consuming exceptions that are already logged but we want to bubble to the OS
+                System.Diagnostics.Trace.TraceError(ex.Message);
+                throw;
+            }
         }
     }
 }

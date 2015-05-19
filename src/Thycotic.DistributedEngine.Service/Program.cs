@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.ServiceProcess;
 
 namespace Thycotic.DistributedEngine.Service
@@ -15,28 +16,38 @@ namespace Thycotic.DistributedEngine.Service
         /// </summary>
         private static void Main(string[] args)
         {
-            if (args.Any())
+            try
             {
-                switch (args[0])
+                if (args.Any())
                 {
-                    case SupportedSwitches.Boostrap:
+                    switch (args[0])
+                    {
+                        case SupportedSwitches.Boostrap:
 
-                        var msiPath = args[1];
+                            var msiPath = args[1];
 
-                        var eub = new EngineUpdateBootstrapper();
+                            var eub = new EngineUpdateBootstrapper();
 
-                        eub.Bootstrap(msiPath);
+                            eub.Bootstrap(msiPath);
 
-                        return;
+                            return;
 
+                    }
                 }
-            }
 
-            var servicesToRun = new ServiceBase[]
+                var servicesToRun = new ServiceBase[]
             {
                 new EngineService()
             };
-            ServiceBase.Run(servicesToRun);
+                ServiceBase.Run(servicesToRun);
+
+            }
+            catch (Exception ex)
+            {
+                //superfluous, mostly used for testing and consuming exceptions that are already logged but we want to bubble to the OS
+                System.Diagnostics.Trace.TraceError(ex.Message);
+                throw;
+            }
         }
     }
 }
