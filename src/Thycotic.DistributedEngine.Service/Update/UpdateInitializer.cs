@@ -279,7 +279,15 @@ namespace Thycotic.DistributedEngine.Service.Update
                 if (_updateTask == null || _updateTask.Status != TaskStatus.Running) return;
 
                 _log.Info("Waiting for update task to complete");
-                _updateTask.Wait();
+
+                try
+                {
+                    _updateTask.Wait();
+                }
+                catch (TaskCanceledException)
+                {
+                    //consume when the update waiting task is cancelled (expected), let all others through
+                }
             }
         }
     }
