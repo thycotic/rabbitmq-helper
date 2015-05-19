@@ -74,7 +74,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             var requeue = true;
 
             using (LogCorrelation.Create())
-            using (LogContext.Create("Execute message"))
             {
                 try
                 {
@@ -112,7 +111,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     }
 
                     using (var consumer = _consumerFactory())
-                    using (LogContext.Create(consumer.Value.GetType().FullName))
                     {
                         consumer.Value.Consume(message);
                     }

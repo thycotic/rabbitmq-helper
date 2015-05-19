@@ -76,7 +76,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private void ExecuteMessage(ulong deliveryTag, string exchangeName, string routingKey, ICommonModelProperties properties, byte[] body)
         {
             using (LogCorrelation.Create())
-            using (LogContext.Create("Execute message"))
             {
                 var responseType = BlockingConsumerResponseTypes.Success;
                 object response;
@@ -100,7 +99,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     }
 
                     using (var consumer = _consumerFactory())
-                    using (LogContext.Create(consumer.Value.GetType().FullName))
                     {
                         response = consumer.Value.Consume(message);
 
