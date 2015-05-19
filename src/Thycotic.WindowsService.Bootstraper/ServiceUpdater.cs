@@ -7,6 +7,7 @@ using System.Management;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
+using Thycotic.Utility.IO;
 using Thycotic.WindowsService.Bootstraper.Wmi;
 
 namespace Thycotic.WindowsService.Bootstraper
@@ -20,72 +21,21 @@ namespace Thycotic.WindowsService.Bootstraper
 
         private readonly CancellationTokenSource _cts;
         private readonly string _workingPath;
+        private readonly string _backupPath;
         private readonly string _serviceName;
         private readonly string _msiPath;
         private readonly ILogWriter _log = Log.Get(typeof(ServiceUpdater));
 
-        public ServiceUpdater(CancellationTokenSource cts, string workingPath, string serviceName, string msiPath)
+        public ServiceUpdater(CancellationTokenSource cts, string workingPath, string backupPath, string serviceName, string msiPath)
         {
             _cts = cts;
             _workingPath = workingPath;
+            _backupPath = backupPath;
             _serviceName = serviceName;
             _msiPath = msiPath;
         }
 
-        private void CleanServiceDirectory(string path)
-        {
-            using (LogContext.Create("Service Directory Clean up"))
-            {
-
-                const int maxRetryCount = 5;
-                var exceptions = new List<Exception>();
-
-                var cleaned = false;
-
-                while (!cleaned)
-                {
-                    if (exceptions.Count >= maxRetryCount)
-                    {
-                        throw new AggregateException("Failed to clean up service directory", exceptions);
-                    }
-
-                    try
-                    {
-
-                        var directoryInfo = new DirectoryInfo(path);
-
-                        directoryInfo.GetFiles().ToList().ForEach(f => f.Delete());
-
-                        directoryInfo.GetDirectories().ToList().ForEach(d =>
-                        {
-                            //don't delete the backup directory
-                            if (d.FullName == Path.Combine(path, BackupDirectoryName))
-                            {
-                                return;
-                            }
-                            d.Delete(true);
-                        });
-
-                        _log.Info("Service directory cleaned");
-                        cleaned = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        exceptions.Add(ex);
-
-                        _log.Warn("Failed to clean up service directory. Will try...", ex);
-
-                        Task.Delay(TimeSpan.FromSeconds(5)).Wait();
-                    }
-                }
-            }
-        }
-
-        private static void CreateDirectory(string path)
-        {
-            Directory.CreateDirectory(path);
-        }
-
+        #region Win32
         private static ManagementObject GetManagementObject(ManagementPath computerPath)
         {
             var path = computerPath;
@@ -139,9 +89,105 @@ namespace Thycotic.WindowsService.Bootstraper
                 throw;
             }
         }
+        #endregion
 
+        #region Service start/stop
+        private void StartService()
+        {
+            InteractiveWithService(service =>
+            {
+                _log.Info("Starting service");
+                service.StartService();
 
+            });
 
+            while (!_cts.Token.IsCancellationRequested)
+            {
+                if (GetServiceState() == ServiceStates.Running)
+                {
+                    _log.Info("Service running");
+                    break;
+                }
+
+                Task.Delay(TimeSpan.FromSeconds(5), _cts.Token).Wait(_cts.Token);
+            }
+        }
+
+        private void StopService()
+        {
+            InteractiveWithService(service =>
+            {
+                _log.Info("Stopping service");
+                service.StopService();
+            });
+
+            while (!_cts.Token.IsCancellationRequested)
+            {
+                if (GetServiceState() == ServiceStates.Stopped)
+                {
+                    _log.Info("Service stopped");
+                    break;
+                }
+
+                Task.Delay(TimeSpan.FromSeconds(5), _cts.Token).Wait(_cts.Token);
+            }
+        }
+        #endregion
+
+        private void CleanServiceDirectory()
+        {
+            using (LogContext.Create("Service Directory Clean up"))
+            {
+
+                const int maxRetryCount = 5;
+                var exceptions = new List<Exception>();
+
+                var cleaned = false;
+
+                while (!cleaned)
+                {
+                    if (exceptions.Count >= maxRetryCount)
+                    {
+                        throw new AggregateException("Failed to clean up service directory", exceptions);
+                    }
+
+                    try
+                    {
+
+                        var directoryInfo = new DirectoryInfo(_workingPath);
+
+                        directoryInfo.GetFiles().ToList().ForEach(f => f.Delete());
+
+                        directoryInfo.GetDirectories().ToList().ForEach(d =>
+                        {
+                            //don't delete the backup directory
+                            if (d.FullName == Path.Combine(_workingPath, BackupDirectoryName))
+                            {
+                                return;
+                            }
+                            d.Delete(true);
+                        });
+
+                        _log.Info("Service directory cleaned");
+                        cleaned = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        exceptions.Add(ex);
+
+                        _log.Warn("Failed to clean up service directory. Will try...", ex);
+
+                        Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+                    }
+                }
+            }
+        }
+
+        private static void CreateDirectory(string path)
+        {
+            Directory.CreateDirectory(path);
+        }
+        
         private void CheckMsi()
         {
             if (!File.Exists(_msiPath))
@@ -240,45 +286,13 @@ namespace Thycotic.WindowsService.Bootstraper
             }
         }
 
-        private void StartService()
+        private void RestoreFromBackup()
         {
-            InteractiveWithService(service =>
-            {
-                _log.Info("Starting service");
-                service.StartService();
+            _log.Info(string.Format("Restoring service from backup in {0}", _backupPath));
 
-            });
+            var directoryCopier = new DirectoryCopier();
 
-            while (!_cts.Token.IsCancellationRequested)
-            {
-                if (GetServiceState() == ServiceStates.Running)
-                {
-                    _log.Info("Service running");
-                    break;
-                }
-
-                Task.Delay(TimeSpan.FromSeconds(5), _cts.Token).Wait(_cts.Token);
-            }
-        }
-
-        private void StopService()
-        {
-            InteractiveWithService(service =>
-            {
-                _log.Info("Stopping service");
-                service.StopService();
-            });
-
-            while (!_cts.Token.IsCancellationRequested)
-            {
-                if (GetServiceState() == ServiceStates.Stopped)
-                {
-                    _log.Info("Service stopped");
-                    break;
-                }
-
-                Task.Delay(TimeSpan.FromSeconds(5), _cts.Token).Wait(_cts.Token);
-            }
+            directoryCopier.Copy(_backupPath, _workingPath, true);
         }
 
         public void Update()
@@ -301,7 +315,7 @@ namespace Thycotic.WindowsService.Bootstraper
 
                         StopService();
 
-                        CleanServiceDirectory(_workingPath);
+                        CleanServiceDirectory();
 
                         //recreate the log path that was just cleaned up
                         CreateDirectory(Path.Combine(_workingPath, "log"));
@@ -356,6 +370,11 @@ namespace Thycotic.WindowsService.Bootstraper
                     catch (Exception ex)
                     {
                         _log.Error("Failed to bootstrap", ex);
+
+                        RestoreFromBackup();
+
+                        StartService();
+
                         throw;
                     }
                 }

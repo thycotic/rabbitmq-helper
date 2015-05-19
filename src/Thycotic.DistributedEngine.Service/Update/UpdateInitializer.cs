@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
+using Thycotic.Utility.IO;
 using Thycotic.WindowsService.Bootstraper;
 
 namespace Thycotic.DistributedEngine.Service.Update
@@ -16,7 +17,7 @@ namespace Thycotic.DistributedEngine.Service.Update
     /// </summary>
     public class UpdateInitializer : IUpdateInitializer
     {
-        private CancellationTokenSource _cts = new CancellationTokenSource();
+        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly IUpdateBus _updateBus;
 
@@ -170,13 +171,15 @@ namespace Thycotic.DistributedEngine.Service.Update
         {
             using (LogContext.Create("Update bootstrap"))
             {
+                var directoryCopier = new DirectoryCopier();
 
                 var sourcePath = GetServiceInstallationPath();
                 var backupPath = Path.Combine(sourcePath, ServiceUpdater.BackupDirectoryName);
 
+
                 CleanBackupDirectory(backupPath);
 
-                DirectoryCopy(sourcePath, backupPath, true);
+                directoryCopier.Copy(sourcePath, backupPath, true);
 
                 var entryPath = GetServiceBootstrapEntryPoint();
 
@@ -206,62 +209,20 @@ namespace Thycotic.DistributedEngine.Service.Update
                 }
 
                 _log.Info("Bootstrapper initialized");
+
             }
         }
 
-        private void DirectoryCopy(string sourcePath, string destinationPath, bool recursive)
-        {
-            _log.Debug(string.Format("Copying contents of {0} to {1} to avoid access violations", sourcePath, destinationPath));
 
-            // get the subdirectories for the specified directory.
-            var dir = new DirectoryInfo(sourcePath);
-            var dirs = dir.GetDirectories();
-
-            if (!dir.Exists)
-            {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourcePath);
-            }
-
-            // if the destination directory doesn't exist, create it. 
-            if (!Directory.Exists(destinationPath))
-            {
-                Directory.CreateDirectory(destinationPath);
-            }
-
-            // get the files in the directory and copy them to the new location.
-            var files = dir.GetFiles();
-            foreach (var file in files)
-            {
-                var temppath = Path.Combine(destinationPath, file.Name);
-                file.CopyTo(temppath, false);
-            }
-
-            // if copying subdirectories, copy them and their contents to new location. 
-            if (!recursive) return;
-
-            foreach (var subdir in dirs)
-            {
-                //skips the destination path
-                if (subdir.FullName == destinationPath)
-                {
-                    continue;
-                }
-
-                var temppath = Path.Combine(destinationPath, subdir.Name);
-
-                DirectoryCopy(subdir.FullName, temppath, true);
-            }
-        }
-        
         private static string GetServiceBootstrapEntryPoint()
         {
-            return Assembly.GetAssembly(typeof (EngineService)).Location;
+            return Assembly.GetAssembly(typeof(EngineService)).Location;
         }
 
         private static string GetServiceInstallationPath()
         {
+            //return @"C:\Program Files (x86)\Thycotic Software Ltd\Distributed Engine";
+
             return Path.GetDirectoryName(GetServiceBootstrapEntryPoint());
         }
 

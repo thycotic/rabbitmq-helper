@@ -5,9 +5,6 @@ using Thycotic.Logging;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
-    //TODO: Improve checking for service state
-    //TODO: Hook into engine
-
     public class Program
     {
         private static void Main(string[] args)
@@ -17,6 +14,7 @@ namespace Thycotic.WindowsService.Bootstraper
             var cts = new CancellationTokenSource();
 
             var workingPath = Directory.GetCurrentDirectory();
+            var backupPath = Path.Combine(workingPath, ServiceUpdater.BackupDirectoryName);
 
             var serviceName = args[0];
 
@@ -32,7 +30,7 @@ namespace Thycotic.WindowsService.Bootstraper
                 throw new FileNotFoundException(string.Format("MSI does not exist at {0}", msiPath));
             }
 
-            var serviceUpdater = new ServiceUpdater(cts, workingPath, serviceName, msiPath);
+            var serviceUpdater = new ServiceUpdater(cts, workingPath, backupPath, serviceName, msiPath);
 
             serviceUpdater.Update();
 

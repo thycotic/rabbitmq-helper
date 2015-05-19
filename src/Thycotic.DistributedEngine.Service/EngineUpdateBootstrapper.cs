@@ -1,10 +1,9 @@
-//#define BREAKINTOVS
+#define BREAKINTOVS
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using SBSSHForwarding;
 using Thycotic.DistributedEngine.Service.Update;
 using Thycotic.Logging;
 using Thycotic.WindowsService.Bootstraper;
@@ -31,7 +30,6 @@ namespace Thycotic.DistributedEngine.Service
         /// <param name="msiPath">The msi path.</param>
         public void Bootstrap(string msiPath)
         {
-
             InterceptChildProcess();
 
             Trace.TraceInformation("Configuring bootstrap logging...");
@@ -49,7 +47,7 @@ namespace Thycotic.DistributedEngine.Service
                     //TODO: Maybe not hardcoded -dkk
                     const string serviceName = "Thycotic.DistributedEngine.Service";
 
-                    var serviceUpdater = new ServiceUpdater(cts, GetServiceInstallationPath(),
+                    var serviceUpdater = new ServiceUpdater(cts, GetServiceInstallationPath(), GetServiceBackupPath(),
                         serviceName, msiPath);
 
                     serviceUpdater.Update();
@@ -57,25 +55,30 @@ namespace Thycotic.DistributedEngine.Service
                 catch (Exception ex)
                 {
                     throw new ApplicationException("Engine update bootstrapper failed", ex);
+                    
                 }
                 finally
                 {
+
                     //delete the update file regardless of update outcome
                     File.Delete(msiPath);
                 }
             }
         }
 
-        
-
         private static string GetServiceInstallationPath()
+        {
+            var backupPath = GetServiceBackupPath();
+            
+            return backupPath.Replace(ServiceUpdater.BackupDirectoryName, string.Empty);
+        }
+        
+        private static string GetServiceBackupPath()
         {
             //return @"C:\Program Files (x86)\Thycotic Software Ltd\Distributed Engine";
 
-            var backupEntryPoint = Path.GetDirectoryName(Assembly.GetAssembly(typeof(EngineService)).Location);
+            return Path.GetDirectoryName(Assembly.GetAssembly(typeof(EngineService)).Location);
 
-            // ReSharper disable once PossibleNullReferenceException
-            return backupEntryPoint.Replace(ServiceUpdater.BackupDirectoryName, string.Empty);
         }
         
     }
