@@ -20,7 +20,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly Func<Owned<TConsumer>> _consumerFactory;
         private readonly IObjectSerializer _objectSerializer;
         private readonly IMessageEncryptor _messageEncryptor;
-        private readonly ILogWriter _log = Log.Get(typeof(BasicConsumerWrapper<TConsumable, TConsumer>));
+        private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
         
         /// <summary>
         /// Initializes a new instance of the <see cref="BasicConsumerWrapper{TConsumable, TConsumer}"/> class.

@@ -23,7 +23,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly IMessageEncryptor _messageEncryptor;
         private readonly Func<Owned<TConsumer>> _consumerFactory;
         private readonly ICommonConnection _connection;
-        private readonly ILogWriter _log = Log.Get(typeof(BlockingConsumerWrapper<TConsumable, TResponse, TConsumer>));
+        private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
 
 
         /// <summary>

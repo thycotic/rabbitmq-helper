@@ -26,7 +26,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
         private bool _terminated;
 
-        private readonly ILogWriter _log = Log.Get(typeof(ConsumerWrapperBase<TConsumable, TConsumer>));
+        private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
         private bool _disposed;
         
         /// <summary>
