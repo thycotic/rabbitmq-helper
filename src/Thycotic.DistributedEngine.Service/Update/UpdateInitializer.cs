@@ -245,9 +245,18 @@ namespace Thycotic.DistributedEngine.Service.Update
                 {
                     _updateTask.Wait();
                 }
-                catch (TaskCanceledException)
+                catch (AggregateException aex)
                 {
-                    //consume when the update waiting task is cancelled (expected), let all others through
+                    aex.Handle(ex =>
+                    {
+                        //consume when the update waiting task is cancelled (expected), let all others through
+                        if (ex is TaskCanceledException)
+                        {
+                            return true;
+                        }
+                        throw ex;
+                    });
+                    
                 }
             }
         }
