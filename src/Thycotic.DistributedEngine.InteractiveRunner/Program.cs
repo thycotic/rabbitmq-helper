@@ -127,56 +127,60 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
         private static void ConfigureCli(CommandLineInterface cli, IComponentContext parentContext)
         {
-            cli.ClearCommands();
+            using (LogContext.Create("CLI configuration"))
+            {
+                cli.ClearCommands();
 
-            Log.Info("Configuring CLI with latest IoC configuration");
+                Log.Info("Configuring CLI with latest IoC configuration");
 
-            var bus = parentContext.Resolve<IRequestBus>();
-            var exchangeNameProvider = parentContext.Resolve<IExchangeNameProvider>();
+                var bus = parentContext.Resolve<IRequestBus>();
+                var exchangeNameProvider = parentContext.Resolve<IExchangeNameProvider>();
 
-            var currentAssembly = Assembly.GetExecutingAssembly();
+                var currentAssembly = Assembly.GetExecutingAssembly();
 
-            // Create the builder with which components/services are registered.
-            var builder = new ContainerBuilder();
+                // Create the builder with which components/services are registered.
+                var builder = new ContainerBuilder();
 
-            builder.Register(context => cli.CancellationToken).As<CancellationToken>().SingleInstance();
-            builder.Register(context => bus).As<IRequestBus>().SingleInstance();
-            builder.Register(context => exchangeNameProvider).As<IExchangeNameProvider>().SingleInstance();
+                builder.Register(context => cli.CancellationToken).As<CancellationToken>().SingleInstance();
+                builder.Register(context => bus).As<IRequestBus>().SingleInstance();
+                builder.Register(context => exchangeNameProvider).As<IExchangeNameProvider>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(currentAssembly)
-                .Where(t => !t.IsAbstract)
-                .Where(t => typeof(IConsoleCommand).IsAssignableFrom(t))
-                .Where(t => t != typeof(SystemConsoleCommand));
+                builder.RegisterAssemblyTypes(currentAssembly)
+                    .Where(t => !t.IsAbstract)
+                    .Where(t => typeof (IConsoleCommand).IsAssignableFrom(t))
+                    .Where(t => t != typeof (SystemConsoleCommand));
 
-            var tempContainer = builder.Build();
+                var tempContainer = builder.Build();
 
-            var commands =
-                tempContainer.ComponentRegistry.Registrations.Where(
-                    r => typeof(IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
+                var commands =
+                    tempContainer.ComponentRegistry.Registrations.Where(
+                        r => typeof (IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
 
-            commands.ToList().ForEach(c => cli.AddCustomCommand((IConsoleCommand)tempContainer.Resolve(c.Activator.LimitType)));
+                commands.ToList()
+                    .ForEach(c => cli.AddCustomCommand((IConsoleCommand) tempContainer.Resolve(c.Activator.LimitType)));
+            }
         }
 
         private static void ConfigureMockConfiguration(EngineService engineService)
         {
-            var staticIdentityGuid = new Guid("f00abcde-1337-1337-1337-d235bc2ce1b1");
-            Log.Warn("Using static/development identity guid");
+            using (LogContext.Create("Mock configuration"))
+            {
+                var staticIdentityGuid = new Guid("f00abcde-1337-1337-1337-d235bc2ce1b1");
+                Log.Warn("Using static/development identity guid");
 
-            var staticIdentityGuidProvider = Substitute.For<IIdentityGuidProvider>();
-            staticIdentityGuidProvider.IdentityGuid.Returns(staticIdentityGuid);
-            engineService.IoCConfigurator.IdentityGuidProvider = staticIdentityGuidProvider;
+                var staticIdentityGuidProvider = Substitute.For<IIdentityGuidProvider>();
+                staticIdentityGuidProvider.IdentityGuid.Returns(staticIdentityGuid);
+                engineService.IoCConfigurator.IdentityGuidProvider = staticIdentityGuidProvider;
 
-            //TODO: Do we need this?
-            //var configurationProvider = Substitute.For<IConfigurationProvider>();
-            //ServiceLocator.ConfigurationProvider = configurationProvider;
+                //TODO: Do we need this?
+                //var configurationProvider = Substitute.For<IConfigurationProvider>();
+                //ServiceLocator.ConfigurationProvider = configurationProvider;
 
-            //var configuration = Substitute.For<IConfiguration>();
-            //configuration.FipsEnabled.Returns(false);
+                //var configuration = Substitute.For<IConfiguration>();
+                //configuration.FipsEnabled.Returns(false);
 
-            //configurationProvider.GetCurrentConfiguration().Returns(configuration);
-
-
-
+                //configurationProvider.GetCurrentConfiguration().Returns(configuration);
+            }
         }
     }
 }
