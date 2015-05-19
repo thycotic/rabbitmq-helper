@@ -86,7 +86,7 @@ namespace Thycotic.DistributedEngine.Service.Update
 
                     if (File.Exists(msiPath))
                     {
-                        _log.Info("Deleting MSI file.");
+                        _log.Info(string.Format("Deleting MSI file from {0}", msiPath));
                         File.Delete(msiPath);
                     }
                 }
@@ -235,6 +235,11 @@ namespace Thycotic.DistributedEngine.Service.Update
 
             _cts.Cancel();
 
+            if (_updateTask == null)
+            {
+                return;
+            }
+            
             lock (_updateTask)
             {
                 if (_updateTask == null || _updateTask.Status != TaskStatus.Running) return;
@@ -256,7 +261,7 @@ namespace Thycotic.DistributedEngine.Service.Update
                         }
                         throw ex;
                     });
-                    
+
                 }
             }
         }

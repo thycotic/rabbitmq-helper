@@ -59,9 +59,12 @@ namespace Thycotic.DistributedEngine.Service
                 }
                 finally
                 {
-
                     //delete the update file regardless of update outcome
-                    File.Delete(msiPath);
+                    if (File.Exists(msiPath))
+                    {
+                        _log.Info(string.Format("Deleting MSI file from {0}", msiPath));
+                        File.Delete(msiPath);
+                    }
                 }
             }
         }
