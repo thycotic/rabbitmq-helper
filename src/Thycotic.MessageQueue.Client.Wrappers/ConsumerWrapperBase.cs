@@ -38,10 +38,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         {
             _connection = connection;
             _exchangeNameProvider = exchangeNameProvider;
-            _connection.ConnectionCreated += (sender, args) => CreateModel();
+            _connection.ConnectionCreated += (sender, args) => CommonModel = CreateModel();
         }
 
-        private void CreateModel()
+        /// <summary>
+        /// Creates the model.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ICommonModel CreateModel()
         {
             try
             {
@@ -77,7 +81,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                 model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
 
-                CommonModel = model;
+                return model;
             }
             catch (Exception ex)
             {
