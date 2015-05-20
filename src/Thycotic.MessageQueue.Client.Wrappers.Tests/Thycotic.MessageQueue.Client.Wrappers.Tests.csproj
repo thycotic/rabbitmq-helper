@@ -123,6 +123,10 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -160,6 +164,15 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="BasicConsumableDummy.cs" />
+    <Compile Include="BasicConsumerWrapper.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BasicConsumerWrapper.feature</DependentUpon>
+    </Compile>
+    <Compile Include="BasicConsumerWrapperDummy.cs" />
+    <Compile Include="BasicConsumerWrapperSteps.cs" />
+    <Compile Include="BlockingConsumerWrapperDummy.cs" />
     <Compile Include="ConsumerWrapperBase.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -170,6 +183,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">
+      <Project>{60af5da6-343c-4c6f-9cd5-2b5f04d9af92}</Project>
+      <Name>Thycotic.MemoryMq</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.MessageQueue.Client.Tests\Thycotic.MessageQueue.Client.Tests.csproj">
+      <Project>{9c4e6fbc-bf2b-4099-816c-89098229ea6d}</Project>
+      <Name>Thycotic.MessageQueue.Client.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thycotic.MessageQueue.Client.Wrappers\Thycotic.MessageQueue.Client.Wrappers.csproj">
       <Project>{d0d2d7e5-d147-47e9-8d8f-18f6f6b19720}</Project>
       <Name>Thycotic.MessageQueue.Client.Wrappers</Name>
@@ -186,9 +207,21 @@
       <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
       <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Utility.Tests\Thycotic.Utility.Tests.csproj">
+      <Project>{341587c7-483a-442a-bf23-49d1a5138e57}</Project>
+      <Name>Thycotic.Utility.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
+      <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
+      <Name>Thycotic.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="BasicConsumerWrapper.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>BasicConsumerWrapper.feature.cs</LastGenOutput>
+    </None>
     <None Include="ConsumerWrapperBase.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ConsumerWrapperBase.feature.cs</LastGenOutput>

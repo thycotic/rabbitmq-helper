@@ -4,7 +4,7 @@ using TechTalk.SpecFlow;
 
 namespace Thycotic.Utility.Specflow
 {
-    public class CustomScenarioContext
+    public class CustomScenarioContext : IDisposable
     {
         private readonly ScenarioContext _baseContext;
 
@@ -15,7 +15,15 @@ namespace Thycotic.Utility.Specflow
 
         public T Get<T>(string key)
         {
-            return _baseContext.Get<T>(key);
+            try
+            {
+                return _baseContext.Get<T>(key);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("Could not locate {0} in the scenario context or it could not be cast to {1}", key, typeof(T).FullName), ex);
+            }
+
         }
 
         public void SetNull(string key)
@@ -64,7 +72,7 @@ namespace Thycotic.Utility.Specflow
         public T SetSubstitute<T>(string key)
             where T : class
         {
-           return Set(key, GetSubstituteFor<T>());
+            return Set(key, GetSubstituteFor<T>());
         }
 
         public T SetSubstitute<T>(string key, Action<T> preparer)
@@ -107,6 +115,11 @@ namespace Thycotic.Utility.Specflow
             var substitute = GetSubstituteFor<T1, T2, T3>();
             preparer.Invoke(substitute);
             return Set(key, substitute);
+        }
+
+        public void Dispose()
+        {
+            //nothing to dispose
         }
     }
 }
