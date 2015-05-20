@@ -33,7 +33,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service.IoC
                 if (!String.Equals(uri.Host, "localhost", StringComparison.CurrentCultureIgnoreCase) &&
                     !String.Equals(uri.Host, DnsEx.GetDnsHostName(), StringComparison.CurrentCultureIgnoreCase))
                 {
-                    _log.Debug("Connection string host and local host are different. Memory Mq server will not start.");
+                    _log.Warn("Connection string host and local host are different. Memory Mq server will not start.");
                     return;
                 }
 
