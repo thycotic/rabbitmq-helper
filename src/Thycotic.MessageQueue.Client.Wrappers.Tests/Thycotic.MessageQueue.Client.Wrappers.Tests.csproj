@@ -165,6 +165,12 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="BasicConsumableDummy.cs" />
+    <Compile Include="BlockingConsumerWrapperSteps.cs" />
+    <Compile Include="BlockingBasicConsumerWrapper.feature.cs">
+      <DependentUpon>BlockingBasicConsumerWrapper.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="BasicConsumerWrapper.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -181,6 +187,7 @@
     </Compile>
     <Compile Include="ConsumerWrapperBaseDummy.cs" />
     <Compile Include="ConsumerWrapperBaseSteps.cs" />
+    <Compile Include="LeakyOwned.cs" />
     <Compile Include="LifetimeDummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -220,6 +227,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="BlockingBasicConsumerWrapper.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>BlockingBasicConsumerWrapper.feature.cs</LastGenOutput>
+    </None>
     <None Include="BasicConsumerWrapper.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BasicConsumerWrapper.feature.cs</LastGenOutput>

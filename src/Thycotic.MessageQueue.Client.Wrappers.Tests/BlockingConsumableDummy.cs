@@ -4,11 +4,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
     public class BlockingConsumableDummy : IBlockingConsumable
     {
-        public BlockingConsumableDummy(int version)
-        {
-            Version = version;
-        }
-
-        public int Version { get; private set; }
+        public int Version { get; set; }
     }
 }

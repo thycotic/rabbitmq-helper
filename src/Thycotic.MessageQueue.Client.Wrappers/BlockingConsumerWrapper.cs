@@ -121,6 +121,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 {
                     Respond(exchangeName, properties.ReplyTo, response, properties.CorrelationId, responseType);
                 }
+                else
+                {
+                    throw new ApplicationException("Blocking call requires a reply to in order to notify caller");
+                }
             }
         }
 

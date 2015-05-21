@@ -10,7 +10,7 @@ Background:
 	And there exists a substitute object for IMessageEncryptor stored in the scenario as MessageEncryptorTest
 	And there exists a BasicConsumableDummy stored in the scenario as BasicConsumableDummyTest
 	And the scenario object BasicConsumableDummy BasicConsumableDummyTest is not expired	
-	And the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns BasicConsumableDummyTest
+	And the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns BasicConsumableDummy BasicConsumableDummyTest
 	And there exists a BasicConsumerWrapperDummy stored in the scenario as BasicConsumerWrapperDummyTest with CommonConnection CommonConnectionTest, ExchangeNameProvider ExchangeNameProviderTest, ConsumerFactory ConsumerFactoryTest, ObjectSerializer ObjectSerializerTest and MessageEncryptor MessageEncryptorTest
 
 Scenario: HandleBasicDeliver should relay message
@@ -29,7 +29,7 @@ Scenario: HandleBasicDeliver should not relay expired message
 	Then the method BasicNack on the CommonModel of BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
 	
 Scenario: HandleBasicDeliver should throw away non parsable message
-	Given the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns corrupted message
+	Given the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns corrupted BasicConsumableDummy message
 	When the connection is established on ICommonConnection CommonConnectionTest
 	When the method HandleBasicDeliver on BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
 	Then the method Consume on IBasicConsumer<BasicConsumableDummy> BasicConsumerTest is not called

@@ -93,7 +93,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
  testRunner.And("the scenario object BasicConsumableDummy BasicConsumableDummyTest is not expired", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
  testRunner.And("the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns " +
-                    "BasicConsumableDummyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                    "BasicConsumableDummy BasicConsumableDummyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
  testRunner.And(@"there exists a BasicConsumerWrapperDummy stored in the scenario as BasicConsumerWrapperDummyTest with CommonConnection CommonConnectionTest, ExchangeNameProvider ExchangeNameProviderTest, ConsumerFactory ConsumerFactoryTest, ObjectSerializer ObjectSerializerTest and MessageEncryptor MessageEncryptorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -165,7 +165,7 @@ this.ScenarioSetup(scenarioInfo);
 this.FeatureBackground();
 #line 32
  testRunner.Given("the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns " +
-                    "corrupted message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+                    "corrupted BasicConsumableDummy message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 33
  testRunner.When("the connection is established on ICommonConnection CommonConnectionTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 34

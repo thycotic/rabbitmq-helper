@@ -14,19 +14,6 @@ using Thycotic.Utility.Specflow;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
-    public class LeakyOwned<T> : Owned<T>
-    {
-        public LeakyOwned(T value, IDisposable lifetime) : base(value, lifetime)
-        {
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            //don't dispose the value
-        }
-    }
-
-
     [Binding]
     public class BasicConsumerWrapperSteps
     {
@@ -53,21 +40,21 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             this.GetScenarioContext().Set(consumerFactoryFunctionName, func);
         }
 
-        [Given(@"the ToObject method on IObjectSerializer substitute (\w+) returns (\w+)")]
+        [Given(@"the ToObject method on IObjectSerializer substitute (\w+) returns BasicConsumableDummy (\w+)")]
         public void GivenTheToObjectMethodOnIObjectSerializerSubstitutReturns(string objectSerializerName, string consumableName)
         {
             var objectSerializer = this.GetScenarioContext().Get<IObjectSerializer>(objectSerializerName);
 
             objectSerializer.ToObject<BasicConsumableDummy>(Arg.Any<byte[]>()).Returns(this.GetScenarioContext().Get<BasicConsumableDummy>(consumableName));
         }
-
-        [Given(@"the ToObject method on IObjectSerializer substitute (\w+) returns corrupted message")]
+        [Given(@"the ToObject method on IObjectSerializer substitute (\w+) returns corrupted BasicConsumableDummy message")]
         public void GivenTheToObjectMethodOnIObjectSerializerSubstitutReturnsCorruptedMessage(string objectSerializerName)
         {
             var objectSerializer = this.GetScenarioContext().Get<IObjectSerializer>(objectSerializerName);
 
             objectSerializer.When(s => s.ToObject<BasicConsumableDummy>(Arg.Any<byte[]>())).Throw<SerializationException>();
         }
+
 
         [Given(
             @"there exists a BasicConsumerWrapperDummy stored in the scenario as (\w+) with CommonConnection (\w+), ExchangeNameProvider (\w+), ConsumerFactory (\w+), ObjectSerializer (\w+) and MessageEncryptor (\w+)"
@@ -90,21 +77,21 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         }
 
         [Given(@"the scenario object BasicConsumableDummy (\w+) is not expired")]
-        public void GivenTheScenarioObjectBasicConsumableDummyTestIsNotExpired(string consumableName)
+        public void GivenTheScenarioObjectBasicConsumableDummyIsNotExpired(string consumableName)
         {
             var consumable = this.GetScenarioContext().Get<BasicConsumableDummy>(consumableName);
             consumable.ExpiresOn = DateTime.UtcNow + TimeSpan.FromSeconds(30);
         }
 
         [Given(@"the scenario object BasicConsumableDummy (\w+) is expired")]
-        public void GivenTheScenarioObjectBasicConsumableDummyTestIsExpired(string consumableName)
+        public void GivenTheScenarioObjectBasicConsumableDummyIsExpired(string consumableName)
         {
             var consumable = this.GetScenarioContext().Get<BasicConsumableDummy>(consumableName);
             consumable.ExpiresOn = DateTime.UtcNow;
         }
 
         [Given(@"the scenario object BasicConsumableDummy (\w+) should not be relayed if it is expired")]
-        public void GivenTheScenarioObjectBasicConsumableDummyTestShouldNotBeRedeliveredIfItIsExpired(string consumableName)
+        public void GivenTheScenarioObjectBasicConsumableDummyShouldNotBeRedeliveredIfItIsExpired(string consumableName)
         {
             var consumable = this.GetScenarioContext().Get<BasicConsumableDummy>(consumableName);
             consumable.RelayEvenIfExpired = false;
@@ -140,7 +127,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         }
 
         [Then(@"the method Consume on IBasicConsumer<BasicConsumableDummy> (\w+) is called")]
-        public void ThenTheMethodConsumeOnIBasicConsumerBasicConsumerTestIsCalled(string consumerName)
+        public void ThenTheMethodConsumeOnIBasicConsumerIsCalled(string consumerName)
         {
             var consumer = this.GetScenarioContext().Get<IBasicConsumer<BasicConsumableDummy>>(consumerName);
 
@@ -148,7 +135,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         }
 
         [Then(@"the method Consume on IBasicConsumer<BasicConsumableDummy> (\w+) is not called")]
-        public void ThenTheMethodConsumeOnIBasicConsumerBasicConsumerTestIsNotCalled(string consumerName)
+        public void ThenTheMethodConsumeOnIBasicConsumerIsNotCalled(string consumerName)
         {
             var consumer = this.GetScenarioContext().Get<IBasicConsumer<BasicConsumableDummy>>(consumerName);
 
