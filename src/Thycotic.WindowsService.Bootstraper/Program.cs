@@ -30,7 +30,9 @@ namespace Thycotic.WindowsService.Bootstraper
                 throw new FileNotFoundException(string.Format("MSI does not exist at {0}", msiPath));
             }
 
-            var serviceUpdater = new ServiceUpdater(cts, workingPath, backupPath, serviceName, msiPath);
+            var serviceManagerInteractor = new ServiceManagerInteractor(cts, serviceName);
+  
+            var serviceUpdater = new ServiceUpdater(cts, serviceManagerInteractor, workingPath, backupPath, serviceName, msiPath);
 
             serviceUpdater.Update();
 

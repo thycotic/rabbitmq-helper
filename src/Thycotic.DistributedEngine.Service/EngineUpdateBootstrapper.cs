@@ -46,8 +46,9 @@ namespace Thycotic.DistributedEngine.Service
 
                     //TODO: Maybe not hardcoded -dkk
                     const string serviceName = "Thycotic.DistributedEngine.Service";
+                    var serviceManagerInteractor = new ServiceManagerInteractor(cts, serviceName);
 
-                    var serviceUpdater = new ServiceUpdater(cts, GetServiceInstallationPath(), GetServiceBackupPath(),
+                    var serviceUpdater = new ServiceUpdater(cts, serviceManagerInteractor, GetServiceInstallationPath(), GetServiceBackupPath(),
                         serviceName, msiPath);
 
                     serviceUpdater.Update();

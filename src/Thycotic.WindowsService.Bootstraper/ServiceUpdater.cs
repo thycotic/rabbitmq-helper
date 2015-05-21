@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Management;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.Utility.IO;
-using Thycotic.WindowsService.Bootstraper.Wmi;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
@@ -20,119 +18,22 @@ namespace Thycotic.WindowsService.Bootstraper
         public const string BackupDirectoryName = "backup";
 
         private readonly CancellationTokenSource _cts;
+        private readonly IServiceManagerInteractor _serviceManagerInteractor;
         private readonly string _workingPath;
         private readonly string _backupPath;
         private readonly string _serviceName;
         private readonly string _msiPath;
         private readonly ILogWriter _log = Log.Get(typeof(ServiceUpdater));
 
-        public ServiceUpdater(CancellationTokenSource cts, string workingPath, string backupPath, string serviceName, string msiPath)
+        public ServiceUpdater(CancellationTokenSource cts, IServiceManagerInteractor serviceManagerInteractor, string workingPath, string backupPath, string serviceName, string msiPath)
         {
             _cts = cts;
+            _serviceManagerInteractor = serviceManagerInteractor;
             _workingPath = workingPath;
             _backupPath = backupPath;
             _serviceName = serviceName;
             _msiPath = msiPath;
         }
-
-        #region Win32
-        private static ManagementObject GetManagementObject(ManagementPath computerPath)
-        {
-            var path = computerPath;
-            var managementObject = new ManagementObject(path);
-            return managementObject;
-        }
-
-        private IWin32Service GetService()
-        {
-            var computerPath = Win32Service.GetLocalServiceManagementPath(_serviceName);
-            var managementObject = GetManagementObject(new ManagementPath(computerPath));
-
-            //Task.Delay(TimeSpan.FromSeconds(5)).Wait();
-
-            managementObject.Scope.Connect();
-
-            return new Win32Service(managementObject);
-
-        }
-
-        private void InteractiveWithService(Action<IWin32Service> action)
-        {
-            try
-            {
-                using (var win32Service = GetService())
-                {
-                    action.Invoke(win32Service);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _log.Error("Interaction with service failed", ex);
-                throw;
-            }
-        }
-
-        private string GetServiceState()
-        {
-            try
-            {
-                using (var win32Service = GetService())
-                {
-                    return win32Service.State;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _log.Error("Interaction with service failed", ex);
-                throw;
-            }
-        }
-        #endregion
-
-        #region Service start/stop
-        private void StartService()
-        {
-            InteractiveWithService(service =>
-            {
-                _log.Info("Starting service");
-                service.StartService();
-
-            });
-
-            while (!_cts.Token.IsCancellationRequested)
-            {
-                if (GetServiceState() == ServiceStates.Running)
-                {
-                    _log.Info("Service running");
-                    break;
-                }
-
-                Task.Delay(TimeSpan.FromSeconds(5), _cts.Token).Wait(_cts.Token);
-            }
-        }
-
-        private void StopService()
-        {
-            InteractiveWithService(service =>
-            {
-                _log.Info("Stopping service");
-                service.StopService();
-            });
-
-            while (!_cts.Token.IsCancellationRequested)
-            {
-                if (GetServiceState() == ServiceStates.Stopped)
-                {
-                    _log.Info("Service stopped");
-                    break;
-                }
-
-                Task.Delay(TimeSpan.FromSeconds(5), _cts.Token).Wait(_cts.Token);
-            }
-        }
-        #endregion
 
         private void CleanServiceDirectory()
         {
@@ -315,7 +216,7 @@ namespace Thycotic.WindowsService.Bootstraper
                     _log.Info(string.Format("Update log path will be {0}",
                         Path.Combine(_workingPath, "log", "SSDEUpdate.log")));
 
-                    StopService();
+                    _serviceManagerInteractor.StopService();
 
                     CleanServiceDirectory();
 
@@ -364,7 +265,7 @@ namespace Thycotic.WindowsService.Bootstraper
                     //configuration.AppSettings.Settings["RPCAgentVersion"].Value = args[0];
                     //configuration.Save();
 
-                    StartService();
+                    _serviceManagerInteractor.StartService();
 
                     _log.Info("Update complete");
 
@@ -375,7 +276,7 @@ namespace Thycotic.WindowsService.Bootstraper
 
                     RestoreFromBackup();
 
-                    StartService();
+                    _serviceManagerInteractor.StartService();
 
                     throw;
                 }
