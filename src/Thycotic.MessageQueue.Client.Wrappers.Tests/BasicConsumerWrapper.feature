@@ -5,7 +5,8 @@ Background:
 	Given there exists a substitute object for ICommonConnection stored in the scenario as CommonConnectionTest
 	And there exists a substitute object for IExchangeNameProvider stored in the scenario as ExchangeNameProviderTest
 	And there exists a substitute object for IBasicConsumer<BasicConsumableDummy> stored in the scenario as BasicConsumerTest
-	And there exists a basic consumer factory function stored in the scenario as ConsumerFactoryTest which returns IBasicConsumer<BasicConsumableDummy> BasicConsumerTest
+	And there exists a substitute object for Owned<IBasicConsumer<BasicConsumableDummy>> stored in the scenario as OwnedBasicConsumerTest which returns IBasicConsumer<BasicConsumableDummy> BasicConsumerTest
+	And there exists a basic consumer factory function stored in the scenario as ConsumerFactoryTest which returns Owned<IBasicConsumer<BasicConsumableDummy>> OwnedBasicConsumerTest
 	And there exists a substitute object for IObjectSerializer stored in the scenario as ObjectSerializerTest
 	And there exists a substitute object for IMessageEncryptor stored in the scenario as MessageEncryptorTest
 	And there exists a BasicConsumableDummy stored in the scenario as BasicConsumableDummyTest
