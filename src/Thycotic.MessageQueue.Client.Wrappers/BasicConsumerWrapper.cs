@@ -41,22 +41,20 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
 
         /// <summary>
-        /// Called each time a message arrives for this consumer.
+        /// Starts the handle task.
         /// </summary>
-        /// <param name="consumerTag"></param>
-        /// <param name="deliveryTag"></param>
-        /// <param name="redelivered"></param>
-        /// <param name="exchange"></param>
-        /// <param name="routingKey"></param>
-        /// <param name="properties"></param>
-        /// <param name="body"></param>
-        /// <remarks>
-        /// Be aware that acknowledgement may be required. See IModel.BasicAck.
-        /// </remarks>
-        public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
-            string routingKey, ICommonModelProperties properties, byte[] body)
+        /// <param name="consumerTag">The consumer tag.</param>
+        /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="redelivered">if set to <c>true</c> [redelivered].</param>
+        /// <param name="exchange">The exchange.</param>
+        /// <param name="routingKey">The routing key.</param>
+        /// <param name="properties">The properties.</param>
+        /// <param name="body">The body.</param>
+        /// <returns></returns>
+        protected override Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
+            ICommonModelProperties properties, byte[] body)
         {
-            Task.Run(() => ExecuteMessage(deliveryTag, redelivered, exchange, routingKey, body));
+            return Task.Run(() => ExecuteMessage(deliveryTag, redelivered, exchange, routingKey, body));
         }
 
         /// <summary>

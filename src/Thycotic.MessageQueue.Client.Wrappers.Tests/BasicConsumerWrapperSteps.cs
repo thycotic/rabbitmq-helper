@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
+using FluentAssertions;
 using NSubstitute;
 using TechTalk.SpecFlow;
 using Thycotic.MemoryMq;
@@ -12,6 +14,19 @@ using Thycotic.Utility.Specflow;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
+    public class LeakyOwned<T> : Owned<T>
+    {
+        public LeakyOwned(T value, IDisposable lifetime) : base(value, lifetime)
+        {
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            //don't dispose the value
+        }
+    }
+
+
     [Binding]
     public class BasicConsumerWrapperSteps
     {
@@ -21,14 +36,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             this.GetScenarioContext().SetSubstitute<IBasicConsumer<BasicConsumableDummy>>(basicConsumerName);
         }
 
-        [Given(@"there exists a substitute object for Owned<IBasicConsumer<BasicConsumableDummy>> stored in the scenario as (\w+) which returns IBasicConsumer<BasicConsumableDummy> (\w+)")]
-        public void GivenThereExistsASubstituteObjectForOwnedIBasicConsumerBasicConsumableDummyStoredInTheScenario(string ownedBasicConsumerName, string basicConsumerName)
-        {
-            var context = this.GetScenarioContext();
-            var consumer = context.Get<IBasicConsumer<BasicConsumableDummy>>(basicConsumerName);
-            var owned = new Owned<IBasicConsumer<BasicConsumableDummy>>(consumer, new LifetimeDummy());
-            this.GetScenarioContext().Set(ownedBasicConsumerName, owned);
-        }
 
         [Given(@"there exists a BasicConsumableDummy stored in the scenario as (\w+)")]
         public void GivenThereExistsABasicConsumableDummyStoredInTheScenario(string basicConsumableName)
@@ -36,13 +43,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             this.GetScenarioContext().Set(basicConsumableName, new BasicConsumableDummy());
         }
 
-        [Given(@"there exists a basic consumer factory function stored in the scenario as (\w+) which returns Owned<IBasicConsumer<BasicConsumableDummy>> (\w+)")]
-        public void GivenThereExistsABasicConsumerFactoryFunctionStoredInTheScenario(string consumerFactoryFunctionName, string owedBasicConsumerName)
+        [Given(@"there exists a basic consumer factory function stored in the scenario as (\w+) which returns Owned<IBasicConsumer<BasicConsumableDummy>> of IBasicConsumer<BasicConsumableDummy> (\w+)")]
+        public void GivenThereExistsABasicConsumerFactoryFunctionStoredInTheScenario(string consumerFactoryFunctionName, string basicConsumerName)
         {
             var context = this.GetScenarioContext();
-            var owned = context.Get<Owned<IBasicConsumer<BasicConsumableDummy>>>(owedBasicConsumerName);
-
-            this.GetScenarioContext().Set<Func<Owned<IBasicConsumer<BasicConsumableDummy>>>>(consumerFactoryFunctionName, () => owned);
+            var consumer = context.Get<IBasicConsumer<BasicConsumableDummy>>(basicConsumerName);
+            Func<Owned<IBasicConsumer<BasicConsumableDummy>>> func =
+                () => new LeakyOwned<IBasicConsumer<BasicConsumableDummy>>(consumer, new LifetimeDummy());
+            this.GetScenarioContext().Set(consumerFactoryFunctionName, func);
         }
 
         [Given(@"the ToObject method on IObjectSerializer substitute (\w+) returns (\w+)")]
@@ -117,6 +125,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             consumerWrapper.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, exchange, routingKey, properties,
                 body);
+
+            consumerWrapper.HandleTask.Wait(TimeSpan.FromSeconds(15));
+
+            consumerWrapper.HandleTask.IsCompleted.Should().BeTrue("Handle task should be completed");
         }
 
         [Then(@"the method ToObject on IObjectSerializer substitute (\w+) is called")]

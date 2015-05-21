@@ -129,6 +129,21 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         }
 
         /// <summary>
+        /// Starts the handle task.
+        /// </summary>
+        /// <param name="consumerTag">The consumer tag.</param>
+        /// <param name="deliveryTag">The delivery tag.</param>
+        /// <param name="redelivered">if set to <c>true</c> [redelivered].</param>
+        /// <param name="exchange">The exchange.</param>
+        /// <param name="routingKey">The routing key.</param>
+        /// <param name="properties">The properties.</param>
+        /// <param name="body">The body.</param>
+        /// <returns></returns>
+        protected abstract Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
+            string routingKey,
+            ICommonModelProperties properties, byte[] body);
+
+        /// <summary>
         /// Called each time a message arrives for this consumer.
         /// </summary>
         /// <param name="consumerTag"></param>
@@ -141,9 +156,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
-        public abstract void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
+        public void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
             string routingKey,
-            ICommonModelProperties properties, byte[] body);
+            ICommonModelProperties properties, byte[] body)
+        {
+            StartHandleTask(consumerTag, deliveryTag, redelivered, exchange, routingKey, properties, body);
+        }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

@@ -1,4 +1,6 @@
-﻿using Thycotic.MessageQueue.Client.QueueClient;
+﻿using System;
+using System.Threading.Tasks;
+using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Tests
@@ -21,10 +23,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
         }
 
-        public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, ICommonModelProperties properties,
-            byte[] body)
+        protected override Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
+            ICommonModelProperties properties, byte[] body)
         {
-
+            return Task.Delay(TimeSpan.FromMilliseconds(0));
         }
     }
 }
