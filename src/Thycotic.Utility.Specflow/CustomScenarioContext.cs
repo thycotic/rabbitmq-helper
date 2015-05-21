@@ -8,6 +8,10 @@ namespace Thycotic.Utility.Specflow
     {
         private readonly ScenarioContext _baseContext;
 
+        public CustomScenarioContext() : this(ScenarioContext.Current)
+        {
+        }
+
         public CustomScenarioContext(ScenarioContext baseContext)
         {
             _baseContext = baseContext;
