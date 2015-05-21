@@ -10,6 +10,7 @@ using Thycotic.Messages.Common;
 using Thycotic.Messages.PasswordChanging.Request;
 using Thycotic.PasswordChangers;
 using Thycotic.SharedTypes.Federator;
+using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 {
