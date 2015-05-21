@@ -41,13 +41,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
 
             try
             {
-                var verifier =
-                    new DefaultPasswordChangerFactory().ResolveCredentialVerifier(request.VerifyCredentialsInfo);
+                var verifier = new DefaultPasswordChangerFactory().ResolveCredentialVerifier(request.VerifyCredentialsInfo);
                 var verifyResult = verifier.VerifyCredentials(request.VerifyCredentialsInfo);
 
                 var response = new SecretHeartbeatResponse
                 {
-                    Success = verifyResult.Success,
+                    Status = verifyResult.Status,
                     SecretId = request.SecretId,
                     ApplicationUrl = request.ApplicationUrl,
                     Errors = verifyResult.Errors,
@@ -57,7 +56,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
                 try
                 {
                     _responseBus.ExecuteAsync(response);
-                    _log.Info(string.Format("Heartbeat Result for Secret Id {0}: Success: {1}", request.SecretId, verifyResult.Success));
+                    _log.Info(string.Format("Heartbeat Result for Secret Id {0}: Status: {1}", request.SecretId, verifyResult.Status));
                 }
                 catch (Exception)
                 {
@@ -70,9 +69,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
             {
                 var failResp = new SecretHeartbeatResponse
                 {
-                    Success = false,
+                    Status = OperationStatus.Unknown,
                     SecretId = request.SecretId,
-                    Errors = new List<Error> {new ThycoticError(ThycoticErrorType.Unknown, ex.ToString())},
+                    Errors = new List<Error> {new Thycotic.SharedTypes.PasswordChangers.Error(ex.Message, ex.ToString())},
                     Log = new List<LogEntry>()
                 };
                 _log.Info(string.Format("Heartbeat Result for Secret Id {0}: Success: False ({1})", request.SecretId, ex ));

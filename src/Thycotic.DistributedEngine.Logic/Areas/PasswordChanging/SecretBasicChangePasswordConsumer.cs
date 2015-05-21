@@ -57,23 +57,22 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                     var changeResult = passwordChanger.ChangeUsingOwnCredentials(info);
 
-                    if (changeResult.Success)
+                    if (changeResult.Status == OperationStatus.Success)
                     {
                         changeResult = passwordChanger.VerifyNewCredentials(info);
                     }
 
                     response = new RemotePasswordChangeResponse
                     {
-                        Success = changeResult.Success,
+                        Status = changeResult.Status,
                         SecretId = request.SecretId,
-                        ErrorCode = changeResult.Success ? (int) FailureCode.NoError : (int) FailureCode.UnknownError,
                         StatusMessages = changeResult.Errors.Select(e => e.DetailedMessage).ToArray(),
                         CommandExecutionResults = new List<CommandExecutionResult>().ToArray(),
                         OldPassword = info.CurrentPassword,
                         NewPassword = info.NewPassword
                     };
 
-                    if (changeResult.Success && request.SecretChangeDependencyMessage != null)
+                    if (changeResult.Status == OperationStatus.Success && request.SecretChangeDependencyMessage != null)
                     {
                         runDependencies = true;                        
                     }
@@ -86,9 +85,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                     response = new RemotePasswordChangeResponse
                     {
-                        Success = false,
+                        Status = OperationStatus.Unknown,
                         SecretId = request.SecretId,
-                        ErrorCode = (int) FailureCode.UnknownError,
                         StatusMessages = new[] {message},
                         CommandExecutionResults = new List<CommandExecutionResult>().ToArray(),
                         OldPassword = string.Empty,
@@ -97,7 +95,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                 }
 
                 _responseBus.ExecuteAsync(response);
-                _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.ErrorCode));
+                _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.Status));
 
                 if (runDependencies)
                 {
@@ -108,16 +106,15 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
             {
                 var response = new RemotePasswordChangeResponse()
                 {
-                    Success = false,
+                    Status = OperationStatus.Unknown,
                     SecretId = request.SecretId,
-                    ErrorCode = (int)FailureCode.UnknownError,
                     StatusMessages = new[] { ex.ToString() },
                     CommandExecutionResults = new List<CommandExecutionResult>().ToArray(),
                     OldPassword = string.Empty,
                     NewPassword = string.Empty
                 };
                 _responseBus.ExecuteAsync(response);
-                _log.Error(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.ErrorCode));
+                _log.Error(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.Status));
             }
         }
     }
