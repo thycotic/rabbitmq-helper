@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -10,7 +11,7 @@ using Thycotic.Utility.IO;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
-    public class ServiceUpdater
+    public class ServiceUpdater : IServiceUpdater
     {
         /// <summary>
         /// The clone directory name
@@ -19,16 +20,26 @@ namespace Thycotic.WindowsService.Bootstraper
 
         private readonly CancellationTokenSource _cts;
         private readonly IServiceManagerInteractor _serviceManagerInteractor;
+        private readonly IProcessRunner _processRunner;
         private readonly string _workingPath;
         private readonly string _backupPath;
         private readonly string _serviceName;
         private readonly string _msiPath;
         private readonly ILogWriter _log = Log.Get(typeof(ServiceUpdater));
 
-        public ServiceUpdater(CancellationTokenSource cts, IServiceManagerInteractor serviceManagerInteractor, string workingPath, string backupPath, string serviceName, string msiPath)
+        public ServiceUpdater(CancellationTokenSource cts, IServiceManagerInteractor serviceManagerInteractor, IProcessRunner processRunner, string workingPath, string backupPath, string serviceName, string msiPath)
         {
+            Contract.Requires<ArgumentNullException>( cts != null);
+            Contract.Requires<ArgumentNullException>(serviceManagerInteractor != null);
+            Contract.Requires<ArgumentNullException>(processRunner != null);
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(workingPath));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(backupPath));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(serviceName));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(msiPath));
+
             _cts = cts;
             _serviceManagerInteractor = serviceManagerInteractor;
+            _processRunner = processRunner;
             _workingPath = workingPath;
             _backupPath = backupPath;
             _serviceName = serviceName;
@@ -143,7 +154,7 @@ namespace Thycotic.WindowsService.Bootstraper
             {
                 try
                 {
-                    process = Process.Start(processInfo);
+                    process = _processRunner.Start(processInfo);
                 }
                 catch (Exception ex)
                 {

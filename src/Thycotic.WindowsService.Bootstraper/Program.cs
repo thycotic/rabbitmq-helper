@@ -31,8 +31,9 @@ namespace Thycotic.WindowsService.Bootstraper
             }
 
             var serviceManagerInteractor = new ServiceManagerInteractor(cts, serviceName);
+            var processRunner = new ProcessRunner();
   
-            var serviceUpdater = new ServiceUpdater(cts, serviceManagerInteractor, workingPath, backupPath, serviceName, msiPath);
+            var serviceUpdater = new ServiceUpdater(cts, serviceManagerInteractor, processRunner, workingPath, backupPath, serviceName, msiPath);
 
             serviceUpdater.Update();
 

@@ -160,6 +160,10 @@
     <Compile Include="ServiceUpdaterTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Thycotic.Utility.Tests\Thycotic.Utility.Tests.csproj">
+      <Project>{341587c7-483a-442a-bf23-49d1a5138e57}</Project>
+      <Name>Thycotic.Utility.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thycotic.WindowsService.Bootstraper\Thycotic.WindowsService.Bootstraper.csproj">
       <Project>{cf3ec07e-ea34-4d65-b6f3-c6335f2588ea}</Project>
       <Name>Thycotic.WindowsService.Bootstraper</Name>

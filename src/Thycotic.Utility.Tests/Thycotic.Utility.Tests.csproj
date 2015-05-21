@@ -166,6 +166,8 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="DummyObject.cs" />
+    <Compile Include="GivenWhenThenTests.cs" />
+    <Compile Include="ISingleClassContractTests.cs" />
     <Compile Include="JsonObjectSerializer.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,6 +175,7 @@
     </Compile>
     <Compile Include="JsonObjectSerializerSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
