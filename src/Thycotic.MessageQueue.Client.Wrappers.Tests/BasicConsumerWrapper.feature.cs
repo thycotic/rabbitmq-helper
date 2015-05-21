@@ -153,6 +153,33 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("HandleBasicDeliver should throw away non parsable message")]
+        public virtual void HandleBasicDeliverShouldThrowAwayNonParsableMessage()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("HandleBasicDeliver should throw away non parsable message", ((string[])(null)));
+#line 31
+this.ScenarioSetup(scenarioInfo);
+#line 4
+this.FeatureBackground();
+#line 32
+ testRunner.Given("the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns " +
+                    "corrupted message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 33
+ testRunner.When("the connection is established on ICommonConnection CommonConnectionTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 34
+ testRunner.When("the method HandleBasicDeliver on BasicConsumerWrapperDummy BasicConsumerWrapperDu" +
+                    "mmyTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 35
+ testRunner.Then("the method Consume on IBasicConsumer<BasicConsumableDummy> BasicConsumerTest is n" +
+                    "ot called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 36
+ testRunner.Then("the method BasicNack on the CommonModel of BasicConsumerWrapperDummy BasicConsume" +
+                    "rWrapperDummyTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

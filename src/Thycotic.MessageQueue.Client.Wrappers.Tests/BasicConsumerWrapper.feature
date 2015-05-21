@@ -28,5 +28,12 @@ Scenario: HandleBasicDeliver should not relay expired message
 	Then the method Consume on IBasicConsumer<BasicConsumableDummy> BasicConsumerTest is not called
 	Then the method BasicNack on the CommonModel of BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
 	
+Scenario: HandleBasicDeliver should throw away non parsable message
+	Given the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns corrupted message
+	When the connection is established on ICommonConnection CommonConnectionTest
+	When the method HandleBasicDeliver on BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
+	Then the method Consume on IBasicConsumer<BasicConsumableDummy> BasicConsumerTest is not called
+	Then the method BasicNack on the CommonModel of BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
+	
 
 

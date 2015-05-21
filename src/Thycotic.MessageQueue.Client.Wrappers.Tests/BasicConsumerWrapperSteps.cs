@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using Autofac.Features.OwnedInstances;
 using NSubstitute;
 using TechTalk.SpecFlow;
@@ -44,6 +45,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             var objectSerializer = this.GetScenarioContext().Get<IObjectSerializer>(objectSerializerName);
 
             objectSerializer.ToObject<BasicConsumableDummy>(Arg.Any<byte[]>()).Returns(this.GetScenarioContext().Get<BasicConsumableDummy>(consumableName));
+        }
+
+        [Given(@"the ToObject method on IObjectSerializer substitute (\w+) returns corrupted message")]
+        public void GivenTheToObjectMethodOnIObjectSerializerSubstitutReturnsCorruptedMessage(string objectSerializerName)
+        {
+            var objectSerializer = this.GetScenarioContext().Get<IObjectSerializer>(objectSerializerName);
+
+            objectSerializer.When(s => s.ToObject<BasicConsumableDummy>(Arg.Any<byte[]>())).Throw<SerializationException>();
         }
 
         [Given(
