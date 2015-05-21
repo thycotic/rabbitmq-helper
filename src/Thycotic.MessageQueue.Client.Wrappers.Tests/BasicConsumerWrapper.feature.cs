@@ -74,36 +74,82 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
  testRunner.And("there exists a substitute object for IExchangeNameProvider stored in the scenario" +
                     " as ExchangeNameProviderTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 7
- testRunner.And("there exists a basic consumer factory function stored in the scenario as Consumer" +
-                    "FactoryTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("there exists a substitute object for IBasicConsumer<BasicConsumableDummy> stored " +
+                    "in the scenario as BasicConsumerTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
+ testRunner.And("there exists a basic consumer factory function stored in the scenario as Consumer" +
+                    "FactoryTest which returns IBasicConsumer<BasicConsumableDummy> BasicConsumerTest" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 9
  testRunner.And("there exists a substitute object for IObjectSerializer stored in the scenario as " +
                     "ObjectSerializerTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 9
+#line 10
  testRunner.And("there exists a substitute object for IMessageEncryptor stored in the scenario as " +
                     "MessageEncryptorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 10
+#line 11
+ testRunner.And("there exists a BasicConsumableDummy stored in the scenario as BasicConsumableDumm" +
+                    "yTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
+ testRunner.And("the scenario object BasicConsumableDummy BasicConsumableDummyTest is not expired", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
+ testRunner.And("the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns " +
+                    "BasicConsumableDummyTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 14
  testRunner.And(@"there exists a BasicConsumerWrapperDummy stored in the scenario as BasicConsumerWrapperDummyTest with CommonConnection CommonConnectionTest, ExchangeNameProvider ExchangeNameProviderTest, ConsumerFactory ConsumerFactoryTest, ObjectSerializer ObjectSerializerTest and MessageEncryptor MessageEncryptorTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("HandleBasicDeliver")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
-        public virtual void HandleBasicDeliver()
+        [NUnit.Framework.DescriptionAttribute("HandleBasicDeliver should relay message")]
+        public virtual void HandleBasicDeliverShouldRelayMessage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("HandleBasicDeliver", new string[] {
-                        "mytag"});
-#line 14
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("HandleBasicDeliver should relay message", ((string[])(null)));
+#line 16
 this.ScenarioSetup(scenarioInfo);
 #line 4
 this.FeatureBackground();
-#line 15
+#line 17
+ testRunner.Given("the scenario object BasicConsumableDummy BasicConsumableDummyTest is not expired", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 18
+ testRunner.When("the connection is established on ICommonConnection CommonConnectionTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 19
  testRunner.When("the method HandleBasicDeliver on BasicConsumerWrapperDummy BasicConsumerWrapperDu" +
                     "mmyTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 16
- testRunner.Then("the method ToObject on IObjectSerializer substitute ObjectSerializerTest is calle" +
-                    "d", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 20
+ testRunner.Then("the method Consume on IBasicConsumer<BasicConsumableDummy> BasicConsumerTest is c" +
+                    "alled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
+ testRunner.Then("the method BasicAck on the CommonModel of BasicConsumerWrapperDummy BasicConsumer" +
+                    "WrapperDummyTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("HandleBasicDeliver should not relay expired message")]
+        public virtual void HandleBasicDeliverShouldNotRelayExpiredMessage()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("HandleBasicDeliver should not relay expired message", ((string[])(null)));
+#line 23
+this.ScenarioSetup(scenarioInfo);
+#line 4
+this.FeatureBackground();
+#line 24
+ testRunner.Given("the scenario object BasicConsumableDummy BasicConsumableDummyTest is expired", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 25
+ testRunner.And("the scenario object BasicConsumableDummy BasicConsumableDummyTest should not be r" +
+                    "elayed if it is expired", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
+ testRunner.When("the connection is established on ICommonConnection CommonConnectionTest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+ testRunner.When("the method HandleBasicDeliver on BasicConsumerWrapperDummy BasicConsumerWrapperDu" +
+                    "mmyTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 28
+ testRunner.Then("the method Consume on IBasicConsumer<BasicConsumableDummy> BasicConsumerTest is n" +
+                    "ot called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 29
+ testRunner.Then("the method BasicNack on the CommonModel of BasicConsumerWrapperDummy BasicConsume" +
+                    "rWrapperDummyTest is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

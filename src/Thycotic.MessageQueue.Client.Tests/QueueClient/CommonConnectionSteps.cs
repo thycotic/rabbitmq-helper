@@ -20,5 +20,14 @@ namespace Thycotic.MessageQueue.Client.Tests.QueueClient
                 connection.OpenChannel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<float>()).Returns(model);
             });
         }
+
+
+        [When(@"the connection is established on ICommonConnection (\w+)")]
+        public void WhenTheConnectionIsExtablishedOnICommonConnectionCommonConnectionTest(string commonConnectionName)
+        {
+            this.GetScenarioContext().Get<ICommonConnection>(commonConnectionName).ConnectionCreated(this, null);
+        }
+
+
     }
 }

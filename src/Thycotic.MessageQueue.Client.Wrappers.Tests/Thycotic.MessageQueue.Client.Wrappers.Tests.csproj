@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="BasicConsumerWrapperDummy.cs" />
     <Compile Include="BasicConsumerWrapperSteps.cs" />
+    <Compile Include="BlockingConsumableDummy.cs" />
     <Compile Include="BlockingConsumerWrapperDummy.cs" />
     <Compile Include="ConsumerWrapperBase.feature.cs">
       <AutoGen>True</AutoGen>
