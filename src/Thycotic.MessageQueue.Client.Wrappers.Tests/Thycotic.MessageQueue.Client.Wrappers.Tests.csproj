@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="ConsumerWrapperBaseDummy.cs" />
     <Compile Include="ConsumerWrapperBaseSteps.cs" />
+    <Compile Include="LifetimeDummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

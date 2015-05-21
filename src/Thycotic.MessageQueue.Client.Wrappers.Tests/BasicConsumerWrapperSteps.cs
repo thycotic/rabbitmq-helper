@@ -15,28 +15,33 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
     [Binding]
     public class BasicConsumerWrapperSteps
     {
-        private static readonly IDisposable OwnedLifetime = new CustomScenarioContext().GetSubstituteFor<IDisposable>();
-
         [Given(@"there exists a substitute object for IBasicConsumer<BasicConsumableDummy> stored in the scenario as (\w+)")]
-        public void GivenThereExistsASubstituteObjectForICommonConnectionStoredInTheScenario(string basicConsumerName)
+        public void GivenThereExistsASubstituteObjectForIBasicConsumerBasicConsumableDummyStoredInTheScenario(string basicConsumerName)
         {
             this.GetScenarioContext().SetSubstitute<IBasicConsumer<BasicConsumableDummy>>(basicConsumerName);
         }
- 
+
+        [Given(@"there exists a substitute object for Owned<IBasicConsumer<BasicConsumableDummy>> stored in the scenario as (\w+) which returns IBasicConsumer<BasicConsumableDummy> (\w+)")]
+        public void GivenThereExistsASubstituteObjectForOwnedIBasicConsumerBasicConsumableDummyStoredInTheScenario(string ownedBasicConsumerName, string basicConsumerName)
+        {
+            var context = this.GetScenarioContext();
+            var consumer = context.Get<IBasicConsumer<BasicConsumableDummy>>(basicConsumerName);
+            var owned = new Owned<IBasicConsumer<BasicConsumableDummy>>(consumer, new LifetimeDummy());
+            this.GetScenarioContext().Set(ownedBasicConsumerName, owned);
+        }
+
         [Given(@"there exists a BasicConsumableDummy stored in the scenario as (\w+)")]
         public void GivenThereExistsABasicConsumableDummyStoredInTheScenario(string basicConsumableName)
         {
             this.GetScenarioContext().Set(basicConsumableName, new BasicConsumableDummy());
         }
 
-        [Given(@"there exists a basic consumer factory function stored in the scenario as (\w+) which returns IBasicConsumer<BasicConsumableDummy> (\w+)")]
-        public void GivenThereExistsABasicConsumerFactoryFunctionStoredInTheScenario(string consumerFactoryFunctionName, string basicConsumerName)
+        [Given(@"there exists a basic consumer factory function stored in the scenario as (\w+) which returns Owned<IBasicConsumer<BasicConsumableDummy>> (\w+)")]
+        public void GivenThereExistsABasicConsumerFactoryFunctionStoredInTheScenario(string consumerFactoryFunctionName, string owedBasicConsumerName)
         {
             var context = this.GetScenarioContext();
-            var consumer = context.Get<IBasicConsumer<BasicConsumableDummy>>(basicConsumerName);
-            
-            var owned = new Owned<IBasicConsumer<BasicConsumableDummy>>(consumer, OwnedLifetime);
-            
+            var owned = context.Get<Owned<IBasicConsumer<BasicConsumableDummy>>>(owedBasicConsumerName);
+
             this.GetScenarioContext().Set<Func<Owned<IBasicConsumer<BasicConsumableDummy>>>>(consumerFactoryFunctionName, () => owned);
         }
 
