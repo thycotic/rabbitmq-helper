@@ -139,10 +139,6 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -171,10 +167,6 @@
     <ProjectReference Include="..\Thycotic.Messages\Thycotic.Messages.csproj">
       <Project>{bb022c12-4d04-4195-bbb7-baaa0e20fcb7}</Project>
       <Name>Thycotic.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
-      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
-      <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

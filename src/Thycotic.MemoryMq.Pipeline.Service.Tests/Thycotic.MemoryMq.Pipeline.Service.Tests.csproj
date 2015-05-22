@@ -145,10 +145,6 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -173,10 +169,6 @@
     <ProjectReference Include="..\Thycotic.MemoryMq.Pipeline.Service\Thycotic.MemoryMq.Pipeline.Service.csproj">
       <Project>{88bda5ed-1bca-4227-b838-681a709f4ea1}</Project>
       <Name>Thycotic.MemoryMq.Pipeline.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
-      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
-      <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
       <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>

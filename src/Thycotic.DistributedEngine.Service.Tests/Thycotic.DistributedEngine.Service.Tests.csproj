@@ -152,10 +152,6 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -174,11 +170,6 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\IoCConfiguratorSteps.cs" />
-    <Compile Include="EngineService.feature.cs">
-      <DependentUpon>EngineService.feature</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="EngineServiceSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -186,10 +177,6 @@
     <ProjectReference Include="..\Thycotic.DistributedEngine.Service\Thycotic.DistributedEngine.Service.csproj">
       <Project>{df86afef-6d78-46c9-9bda-419c4547efe3}</Project>
       <Name>Thycotic.DistributedEngine.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
-      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
-      <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
       <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
