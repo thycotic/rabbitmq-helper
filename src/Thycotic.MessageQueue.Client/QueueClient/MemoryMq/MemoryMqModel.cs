@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using Thycotic.Logging;
 using Thycotic.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf;
 using Thycotic.MessageQueue.Client.Wrappers;
@@ -17,6 +18,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         private readonly IMemoryMqWcfService _server;
         private readonly MemoryMqWcfServiceCallback _callback;
         private readonly ICommunicationObject _communicationObject;
+
+        private readonly ILogWriter _log = Log.Get(typeof (MemoryMqModel));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqModel" /> class.
@@ -226,15 +229,26 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="noAck">if set to <c>true</c> [no ack].</param>
         /// <param name="consumer">The consumer.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
             //when the server sends us something, process it
             _callback.BytesReceived +=
-                (sender, deliveryArgs) => Task.Factory.StartNew(() =>
-                    consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag,
-                        deliveryArgs.Redelivered, deliveryArgs.Exchange,
-                        deliveryArgs.RoutingKey, Map(deliveryArgs.Properties), deliveryArgs.Body));
+                (sender, deliveryArgs) => Task.Factory
+                    .StartNew(() =>
+                    {
+                        var properties = Map(deliveryArgs.Properties);
+
+                        consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag,
+                            deliveryArgs.Redelivered, deliveryArgs.Exchange,
+                            deliveryArgs.RoutingKey, properties, deliveryArgs.Body);
+                    })
+                    .ContinueWith(task =>
+                    {
+                        if (task.Exception != null)
+                        {
+                            _log.Error("Failed to consume message", task.Exception);
+                        }
+                    });
 
             //tell the server we want to consume
             _server.BasicConsume(queueName);

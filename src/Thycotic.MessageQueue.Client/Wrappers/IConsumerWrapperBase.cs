@@ -82,8 +82,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         public void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
-            Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(consumerTag));
-            Contract.Requires<ArgumentException>(deliveryTag > 0);
+            //TODO: Dobri to fix!
+            //Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(consumerTag));
+            //Contract.Requires<ArgumentException>(deliveryTag >= 0); //no needed since ulong
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(exchange));
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(routingKey));
             Contract.Requires<ArgumentException>(properties != null);
