@@ -145,9 +145,6 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -166,27 +163,23 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="DummyObject.cs" />
-    <Compile Include="JsonObjectSerializer.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>JsonObjectSerializer.feature</DependentUpon>
-    </Compile>
+    <Compile Include="GivenWhenThenTests.cs" />
+    <Compile Include="ISingleClassContractTests.cs" />
     <Compile Include="JsonObjectSerializerSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="JsonObjectSerializer.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>JsonObjectSerializer.feature.cs</LastGenOutput>
+      <LastGenOutput>JsonObjectSerializer.feature1.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
-      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
-      <Name>Thycotic.Utility.Specflow</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
       <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
       <Name>Thycotic.Utility</Name>

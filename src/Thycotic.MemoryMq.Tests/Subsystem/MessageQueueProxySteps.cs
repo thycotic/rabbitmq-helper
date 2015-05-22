@@ -1,70 +1,70 @@
-﻿using System;
-using FluentAssertions;
-using NSubstitute;
-using TechTalk.SpecFlow;
-using Thycotic.MemoryMq.Subsystem;
-using Thycotic.Utility.Specflow;
+﻿//using System;
+//using FluentAssertions;
+//using NSubstitute;
+//using TechTalk.SpecFlow;
+//using Thycotic.MemoryMq.Subsystem;
+//using Thycotic.Utility.Specflow;
 
-namespace Thycotic.MemoryMq.Tests.Subsystem
-{
-    [Binding]
-    public class MessageQueueProxySteps
-    {
-        [Given(@"there exists a MessageQueueProxy stored in the scenario as (\w+) with MessageQueue (\w+)")]
-        public void GivenThereExistsAMessageQueueProxyStoredInTheScenario(string messageQueueProxyName, string messageQueueName)
-        {
-            var messageQueue = this.GetScenarioContext().Get<IMessageQueue>(messageQueueName);
-            this.GetScenarioContext().Set(messageQueueProxyName, new MessageQueueProxy(messageQueue));
-        }
+//namespace Thycotic.MemoryMq.Tests.Subsystem
+//{
+//    [Binding]
+//    public class MessageQueueProxySteps
+//    {
+//        [Given(@"there exists a MessageQueueProxy stored in the scenario as (\w+) with MessageQueue (\w+)")]
+//        public void GivenThereExistsAMessageQueueProxyStoredInTheScenario(string messageQueueProxyName, string messageQueueName)
+//        {
+//            var messageQueue = this.GetScenarioContext().Get<IMessageQueue>(messageQueueName);
+//            this.GetScenarioContext().Set(messageQueueProxyName, new MessageQueueProxy(messageQueue));
+//        }
 
-        [Given(@"there is attempt to create a MessageQueueProxy with a null queue")]
-        public void GivenThereIsAttemptToCreateAMessageQueueProxyWithANullQueue()
-        {
-            this.GetScenarioContext().ExecuteThrowing<ArgumentNullException>(() =>
-            {
-// ReSharper disable once ObjectCreationAsStatement
-                new MessageQueueProxy(null);
-            });
-        }
+//        [Given(@"there is attempt to create a MessageQueueProxy with a null queue")]
+//        public void GivenThereIsAttemptToCreateAMessageQueueProxyWithANullQueue()
+//        {
+//            this.GetScenarioContext().ExecuteThrowing<ArgumentNullException>(() =>
+//            {
+//// ReSharper disable once ObjectCreationAsStatement
+//                new MessageQueueProxy(null);
+//            });
+//        }
 
-        [When(@"the method TryDequeue on IMessageQueueProxy (\w+) is called")]
-        public void WhenTheMethodTryDequeueOnIMessageQueueProxyIsCalled(string messageQueueProxyName)
-        {
-            var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
-            MemoryMqDeliveryEventArgs throwAway;
-            messageQueueProxy.TryDequeue(out throwAway);
-        }
+//        [When(@"the method TryDequeue on IMessageQueueProxy (\w+) is called")]
+//        public void WhenTheMethodTryDequeueOnIMessageQueueProxyIsCalled(string messageQueueProxyName)
+//        {
+//            var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
+//            MemoryMqDeliveryEventArgs throwAway;
+//            messageQueueProxy.TryDequeue(out throwAway);
+//        }
 
 
-        [When(@"the method NegativelyAcknoledge on IMessageQueueProxy (\w+) is called")]
-        public void WhenTheMethodNegativelyAcknoledgeOnMessageQueueProxyIsCalled(string messageQueueProxyName)
-        {
-            var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
-            messageQueueProxy.NegativelyAcknoledge(7, false);
-        }
+//        [When(@"the method NegativelyAcknoledge on IMessageQueueProxy (\w+) is called")]
+//        public void WhenTheMethodNegativelyAcknoledgeOnMessageQueueProxyIsCalled(string messageQueueProxyName)
+//        {
+//            var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
+//            messageQueueProxy.NegativelyAcknoledge(7, false);
+//        }
 
-        [Then(@"the scenario IMessageQueueProxy (\w+) is empty")]
-        public void ThenTheScenarioIMessageQueueProxyIsEmpty(string messageQueueProxyName)
-        {
-            var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
-            messageQueueProxy.IsEmpty.Should().BeTrue();
-        }
+//        [Then(@"the scenario IMessageQueueProxy (\w+) is empty")]
+//        public void ThenTheScenarioIMessageQueueProxyIsEmpty(string messageQueueProxyName)
+//        {
+//            var messageQueueProxy = this.GetScenarioContext().Get<IMessageQueueProxy>(messageQueueProxyName);
+//            messageQueueProxy.IsEmpty.Should().BeTrue();
+//        }
 
-        [Then(@"the method TryDequeue on IMessageQueue substitute (\w+) is called")]
-        public void ThenTheMethodTryDequeueOnIMessageQueueSubstituteIsCalled(string messageQueueName)
-        {
-            var messageQueue = this.GetScenarioContext().Get<IMessageQueue>(messageQueueName);
+//        [Then(@"the method TryDequeue on IMessageQueue substitute (\w+) is called")]
+//        public void ThenTheMethodTryDequeueOnIMessageQueueSubstituteIsCalled(string messageQueueName)
+//        {
+//            var messageQueue = this.GetScenarioContext().Get<IMessageQueue>(messageQueueName);
 
-            MemoryMqDeliveryEventArgs throwAway;
-            messageQueue.ReceivedWithAnyArgs().TryDequeue(out throwAway);
-        }
+//            MemoryMqDeliveryEventArgs throwAway;
+//            messageQueue.ReceivedWithAnyArgs().TryDequeue(out throwAway);
+//        }
 
-        [Then(@"the method NegativelyAcknoledge on IMessageQueue substitute (\w+) is called")]
-        public void ThenTheMethodNegativelyAcknoledgeOnIMessageQueueSubstituteIsCalled(string messageQueueName)
-        {
-            var messageQueue = this.GetScenarioContext().Get<IMessageQueue>(messageQueueName);
-            messageQueue.ReceivedWithAnyArgs().NegativelyAcknoledge(Arg.Any<ulong>(), Arg.Any<bool>());
-        }
+//        [Then(@"the method NegativelyAcknoledge on IMessageQueue substitute (\w+) is called")]
+//        public void ThenTheMethodNegativelyAcknoledgeOnIMessageQueueSubstituteIsCalled(string messageQueueName)
+//        {
+//            var messageQueue = this.GetScenarioContext().Get<IMessageQueue>(messageQueueName);
+//            messageQueue.ReceivedWithAnyArgs().NegativelyAcknoledge(Arg.Any<ulong>(), Arg.Any<bool>());
+//        }
 
-    }
-}
+//    }
+//}
