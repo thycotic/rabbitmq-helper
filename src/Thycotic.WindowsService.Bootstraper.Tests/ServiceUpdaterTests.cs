@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Mime;
 using System.Threading;
+using System.Threading.Tasks;
 using NSubstitute;
 using NSubstitute.Core;
 using NUnit.Framework;
@@ -37,8 +38,12 @@ namespace Thycotic.WindowsService.Bootstraper.Tests
 
            _serviceName = Guid.NewGuid().ToString();
 
-           _msiPath = Path.Combine(Path.GetTempPath(), "fake.msi");
-           File.Create(_msiPath);
+           _msiPath = Path.Combine(Path.GetTempPath(), string.Format("fake-{0}.msi", Guid.NewGuid()));
+           using (File.Create(_msiPath))
+           {
+                //create and dispose
+           }
+
 
            Sut = new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath);
 
@@ -55,15 +60,14 @@ namespace Thycotic.WindowsService.Bootstraper.Tests
 
             if (Directory.Exists(_backupPath))
             {
-                Directory.Delete(_workingPath, true);
+                Directory.Delete(_backupPath, true);
             }
+
 
             if (File.Exists(_msiPath))
             {
                 File.Delete(_msiPath);
             }
-
-            
         }
 
         [Test]
