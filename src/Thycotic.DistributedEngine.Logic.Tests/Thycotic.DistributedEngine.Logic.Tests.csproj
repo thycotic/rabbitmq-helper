@@ -199,10 +199,6 @@
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Thycotic.BlackBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6faa24c50f43cf8d, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>
@@ -268,11 +264,6 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="Areas\POC\PingConsumer.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PingConsumer.feature</DependentUpon>
-    </Compile>
     <Compile Include="Areas\POC\PingConsumerSteps.cs" />
     <Compile Include="EngineToServer\ResponseBusSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -297,10 +288,6 @@
     <ProjectReference Include="..\Thycotic.Messages\Thycotic.Messages.csproj">
       <Project>{bb022c12-4d04-4195-bbb7-baaa0e20fcb7}</Project>
       <Name>Thycotic.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
-      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
-      <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

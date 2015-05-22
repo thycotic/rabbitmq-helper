@@ -143,9 +143,6 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-    </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
@@ -175,44 +172,14 @@
     <Compile Include="Subsystem\CallbackChannelProviderSteps.cs" />
     <Compile Include="Subsystem\ExchangeDictionarySteps.cs" />
     <Compile Include="Subsystem\BindingDictionarySteps.cs" />
-    <Compile Include="Collections\ConcurrentPriorityQueue.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ConcurrentPriorityQueue.feature</DependentUpon>
-    </Compile>
     <Compile Include="Collections\ConcurrentPriorityQueueSteps.cs" />
-    <Compile Include="MemoryMqWcfService.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MemoryMqWcfService.feature</DependentUpon>
-    </Compile>
     <Compile Include="MemoryMqWcfServiceSteps.cs" />
-    <Compile Include="Subsystem\ClientDictionary.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClientDictionary.feature</DependentUpon>
-    </Compile>
     <Compile Include="Subsystem\ClientDictionarySteps.cs" />
-    <Compile Include="Subsystem\ExchangeDictionary.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExchangeDictionary.feature</DependentUpon>
-    </Compile>
     <Compile Include="Subsystem\MessageDispatcherSteps.cs" />
     <Compile Include="Subsystem\MessageQueueProxySteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Subsystem\MessageQueueProxy.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MessageQueueProxy.feature</DependentUpon>
-    </Compile>
     <Compile Include="Subsystem\MessageQueueSteps.cs" />
     <Compile Include="Subsystem\RoutingSlipSteps.cs" />
-    <Compile Include="Subsystem\RoutingSlip.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RoutingSlip.feature</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -248,10 +215,6 @@
     <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">
       <Project>{60af5da6-343c-4c6f-9cd5-2b5f04d9af92}</Project>
       <Name>Thycotic.MemoryMq</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
-      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
-      <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -145,9 +145,6 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -169,11 +166,6 @@
     <Compile Include="ITestConsumerInvoker.cs" />
     <Compile Include="QueueClient\CommonConnectionSteps.cs" />
     <Compile Include="QueueClient\ExchangeNameProviderSteps.cs" />
-    <Compile Include="RequestBus.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RequestBus.feature</DependentUpon>
-    </Compile>
     <Compile Include="RequestBusSteps.cs" />
     <Compile Include="TestConsumerInvoker.cs" />
     <Compile Include="TestMqRequestBus.cs" />
@@ -199,10 +191,6 @@
     <ProjectReference Include="..\Thycotic.Messages.Tests\Thycotic.Messages.Tests.csproj">
       <Project>{b8df9bce-75a1-4690-adc2-409d55095a26}</Project>
       <Name>Thycotic.Messages.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
-      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
-      <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility.Tests\Thycotic.Utility.Tests.csproj">
       <Project>{341587c7-483a-442a-bf23-49d1a5138e57}</Project>

@@ -43,8 +43,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Common.Tests", "Thycotic.Messages.Common.Tests\Thycotic.Messages.Common.Tests.csproj", "{9E5E3B06-B6FC-44F3-B25B-1ED6FE4DD7B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Utility.Specflow", "Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj", "{66404D3B-5AF5-4868-8415-A1C5CEB78E22}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MessageQueue.Client.Wrappers.Tests", "Thycotic.MessageQueue.Client.Wrappers.Tests\Thycotic.MessageQueue.Client.Wrappers.Tests.csproj", "{6A01AA5E-D7AA-4A1D-BDAC-05285CD1F5A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Tests", "Thycotic.Messages.Tests\Thycotic.Messages.Tests.csproj", "{B8DF9BCE-75A1-4690-ADC2-409D55095A26}"
@@ -75,6 +73,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C88E4F
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.WindowsService.Bootstraper.Tests", "Thycotic.WindowsService.Bootstraper.Tests\Thycotic.WindowsService.Bootstraper.Tests.csproj", "{F3E9DA0D-B1DC-4AB5-B99D-998E10CFAEC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,10 +142,6 @@ Global
 		{9E5E3B06-B6FC-44F3-B25B-1ED6FE4DD7B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E5E3B06-B6FC-44F3-B25B-1ED6FE4DD7B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E5E3B06-B6FC-44F3-B25B-1ED6FE4DD7B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66404D3B-5AF5-4868-8415-A1C5CEB78E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66404D3B-5AF5-4868-8415-A1C5CEB78E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66404D3B-5AF5-4868-8415-A1C5CEB78E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66404D3B-5AF5-4868-8415-A1C5CEB78E22}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A01AA5E-D7AA-4A1D-BDAC-05285CD1F5A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A01AA5E-D7AA-4A1D-BDAC-05285CD1F5A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A01AA5E-D7AA-4A1D-BDAC-05285CD1F5A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -178,6 +174,10 @@ Global
 		{CF3EC07E-EA34-4D65-B6F3-C6335F2588EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF3EC07E-EA34-4D65-B6F3-C6335F2588EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF3EC07E-EA34-4D65-B6F3-C6335F2588EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E9DA0D-B1DC-4AB5-B99D-998E10CFAEC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E9DA0D-B1DC-4AB5-B99D-998E10CFAEC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E9DA0D-B1DC-4AB5-B99D-998E10CFAEC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E9DA0D-B1DC-4AB5-B99D-998E10CFAEC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -193,7 +193,6 @@ Global
 		{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92} = {7D0ED7EF-9B42-425F-ADD4-260565FF231A}
 		{1D136130-3ED7-4087-9A1D-F5F35504B518} = {7D0ED7EF-9B42-425F-ADD4-260565FF231A}
 		{9E5E3B06-B6FC-44F3-B25B-1ED6FE4DD7B6} = {135CB337-DA1B-4552-9240-73E31876E0AA}
-		{66404D3B-5AF5-4868-8415-A1C5CEB78E22} = {ADDC0AE6-C6A3-449B-A4B9-A8E0B471FDA4}
 		{6A01AA5E-D7AA-4A1D-BDAC-05285CD1F5A6} = {338FE5E7-218E-4CCC-8FCE-0BFB65189F59}
 		{B8DF9BCE-75A1-4690-ADC2-409D55095A26} = {135CB337-DA1B-4552-9240-73E31876E0AA}
 		{341587C7-483A-442A-BF23-49D1A5138E57} = {ADDC0AE6-C6A3-449B-A4B9-A8E0B471FDA4}

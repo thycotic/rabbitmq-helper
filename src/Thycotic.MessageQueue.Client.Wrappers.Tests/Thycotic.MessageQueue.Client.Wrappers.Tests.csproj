@@ -143,10 +143,6 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -166,25 +162,10 @@
     </Compile>
     <Compile Include="BasicConsumableDummy.cs" />
     <Compile Include="BlockingConsumerWrapperSteps.cs" />
-    <Compile Include="BlockingBasicConsumerWrapper.feature.cs">
-      <DependentUpon>BlockingBasicConsumerWrapper.feature</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="BasicConsumerWrapper.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BasicConsumerWrapper.feature</DependentUpon>
-    </Compile>
     <Compile Include="BasicConsumerWrapperDummy.cs" />
     <Compile Include="BasicConsumerWrapperSteps.cs" />
     <Compile Include="BlockingConsumableDummy.cs" />
     <Compile Include="BlockingConsumerWrapperDummy.cs" />
-    <Compile Include="ConsumerWrapperBase.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ConsumerWrapperBase.feature</DependentUpon>
-    </Compile>
     <Compile Include="ConsumerWrapperBaseDummy.cs" />
     <Compile Include="ConsumerWrapperBaseSteps.cs" />
     <Compile Include="LeakyOwned.cs" />
@@ -211,10 +192,6 @@
     <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
       <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
       <Name>Thycotic.Messages.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
-      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
-      <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.Utility.Tests\Thycotic.Utility.Tests.csproj">
       <Project>{341587c7-483a-442a-bf23-49d1a5138e57}</Project>

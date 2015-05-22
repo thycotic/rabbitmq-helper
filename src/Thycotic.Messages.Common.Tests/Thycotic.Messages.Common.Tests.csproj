@@ -142,9 +142,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ProductInfo.cs">
@@ -153,16 +150,6 @@
     <Compile Include="BasicConsumableDummy.cs" />
     <Compile Include="BasicConsumerDummy.cs" />
     <Compile Include="BlockingConsumableDummy.cs" />
-    <Compile Include="BlockingConsumerInterface.feature.cs">
-      <DependentUpon>BlockingConsumerInterface.feature</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="BasicConsumerInterface.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BasicConsumerInterface.feature</DependentUpon>
-    </Compile>
     <Compile Include="BlockingConsumerInterfaceSteps.cs" />
     <Compile Include="BasicConsumerInterfaceSteps.cs" />
     <Compile Include="BlockingConsumerDummy.cs" />
@@ -184,10 +171,6 @@
     <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
       <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
       <Name>Thycotic.Messages.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Specflow\Thycotic.Utility.Specflow.csproj">
-      <Project>{66404d3b-5af5-4868-8415-a1c5ceb78e22}</Project>
-      <Name>Thycotic.Utility.Specflow</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
