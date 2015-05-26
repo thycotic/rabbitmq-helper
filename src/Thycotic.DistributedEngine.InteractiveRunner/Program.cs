@@ -64,7 +64,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
                     engineService = new EngineService(startConsuming);
 
-                    //ConfigureMockConfiguration(engineService);
+                    ConfigureMockConfiguration(engineService);
 
                     //every time engine IoCContainer changes reconfigure the CLI
                     engineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
