@@ -26,17 +26,14 @@ namespace Thycotic.MemoryMq.Pipeline.Service.IoC
                     _configurationProvider(ConfigurationKeys.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-                var uri = new Uri(connectionString);
 
-                //if the connection string host is different than the current,
-                //don't start server
-                if (!String.Equals(uri.Host, "localhost", StringComparison.CurrentCultureIgnoreCase) &&
-                    !String.Equals(uri.Host, DnsEx.GetDnsHostName(), StringComparison.CurrentCultureIgnoreCase))
-                {
-                    _log.Warn("Connection string host and local host are different. Memory Mq server will not start.");
-                    return;
-                }
 
+                //TODO: Revisit if we still want this restriction. Disabling for now to accommodate for CNAMES
+                //if (!ValidConnectionString(connectionString))
+                //{
+                //    return;
+                //}
+                
                 _log.Debug("Initializing Memory Mq server...");
 
                 var useSsl =
@@ -60,6 +57,22 @@ namespace Thycotic.MemoryMq.Pipeline.Service.IoC
                         .SingleInstance();
                 }
             }
+        }
+
+        private bool ValidConnectionString(string connectionString)
+        {
+            var uri = new Uri(connectionString);
+
+            //if the connection string host is different than the current,
+            //don't start server
+            if (!String.Equals(uri.Host, "localhost", StringComparison.CurrentCultureIgnoreCase) &&
+                !String.Equals(uri.Host, DnsEx.GetDnsHostName(), StringComparison.CurrentCultureIgnoreCase))
+            {
+                _log.Warn("Connection string host and local host are different. Memory Mq server will not start.");
+                return false;
+            }
+
+            return true;
         }
     }
 }
