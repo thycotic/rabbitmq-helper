@@ -142,6 +142,7 @@
   <ItemGroup>
     <Compile Include="IO\DirectoryCopier.cs" />
     <Compile Include="DnsEx.cs" />
+    <Compile Include="Reflection\AssemblyEntryPointProvider.cs" />
     <Compile Include="Serialization\IObjectSerializer.cs" />
     <Compile Include="Serialization\JsonObjectSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

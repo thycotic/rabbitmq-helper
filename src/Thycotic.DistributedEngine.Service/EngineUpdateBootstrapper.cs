@@ -1,11 +1,12 @@
 //#define BREAKINTOVS
+
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 using Thycotic.DistributedEngine.Service.Update;
 using Thycotic.Logging;
+using Thycotic.Utility.Reflection;
 using Thycotic.WindowsService.Bootstraper;
 
 namespace Thycotic.DistributedEngine.Service
@@ -16,6 +17,8 @@ namespace Thycotic.DistributedEngine.Service
     public class EngineUpdateBootstrapper
     {
         private readonly ILogWriter _log = Log.Get(typeof (EngineUpdateBootstrapper));
+
+        private readonly AssemblyEntryPointProvider _assemblyEntryPointProvider = new AssemblyEntryPointProvider();
 
         [Conditional("BREAKINTOVS")]
         private static void InterceptChildProcess()
@@ -72,19 +75,16 @@ namespace Thycotic.DistributedEngine.Service
             }
         }
 
-        private static string GetServiceInstallationPath()
+        private string GetServiceInstallationPath()
         {
             var backupPath = GetServiceBackupPath();
             
             return backupPath.Replace(ServiceUpdater.BackupDirectoryName, string.Empty);
         }
         
-        private static string GetServiceBackupPath()
+        private string GetServiceBackupPath()
         {
-            //return @"C:\Program Files (x86)\Thycotic Software Ltd\Distributed Engine";
-
-            return Path.GetDirectoryName(Assembly.GetAssembly(typeof(EngineService)).Location);
-
+            return _assemblyEntryPointProvider.GetAssemblyDirectory(typeof (EngineService));
         }
         
     }

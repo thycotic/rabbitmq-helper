@@ -7,6 +7,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Subsystem.Persistance;
+using Thycotic.Utility.Reflection;
 
 namespace Thycotic.MemoryMq.Subsystem
 {
@@ -23,6 +24,8 @@ namespace Thycotic.MemoryMq.Subsystem
         /// Reset event used to ensure we don't restore while storing and vise versa
         /// </summary>
         private readonly ManualResetEventSlim _persistResetEvent = new ManualResetEventSlim(true);
+
+        private readonly AssemblyEntryPointProvider _assemblyEntryPointProvider = new AssemblyEntryPointProvider();
 
         /// <summary>
         /// Gets the mailboxes in the exchange
@@ -83,10 +86,11 @@ namespace Thycotic.MemoryMq.Subsystem
             _data[routingSlip].NegativelyAcknoledge(deliveryTag, requeue);
         }
 
-        private static string GetPersistPath()
+        private string GetPersistPath()
         {
-            //TODO: Figure out what better path to have this live under
-            return Path.Combine(Directory.GetCurrentDirectory(), "store.json");
+            var path = _assemblyEntryPointProvider.GetAssemblyDirectory(GetType());
+
+            return Path.Combine(path, "store.json");
         }
 
         /// <summary>

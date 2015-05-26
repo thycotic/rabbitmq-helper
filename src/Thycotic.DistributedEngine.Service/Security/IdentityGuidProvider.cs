@@ -3,6 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using Thycotic.Logging;
+using Thycotic.Utility.Reflection;
 
 namespace Thycotic.DistributedEngine.Service.Security
 {
@@ -11,10 +12,11 @@ namespace Thycotic.DistributedEngine.Service.Security
     /// </summary>
     public class IdentityGuidProvider : IIdentityGuidProvider
     {
-        private readonly ILogWriter _log = Log.Get(typeof(IdentityGuidProvider));
-
         private readonly Lazy<Guid> _identityGuid;
+        private readonly AssemblyEntryPointProvider _assemblyEntryPointProvider = new AssemblyEntryPointProvider();
 
+        private readonly ILogWriter _log = Log.Get(typeof(IdentityGuidProvider));
+        
         /// <summary>
         /// Gets the identity unique identifier.
         /// </summary>
@@ -34,10 +36,11 @@ namespace Thycotic.DistributedEngine.Service.Security
             _identityGuid = new Lazy<Guid>(RestoreIdentityGuid);
         }
 
-        private static string GetPersistPath()
+        private string GetPersistPath()
         {
-            //TODO: Figure out what better path to have this live under
-            return Path.Combine(Directory.GetCurrentDirectory(), "identityGuid.json");
+            var path = _assemblyEntryPointProvider.GetAssemblyDirectory(GetType());
+
+            return Path.Combine(path, "identityGuid.json");
         }
 
         private byte[] Protect(Guid identityGuid)
