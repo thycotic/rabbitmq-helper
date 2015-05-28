@@ -147,9 +147,8 @@
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.111\lib\net451\Interop.ActiveDs.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.146\lib\net451\Jscape.Ssh.dll</HintPath>
+    <Reference Include="Jscape.Ssh">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.149\lib\net451\Jscape.Ssh.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -230,9 +229,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.146, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.146\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+    <Reference Include="Thycotic.PasswordChangers">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.149\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.SharedTypes">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.124\lib\net451\Thycotic.SharedTypes.dll</HintPath>
@@ -311,8 +309,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="phantomjs.exe" />
-    <Content Include="WebPassword\PhantomJSFiles\CasperJS\bin\bootstrap.js" />
-    <Content Include="WebPassword\PhantomJSFiles\CasperJS\bin\usage.txt" />
     <Content Include="WebPassword\PhantomJSFiles\CasperJS\c.js" />
     <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\casper.js" />
     <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\cli.js" />
@@ -355,6 +351,7 @@
     <Content Include="WebPassword\PhantomJSScripts\ChangerBase.js" />
     <Content Include="WebPassword\PhantomJSScripts\GenericPasswordChanger.js" />
     <Content Include="WebPassword\PhantomJSScripts\PasswordChangerUtil.js" />
+    <Content Include="WebPassword\PhantomJSScripts\phantomjs.exe" />
     <Content Include="WebPassword\PhantomJSScripts\SonicWallAdminPasswordChanger.js" />
     <Content Include="WebPassword\PhantomJSScripts\SonicWallPasswordChanger.js" />
     <Content Include="WebPassword\PhantomJSScripts\WindowsLivePasswordChanger.js" />
