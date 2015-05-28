@@ -145,7 +145,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.145\lib\net451\Jscape.Ssh.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.146\lib\net451\Jscape.Ssh.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -239,7 +240,8 @@
     </Reference>
     <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.145, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.145\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.146\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.SharedTypes">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.124\lib\net451\Thycotic.SharedTypes.dll</HintPath>
@@ -305,6 +307,53 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="phantomjs.exe" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\bin\bootstrap.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\bin\usage.txt" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\c.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\casper.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\cli.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\clientutils.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\colorizer.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\events.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\http.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\mouse.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\pagestack.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\querystring.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\tester.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\utils.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\vendors\coffee-script.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\modules\xunit.js" />
+    <Content Include="WebPassword\PhantomJSFiles\CasperJS\t.html" />
+    <Content Include="WebPassword\PhantomJSFiles\ChangerBase.js" />
+    <Content Include="WebPassword\PhantomJSFiles\GenericPasswordChanger.js" />
+    <Content Include="WebPassword\PhantomJSFiles\PasswordChangerUtil.js" />
+    <Content Include="WebPassword\PhantomJSFiles\phantomjs.exe" />
+    <Content Include="WebPassword\PhantomJSFiles\SonicWallAdminPasswordChanger.js" />
+    <Content Include="WebPassword\PhantomJSFiles\SonicWallPasswordChanger.js" />
+    <Content Include="WebPassword\PhantomJSFiles\WindowsLivePasswordChanger.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\bin\bootstrap.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\bin\usage.txt" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\c.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\casper.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\cli.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\clientutils.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\colorizer.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\events.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\http.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\mouse.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\pagestack.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\querystring.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\tester.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\utils.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\vendors\coffee-script.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\modules\xunit.js" />
+    <Content Include="WebPassword\PhantomJSScripts\CasperJS\t.html" />
+    <Content Include="WebPassword\PhantomJSScripts\ChangerBase.js" />
+    <Content Include="WebPassword\PhantomJSScripts\GenericPasswordChanger.js" />
+    <Content Include="WebPassword\PhantomJSScripts\PasswordChangerUtil.js" />
+    <Content Include="WebPassword\PhantomJSScripts\SonicWallAdminPasswordChanger.js" />
+    <Content Include="WebPassword\PhantomJSScripts\SonicWallPasswordChanger.js" />
+    <Content Include="WebPassword\PhantomJSScripts\WindowsLivePasswordChanger.js" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
