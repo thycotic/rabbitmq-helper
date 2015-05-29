@@ -28,7 +28,7 @@
       <ComponentGroupRef Id="main_component_group" />
     </Feature>
 
-    <CustomAction Id='SetRootDrive' Property='ROOTDRIVE' Value='[%SystemDrive]\'/>
+    <!--<CustomAction Id='SetRootDrive' Property='ROOTDRIVE' Value='[%SystemDrive]\'/>-->
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
 
