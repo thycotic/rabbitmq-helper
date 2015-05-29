@@ -166,7 +166,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.MemoryMq.Pipeline.Service\Thycotic.MemoryMq.SiteConnector.Service.csproj">
+    <ProjectReference Include="..\Thycotic.MemoryMq.SiteConnector.Service\Thycotic.MemoryMq.SiteConnector.Service.csproj">
       <Project>{88bda5ed-1bca-4227-b838-681a709f4ea1}</Project>
       <Name>Thycotic.MemoryMq.SiteConnector.Service</Name>
     </ProjectReference>

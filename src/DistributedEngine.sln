@@ -63,9 +63,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MemoryMq", "MemoryMq", "{7D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SiteConnector", "SiteConnector", "{B8F73DAD-1146-4E09-914A-035D2BA99476}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.SiteConnector.Service", "Thycotic.MemoryMq.Pipeline.Service\Thycotic.MemoryMq.SiteConnector.Service.csproj", "{88BDA5ED-1BCA-4227-B838-681A709F4EA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.SiteConnector.Service", "Thycotic.MemoryMq.SiteConnector.Service\Thycotic.MemoryMq.SiteConnector.Service.csproj", "{88BDA5ED-1BCA-4227-B838-681A709F4EA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.SiteConnector.Service.Tests", "Thycotic.MemoryMq.Pipeline.Service.Tests\Thycotic.MemoryMq.SiteConnector.Service.Tests.csproj", "{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq.SiteConnector.Service.Tests", "Thycotic.MemoryMq.SiteConnector.Service.Tests\Thycotic.MemoryMq.SiteConnector.Service.Tests.csproj", "{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.WindowsService.Bootstraper", "Thycotic.WindowsService.Bootstraper\Thycotic.WindowsService.Bootstraper.csproj", "{CF3EC07E-EA34-4D65-B6F3-C6335F2588EA}"
 EndProject

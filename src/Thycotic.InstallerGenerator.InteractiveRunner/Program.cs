@@ -47,12 +47,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         private static string GenerateMemoryMqMsi()
         {
             const string someSecretServerArbitraryPathForWixRecipe =
-                 @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service.Wix";
-                //@"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service.Wix";
+                 @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service.Wix";
+            //@"C:\development\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service.Wix";
 
             const string someSecretServerArbitraryPathForBits =
-                @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
-                //@"C:\development\distributedengine\src\Thycotic.MemoryMq.Pipeline.Service\bin\Release";
+                @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service\bin\Release";
+            //@"C:\development\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service\bin\Release";
             const string currentSnapshottedVersion = Version;
 
 
