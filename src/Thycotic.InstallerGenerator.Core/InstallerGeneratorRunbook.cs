@@ -74,6 +74,14 @@ namespace Thycotic.InstallerGenerator.Core
         public string Version { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [is64 bit].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [is64 bit]; otherwise, <c>false</c>.
+        /// </value>
+        public bool Is64Bit { get; set; }
+
+        /// <summary>
         /// Gets the steps.
         /// </summary>
         /// <value>

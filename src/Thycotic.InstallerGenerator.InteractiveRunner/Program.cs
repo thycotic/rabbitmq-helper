@@ -56,7 +56,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             const string currentSnapshottedVersion = Version;
 
 
-            var steps = new MemoryMqPiplineServiceWiXMsiGeneratorRunbook
+            var steps = new MemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook
             {
                 RecipePath = someSecretServerArbitraryPathForWixRecipe,
                 SourcePath = someSecretServerArbitraryPathForBits,

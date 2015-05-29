@@ -25,6 +25,14 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         public EngineToServerCommunicationSettings EngineToServerCommunicationSettings { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DistributedEngineServiceWiXMsiGeneratorRunbook"/> class.
+        /// </summary>
+        public DistributedEngineServiceWiXMsiGeneratorRunbook()
+        {
+            Is64Bit = true;
+        }
+
+        /// <summary>
         /// Bakes the steps.
         /// </summary>
         /// <exception cref="System.ArgumentException">Engine to server communication ingredients missing.</exception>
@@ -35,7 +43,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                 throw new ArgumentException("Engine to server communication ingredients missing.");
             }
 
-            ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Version);
+            ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Is64Bit, Version);
 
             Steps = new IInstallerGeneratorStep[]
             {
@@ -79,6 +87,7 @@ dir {0}
                     ExecutablePath = ToolPaths.GetCandlePath(ApplicationPath),
                     Parameters = string.Format(@"
 -nologo 
+-arch x64
 -ext WixUtilExtension 
 -dInstallerVersion={0} 
 -out output\

@@ -53,7 +53,7 @@
     <Compile Include="ServiceInstallerRunbookProvider.cs" />
     <Compile Include="DistributedEngineServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="Ingredients\EngineToServerCommunicationSettings.cs" />
-    <Compile Include="MemoryMqPiplineServiceWiXMsiGeneratorRunbook.cs" />
+    <Compile Include="MemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="Ingredients\PipelineSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Thycotic.InstallerGenerator.Core.MSI.WiX
 {
     /// <summary>
@@ -10,13 +12,25 @@ namespace Thycotic.InstallerGenerator.Core.MSI.WiX
         /// </summary>
         /// <param name="artifactName">Name of the artifact.</param>
         /// <param name="suffix">The suffix.</param>
+        /// <param name="is64Bit">if set to <c>true</c> [is64bit].</param>
         /// <param name="version">The version.</param>
         /// <returns></returns>
-        public static string GetArtifactFileName(string artifactName, string suffix, string version)
+        protected static string GetArtifactFileName(string artifactName, string suffix, bool is64Bit, string version)
         {
-            return (!string.IsNullOrEmpty(suffix))
-                ? string.Format("{0}-{1}.{2}.msi", artifactName, suffix, version)
-                : string.Format("{0}.{1}.msi", artifactName, version);
+            var sb = new StringBuilder();
+
+            sb.Append(artifactName);
+
+            if (!string.IsNullOrWhiteSpace(suffix))
+            {
+                sb.Append(string.Format("-{0}", suffix));
+            }
+
+            sb.Append(is64Bit ? "-x64" : "-x86");
+
+            sb.Append(string.Format(".{0}.msi", version));
+
+            return sb.ToString();
         }
     }
 }
