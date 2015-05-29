@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
-using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.DistributedEngine.Service.Update;
 using Thycotic.Logging;
-using Thycotic.Logging.LogTail;
 using Thycotic.Utility;
 
 namespace Thycotic.DistributedEngine.Service.Heartbeat

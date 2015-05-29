@@ -1,4 +1,4 @@
-﻿namespace Thycotic.MemoryMq.Pipeline.Service
+﻿namespace Thycotic.MemoryMq.SiteConnector.Service
 {
     partial class ProjectInstaller
     {

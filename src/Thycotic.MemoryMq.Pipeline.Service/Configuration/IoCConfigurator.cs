@@ -1,16 +1,16 @@
 using System.Configuration;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.MemoryMq.Pipeline.Service.IoC;
+using Thycotic.MemoryMq.SiteConnector.Service.IoC;
 
-namespace Thycotic.MemoryMq.Pipeline.Service.Configuration
+namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
 {
     /// <summary>
     /// IoC configurator
     /// </summary>
     public class IoCConfigurator : IIoCConfigurator
     {
-        private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
+        //private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
         
         // ReSharper disable once UnusedParameter.Local
         private static string GetOptionalLocalConfiguration(string name, bool throwIfNotFound)

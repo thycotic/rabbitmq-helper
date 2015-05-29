@@ -10,7 +10,7 @@ using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.DistributedEngine.Service;
 using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Logging;
-using Thycotic.MemoryMq.Pipeline.Service;
+using Thycotic.MemoryMq.SiteConnector.Service;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using StartupMessageWriter = Thycotic.DistributedEngine.Service.StartupMessageWriter;

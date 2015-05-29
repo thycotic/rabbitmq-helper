@@ -71,7 +71,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
                 {
                     Status = OperationStatus.Unknown,
                     SecretId = request.SecretId,
-                    Errors = new List<Error> {new Thycotic.SharedTypes.PasswordChangers.Error(ex.Message, ex.ToString())},
+                    Errors = new List<Error> {new SharedTypes.PasswordChangers.Error(ex.Message, ex.ToString())},
                     Log = new List<LogEntry>()
                 };
                 _log.Info(string.Format("Heartbeat Result for Secret Id {0}: Success: False ({1})", request.SecretId, ex ));

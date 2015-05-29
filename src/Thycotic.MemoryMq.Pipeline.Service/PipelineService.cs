@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Thycotic.Logging;
-using Thycotic.MemoryMq.Pipeline.Service.Configuration;
+using Thycotic.MemoryMq.SiteConnector.Service.Configuration;
 
-namespace Thycotic.MemoryMq.Pipeline.Service
+namespace Thycotic.MemoryMq.SiteConnector.Service
 {
     /// <summary>
     /// Engine windows service

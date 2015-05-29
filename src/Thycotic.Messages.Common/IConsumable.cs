@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Thycotic.Messages.Common
+﻿namespace Thycotic.Messages.Common
 {
     /// <summary>
     /// Interface for a consumable

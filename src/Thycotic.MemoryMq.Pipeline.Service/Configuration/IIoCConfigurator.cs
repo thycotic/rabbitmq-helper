@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace Thycotic.MemoryMq.Pipeline.Service.Configuration
+namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
 {
     /// <summary>
     /// Interface for an IoC Configirator

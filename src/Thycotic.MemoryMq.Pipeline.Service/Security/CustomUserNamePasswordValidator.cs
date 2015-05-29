@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Selectors;
 using Thycotic.Logging;
 
-namespace Thycotic.MemoryMq.Pipeline.Service.Security
+namespace Thycotic.MemoryMq.SiteConnector.Service.Security
 {
     /// <summary>
     /// Custom username and password validator

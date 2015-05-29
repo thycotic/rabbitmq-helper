@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using Thycotic.MemoryMq.Pipeline.Service.Security;
+using Thycotic.MemoryMq.SiteConnector.Service.Security;
 using Thycotic.Wcf;
 
-namespace Thycotic.MemoryMq.Pipeline.Service.MemoryMq
+namespace Thycotic.MemoryMq.SiteConnector.Service.MemoryMq
 {
     /// <summary>
     /// Memory mq WCF server wrapper.

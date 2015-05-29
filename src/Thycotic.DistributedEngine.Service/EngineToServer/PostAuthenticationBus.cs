@@ -34,7 +34,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// </value>
         protected IEngineToServerCommunicationWcfService Channel { get; private set; }
 
-        private readonly ILogWriter _log = Log.Get(typeof(PostAuthenticationBus));
+        //private readonly ILogWriter _log = Log.Get(typeof(PostAuthenticationBus));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationBus" /> class.

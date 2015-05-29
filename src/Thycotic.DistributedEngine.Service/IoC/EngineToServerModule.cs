@@ -4,7 +4,7 @@ using Thycotic.DistributedEngine.Service.EngineToServer;
 using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
 using Thycotic.Logging;
-using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.MessageQueue.Client;
 
 namespace Thycotic.DistributedEngine.Service.IoC
 {
@@ -13,7 +13,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
         private readonly Func<string, string> _configurationProvider;
         private readonly EngineService _engineService;
 
-        private readonly ILogWriter _log = Log.Get(typeof(HeartbeatModule));
+        //private readonly ILogWriter _log = Log.Get(typeof(HeartbeatModule));
 
 
         public EngineToServerModule(Func<string, string> configurationProvider, EngineService engineService)
@@ -29,10 +29,10 @@ namespace Thycotic.DistributedEngine.Service.IoC
             builder.Register(context => new AuthenticatedCommunicationKeyProvider
             {
                 SymmetricKey =
-                    new SymmetricKey(Convert.FromBase64String(_configurationProvider(MessageQueue.Client.ConfigurationKeys.Engine.SymmetricKey))),
+                    new SymmetricKey(Convert.FromBase64String(_configurationProvider(ConfigurationKeys.Engine.SymmetricKey))),
                 InitializationVector =
                     new InitializationVector(
-                        Convert.FromBase64String(_configurationProvider(MessageQueue.Client.ConfigurationKeys.Engine.InitializationVector)))
+                        Convert.FromBase64String(_configurationProvider(ConfigurationKeys.Engine.InitializationVector)))
             }).As<IAuthenticatedCommunicationKeyProvider>().SingleInstance();
            
             builder.RegisterModule(new HeartbeatModule(_configurationProvider, _engineService));

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
-using System.Net.Mime;
 using System.Threading;
-using System.Threading.Tasks;
 using NSubstitute;
-using NSubstitute.Core;
 using NUnit.Framework;
 using Thycotic.Utility.Tests;
 

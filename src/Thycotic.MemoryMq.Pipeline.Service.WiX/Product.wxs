@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-  <Product Id="*" Language="1033" Manufacturer="Thycotic Software Ltd" Name="Thycotic MemoryMq Pipeline Service (x64)" Version="$(var.InstallerVersion)" UpgradeCode="D19B8142-9548-4C64-BEEB-BB7194D65E7C">
+  <Product Id="*" Language="1033" Manufacturer="Thycotic Software Ltd" Name="Thycotic MemoryMq Site Connector Service (x64)" Version="$(var.InstallerVersion)" UpgradeCode="D19B8142-9548-4C64-BEEB-BB7194D65E7C">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Languages='1033'/>
 
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
@@ -16,7 +16,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFiles64Folder" Name="PFiles">
         <Directory Id="ThycoticInstall" Name="Thycotic Software Ltd" ComponentGuidGenerationSeed="C1D4C69B-7A26-40FC-8D9A-4EEF969E88E5">
-          <Directory Id="INSTALLLOCATION" Name="MemoryMq Pipeline"/>
+          <Directory Id="INSTALLLOCATION" Name="MemoryMq Site Connector"/>
         </Directory>
       </Directory>
     </Directory>

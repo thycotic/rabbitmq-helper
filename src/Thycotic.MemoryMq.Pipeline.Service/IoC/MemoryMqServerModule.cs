@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Configuration;
+using System.Diagnostics;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.Utility;
 
-namespace Thycotic.MemoryMq.Pipeline.Service.IoC
+namespace Thycotic.MemoryMq.SiteConnector.Service.IoC
 {
     class MemoryMqServerModule : Module
     {
@@ -26,13 +28,7 @@ namespace Thycotic.MemoryMq.Pipeline.Service.IoC
                     _configurationProvider(ConfigurationKeys.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-
-
-                //TODO: Revisit if we still want this restriction. Disabling for now to accommodate for CNAMES
-                //if (!ValidConnectionString(connectionString))
-                //{
-                //    return;
-                //}
+                ValidConnectionString(connectionString);
                 
                 _log.Debug("Initializing Memory Mq server...");
 
@@ -59,7 +55,8 @@ namespace Thycotic.MemoryMq.Pipeline.Service.IoC
             }
         }
 
-        private bool ValidConnectionString(string connectionString)
+        [Conditional("HOSTMUSTMATCH")]
+        private static void ValidConnectionString(string connectionString)
         {
             var uri = new Uri(connectionString);
 
@@ -68,11 +65,8 @@ namespace Thycotic.MemoryMq.Pipeline.Service.IoC
             if (!String.Equals(uri.Host, "localhost", StringComparison.CurrentCultureIgnoreCase) &&
                 !String.Equals(uri.Host, DnsEx.GetDnsHostName(), StringComparison.CurrentCultureIgnoreCase))
             {
-                _log.Warn("Connection string host and local host are different. Memory Mq server will not start.");
-                return false;
+                throw new ConfigurationErrorsException("Connection string host and local host are different. Memory Mq server will not start.");
             }
-
-            return true;
         }
     }
 }

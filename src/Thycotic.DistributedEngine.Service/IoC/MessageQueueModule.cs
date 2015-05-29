@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
-using Thycotic.DistributedEngine.Service.EngineToServer;
 using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
 using Thycotic.Logging;
@@ -28,18 +27,18 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("RabbitMq"))
             {
                 var connectionString =
-                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.ConnectionString);
+                    _configurationProvider(ConfigurationKeys.Pipeline.ConnectionString);
                 _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-                var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.UserName);
+                var userName = _configurationProvider(ConfigurationKeys.Pipeline.UserName);
                 _log.Info(string.Format("RabbitMq username is {0}", userName));
 
-                var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.Password);
+                var password = _configurationProvider(ConfigurationKeys.Pipeline.Password);
                 _log.Info(string.Format("RabbitMq password is {0}",
                     string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.UseSsl));
                 if (useSsl)
                 {
                     _log.Info("RabbitMq using encryption");
@@ -60,18 +59,18 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("MemoryMq"))
             {
                 var connectionString =
-                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.ConnectionString);
+                    _configurationProvider(ConfigurationKeys.Pipeline.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-                var userName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.UserName);
+                var userName = _configurationProvider(ConfigurationKeys.Pipeline.UserName);
                 _log.Info(string.Format("MemoryMq username is {0}", userName));
 
-                var password = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.Password);
+                var password = _configurationProvider(ConfigurationKeys.Pipeline.Password);
                 _log.Info(string.Format("MemoryMq password is {0}",
                     string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.UseSsl));
                 if (useSsl)
                 {
                     _log.Info("MemoryMq using encryption");
@@ -91,13 +90,13 @@ namespace Thycotic.DistributedEngine.Service.IoC
         {
             using (LogContext.Create("Exchange"))
             {
-                var exchangeName = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.Name);
+                var exchangeName = _configurationProvider(ConfigurationKeys.Exchange.Name);
                 exchangeName = !string.IsNullOrWhiteSpace(exchangeName) ? exchangeName : "thycotic";
 
                 var symmetricKeyString =
-                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.SymmetricKey);
+                    _configurationProvider(ConfigurationKeys.Exchange.SymmetricKey);
                 var initializationVectorString =
-                    _configurationProvider(MessageQueue.Client.ConfigurationKeys.Exchange.InitializationVector);
+                    _configurationProvider(ConfigurationKeys.Exchange.InitializationVector);
 
                 var symmetricKey = new SymmetricKey(Convert.FromBase64String(symmetricKeyString));
                 var initializationVector = new InitializationVector(Convert.FromBase64String(initializationVectorString));
@@ -128,7 +127,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
             _log.Debug("Initializing message queue dependencies...");
 
-            var queueType = _configurationProvider(MessageQueue.Client.ConfigurationKeys.Pipeline.QueueType);
+            var queueType = _configurationProvider(ConfigurationKeys.Pipeline.QueueType);
             
             if (queueType == SupportedMessageQueues.RabbitMq)
             {

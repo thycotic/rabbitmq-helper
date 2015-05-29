@@ -5,7 +5,6 @@ using System.Linq;
 using Autofac;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
-using Thycotic.DistributedEngine.Logic;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.DistributedEngine.Service.EngineToServer;
 using Thycotic.DistributedEngine.Service.IoC;

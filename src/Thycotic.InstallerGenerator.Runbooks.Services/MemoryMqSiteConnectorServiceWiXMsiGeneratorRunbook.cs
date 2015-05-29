@@ -9,7 +9,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
     /// <summary>
     /// Memory Mq pipeline service WiX MSI generator runbook
     /// </summary>
-    public class MemoryMqPiplineServiceWiXMsiGeneratorRunbook : WiXMsiGeneratorRunbook
+    public class MemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook : WiXMsiGeneratorRunbook
     {
         /// <summary>
         /// The default artifact name
@@ -25,6 +25,14 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         public PipelineSettings PipelineSettings { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook"/> class.
+        /// </summary>
+        public MemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook()
+        {
+            Is64Bit = true;
+        }
+
+        /// <summary>
         /// Bakes the steps.
         /// </summary>
         /// <exception cref="System.ArgumentException">Pipeline settings ingredients missing</exception>
@@ -35,7 +43,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                 throw new ArgumentException("Pipeline settings ingredients missing");
             }
 
-            ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Version);
+            ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Is64Bit, Version);
 
             Steps = new IInstallerGeneratorStep[]
             {
@@ -79,6 +87,7 @@ dir {0}
                     ExecutablePath = ToolPaths.GetCandlePath(ApplicationPath),
                     Parameters = string.Format(@"
 -nologo 
+-arch x64
 -ext WixUtilExtension 
 -dInstallerVersion={0} 
 -out output\

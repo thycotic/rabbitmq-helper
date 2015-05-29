@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac.Features.OwnedInstances;
-using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.General;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.Messages.PasswordChanging.Request;
 using Thycotic.PasswordChangers;
-using Thycotic.SharedTypes.Federator;
 using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging

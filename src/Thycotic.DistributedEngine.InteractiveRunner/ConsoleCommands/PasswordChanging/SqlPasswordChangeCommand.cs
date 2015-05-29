@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Thycotic.Logging;
+﻿using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.PasswordChanging.Request;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordChanging
 {

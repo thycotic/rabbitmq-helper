@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceProcess;
 
-namespace Thycotic.MemoryMq.Pipeline.Service
+namespace Thycotic.MemoryMq.SiteConnector.Service
 {
     internal static class Program
     {

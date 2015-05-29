@@ -7,7 +7,7 @@ using Autofac;
 using Thycotic.Logging;
 using Thycotic.Utility;
 
-namespace Thycotic.MemoryMq.Pipeline.Service
+namespace Thycotic.MemoryMq.SiteConnector.Service
 {
     /// <summary>
     /// Startup message writer. Mostly to ensure Autofac is working properly.

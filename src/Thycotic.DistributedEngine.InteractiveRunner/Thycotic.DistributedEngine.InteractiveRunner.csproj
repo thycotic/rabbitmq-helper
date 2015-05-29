@@ -294,9 +294,9 @@
       <Project>{74ec374a-729a-4707-8586-32d10cdc3ecc}</Project>
       <Name>Thycotic.DistributedEngine.Logic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Thycotic.MemoryMq.Pipeline.Service\Thycotic.MemoryMq.Pipeline.Service.csproj">
+    <ProjectReference Include="..\Thycotic.MemoryMq.Pipeline.Service\Thycotic.MemoryMq.SiteConnector.Service.csproj">
       <Project>{88bda5ed-1bca-4227-b838-681a709f4ea1}</Project>
-      <Name>Thycotic.MemoryMq.Pipeline.Service</Name>
+      <Name>Thycotic.MemoryMq.SiteConnector.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Thycotic.MessageQueue.Client\Thycotic.MessageQueue.Client.csproj">
       <Project>{23d33205-a493-4977-831a-3487ec2042d6}</Project>
