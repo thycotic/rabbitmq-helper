@@ -15,7 +15,7 @@ namespace Thycotic.InstallerGenerator.Core.MSI.WiX
         /// <param name="is64Bit">if set to <c>true</c> [is64bit].</param>
         /// <param name="version">The version.</param>
         /// <returns></returns>
-        protected static string GetArtifactFileName(string artifactName, string suffix, bool is64Bit, string version)
+        public static string GetArtifactFileName(string artifactName, string suffix, bool is64Bit, string version)
         {
             var sb = new StringBuilder();
 
