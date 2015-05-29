@@ -62,11 +62,13 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         changeResult = passwordChanger.VerifyNewCredentials(info);
                     }
 
+                    var allErrors = changeResult.Errors.Select(e => (string.IsNullOrWhiteSpace(e.DetailedMessage) ? e.Message : e.DetailedMessage)).ToArray();
+
                     response = new RemotePasswordChangeResponse
                     {
                         Status = changeResult.Status,
                         SecretId = request.SecretId,
-                        StatusMessages = changeResult.Errors.Select(e => e.DetailedMessage).ToArray(),
+                        StatusMessages = allErrors,
                         CommandExecutionResults = new List<CommandExecutionResult>().ToArray(),
                         OldPassword = info.CurrentPassword,
                         NewPassword = info.NewPassword
