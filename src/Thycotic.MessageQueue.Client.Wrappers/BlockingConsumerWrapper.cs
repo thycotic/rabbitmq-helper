@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Serialization;
+using Thycotic.Utility.Threading;
 
 namespace Thycotic.MessageQueue.Client.Wrappers
 {
@@ -60,7 +62,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         protected override Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
-            return Task.Run(() => ExecuteMessage(deliveryTag, exchange, routingKey, properties, body));
+
+            return Task.Factory.StartNew(() => ExecuteMessage(deliveryTag, exchange, routingKey, properties, body),
+                CancellationToken.None,
+                TaskCreationOptions.None,
+                TaskSchedulerHelper.FromCurrentSynchronizationContext());
         }
 
         /// <summary>
@@ -100,7 +106,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     {
                         response = consumer.Value.Consume(message);
 
-                        _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof (TConsumable))));
+                        _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TConsumable))));
                     }
 
                     CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, false);
@@ -108,12 +114,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 catch (Exception ex)
                 {
                     _log.Error(
-                        string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof (TConsumable)),
+                        string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TConsumable)),
                             ex.Message), ex);
 
                     CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, false, requeue: false);
 
-                    response = new BlockingConsumerError {Message = ex.Message};
+                    response = new BlockingConsumerError { Message = ex.Message };
                     responseType = BlockingConsumerResponseTypes.Error;
                 }
 
