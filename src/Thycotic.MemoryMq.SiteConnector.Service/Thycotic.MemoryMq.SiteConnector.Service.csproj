@@ -204,7 +204,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Thycotic.MemoryMq.Pipeline.Service.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">

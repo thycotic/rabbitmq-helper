@@ -39,7 +39,7 @@
     <InstallUISequence>
       <!-- App search is what does FindInstallLocation, and it is dependent on FindRelatedProducts -->
       <AppSearch After="FindRelatedProducts"/>
-      <Custom Action="SetRootDrive" Before="CostInitialize"></Custom>
+      <!--<Custom Action="SetRootDrive" Before="CostInitialize"></Custom>-->
     </InstallUISequence>
 
   </Product>
