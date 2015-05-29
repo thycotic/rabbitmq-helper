@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Serialization;
+using Thycotic.Utility.Threading;
 
 namespace Thycotic.MessageQueue.Client.Wrappers
 {
@@ -54,7 +56,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         protected override Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
-            return Task.Run(() => ExecuteMessage(deliveryTag, redelivered, exchange, routingKey, body));
+            return Task.Factory.StartNew(() => ExecuteMessage(deliveryTag, redelivered, exchange, routingKey, body),
+                CancellationToken.None, 
+                TaskCreationOptions.None,
+                TaskSchedulerHelper.FromCurrentSynchronizationContext());
         }
 
         /// <summary>
