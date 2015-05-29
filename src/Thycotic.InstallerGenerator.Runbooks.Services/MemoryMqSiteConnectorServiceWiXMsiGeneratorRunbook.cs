@@ -14,7 +14,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// <summary>
         /// The default artifact name
         /// </summary>
-        public const string DefaultArtifactName = "Thycotic.MemoryMq.Pipeline.Service";
+        public const string DefaultArtifactName = "Thycotic.MemoryMq.SiteConnector.Service";
 
         /// <summary>
         /// Gets or sets the pipeline settings.

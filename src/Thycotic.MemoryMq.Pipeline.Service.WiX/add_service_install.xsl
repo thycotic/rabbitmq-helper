@@ -5,14 +5,14 @@
     xmlns:wix="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 
-    <xsl:template match="wix:Component[@Id='Thycotic.MemoryMq.Pipeline.Service.exe']">
+    <xsl:template match="wix:Component[@Id='Thycotic.MemoryMq.SiteConnector.Service.exe']">
         <xsl:copy>
             <xsl:apply-templates select="@*" />
             <xsl:apply-templates select="*" />
-            <ServiceInstall Arguments="-installerVersion=$(var.InstallerVersion)" Account="[SERVICE_USERNAME]" Password="[SERVICE_PASSWORD]" Id="ServiceInstallMemoryMqPipelineService" Name="Thycotic.MemoryMq.Pipeline.Service" Type="ownProcess" Start="auto" ErrorControl="normal" DisplayName="Thycotic MemoryMq Site Connector Service" Description="Allows site requests to be relayed to engines">
+            <ServiceInstall Arguments="-installerVersion=$(var.InstallerVersion)" Account="[SERVICE_USERNAME]" Password="[SERVICE_PASSWORD]" Id="ServiceInstallMemoryMqSiteConnectorService" Name="Thycotic.MemoryMq.SiteConnector.Service" Type="ownProcess" Start="auto" ErrorControl="normal" DisplayName="Thycotic MemoryMq Site Connector Service" Description="Allows site requests to be relayed to engines">
                 <util:ServiceConfig FirstFailureActionType="restart" SecondFailureActionType="restart" ThirdFailureActionType="none" RestartServiceDelayInSeconds="60" ResetPeriodInDays="1" />
             </ServiceInstall>
-            <ServiceControl Id="ServiceControlMemoryMqPipelineService" Name="Thycotic.MemoryMq.Pipeline.Service" Start="install" Stop="uninstall" Remove="uninstall"/>
+            <ServiceControl Id="ServiceControlMemoryMqSiteConnectorService" Name="Thycotic.MemoryMq.SiteConnector.Service" Start="install" Stop="uninstall" Remove="uninstall"/>
         </xsl:copy>
     </xsl:template>
 
