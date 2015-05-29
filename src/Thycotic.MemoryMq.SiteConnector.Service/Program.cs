@@ -14,7 +14,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
             {
                 var servicesToRun = new ServiceBase[]
                 {
-                    new PipelineService()
+                    new SiteConnectorService()
                 };
                 ServiceBase.Run(servicesToRun);
             }

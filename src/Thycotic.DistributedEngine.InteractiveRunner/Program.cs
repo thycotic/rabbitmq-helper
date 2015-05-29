@@ -41,13 +41,13 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
                 Trace.TraceInformation("Starting interactive runner...");
 
-                PipelineService pipelineService = null;
+                SiteConnectorService pipelineService = null;
                 if (startPipeline)
                 {
                     //Trace.TraceInformation("Starting pipeline...");
                     using (LogContext.Create("Pipeline service startup"))
                     {
-                        pipelineService = new PipelineService();
+                        pipelineService = new SiteConnectorService();
                         pipelineService.Start();
                     }
                 }

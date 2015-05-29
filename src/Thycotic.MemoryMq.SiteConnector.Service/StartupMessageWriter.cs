@@ -33,7 +33,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
             {
                 //from http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Dobri is awesome
                 var logoStream =
-                    Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.MemoryMq.Pipeline.Service.logo.txt");
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream("Thycotic.MemoryMq.SiteConnector.Service.logo.txt");
 
                 if (logoStream != null)
                 {

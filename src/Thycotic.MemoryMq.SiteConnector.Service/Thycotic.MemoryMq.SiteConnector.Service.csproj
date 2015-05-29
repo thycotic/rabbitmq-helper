@@ -176,7 +176,7 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="PipelineService.cs">
+    <Compile Include="SiteConnectorService.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Configuration\IIoCConfigurator.cs" />
@@ -221,8 +221,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="logo.txt" />
-    <EmbeddedResource Include="PipelineService.resx">
-      <DependentUpon>PipelineService.cs</DependentUpon>
+    <EmbeddedResource Include="SiteConnectorService.resx">
+      <DependentUpon>SiteConnectorService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>

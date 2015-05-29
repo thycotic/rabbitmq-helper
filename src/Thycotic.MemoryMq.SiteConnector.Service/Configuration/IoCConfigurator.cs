@@ -55,7 +55,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <param name="pipelineService">The engine service.</param>
-        protected virtual void RegisterPostAuthorization(ContainerBuilder builder, PipelineService pipelineService)
+        protected virtual void RegisterPostAuthorization(ContainerBuilder builder, SiteConnectorService pipelineService)
         {
             builder.RegisterModule(new MemoryMqServerModule(GetLocalConfiguration));
 
@@ -86,7 +86,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
         /// </summary>
         /// <param name="pipelineService">The engine service.</param>
         /// <returns></returns>
-        public IContainer BuildAll(PipelineService pipelineService)
+        public IContainer BuildAll(SiteConnectorService pipelineService)
         {
             using (LogContext.Create("IoC - All"))
             {

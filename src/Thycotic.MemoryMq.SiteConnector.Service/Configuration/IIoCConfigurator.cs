@@ -12,7 +12,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
         /// </summary>
         /// <param name="pipelineService">The PipelineService.</param>
         /// <returns></returns>
-        IContainer BuildAll(PipelineService pipelineService);
+        IContainer BuildAll(SiteConnectorService pipelineService);
         
         
     }

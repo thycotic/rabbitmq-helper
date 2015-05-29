@@ -12,7 +12,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
     /// <summary>
     /// Engine windows service
     /// </summary>
-    public class PipelineService : ServiceBase
+    public class SiteConnectorService : ServiceBase
     {
         /// <summary>
         /// Occurs when the IoC container configured.
@@ -33,19 +33,19 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
 
         private LogCorrelation _correlation;
 
-        private readonly ILogWriter _log = Log.Get(typeof(PipelineService));
+        private readonly ILogWriter _log = Log.Get(typeof(SiteConnectorService));
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PipelineService"/> class.
+        /// Initializes a new instance of the <see cref="SiteConnectorService"/> class.
         /// </summary>
-        public PipelineService() : this(new IoCConfigurator()) { }
+        public SiteConnectorService() : this(new IoCConfigurator()) { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PipelineService" /> class.
+        /// Initializes a new instance of the <see cref="SiteConnectorService" /> class.
         /// </summary>
         /// <param name="ioCConfigurator">The iio c configurator.</param>
-        public PipelineService(IIoCConfigurator ioCConfigurator)
+        public SiteConnectorService(IIoCConfigurator ioCConfigurator)
         {
             IoCConfigurator = ioCConfigurator;
             ConfigureLogging();
@@ -169,15 +169,15 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
                 try
                 {
 
-                    _log.Info("Pipeline starting...");
+                    _log.Info("Site connector starting...");
 
                     BringUp();
 
-                    _log.Info("Pipeline started");
+                    _log.Info("Site connector started");
                 }
                 catch (Exception ex)
                 {
-                    _log.Error("Failed to start pipeline", ex);
+                    _log.Error("Failed to start site connector", ex);
                 }
             }
         }
@@ -191,15 +191,15 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
             {
                 try
                 {
-                    _log.Info("Pipeline stopping...");
+                    _log.Info("Site connector stopping...");
 
                     TearDown();
 
-                    _log.Info("Pipeline stopped");
+                    _log.Info("Site connector stopped");
                 }
                 catch (Exception ex)
                 {
-                    _log.Error("Failed to stop pipeline", ex);
+                    _log.Error("Failed to stop site connector", ex);
                 }
             }
         }
