@@ -31,12 +31,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.DistributedEngine.
 		..\Thycotic.DistributedEngine.Service.WiX.Update\Product.wxs = ..\Thycotic.DistributedEngine.Service.WiX.Update\Product.wxs
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.MemoryMq.Pipeline.Service.WiX", "Thycotic.MemoryMq.Pipeline.Service.WiX", "{35BF3D00-A1C0-432A-9203-F7C2C0FC3ADB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.MemoryMq.SiteConnector.Service.WiX", "Thycotic.MemoryMq.SiteConnector.Service.WiX", "{35BF3D00-A1C0-432A-9203-F7C2C0FC3ADB}"
 	ProjectSection(SolutionItems) = preProject
-		..\Thycotic.MemoryMq.Pipeline.Service.WiX\add_service_install.xsl = ..\Thycotic.MemoryMq.Pipeline.Service.WiX\add_service_install.xsl
-		..\Thycotic.MemoryMq.Pipeline.Service.WiX\generate_msi.cmd = ..\Thycotic.MemoryMq.Pipeline.Service.WiX\generate_msi.cmd
-		..\Thycotic.MemoryMq.Pipeline.Service.WiX\icon.ico = ..\Thycotic.MemoryMq.Pipeline.Service.WiX\icon.ico
-		..\Thycotic.MemoryMq.Pipeline.Service.WiX\Product.wxs = ..\Thycotic.MemoryMq.Pipeline.Service.WiX\Product.wxs
+		..\Thycotic.MemoryMq.SiteConnector.Service.WiX\add_service_install.xsl = ..\Thycotic.MemoryMq.SiteConnector.Service.WiX\add_service_install.xsl
+		..\Thycotic.MemoryMq.SiteConnector.Service.WiX\generate_msi.cmd = ..\Thycotic.MemoryMq.SiteConnector.Service.WiX\generate_msi.cmd
+		..\Thycotic.MemoryMq.SiteConnector.Service.WiX\icon.ico = ..\Thycotic.MemoryMq.SiteConnector.Service.WiX\icon.ico
+		..\Thycotic.MemoryMq.SiteConnector.Service.WiX\Product.wxs = ..\Thycotic.MemoryMq.SiteConnector.Service.WiX\Product.wxs
 	EndProjectSection
 EndProject
 Global
