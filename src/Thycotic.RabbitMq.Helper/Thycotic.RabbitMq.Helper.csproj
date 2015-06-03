@@ -63,7 +63,8 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="ConvertPfxToPemCommand.cs" />
-    <Compile Include="InstallRabbitMqCommand.cs" />
+    <Compile Include="Installation\InstallationConstants.cs" />
+    <Compile Include="Installation\InstallRabbitMqCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

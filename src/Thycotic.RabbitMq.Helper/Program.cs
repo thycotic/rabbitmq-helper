@@ -13,6 +13,7 @@ namespace Thycotic.RabbitMq.Helper
 
             var cli = new CommandLineInterface();
 
+            cli.AddCustomCommand(new InstallRabbitMqCommand());
             cli.AddCustomCommand(new ConvertPfxToPemCommand());
 
             cli.BeginInputLoop(initialCommand);
