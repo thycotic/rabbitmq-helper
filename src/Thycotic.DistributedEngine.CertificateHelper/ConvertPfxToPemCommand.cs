@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Security.Certificates;
 using Thycotic.CLI;
 using Thycotic.Logging;
 
@@ -60,11 +61,20 @@ namespace Thycotic.DistributedEngine.CertificateHelper
 
             var pfxDirectory = file.Directory.FullName;
 
-            var fileName = file.Name;
             var pemFileName = file.Name.Replace(file.Extension, ".pem");
             var keyFileName = file.Name.Replace(file.Extension, ".key");
 
-            var pfx = new X509Certificate2(pfxPath, password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
+
+            X509Certificate2 pfx;
+
+            try
+            {
+                pfx = new X509Certificate2(pfxPath, password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
+            }
+            catch (Exception ex)
+            {
+                throw new CertificateException("Could not open PFX. Perhaps the password is wrong", ex);
+            }
 
             var rsa = (RSACryptoServiceProvider)pfx.PrivateKey;
 
@@ -78,7 +88,11 @@ namespace Thycotic.DistributedEngine.CertificateHelper
                     var keyPair = DotNetUtilities.GetRsaKeyPair(rsa);
                     pemWriter.WriteObject(keyPair.Private);
                     streamWriter.Flush();
-                    File.WriteAllBytes(Path.Combine(pfxDirectory, keyFileName), memoryStream.GetBuffer());
+
+                    var path = Path.Combine(pfxDirectory, keyFileName);
+                    File.WriteAllBytes(path, memoryStream.GetBuffer());
+
+                    _log.Info(string.Format("Key file written to {0}", path));
                 }
             }
 
@@ -91,7 +105,11 @@ namespace Thycotic.DistributedEngine.CertificateHelper
                     var pemWriter = new PemWriter(streamWriter);
                     pemWriter.WriteObject(DotNetUtilities.FromX509Certificate(pfx));
                     streamWriter.Flush();
-                    File.WriteAllBytes(Path.Combine(pfxDirectory, pemFileName), memoryStream.GetBuffer());
+
+                    var path = Path.Combine(pfxDirectory, pemFileName);
+                    File.WriteAllBytes(path, memoryStream.GetBuffer());
+
+                    _log.Info(string.Format("PEM file written to {0}", path));
                 }
             }
 
