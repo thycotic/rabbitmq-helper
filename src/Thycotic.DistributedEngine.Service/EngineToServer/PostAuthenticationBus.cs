@@ -25,35 +25,27 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// The callback.
         /// </value>
         protected IEngineToServerCommunicationCallback Callback { get; private set; }
-        
-        /// <summary>
-        /// Gets the channel.
-        /// </summary>
-        /// <value>
-        /// The channel.
-        /// </value>
-        protected IEngineToServerCommunicationWcfService Channel { get; private set; }
 
         //private readonly ILogWriter _log = Log.Get(typeof(PostAuthenticationBus));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationBus" /> class.
         /// </summary>
-        /// <param name="engineToServerConnection">The engine to server connection.</param>
+        /// <param name="engineToServerConnectionManager">The engine to server connection.</param>
         /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="authenticatedCommunicationKeyProvider">The authenticated communication key provider.</param>
         /// <param name="authenticatedCommunicationRequestEncryptor">The authenticated communication request encryptor.</param>
-        protected PostAuthenticationBus(IEngineToServerConnection engineToServerConnection,
+        protected PostAuthenticationBus(IEngineToServerConnectionManager engineToServerConnectionManager,
             IObjectSerializer objectSerializer,
             IAuthenticatedCommunicationKeyProvider authenticatedCommunicationKeyProvider,
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
+            : base(engineToServerConnectionManager)
         {
             _objectSerializer = objectSerializer;
             _authenticatedCommunicationKeyProvider = authenticatedCommunicationKeyProvider;
             _authenticatedCommunicationRequestEncryptor = authenticatedCommunicationRequestEncryptor;
 
             Callback = new EngineToServerCommunicationCallback();
-            Channel = engineToServerConnection.OpenChannel(Callback);
         }
 
         /// <summary>
@@ -108,7 +100,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// </summary>
         public virtual void Dispose()
         {
-            WrapInteraction(() => Channel.Dispose());
+            WrapInteraction(channel => channel.Dispose(), Callback);
         }
     }
 }

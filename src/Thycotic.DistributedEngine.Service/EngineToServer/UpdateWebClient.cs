@@ -41,5 +41,23 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             File.WriteAllBytes(path, bytes);
         }
 
+        /// <summary>
+        /// Simple ping to the web site to see if the ConnectionString we're using allows us to access it.
+        /// </summary>
+        public void Ping()
+        {
+            var webClient = new PingWebClient();
+            webClient.DownloadString(new Uri(_connectionString));
+        }
+
+        private class PingWebClient : WebClient
+        {
+            protected override WebRequest GetWebRequest(Uri address)
+            {
+                WebRequest req = base.GetWebRequest(address);
+                req.Method = "HEAD";
+                return req;
+            }
+        }
     }
 }

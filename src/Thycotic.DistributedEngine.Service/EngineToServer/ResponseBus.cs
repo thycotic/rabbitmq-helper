@@ -23,15 +23,15 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationBus" /> class.
         /// </summary>
-        /// <param name="engineToServerConnection">The engine to server connection.</param>
+        /// <param name="engineToServerConnectionManager">The engine to server connection.</param>
         /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="authenticatedCommunicationKeyProvider">The authenticated communication key provider.</param>
         /// <param name="authenticatedCommunicationRequestEncryptor">The authenticated communication request encryptor.</param>
-        public ResponseBus(IEngineToServerConnection engineToServerConnection,
+        public ResponseBus(IEngineToServerConnectionManager engineToServerConnectionManager,
             IObjectSerializer objectSerializer,
             IAuthenticatedCommunicationKeyProvider authenticatedCommunicationKeyProvider,
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
-            : base(engineToServerConnection, objectSerializer, authenticatedCommunicationKeyProvider, authenticatedCommunicationRequestEncryptor)
+            : base(engineToServerConnectionManager, objectSerializer, authenticatedCommunicationKeyProvider, authenticatedCommunicationRequestEncryptor)
         {
 
         }
@@ -45,13 +45,13 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <returns></returns>
         public TResponse Get<TRequest, TResponse>(TRequest request) where TRequest : IEngineQueryRequest
         {
-            return WrapInteraction(() =>
+            return WrapInteraction(channel =>
             {
                 var wrappedRequest = WrapRequest<TResponse>(request);
-                var wrapperResponse = Channel.Get(wrappedRequest);
+                var wrapperResponse = channel.Get(wrappedRequest);
 
                 return UnwrapResponse<TResponse>(wrapperResponse);
-            });
+            }, Callback);
         }
 
         /// <summary>
@@ -61,11 +61,11 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <param name="request">The request.</param>
         public void Execute<TRequest>(TRequest request) where TRequest : IEngineCommandRequest
         {
-            WrapInteraction(() =>
+            WrapInteraction(channel =>
             {
                 var wrappedRequest = WrapRequest(request);
-                Channel.Execute(wrappedRequest);
-            });
+                channel.Execute(wrappedRequest);
+            }, Callback);
         }
 
         /// <summary>
@@ -77,13 +77,13 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <returns></returns>
         public TResponse Execute<TRequest, TResponse>(TRequest request) where TRequest : IEngineCommandRequest
         {
-            return WrapInteraction(() =>
+            return WrapInteraction(channel =>
             {
                 var wrappedRequest = WrapRequest<TResponse>(request);
-                var wrapperResponse = Channel.ExecuteAndRespond(wrappedRequest);
+                var wrapperResponse = channel.ExecuteAndRespond(wrappedRequest);
 
                 return UnwrapResponse<TResponse>(wrapperResponse);
-            });
+            }, Callback);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             //start the response task
             var pendingTask = Task.Factory.StartNew(() =>
             {
-                WrapInteraction(() =>
+                WrapInteraction(channel =>
                 {
                     var tries = 0;
                     do
@@ -109,7 +109,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                             Task.Delay(TimeSpan.FromSeconds(tries * retryDelaySeconds)).Wait();
 
                             var wrappedRequest = WrapRequest(request);
-                            Channel.Execute(wrappedRequest);
+                            channel.Execute(wrappedRequest);
 
                             return;
                         }
@@ -128,7 +128,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                             }
                         }
                     } while (tries < maxRetryCount);
-                });
+                }, Callback);
             });
 
             //add the task

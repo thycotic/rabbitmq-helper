@@ -150,7 +150,6 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         {
             builder.RegisterType<AuthenticationRequestEncryptor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<AuthenticatedCommunicationRequestEncryptor>().AsImplementedInterfaces().SingleInstance();
-
             builder.Register(context =>
             {
                 var connectionString =
@@ -168,8 +167,8 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                     _log.Warn("Connection to server is not using encryption");
                 }
 
-                return new EngineToServerConnection(connectionString, useSsl);
-            }).As<IEngineToServerConnection>();
+                return new EngineToServerConnectionManager(connectionString, useSsl);
+            }).As<IEngineToServerConnectionManager>().SingleInstance();
 
             builder.RegisterType<ConfigurationBus>().AsImplementedInterfaces().SingleInstance();
         }

@@ -17,28 +17,26 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
     /// </summary>
     public class UpdateBus : PostAuthenticationBus, IUpdateBus
     {
-        private readonly IEngineToServerConnection _engineToServerConnection;
         private readonly IEngineIdentificationProvider _engineIdentificationProvider;
         private readonly ILogWriter _log = Log.Get(typeof(UpdateBus));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationBus" /> class.
         /// </summary>
-        /// <param name="engineToServerConnection">The engine to server connection.</param>
+        /// <param name="engineToServerConnectionManager">The engine to server connection.</param>
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="authenticatedCommunicationKeyProvider">The authenticated communication key provider.</param>
         /// <param name="authenticatedCommunicationRequestEncryptor">The authenticated communication request encryptor.</param>
-        public UpdateBus(IEngineToServerConnection engineToServerConnection,
+        public UpdateBus(IEngineToServerConnectionManager engineToServerConnectionManager,
             IEngineIdentificationProvider engineIdentificationProvider,
             IObjectSerializer objectSerializer,
             IAuthenticatedCommunicationKeyProvider authenticatedCommunicationKeyProvider,
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
             : base(
-                engineToServerConnection, objectSerializer, authenticatedCommunicationKeyProvider,
+                engineToServerConnectionManager, objectSerializer, authenticatedCommunicationKeyProvider,
                 authenticatedCommunicationRequestEncryptor)
         {
-            _engineToServerConnection = engineToServerConnection;
             _engineIdentificationProvider = engineIdentificationProvider;
         }
 
@@ -48,21 +46,24 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// </summary>
         public void GetUpdate(string path)
         {
-            _log.Info("Requesting update from server...");
+            WrapInteraction(channel =>
+            {
+                _log.Info("Requesting update from server...");
 
-            if (Channel is IDuplexEngineToServerCommunicationWcfService)
-            {
-                ExtractOverNetTcp(path);
-            }
-            else if (Channel is IUnidirectionalEngineToServerCommunicationWcfService)
-            {
-                ExtractOverHttp(path);
-            }
+                if (channel is IDuplexEngineToServerCommunicationWcfService)
+                {
+                    ExtractOverNetTcp(path);
+                }
+                else if (channel is IUnidirectionalEngineToServerCommunicationWcfService)
+                {
+                    ExtractOverHttp(path);
+                }
+            }, Callback);
         }
 
         private void ExtractOverNetTcp(string path)
         {
-            var response = WrapInteraction(() =>
+            var response = WrapInteraction(channel =>
             {
                 var request = new EngineUpdateRequest
                 {
@@ -72,10 +73,10 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 };
 
                 var wrappedRequest = WrapRequest<EngineUpdateResponse>(request);
-                var wrapperResponse = Channel.Get(wrappedRequest);
+                var wrapperResponse = channel.Get(wrappedRequest);
 
                 return UnwrapResponse<EngineUpdateResponse>(wrapperResponse);
-            });
+            }, Callback);
 
             if (response.Success)
             {
@@ -97,7 +98,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
 
         private void ExtractOverHttp(string path)
         {
-            var response = WrapInteraction(() =>
+            var response = WrapInteraction(webClient =>
             {
                 var request = new EngineUpdateOverHttpRequest
                 {
@@ -107,16 +108,12 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 };
 
                 var wrappedRequest = WrapRequest<EngineUpdateOverHttpResponse>(request);
-
-                var updateWebClient = _engineToServerConnection.OpenUpdateWebClient();
-
-                updateWebClient.DownloadUpdate(wrappedRequest, path);
+                webClient.DownloadUpdate(wrappedRequest, path);
 
                 return new EngineUpdateResponse
                 {
                     Success = true
                 };
-
             });
 
             if (response.Success)
