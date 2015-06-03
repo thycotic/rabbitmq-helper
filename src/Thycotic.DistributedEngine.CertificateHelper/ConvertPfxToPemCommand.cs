@@ -32,8 +32,6 @@ namespace Thycotic.DistributedEngine.CertificateHelper
 
             Action = parameters =>
             {
-                _log.Info("Posting message to exchange");
-
                 string path;
                 string password;
                 if (!parameters.TryGet("path", out path)) return;
@@ -41,12 +39,10 @@ namespace Thycotic.DistributedEngine.CertificateHelper
                 
                 ConvertToPem(path, password);
 
-                _log.Debug("Conversion completed");
-
             };
         }
 
-        private static void ConvertToPem(string pfxPath, string password)
+        private void ConvertToPem(string pfxPath, string password)
         {
 
             var file = new FileInfo(pfxPath);
@@ -70,6 +66,8 @@ namespace Thycotic.DistributedEngine.CertificateHelper
             {
                 using (TextWriter streamWriter = new StreamWriter(memoryStream))
                 {
+                    _log.Info("Creating key file..");
+
                     var pemWriter = new PemWriter(streamWriter);
                     var keyPair = DotNetUtilities.GetRsaKeyPair(rsa);
                     pemWriter.WriteObject(keyPair.Private);
@@ -82,12 +80,16 @@ namespace Thycotic.DistributedEngine.CertificateHelper
             {
                 using (TextWriter streamWriter = new StreamWriter(memoryStream))
                 {
+                    _log.Info("Creating certificate file..");
+
                     var pemWriter = new PemWriter(streamWriter);
                     pemWriter.WriteObject(DotNetUtilities.FromX509Certificate(pfx));
                     streamWriter.Flush();
                     File.WriteAllBytes(Path.Combine(pfxDirectory, pemFileName), memoryStream.GetBuffer());
                 }
             }
+
+            _log.Info("Done");
         }
 
         
