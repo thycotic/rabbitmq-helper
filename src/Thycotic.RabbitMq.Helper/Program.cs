@@ -1,7 +1,7 @@
 ﻿using Thycotic.CLI;
 using Thycotic.Logging;
 
-namespace Thycotic.DistributedEngine.CertificateHelper
+namespace Thycotic.RabbitMq.Helper
 {
     internal class Program
     {

@@ -8,7 +8,7 @@ using Org.BouncyCastle.Security.Certificates;
 using Thycotic.CLI;
 using Thycotic.Logging;
 
-namespace Thycotic.DistributedEngine.CertificateHelper
+namespace Thycotic.RabbitMq.Helper
 {
     public class ConvertPfxToPemCommand : ConsoleCommandBase, IImmediateConsoleCommand
     {
