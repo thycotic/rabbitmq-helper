@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Thycotic.Logging;
 
-namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
+namespace Thycotic.CLI
 {
-    internal class ConsoleCommandParameters : Dictionary<string, object>
+    public class ConsoleCommandParameters : Dictionary<string, object>
     {
         private readonly ILogWriter _log = Log.Get(typeof(CommandLineInterface));
 
@@ -11,7 +11,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
         {
             if (!ContainsKey(name))
             {
-                _log.Error(string.Format("Parameter {0} was not found", name));
+                _log.Debug(string.Format("Parameter {0} was not found", name));
                 value = default (T);
                 return false;
             }

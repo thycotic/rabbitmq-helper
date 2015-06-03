@@ -1,8 +1,8 @@
 using System;
 
-namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
+namespace Thycotic.CLI
 {
-    internal interface IConsoleCommand
+    public interface IConsoleCommand
     {
         string Name { get; }
         string Area { get; }

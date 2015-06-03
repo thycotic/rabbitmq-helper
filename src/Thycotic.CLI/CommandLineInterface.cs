@@ -7,12 +7,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
-using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Utility;
 
-namespace Thycotic.DistributedEngine.InteractiveRunner
+namespace Thycotic.CLI
 {
-    internal class CommandLineInterface
+    public class CommandLineInterface
     {
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
         private readonly HashSet<IConsoleCommand> _commandBuiltInMappings = new HashSet<IConsoleCommand>();
@@ -25,13 +24,13 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             get { return _cts.Token; }
         }
 
-        public CommandLineInterface()
+        public CommandLineInterface(string coreAreaName = "Core", string uncategorizedAreaName = "Uncategorized")
         {
             #region BuildAll-in system commands
             _commandBuiltInMappings.Add(new SystemConsoleCommand
             {
                 Name = "clear",
-                Area = CommandAreas.Core,
+                Area = coreAreaName,
                 Aliases = new[] { "cls" },
                 Description = "Clears the terminal screen",
                 Action = parameters => Console.Clear()
@@ -40,7 +39,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             _commandBuiltInMappings.Add(new SystemConsoleCommand
             {
                 Name = "help",
-                Area = CommandAreas.Core,
+                Area = coreAreaName,
                 Aliases = new[] { "man", "h" },
                 Description = "This screen",
                 Action = parameters =>
@@ -50,11 +49,11 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
                     var currentMappings = GetCurrentCommandMappings().ToArray();
 
-                    currentMappings.Select(c => !string.IsNullOrWhiteSpace(c.Area) ? c.Area : CommandAreas.Uncategorized).Distinct().OrderBy(a => a).ToList().ForEach(a =>
+                    currentMappings.Select(c => !string.IsNullOrWhiteSpace(c.Area) ? c.Area : uncategorizedAreaName).Distinct().OrderBy(a => a).ToList().ForEach(a =>
                     {
                         Console.WriteLine("{0} command area", a);
 
-                        if (a == CommandAreas.Uncategorized) a = null;
+                        if (a == uncategorizedAreaName) a = null;
 
                         var mappings =
                             currentMappings.Where(c => c.Area == a).OrderBy(c => c.Name).Select(c => c.ToString());
@@ -69,7 +68,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             _commandBuiltInMappings.Add(new SystemConsoleCommand
             {
                 Name = "quit",
-                Area = CommandAreas.Core,
+                Area = coreAreaName,
                 Aliases = new[] { "exit", "q" },
                 Description = "Quits/exists the application",
                 Action = parameters => _cts.Cancel()
@@ -161,14 +160,14 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 commandName = commandMatches[0].Groups[0].Value;
             }
 
-            var regexParameters = new Regex(@"-([\w]+)=\""?([\d\w\s.]+)\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            var regexParameters = new Regex(@"-([\w]+)=\""?([\d\w\s.:\\\[\]]+)\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             var parameterMatches = regexParameters.Matches(input);
 
             foreach (Match parameterMatch in parameterMatches)
             {
                 // -foo="bar baz" => [1] = foo, [2] = bar baz
-                parameters.Add(parameterMatch.Groups[1].Value, parameterMatch.Groups[2].Value);
+                parameters.Add(parameterMatch.Groups[1].Value, parameterMatch.Groups[2].Value.Trim());
             }
 
             return commandName;

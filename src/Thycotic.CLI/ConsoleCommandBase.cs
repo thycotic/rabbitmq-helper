@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Text;
 
-namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
+namespace Thycotic.CLI
 {
-    internal abstract class ConsoleCommandBase : IConsoleCommand
+    public abstract class ConsoleCommandBase : IConsoleCommand
     {
 
         public virtual string Name { get; set; }

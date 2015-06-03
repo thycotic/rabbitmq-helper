@@ -7,10 +7,11 @@
     <ProjectGuid>{8E815A53-4472-4C31-9FF5-1BD48B976565}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.DistributedEngine.CertificateHelper</RootNamespace>
-    <AssemblyName>Thycotic.DistributedEngine.CertificateHelper</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Thycotic.RabbitMq.Helper</RootNamespace>
+    <AssemblyName>Thycotic.RabbitMq.Helper</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,6 +42,10 @@
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,11 +53,18 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="ConvertPfxToPemCommand.cs" />
+    <Compile Include="Installation\InstallationConstants.cs" />
+    <Compile Include="Installation\InstallRabbitMqCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,6 +74,16 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Thycotic.CLI\Thycotic.CLI.csproj">
+      <Project>{2dbbc8ec-b150-45c1-82a9-20ccee768443}</Project>
+      <Name>Thycotic.CLI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
+      <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
+      <Name>Thycotic.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
