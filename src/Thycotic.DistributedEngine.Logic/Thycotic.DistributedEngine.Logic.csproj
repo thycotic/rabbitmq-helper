@@ -148,8 +148,8 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Jscape.Ssh">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.155\lib\net451\Jscape.Ssh.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.161\lib\net451\Jscape.Ssh.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -231,8 +231,7 @@
       <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.PasswordChangers">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.155\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.161\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.SharedTypes">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.124\lib\net451\Thycotic.SharedTypes.dll</HintPath>
