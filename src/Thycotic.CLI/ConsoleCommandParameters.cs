@@ -3,7 +3,7 @@ using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
 {
-    internal class ConsoleCommandParameters : Dictionary<string, object>
+    public class ConsoleCommandParameters : Dictionary<string, object>
     {
         private readonly ILogWriter _log = Log.Get(typeof(CommandLineInterface));
 

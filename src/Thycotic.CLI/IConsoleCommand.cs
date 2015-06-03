@@ -2,7 +2,7 @@ using System;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
 {
-    internal interface IConsoleCommand
+    public interface IConsoleCommand
     {
         string Name { get; }
         string Area { get; }

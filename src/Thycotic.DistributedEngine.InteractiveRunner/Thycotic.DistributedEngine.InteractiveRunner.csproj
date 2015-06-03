@@ -258,13 +258,8 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="CommandLineInterface.cs" />
     <Compile Include="Configuration\LoopbackConfiguirationScenarios.cs" />
     <Compile Include="ConsoleCommands\CommandAreas.cs" />
-    <Compile Include="ConsoleCommands\ConsoleCommandBase.cs" />
-    <Compile Include="ConsoleCommands\ConsoleCommandParameters.cs" />
-    <Compile Include="ConsoleCommands\IConsoleCommand.cs" />
-    <Compile Include="ConsoleCommands\IImmediateConsoleCommand.cs" />
     <Compile Include="ConsoleCommands\PasswordChanging\SqlPasswordChangeCommand.cs" />
     <Compile Include="ConsoleCommands\POC\CreateFileCommand.cs" />
     <Compile Include="ConsoleCommands\POC\FloodCommand.cs" />
@@ -274,7 +269,6 @@
     <Compile Include="ConsoleCommands\POC\ThrowTriggerCommand.cs" />
     <Compile Include="ConsoleCommands\POC\SortListCommand.cs" />
     <Compile Include="ConsoleCommands\POC\HelloWorldCommand.cs" />
-    <Compile Include="ConsoleCommands\SystemConsoleCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -290,6 +284,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Thycotic.CLI\Thycotic.CLI.csproj">
+      <Project>{2dbbc8ec-b150-45c1-82a9-20ccee768443}</Project>
+      <Name>Thycotic.CLI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thycotic.DistributedEngine.Logic\Thycotic.DistributedEngine.Logic.csproj">
       <Project>{74ec374a-729a-4707-8586-32d10cdc3ecc}</Project>
       <Name>Thycotic.DistributedEngine.Logic</Name>

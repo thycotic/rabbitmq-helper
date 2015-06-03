@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
 {
-    internal abstract class ConsoleCommandBase : IConsoleCommand
+    public abstract class ConsoleCommandBase : IConsoleCommand
     {
 
         public virtual string Name { get; set; }
