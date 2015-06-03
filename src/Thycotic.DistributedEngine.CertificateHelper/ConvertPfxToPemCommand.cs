@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
-using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
+using Thycotic.CLI;
 using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.CertificateHelper

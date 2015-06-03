@@ -1,4 +1,4 @@
-﻿namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
+﻿namespace Thycotic.CLI
 {
     public class SystemConsoleCommand : ConsoleCommandBase, IImmediateConsoleCommand {
     }

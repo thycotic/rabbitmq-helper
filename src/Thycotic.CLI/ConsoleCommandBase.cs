@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
+namespace Thycotic.CLI
 {
     public abstract class ConsoleCommandBase : IConsoleCommand
     {

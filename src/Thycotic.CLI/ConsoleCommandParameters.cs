@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Thycotic.Logging;
 
-namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
+namespace Thycotic.CLI
 {
     public class ConsoleCommandParameters : Dictionary<string, object>
     {

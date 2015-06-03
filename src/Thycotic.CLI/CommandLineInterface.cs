@@ -7,10 +7,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
-using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Utility;
 
-namespace Thycotic.DistributedEngine.InteractiveRunner
+namespace Thycotic.CLI
 {
     public class CommandLineInterface
     {

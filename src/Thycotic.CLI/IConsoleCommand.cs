@@ -1,6 +1,6 @@
 using System;
 
-namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands
+namespace Thycotic.CLI
 {
     public interface IConsoleCommand
     {

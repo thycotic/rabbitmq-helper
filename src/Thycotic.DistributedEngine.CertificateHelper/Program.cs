@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using Thycotic.CLI;
 using Thycotic.DistributedEngine.InteractiveRunner;
-using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.CertificateHelper

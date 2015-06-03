@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using NSubstitute;
+using Thycotic.CLI;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.DistributedEngine.Service;
 using Thycotic.DistributedEngine.Service.Security;
