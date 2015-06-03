@@ -11,7 +11,7 @@ namespace Thycotic.CLI
         {
             if (!ContainsKey(name))
             {
-                _log.Error(string.Format("Parameter {0} was not found", name));
+                _log.Debug(string.Format("Parameter {0} was not found", name));
                 value = default (T);
                 return false;
             }
