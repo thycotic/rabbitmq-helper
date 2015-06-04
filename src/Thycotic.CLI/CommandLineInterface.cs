@@ -33,7 +33,7 @@ namespace Thycotic.CLI
                 Area = coreAreaName,
                 Aliases = new[] { "cls" },
                 Description = "Clears the terminal screen",
-                Action = parameters => Console.Clear()
+                Action = parameters => { Console.Clear(); return 0; }
             });
 
             _commandBuiltInMappings.Add(new SystemConsoleCommand
@@ -62,6 +62,8 @@ namespace Thycotic.CLI
 
                         Console.WriteLine();
                     });
+
+                    return 0;
                 }
             });
 
@@ -71,7 +73,7 @@ namespace Thycotic.CLI
                 Area = coreAreaName,
                 Aliases = new[] { "exit", "q" },
                 Description = "Quits/exists the application",
-                Action = parameters => _cts.Cancel()
+                Action = parameters => { _cts.Cancel(); return 0; }
             });
             #endregion
 

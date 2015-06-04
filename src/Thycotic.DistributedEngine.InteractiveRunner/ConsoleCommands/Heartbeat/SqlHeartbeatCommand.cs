@@ -76,6 +76,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
 
                 _log.Info("Posting completed");
 
+                return 0;
+
             };
         }
 

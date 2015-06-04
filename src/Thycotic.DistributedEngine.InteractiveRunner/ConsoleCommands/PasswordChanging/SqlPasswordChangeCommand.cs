@@ -74,6 +74,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordC
 
                 _log.Info("Posting completed");
 
+                return 0;
+
             };
         }
     }

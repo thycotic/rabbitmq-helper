@@ -35,10 +35,12 @@ namespace Thycotic.RabbitMq.Helper
             {
                 string path;
                 string password;
-                if (!parameters.TryGet("path", out path)) return;
-                if (!parameters.TryGet("pw", out password)) return;
+                if (!parameters.TryGet("path", out path)) return 1;
+                if (!parameters.TryGet("pw", out password)) return 1;
                 
                 ConvertToPem(path, password);
+
+                return 0;
 
             };
         }

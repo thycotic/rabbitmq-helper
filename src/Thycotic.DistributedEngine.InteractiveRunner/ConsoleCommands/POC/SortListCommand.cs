@@ -49,6 +49,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                 Console.WriteLine("Consumer returned \"{0}\" item(s)", response.Items.Length);
 
                 response.Items.ToList().ForEach(Console.WriteLine);
+
+                return 0;
             };
         }
     }

@@ -1,5 +1,10 @@
-﻿using Thycotic.CLI;
+﻿using System.Linq;
+using System.Reflection;
+using System.Threading;
+using Autofac;
+using Thycotic.CLI;
 using Thycotic.Logging;
+using Thycotic.RabbitMq.Helper.Installation;
 
 namespace Thycotic.RabbitMq.Helper
 {
@@ -13,13 +18,46 @@ namespace Thycotic.RabbitMq.Helper
 
             var cli = new CommandLineInterface();
 
-            cli.AddCustomCommand(new InstallRabbitMqCommand());
-            cli.AddCustomCommand(new ConvertPfxToPemCommand());
+            var container = ConfigureCli(cli);
 
             cli.BeginInputLoop(initialCommand);
 
             return 0;
         }
+
+        private static IContainer ConfigureCli(CommandLineInterface cli)
+        {
+            using (LogContext.Create("CLI configuration"))
+            {
+                cli.ClearCommands();
+
+                var currentAssembly = Assembly.GetExecutingAssembly();
+
+                // Create the builder with which components/services are registered.
+                var builder = new ContainerBuilder();
+
+                builder.Register(context => cli.CancellationToken).As<CancellationToken>().SingleInstance();
+                //builder.Register(context => bus).As<IRequestBus>().SingleInstance();
+                //builder.Register(context => exchangeNameProvider).As<IExchangeNameProvider>().SingleInstance();
+
+                builder.RegisterAssemblyTypes(currentAssembly)
+                    .Where(t => !t.IsAbstract)
+                    .Where(t => typeof(IConsoleCommand).IsAssignableFrom(t))
+                    .Where(t => t != typeof(SystemConsoleCommand));
+
+                var container = builder.Build();
+
+                var commands =
+                    container.ComponentRegistry.Registrations.Where(
+                        r => typeof(IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
+
+                commands.ToList()
+                    .ForEach(c => cli.AddCustomCommand((IConsoleCommand)container.Resolve(c.Activator.LimitType)));
+
+                return container;
+            }
+        }
+
 
     }
 }

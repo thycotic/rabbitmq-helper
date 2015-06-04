@@ -48,6 +48,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                 }
 
                 _log.Info("Posting completed.");
+
+                return 0;
             };
         }
     }

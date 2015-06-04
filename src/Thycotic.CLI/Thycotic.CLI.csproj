@@ -52,7 +52,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryConsoleCommandFragment.cs" />
     <Compile Include="CommandLineInterface.cs" />
+    <Compile Include="IConsoleCommandFragment.cs" />
+    <Compile Include="WorkflowConsoleCommand.cs" />
     <Compile Include="ConsoleCommandBase.cs" />
     <Compile Include="ConsoleCommandParameters.cs" />
     <Compile Include="IConsoleCommand.cs" />

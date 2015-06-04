@@ -37,7 +37,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
             Action = parameters =>
             {
                 string countString;
-                if (!parameters.TryGet("count", out countString)) return;
+                if (!parameters.TryGet("count", out countString)) return 1;
 
                 var count = Math.Max(0, Convert.ToInt32(countString));
 
@@ -62,11 +62,16 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                     }
 
                     _log.Info("Flooding completed");
+
+                    return 0;
                 }
                 catch (ObjectDisposedException)
                 {
                     _log.Info("Flooding aborted");
+
+                    return 0;
                 }
+
             };
         }
     }

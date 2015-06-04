@@ -34,7 +34,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                 _log.Info("Posting message to exchange");
 
                 string content;
-                if (!parameters.TryGet("content", out content)) return;
+                if (!parameters.TryGet("content", out content)) return 1;
 
                 var message = new HelloWorldMessage
                 {
@@ -44,6 +44,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                 _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
 
                 _log.Info("Posting completed");
+
+                return 0;
 
             };
         }

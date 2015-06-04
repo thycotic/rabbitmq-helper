@@ -37,7 +37,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                 _log.Info("Posting message to exchange");
 
                 string countString;
-                if (!parameters.TryGet("count", out countString)) return;
+                if (!parameters.TryGet("count", out countString)) return 1;
 
                 var count = Convert.ToInt32(countString);
 
@@ -49,6 +49,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
                 var response = _bus.BlockingPublish<BlockingConsumerResult>(exchangeNameProvider.GetCurrentExchange(), message, (count+5) * 1000);
 
                 _log.Info(string.Format("Posting completed. Consumer said: {0}", response.StatusText));
+
+                return 0;
             };
         }
     }

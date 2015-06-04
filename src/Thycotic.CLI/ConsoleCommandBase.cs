@@ -27,7 +27,12 @@ namespace Thycotic.CLI
             return !Equals(left, right);
         }
 
-        public Action<ConsoleCommandParameters> Action { get; set; }
+        public Func<ConsoleCommandParameters, int> Action { get; set; }
+
+        protected ConsoleCommandBase()
+        {
+            Action = parameters => 0;
+        }
 
         public override int GetHashCode()
         {
