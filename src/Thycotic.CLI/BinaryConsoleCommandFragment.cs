@@ -18,6 +18,14 @@ namespace Thycotic.CLI
 
             Action = parameters =>
             {
+                string silentString;
+                bool silent;
+                if (parameters.TryGet("silent", out silentString) &&
+                    bool.TryParse(silentString, out silent))
+                {
+                    return WhenTrue.Action.Invoke(parameters);
+                }
+
 
                 Console.Write("{0} [Y/N] ", Prompt);
 
@@ -26,6 +34,8 @@ namespace Thycotic.CLI
                 var choice = input.ToLower().Trim();
                 switch (choice)
                 {
+                    case "t":
+                    case "true":
                     case "y":
                     case "yes":
                     case "yeh":
