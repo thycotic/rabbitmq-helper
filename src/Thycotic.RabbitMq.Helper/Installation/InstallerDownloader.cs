@@ -26,9 +26,12 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
             do
             {
+                var oldConsoleTop = Console.CursorTop;
+                var oldConsoleLeft = Console.CursorLeft;
+
+
                 try
-                {
-                    var client = new WebClient();
+                {                    var client = new WebClient();
 
                     client.DownloadProgressChanged += (sender, args) =>
                     {
@@ -61,8 +64,14 @@ namespace Thycotic.RabbitMq.Helper.Installation
                 }
                 catch (Exception ex)
                 {
+                    Console.SetCursorPosition(oldConsoleLeft, oldConsoleTop);
+
                     _log.Error("Failed to download", ex);
                     retries++;
+                }
+                finally
+                {
+                    Console.SetCursorPosition(oldConsoleLeft, oldConsoleTop);
                 }
             } while (retries < maxRetries);
 
