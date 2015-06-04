@@ -3,14 +3,14 @@ using Thycotic.Logging;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class EditRabbitMqConfigFileMqCommand : ConsoleCommandBase
+    internal class EnableRabbitManagementPlugin : ConsoleCommandBase
     {
-        
-        private readonly ILogWriter _log = Log.Get(typeof (EditRabbitMqConfigFileMqCommand));
+
+        private readonly ILogWriter _log = Log.Get(typeof(InstallRabbitMqCommand));
 
         public override string Name
         {
-            get { return "editRabbitMqConfigFileMq"; }
+            get { return "enableRabbitMqManagementPlugin"; }
         }
 
         public override string Area
@@ -20,17 +20,14 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
         public override string Description
         {
-            get { return "Edits the RabbitMq configuration file"; }
+            get { return "Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)"; }
         }
 
-        public EditRabbitMqConfigFileMqCommand()
+        public EnableRabbitManagementPlugin()
         {
 
             Action = parameters =>
             {
-
-
-
                 return 0;
             };
         }

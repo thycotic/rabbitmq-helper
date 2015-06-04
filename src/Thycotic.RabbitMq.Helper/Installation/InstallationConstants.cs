@@ -30,6 +30,8 @@ namespace Thycotic.RabbitMq.Helper.Installation
             public const string DownloadUrl =
                 "https://www.rabbitmq.com/releases/rabbitmq-server/v3.5.3/rabbitmq-server-3.5.3.exe";
 
+            public static readonly string ConfigurationPath = Path.Combine(EnvironmentalVariables.ProgramFiles,
+                "Thycotic Software Ltd", "RabbitMq Site Connector");
             public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles32Bit, "RabbitMQ Server", "rabbitmq_server-3.5.3");
             public static readonly string BinPath = Path.Combine(InstallPath, "sbin");
             public static readonly string UninstallerPath = Path.Combine(EnvironmentalVariables.ProgramFiles32Bit, "RabbitMQ Server", "uninstall.exe");

@@ -10,7 +10,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
     internal class DownloadErlangCommand : ConsoleCommandBase, IImmediateConsoleCommand
     {
-        private readonly string _erlangInstallerPath = Path.Combine(Path.GetTempPath(), "erlang.exe");
+        public static readonly string ErlangInstallerPath = Path.Combine(Path.GetTempPath(), "erlang.exe");
 
         private readonly ILogWriter _log = Log.Get(typeof(DownloadErlangCommand));
 
@@ -52,7 +52,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
                 var downloader = new InstallerDownloader();
 
                 downloader.DownloadInstaller(CancellationToken.None, InstallationConstants.Erlang.DownloadUrl,
-                    _erlangInstallerPath, forceDownload);
+                    ErlangInstallerPath, forceDownload);
 
                 return 0;
             };

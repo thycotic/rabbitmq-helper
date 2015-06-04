@@ -9,6 +9,13 @@ namespace Thycotic.CLI.OS
     {
         private readonly ILogWriter _log = Log.Get(typeof (ExternalProcessRunner));
 
+        public TimeSpan EstimatedProcessDuration { get; set; }
+
+        public ExternalProcessRunner()
+        {
+            EstimatedProcessDuration = TimeSpan.FromSeconds(30);
+        }
+
         public void Run(string executablePath, string workingPath, string parameters = null)
         {
             var processInfo = new ProcessStartInfo(executablePath, parameters)
@@ -44,8 +51,8 @@ namespace Thycotic.CLI.OS
 
             });
 
-            //wait for 30 seconds for process to complete
-            task.Wait(TimeSpan.FromSeconds(30));
+            //wait for process to complete
+            task.Wait(EstimatedProcessDuration);
 
             //there was an exception, rethrow it
             if (task.Exception != null)

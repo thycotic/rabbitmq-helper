@@ -35,7 +35,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
                     {
                         Steps = new IConsoleCommandFragment[]
                         {
-                            container.Resolve<DownloadErlangCommand>(),
+                            //container.Resolve<DownloadErlangCommand>(),
                             new BinaryConsoleCommandFragment
                             {
                                 Name = "agreeToErlangLicense",
@@ -45,13 +45,12 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                 {
                                     Steps = new IConsoleCommandFragment[]
                                     {
-                                        container.Resolve<DownloadRabbitMqCommand>(),
-                                        container.Resolve<UninstallPriorRabbitMqCommand>(),
-                                        container.Resolve<UninstallPriorErlangCommand>(),
-                                        container.Resolve<InstallErlangCommand>(),
-                                        container.Resolve<CreateRabbitMqConfigDirectoryCommand>(),
-                                        container.Resolve<SetRabbitMqBaseEnvironmentalVariableCommand>(),
-                                        container.Resolve<InstallRabbitMqCommand>(),
+                                        //container.Resolve<DownloadRabbitMqCommand>(),
+                                        //container.Resolve<UninstallPriorRabbitMqCommand>(),
+                                        //container.Resolve<UninstallPriorErlangCommand>(),
+                                        //container.Resolve<InstallErlangCommand>(),
+                                        //container.Resolve<CreateRabbitMqConfigDirectoryCommand>(),
+                                        //container.Resolve<SetRabbitMqBaseEnvironmentalVariableCommand>(),
                                         new BinaryConsoleCommandFragment
                                         {
                                             Name = "sslChoice",
@@ -60,11 +59,12 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                             {
                                                 Steps = new IConsoleCommandFragment[]
                                                 {
-                                                    container.Resolve<CopyRabbitMqExampleConfigFileCommand>(),
-                                                    container.Resolve<EditRabbitMqConfigFileMqCommand>(),
-                                                    container.Resolve<UninstallPriorRabbitMqCommand>(),
-                                                    container.Resolve<InstallRabbitMqCommand>(),
+                                                    //container.Resolve<ConvertCaCerToPemCommand>(),
+                                                    //container.Resolve<ConvertPfxToPemCommand>(),
+                                                    //container.Resolve<CopyRabbitMqExampleConfigFileCommand>(),
+                                                    //container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
+                                                    container.Resolve<EnableRabbitManagementPlugin>(),
                                                     new OutputConsoleCommandFragment
                                                     {
                                                         Output = "RabbitMq is ready to use with encryption"
@@ -75,7 +75,9 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                             {
                                                 Steps = new IConsoleCommandFragment[]
                                                 {
+                                                    //container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
+                                                    container.Resolve<EnableRabbitManagementPlugin>(),
                                                     new OutputConsoleCommandFragment
                                                     {
                                                         Output = "RabbitMq is ready to use without encryption"

@@ -11,7 +11,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
     class DownloadRabbitMqCommand : ConsoleCommandBase, IImmediateConsoleCommand
     {
-        private readonly string _rabbitMqInstallerPath = Path.Combine(Path.GetTempPath(), "rabbitMq.exe");
+        public static readonly string RabbitMqInstallerPath = Path.Combine(Path.GetTempPath(), "rabbitMq.exe");
 
         private readonly ILogWriter _log = Log.Get(typeof(DownloadRabbitMqCommand));
 
@@ -51,7 +51,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
                 var downloader = new InstallerDownloader();
 
-                downloader.DownloadInstaller(CancellationToken.None, InstallationConstants.Erlang.DownloadUrl, _rabbitMqInstallerPath, forceDownload);
+                downloader.DownloadInstaller(CancellationToken.None, InstallationConstants.Erlang.DownloadUrl, RabbitMqInstallerPath, forceDownload);
 
                 return 0;
             };

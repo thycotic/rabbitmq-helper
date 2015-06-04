@@ -1,3 +1,4 @@
+using System.IO;
 using Thycotic.CLI;
 using Thycotic.Logging;
 
@@ -28,6 +29,13 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
             Action = parameters =>
             {
+                if (Directory.Exists(InstallationConstants.RabbitMq.ConfigurationPath))
+                {
+                    return 0;
+                }
+
+                Directory.CreateDirectory(InstallationConstants.RabbitMq.ConfigurationPath);
+
                 return 0;
             };
         }
