@@ -30,14 +30,27 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
             Action = parameters =>
             {
-                if (!File.Exists(InstallationConstants.RabbitMq.UninstallerPath))
+                var executablePath = InstallationConstants.RabbitMq.UninstallerPath;
+
+                if (!File.Exists(executablePath))
                 {
                     _log.Debug("No uninstaller found");
                     return 0;
                 }
 
                 var externalProcessRunner = new ExternalProcessRunner();
-                
+
+                var directoryInfo = new FileInfo(executablePath);
+                var workingPath = directoryInfo.DirectoryName;
+
+                const string silent = "/S";
+
+                externalProcessRunner.Run(executablePath, workingPath, silent);
+
+                //if (directoryInfo.Directory != null)
+                //{
+                //    directoryInfo.Directory.Delete(true);
+                //}
 
                 return 0;
             };

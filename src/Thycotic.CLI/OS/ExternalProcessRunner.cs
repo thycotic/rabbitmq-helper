@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 
@@ -12,7 +9,7 @@ namespace Thycotic.CLI.OS
     {
         private readonly ILogWriter _log = Log.Get(typeof (ExternalProcessRunner));
 
-        public void Run(string executablePath, string workingPath, string parameters)
+        public void Run(string executablePath, string workingPath, string parameters = null)
         {
             var processInfo = new ProcessStartInfo(executablePath, parameters)
             {
