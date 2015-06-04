@@ -140,6 +140,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\DirectoryCleaner.cs" />
     <Compile Include="IO\DirectoryCopier.cs" />
     <Compile Include="DnsEx.cs" />
     <Compile Include="Reflection\AssemblyEntryPointProvider.cs" />
