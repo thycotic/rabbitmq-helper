@@ -46,7 +46,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
                 var downloader = new InstallerDownloader();
 
-                downloader.DownloadInstaller(CancellationToken.None, InstallationConstants.Erlang.DownloadUrl, RabbitMqInstallerPath, forceDownload);
+                downloader.DownloadInstaller(CancellationToken.None, InstallationConstants.RabbitMq.DownloadUrl, RabbitMqInstallerPath, forceDownload);
 
                 return 0;
             };
