@@ -38,7 +38,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
              
                 ConfigureTraceListener();
 
-                var cli = new CommandLineInterface();
+                var cli = new CommandLineInterface("Thycotic Distributed Engine");
+
 
                 Trace.TraceInformation("Starting interactive runner...");
 

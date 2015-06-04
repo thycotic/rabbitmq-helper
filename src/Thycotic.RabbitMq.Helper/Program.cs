@@ -16,9 +16,9 @@ namespace Thycotic.RabbitMq.Helper
 
             var initialCommand = string.Join(" ", args);
 
-            var cli = new CommandLineInterface();
+            var cli = new CommandLineInterface("Thycotic RabbitMq Helper");
 
-            var container = ConfigureCli(cli);
+            ConfigureCli(cli);
 
             cli.BeginInputLoop(initialCommand);
 

@@ -24,8 +24,12 @@ namespace Thycotic.CLI
             get { return _cts.Token; }
         }
 
-        public CommandLineInterface(string coreAreaName = "Core", string uncategorizedAreaName = "Uncategorized")
+        private readonly string _applicationName;
+
+        public CommandLineInterface(string applicationName, string coreAreaName = "Core", string uncategorizedAreaName = "Uncategorized")
         {
+            _applicationName = applicationName;
+
             #region BuildAll-in system commands
             _commandBuiltInMappings.Add(new SystemConsoleCommand
             {
@@ -80,9 +84,9 @@ namespace Thycotic.CLI
             ConfigureConsoleWindow();
         }
 
-        private static void ConfigureConsoleWindow()
+        private void ConfigureConsoleWindow()
         {
-            Console.Title = string.Format("Secret Server Distributed Engine in interactive mode v.{0} ({1})", ReleaseInformationHelper.Version, ReleaseInformationHelper.Architecture);
+            Console.Title = string.Format("{0} in interactive mode v.{1} ({2})", _applicationName, ReleaseInformationHelper.Version, ReleaseInformationHelper.Architecture);
 
             InteropHelper.DisableCloseMenuItem();
             InteropHelper.Maximize();
