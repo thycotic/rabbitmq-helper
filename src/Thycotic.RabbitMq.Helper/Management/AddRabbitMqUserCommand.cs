@@ -41,8 +41,8 @@ namespace Thycotic.RabbitMq.Helper.Management
 
                 string username;
                 string password;
-                if (!parameters.TryGet("rabbitUsername", out username)) return 1;
-                if (!parameters.TryGet("rabbitPw", out password)) return 1;
+                if (!parameters.TryGet("rabbitMqUsername", out username)) return 1;
+                if (!parameters.TryGet("rabbitMqPw", out password)) return 1;
                 
                 var externalProcessRunner = new ExternalProcessRunner
                 {
