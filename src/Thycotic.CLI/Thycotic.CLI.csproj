@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NoopConsoleCommandFragement.cs" />
+    <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="OutputConsoleCommandFragment.cs" />
     <Compile Include="BinaryConsoleCommandFragment.cs" />
     <Compile Include="CommandLineInterface.cs" />

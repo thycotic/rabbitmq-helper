@@ -28,6 +28,9 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
             Action = parameters =>
             {
+
+
+
                 return 0;
             };
         }

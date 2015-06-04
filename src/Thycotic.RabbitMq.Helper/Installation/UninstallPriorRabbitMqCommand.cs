@@ -1,4 +1,6 @@
-﻿using Thycotic.CLI;
+﻿using System.IO;
+using Thycotic.CLI;
+using Thycotic.CLI.OS;
 using Thycotic.Logging;
 
 namespace Thycotic.RabbitMq.Helper.Installation
@@ -28,6 +30,15 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
             Action = parameters =>
             {
+                if (!File.Exists(InstallationConstants.RabbitMq.UninstallerPath))
+                {
+                    _log.Debug("No uninstaller found");
+                    return 0;
+                }
+
+                var externalProcessRunner = new ExternalProcessRunner();
+                
+
                 return 0;
             };
         }
