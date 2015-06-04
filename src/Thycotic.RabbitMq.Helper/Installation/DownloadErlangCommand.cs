@@ -35,12 +35,13 @@ namespace Thycotic.RabbitMq.Helper.Installation
             Action = parameters =>
             {
                 var forceDownload = false;
-                if (parameters.TryGetBoolean("force", out forceDownload) &&
+                if (parameters.TryGetBoolean("forceDownload", out forceDownload) &&
                     forceDownload)
                 {
                     _log.Info("Forcing download");
                 }
 
+                _log.Info("Downloading Erlang");
 
                 var downloader = new InstallerDownloader();
 

@@ -45,6 +45,8 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
                 const string silent = "/S";
 
+                _log.Info("Uninstalling prior version of Erlang");
+
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 
                 //if (directoryInfo.Directory != null)

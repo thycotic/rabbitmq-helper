@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Thycotic.CLI;
 using Thycotic.Logging;
+using Thycotic.RabbitMq.Helper.Certificate;
+using Thycotic.RabbitMq.Helper.Installation.Choice;
 using Thycotic.RabbitMq.Helper.Management;
 
 namespace Thycotic.RabbitMq.Helper.Installation
@@ -28,7 +30,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
         {
             Steps = new IConsoleCommandFragment[]
             {
-                new BinaryConsoleCommandFragment
+                new ErlangLicenseChoiceConsoleCommandFragment
                 {
                     Name = "agreeToErlangLicense",
                     Prompt = "Do you agree and accept the Erlang license (http://www.erlang.org/EPLICENSE)?",
@@ -36,23 +38,23 @@ namespace Thycotic.RabbitMq.Helper.Installation
                     {
                         Steps = new IConsoleCommandFragment[]
                         {
-                            //container.Resolve<DownloadErlangCommand>(),
-                            new BinaryConsoleCommandFragment
+                            container.Resolve<DownloadErlangCommand>(),
+                            new RabbitMqLicenseChoiceConsoleCommandFragment
                             {
-                                Name = "agreeToErlangLicense",
+                                Name = "agreeToRabbitMqLicense",
                                 Prompt =
                                     "Do you agree and accept the RabbitMq license (https://www.rabbitmq.com/mpl.html)?",
                                 WhenTrue = new WorkflowConsoleCommand
                                 {
                                     Steps = new IConsoleCommandFragment[]
                                     {
-                                        //container.Resolve<DownloadRabbitMqCommand>(),
-                                        //container.Resolve<UninstallPriorRabbitMqCommand>(),
-                                        //container.Resolve<UninstallPriorErlangCommand>(),
-                                        //container.Resolve<InstallErlangCommand>(),
-                                        //container.Resolve<CreateRabbitMqConfigDirectoryCommand>(),
-                                        //container.Resolve<SetRabbitMqBaseEnvironmentalVariableCommand>(),
-                                        new BinaryConsoleCommandFragment
+                                        container.Resolve<DownloadRabbitMqCommand>(),
+                                        container.Resolve<UninstallPriorRabbitMqCommand>(),
+                                        container.Resolve<UninstallPriorErlangCommand>(),
+                                        container.Resolve<InstallErlangCommand>(),
+                                        container.Resolve<CreateRabbitMqConfigDirectoryCommand>(),
+                                        container.Resolve<SetRabbitMqBaseEnvironmentalVariableCommand>(),
+                                        new SslChoiceConsoleCommandFragment
                                         {
                                             Name = "sslChoice",
                                             Prompt = "Would you like to use SSL?",
@@ -60,10 +62,10 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                             {
                                                 Steps = new IConsoleCommandFragment[]
                                                 {
-                                                    //container.Resolve<ConvertCaCerToPemCommand>(),
-                                                    //container.Resolve<ConvertPfxToPemCommand>(),
-                                                    //container.Resolve<CopyRabbitMqExampleConfigFileCommand>(),
-                                                    //container.Resolve<InstallRabbitMqCommand>(),
+                                                    container.Resolve<ConvertCaCerToPemCommand>(),
+                                                    container.Resolve<ConvertPfxToPemCommand>(),
+                                                    container.Resolve<CopyRabbitMqExampleConfigFileCommand>(),
+                                                    container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
                                                     container.Resolve<EnableRabbitManagementPlugin>(),
                                                     new OutputConsoleCommandFragment
@@ -76,7 +78,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                             {
                                                 Steps = new IConsoleCommandFragment[]
                                                 {
-                                                    //container.Resolve<InstallRabbitMqCommand>(),
+                                                    container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
                                                     container.Resolve<EnableRabbitManagementPlugin>(),
                                                     new OutputConsoleCommandFragment

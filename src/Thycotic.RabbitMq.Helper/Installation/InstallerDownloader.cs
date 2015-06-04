@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Thycotic.Logging;
 
@@ -20,6 +21,8 @@ namespace Thycotic.RabbitMq.Helper.Installation
             }
 
             var retries = 0;
+
+            _log.Info(string.Format("Downloading installer from {0}. Please wait...", downloadUrl));
 
             do
             {

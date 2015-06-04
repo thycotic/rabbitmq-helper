@@ -69,6 +69,9 @@
     </Compile>
     <Compile Include="Certificate\ConvertCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
+    <Compile Include="Installation\Choice\ErlangLicenseChoiceConsoleCommandFragment.cs" />
+    <Compile Include="Installation\Choice\RabbitMqLicenseChoiceConsoleCommandFragment.cs" />
+    <Compile Include="Installation\Choice\SslChoiceConsoleCommandFragment.cs" />
     <Compile Include="Management\EnableRabbitManagementPlugin.cs" />
     <Compile Include="Management\AddRabbitMqUserCommand.cs" />
     <Compile Include="Installation\CopyRabbitMqExampleConfigFileCommand.cs" />
@@ -105,6 +108,7 @@
       <Name>Thycotic.Utility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

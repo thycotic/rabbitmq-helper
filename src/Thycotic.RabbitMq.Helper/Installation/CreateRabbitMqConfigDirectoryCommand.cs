@@ -34,6 +34,8 @@ namespace Thycotic.RabbitMq.Helper.Installation
                     return 0;
                 }
 
+                _log.Info("Creating RabbitMq configuration folder");
+
                 Directory.CreateDirectory(InstallationConstants.RabbitMq.ConfigurationPath);
 
                 return 0;

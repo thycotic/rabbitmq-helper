@@ -60,6 +60,8 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
                 const string silent = "/S";
 
+                _log.Info("Installing RabbitMq, please wait...");
+
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 
                 return 0;

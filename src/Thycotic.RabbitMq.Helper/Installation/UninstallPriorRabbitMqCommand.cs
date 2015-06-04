@@ -45,12 +45,23 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
                 const string silent = "/S";
 
+                _log.Info("Uninstalling prior version of RabbitMq");
+
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 
                 //if (directoryInfo.Directory != null)
                 //{
                 //    directoryInfo.Directory.Delete(true);
                 //}
+
+                if (!Directory.Exists(InstallationConstants.RabbitMq.ConfigurationPath))
+                {
+                    return 0;
+                }
+
+                _log.Info("Deleting prior configuration path of RabbitMq");
+
+                Directory.Delete(InstallationConstants.RabbitMq.ConfigurationPath, true);
 
                 return 0;
             };

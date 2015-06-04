@@ -53,6 +53,8 @@ namespace Thycotic.RabbitMq.Helper.Installation
                 {
                     throw new FileNotFoundException("Key not found");
                 }
+
+                _log.Info("Creating RabbitMq configuration file.");
                 
                 var contentAssembly = Assembly.GetAssembly(typeof(Program));
 
