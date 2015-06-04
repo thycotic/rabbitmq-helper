@@ -34,20 +34,43 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
             Action = parameters =>
             {
-                var forceDownload = false;
-                if (parameters.TryGetBoolean("forceDownload", out forceDownload) &&
-                    forceDownload)
+                string offlineErlangInstallerPath;
+                if (parameters.TryGet("offlineErlangInstallerPath", out offlineErlangInstallerPath) &&
+                    !string.IsNullOrWhiteSpace(offlineErlangInstallerPath))
                 {
-                    _log.Info("Forcing download");
+                    _log.Info(string.Format("Using offline installer path {0}", offlineErlangInstallerPath));
+
+                    if (!File.Exists(offlineErlangInstallerPath))
+                    {
+                        _log.Error("Installer does not exist");
+                    }
+                    else
+                    {
+                        if (File.Exists(ErlangInstallerPath))
+                        {
+                            File.Delete(ErlangInstallerPath);
+                        }
+
+                        File.Move(offlineErlangInstallerPath, ErlangInstallerPath);
+                    }
                 }
+                else
+                {
+                    bool forceDownload;
+                    if (parameters.TryGetBoolean("forceDownload", out forceDownload) &&
+                        forceDownload)
+                    {
+                        _log.Info("Forcing download");
+                    }
 
-                _log.Info("Downloading Erlang");
 
-                var downloader = new InstallerDownloader();
+                    _log.Info("Downloading Erlang");
 
-                downloader.DownloadInstaller(CancellationToken.None, InstallationConstants.Erlang.DownloadUrl,
-                    ErlangInstallerPath, forceDownload);
+                    var downloader = new InstallerDownloader();
 
+                    downloader.DownloadInstaller(CancellationToken.None, InstallationConstants.Erlang.DownloadUrl,
+                        ErlangInstallerPath, forceDownload);
+                }
                 return 0;
             };
         }

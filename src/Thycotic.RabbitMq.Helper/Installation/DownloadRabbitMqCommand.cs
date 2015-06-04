@@ -35,19 +35,42 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
             Action = parameters =>
             {
-                var forceDownload = false;
-                if (parameters.TryGetBoolean("forceDownload", out forceDownload) &&
-                    forceDownload)
+                string offlineRabbitMqInstallerPath;
+                if (parameters.TryGet("offlineRabbitMqInstallerPath", out offlineRabbitMqInstallerPath) &&
+                    !string.IsNullOrWhiteSpace(offlineRabbitMqInstallerPath))
                 {
-                    _log.Info("Forcing download");
+                    _log.Info(string.Format("Using offline installer path {0}", offlineRabbitMqInstallerPath));
+
+                    if (!File.Exists(offlineRabbitMqInstallerPath))
+                    {
+                        _log.Error("Installer does not exist");
+                    }
+                    else
+                    {
+                        if (File.Exists(RabbitMqInstallerPath))
+                        {
+                            File.Delete(RabbitMqInstallerPath);
+                        }
+
+                        File.Move(offlineRabbitMqInstallerPath, RabbitMqInstallerPath);
+                    }
                 }
+                else
+                {
+                    var forceDownload = false;
+                    if (parameters.TryGetBoolean("forceDownload", out forceDownload) &&
+                        forceDownload)
+                    {
+                        _log.Info("Forcing download");
+                    }
 
-                _log.Info("Downloading RabbitMq");
+                    _log.Info("Downloading RabbitMq");
 
-                var downloader = new InstallerDownloader();
+                    var downloader = new InstallerDownloader();
 
-                downloader.DownloadInstaller(CancellationToken.None, InstallationConstants.RabbitMq.DownloadUrl, RabbitMqInstallerPath, forceDownload);
-
+                    downloader.DownloadInstaller(CancellationToken.None, InstallationConstants.RabbitMq.DownloadUrl,
+                        RabbitMqInstallerPath, forceDownload);
+                }
                 return 0;
             };
         }
