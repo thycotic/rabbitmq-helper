@@ -2,7 +2,7 @@
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class InstallRabbitMqCommand : ConsoleCommandBase
+    internal class SetRabbitMqBaseEnvironmentalVariableCommand : ConsoleCommandBase
     {
     }
 }
