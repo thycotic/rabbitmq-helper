@@ -10,7 +10,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
     class InstallerDownloader
     {
 
-        private readonly ILogWriter _log = Log.Get(typeof (InstallerDownloader));
+        private readonly ILogWriter _log = Log.Get(typeof(InstallerDownloader));
 
         public void DownloadInstaller(CancellationToken token, string downloadUrl, string installerPath, bool forceDownload = false, int maxRetries = 5)
         {
@@ -20,18 +20,21 @@ namespace Thycotic.RabbitMq.Helper.Installation
                 return;
             }
 
-            var retries = 0;
+            var tries = 0;
 
             _log.Info(string.Format("Downloading installer from {0}. Please wait...", downloadUrl));
 
-            do
+            var downloaded = false;
+
+            while (!downloaded && tries < maxRetries)
             {
                 var oldConsoleTop = Console.CursorTop;
                 var oldConsoleLeft = Console.CursorLeft;
 
 
                 try
-                {                    var client = new WebClient();
+                {
+                    var client = new WebClient();
 
                     client.DownloadProgressChanged += (sender, args) =>
                     {
@@ -39,8 +42,8 @@ namespace Thycotic.RabbitMq.Helper.Installation
                         {
                             Console.SetCursorPosition(0, 0);
                             //_log.Debug(string.Format("Downloaded {0}/{1}", args.BytesReceived, args.TotalBytesToReceive));
-                            Console.WriteLine("{0}/{1} megabytes downloaded", args.BytesReceived/1024,
-                                args.TotalBytesToReceive/1024);
+                            Console.WriteLine("{0}/{1} megabytes downloaded", args.BytesReceived / 1024,
+                                args.TotalBytesToReceive / 1024);
                         }
 
                     };
@@ -60,22 +63,25 @@ namespace Thycotic.RabbitMq.Helper.Installation
                         _log.Warn(string.Format("Temp installer files still exists at {0}", tempPath));
                     }
 
-                    break;
+                    downloaded = true;
                 }
                 catch (Exception ex)
                 {
                     Console.SetCursorPosition(oldConsoleLeft, oldConsoleTop);
 
-                    _log.Error("Failed to download", ex);
-                    retries++;
+                    _log.Warn("Failed to download will retry...", ex);
+                    tries++;
                 }
                 finally
                 {
                     Console.SetCursorPosition(oldConsoleLeft, oldConsoleTop);
                 }
-            } while (retries < maxRetries);
+            }
 
-
+            if (!downloaded)
+            {
+                throw new FileNotFoundException("Failed to download");
+            }
         }
     }
 }
