@@ -18,14 +18,6 @@ namespace Thycotic.CLI
 
             Action = parameters =>
             {
-                bool silent;
-                if (parameters.TryGetBoolean("silent", out silent) &&
-                    silent)
-                {
-                    return WhenTrue.Action.Invoke(parameters);
-                }
-
-
                 Console.Write("{0} [Y/N] ", Prompt);
 
                 var input = Console.ReadLine() ?? string.Empty;
