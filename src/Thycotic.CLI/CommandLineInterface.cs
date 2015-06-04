@@ -169,7 +169,7 @@ namespace Thycotic.CLI
             foreach (Match parameterMatch in parameterMatches)
             {
                 // -foo="bar baz" => [1] = foo, [2] = bar baz
-                parameters.Add(parameterMatch.Groups[1].Value, parameterMatch.Groups[2].Value.Trim());
+                parameters.Add(parameterMatch.Groups[1].Value.ToLower(), parameterMatch.Groups[2].Value.Trim());
             }
 
             return commandName;

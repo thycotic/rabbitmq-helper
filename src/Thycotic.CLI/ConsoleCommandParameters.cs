@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Thycotic.Logging;
 
 namespace Thycotic.CLI
@@ -9,6 +11,10 @@ namespace Thycotic.CLI
 
         public bool TryGet(string name, out string value)
         {
+            Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(name), "Parameter name should not be null or empty");
+
+            name = name.ToLower();
+
             if (!ContainsKey(name))
             {
                 _log.Debug(string.Format("Parameter {0} was not found", name));
