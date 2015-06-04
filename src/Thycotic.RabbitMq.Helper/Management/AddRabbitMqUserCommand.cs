@@ -49,9 +49,19 @@ namespace Thycotic.RabbitMq.Helper.Management
                     EstimatedProcessDuration = TimeSpan.FromSeconds(15)
                 };
 
+                _log.Info(string.Format("Adding user {0}", username));
+
                 var parameters2 = string.Format("add_user {0} {1}", username, password);
 
                 externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
+
+                _log.Info(string.Format("Granting permissions to user {0}", username));
+
+                parameters2 = string.Format("set_permissions -p / {0} \".*\" \".*\" \".*\"", username);
+
+                externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
+
+
 
                 return 0;
 
