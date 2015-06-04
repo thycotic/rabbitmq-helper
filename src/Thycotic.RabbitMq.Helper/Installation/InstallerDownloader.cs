@@ -45,7 +45,17 @@ namespace Thycotic.RabbitMq.Helper.Installation
                     var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
                     client.DownloadFileTaskAsync(new Uri(downloadUrl, UriKind.Absolute), tempPath).Wait(token);
 
+                    if (File.Exists(installerPath))
+                    {
+                        File.Delete(installerPath);
+                    }
+
                     File.Move(tempPath, installerPath);
+
+                    if (File.Exists(tempPath))
+                    {
+                        _log.Warn(string.Format("Temp installer files still exists at {0}", tempPath));
+                    }
 
                     break;
                 }
