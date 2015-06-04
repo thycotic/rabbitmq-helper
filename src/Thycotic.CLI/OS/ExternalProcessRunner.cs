@@ -68,12 +68,17 @@ namespace Thycotic.CLI.OS
                     process.Kill();
                 }
 
+                var output = process.StandardOutput.ReadToEnd();
+
                 //process didn't exit correctly, extract output and throw
                 if (process.ExitCode != 0)
                 {
-                    var output = process.StandardOutput.ReadToEnd();
-
                     throw new ApplicationException("Process failed", new Exception(output));
+                }
+
+                if (output.ToLower().Contains("error"))
+                {
+                    throw new ApplicationException("Process appears to have failed", new Exception(output));
                 }
             }
         }

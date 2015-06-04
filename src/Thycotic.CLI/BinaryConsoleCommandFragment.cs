@@ -18,10 +18,9 @@ namespace Thycotic.CLI
 
             Action = parameters =>
             {
-                string silentString;
                 bool silent;
-                if (parameters.TryGet("silent", out silentString) &&
-                    bool.TryParse(silentString, out silent))
+                if (parameters.TryGetBoolean("silent", out silent) &&
+                    silent)
                 {
                     return WhenTrue.Action.Invoke(parameters);
                 }

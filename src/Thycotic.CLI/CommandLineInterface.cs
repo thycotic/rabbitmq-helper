@@ -162,7 +162,7 @@ namespace Thycotic.CLI
                 commandName = commandMatches[0].Groups[0].Value;
             }
 
-            var regexParameters = new Regex(@"-([\w]+)=\""?([\d\w\s.:\\\[\]]+)\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            var regexParameters = new Regex(@"-([\w]+)=\""?([\d\w\s.:\\\[\]@]+)\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             var parameterMatches = regexParameters.Matches(input);
 
@@ -208,8 +208,7 @@ namespace Thycotic.CLI
                             {
                                 if (task.Exception != null)
                                 {
-                                    _log.Error(string.Format("Command failed because {0}", task.Exception.Message),
-                                        task.Exception);
+                                    _log.Error(string.Format("Command failed because {0}", task.Exception.Message), task.Exception);
                                 }
                             }, CancellationToken);
 
@@ -220,12 +219,12 @@ namespace Thycotic.CLI
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(string.Format("Command failed because {0}", ex.Message));
+                    _log.Error(string.Format("Command failed because {0}", ex.Message), ex);
                 }
 
             }
         }
-
+        
 
         public void Wait()
         {
