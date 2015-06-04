@@ -37,6 +37,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
                 container.Resolve<InstallRabbitMqCommand>(),
                 new BinaryConsoleCommandFragment
                 {
+                    Name = "sslChoice",
                     Prompt = "Would you like to use SSL?",
                     WhenTrue = new WorkflowConsoleCommand
                     {

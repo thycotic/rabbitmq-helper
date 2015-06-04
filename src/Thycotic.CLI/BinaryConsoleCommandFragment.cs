@@ -19,17 +19,21 @@ namespace Thycotic.CLI
             Action = parameters =>
             {
 
-                Console.Write(Prompt);
+                Console.Write("{0} [Y/N] ", Prompt);
 
-                var response = Console.ReadLine();
+                var input = Console.ReadLine() ?? string.Empty;
 
-                bool result;
-                if (bool.TryParse(response, out result) && result)
+                var choice = input.ToLower().Trim();
+                switch (choice)
                 {
-                    return WhenTrue.Action.Invoke(parameters);
+                    case "y":
+                    case "yes":
+                    case "yeh":
+                    case "yeah":
+                        return WhenTrue.Action.Invoke(parameters);
+                    default:
+                        return WhenFalse.Action.Invoke(parameters);
                 }
-                return WhenFalse.Action.Invoke(parameters);
-
 
             };
         }

@@ -18,7 +18,7 @@ namespace Thycotic.CLI
 
                 Steps.ToList().ForEach(s =>
                 {
-                    _log.Info(string.Format("Executing {0}", s.Name ?? "Unnamed step"));
+                    _log.Debug(string.Format("Executing {0}", s.Name ?? "Unnamed step"));
 
                     if (s.Action.Invoke(parameters) != 0)
                     {
