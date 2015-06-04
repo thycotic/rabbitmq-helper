@@ -72,6 +72,7 @@
     <Compile Include="Installation\Choice\ErlangLicenseChoiceConsoleCommandFragment.cs" />
     <Compile Include="Installation\Choice\RabbitMqLicenseChoiceConsoleCommandFragment.cs" />
     <Compile Include="Installation\Choice\SslChoiceConsoleCommandFragment.cs" />
+    <Compile Include="Installation\SetErlangHomeEnvironmentalVariableCommand.cs" />
     <Compile Include="Management\EnableRabbitManagementPlugin.cs" />
     <Compile Include="Management\AddRabbitMqUserCommand.cs" />
     <Compile Include="Installation\CopyRabbitMqExampleConfigFileCommand.cs" />

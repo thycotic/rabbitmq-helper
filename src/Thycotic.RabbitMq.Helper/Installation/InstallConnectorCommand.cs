@@ -51,6 +51,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                         container.Resolve<DownloadRabbitMqCommand>(),
                                         container.Resolve<UninstallPriorRabbitMqCommand>(),
                                         container.Resolve<UninstallPriorErlangCommand>(),
+                                        container.Resolve<SetErlangHomeEnvironmentalVariableCommand>(),
                                         container.Resolve<InstallErlangCommand>(),
                                         container.Resolve<CreateRabbitMqConfigDirectoryCommand>(),
                                         container.Resolve<SetRabbitMqBaseEnvironmentalVariableCommand>(),
