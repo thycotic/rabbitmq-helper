@@ -35,19 +35,13 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
             Action = parameters =>
             {
-                //string path;
-                //string password;
-                string forceDownloadString;
                 var forceDownload = false;
-                //if (!parameters.TryGet("path", out path)) return;
-                //if (!parameters.TryGet("pw", out password)) return;
-                if (parameters.TryGet("force", out forceDownloadString) && bool.TryParse(forceDownloadString, out forceDownload))
+                if (parameters.TryGetBoolean("force", out forceDownload) &&
+                    forceDownload)
                 {
-                    if (forceDownload)
-                    {
-                        _log.Info("Forcing download");
-                    }
+                    _log.Info("Forcing download");
                 }
+
 
                 var downloader = new InstallerDownloader();
 
@@ -56,6 +50,6 @@ namespace Thycotic.RabbitMq.Helper.Installation
                 return 0;
             };
         }
-      
+
     }
 }

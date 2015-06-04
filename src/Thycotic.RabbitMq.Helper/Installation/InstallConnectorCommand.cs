@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Thycotic.CLI;
 using Thycotic.Logging;
+using Thycotic.RabbitMq.Helper.Management;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {

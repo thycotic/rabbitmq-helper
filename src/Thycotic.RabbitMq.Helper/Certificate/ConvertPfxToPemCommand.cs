@@ -9,7 +9,7 @@ using Thycotic.CLI;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Installation;
 
-namespace Thycotic.RabbitMq.Helper
+namespace Thycotic.RabbitMq.Helper.Certificate
 {
     public class ConvertPfxToPemCommand : ConsoleCommandBase, IImmediateConsoleCommand
     {
@@ -27,7 +27,7 @@ namespace Thycotic.RabbitMq.Helper
         }
 
         public override string Area {
-            get { return "Conversion"; }
+            get { return "Certificate"; }
         }
 
         public override string Description
@@ -42,8 +42,8 @@ namespace Thycotic.RabbitMq.Helper
             {
                 string path;
                 string password;
-                if (!parameters.TryGet("pfxpath", out path)) return 1;
-                if (!parameters.TryGet("pfxpw", out password)) return 1;
+                if (!parameters.TryGet("pfxPath", out path)) return 1;
+                if (!parameters.TryGet("pfxPw", out password)) return 1;
                 
                 ConvertToPem(path, password);
 

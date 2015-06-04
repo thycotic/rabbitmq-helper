@@ -8,7 +8,7 @@ using Thycotic.CLI;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Installation;
 
-namespace Thycotic.RabbitMq.Helper
+namespace Thycotic.RabbitMq.Helper.Certificate
 {
     public class ConvertCaCerToPemCommand : ConsoleCommandBase, IImmediateConsoleCommand
     {
@@ -23,7 +23,7 @@ namespace Thycotic.RabbitMq.Helper
         }
 
         public override string Area {
-            get { return "Conversion"; }
+            get { return "Certificate"; }
         }
 
         public override string Description

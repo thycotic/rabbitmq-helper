@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Reflection;
-using System.Text;
 using Thycotic.CLI;
 using Thycotic.Logging;
+using Thycotic.RabbitMq.Helper.Certificate;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {

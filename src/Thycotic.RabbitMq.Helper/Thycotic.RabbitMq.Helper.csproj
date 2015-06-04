@@ -67,10 +67,10 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="ConvertCerToPemCommand.cs" />
-    <Compile Include="ConvertPfxToPemCommand.cs" />
-    <Compile Include="Installation\EnableRabbitManagementPlugin.cs" />
-    <Compile Include="Installation\AddRabbitMqUserCommand.cs" />
+    <Compile Include="Certificate\ConvertCerToPemCommand.cs" />
+    <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
+    <Compile Include="Management\EnableRabbitManagementPlugin.cs" />
+    <Compile Include="Management\AddRabbitMqUserCommand.cs" />
     <Compile Include="Installation\CopyRabbitMqExampleConfigFileCommand.cs" />
     <Compile Include="Installation\CreateRabbitMqConfigDirectoryCommand.cs" />
     <Compile Include="Installation\InstallationConstants.cs" />
@@ -83,6 +83,7 @@
     <Compile Include="Installation\SetRabbitMqBaseEnvironmentalVariableCommand.cs" />
     <Compile Include="Installation\UninstallPriorErlangCommand.cs" />
     <Compile Include="Installation\UninstallPriorRabbitMqCommand.cs" />
+    <Compile Include="Management\ManagementConsoleCommandBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
