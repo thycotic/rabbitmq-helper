@@ -11,8 +11,8 @@ namespace Thycotic.RabbitMq.Helper.Installation
     internal class DownloadErlangCommand : ConsoleCommandBase, IImmediateConsoleCommand
     {
         private readonly string _erlangInstallerPath = Path.Combine(Path.GetTempPath(), "erlang.exe");
-   
-        private readonly ILogWriter _log = Log.Get(typeof (InstallRabbitMqCommand));
+
+        private readonly ILogWriter _log = Log.Get(typeof(DownloadErlangCommand));
 
         public override string Name
         {

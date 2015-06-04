@@ -66,6 +66,7 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="ConvertPfxToPemCommand.cs" />
+    <Compile Include="Installation\AddRabbitMqUserCommand.cs" />
     <Compile Include="Installation\CopyRabbitMqExampleConfigFileCommand.cs" />
     <Compile Include="Installation\CreateRabbitMqConfigDirectoryCommand.cs" />
     <Compile Include="Installation\EditRabbitMqConfigFileMqCommand.cs" />

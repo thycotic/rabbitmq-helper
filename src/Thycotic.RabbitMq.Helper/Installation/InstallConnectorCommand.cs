@@ -27,31 +27,68 @@ namespace Thycotic.RabbitMq.Helper.Installation
         {
             Steps = new IConsoleCommandFragment[]
             {
-                container.Resolve<DownloadRabbitMqCommand>(),
-                container.Resolve<DownloadErlangCommand>(),
-                container.Resolve<UninstallPriorRabbitMqCommand>(),
-                container.Resolve<UninstallPriorErlangCommand>(),
-                container.Resolve<InstallErlangCommand>(),
-                container.Resolve<CreateRabbitMqConfigDirectoryCommand>(),
-                container.Resolve<SetRabbitMqBaseEnvironmentalVariableCommand>(),
-                container.Resolve<InstallRabbitMqCommand>(),
                 new BinaryConsoleCommandFragment
                 {
-                    Name = "sslChoice",
-                    Prompt = "Would you like to use SSL?",
+                    Name = "agreeToErlangLicense",
+                    Prompt = "Do you agree and accept the Erlang license (http://www.erlang.org/EPLICENSE)?",
                     WhenTrue = new WorkflowConsoleCommand
                     {
-                        Steps = new IConsoleCommand[]
+                        Steps = new IConsoleCommandFragment[]
                         {
-                            container.Resolve<CopyRabbitMqExampleConfigFileCommand>(),
-                            container.Resolve<EditRabbitMqConfigFileMqCommand>(),
-                            container.Resolve<UninstallPriorRabbitMqCommand>(),
-                            container.Resolve<InstallRabbitMqCommand>()
+                            container.Resolve<DownloadErlangCommand>(),
+                            new BinaryConsoleCommandFragment
+                            {
+                                Name = "agreeToErlangLicense",
+                                Prompt =
+                                    "Do you agree and accept the RabbitMq license (https://www.rabbitmq.com/mpl.html)?",
+                                WhenTrue = new WorkflowConsoleCommand
+                                {
+                                    Steps = new IConsoleCommandFragment[]
+                                    {
+                                        container.Resolve<DownloadRabbitMqCommand>(),
+                                        container.Resolve<UninstallPriorRabbitMqCommand>(),
+                                        container.Resolve<UninstallPriorErlangCommand>(),
+                                        container.Resolve<InstallErlangCommand>(),
+                                        container.Resolve<CreateRabbitMqConfigDirectoryCommand>(),
+                                        container.Resolve<SetRabbitMqBaseEnvironmentalVariableCommand>(),
+                                        container.Resolve<InstallRabbitMqCommand>(),
+                                        new BinaryConsoleCommandFragment
+                                        {
+                                            Name = "sslChoice",
+                                            Prompt = "Would you like to use SSL?",
+                                            WhenTrue = new WorkflowConsoleCommand
+                                            {
+                                                Steps = new IConsoleCommandFragment[]
+                                                {
+                                                    container.Resolve<CopyRabbitMqExampleConfigFileCommand>(),
+                                                    container.Resolve<EditRabbitMqConfigFileMqCommand>(),
+                                                    container.Resolve<UninstallPriorRabbitMqCommand>(),
+                                                    container.Resolve<InstallRabbitMqCommand>(),
+                                                    container.Resolve<AddRabbitMqUserCommand>(),
+                                                    new OutputConsoleCommandFragment
+                                                    {
+                                                        Output = "RabbitMq is ready to use with encryption"
+                                                    }
+                                                }
+                                            },
+                                            WhenFalse = new WorkflowConsoleCommand
+                                            {
+                                                Steps = new IConsoleCommandFragment[]
+                                                {
+                                                    container.Resolve<AddRabbitMqUserCommand>(),
+                                                    new OutputConsoleCommandFragment
+                                                    {
+                                                        Output = "RabbitMq is ready to use without encryption"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-
-
             };
         }
     }
