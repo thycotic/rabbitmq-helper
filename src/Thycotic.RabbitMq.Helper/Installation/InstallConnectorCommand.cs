@@ -62,6 +62,10 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                             {
                                                 Steps = new IConsoleCommandFragment[]
                                                 {
+                                                    new OutputConsoleCommandFragment
+                                                    {
+                                                        Output = "Configuring RabbitMq with ecryption support"
+                                                    },
                                                     container.Resolve<ConvertCaCerToPemCommand>(),
                                                     container.Resolve<ConvertPfxToPemCommand>(),
                                                     container.Resolve<CopyRabbitMqExampleConfigFileCommand>(),
@@ -70,7 +74,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                                     container.Resolve<EnableRabbitManagementPlugin>(),
                                                     new OutputConsoleCommandFragment
                                                     {
-                                                        Output = "RabbitMq is ready to use with encryption"
+                                                        Output = "RabbitMq is ready to use with encryption. Please open port 5671 on the machine firewall."
                                                     }
                                                 }
                                             },
@@ -83,7 +87,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                                     container.Resolve<EnableRabbitManagementPlugin>(),
                                                     new OutputConsoleCommandFragment
                                                     {
-                                                        Output = "RabbitMq is ready to use without encryption"
+                                                        Output = "RabbitMq is ready to use without encryption. Please open port 5672 on the machine firewall."
                                                     }
                                                 }
                                             }
