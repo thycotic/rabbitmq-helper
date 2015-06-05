@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
+using Thycotic.Utility;
 using Thycotic.Utility.IO;
 using Thycotic.WindowsService.Bootstraper;
 
@@ -40,6 +41,8 @@ namespace Thycotic.DistributedEngine.Service.Update
         /// </summary>
         public void ApplyLatestUpdate()
         {
+            _log.Info(string.Format("This engine version is outdated ({0}). Updating...", ReleaseInformationHelper.Version));
+
             lock (_syncRoot)
             {
                 if (_updateTask != null)
@@ -49,7 +52,7 @@ namespace Thycotic.DistributedEngine.Service.Update
                 }
             }
 
-
+           
             var msiPath = Path.Combine(Path.GetTempPath(),
                 string.Format("SSDEUpdate-{0}.msi", Guid.NewGuid().ToString("N")));
 

@@ -16,6 +16,11 @@ namespace Thycotic.MemoryMq.Subsystem
     /// </summary>
     public class ExchangeDictionary : IExchangeDictionary
     {
+        /// <summary>
+        /// Data directory name
+        /// </summary>
+        public const string DataDirectoryName = "data";
+
         private readonly ConcurrentDictionary<RoutingSlip, IMessageQueue> _data = new ConcurrentDictionary<RoutingSlip, IMessageQueue>();
 
         private readonly ILogWriter _log = Log.Get(typeof(ExchangeDictionary));
@@ -88,7 +93,12 @@ namespace Thycotic.MemoryMq.Subsystem
 
         private string GetPersistPath()
         {
-            var path = _assemblyEntryPointProvider.GetAssemblyDirectory(GetType());
+            var path = Path.Combine(_assemblyEntryPointProvider.GetAssemblyDirectory(GetType()), DataDirectoryName);
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
 
             return Path.Combine(path, "store.json");
         }

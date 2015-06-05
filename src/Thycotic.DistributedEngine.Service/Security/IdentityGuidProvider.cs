@@ -12,6 +12,8 @@ namespace Thycotic.DistributedEngine.Service.Security
     /// </summary>
     public class IdentityGuidProvider : IIdentityGuidProvider
     {
+        private const string DataDirectoryName = "data";
+
         private readonly Lazy<Guid> _identityGuid;
         private readonly AssemblyEntryPointProvider _assemblyEntryPointProvider = new AssemblyEntryPointProvider();
 
@@ -38,7 +40,12 @@ namespace Thycotic.DistributedEngine.Service.Security
 
         private string GetPersistPath()
         {
-            var path = _assemblyEntryPointProvider.GetAssemblyDirectory(GetType());
+            var path = Path.Combine(_assemblyEntryPointProvider.GetAssemblyDirectory(GetType()), DataDirectoryName);
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
 
             return Path.Combine(path, "identityGuid.json");
         }

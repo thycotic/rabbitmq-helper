@@ -18,6 +18,10 @@ namespace Thycotic.WindowsService.Bootstraper
         /// </summary>
         public const string BackupDirectoryName = "backup";
 
+        public const string LogDirectoryName = "log";
+
+        public const string DataDirectoryName = "data";
+
         private readonly CancellationTokenSource _cts;
         private readonly IServiceManagerInteractor _serviceManagerInteractor;
         private readonly IProcessRunner _processRunner;
@@ -70,11 +74,19 @@ namespace Thycotic.WindowsService.Bootstraper
 
                         directoryInfo.GetFiles().ToList().ForEach(f => f.Delete());
 
+                        var directoriesToIgnore = new[]
+                        {
+                            Path.Combine(_workingPath, BackupDirectoryName),
+                            Path.Combine(_workingPath, LogDirectoryName),
+                            Path.Combine(_workingPath, DataDirectoryName)
+                        };
+
                         directoryInfo.GetDirectories().ToList().ForEach(d =>
                         {
                             //don't delete the backup directory
-                            if (d.FullName == Path.Combine(_workingPath, BackupDirectoryName))
+                            if (directoriesToIgnore.Contains(d.FullName))
                             {
+                                _log.Info(string.Format("Skipping clean up of {0}", d.FullName));
                                 return;
                             }
                             d.Delete(true);
@@ -97,7 +109,10 @@ namespace Thycotic.WindowsService.Bootstraper
 
         private static void CreateDirectory(string path)
         {
-            Directory.CreateDirectory(path);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
         }
         
         private void CheckMsi()
