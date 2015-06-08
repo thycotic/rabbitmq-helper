@@ -91,11 +91,22 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
 
         private void ResetIoCContainer()
         {
-            if (_ioCContainer == null) return;
+            if (_ioCContainer == null)
+            {
+                return;
+            }
 
             _log.Debug("Cleaning up IoC container");
 
-            _ioCContainer.Dispose();
+            try
+            {
+                _ioCContainer.Dispose();
+            }
+            catch (Exception ex)
+            {
+                _log.Warn("Failed to properly clean up the IoC container", ex);
+            }
+
             _ioCContainer = null;
         }
 

@@ -118,20 +118,43 @@ namespace Thycotic.DistributedEngine.Service
 
         private void ResetIoCContainer()
         {
-            if (_ioCContainer == null) return;
+            if (_ioCContainer == null)
+            {
+                return;
+            }
 
             _log.Debug("Cleaning up IoC container");
 
-            if (_startConsuming && _ioCContainer.IsRegistered<ConsumerWrapperFactory>())
+            try
             {
-                _log.Info("Stopping all consumers...");
-                var consumerFactory = _ioCContainer.Resolve<ConsumerWrapperFactory>();
 
-                //clean up the consumers in the factory
-                consumerFactory.Dispose();
+
+                if (_startConsuming && _ioCContainer.IsRegistered<ConsumerWrapperFactory>())
+                {
+                    _log.Info("Stopping all consumers...");
+                    var consumerFactory = _ioCContainer.Resolve<ConsumerWrapperFactory>();
+
+                    //clean up the consumers in the factory
+                    consumerFactory.Dispose();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _log.Warn("Failed to properly clean up consumer factory", ex);
             }
 
-            _ioCContainer.Dispose();
+            try
+            {
+
+                _ioCContainer.Dispose();
+            }
+
+            catch (Exception ex)
+            {
+                _log.Warn("Failed to properly clean up the IoC container", ex);
+            }
+
             _ioCContainer = null;
         }
 
