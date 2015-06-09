@@ -21,6 +21,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.General
             {
                 Domain = request.Domain,
                 UserPrincipalName = request.UserName,
+                UserDomain = request.UserDomain,
                 Password = request.Password,
                 Port = request.Port,
                 UseSSL = request.UseSsl

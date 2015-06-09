@@ -24,6 +24,14 @@ namespace Thycotic.Messages.General
         public string UserName { get; set; }
 
         /// <summary>
+        /// Gets or sets the user's domain.
+        /// </summary>
+        /// <value>
+        /// The user's domain.
+        /// </value>
+        public string UserDomain { get; set; }
+
+        /// <summary>
         /// Gets or sets the password.
         /// </summary>
         /// <value>
