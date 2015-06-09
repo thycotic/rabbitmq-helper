@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Client", "..\Thycotic.InstallerGenerator.Client\Thycotic.InstallerGenerator.Client.csproj", "{32AD995B-6A60-4136-A015-3E053E205A39}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Recipies", "Recipies", "{2E39DFBC-859B-4873-9B8A-E62704DA7FCC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Recipes", "Recipes", "{2E39DFBC-859B-4873-9B8A-E62704DA7FCC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.DistributedEngine.Service.WiX", "Thycotic.DistributedEngine.Service.WiX", "{04626335-681F-44E0-BD23-EDD8F666A2C1}"
 	ProjectSection(SolutionItems) = preProject
