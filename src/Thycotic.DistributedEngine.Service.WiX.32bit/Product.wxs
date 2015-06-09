@@ -14,7 +14,7 @@
     </Upgrade>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFiles64Folder" Name="PFiles">
+      <Directory Id="ProgramFilesFolder" Name="PFiles">
         <Directory Id="ThycoticInstall" Name="Thycotic Software Ltd" ComponentGuidGenerationSeed="F32D4903-3169-4230-916D-AB3CA63C395E">
           <Directory Id="INSTALLLOCATION" Name="Distributed Engine"/>
         </Directory>
