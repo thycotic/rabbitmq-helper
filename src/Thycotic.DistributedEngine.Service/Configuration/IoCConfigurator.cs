@@ -124,7 +124,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 var identityGuidProvider = context.Resolve<IIdentityGuidProvider>();
 
                 var siteIdString =
-                    GetOptionalLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.ExchangeId,
+                    GetOptionalLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.SiteId,
                         false);
 
                 return new EngineIdentificationProvider
@@ -311,7 +311,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
 
                 var request = new EngineConfigurationRequest
                 {
-                    ExchangeId = engineIdentificationProvider.SiteId,
+                    SiteId = engineIdentificationProvider.SiteId,
                     OrganizationId = engineIdentificationProvider.OrganizationId,
                     HostName = engineIdentificationProvider.HostName,
                     FriendlyName = engineIdentificationProvider.FriendlyName,
