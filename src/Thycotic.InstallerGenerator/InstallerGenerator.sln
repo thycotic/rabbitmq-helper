@@ -39,6 +39,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.MemoryMq.SiteConne
 		..\Thycotic.MemoryMq.SiteConnector.Service.WiX\Product.wxs = ..\Thycotic.MemoryMq.SiteConnector.Service.WiX\Product.wxs
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.DistributedEngine.Service.WiX.Update.32bit", "Thycotic.DistributedEngine.Service.WiX.Update.32bit", "{42374357-2E5C-42DC-ABD6-0AC1D137215A}"
+	ProjectSection(SolutionItems) = preProject
+		..\Thycotic.DistributedEngine.Service.WiX.Update.32bit\add_service_install.xsl = ..\Thycotic.DistributedEngine.Service.WiX.Update.32bit\add_service_install.xsl
+		..\Thycotic.DistributedEngine.Service.WiX.Update.32bit\generate_msi.cmd = ..\Thycotic.DistributedEngine.Service.WiX.Update.32bit\generate_msi.cmd
+		..\Thycotic.DistributedEngine.Service.WiX.Update.32bit\icon.ico = ..\Thycotic.DistributedEngine.Service.WiX.Update.32bit\icon.ico
+		..\Thycotic.DistributedEngine.Service.WiX.Update.32bit\Product.wxs = ..\Thycotic.DistributedEngine.Service.WiX.Update.32bit\Product.wxs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.DistributedEngine.Service.WiX.32bit", "Thycotic.DistributedEngine.Service.WiX.32bit", "{D7BF18B7-D0B6-4B94-9E6E-EC2D6BA9B8CA}"
+	ProjectSection(SolutionItems) = preProject
+		..\Thycotic.DistributedEngine.Service.WiX.32bit\add_service_install.xsl = ..\Thycotic.DistributedEngine.Service.WiX.32bit\add_service_install.xsl
+		..\Thycotic.DistributedEngine.Service.WiX.32bit\generate_msi.cmd = ..\Thycotic.DistributedEngine.Service.WiX.32bit\generate_msi.cmd
+		..\Thycotic.DistributedEngine.Service.WiX.32bit\icon.ico = ..\Thycotic.DistributedEngine.Service.WiX.32bit\icon.ico
+		..\Thycotic.DistributedEngine.Service.WiX.32bit\Product.wxs = ..\Thycotic.DistributedEngine.Service.WiX.32bit\Product.wxs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,5 +89,7 @@ Global
 		{04626335-681F-44E0-BD23-EDD8F666A2C1} = {2E39DFBC-859B-4873-9B8A-E62704DA7FCC}
 		{0124A40D-83A3-4E80-BFA3-099FB41EA87A} = {2E39DFBC-859B-4873-9B8A-E62704DA7FCC}
 		{35BF3D00-A1C0-432A-9203-F7C2C0FC3ADB} = {2E39DFBC-859B-4873-9B8A-E62704DA7FCC}
+		{42374357-2E5C-42DC-ABD6-0AC1D137215A} = {2E39DFBC-859B-4873-9B8A-E62704DA7FCC}
+		{D7BF18B7-D0B6-4B94-9E6E-EC2D6BA9B8CA} = {2E39DFBC-859B-4873-9B8A-E62704DA7FCC}
 	EndGlobalSection
 EndGlobal

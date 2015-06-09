@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*" Language="1033" Manufacturer="Thycotic Software Ltd" Name="Thycotic Distributed Engine Service Limited Updater (x86)" Version="$(var.InstallerVersion)" UpgradeCode="A45158D7-7AC9-4EE8-A739-684ED67B96FC">
+    <Package InstallerVersion="200" Compressed="yes" InstallPrivileges="limited" Languages='1033'/>
+
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Upgrade Id="A45158D7-7AC9-4EE8-A739-684ED67B96FC">
+      <UpgradeVersion
+          Minimum="1.0.0.0" Maximum="$(var.InstallerVersion)"
+          Property="PREVIOUSVERSIONSINSTALLED"
+          IncludeMinimum="yes" IncludeMaximum="no" />
+    </Upgrade>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder" Name="PFiles">
+        <Directory Id="ThycoticInstall" Name="Thycotic Software Ltd" ComponentGuidGenerationSeed="B2048F39-ADFF-4D70-8270-4DD4D40C217E">
+          <Directory Id="INSTALLLOCATION" Name="Distributed Engine"/>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Icon Id="icon.ico" SourceFile="icon.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="icon.ico"/>
+
+    <Feature Id="Complete" Title="All Services" Level="1">
+      <ComponentGroupRef Id="main_component_group" />
+    </Feature>
+
+    <!--<CustomAction Id='SetRootDrive' Property='ROOTDRIVE' Value='[%SystemDrive]\'/>-->
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallInitialize" />
+    </InstallExecuteSequence>
+
+    <InstallUISequence>
+      <!-- App search is what does FindInstallLocation, and it is dependent on FindRelatedProducts -->
+      <AppSearch After="FindRelatedProducts"/>
+      <!--<Custom Action="SetRootDrive" Before="CostInitialize"></Custom>-->
+    </InstallUISequence>
+
+  </Product>
+</Wix>
