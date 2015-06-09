@@ -123,14 +123,14 @@ namespace Thycotic.DistributedEngine.Service.Configuration
             {
                 var identityGuidProvider = context.Resolve<IIdentityGuidProvider>();
 
-                var exchangeIdString =
+                var siteIdString =
                     GetOptionalLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.ExchangeId,
                         false);
 
                 return new EngineIdentificationProvider
                 {
-                    ExchangeId =
-                        !string.IsNullOrWhiteSpace(exchangeIdString) ? Convert.ToInt32(exchangeIdString) : new int?(),
+                    SiteId =
+                        !string.IsNullOrWhiteSpace(siteIdString) ? Convert.ToInt32(siteIdString) : new int?(),
                     HostName = DnsEx.GetDnsHostName(),
                     OrganizationId =
                         Convert.ToInt32(
@@ -311,7 +311,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
 
                 var request = new EngineConfigurationRequest
                 {
-                    ExchangeId = engineIdentificationProvider.ExchangeId,
+                    ExchangeId = engineIdentificationProvider.SiteId,
                     OrganizationId = engineIdentificationProvider.OrganizationId,
                     HostName = engineIdentificationProvider.HostName,
                     FriendlyName = engineIdentificationProvider.FriendlyName,

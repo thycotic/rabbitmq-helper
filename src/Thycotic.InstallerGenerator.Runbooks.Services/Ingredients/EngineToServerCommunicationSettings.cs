@@ -27,7 +27,7 @@
         /// <value>
         /// The exchange identifier.
         /// </value>
-        public string ExchangeId { get; set; }
+        public string SiteId { get; set; }
 
         /// <summary>
         /// Gets or sets the organization identifier.

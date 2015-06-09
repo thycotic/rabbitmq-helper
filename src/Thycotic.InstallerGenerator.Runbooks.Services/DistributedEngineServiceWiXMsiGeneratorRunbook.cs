@@ -55,7 +55,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                     {
                         {"EngineToServerCommunication.ConnectionString", EngineToServerCommunicationSettings.ConnectionString},
                         {"EngineToServerCommunication.UseSsl", EngineToServerCommunicationSettings.UseSsl},
-                        {"EngineToServerCommunication.ExchangeId", EngineToServerCommunicationSettings.ExchangeId},
+                        {"EngineToServerCommunication.SiteId", EngineToServerCommunicationSettings.SiteId},
                         {"EngineToServerCommunication.OrganizationId", EngineToServerCommunicationSettings.OrganizationId}
                     }
                 },

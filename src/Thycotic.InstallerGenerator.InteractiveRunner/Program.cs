@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Thycotic.InstallerGenerator.MSI.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
 using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
@@ -10,27 +12,30 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
     {
         private const string Version = "5.0.0.8";
 
+        private const string EngineToServerConnectionString = "http://localhost/ihawu";
+        private const string EngineToServerUseSsl = "false";
+        private const string EngineToServerSiteId = "3";
+        private const string EngineToServerOrganizationId = "1";
+
         private static void Main(string[] args)
         {
             Log.Configure();
 
             try
             {
-                string path;
-                path = GenerateMemoryMqMsi();
-                Console.WriteLine("Artifact generator and stored in {0}", path);
+                var generations = new List<Func<string>>
+                {
+                    GenerateMemoryMqMsi,
+                    GenerateDistributedEngineMsi,
+                    GenerateDistributedEngineMsi32Bit,
+                    GenerateDistributedEngineUpdateMsi,
+                    GenerateDistributedEngineUpdateMsi32Bit
+                };
 
-                Console.WriteLine();
-
-                path = GenerateDistributedEngineMsi();
-                Console.WriteLine("Artifact generator and stored in {0}", path);
-
-                Console.WriteLine();
-
-                path = GenerateDistributedEngineUpdateMsi();
-                Console.WriteLine("Artifact generator and stored in {0}", path);
-
-
+                generations.ForEach(g =>
+                {
+                    Console.WriteLine("Artifact generator and stored in {0}", g.Invoke());
+                });
                 
             }
             catch (Exception ex)
@@ -86,7 +91,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             const string someSecretServerArbitraryPathForBits =
                 @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
-                //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
             const string currentSnapshottedVersion = Version;
 
 
@@ -95,13 +100,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 RecipePath = someSecretServerArbitraryPathForWixRecipe,
                 SourcePath = someSecretServerArbitraryPathForBits,
                 Version = currentSnapshottedVersion,
-
                 EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
                 {
-                    ConnectionString = "net.tcp://localhost:8881",
-                    UseSsl = "false",
-                    ExchangeId = "5",
-                    OrganizationId = "1"
+                    ConnectionString = EngineToServerConnectionString,
+                    UseSsl = EngineToServerUseSsl,
+                    SiteId = EngineToServerSiteId,
+                    OrganizationId = EngineToServerOrganizationId
                 }
 
 
@@ -112,12 +116,48 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             return wrapper.Generate(new WiXMsiGenerator(), steps);
         }
 
+        private static string GenerateDistributedEngineMsi32Bit()
+        {
+            const string someSecretServerArbitraryPathForWixRecipe =
+                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.32bit";
+               @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.32bit";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.32bit";
+
+            const string someSecretServerArbitraryPathForBits =
+                @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
+            const string currentSnapshottedVersion = Version;
+
+
+            var steps = new DistributedEngineServiceWiXMsiGeneratorRunbook
+            {
+                Is64Bit = false,
+                RecipePath = someSecretServerArbitraryPathForWixRecipe,
+                SourcePath = someSecretServerArbitraryPathForBits,
+                Version = currentSnapshottedVersion,
+                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
+                {
+                    ConnectionString = EngineToServerConnectionString,
+                    UseSsl = EngineToServerUseSsl,
+                    SiteId = EngineToServerSiteId,
+                    OrganizationId = EngineToServerOrganizationId
+                }
+
+
+            };
+
+            var wrapper = new InstallerGeneratorWrapper();
+
+            return wrapper.Generate(new WiXMsiGenerator(), steps);
+        }
+
+
         private static string GenerateDistributedEngineUpdateMsi()
         {
             const string someSecretServerArbitraryPathForWixRecipe =
-                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update";
                 @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update";
-            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update";
 
             const string someSecretServerArbitraryPathForBits =
                 @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
@@ -134,10 +174,10 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
                 EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
                 {
-                    ConnectionString = "net.tcp://localhost:8881",
-                    UseSsl = "false",
-                    ExchangeId = "5",
-                    OrganizationId = "1"
+                    ConnectionString = EngineToServerConnectionString,
+                    UseSsl = EngineToServerUseSsl,
+                    SiteId = EngineToServerSiteId,
+                    OrganizationId = EngineToServerOrganizationId
                 }
 
 
@@ -147,5 +187,45 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             return wrapper.Generate(new WiXMsiGenerator(), steps);
         }
+
+
+        private static string GenerateDistributedEngineUpdateMsi32Bit()
+        {
+            const string someSecretServerArbitraryPathForWixRecipe =
+                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update.32bit";
+               @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update.32bit";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update.32bit";
+
+            const string someSecretServerArbitraryPathForBits =
+                @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
+            const string currentSnapshottedVersion = Version;
+
+
+            var steps = new DistributedEngineServiceWiXMsiGeneratorRunbook
+            {
+                Is64Bit = false,
+                ArtifactNameSuffix = "Update",
+                RecipePath = someSecretServerArbitraryPathForWixRecipe,
+                SourcePath = someSecretServerArbitraryPathForBits,
+                Version = currentSnapshottedVersion,
+
+                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
+                {
+                    ConnectionString = EngineToServerConnectionString,
+                    UseSsl = EngineToServerUseSsl,
+                    SiteId = EngineToServerSiteId,
+                    OrganizationId = EngineToServerOrganizationId
+                }
+
+
+            };
+
+
+            var wrapper = new InstallerGeneratorWrapper();
+
+            return wrapper.Generate(new WiXMsiGenerator(), steps);
+        }
+
     }
 }

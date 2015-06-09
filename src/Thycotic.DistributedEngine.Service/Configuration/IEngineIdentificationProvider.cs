@@ -40,11 +40,11 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         Guid IdentityGuid { get; }
 
         /// <summary>
-        /// Gets or sets the exchange identifier.
+        /// Gets or sets the site identifier.
         /// </summary>
         /// <value>
         /// The exchange identifier.
         /// </value>
-        int? ExchangeId { get; set; }
+        int? SiteId { get; set; }
     }
 }
