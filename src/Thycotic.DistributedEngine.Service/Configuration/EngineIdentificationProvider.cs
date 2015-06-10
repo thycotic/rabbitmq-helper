@@ -8,6 +8,14 @@ namespace Thycotic.DistributedEngine.Service.Configuration
     public class EngineIdentificationProvider : IEngineIdentificationProvider
     {
         /// <summary>
+        /// Gets a value indicating whether the engine is running as 64 bit or 32 bit process
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [is64 bit]; otherwise, <c>false</c>.
+        /// </value>
+        public bool Is64Bit{ get { return Environment.Is64BitProcess; }}
+
+        /// <summary>
         /// Gets or sets the name of the host.
         /// </summary>
         /// <value>
