@@ -67,7 +67,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             {
                 var request = new EngineUpdateRequest
                 {
-                    //Is64Bit = _engineIdentificationProvider.Is64Bit,
+                    Is64Bit = _engineIdentificationProvider.Is64Bit,
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
                     Version = ReleaseInformationHelper.Version.ToString()
@@ -103,7 +103,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             {
                 var request = new EngineUpdateOverHttpRequest
                 {
-                    //Is64Bit = _engineIdentificationProvider.Is64Bit,
+                    Is64Bit = _engineIdentificationProvider.Is64Bit,
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
                     Version = ReleaseInformationHelper.Version.ToString()
