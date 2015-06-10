@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -41,17 +42,24 @@ namespace Thycotic.InstallerGenerator.Core.Steps
         /// </summary>
         public void Execute()
         {
-            var configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = ConfigurationFilePath};
+            var configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = ConfigurationFilePath };
             var config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
-  
+
             Settings.ToList().ForEach(setting =>
             {
-                _log.Info(string.Format("Setting value for {0}", setting.Key));
-                config.AppSettings.Settings[setting.Key].Value = setting.Value;
+                try
+                {
+                    _log.Info(string.Format("Setting value for {0}", setting.Key));
+                    config.AppSettings.Settings[setting.Key].Value = setting.Value;
+                }
+                catch (Exception)
+                {
+                    throw new ApplicationException(string.Format("Could not find and replace app setting with key {0}", setting.Key));
+                }
             });
 
             //only write modified fields
-            config.Save(ConfigurationSaveMode.Minimal);  
+            config.Save(ConfigurationSaveMode.Minimal);
         }
     }
 }
