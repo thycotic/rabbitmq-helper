@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Thycotic.InstallerGenerator.MSI.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
 using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
@@ -10,7 +9,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 {
     class Program
     {
-        private const string Version = "5.0.0.8";
+        private const string Version = "5.0.0.0";
 
         private const string EngineToServerConnectionString = "http://localhost/ihawu";
         private const string EngineToServerUseSsl = "false";
