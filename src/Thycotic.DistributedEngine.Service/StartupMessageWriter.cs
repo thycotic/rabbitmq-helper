@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Autofac;
+using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.Logging;
 using Thycotic.Utility;
 
@@ -14,6 +15,8 @@ namespace Thycotic.DistributedEngine.Service
     /// </summary>
     public class StartupMessageWriter : IStartable, IDisposable
     {
+        private readonly IEngineIdentificationProvider _engineIdentificationProvider;
+
         /// <summary>
         /// The startup message delay
         /// </summary>
@@ -22,12 +25,22 @@ namespace Thycotic.DistributedEngine.Service
         private readonly ILogWriter _log = Log.Get(typeof(StartupMessageWriter));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StartupMessageWriter"/> class.
+        /// </summary>
+        /// <param name="engineIdentificationProvider">The engine identification provider.</param>
+        public StartupMessageWriter(IEngineIdentificationProvider engineIdentificationProvider)
+        {
+            _engineIdentificationProvider = engineIdentificationProvider;
+        }
+
+        /// <summary>
         /// Perform once-off startup processing.
         /// </summary>
         public void Start()
         {
             _log.Debug("Application is starting...");
             _log.Info(string.Format("Running as {0}", GetUserName()));
+            _log.Info(string.Format("Running as {0} bit process", _engineIdentificationProvider.Is64Bit ?  "64" : "32"));
 
             Task.Delay(StartupMessageDelay).ContinueWith(task => 
             {
