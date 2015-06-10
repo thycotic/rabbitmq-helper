@@ -10,7 +10,7 @@
       <UpgradeVersion
           Minimum="1.0.0.0" Maximum="$(var.InstallerVersion)"
           Property="PREVIOUSVERSIONSINSTALLED"
-          IncludeMinimum="yes" IncludeMaximum="no" />
+          IncludeMinimum="yes" IncludeMaximum="yes" />
     </Upgrade>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
