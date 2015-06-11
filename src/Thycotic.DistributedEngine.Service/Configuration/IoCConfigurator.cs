@@ -247,6 +247,16 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         }
 
         /// <summary>
+        /// Set Configuration to null
+        /// </summary>
+        /// <returns></returns>
+        public void ClearConfiguration()
+        {
+            LastConfigurationConsumed = DateTime.MinValue;
+            _instanceConfiguration = null;
+        }
+
+        /// <summary>
         /// Tries the assign configuration.
         /// </summary>
         /// <param name="configuration">The configuration.</param>

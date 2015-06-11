@@ -275,7 +275,7 @@ namespace Thycotic.DistributedEngine.Service
                 if (removeInstanceConfiguration)
                 {
                     _log.Info("Removing instance configuration");
-                    IoCConfigurator.TryAssignConfiguration(null);
+                    IoCConfigurator.ClearConfiguration();
                 }
 
                 BringUp();

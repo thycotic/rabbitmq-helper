@@ -51,5 +51,10 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         IContainer BuildAll(EngineService engineService, bool startConsuming);
 
 
+        /// <summary>
+        /// Set Configuration to null
+        /// </summary>
+        /// <returns></returns>
+        void ClearConfiguration();
     }
 }

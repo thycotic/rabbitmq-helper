@@ -120,7 +120,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
 
                     _log.Error("Failed to send heart beat to server. Recycling", task.Exception);
 
-                    _engineService.Recycle();
+                    _engineService.Recycle(true);
                 })
                 //schedule
                 .ContinueWith(task => WaitPumpAndSchedule(), _cts.Token);
