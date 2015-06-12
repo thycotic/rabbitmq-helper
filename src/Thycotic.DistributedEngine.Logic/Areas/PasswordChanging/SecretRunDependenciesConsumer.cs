@@ -42,7 +42,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         /// <returns></returns>
         public void Consume(SecretChangeDependencyMessage request)
         {
-            _log.Info(string.Format("Got a change dependency request for Secret Id {0}:", request.SecretId));
+            _log.Info(string.Format("Got a change dependency request for Secret Id {0}", request.SecretId));
 
             var guid = Guid.NewGuid();
             var messages = new List<DependencyChangeResponseMessageToLocalize>();
@@ -89,8 +89,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         {
             var hasMachine = !string.IsNullOrEmpty(info.MachineName);
             return !hasMachine
-                    ? new DependencyChangeResponseMessageToLocalize {MessageName = "DependencyStartedRunningOnMachineOnExchange", Params = new object[] { info.ServiceName, info.MachineName, _exchangeNameProvider.GetCurrentExchange() }}
-                    : new DependencyChangeResponseMessageToLocalize {MessageName = "DependencyStartedRunningOnExchange", Params = new object[] { info.ServiceName, _exchangeNameProvider.GetCurrentExchange() }};
+                    ? new DependencyChangeResponseMessageToLocalize {MessageName = "DependencyStartedRunningOnMachineOnSite", Params = new object[] { info.ServiceName, info.MachineName, _exchangeNameProvider.GetCurrentExchange() } }
+                    : new DependencyChangeResponseMessageToLocalize {MessageName = "DependencyStartedRunningOnSite", Params = new object[] { info.ServiceName, _exchangeNameProvider.GetCurrentExchange() }};
            
         }
 
