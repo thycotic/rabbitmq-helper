@@ -48,11 +48,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
             var messages = new List<DependencyChangeResponseMessageToLocalize>();
             for (int index = 0; index < request.DependencyChangeInfos.Length; index++)
             {
+                var response = new DependencyChangeResponse();
                 try
                 {
-                    messages =  new List<DependencyChangeResponseMessageToLocalize>();
+                    messages = new List<DependencyChangeResponseMessageToLocalize>();
                     var info = request.DependencyChangeInfos[index];
-                    var response = new DependencyChangeResponse();
                     response.SecretId = request.SecretId;
                     response.SecretDependencyId = info.SecretDependencyId;
                     response.TransactionGuid = guid;
@@ -71,7 +71,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                 }
                 catch (Exception ex)
                 {
-                    var response = new DependencyChangeResponse
+                    response = new DependencyChangeResponse
                     {
                         Success = false,
                         SecretId = request.SecretId,
@@ -81,6 +81,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         LogMessages = messages.ToArray(),
                     };
                     _responseBus.ExecuteAsync(response);
+                }
+                finally
+                {
+                    _log.Info(string.Format("Completed processing dependency request for Secret Id {0}. Successful: {1}", request.SecretId, response.Success ? "Yes" : "No"));
                 }
             }
         }
