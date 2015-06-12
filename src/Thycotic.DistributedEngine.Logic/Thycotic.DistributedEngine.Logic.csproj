@@ -144,7 +144,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Interop.ActiveDs">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.111\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.117\lib\net451\Interop.ActiveDs.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
@@ -200,8 +200,9 @@
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.94\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Sources">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.111\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.117, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.117\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.348, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
