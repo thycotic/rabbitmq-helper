@@ -86,6 +86,7 @@ dir {0}
                     WorkingPath = WorkingPath,
                     ExecutablePath = ToolPaths.GetCandlePath(ApplicationPath),
                     Parameters = string.Format(@"
+-fips
 -nologo 
 -arch x64
 -ext WixUtilExtension 
