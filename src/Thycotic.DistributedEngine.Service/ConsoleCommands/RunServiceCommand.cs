@@ -35,6 +35,14 @@ namespace Thycotic.DistributedEngine.Service.ConsoleCommands
                 //if (!parameters.TryGet("server", out server)) return;
                 //if (!parameters.TryGet("username", out username)) return;
                 //if (!parameters.TryGet("password", out password)) return;
+
+                //ConsoleConfigurationManager.AppSettings["EngineToServerCommunication.ConnectionString"] =
+                //    "http://localhost/ihawu";
+
+                //ConsoleConfigurationManager.AppSettings["EngineToServerCommunication.UseSsl"] = "false";
+                //ConsoleConfigurationManager.AppSettings["EngineToServerCommunication.SiteId"] = "3";
+                //ConsoleConfigurationManager.AppSettings["EngineToServerCommunication.OrganizationId"] = "1";
+
                 var servicesToRun = new ServiceBase[]
                 {
                     new EngineService()

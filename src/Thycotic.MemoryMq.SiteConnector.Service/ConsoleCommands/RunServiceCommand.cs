@@ -35,6 +35,12 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.ConsoleCommands
                 //if (!parameters.TryGet("server", out server)) return;
                 //if (!parameters.TryGet("username", out username)) return;
                 //if (!parameters.TryGet("password", out password)) return;
+
+                //ConsoleConfigurationManager.AppSettings["Pipeline.ConnectionString"] = "net.tcp://localhost:8672";
+                //ConsoleConfigurationManager.AppSettings["Pipeline.UseSsl"] = "false";
+                //ConsoleConfigurationManager.AppSettings["Pipeline.Thumbprint"] =
+                //    "f1faa2aa00f1350edefd9490e3fc95017db3c897";
+
                 var servicesToRun = new ServiceBase[]
                 {
                     new SiteConnectorService(), 
