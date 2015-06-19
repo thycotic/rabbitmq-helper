@@ -16,11 +16,11 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
         // ReSharper disable once UnusedParameter.Local
         private static string GetOptionalLocalConfiguration(string name, bool throwIfNotFound)
         {
-            var value = ConfigurationManager.AppSettings[name];
+            var value = ConsoleConfigurationManager.AppSettings[name];
 
             if (string.IsNullOrWhiteSpace(value))
             {
-                value = ConsoleConfigurationManager.AppSettings[name];
+                value = ConfigurationManager.AppSettings[name];
             }
 
             if (string.IsNullOrWhiteSpace(value) && throwIfNotFound)
