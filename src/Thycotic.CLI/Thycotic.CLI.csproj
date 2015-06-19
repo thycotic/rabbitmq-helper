@@ -139,6 +139,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ConsoleConfigurationManager.cs" />
     <Compile Include="NoopConsoleCommandFragement.cs" />
     <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="OutputConsoleCommandFragment.cs" />

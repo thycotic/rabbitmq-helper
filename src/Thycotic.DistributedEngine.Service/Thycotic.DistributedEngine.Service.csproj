@@ -264,6 +264,8 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
+    <Compile Include="ConsoleCommands\RunServiceCommand.cs" />
+    <Compile Include="ConsoleCommands\BoostrapUpdateCommand.cs" />
     <Compile Include="EngineToServer\BasicBus.cs" />
     <Compile Include="EngineToServer\EngineToServerConnectionManager.cs" />
     <Compile Include="EngineToServer\EngineToServerConnection.cs" />
@@ -329,6 +331,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Thycotic.CLI\Thycotic.CLI.csproj">
+      <Project>{2dbbc8ec-b150-45c1-82a9-20ccee768443}</Project>
+      <Name>Thycotic.CLI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">
       <Project>{60af5da6-343c-4c6f-9cd5-2b5f04d9af92}</Project>
       <Name>Thycotic.MemoryMq</Name>

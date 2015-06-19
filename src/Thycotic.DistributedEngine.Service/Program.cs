@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Linq;
-using System.ServiceProcess;
+using System.Diagnostics;
+using Thycotic.CLI;
+using Thycotic.DistributedEngine.Service.ConsoleCommands;
 
 namespace Thycotic.DistributedEngine.Service
 {
@@ -9,6 +10,7 @@ namespace Thycotic.DistributedEngine.Service
         public static class SupportedSwitches
         {
             public const string Boostrap = "bootstrap";
+            public const string RunService = "runService";
         }
 
         /// <summary>
@@ -18,34 +20,24 @@ namespace Thycotic.DistributedEngine.Service
         {
             try
             {
-                if (args.Any())
+                var cli = new CommandLineInterface("Thycotic Distributed Engine");
+                cli.AddCustomCommand(new RunServiceCommand());
+                cli.AddCustomCommand(new BoostrapUpdateCommand());
+
+                var input = string.Join(" ", args);
+
+                if (string.IsNullOrWhiteSpace(input))
                 {
-                    switch (args[0])
-                    {
-                        case SupportedSwitches.Boostrap:
-
-                            var msiPath = args[1];
-
-                            var eub = new EngineUpdateBootstrapper();
-
-                            eub.Bootstrap(msiPath);
-
-                            return;
-
-                    }
+                    input = SupportedSwitches.RunService;
                 }
 
-                var servicesToRun = new ServiceBase[]
-            {
-                new EngineService()
-            };
-                ServiceBase.Run(servicesToRun);
+                cli.ConsumeInput(input);
 
             }
             catch (Exception ex)
             {
                 //superfluous, mostly used for testing and consuming exceptions that are already logged but we want to bubble to the OS
-                System.Diagnostics.Trace.TraceError(ex.Message);
+                Trace.TraceError(ex.Message);
                 throw;
             }
         }

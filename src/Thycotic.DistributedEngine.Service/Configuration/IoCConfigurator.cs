@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using Autofac;
+using Thycotic.CLI.Configuration;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -93,6 +94,11 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         private static string GetOptionalLocalConfiguration(string name, bool throwIfNotFound)
         {
             var value = ConfigurationManager.AppSettings[name];
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                value = ConsoleConfigurationManager.AppSettings[name];
+            }
 
             if (string.IsNullOrWhiteSpace(value) && throwIfNotFound)
             {

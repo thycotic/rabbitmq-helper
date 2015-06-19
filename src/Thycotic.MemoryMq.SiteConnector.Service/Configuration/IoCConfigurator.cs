@@ -1,5 +1,6 @@
 using System.Configuration;
 using Autofac;
+using Thycotic.CLI.Configuration;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.SiteConnector.Service.IoC;
 
@@ -16,6 +17,11 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
         private static string GetOptionalLocalConfiguration(string name, bool throwIfNotFound)
         {
             var value = ConfigurationManager.AppSettings[name];
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                value = ConsoleConfigurationManager.AppSettings[name];
+            }
 
             if (string.IsNullOrWhiteSpace(value) && throwIfNotFound)
             {

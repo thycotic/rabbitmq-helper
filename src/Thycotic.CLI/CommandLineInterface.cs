@@ -86,10 +86,17 @@ namespace Thycotic.CLI
 
         private void ConfigureConsoleWindow()
         {
-            Console.Title = string.Format("{0} in interactive mode v.{1} ({2})", _applicationName, ReleaseInformationHelper.Version, ReleaseInformationHelper.Architecture);
+            try
+            {
+                Console.Title = string.Format("{0} in interactive mode v.{1} ({2})", _applicationName, ReleaseInformationHelper.Version, ReleaseInformationHelper.Architecture);
 
-            InteropHelper.DisableCloseMenuItem();
-            InteropHelper.Maximize();
+                InteropHelper.DisableCloseMenuItem();
+                InteropHelper.Maximize();
+            }
+            catch
+            {
+                //console not available
+            }
         }
 
         public void AddCustomCommand(IConsoleCommand command)
@@ -105,6 +112,31 @@ namespace Thycotic.CLI
         private IEnumerable<IConsoleCommand> GetCurrentCommandMappings()
         {
             return _commandCustomMappings.Union(_commandBuiltInMappings);
+        }
+
+        public void ConsumeInput(string initialCommand)
+        {
+            ConsoleCommandParameters parameters;
+
+            string input;
+
+            if (!string.IsNullOrWhiteSpace(initialCommand))
+            {
+                //escape quotes
+                input = initialCommand.Replace("&quot;", "\"");
+
+                Console.WriteLine();
+                Console.Write("{0}@{1} # ", Environment.UserName, Environment.MachineName);
+                Console.WriteLine(input);
+            }
+            else
+            {
+                throw new ArgumentException("No input provided");
+            }
+
+            var commandName = ParseInput(input, out parameters);
+            HandleCommand(commandName, parameters);
+
         }
 
         public void BeginInputLoop(string initialCommand)
@@ -126,7 +158,7 @@ namespace Thycotic.CLI
                 }
                 else
                 {
-                    input = ConsumeInput();
+                    input = PromptForInput();
                 }
 
                 var commandName = ParseInput(input, out parameters);
@@ -141,7 +173,7 @@ namespace Thycotic.CLI
             } while (!_cts.IsCancellationRequested);
         }
 
-        private static string ConsumeInput()
+        private static string PromptForInput()
         {
             Console.WriteLine();
             Console.Write("{0}@{1} # ", Environment.UserName, Environment.MachineName);
@@ -228,7 +260,7 @@ namespace Thycotic.CLI
 
             }
         }
-        
+
 
         public void Wait()
         {
