@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Thycotic.InstallerGenerator.MSI.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
-using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
 using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.InteractiveRunner
@@ -64,16 +63,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             {
                 RecipePath = someSecretServerArbitraryPathForWixRecipe,
                 SourcePath = someSecretServerArbitraryPathForBits,
-                Version = currentSnapshottedVersion,
-
-                PipelineSettings = new PipelineSettings
-                {
-                    ConnectionString = "net.tcp://localhost:8672",
-                    UseSsl = "false",// "true",
-                    Thumbprint = string.Empty//"f1faa2aa00f1350edefd9490e3fc95017db3c897"
-                }
-
-
+                Version = currentSnapshottedVersion
             };
 
             var wrapper = new InstallerGeneratorWrapper();
@@ -98,15 +88,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             {
                 RecipePath = someSecretServerArbitraryPathForWixRecipe,
                 SourcePath = someSecretServerArbitraryPathForBits,
-                Version = currentSnapshottedVersion,
-                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
-                {
-                    ConnectionString = EngineToServerConnectionString,
-                    UseSsl = EngineToServerUseSsl,
-                    SiteId = EngineToServerSiteId,
-                    OrganizationId = EngineToServerOrganizationId
-                }
-
+                Version = currentSnapshottedVersion
 
             };
 
@@ -133,15 +115,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 Is64Bit = false,
                 RecipePath = someSecretServerArbitraryPathForWixRecipe,
                 SourcePath = someSecretServerArbitraryPathForBits,
-                Version = currentSnapshottedVersion,
-                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
-                {
-                    ConnectionString = EngineToServerConnectionString,
-                    UseSsl = EngineToServerUseSsl,
-                    SiteId = EngineToServerSiteId,
-                    OrganizationId = EngineToServerOrganizationId
-                }
-
+                Version = currentSnapshottedVersion
 
             };
 
@@ -169,17 +143,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 ArtifactNameSuffix = "Update",
                 RecipePath = someSecretServerArbitraryPathForWixRecipe,
                 SourcePath = someSecretServerArbitraryPathForBits,
-                Version = currentSnapshottedVersion,
-
-                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
-                {
-                    ConnectionString = EngineToServerConnectionString,
-                    UseSsl = EngineToServerUseSsl,
-                    SiteId = EngineToServerSiteId,
-                    OrganizationId = EngineToServerOrganizationId
-                }
-
-
+                Version = currentSnapshottedVersion
             };
 
             var wrapper = new InstallerGeneratorWrapper();
@@ -207,17 +171,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
                 ArtifactNameSuffix = "Update",
                 RecipePath = someSecretServerArbitraryPathForWixRecipe,
                 SourcePath = someSecretServerArbitraryPathForBits,
-                Version = currentSnapshottedVersion,
-
-                EngineToServerCommunicationSettings = new EngineToServerCommunicationSettings
-                {
-                    ConnectionString = EngineToServerConnectionString,
-                    UseSsl = EngineToServerUseSsl,
-                    SiteId = EngineToServerSiteId,
-                    OrganizationId = EngineToServerOrganizationId
-                }
-
-
+                Version = currentSnapshottedVersion
             };
 
 

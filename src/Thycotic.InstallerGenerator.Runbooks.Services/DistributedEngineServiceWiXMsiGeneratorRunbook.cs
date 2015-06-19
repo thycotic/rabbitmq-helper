@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Thycotic.InstallerGenerator.Core.MSI.WiX;
+﻿using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.InstallerGenerator.Core.Steps;
-using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
 
 namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
@@ -15,14 +12,6 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// The default artifact name
         /// </summary>
         public const string DefaultArtifactName = "Thycotic.DistributedEngine.Service";
-
-        /// <summary>
-        /// Gets or sets the engine to server communication settings.
-        /// </summary>
-        /// <value>
-        /// The engine to server communication.
-        /// </value>
-        public EngineToServerCommunicationSettings EngineToServerCommunicationSettings { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DistributedEngineServiceWiXMsiGeneratorRunbook"/> class.
@@ -38,27 +27,10 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// <exception cref="System.ArgumentException">Engine to server communication ingredients missing.</exception>
         public override void BakeSteps()
         {
-            if (EngineToServerCommunicationSettings == null)
-            {
-                throw new ArgumentException("Engine to server communication ingredients missing.");
-            }
-
             ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Is64Bit, Version);
 
             Steps = new IInstallerGeneratorStep[]
             {
-                new AppSettingConfigurationChangeStep
-                {
-                    Name = "App.config changes",
-                    ConfigurationFilePath = GetPathToFileInSourcePath(string.Format("{0}.exe.config", DefaultArtifactName)),
-                    Settings = new Dictionary<string, string>
-                    {
-                        {"EngineToServerCommunication.ConnectionString", EngineToServerCommunicationSettings.ConnectionString},
-                        {"EngineToServerCommunication.UseSsl", EngineToServerCommunicationSettings.UseSsl},
-                        {"EngineToServerCommunication.SiteId", EngineToServerCommunicationSettings.SiteId},
-                        {"EngineToServerCommunication.OrganizationId", EngineToServerCommunicationSettings.OrganizationId}
-                    }
-                },
                 new ExternalProcessStep
                 {
                     Name = "File harvest (WiX Heat process)",

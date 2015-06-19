@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Thycotic.InstallerGenerator.Core.MSI.WiX;
+﻿using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.InstallerGenerator.Core.Steps;
-using Thycotic.InstallerGenerator.Runbooks.Services.Ingredients;
 
 namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
@@ -15,14 +12,6 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// The default artifact name
         /// </summary>
         public const string DefaultArtifactName = "Thycotic.MemoryMq.SiteConnector.Service";
-
-        /// <summary>
-        /// Gets or sets the pipeline settings.
-        /// </summary>
-        /// <value>
-        /// The pipeline settings.
-        /// </value>
-        public PipelineSettings PipelineSettings { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook"/> class.
@@ -38,27 +27,10 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// <exception cref="System.ArgumentException">Pipeline settings ingredients missing</exception>
         public override void BakeSteps()
         {
-            if (PipelineSettings == null)
-            {
-                throw new ArgumentException("Pipeline settings ingredients missing");
-            }
-
             ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Is64Bit, Version);
 
             Steps = new IInstallerGeneratorStep[]
             {
-                new AppSettingConfigurationChangeStep
-                {
-                    Name = "App.config changes",
-                    ConfigurationFilePath =
-                        GetPathToFileInSourcePath(string.Format("{0}.exe.config", DefaultArtifactName)),
-                    Settings = new Dictionary<string, string>
-                    {
-                        {"Pipeline.ConnectionString", PipelineSettings.ConnectionString},
-                        {"Pipeline.UseSSL", PipelineSettings.UseSsl},
-                        {"Pipeline.Thumbprint", PipelineSettings.Thumbprint}
-                    }
-                },
                 new ExternalProcessStep
                 {
                     Name = "File harvest (WiX Heat process)",
