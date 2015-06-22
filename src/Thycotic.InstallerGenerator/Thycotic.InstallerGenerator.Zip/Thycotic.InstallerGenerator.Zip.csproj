@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,12 +44,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ZipFileCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Thycotic.InstallerGenerator.Core\Thycotic.InstallerGenerator.Core.csproj">
       <Project>{3c2d28be-dda0-4768-b968-4ec89b52bb9e}</Project>
       <Name>Thycotic.InstallerGenerator.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
