@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip;
 
-namespace Thycotic.InstallerGenerator.Zip
+namespace Thycotic.InstallerGenerator.Core.Zip
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AgentContentZipCreator
     {
-        private IApplicationPathProvider _applicationPathProvider;
+        //private IApplicationPathProvider _applicationPathProvider;
 
-        public AgentContentZipCreator(IApplicationPathProvider pathProvider)
-        {
-            _applicationPathProvider = pathProvider;
-        }
+        //public AgentContentZipCreator(IApplicationPathProvider pathProvider)
+        //{
+        //    _applicationPathProvider = pathProvider;
+        //}
 
-        public AgentContentZipCreator()
-            : this(ServiceLocator.ApplicationPathProvider)
-        {
-        }
+        //public AgentContentZipCreator()
+        //    : this(ServiceLocator.ApplicationPathProvider)
+        //{
+        //}
 
+        /// <summary>
+        /// Adds all DLLS to content zip.
+        /// </summary>
         public void AddAllDllsToContentZip()
         {
-            string applicationPath = _applicationPathProvider.GetApplicationPath();
+            string applicationPath = string.Empty;// _applicationPathProvider.GetApplicationPath();
             DeleteOldAgentFiles(applicationPath);
 
             bool shouldAddDlls;
@@ -240,10 +243,14 @@ namespace Thycotic.InstallerGenerator.Zip
             s.Write(dllBytes, 0, dllBytes.Length);
         }
 
+        /// <summary>
+        /// Shoulds the add agent DLLS to content zip.
+        /// </summary>
+        /// <returns></returns>
         public bool ShouldAddAgentDllsToContentZip()
         {
-            string agentFilesDirectory = Path.Combine(_applicationPathProvider.GetApplicationPath(),
-              "agentinstallerfiles");
+            string agentFilesDirectory = string.Empty;// Path.Combine(_applicationPathProvider.GetApplicationPath(),
+              //"agentinstallerfiles");
             string contentZipPath = Path.Combine(agentFilesDirectory, "Content.zip");
             FileInfo contentZipFileInfo = new FileInfo(contentZipPath);
             return contentZipFileInfo.Length / 1024 < 1000;

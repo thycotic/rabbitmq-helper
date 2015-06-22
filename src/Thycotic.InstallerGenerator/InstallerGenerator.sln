@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator", "Thycotic.InstallerGenerator.csproj", "{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.InteractiveRunner", "..\Thycotic.InstallerGenerator.InteractiveRunner\Thycotic.InstallerGenerator.InteractiveRunner.csproj", "{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Core", "..\Thycotic.InstallerGenerator.Core\Thycotic.InstallerGenerator.Core.csproj", "{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}"
@@ -59,18 +57,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.CLI", "..\Thycotic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.WiX", "..\Thycotic.InstallerGenerator.WiX\Thycotic.InstallerGenerator.WiX.csproj", "{3551DAF3-DBCE-4081-8010-E6AE850E7A67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Zip", "Thycotic.InstallerGenerator.Zip\Thycotic.InstallerGenerator.Zip.csproj", "{26BC6181-AEA4-4D2B-8062-FABD19F744F8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -95,10 +87,6 @@ Global
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26BC6181-AEA4-4D2B-8062-FABD19F744F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26BC6181-AEA4-4D2B-8062-FABD19F744F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26BC6181-AEA4-4D2B-8062-FABD19F744F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26BC6181-AEA4-4D2B-8062-FABD19F744F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

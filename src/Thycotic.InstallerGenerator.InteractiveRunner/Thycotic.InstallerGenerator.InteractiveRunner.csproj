@@ -77,14 +77,6 @@
       <Project>{3551daf3-dbce-4081-8010-e6ae850e7a67}</Project>
       <Name>Thycotic.InstallerGenerator.WiX</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Thycotic.InstallerGenerator\Thycotic.InstallerGenerator.csproj">
-      <Project>{2ea4777c-e2aa-4ccc-94a1-9cef50c29ae8}</Project>
-      <Name>Thycotic.InstallerGenerator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.InstallerGenerator\Thycotic.InstallerGenerator.Zip\Thycotic.InstallerGenerator.Zip.csproj">
-      <Project>{26bc6181-aea4-4d2b-8062-fabd19f744f8}</Project>
-      <Name>Thycotic.InstallerGenerator.Zip</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
