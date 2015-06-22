@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 
 namespace Thycotic.InstallerGenerator.Core.MSI.WiX
@@ -7,6 +8,30 @@ namespace Thycotic.InstallerGenerator.Core.MSI.WiX
     /// </summary>
     public abstract class WiXMsiGeneratorRunbook : InstallerGeneratorRunbook
     {
+        /// <summary>
+        /// Gets or sets the heat path provider.
+        /// </summary>
+        /// <value>
+        /// The heat path provider.
+        /// </value>
+        public Func<string, string> HeatPathProvider { get; set; }
+
+        /// <summary>
+        /// Gets or sets the candle path provider.
+        /// </summary>
+        /// <value>
+        /// The candle path provider.
+        /// </value>
+        public Func<string, string> CandlePathProvider { get; set; }
+
+        /// <summary>
+        /// Gets or sets the light path provider.
+        /// </summary>
+        /// <value>
+        /// The light path provider.
+        /// </value>
+        public Func<string, string> LightPathProvider { get; set; }
+
         /// <summary>
         /// Gets the name of the artifact file.
         /// </summary>

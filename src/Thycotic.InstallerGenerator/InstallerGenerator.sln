@@ -57,6 +57,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.DistributedEngine.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.CLI", "..\Thycotic.CLI\Thycotic.CLI.csproj", "{2DBBC8EC-B150-45C1-82A9-20CCEE768443}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.WiX", "..\Thycotic.InstallerGenerator.WiX\Thycotic.InstallerGenerator.WiX.csproj", "{3551DAF3-DBCE-4081-8010-E6AE850E7A67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Zip", "Thycotic.InstallerGenerator.Zip\Thycotic.InstallerGenerator.Zip.csproj", "{26BC6181-AEA4-4D2B-8062-FABD19F744F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,14 @@ Global
 		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26BC6181-AEA4-4D2B-8062-FABD19F744F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26BC6181-AEA4-4D2B-8062-FABD19F744F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26BC6181-AEA4-4D2B-8062-FABD19F744F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26BC6181-AEA4-4D2B-8062-FABD19F744F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,13 +1,13 @@
 ﻿using System.IO;
 
-namespace Thycotic.InstallerGenerator.Core.MSI.WiX
+namespace Thycotic.InstallerGenerator.WiX
 {
     /// <summary>
     /// WiX tool paths
     /// </summary>
     public static class ToolPaths
     {
-        private static readonly string LibPath = Path.Combine("lib", "WiX");
+        private static readonly string LibPath = Path.Combine("lib");
 
         /// <summary>
         /// Gets the heat path.
