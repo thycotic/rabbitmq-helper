@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2EA4777C-E2AA-4CCC-94A1-9CEF50C29AE8}</ProjectGuid>
+    <ProjectGuid>{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.InstallerGenerator</RootNamespace>
-    <AssemblyName>Thycotic.InstallerGenerator</AssemblyName>
+    <RootNamespace>Thycotic.InstallerGenerator.Core</RootNamespace>
+    <AssemblyName>Thycotic.InstallerGenerator.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -21,8 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Thycotic.InstallerGenerator.Core.XML</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\Thycotic.InstallerGenerator.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,46 +32,56 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Release\Thycotic.InstallerGenerator.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Thycotic.InstallerGenerator.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\Thycotic.InstallerGenerator\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
-      <HintPath>packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\Thycotic.InstallerGenerator\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.Logging">
-      <HintPath>packages\Thycotic.Logging.5.0.0.202\lib\net451\Thycotic.Logging.dll</HintPath>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\Thycotic.InstallerGenerator\packages\Thycotic.Logging.5.0.0.202\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InstallerGeneratorWrapper.cs" />
+    <Compile Include="WiX\WiXMsiGeneratorRunbook.cs" />
+    <Compile Include="Steps\AppSettingConfigurationChangeStep.cs" />
+    <Compile Include="IInstallerGenerator.cs" />
+    <Compile Include="Steps\ExternalProcessStep.cs" />
+    <Compile Include="Steps\IInstallerGeneratorStep.cs" />
+    <Compile Include="IInstallerGeneratorRunbook.cs" />
+    <Compile Include="InstallerGeneratorExternalProcessExtensions.cs" />
+    <Compile Include="InstallerGeneratorRunbook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MSI\WiX\WiXMsiGenerator.cs" />
+    <Compile Include="Steps\IInstallerRunbookProvider.cs" />
+    <Compile Include="TemporaryFileCleaner.cs" />
+    <Compile Include="WiX\WiXMsiGenerator.cs" />
+    <Compile Include="Zip\ZipFileCreator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.InstallerGenerator.Core\Thycotic.InstallerGenerator.Core.csproj">
-      <Project>{3c2d28be-dda0-4768-b968-4ec89b52bb9e}</Project>
-      <Name>Thycotic.InstallerGenerator.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Certificates\Thycotic.snk">
+    <None Include="..\..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

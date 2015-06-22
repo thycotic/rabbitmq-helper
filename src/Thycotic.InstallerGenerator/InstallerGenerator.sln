@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.InteractiveRunner", "..\Thycotic.InstallerGenerator.InteractiveRunner\Thycotic.InstallerGenerator.InteractiveRunner.csproj", "{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.InteractiveRunner", "Thycotic.InstallerGenerator.InteractiveRunner\Thycotic.InstallerGenerator.InteractiveRunner.csproj", "{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Core", "..\Thycotic.InstallerGenerator.Core\Thycotic.InstallerGenerator.Core.csproj", "{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Core", "Thycotic.InstallerGenerator.Core\Thycotic.InstallerGenerator.Core.csproj", "{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Runbooks.Services", "..\Thycotic.InstallerGenerator.Runbooks.Services\Thycotic.InstallerGenerator.Runbooks.Services.csproj", "{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Runbooks.Services", "Thycotic.InstallerGenerator.Runbooks.Services\Thycotic.InstallerGenerator.Runbooks.Services.csproj", "{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Client", "..\Thycotic.InstallerGenerator.Client\Thycotic.InstallerGenerator.Client.csproj", "{32AD995B-6A60-4136-A015-3E053E205A39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.Client", "Thycotic.InstallerGenerator.Client\Thycotic.InstallerGenerator.Client.csproj", "{32AD995B-6A60-4136-A015-3E053E205A39}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Recipes", "Recipes", "{2E39DFBC-859B-4873-9B8A-E62704DA7FCC}"
 EndProject
@@ -55,7 +55,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.DistributedEngine.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.CLI", "..\Thycotic.CLI\Thycotic.CLI.csproj", "{2DBBC8EC-B150-45C1-82A9-20CCEE768443}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.WiX", "..\Thycotic.InstallerGenerator.WiX\Thycotic.InstallerGenerator.WiX.csproj", "{3551DAF3-DBCE-4081-8010-E6AE850E7A67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.WiX", "Thycotic.InstallerGenerator.WiX\Thycotic.InstallerGenerator.WiX.csproj", "{3551DAF3-DBCE-4081-8010-E6AE850E7A67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
