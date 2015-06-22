@@ -70,5 +70,11 @@ namespace Thycotic.InstallerGenerator.Core
         /// The steps.
         /// </value>
         IInstallerGeneratorStep[] Steps { get; }
+
+
+        /// <summary>
+        /// Bakes the steps.
+        /// </summary>
+        void BakeSteps();
     }
 }

@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgentToEngineServiceZipGeneratorRunbook.cs" />
+    <Compile Include="AgentToEngineServicePreliminaryZipGeneratorRunbook.cs" />
     <Compile Include="ServiceInstallerRunbookProvider.cs" />
     <Compile Include="DistributedEngineServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="MemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook.cs" />

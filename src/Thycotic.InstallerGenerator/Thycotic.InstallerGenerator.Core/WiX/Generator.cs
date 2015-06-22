@@ -9,16 +9,16 @@ namespace Thycotic.InstallerGenerator.MSI.WiX
     /// <summary>
     /// WiX MSI generator
     /// </summary>
-    public class WiXMsiGenerator : IInstallerGenerator<WiXMsiGeneratorRunbook>
+    public class Generator : IInstallerGenerator<IInstallerGeneratorRunbook>
     {
-        private readonly ILogWriter _log = Log.Get(typeof(WiXMsiGenerator));
+        private readonly ILogWriter _log = Log.Get(typeof(Generator));
 
         /// <summary>
         /// Generates the specified runbook.
         /// </summary>
         /// <param name="runbook">The runbook.</param>
         /// <returns></returns>
-        public string Generate(WiXMsiGeneratorRunbook runbook)
+        public string Generate(IInstallerGeneratorRunbook runbook)
         {
             _log.Info("Baking steps");
             runbook.BakeSteps();

@@ -23,11 +23,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             {
                 var generations = new List<Func<string>>
                 {
-                    GenerateMemoryMqMsi,
-                    GenerateDistributedEngineMsi,
-                    GenerateDistributedEngineMsi32Bit,
-                    GenerateDistributedEngineUpdateMsi,
-                    GenerateDistributedEngineUpdateMsi32Bit
+                    GenerateAgentToDistributedEnginePreliminaryZip,
+                    //GenerateMemoryMqMsi,
+                    //GenerateDistributedEngineMsi,
+                    //GenerateDistributedEngineMsi32Bit,
+                    //GenerateDistributedEngineUpdateMsi,
+                    //GenerateDistributedEngineUpdateMsi32Bit
                 };
 
                 generations.ForEach(g =>
@@ -68,7 +69,33 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             var wrapper = new InstallerGeneratorWrapper();
 
-            return wrapper.Generate(new WiXMsiGenerator(), steps);
+            return wrapper.Generate(new Generator(), steps);
+        }
+
+        private static string GenerateAgentToDistributedEnginePreliminaryZip()
+        {
+            const string someSecretServerArbitraryPathForWixRecipe =
+                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+                @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+
+            const string someSecretServerArbitraryPathForBits =
+                @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+            const string currentSnapshottedVersion = Version;
+
+
+            var steps = new AgentToEngineServicePreliminaryZipGeneratorRunbook
+            {
+                RecipePath = someSecretServerArbitraryPathForWixRecipe,
+                SourcePath = someSecretServerArbitraryPathForBits,
+                Version = currentSnapshottedVersion
+
+            };
+
+            var wrapper = new InstallerGeneratorWrapper();
+
+            return wrapper.Generate(new Generator(), steps);
         }
 
         private static string GenerateDistributedEngineMsi()
@@ -94,7 +121,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             var wrapper = new InstallerGeneratorWrapper();
 
-            return wrapper.Generate(new WiXMsiGenerator(), steps);
+            return wrapper.Generate(new Generator(), steps);
         }
 
         private static string GenerateDistributedEngineMsi32Bit()
@@ -121,7 +148,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             var wrapper = new InstallerGeneratorWrapper();
 
-            return wrapper.Generate(new WiXMsiGenerator(), steps);
+            return wrapper.Generate(new Generator(), steps);
         }
 
 
@@ -148,7 +175,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             var wrapper = new InstallerGeneratorWrapper();
 
-            return wrapper.Generate(new WiXMsiGenerator(), steps);
+            return wrapper.Generate(new Generator(), steps);
         }
 
 
@@ -177,7 +204,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
             var wrapper = new InstallerGeneratorWrapper();
 
-            return wrapper.Generate(new WiXMsiGenerator(), steps);
+            return wrapper.Generate(new Generator(), steps);
         }
 
     }
