@@ -29,11 +29,9 @@ namespace Thycotic.CLI.OS
         }
 
         /// <summary>
-        /// Runs the specified executable path.
+        /// Runs the specified process information.
         /// </summary>
-        /// <param name="executablePath">The executable path.</param>
-        /// <param name="workingPath">The working path.</param>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="processInfo">The process information.</param>
         /// <exception cref="System.ApplicationException">
         /// Process failed
         /// or
@@ -41,21 +39,13 @@ namespace Thycotic.CLI.OS
         /// </exception>
         /// <exception cref="System.Exception">
         /// </exception>
-        public void Run(string executablePath, string workingPath, string parameters = null)
+        public void Run(ProcessStartInfo processInfo)
         {
-            var processInfo = new ProcessStartInfo(executablePath, parameters)
-            {
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                WorkingDirectory = workingPath
-            };
-
             Process process = null;
 
             var task = Task.Factory.StartNew(() =>
             {
-                _log.Debug(string.Format("Starting process {0} inside {1}", executablePath, workingPath));
+                _log.Debug(string.Format("Starting process {0} inside {1}", processInfo.FileName, processInfo.WorkingDirectory));
 
                 try
                 {
@@ -63,7 +53,7 @@ namespace Thycotic.CLI.OS
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException(string.Format("Could not start process from {0}", executablePath), ex);
+                    throw new ApplicationException(string.Format("Could not start process from {0}", processInfo.FileName), ex);
                 }
 
 
@@ -106,6 +96,36 @@ namespace Thycotic.CLI.OS
                     throw new ApplicationException("Process appears to have failed", new Exception(output));
                 }
             }
+        
         }
+
+        /// <summary>
+        /// Runs the specified executable path.
+        /// </summary>
+        /// <param name="executablePath">The executable path.</param>
+        /// <param name="workingPath">The working path.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <exception cref="System.ApplicationException">
+        /// Process failed
+        /// or
+        /// Process appears to have failed
+        /// </exception>
+        /// <exception cref="System.Exception">
+        /// </exception>
+        public void Run(string executablePath, string workingPath, string parameters = null)
+        {
+            var processInfo = new ProcessStartInfo(executablePath, parameters)
+            {
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                WorkingDirectory = workingPath
+            };
+
+            Run(processInfo);
+
+
+        }
+
     }
 }
