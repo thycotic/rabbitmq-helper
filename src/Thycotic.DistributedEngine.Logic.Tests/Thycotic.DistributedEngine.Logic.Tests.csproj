@@ -279,6 +279,8 @@
     <Compile Include="Areas\Discovery\DependencyConsumerTests.cs" />
     <Compile Include="Areas\Discovery\LocalAccountConsumerTests.cs" />
     <Compile Include="Areas\Heartbeat\SecretHeartbeatConsumerTests.cs" />
+    <Compile Include="Areas\PasswordChanging\SecretRunDependencyConsumerTests.cs" />
+    <Compile Include="Areas\PasswordChanging\SecretBasicChangePasswordConsumerTests.cs" />
     <Compile Include="Areas\POC\PingConsumerSteps.cs" />
     <Compile Include="EngineToServer\ResponseBusSteps.cs" />
     <Compile Include="Areas\Discovery\MachineConsumerTests.cs" />
