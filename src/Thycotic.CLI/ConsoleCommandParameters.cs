@@ -16,7 +16,11 @@ namespace Thycotic.CLI
             get { return _dictionary[key]; }
             set { _dictionary[key] = value; }
         }
-        
+
+        public IEnumerable<string> AllKeys {
+            get { return _dictionary.Keys; }
+        }
+
         public bool TryGet(string name, out string value)
         {
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(name), "Parameter name should not be null or empty");

@@ -39,7 +39,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands
 
                 if (useSsl)
                 {
-                    thumbprint = parameters[" Pipeline.Thumbprint"];
+                    thumbprint = parameters["Pipeline.Thumbprint"];
                 }
 
                 var msiSourcePath = parameters["SourcePath.MSI"];

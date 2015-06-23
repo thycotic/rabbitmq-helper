@@ -1,5 +1,7 @@
-﻿using System.ServiceProcess;
+﻿using System.Linq;
+using System.ServiceProcess;
 using Thycotic.CLI;
+using Thycotic.CLI.Configuration;
 using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.Service.ConsoleCommands
@@ -28,20 +30,8 @@ namespace Thycotic.DistributedEngine.Service.ConsoleCommands
 
             Action = parameters =>
             {
-
-                //string server;
-                //string username;
-                //string password;
-                //if (!parameters.TryGet("server", out server)) return;
-                //if (!parameters.TryGet("username", out username)) return;
-                //if (!parameters.TryGet("password", out password)) return;
-
-                //ConsoleConfigurationManager.AppSettings["EngineToServerCommunication.ConnectionString"] =
-                //    "http://localhost/ihawu";
-
-                //ConsoleConfigurationManager.AppSettings["EngineToServerCommunication.UseSsl"] = "false";
-                //ConsoleConfigurationManager.AppSettings["EngineToServerCommunication.SiteId"] = "3";
-                //ConsoleConfigurationManager.AppSettings["EngineToServerCommunication.OrganizationId"] = "1";
+                //pass all parameters to service
+                parameters.AllKeys.ToList().ForEach(k => ConsoleConfigurationManager.AppSettings[k] = parameters[k]);
 
                 var servicesToRun = new ServiceBase[]
                 {

@@ -1,5 +1,7 @@
-﻿using System.ServiceProcess;
+﻿using System.Linq;
+using System.ServiceProcess;
 using Thycotic.CLI;
+using Thycotic.CLI.Configuration;
 using Thycotic.Logging;
 
 namespace Thycotic.MemoryMq.SiteConnector.Service.ConsoleCommands
@@ -28,22 +30,12 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.ConsoleCommands
 
             Action = parameters =>
             {
-
-                //string server;
-                //string username;
-                //string password;
-                //if (!parameters.TryGet("server", out server)) return;
-                //if (!parameters.TryGet("username", out username)) return;
-                //if (!parameters.TryGet("password", out password)) return;
-
-                //ConsoleConfigurationManager.AppSettings["Pipeline.ConnectionString"] = "net.tcp://localhost:8672";
-                //ConsoleConfigurationManager.AppSettings["Pipeline.UseSsl"] = "false";
-                //ConsoleConfigurationManager.AppSettings["Pipeline.Thumbprint"] =
-                //    "f1faa2aa00f1350edefd9490e3fc95017db3c897";
+                //pass all parameters to service
+                parameters.AllKeys.ToList().ForEach(k => ConsoleConfigurationManager.AppSettings[k] = parameters[k]);
 
                 var servicesToRun = new ServiceBase[]
                 {
-                    new SiteConnectorService(), 
+                     new SiteConnectorService(), 
                 };
 
                 ServiceBase.Run(servicesToRun);

@@ -18,11 +18,13 @@ namespace Thycotic.InstallerRunner
         {
             InitializeComponent();
 
+            //TODO: OMG REFACTOR THIS HORRIBLE CODE -dkk
+
             var appSettings = ConfigurationManager.AppSettings;
 
             var parameters = new Dictionary<string, string>();
 
-            appSettings.AllKeys.ToList().ForEach(k => parameters.Add(k, appSettings[k]));
+            appSettings.AllKeys.Where(k => k != "Path.MSI").ToList().ForEach(k => parameters.Add(k, appSettings[k]));
 
             var processRunner = new ExternalProcessRunner();
 
