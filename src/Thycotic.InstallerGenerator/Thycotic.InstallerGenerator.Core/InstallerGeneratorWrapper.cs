@@ -39,11 +39,31 @@ namespace Thycotic.InstallerGenerator.Core
 
             _log.Info("Copying sources");
 
-            var sourcePath = Path.Combine(steps.WorkingPath, "raw");
+            var volatileSourcePath = Path.Combine(steps.WorkingPath, "raw");
 
-            _directoryCopier.Copy(steps.SourcePath, sourcePath, true);
+            if (!Directory.Exists(volatileSourcePath))
+            {
+                Directory.CreateDirectory(volatileSourcePath);
+            }
 
-            steps.SourcePath = Path.GetFullPath(sourcePath);
+            if (File.Exists(steps.SourcePath))
+            {
+                var fileInfo = new FileInfo(steps.SourcePath);
+
+                File.Copy(steps.SourcePath, Path.Combine(volatileSourcePath, fileInfo.Name));
+            }
+            else if (Directory.Exists(volatileSourcePath))
+            {
+                _directoryCopier.Copy(steps.SourcePath, volatileSourcePath, true);
+            }
+            else
+            {
+                throw new ApplicationException("Sources not found");
+            }
+
+            
+
+            steps.SourcePath = Path.GetFullPath(volatileSourcePath);
         }
 
         /// <summary>
