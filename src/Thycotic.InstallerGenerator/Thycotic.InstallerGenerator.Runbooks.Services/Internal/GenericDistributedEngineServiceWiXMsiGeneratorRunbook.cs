@@ -1,12 +1,12 @@
-﻿using Thycotic.InstallerGenerator.Core.MSI.WiX;
-using Thycotic.InstallerGenerator.Core.Steps;
+﻿using Thycotic.InstallerGenerator.Core.Steps;
+using Thycotic.InstallerGenerator.Core.WiX;
 
-namespace Thycotic.InstallerGenerator.Runbooks.Services
+namespace Thycotic.InstallerGenerator.Runbooks.Services.Internal
 {
     /// <summary>
     /// Distributed engine service WiX MSI generator runbook
     /// </summary>
-    public class DistributedEngineServiceWiXMsiGeneratorRunbook : WiXMsiGeneratorRunbook
+    public class GenericDistributedEngineServiceWiXMsiGeneratorRunbook : WiXMsiGeneratorRunbook
     {
         /// <summary>
         /// The default artifact name
@@ -14,9 +14,9 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         public const string DefaultArtifactName = "Thycotic.DistributedEngine.Service";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DistributedEngineServiceWiXMsiGeneratorRunbook"/> class.
+        /// Initializes a new instance of the <see cref="GenericDistributedEngineServiceWiXMsiGeneratorRunbook"/> class.
         /// </summary>
-        public DistributedEngineServiceWiXMsiGeneratorRunbook()
+        public GenericDistributedEngineServiceWiXMsiGeneratorRunbook()
         {
             Is64Bit = true;
         }

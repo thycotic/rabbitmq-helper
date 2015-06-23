@@ -198,17 +198,17 @@ namespace Thycotic.CLI
                 commandName = commandMatches[0].Groups[0].Value;
             }
 
-            var regexParameters = new Regex(@"-([\w]+)=\""?([\d\w\s.:\\\[\]@]+)\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            var regexParameters = new Regex(@"-([\w.]+)=\""?([\d\w\s.:/\\\[\]@]+)\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             var parameterMatches = regexParameters.Matches(input);
 
             foreach (Match parameterMatch in parameterMatches)
             {
                 // -foo="bar baz" => [1] = foo, [2] = bar baz
-                parameters.Add(parameterMatch.Groups[1].Value.ToLower(), parameterMatch.Groups[2].Value.Trim());
+                parameters[parameterMatch.Groups[1].Value] = parameterMatch.Groups[2].Value.Trim();
             }
 
-            return commandName;
+             return commandName;
 
         }
 

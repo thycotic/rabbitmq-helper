@@ -54,6 +54,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleCommands\GenerateConfiguredMemoryMqZipCommand.cs" />
+    <Compile Include="ConsoleCommands\GenerateGenericMemoryMqMsiCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,6 +67,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Thycotic.CLI\Thycotic.CLI.csproj">
+      <Project>{2dbbc8ec-b150-45c1-82a9-20ccee768443}</Project>
+      <Name>Thycotic.CLI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thycotic.InstallerGenerator.Core\Thycotic.InstallerGenerator.Core.csproj">
       <Project>{3c2d28be-dda0-4768-b968-4ec89b52bb9e}</Project>
       <Name>Thycotic.InstallerGenerator.Core</Name>

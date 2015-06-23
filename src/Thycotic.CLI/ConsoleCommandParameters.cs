@@ -5,24 +5,30 @@ using Thycotic.Logging;
 
 namespace Thycotic.CLI
 {
-    public class ConsoleCommandParameters : Dictionary<string, object>
+    public class ConsoleCommandParameters
     {
+        private readonly Dictionary<string, string> _dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
         private readonly ILogWriter _log = Log.Get(typeof(CommandLineInterface));
 
+        public string this[string key]
+        {
+            get { return _dictionary[key]; }
+            set { _dictionary[key] = value; }
+        }
+        
         public bool TryGet(string name, out string value)
         {
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(name), "Parameter name should not be null or empty");
 
-            name = name.ToLower();
-
-            if (!ContainsKey(name))
+            if (!_dictionary.ContainsKey(name))
             {
                 _log.Debug(string.Format("Parameter {0} was not found", name));
                 value = string.Empty;
                 return false;
             }
 
-            value = this[name].ToString();
+            value = _dictionary[name];
             return true;
         }
 

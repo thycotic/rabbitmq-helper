@@ -1,37 +1,12 @@
-using System;
 using System.Text;
 
-namespace Thycotic.InstallerGenerator.Core.WiX
+namespace Thycotic.InstallerGenerator.Core.Zip
 {
     /// <summary>
     /// Sets to generate a Wix MSI. 
     /// </summary>
-    public abstract class WiXMsiGeneratorRunbook : InstallerGeneratorRunbook
+    public abstract class ZipGeneratorRunbook : InstallerGeneratorRunbook
     {
-        /// <summary>
-        /// Gets or sets the heat path provider.
-        /// </summary>
-        /// <value>
-        /// The heat path provider.
-        /// </value>
-        public Func<string, string> HeatPathProvider { get; set; }
-
-        /// <summary>
-        /// Gets or sets the candle path provider.
-        /// </summary>
-        /// <value>
-        /// The candle path provider.
-        /// </value>
-        public Func<string, string> CandlePathProvider { get; set; }
-
-        /// <summary>
-        /// Gets or sets the light path provider.
-        /// </summary>
-        /// <value>
-        /// The light path provider.
-        /// </value>
-        public Func<string, string> LightPathProvider { get; set; }
-
         /// <summary>
         /// Gets the name of the artifact file.
         /// </summary>
@@ -53,7 +28,7 @@ namespace Thycotic.InstallerGenerator.Core.WiX
 
             sb.Append(is64Bit ? ".x64" : ".x86");
 
-            sb.Append(string.Format(".{0}.msi", version));
+            sb.Append(string.Format(".{0}.zip", version));
 
             return sb.ToString();
         }

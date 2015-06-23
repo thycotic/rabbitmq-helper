@@ -1,10 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
-using Thycotic.InstallerGenerator.Core;
-using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.Logging;
 
-namespace Thycotic.InstallerGenerator.MSI.WiX
+namespace Thycotic.InstallerGenerator.Core.WiX
 {
     /// <summary>
     /// WiX MSI generator
