@@ -144,6 +144,10 @@
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Interop.ActiveDs">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.117\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.216\lib\net451\Jscape.Ssh.dll</HintPath>
@@ -211,6 +215,10 @@
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.94\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.117, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.117\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.350, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.350\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
       <Private>True</Private>
@@ -267,8 +275,13 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\Discovery\HostRangeConsumerTests.cs" />
+    <Compile Include="Areas\Discovery\DependencyConsumerTests.cs" />
+    <Compile Include="Areas\Discovery\LocalAccountConsumerTests.cs" />
+    <Compile Include="Areas\Heartbeat\SecretHeartbeatConsumerTests.cs" />
     <Compile Include="Areas\POC\PingConsumerSteps.cs" />
     <Compile Include="EngineToServer\ResponseBusSteps.cs" />
+    <Compile Include="Areas\Discovery\MachineConsumerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -291,6 +304,10 @@
     <ProjectReference Include="..\Thycotic.Messages\Thycotic.Messages.csproj">
       <Project>{bb022c12-4d04-4195-bbb7-baaa0e20fcb7}</Project>
       <Name>Thycotic.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thycotic.Utility.Tests\Thycotic.Utility.Tests.csproj">
+      <Project>{341587C7-483A-442A-BF23-49D1A5138E57}</Project>
+      <Name>Thycotic.Utility.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
