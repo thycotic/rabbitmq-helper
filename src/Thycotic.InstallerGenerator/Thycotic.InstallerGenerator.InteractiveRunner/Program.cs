@@ -22,7 +22,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         {
             try
             {
-                //configure log4net
+                Log.Configure();
 
                 var cli = new CommandLineInterface("Thycotic.InstallerGenerator.InteractiveRunner");
 
