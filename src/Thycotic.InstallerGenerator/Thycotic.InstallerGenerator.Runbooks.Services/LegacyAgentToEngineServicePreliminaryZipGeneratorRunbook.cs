@@ -8,17 +8,17 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
     /// <summary>
     /// Distributed engine service WiX MSI generator runbook
     /// </summary>
-    public class AgentToEngineServicePreliminaryZipGeneratorRunbook : InstallerGeneratorRunbook
+    public class LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook : InstallerGeneratorRunbook
     {
         /// <summary>
         /// The default artifact name
         /// </summary>
-        public const string DefaultArtifactName = "Thycotic.DistributedEngine.Service";
+        public const string DefaultArtifactName = "Legacy.Agent-Thycotic.DistributedEngine.Service";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AgentToEngineServicePreliminaryZipGeneratorRunbook"/> class.
+        /// Initializes a new instance of the <see cref="LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook"/> class.
         /// </summary>
-        public AgentToEngineServicePreliminaryZipGeneratorRunbook()
+        public LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook()
         {
             Is64Bit = false;
         }
@@ -59,6 +59,11 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
 
             Steps = new IInstallerGeneratorStep[]
             {
+                new FileCopyStep
+                {
+                    SourcePath = ToolPaths.GetLegacyAgentBootstrapperPath(ApplicationPath),
+                    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentBootstrap.exe")
+                },
                 new FileRenameStep
                 {
                     SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe"),

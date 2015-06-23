@@ -50,11 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgentToEngineServicePreliminaryZipGeneratorRunbook.cs" />
+    <Compile Include="LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook.cs" />
     <Compile Include="ServiceInstallerRunbookProvider.cs" />
     <Compile Include="DistributedEngineServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="MemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolPaths.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.InstallerGenerator.Core\Thycotic.InstallerGenerator.Core.csproj">

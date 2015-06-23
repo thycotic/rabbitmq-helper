@@ -80,7 +80,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
             const string currentSnapshottedVersion = Version;
 
-            var steps = new AgentToEngineServicePreliminaryZipGeneratorRunbook
+            var steps = new LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook
             {
                 SourcePath = someSecretServerArbitraryPathForBits,
                 Version = currentSnapshottedVersion

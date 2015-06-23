@@ -61,9 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InstallerGeneratorWrapper.cs" />
+    <Compile Include="Steps\FileCopyStep.cs" />
     <Compile Include="Steps\FileRenameStep.cs" />
     <Compile Include="Steps\ExtractZipFileStep.cs" />
-    <Compile Include="Steps\CreateZipFileStep.cs" />
+    <Compile Include="Steps\ZipCreateFileStep.cs" />
     <Compile Include="WiX\WiXMsiGeneratorRunbook.cs" />
     <Compile Include="Steps\AppSettingConfigurationChangeStep.cs" />
     <Compile Include="IInstallerGenerator.cs" />
