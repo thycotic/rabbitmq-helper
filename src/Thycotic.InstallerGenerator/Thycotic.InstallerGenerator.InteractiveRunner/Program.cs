@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.MSI.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
 using Thycotic.Logging;
@@ -74,20 +75,13 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
         private static string GenerateAgentToDistributedEnginePreliminaryZip()
         {
-            const string someSecretServerArbitraryPathForWixRecipe =
-                //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
-                @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
-            //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
-
             const string someSecretServerArbitraryPathForBits =
                 @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
             //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
             const string currentSnapshottedVersion = Version;
 
-
             var steps = new AgentToEngineServicePreliminaryZipGeneratorRunbook
             {
-                RecipePath = someSecretServerArbitraryPathForWixRecipe,
                 SourcePath = someSecretServerArbitraryPathForBits,
                 Version = currentSnapshottedVersion
 

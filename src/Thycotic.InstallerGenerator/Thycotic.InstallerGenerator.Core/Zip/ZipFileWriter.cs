@@ -2,6 +2,8 @@
 using System.IO;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
+using Thycotic.InstallerGenerator.Core.Steps;
+using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.Core.Zip
 {
@@ -10,15 +12,18 @@ namespace Thycotic.InstallerGenerator.Core.Zip
     /// </summary>
     public class ZipFileWriter
     {
+        private readonly ILogWriter _log = Log.Get(typeof(ZipFileWriter));
+
         //samples from https://github.com/icsharpcode/SharpZipLib/wiki/Zip-Samples#anchorUnpackFull
 
-        private static void CompressFolder(string path, ZipOutputStream zipStream, int folderOffset)
+        private void CompressFolder(string path, ZipOutputStream zipStream, int folderOffset)
         {
 
             var files = Directory.GetFiles(path);
 
-            foreach (string filename in files)
+            foreach (var filename in files)
             {
+                _log.Debug(string.Format("Adding {0}", filename));
 
                 var fi = new FileInfo(filename);
 
@@ -56,7 +61,7 @@ namespace Thycotic.InstallerGenerator.Core.Zip
             }
         }
 
-        private static void ExtractZipFile(string archiveFilenameIn, string password, string outFolder)
+        private void ExtractZipFile(string archiveFilenameIn, string password, string outFolder)
         {
             ZipFile zf = null;
             try
@@ -73,7 +78,10 @@ namespace Thycotic.InstallerGenerator.Core.Zip
                     {
                         continue;           // Ignore directories
                     }
-                    var entryFileName = zipEntry.Name;
+                    var filename = zipEntry.Name;
+
+                    _log.Debug(string.Format("Extracting {0}", filename));
+
                     // to remove the folder from the entry:- entryFileName = Path.GetFileName(entryFileName);
                     // Optionally match entrynames against a selection list here to skip as desired.
                     // The unpacked length is available in the zipEntry.Size property.
@@ -82,7 +90,7 @@ namespace Thycotic.InstallerGenerator.Core.Zip
                     var zipStream = zf.GetInputStream(zipEntry);
 
                     // Manipulate the output filename here as desired.
-                    var fullZipToPath = Path.Combine(outFolder, entryFileName);
+                    var fullZipToPath = Path.Combine(outFolder, filename);
                     var directoryName = Path.GetDirectoryName(fullZipToPath);
                     if (directoryName.Length > 0)
                         Directory.CreateDirectory(directoryName);

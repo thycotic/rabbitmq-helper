@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InstallerGeneratorWrapper.cs" />
+    <Compile Include="Steps\FileRenameStep.cs" />
     <Compile Include="Steps\ExtractZipFileStep.cs" />
     <Compile Include="Steps\CreateZipFileStep.cs" />
     <Compile Include="WiX\WiXMsiGeneratorRunbook.cs" />
@@ -83,7 +84,12 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Thycotic.Utility\Thycotic.Utility.csproj">
+      <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
+      <Name>Thycotic.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

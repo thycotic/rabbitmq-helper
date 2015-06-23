@@ -1,6 +1,6 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using Thycotic.InstallerGenerator.Core;
-using Thycotic.InstallerGenerator.Core.MSI.WiX;
 using Thycotic.InstallerGenerator.Core.Steps;
 
 namespace Thycotic.InstallerGenerator.Runbooks.Services
@@ -20,7 +20,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// </summary>
         public AgentToEngineServicePreliminaryZipGeneratorRunbook()
         {
-            Is64Bit = true;
+            Is64Bit = false;
         }
 
         /// <summary>
@@ -59,9 +59,22 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
 
             Steps = new IInstallerGeneratorStep[]
             {
+                new FileRenameStep
+                {
+                    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe"),
+                    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe")
+                },
+                new FileRenameStep
+                {
+                    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe.config"),
+                    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe.config")
+                },
+                //TODO: Copy old bootstrapper
                 new CreateZipStep
                 {
-                    
+                    Name = "File harvest (Zip)",
+                    SourcePath = SourcePath,
+                    ZipFilePath = Path.Combine(WorkingPath, ArtifactName)
                 }
             };
         }

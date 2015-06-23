@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Thycotic.InstallerGenerator.Core;
 using Thycotic.Logging;
+using Thycotic.Utility.IO;
 
-namespace Thycotic.InstallerGenerator
+namespace Thycotic.InstallerGenerator.Core
 {
     /// <summary>
     /// Installer generation wrapper
@@ -12,60 +12,36 @@ namespace Thycotic.InstallerGenerator
     {
         private readonly ILogWriter _log = Log.Get(typeof(InstallerGeneratorWrapper));
 
-        private void DirectoryCopy(string sourcePath, string destinationPath, bool recursive)
-        {
-            _log.Debug(string.Format("Copying contents of {0} to {1}", sourcePath, destinationPath));
-
-            // get the subdirectories for the specified directory.
-            var dir = new DirectoryInfo(sourcePath);
-            var dirs = dir.GetDirectories();
-
-            if (!dir.Exists)
-            {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourcePath);
-            }
-
-            // if the destination directory doesn't exist, create it. 
-            if (!Directory.Exists(destinationPath))
-            {
-                Directory.CreateDirectory(destinationPath);
-            }
-
-            // get the files in the directory and copy them to the new location.
-            var files = dir.GetFiles();
-            foreach (var file in files)
-            {
-                var temppath = Path.Combine(destinationPath, file.Name);
-                file.CopyTo(temppath, false);
-            }
-
-            // if copying subdirectories, copy them and their contents to new location. 
-            if (!recursive) return;
-
-            foreach (var subdir in dirs)
-            {
-                var temppath = Path.Combine(destinationPath, subdir.Name);
-                DirectoryCopy(subdir.FullName, temppath, true);
-            }
-        }
-
+        private readonly DirectoryCopier _directoryCopier = new DirectoryCopier();
+       
 
         private void CoreRecipeResources(IInstallerGeneratorRunbook steps)
         {
+            if (string.IsNullOrWhiteSpace(steps.RecipePath))
+            {
+                _log.Info("No recipes to copy");
+                return;
+            }
+
             _log.Info("Copying recipes");
 
-            DirectoryCopy(steps.RecipePath, steps.WorkingPath, true);
+           _directoryCopier.Copy(steps.RecipePath, steps.WorkingPath, true);
         }
 
         private void CoreSourceResources(IInstallerGeneratorRunbook steps)
         {
+            if (string.IsNullOrWhiteSpace(steps.SourcePath))
+            {
+                _log.Info("No sources to copy");
+                return;
+            }
+
+
             _log.Info("Copying sources");
 
             var sourcePath = Path.Combine(steps.WorkingPath, "raw");
 
-            DirectoryCopy(steps.SourcePath, sourcePath, true);
+            _directoryCopier.Copy(steps.SourcePath, sourcePath, true);
 
             steps.SourcePath = Path.GetFullPath(sourcePath);
         }
