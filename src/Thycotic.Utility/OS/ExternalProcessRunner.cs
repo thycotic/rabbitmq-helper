@@ -5,17 +5,42 @@ using Thycotic.Logging;
 
 namespace Thycotic.CLI.OS
 {
+    /// <summary>
+    /// External process runner
+    /// </summary>
     public class ExternalProcessRunner
     {
         private readonly ILogWriter _log = Log.Get(typeof (ExternalProcessRunner));
 
+        /// <summary>
+        /// Gets or sets the duration of the estimated process.
+        /// </summary>
+        /// <value>
+        /// The duration of the estimated process.
+        /// </value>
         public TimeSpan EstimatedProcessDuration { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExternalProcessRunner"/> class.
+        /// </summary>
         public ExternalProcessRunner()
         {
             EstimatedProcessDuration = TimeSpan.FromSeconds(30);
         }
 
+        /// <summary>
+        /// Runs the specified executable path.
+        /// </summary>
+        /// <param name="executablePath">The executable path.</param>
+        /// <param name="workingPath">The working path.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <exception cref="System.ApplicationException">
+        /// Process failed
+        /// or
+        /// Process appears to have failed
+        /// </exception>
+        /// <exception cref="System.Exception">
+        /// </exception>
         public void Run(string executablePath, string workingPath, string parameters = null)
         {
             var processInfo = new ProcessStartInfo(executablePath, parameters)

@@ -128,6 +128,9 @@
     <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\Thycotic.InstallerGenerator\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -138,11 +141,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Thycotic.Logging">
+      <HintPath>..\Thycotic.InstallerGenerator\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IO\DirectoryCleaner.cs" />
     <Compile Include="IO\DirectoryCopier.cs" />
     <Compile Include="DnsEx.cs" />
+    <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="Reflection\AssemblyEntryPointProvider.cs" />
     <Compile Include="Serialization\IObjectSerializer.cs" />
     <Compile Include="Serialization\JsonObjectSerializer.cs" />
