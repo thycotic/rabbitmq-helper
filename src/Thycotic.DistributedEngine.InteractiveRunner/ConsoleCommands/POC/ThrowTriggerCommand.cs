@@ -1,5 +1,6 @@
 ﻿using System;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -8,7 +9,7 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 {
-    class ThrowTriggerCommand : ConsoleCommandBase
+    class ThrowTriggerCommand : CommandBase
     {
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(ThrowTriggerCommand));

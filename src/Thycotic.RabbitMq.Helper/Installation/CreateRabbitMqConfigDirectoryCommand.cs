@@ -1,10 +1,11 @@
 using System.IO;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class CreateRabbitMqConfigDirectoryCommand : ConsoleCommandBase
+    internal class CreateRabbitMqConfigDirectoryCommand : CommandBase
     {
         
         private readonly ILogWriter _log = Log.Get(typeof (CreateRabbitMqConfigDirectoryCommand));

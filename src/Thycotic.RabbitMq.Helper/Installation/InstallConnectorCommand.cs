@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
+using Thycotic.CLI.Fragments;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Certificate;
 using Thycotic.RabbitMq.Helper.Installation.Choice;
@@ -7,7 +9,7 @@ using Thycotic.RabbitMq.Helper.Management;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    class InstallConnectorCommand : WorkflowConsoleCommand, IImmediateConsoleCommand
+    class InstallConnectorCommand : WorkflowCommand, IImmediateCommand
     {
         private readonly ILogWriter _log = Log.Get(typeof(InstallConnectorCommand));
 
@@ -28,15 +30,15 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
         public InstallConnectorCommand(IComponentContext container)
         {
-            Steps = new IConsoleCommandFragment[]
+            Steps = new ICommandFragment[]
             {
                 new ErlangLicenseChoiceConsoleCommandFragment
                 {
                     Name = "agreeToErlangLicense",
                     Prompt = "Do you agree and accept the Erlang license (http://www.erlang.org/EPLICENSE)?",
-                    WhenTrue = new WorkflowConsoleCommand
+                    WhenTrue = new WorkflowCommand
                     {
-                        Steps = new IConsoleCommandFragment[]
+                        Steps = new ICommandFragment[]
                         {
                             container.Resolve<DownloadErlangCommand>(),
                             new RabbitMqLicenseChoiceConsoleCommandFragment
@@ -44,9 +46,9 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                 Name = "agreeToRabbitMqLicense",
                                 Prompt =
                                     "Do you agree and accept the RabbitMq license (https://www.rabbitmq.com/mpl.html)?",
-                                WhenTrue = new WorkflowConsoleCommand
+                                WhenTrue = new WorkflowCommand
                                 {
-                                    Steps = new IConsoleCommandFragment[]
+                                    Steps = new ICommandFragment[]
                                     {
                                         container.Resolve<DownloadRabbitMqCommand>(),
                                         container.Resolve<UninstallPriorRabbitMqCommand>(),
@@ -59,11 +61,11 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                         {
                                             Name = "sslChoice",
                                             Prompt = "Would you like to use SSL?",
-                                            WhenTrue = new WorkflowConsoleCommand
+                                            WhenTrue = new WorkflowCommand
                                             {
-                                                Steps = new IConsoleCommandFragment[]
+                                                Steps = new ICommandFragment[]
                                                 {
-                                                    new OutputConsoleCommandFragment
+                                                    new OutputCommandFragment
                                                     {
                                                         Output = "Configuring RabbitMq with ecryption support"
                                                     },
@@ -73,20 +75,20 @@ namespace Thycotic.RabbitMq.Helper.Installation
                                                     container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
                                                     container.Resolve<EnableRabbitManagementPlugin>(),
-                                                    new OutputConsoleCommandFragment
+                                                    new OutputCommandFragment
                                                     {
                                                         Output = "RabbitMq is ready to use with encryption. Please open port 5671 on the machine firewall."
                                                     }
                                                 }
                                             },
-                                            WhenFalse = new WorkflowConsoleCommand
+                                            WhenFalse = new WorkflowCommand
                                             {
-                                                Steps = new IConsoleCommandFragment[]
+                                                Steps = new ICommandFragment[]
                                                 {
                                                     container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
                                                     container.Resolve<EnableRabbitManagementPlugin>(),
-                                                    new OutputConsoleCommandFragment
+                                                    new OutputCommandFragment
                                                     {
                                                         Output = "RabbitMq is ready to use without encryption. Please open port 5672 on the machine firewall."
                                                     }

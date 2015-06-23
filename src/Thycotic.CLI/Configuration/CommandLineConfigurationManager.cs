@@ -2,9 +2,9 @@
 
 namespace Thycotic.CLI.Configuration
 {
-    public static class ConsoleConfigurationManager
+    public static class CommandLineConfigurationManager
     {
-        static ConsoleConfigurationManager()
+        static CommandLineConfigurationManager()
         {
             AppSettings = new NameValueCollection();
         }

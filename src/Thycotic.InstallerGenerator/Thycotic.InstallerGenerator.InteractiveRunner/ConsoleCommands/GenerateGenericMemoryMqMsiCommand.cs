@@ -1,5 +1,6 @@
 ﻿using System;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.Core.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
@@ -8,7 +9,7 @@ using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands
 {
-    class GenerateGenericMemoryMqMsiCommand : ConsoleCommandBase, IImmediateConsoleCommand
+    class GenerateGenericMemoryMqMsiCommand : CommandBase, IImmediateCommand
     {
         private readonly ILogWriter _log = Log.Get(typeof(GenerateConfiguredMemoryMqZipCommand));
 

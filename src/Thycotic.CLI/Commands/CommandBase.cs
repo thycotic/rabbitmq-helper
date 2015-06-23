@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Text;
 
-namespace Thycotic.CLI
+namespace Thycotic.CLI.Commands
 {
-    public abstract class ConsoleCommandBase : IConsoleCommand
+    public abstract class CommandBase : ICommand
     {
 
         public virtual string Name { get; set; }
@@ -12,24 +12,24 @@ namespace Thycotic.CLI
         public virtual string[] Aliases { get; set; }
         public virtual string Description { get; set; }
 
-        protected bool Equals(ConsoleCommandBase other)
+        protected bool Equals(CommandBase other)
         {
             return string.Equals(Name, other.Name) && string.Equals(Area, other.Area) && Equals(Aliases, other.Aliases);
         }
 
-        public static bool operator ==(ConsoleCommandBase left, ConsoleCommandBase right)
+        public static bool operator ==(CommandBase left, CommandBase right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(ConsoleCommandBase left, ConsoleCommandBase right)
+        public static bool operator !=(CommandBase left, CommandBase right)
         {
             return !Equals(left, right);
         }
 
         public Func<ConsoleCommandParameters, int> Action { get; set; }
 
-        protected ConsoleCommandBase()
+        protected CommandBase()
         {
             Action = parameters => 0;
         }
@@ -49,7 +49,7 @@ namespace Thycotic.CLI
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((ConsoleCommandBase) obj);
+            return obj.GetType() == GetType() && Equals((CommandBase) obj);
         }
 
         public override string ToString()

@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.Utility;
 
@@ -14,8 +15,8 @@ namespace Thycotic.CLI
     public class CommandLineInterface
     {
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-        private readonly HashSet<IConsoleCommand> _commandBuiltInMappings = new HashSet<IConsoleCommand>();
-        private readonly HashSet<IConsoleCommand> _commandCustomMappings = new HashSet<IConsoleCommand>();
+        private readonly HashSet<ICommand> _commandBuiltInMappings = new HashSet<ICommand>();
+        private readonly HashSet<ICommand> _commandCustomMappings = new HashSet<ICommand>();
 
         private readonly ILogWriter _log = Log.Get(typeof(CommandLineInterface));
 
@@ -31,7 +32,7 @@ namespace Thycotic.CLI
             _applicationName = applicationName;
 
             #region BuildAll-in system commands
-            _commandBuiltInMappings.Add(new SystemConsoleCommand
+            _commandBuiltInMappings.Add(new SystemCommand
             {
                 Name = "clear",
                 Area = coreAreaName,
@@ -40,7 +41,7 @@ namespace Thycotic.CLI
                 Action = parameters => { Console.Clear(); return 0; }
             });
 
-            _commandBuiltInMappings.Add(new SystemConsoleCommand
+            _commandBuiltInMappings.Add(new SystemCommand
             {
                 Name = "help",
                 Area = coreAreaName,
@@ -71,7 +72,7 @@ namespace Thycotic.CLI
                 }
             });
 
-            _commandBuiltInMappings.Add(new SystemConsoleCommand
+            _commandBuiltInMappings.Add(new SystemCommand
             {
                 Name = "quit",
                 Area = coreAreaName,
@@ -99,7 +100,7 @@ namespace Thycotic.CLI
             }
         }
 
-        public void AddCustomCommand(IConsoleCommand command)
+        public void AddCustomCommand(ICommand command)
         {
             _commandCustomMappings.Add(command);
         }
@@ -109,7 +110,7 @@ namespace Thycotic.CLI
             _commandCustomMappings.Clear();
         }
 
-        private IEnumerable<IConsoleCommand> GetCurrentCommandMappings()
+        private IEnumerable<ICommand> GetCurrentCommandMappings()
         {
             return _commandCustomMappings.Union(_commandBuiltInMappings);
         }
@@ -233,7 +234,7 @@ namespace Thycotic.CLI
                             cm => cm.Name == "help");
                     }
 
-                    if (command is IImmediateConsoleCommand)
+                    if (command is IImmediateCommand)
                     {
                         command.Action.Invoke(parameters);
                     }

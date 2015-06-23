@@ -1,11 +1,12 @@
 ﻿using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
 {
-    class SqlHeartbeatCommand : ConsoleCommandBase
+    class SqlHeartbeatCommand : CommandBase
     {
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(SqlHeartbeatCommand));

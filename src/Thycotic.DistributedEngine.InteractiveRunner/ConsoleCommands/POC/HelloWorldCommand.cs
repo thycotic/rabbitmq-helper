@@ -1,4 +1,5 @@
 ﻿using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -6,7 +7,7 @@ using Thycotic.Messages.Areas.POC.Request;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 {
-    class HelloWorldCommand : ConsoleCommandBase
+    class HelloWorldCommand : CommandBase
     {
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(HelloWorldCommand));

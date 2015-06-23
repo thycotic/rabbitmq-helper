@@ -1,8 +1,8 @@
 using System;
 
-namespace Thycotic.CLI
+namespace Thycotic.CLI.Fragments
 {
-    public interface IConsoleCommandFragment
+    public interface ICommandFragment
     {
         string Name { get; }
 

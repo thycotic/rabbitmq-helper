@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using System.ServiceProcess;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.CLI.Configuration;
 using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.Service.ConsoleCommands
 {
-    class RunServiceCommand : ConsoleCommandBase, IImmediateConsoleCommand
+    class RunServiceCommand : CommandBase, IImmediateCommand
     {
         private readonly ILogWriter _log = Log.Get(typeof(RunServiceCommand));
 
@@ -31,7 +32,7 @@ namespace Thycotic.DistributedEngine.Service.ConsoleCommands
             Action = parameters =>
             {
                 //pass all parameters to service
-                parameters.AllKeys.ToList().ForEach(k => ConsoleConfigurationManager.AppSettings[k] = parameters[k]);
+                parameters.AllKeys.ToList().ForEach(k => CommandLineConfigurationManager.AppSettings[k] = parameters[k]);
 
                 var servicesToRun = new ServiceBase[]
                 {

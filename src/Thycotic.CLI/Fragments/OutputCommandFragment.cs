@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace Thycotic.CLI
+namespace Thycotic.CLI.Fragments
 {
-    public class OutputConsoleCommandFragment : IConsoleCommandFragment
+    public class OutputCommandFragment : ICommandFragment
     {
         public Func<ConsoleCommandParameters, int> Action { get; set; }
 
         public string Name { get; set; }
         public string Output { get; set; }
-        public IConsoleCommandFragment WhenTrue { get; set; }
-        public IConsoleCommandFragment WhenFalse { get; set; }
+        public ICommandFragment WhenTrue { get; set; }
+        public ICommandFragment WhenFalse { get; set; }
 
-        public OutputConsoleCommandFragment()
+        public OutputCommandFragment()
         {
             Action = parameters =>
             {

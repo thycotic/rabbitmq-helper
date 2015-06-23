@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Thycotic.CLI.Fragments;
 using Thycotic.Logging;
 
-namespace Thycotic.CLI
+namespace Thycotic.CLI.Commands
 {
-    public class WorkflowConsoleCommand : ConsoleCommandBase
+    public class WorkflowCommand : CommandBase
     {
-        public IEnumerable<IConsoleCommandFragment> Steps { get; set; }
+        public IEnumerable<ICommandFragment> Steps { get; set; }
 
-        private readonly ILogWriter _log = Log.Get(typeof(WorkflowConsoleCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(WorkflowCommand));
 
-        public WorkflowConsoleCommand()
+        public WorkflowCommand()
         {
             Action = parameters =>
             {

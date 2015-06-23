@@ -93,7 +93,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         // ReSharper disable once UnusedParameter.Local
         private static string GetOptionalLocalConfiguration(string name, bool throwIfNotFound)
         {
-            var value = ConsoleConfigurationManager.AppSettings[name];
+            var value = CommandLineConfigurationManager.AppSettings[name];
 
             if (string.IsNullOrWhiteSpace(value))
             {

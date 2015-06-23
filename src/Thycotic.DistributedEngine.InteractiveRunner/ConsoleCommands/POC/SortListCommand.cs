@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -9,7 +10,7 @@ using Thycotic.Messages.Areas.POC.Response;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 {
-    class SortListCommand : ConsoleCommandBase
+    class SortListCommand : CommandBase
     {
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(SortListCommand));

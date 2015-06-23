@@ -1,20 +1,20 @@
 ﻿using System;
 
-namespace Thycotic.CLI
+namespace Thycotic.CLI.Fragments
 {
-    public class BinaryConsoleCommandFragment : IConsoleCommandFragment
+    public class BinaryCommandFragment : ICommandFragment
     {
         public Func<ConsoleCommandParameters, int> Action { get; set; }
 
         public string Name { get; set; }
         public string Prompt { get; set; }
-        public IConsoleCommandFragment WhenTrue { get; set; }
-        public IConsoleCommandFragment WhenFalse { get; set; }
+        public ICommandFragment WhenTrue { get; set; }
+        public ICommandFragment WhenFalse { get; set; }
 
-        public BinaryConsoleCommandFragment()
+        public BinaryCommandFragment()
         {
-            WhenFalse = new NoopConsoleCommandFragement();
-            WhenTrue = new NoopConsoleCommandFragement();
+            WhenFalse = new NoopCommandFragement();
+            WhenTrue = new NoopCommandFragement();
 
             Action = parameters =>
             {

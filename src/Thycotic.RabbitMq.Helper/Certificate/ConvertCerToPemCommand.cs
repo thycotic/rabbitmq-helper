@@ -5,12 +5,13 @@ using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Security.Certificates;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Installation;
 
 namespace Thycotic.RabbitMq.Helper.Certificate
 {
-    public class ConvertCaCerToPemCommand : ConsoleCommandBase, IImmediateConsoleCommand
+    public class ConvertCaCerToPemCommand : CommandBase, IImmediateCommand
     {
         public static readonly string CertificatePath = Path.Combine(InstallationConstants.RabbitMq.ConfigurationPath,
             "ca.pem");

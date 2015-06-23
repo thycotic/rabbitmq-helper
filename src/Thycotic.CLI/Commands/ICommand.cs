@@ -1,6 +1,8 @@
-namespace Thycotic.CLI
+using Thycotic.CLI.Fragments;
+
+namespace Thycotic.CLI.Commands
 {
-    public interface IConsoleCommand : IConsoleCommandFragment
+    public interface ICommand : ICommandFragment
     {
         string Area { get; }
         string[] Aliases { get; set; }

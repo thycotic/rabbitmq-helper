@@ -4,12 +4,13 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
 
-    class DownloadRabbitMqCommand : ConsoleCommandBase, IImmediateConsoleCommand
+    class DownloadRabbitMqCommand : CommandBase, IImmediateCommand
     {
         public static readonly string RabbitMqInstallerPath = Path.Combine(Path.GetTempPath(), "rabbitMq.exe");
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Autofac;
 using NSubstitute;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.DistributedEngine.Service;
 using Thycotic.DistributedEngine.Service.Security;
@@ -149,17 +150,17 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
                 builder.RegisterAssemblyTypes(currentAssembly)
                     .Where(t => !t.IsAbstract)
-                    .Where(t => typeof (IConsoleCommand).IsAssignableFrom(t))
-                    .Where(t => t != typeof (SystemConsoleCommand));
+                    .Where(t => typeof (ICommand).IsAssignableFrom(t))
+                    .Where(t => t != typeof (SystemCommand));
 
                 var tempContainer = builder.Build();
 
                 var commands =
                     tempContainer.ComponentRegistry.Registrations.Where(
-                        r => typeof (IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
+                        r => typeof (ICommand).IsAssignableFrom(r.Activator.LimitType));
 
                 commands.ToList()
-                    .ForEach(c => cli.AddCustomCommand((IConsoleCommand) tempContainer.Resolve(c.Activator.LimitType)));
+                    .ForEach(c => cli.AddCustomCommand((ICommand) tempContainer.Resolve(c.Activator.LimitType)));
             }
         }
 

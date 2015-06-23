@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -8,7 +9,7 @@ using Thycotic.Messages.Areas.POC.Request;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 {
-    class FloodCommand : ConsoleCommandBase
+    class FloodCommand : CommandBase
     {
         private readonly IRequestBus _bus;
         private readonly CancellationToken _cancellationToken;

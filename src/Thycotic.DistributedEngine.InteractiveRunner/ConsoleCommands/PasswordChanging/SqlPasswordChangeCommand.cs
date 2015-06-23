@@ -1,11 +1,12 @@
 ﻿using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordChanging
 {
-    class SqlPasswordChangeCommand : ConsoleCommandBase
+    class SqlPasswordChangeCommand : CommandBase
     {
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(SqlPasswordChangeCommand));

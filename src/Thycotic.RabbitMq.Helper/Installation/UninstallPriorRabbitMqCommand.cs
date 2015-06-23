@@ -3,13 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.CLI.OS;
 using Thycotic.Logging;
 using Thycotic.Utility.IO;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class UninstallPriorRabbitMqCommand : ConsoleCommandBase
+    internal class UninstallPriorRabbitMqCommand : CommandBase
     {
 
         private readonly ILogWriter _log = Log.Get(typeof (UninstallPriorRabbitMqCommand));

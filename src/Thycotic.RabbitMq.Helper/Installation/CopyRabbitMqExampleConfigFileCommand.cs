@@ -1,12 +1,13 @@
 ﻿using System.IO;
 using System.Reflection;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Certificate;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class CopyRabbitMqExampleConfigFileCommand : ConsoleCommandBase
+    internal class CopyRabbitMqExampleConfigFileCommand : CommandBase
     {
 
         private static class TokenNames

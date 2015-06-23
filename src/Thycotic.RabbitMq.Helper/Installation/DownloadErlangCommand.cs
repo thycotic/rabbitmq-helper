@@ -3,12 +3,13 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
 
-    internal class DownloadErlangCommand : ConsoleCommandBase, IImmediateConsoleCommand
+    internal class DownloadErlangCommand : CommandBase, IImmediateCommand
     {
         public static readonly string ErlangInstallerPath = Path.Combine(Path.GetTempPath(), "erlang.exe");
 

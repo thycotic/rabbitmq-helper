@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class SetErlangHomeEnvironmentalVariableCommand : ConsoleCommandBase
+    internal class SetErlangHomeEnvironmentalVariableCommand : CommandBase
     {
         public const string ErlangHomeEnvironmentalVariableName = "ERLANG_HOME";
 

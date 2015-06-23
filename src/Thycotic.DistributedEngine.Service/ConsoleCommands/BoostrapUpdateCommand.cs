@@ -1,10 +1,11 @@
 ﻿using System;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 
 namespace Thycotic.DistributedEngine.Service.ConsoleCommands
 {
-    class BoostrapUpdateCommand : ConsoleCommandBase, IImmediateConsoleCommand
+    class BoostrapUpdateCommand : CommandBase, IImmediateCommand
     {
         private readonly ILogWriter _log = Log.Get(typeof(BoostrapUpdateCommand));
 

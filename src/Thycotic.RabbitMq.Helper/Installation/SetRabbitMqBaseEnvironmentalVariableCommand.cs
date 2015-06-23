@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class SetRabbitMqBaseEnvironmentalVariableCommand : ConsoleCommandBase
+    internal class SetRabbitMqBaseEnvironmentalVariableCommand : CommandBase
     {
         public const string RabbitMqBaseEnvironmentalVariableName = "RABBITMQ_BASE";
 

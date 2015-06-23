@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -10,7 +11,7 @@ using Thycotic.Messages.Common;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
 {
-    class MultiplePublishCommand : ConsoleCommandBase
+    class MultiplePublishCommand : CommandBase
     {
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(MultiplePublishCommand));

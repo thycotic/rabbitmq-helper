@@ -1,8 +1,9 @@
 ﻿using Thycotic.CLI;
+using Thycotic.CLI.Fragments;
 
 namespace Thycotic.RabbitMq.Helper.Installation.Choice
 {
-    internal class SslChoiceConsoleCommandFragment : BinaryConsoleCommandFragment
+    internal class SslChoiceConsoleCommandFragment : BinaryCommandFragment
     {
         public SslChoiceConsoleCommandFragment()
         {

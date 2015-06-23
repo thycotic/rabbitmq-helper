@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Thycotic.CLI
+namespace Thycotic.CLI.Fragments
 {
-    public class NoopConsoleCommandFragement : IConsoleCommandFragment
+    public class NoopCommandFragement : ICommandFragment
     {
         public string Name { get; set; }
         public Func<ConsoleCommandParameters, int> Action { get; set; }
 
-        public NoopConsoleCommandFragement()
+        public NoopCommandFragement()
         {
             Action = parameters => 0;
         }

@@ -1,8 +1,9 @@
 ﻿using Thycotic.CLI;
+using Thycotic.CLI.Fragments;
 
 namespace Thycotic.RabbitMq.Helper.Installation.Choice
 {
-    internal class RabbitMqLicenseChoiceConsoleCommandFragment : BinaryConsoleCommandFragment
+    internal class RabbitMqLicenseChoiceConsoleCommandFragment : BinaryCommandFragment
     {
         public RabbitMqLicenseChoiceConsoleCommandFragment()
         {

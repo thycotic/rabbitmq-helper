@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Threading;
 using Autofac;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Installation;
 
@@ -42,17 +43,17 @@ namespace Thycotic.RabbitMq.Helper
 
                 builder.RegisterAssemblyTypes(currentAssembly)
                     .Where(t => !t.IsAbstract)
-                    .Where(t => typeof(IConsoleCommand).IsAssignableFrom(t))
-                    .Where(t => t != typeof(SystemConsoleCommand));
+                    .Where(t => typeof(ICommand).IsAssignableFrom(t))
+                    .Where(t => t != typeof(SystemCommand));
 
                 var container = builder.Build();
 
                 var commands =
                     container.ComponentRegistry.Registrations.Where(
-                        r => typeof(IConsoleCommand).IsAssignableFrom(r.Activator.LimitType));
+                        r => typeof(ICommand).IsAssignableFrom(r.Activator.LimitType));
 
                 commands.ToList()
-                    .ForEach(c => cli.AddCustomCommand((IConsoleCommand)container.Resolve(c.Activator.LimitType)));
+                    .ForEach(c => cli.AddCustomCommand((ICommand)container.Resolve(c.Activator.LimitType)));
 
                 return container;
             }

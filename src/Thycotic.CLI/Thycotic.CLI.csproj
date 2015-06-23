@@ -139,19 +139,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ConsoleConfigurationManager.cs" />
-    <Compile Include="NoopConsoleCommandFragement.cs" />
-    <Compile Include="OutputConsoleCommandFragment.cs" />
-    <Compile Include="BinaryConsoleCommandFragment.cs" />
+    <Compile Include="Configuration\CommandLineConfigurationManager.cs" />
+    <Compile Include="Fragments\NoopCommandFragement.cs" />
+    <Compile Include="Fragments\OutputCommandFragment.cs" />
+    <Compile Include="Fragments\BinaryCommandFragment.cs" />
     <Compile Include="CommandLineInterface.cs" />
-    <Compile Include="IConsoleCommandFragment.cs" />
-    <Compile Include="WorkflowConsoleCommand.cs" />
-    <Compile Include="ConsoleCommandBase.cs" />
+    <Compile Include="Fragments\ICommandFragment.cs" />
+    <Compile Include="Commands\WorkflowCommand.cs" />
+    <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="ConsoleCommandParameters.cs" />
-    <Compile Include="IConsoleCommand.cs" />
-    <Compile Include="IImmediateConsoleCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\IImmediateCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemConsoleCommand.cs" />
+    <Compile Include="Commands\SystemCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Thycotic.snk">

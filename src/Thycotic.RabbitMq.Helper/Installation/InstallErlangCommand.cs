@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using Thycotic.CLI;
+using Thycotic.CLI.Commands;
 using Thycotic.CLI.OS;
 using Thycotic.Logging;
 using Thycotic.Utility.Reflection;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class InstallErlangCommand : ConsoleCommandBase
+    internal class InstallErlangCommand : CommandBase
     {
         
         private readonly ILogWriter _log = Log.Get(typeof (InstallErlangCommand));
