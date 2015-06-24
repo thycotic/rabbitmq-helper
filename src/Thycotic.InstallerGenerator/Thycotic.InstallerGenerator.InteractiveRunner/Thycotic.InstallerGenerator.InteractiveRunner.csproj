@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleCommands\GenerateConfiguredMemoryMqZipCommand.cs" />
+    <Compile Include="ConsoleCommands\GenerateGenericDistributedEngineMsiCommand.cs" />
     <Compile Include="ConsoleCommands\GenerateGenericMemoryMqMsiCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,9 +9,9 @@ using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands
 {
-    class GenerateGenericMemoryMqMsiCommand : CommandBase, IImmediateCommand
+    class GenerateGenericDistributedEngineMsiCommand : CommandBase, IImmediateCommand
     {
-        private readonly ILogWriter _log = Log.Get(typeof(GenerateGenericMemoryMqMsiCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(GenerateGenericDistributedEngineMsiCommand));
 
         public override string Name
         {
@@ -25,10 +25,10 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands
 
         public override string Description
         {
-            get { return "Generates generic MemoryMq Site Connector MSI"; }
+            get { return "Generates generic Distributed Engine MSI"; }
         }
 
-        public GenerateGenericMemoryMqMsiCommand()
+        public GenerateGenericDistributedEngineMsiCommand()
         {
 
             Action = parameters =>
