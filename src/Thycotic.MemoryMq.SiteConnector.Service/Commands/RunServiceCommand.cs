@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using System.ServiceProcess;
-using Thycotic.CLI;
 using Thycotic.CLI.Commands;
 using Thycotic.CLI.Configuration;
 using Thycotic.Logging;
 
-namespace Thycotic.MemoryMq.SiteConnector.Service.ConsoleCommands
+namespace Thycotic.MemoryMq.SiteConnector.Service.Commands
 {
     class RunServiceCommand : CommandBase, IImmediateCommand
     {

@@ -1,9 +1,8 @@
 ﻿using System;
-using Thycotic.CLI;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 
-namespace Thycotic.DistributedEngine.Service.ConsoleCommands
+namespace Thycotic.DistributedEngine.Service.Commands
 {
     class BoostrapUpdateCommand : CommandBase, IImmediateCommand
     {

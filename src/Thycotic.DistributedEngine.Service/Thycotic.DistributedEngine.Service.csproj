@@ -264,8 +264,8 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\EngineIdentificationProvider.cs" />
-    <Compile Include="ConsoleCommands\RunServiceCommand.cs" />
-    <Compile Include="ConsoleCommands\BoostrapUpdateCommand.cs" />
+    <Compile Include="Commands\RunServiceCommand.cs" />
+    <Compile Include="Commands\BoostrapUpdateCommand.cs" />
     <Compile Include="EngineToServer\BasicBus.cs" />
     <Compile Include="EngineToServer\EngineToServerConnectionManager.cs" />
     <Compile Include="EngineToServer\EngineToServerConnection.cs" />

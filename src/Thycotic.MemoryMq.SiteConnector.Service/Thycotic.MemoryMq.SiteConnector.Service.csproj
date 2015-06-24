@@ -188,7 +188,7 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="ConsoleCommands\RunServiceCommand.cs" />
+    <Compile Include="Commands\RunServiceCommand.cs" />
     <Compile Include="SiteConnectorService.cs">
       <SubType>Component</SubType>
     </Compile>

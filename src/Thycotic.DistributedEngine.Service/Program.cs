@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Thycotic.CLI;
-using Thycotic.DistributedEngine.Service.ConsoleCommands;
+using Thycotic.DistributedEngine.Service.Commands;
 
 namespace Thycotic.DistributedEngine.Service
 {

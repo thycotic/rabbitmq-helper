@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.ServiceProcess;
 using Thycotic.CLI;
-using Thycotic.MemoryMq.SiteConnector.Service.ConsoleCommands;
+using Thycotic.MemoryMq.SiteConnector.Service.Commands;
 
 namespace Thycotic.MemoryMq.SiteConnector.Service
 {
