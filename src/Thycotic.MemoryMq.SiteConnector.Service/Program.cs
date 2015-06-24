@@ -22,15 +22,8 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
             {
                 var cli = new CommandLineInterface("Thycotic MemoryMq Site Connector");
                 cli.AddCustomCommand(new RunServiceCommand());
-
-                var input = string.Join(" ", args);
-
-                if (string.IsNullOrWhiteSpace(input))
-                {
-                    input = SupportedSwitches.RunService;
-                }
-
-                cli.ConsumeInput(input);
+                
+                cli.ConsumeInput(string.Join(" ", args));
 
             }
             catch (Exception ex)

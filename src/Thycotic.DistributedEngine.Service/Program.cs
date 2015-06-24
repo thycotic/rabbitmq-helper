@@ -24,14 +24,7 @@ namespace Thycotic.DistributedEngine.Service
                 cli.AddCustomCommand(new RunServiceCommand());
                 cli.AddCustomCommand(new BoostrapUpdateCommand());
 
-                var input = string.Join(" ", args);
-
-                if (string.IsNullOrWhiteSpace(input))
-                {
-                    input = SupportedSwitches.RunService;
-                }
-
-                cli.ConsumeInput(input);
+                cli.ConsumeInput(string.Join(" ", args));
 
             }
             catch (Exception ex)
