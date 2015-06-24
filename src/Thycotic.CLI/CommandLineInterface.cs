@@ -36,7 +36,7 @@ namespace Thycotic.CLI
             #region BuildAll-in system commands
             _commandBuiltInMappings.Add(new SystemCommand
             {
-                Name = "clear",
+                CustomName = "clear",
                 Area = coreAreaName,
                 Aliases = new[] { "cls" },
                 Description = "Clears the terminal screen",
@@ -45,7 +45,7 @@ namespace Thycotic.CLI
 
             _commandBuiltInMappings.Add(new SystemCommand
             {
-                Name = "help",
+                CustomName = "help",
                 Area = coreAreaName,
                 Aliases = new[] { "man", "h" },
                 Description = "This screen",
@@ -76,7 +76,7 @@ namespace Thycotic.CLI
 
             _commandBuiltInMappings.Add(new SystemCommand
             {
-                Name = "quit",
+                CustomName = "quit",
                 Area = coreAreaName,
                 Aliases = new[] { "exit", "q" },
                 Description = "Quits/exists the application",
@@ -261,14 +261,14 @@ namespace Thycotic.CLI
                     var command =
                         GetCurrentCommandMappings().SingleOrDefault(
                             cm =>
-                                (cm.Name == commandName) ||
-                                ((cm.Aliases != null) && cm.Aliases.Any(ca => ca == commandName)));
+                                (cm.Name.ToLower() == commandName.ToLower()) ||
+                                ((cm.Aliases != null) && cm.Aliases.Any(ca => ca.ToLower() == commandName.ToLower())));
 
                     if (command == null)
                     {
                         _log.Error(string.Format("Command {0} not found", commandName));
                         command = _commandCustomMappings.Single(
-                            cm => cm.Name == "help");
+                            cm => cm.Name == "Help");
                     }
 
                     if (command is IImmediateCommand)

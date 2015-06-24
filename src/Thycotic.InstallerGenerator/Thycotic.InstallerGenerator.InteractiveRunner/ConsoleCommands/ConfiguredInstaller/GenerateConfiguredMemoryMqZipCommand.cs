@@ -10,11 +10,6 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands.Configur
     {
         private readonly ILogWriter _log = Log.Get(typeof(GenerateConfiguredMemoryMqZipCommand));
 
-        public override string Name
-        {
-            get { return Program.SupportedSwitches.GenerateConfiguredMemoryMqZip; }
-        }
-
         public override string Area
         {
             get { return "MSI"; }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Thycotic.CLI;
-using Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands.ConfiguredInstaller;
-using Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands.GenericInstaller;
 using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.InteractiveRunner
@@ -27,18 +25,9 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
 
                 var cli = new CommandLineInterface("Thycotic.InstallerGenerator.InteractiveRunner");
 
-                //TODO: harvest all commands automatically
-                cli.AddCustomCommand(new GenerateGenericMemoryMqMsiCommand());
-                cli.AddCustomCommand(new GenerateConfiguredMemoryMqZipCommand());
+                cli.DiscoverCommands();
 
-                var input = string.Join(" ", args);
-
-                if (string.IsNullOrWhiteSpace(input))
-                {
-                    input = SupportedSwitches.GenerateMemoryMqMsi;
-                }
-
-                cli.ConsumeInput(input);
+                cli.ConsumeInput(string.Join(" ", args));
 
             }
             catch (Exception ex)

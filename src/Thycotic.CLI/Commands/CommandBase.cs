@@ -6,8 +6,10 @@ namespace Thycotic.CLI.Commands
 {
     public abstract class CommandBase : ICommand
     {
-
-        public virtual string Name { get; set; }
+        public virtual string Name
+        {
+            get { return GetType().Name; }
+        }
         public virtual string Area { get; set; }
         public virtual string[] Aliases { get; set; }
         public virtual string Description { get; set; }
