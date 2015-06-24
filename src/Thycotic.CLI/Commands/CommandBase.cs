@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Thycotic.CLI.Commands
 {
@@ -8,8 +9,23 @@ namespace Thycotic.CLI.Commands
     {
         public virtual string Name
         {
-            get { return GetType().Name; }
+            get { return GetCommandName(GetType().Name);}
         }
+
+        private string GetCommandName(string name)
+        {
+            var regexCommandAtEnd = new Regex("Command$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+            //remove command at the end
+            name = regexCommandAtEnd.Replace(name, string.Empty);
+            
+            //camel case
+            name = new string(new[] {name[0]}).ToLower() + name.Substring(1, name.Length - 1);
+
+            return name;
+
+        }
+
         public virtual string Area { get; set; }
         public virtual string[] Aliases { get; set; }
         public virtual string Description { get; set; }
