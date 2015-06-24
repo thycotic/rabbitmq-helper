@@ -12,7 +12,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands.Configur
 
         public override string Area
         {
-            get { return "MSI"; }
+            get { return CommandAreas.Configured; }
         }
 
         public override string Description
