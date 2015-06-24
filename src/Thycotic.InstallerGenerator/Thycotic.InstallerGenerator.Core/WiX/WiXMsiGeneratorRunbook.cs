@@ -33,6 +33,30 @@ namespace Thycotic.InstallerGenerator.Core.WiX
         public Func<string, string> LightPathProvider { get; set; }
 
         /// <summary>
+        /// Gets or sets the sign tool path provider.
+        /// </summary>
+        /// <value>
+        /// The sign tool path provider.
+        /// </value>
+        public Func<string, string> SignToolPathProvider { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PFX path.
+        /// </summary>
+        /// <value>
+        /// The PFX path.
+        /// </value>
+        public string PfxPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PFX password.
+        /// </summary>
+        /// <value>
+        /// The PFX password.
+        /// </value>
+        public string PfxPassword { get; set; }
+
+        /// <summary>
         /// Gets the name of the artifact file.
         /// </summary>
         /// <param name="artifactName">Name of the artifact.</param>

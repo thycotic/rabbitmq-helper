@@ -33,6 +33,9 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands.GenericInstalle
 
                 var installerVersion = parameters["Installer.Version"];
 
+                var pfxPath = parameters["Signing.PfxPath"];
+                var pfxPassword = parameters["Signing.PfxPassword"];
+
                 var steps = new GenericDistributedEngineServiceWiXMsiGeneratorRunbook
                 {
                     Is64Bit = !is32Bit,
@@ -41,9 +44,14 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands.GenericInstalle
                     SourcePath = binariesSourcePath,
                     Version = installerVersion,
 
+                    PfxPath = pfxPath,
+                    PfxPassword = pfxPassword,
+
                     HeatPathProvider = applicationPath => WiX.ToolPaths.GetHeatPath(applicationPath),
                     CandlePathProvider = applicationPath => WiX.ToolPaths.GetCandlePath(applicationPath),
                     LightPathProvider = applicationPath => WiX.ToolPaths.GetLightPath(applicationPath),
+                    
+                    SignToolPathProvider = applicationPath => ToolPaths.GetSignToolPath(applicationPath),
                 };
                 
                 var wrapper = new InstallerGeneratorWrapper();

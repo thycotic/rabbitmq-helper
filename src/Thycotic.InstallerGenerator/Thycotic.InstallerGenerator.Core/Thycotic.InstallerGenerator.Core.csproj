@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InstallerGeneratorWrapper.cs" />
+    <Compile Include="Steps\FileSignStep.cs" />
     <Compile Include="Steps\FileCopyStep.cs" />
     <Compile Include="Steps\FileRenameStep.cs" />
     <Compile Include="Steps\ExtractZipFileStep.cs" />
