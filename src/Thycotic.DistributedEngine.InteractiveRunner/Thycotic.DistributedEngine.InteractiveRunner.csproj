@@ -260,16 +260,16 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\LoopbackConfiguirationScenarios.cs" />
-    <Compile Include="ConsoleCommands\CommandAreas.cs" />
-    <Compile Include="ConsoleCommands\PasswordChanging\SqlPasswordChangeCommand.cs" />
-    <Compile Include="ConsoleCommands\POC\CreateFileCommand.cs" />
-    <Compile Include="ConsoleCommands\POC\FloodCommand.cs" />
-    <Compile Include="ConsoleCommands\Heartbeat\SqlHeartbeatCommand.cs" />
-    <Compile Include="ConsoleCommands\POC\MultiplePublishCommand.cs" />
-    <Compile Include="ConsoleCommands\POC\StepCommand.cs" />
-    <Compile Include="ConsoleCommands\POC\ThrowTriggerCommand.cs" />
-    <Compile Include="ConsoleCommands\POC\SortListCommand.cs" />
-    <Compile Include="ConsoleCommands\POC\HelloWorldCommand.cs" />
+    <Compile Include="Commands\CommandAreas.cs" />
+    <Compile Include="Commands\PasswordChanging\SqlPasswordChangeCommand.cs" />
+    <Compile Include="Commands\POC\CreateFileCommand.cs" />
+    <Compile Include="Commands\POC\FloodCommand.cs" />
+    <Compile Include="Commands\Heartbeat\SqlHeartbeatCommand.cs" />
+    <Compile Include="Commands\POC\MultiplePublishCommand.cs" />
+    <Compile Include="Commands\POC\StepCommand.cs" />
+    <Compile Include="Commands\POC\ThrowTriggerCommand.cs" />
+    <Compile Include="Commands\POC\SortListCommand.cs" />
+    <Compile Include="Commands\POC\HelloWorldCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
