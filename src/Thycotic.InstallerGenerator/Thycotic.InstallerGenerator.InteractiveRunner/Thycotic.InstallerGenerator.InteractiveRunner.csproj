@@ -77,6 +77,13 @@
       <Link>Thycotic.snk</Link>
     </None>
     <None Include="App.config" />
+    <None Include="Examples\Signing\codesigning.docx" />
+    <None Include="Examples\Signing\sign.cmd" />
+    <None Include="Examples\Signing\SSDECA.cer" />
+    <None Include="Examples\Signing\SSDECA.pvk" />
+    <None Include="Examples\Signing\SSDESPC.cer" />
+    <None Include="Examples\Signing\SSDESPC.pfx" />
+    <None Include="Examples\Signing\SSDESPC.pvk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -101,7 +108,10 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EXAMPLES.txt" />
+    <Content Include="Examples\CLI.txt" />
+    <Content Include="Examples\Signing\makecert.exe" />
+    <Content Include="Examples\Signing\pvk2pfx.exe" />
+    <Content Include="Examples\Signing\signtool.exe" />
     <Content Include="lib\signtool.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
