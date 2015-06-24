@@ -9,7 +9,7 @@
         <xsl:copy>
             <xsl:apply-templates select="@*" />
             <xsl:apply-templates select="*" />
-            <ServiceInstall Arguments="-Installer.Version=$(var.InstallerVersion) -Pipeline.ConnectionString=[PIPELINE.CONNECTIONSTRING] -Pipeline.UseSsl=[PIPELINE.USESSL] -Pipeline.Thumbprint=[PIPELINE.THUMBPRINT]" Account="[SERVICE_USERNAME]" Password="[SERVICE_PASSWORD]" Id="ServiceInstallMemoryMqSiteConnectorService" Name="Thycotic.MemoryMq.SiteConnector.Service" Type="ownProcess" Start="auto" ErrorControl="normal" DisplayName="Thycotic MemoryMq Site Connector Service" Description="Allows site requests to be relayed to engines">
+            <ServiceInstall Arguments="runService -Installer.Version=$(var.InstallerVersion) -Pipeline.ConnectionString=[PIPELINE.CONNECTIONSTRING] -Pipeline.UseSsl=[PIPELINE.USESSL] -Pipeline.Thumbprint=[PIPELINE.THUMBPRINT]" Account="[SERVICE_USERNAME]" Password="[SERVICE_PASSWORD]" Id="ServiceInstallMemoryMqSiteConnectorService" Name="Thycotic.MemoryMq.SiteConnector.Service" Type="ownProcess" Start="auto" ErrorControl="normal" DisplayName="Thycotic MemoryMq Site Connector Service" Description="Allows site requests to be relayed to engines">
                 <util:ServiceConfig FirstFailureActionType="restart" SecondFailureActionType="restart" ThirdFailureActionType="none" RestartServiceDelayInSeconds="60" ResetPeriodInDays="1" />
             </ServiceInstall>
             <ServiceControl Id="ServiceControlMemoryMqSiteConnectorService" Name="Thycotic.MemoryMq.SiteConnector.Service" Start="install" Stop="uninstall" Remove="uninstall"/>
