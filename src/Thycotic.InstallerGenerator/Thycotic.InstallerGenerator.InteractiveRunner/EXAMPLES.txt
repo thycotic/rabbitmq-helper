@@ -1,0 +1,7 @@
+﻿Generic
+generateGenericMemoryMqMsi -ArtifactPath=C:\Users\dobroslav.kolev\Desktop\bits -SourcePath.Recipes=M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service.Wix -SourcePath.Binaries=M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service\bin\Release -Installer.Version=5.0.0.0
+generateGenericDistributedEngineMsi -ArtifactPath=C:\Users\dobroslav.kolev\Desktop\bits -SourcePath.Recipes=M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix -SourcePath.Binaries=M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release -Installer.Version=5.0.0.0
+generateGenericDistributedEngineMsi -Is32Bit=true -ArtifactPath=C:\Users\dobroslav.kolev\Desktop\bits -SourcePath.Recipes=M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.32Bit -SourcePath.Binaries=M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32Bit -Installer.Version=5.0.0.0
+
+Configured
+generateConfiguredMemoryMqZip -Pipeline.ConnectionString=net.tcp://locahost:8671 -Pipeline.UseSsl=false -Pipeline.Thumbprint=invalid -SourcePath.MSI=M:\development\repos\distributedengine\src\Thycotic.InstallerGenerator\Thycotic.InstallerGenerator.InteractiveRunner\bin\Debug\artifact\Thycotic.MemoryMq.SiteConnector.Service.x64.5.0.0.0.msi -Installer.Version=5.0.0.0
