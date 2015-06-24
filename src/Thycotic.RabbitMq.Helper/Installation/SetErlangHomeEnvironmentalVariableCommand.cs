@@ -12,11 +12,6 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
         private readonly ILogWriter _log = Log.Get(typeof (SetRabbitMqBaseEnvironmentalVariableCommand));
 
-        public override string Name
-        {
-            get { return "setErlangHomeEnvironmentalVariable"; }
-        }
-
         public override string Area
         {
             get { return "Installation"; }

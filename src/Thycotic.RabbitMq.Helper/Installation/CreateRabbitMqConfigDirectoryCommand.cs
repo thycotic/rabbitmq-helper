@@ -10,11 +10,6 @@ namespace Thycotic.RabbitMq.Helper.Installation
         
         private readonly ILogWriter _log = Log.Get(typeof (CreateRabbitMqConfigDirectoryCommand));
 
-        public override string Name
-        {
-            get { return "createRabbitMqConfigDirectory"; }
-        }
-
         public override string Area
         {
             get { return "Installation"; }

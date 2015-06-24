@@ -19,11 +19,6 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
         private readonly ILogWriter _log = Log.Get(typeof(CopyRabbitMqExampleConfigFileCommand));
 
-        public override string Name
-        {
-            get { return "copyRabbitMqExampleConfigFile"; }
-        }
-
         public override string Area
         {
             get { return "Installation"; }

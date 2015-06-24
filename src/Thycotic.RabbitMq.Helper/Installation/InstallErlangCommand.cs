@@ -13,11 +13,6 @@ namespace Thycotic.RabbitMq.Helper.Installation
         
         private readonly ILogWriter _log = Log.Get(typeof (InstallErlangCommand));
 
-        public override string Name
-        {
-            get { return "installErlang"; }
-        }
-
         public override string Area
         {
             get { return "Installation"; }

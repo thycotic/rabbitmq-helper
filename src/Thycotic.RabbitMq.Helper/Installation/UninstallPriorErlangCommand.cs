@@ -15,11 +15,6 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
         private readonly ILogWriter _log = Log.Get(typeof(UninstallPriorErlangCommand));
 
-        public override string Name
-        {
-            get { return "uninstallPriorErlang"; }
-        }
-
         public override string Area
         {
             get { return "Installation"; }

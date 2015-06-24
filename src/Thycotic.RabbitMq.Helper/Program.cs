@@ -1,11 +1,5 @@
-﻿using System.Linq;
-using System.Reflection;
-using System.Threading;
-using Autofac;
-using Thycotic.CLI;
-using Thycotic.CLI.Commands;
+﻿using Thycotic.CLI;
 using Thycotic.Logging;
-using Thycotic.RabbitMq.Helper.Installation;
 
 namespace Thycotic.RabbitMq.Helper
 {

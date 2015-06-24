@@ -12,11 +12,6 @@ namespace Thycotic.RabbitMq.Helper.Management
 
         private readonly ILogWriter _log = Log.Get(typeof(InstallRabbitMqCommand));
 
-        public override string Name
-        {
-            get { return "addRabbitMqUserCommand"; }
-        }
-
         public override string Area
         {
             get { return "Management"; }
