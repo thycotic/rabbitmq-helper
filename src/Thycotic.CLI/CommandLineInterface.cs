@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.Utility;
@@ -83,6 +85,41 @@ namespace Thycotic.CLI
             #endregion
 
             ConfigureConsoleWindow();
+        }
+
+        /// <summary>
+        /// Discovers the commands in the specified assembly.
+        /// </summary>
+        /// <param name="assembly">The assembly. Defaults to the entry assembly if null</param>
+        /// <returns></returns>
+        public IContainer DiscoverCommands(Assembly assembly = null)
+        {
+            using (LogContext.Create("CLI configuration"))
+            {
+                ClearCommands();
+
+
+                // Create the builder with which components/services are registered.
+                var builder = new ContainerBuilder();
+
+                builder.Register(context => CancellationToken).As<CancellationToken>().SingleInstance();
+
+                builder.RegisterAssemblyTypes(assembly ?? Assembly.GetEntryAssembly())
+                    .Where(t => !t.IsAbstract)
+                    .Where(t => typeof(ICommand).IsAssignableFrom(t))
+                    .Where(t => t != typeof(SystemCommand));
+
+                var container = builder.Build();
+
+                var commands =
+                    container.ComponentRegistry.Registrations.Where(
+                        r => typeof(ICommand).IsAssignableFrom(r.Activator.LimitType));
+
+                commands.ToList()
+                    .ForEach(c => AddCustomCommand((ICommand)container.Resolve(c.Activator.LimitType)));
+
+                return container;
+            }
         }
 
         private void ConfigureConsoleWindow()
