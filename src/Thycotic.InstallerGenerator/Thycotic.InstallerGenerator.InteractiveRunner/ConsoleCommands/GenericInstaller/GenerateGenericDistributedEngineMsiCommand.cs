@@ -1,13 +1,10 @@
-﻿using System;
-using Thycotic.CLI;
-using Thycotic.CLI.Commands;
+﻿using Thycotic.CLI.Commands;
 using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.Core.WiX;
-using Thycotic.InstallerGenerator.Runbooks.Services;
-using Thycotic.InstallerGenerator.Runbooks.Services.Internal;
+using Thycotic.InstallerGenerator.Runbooks.Services.GenericInstaller;
 using Thycotic.Logging;
 
-namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands
+namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands.GenericInstaller
 {
     class GenerateGenericDistributedEngineMsiCommand : CommandBase, IImmediateCommand
     {

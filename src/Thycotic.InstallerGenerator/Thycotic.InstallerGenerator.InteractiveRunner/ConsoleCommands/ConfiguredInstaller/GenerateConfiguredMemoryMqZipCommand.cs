@@ -1,13 +1,10 @@
-﻿using Thycotic.CLI;
-using Thycotic.CLI.Commands;
+﻿using Thycotic.CLI.Commands;
 using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.Core.WiX;
-using Thycotic.InstallerGenerator.Runbooks.Services.Internal;
-using Thycotic.InstallerGenerator.Runbooks.Services.Public;
-using Thycotic.InstallerGenerator.WiX;
+using Thycotic.InstallerGenerator.Runbooks.Services.ConfiguredInstaller;
 using Thycotic.Logging;
 
-namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands
+namespace Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands.ConfiguredInstaller
 {
     class GenerateConfiguredMemoryMqZipCommand : CommandBase, IImmediateCommand
     {

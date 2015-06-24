@@ -3,7 +3,7 @@ using System.Text;
 using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.Core.Steps;
 
-namespace Thycotic.InstallerGenerator.Runbooks.Services.Public
+namespace Thycotic.InstallerGenerator.Runbooks.Services.ConfiguredInstaller
 {
     /// <summary>
     /// Distributed engine service WiX MSI generator runbook
@@ -16,7 +16,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services.Public
         public const string DefaultArtifactName = "Legacy.Agent-Thycotic.DistributedEngine.Service";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Thycotic.InstallerGenerator.Runbooks.Services.Public.LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook"/> class.
+        /// Initializes a new instance of the <see cref="LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook"/> class.
         /// </summary>
         public LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook()
         {

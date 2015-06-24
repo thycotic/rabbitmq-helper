@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Thycotic.CLI;
-using Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands;
+using Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands.ConfiguredInstaller;
+using Thycotic.InstallerGenerator.InteractiveRunner.ConsoleCommands.GenericInstaller;
 using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.InteractiveRunner

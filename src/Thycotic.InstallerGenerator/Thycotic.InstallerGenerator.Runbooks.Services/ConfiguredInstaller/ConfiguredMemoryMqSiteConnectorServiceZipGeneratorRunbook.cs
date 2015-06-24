@@ -1,8 +1,7 @@
-﻿using System.IO;
-using Thycotic.InstallerGenerator.Core.Steps;
+﻿using Thycotic.InstallerGenerator.Core.Steps;
 using Thycotic.InstallerGenerator.Core.Zip;
 
-namespace Thycotic.InstallerGenerator.Runbooks.Services.Public
+namespace Thycotic.InstallerGenerator.Runbooks.Services.ConfiguredInstaller
 {
     /// <summary>
     /// Distributed engine service WiX MSI generator runbook
