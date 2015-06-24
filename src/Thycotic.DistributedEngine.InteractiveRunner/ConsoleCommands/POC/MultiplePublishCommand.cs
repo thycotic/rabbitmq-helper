@@ -16,11 +16,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(MultiplePublishCommand));
 
-        public override string Name
-        {
-            get { return "multiplepublish"; }
-        }
-
         public override string Area
         {
             get { return CommandAreas.Poc; }

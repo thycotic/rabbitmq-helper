@@ -14,11 +14,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(ThrowTriggerCommand));
 
-        public override string Name
-        {
-            get { return "throwtrigger"; }
-        }
-
         public override string Area
         {
             get { return CommandAreas.Poc; }

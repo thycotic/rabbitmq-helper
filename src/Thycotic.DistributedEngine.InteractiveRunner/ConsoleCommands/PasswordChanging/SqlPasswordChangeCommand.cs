@@ -11,11 +11,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.PasswordC
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(SqlPasswordChangeCommand));
 
-        public override string Name
-        {
-            get { return "changepassword_sql"; }
-        }
-
         public override string Area {
             get { return CommandAreas.TestFunctions; }
         }

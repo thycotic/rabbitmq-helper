@@ -12,11 +12,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(HelloWorldCommand));
 
-        public override string Name
-        {
-            get { return "helloworld"; }
-        }
-
         public override string Area {
             get { return CommandAreas.Poc; }
         }

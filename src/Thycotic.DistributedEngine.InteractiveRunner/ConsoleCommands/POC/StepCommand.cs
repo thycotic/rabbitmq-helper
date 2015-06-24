@@ -14,11 +14,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(StepCommand));
 
-        public override string Name
-        {
-            get { return "step"; }
-        }
-
         public override string Area
         {
             get { return CommandAreas.Poc; }

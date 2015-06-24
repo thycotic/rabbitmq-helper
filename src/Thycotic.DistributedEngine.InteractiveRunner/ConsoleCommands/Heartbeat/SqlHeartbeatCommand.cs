@@ -11,11 +11,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.Heartbeat
         private readonly IRequestBus _bus;
         private readonly ILogWriter _log = Log.Get(typeof(SqlHeartbeatCommand));
 
-        public override string Name
-        {
-            get { return "heartbeat_sql"; }
-        }
-
         public override string Area {
             get { return CommandAreas.TestFunctions; }
         }

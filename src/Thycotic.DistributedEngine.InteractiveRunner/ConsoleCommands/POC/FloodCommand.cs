@@ -15,11 +15,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands.POC
         private readonly CancellationToken _cancellationToken;
         private readonly ILogWriter _log = Log.Get(typeof(FloodCommand));
 
-        public override string Name
-        {
-            get { return "flood"; }
-        }
-
         public override string Area
         {
             get { return CommandAreas.Poc; }
