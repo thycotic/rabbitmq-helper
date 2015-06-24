@@ -33,7 +33,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands.GenericInstalle
 
                 var installerVersion = parameters["Installer.Version"];
 
-                var steps = new GenericMemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook
+                var steps = new GenericDistributedEngineServiceWiXMsiGeneratorRunbook
                 {
                     Is64Bit = !is32Bit,
                     ArtifactPath = artifactPath,
