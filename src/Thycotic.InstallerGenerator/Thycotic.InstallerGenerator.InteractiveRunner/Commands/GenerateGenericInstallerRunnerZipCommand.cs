@@ -33,7 +33,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                 
                 var installerVersion = parameters["Installer.Version"];
 
-                var steps = new GenericLegacyAgentServiceZipGeneratorRunbook
+                var steps = new GenericInstallerRunnerZipGeneratorRunbook
                 {
                     Is64Bit = !is32Bit,
                     ArtifactPath = artifactPath,
@@ -43,7 +43,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                 
                 var wrapper = new InstallerGeneratorWrapper();
 
-                var path = wrapper.Generate(new Generator(), steps);
+                var path = wrapper.Generate(new BasicInstallerGenerator(), steps);
 
                 return 0;
 

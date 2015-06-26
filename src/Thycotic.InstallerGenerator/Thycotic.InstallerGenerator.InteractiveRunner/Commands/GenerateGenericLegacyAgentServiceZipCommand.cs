@@ -43,7 +43,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                 
                 var wrapper = new InstallerGeneratorWrapper();
 
-                var path = wrapper.Generate(new Generator(), steps);
+                var path = wrapper.Generate(new BasicInstallerGenerator(), steps);
 
                 return 0;
 

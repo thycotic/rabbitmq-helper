@@ -59,22 +59,6 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
 
             Steps = new IInstallerGeneratorStep[]
             {
-                new FileCopyStep
-                {
-                    SourcePath = ToolPaths.GetLegacyAgentBootstrapperPath(ApplicationPath),
-                    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentBootstrap.exe")
-                },
-                new FileRenameStep
-                {
-                    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe"),
-                    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe")
-                },
-                new FileRenameStep
-                {
-                    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe.config"),
-                    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe.config")
-                },
-                //TODO: Copy old bootstrapper
                 new CreateZipStep
                 {
                     Name = "File harvest (Zip)",

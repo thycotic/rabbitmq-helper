@@ -2,14 +2,14 @@
 using System.Linq;
 using Thycotic.Logging;
 
-namespace Thycotic.InstallerGenerator.Core.WiX
+namespace Thycotic.InstallerGenerator.Core
 {
     /// <summary>
-    /// WiX MSI generator
+    /// Basic installer generator
     /// </summary>
-    public class Generator : IInstallerGenerator<IInstallerGeneratorRunbook>
+    public class BasicInstallerGenerator : IInstallerGenerator<IInstallerGeneratorRunbook>
     {
-        private readonly ILogWriter _log = Log.Get(typeof(Generator));
+        private readonly ILogWriter _log = Log.Get(typeof(BasicInstallerGenerator));
 
         /// <summary>
         /// Generates the specified runbook.
