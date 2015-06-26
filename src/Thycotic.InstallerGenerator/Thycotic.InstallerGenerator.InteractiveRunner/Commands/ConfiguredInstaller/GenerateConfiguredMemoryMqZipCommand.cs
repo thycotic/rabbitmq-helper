@@ -1,7 +1,7 @@
 ﻿using Thycotic.CLI.Commands;
 using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.Core.WiX;
-using Thycotic.InstallerGenerator.Runbooks.Services.ConfiguredInstaller;
+using Thycotic.InstallerGenerator.Runbooks.Services;
 using Thycotic.Logging;
 
 namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands.ConfiguredInstaller

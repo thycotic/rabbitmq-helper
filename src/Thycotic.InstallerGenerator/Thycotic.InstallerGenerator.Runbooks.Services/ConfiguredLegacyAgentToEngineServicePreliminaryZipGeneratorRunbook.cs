@@ -1,9 +1,9 @@
-﻿using System.IO;
+﻿using System;
 using System.Text;
 using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.Core.Steps;
 
-namespace Thycotic.InstallerGenerator.Runbooks.Services.ConfiguredInstaller
+namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
     /// <summary>
     /// Distributed engine service WiX MSI generator runbook
@@ -55,33 +55,35 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services.ConfiguredInstaller
         /// <exception cref="System.ArgumentException">Engine to server communication ingredients missing.</exception>
         public override void BakeSteps()
         {
-            ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Is64Bit, Version);
+            throw new NotImplementedException();
 
-            Steps = new IInstallerGeneratorStep[]
-            {
-                new FileCopyStep
-                {
-                    SourcePath = ToolPaths.GetLegacyAgentBootstrapperPath(ApplicationPath),
-                    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentBootstrap.exe")
-                },
-                new FileRenameStep
-                {
-                    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe"),
-                    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe")
-                },
-                new FileRenameStep
-                {
-                    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe.config"),
-                    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe.config")
-                },
-                //TODO: Copy old bootstrapper
-                new CreateZipStep
-                {
-                    Name = "File harvest (Zip)",
-                    SourcePath = SourcePath,
-                    ZipFilePath = Path.Combine(WorkingPath, ArtifactName)
-                }
-            };
+            //ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Is64Bit, Version);
+
+            //Steps = new IInstallerGeneratorStep[]
+            //{
+            //    //new FileCopyStep
+            //    //{
+            //    //    SourcePath = ToolPaths.GetLegacyAgentBootstrapperPath(ApplicationPath),
+            //    //    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentBootstrap.exe")
+            //    //},
+            //    //new FileRenameStep
+            //    //{
+            //    //    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe"),
+            //    //    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe")
+            //    //},
+            //    //new FileRenameStep
+            //    //{
+            //    //    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe.config"),
+            //    //    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe.config")
+            //    //},
+            //    ////TODO: Copy old bootstrapper
+            //    //new CreateZipStep
+            //    //{
+            //    //    Name = "File harvest (Zip)",
+            //    //    SourcePath = SourcePath,
+            //    //    ZipFilePath = Path.Combine(WorkingPath, ArtifactName)
+            //    //}
+            //};
         }
     }
 }
