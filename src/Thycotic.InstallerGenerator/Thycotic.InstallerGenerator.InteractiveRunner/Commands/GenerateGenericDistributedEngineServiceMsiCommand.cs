@@ -20,6 +20,19 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
             get { return "Generates generic Distributed Engine MSI"; }
         }
 
+        public override string[] Examples
+        {
+            get
+            {
+                return new[]
+                {
+                    @"generateGenericDistributedEngineServiceMsi -ArtifactPath=C:\Users\dobroslav.kolev\Desktop\bits -SourcePath.Recipes=M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix -SourcePath.Binaries=M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release -Installer.Version=5.0.0.0 -Signing.PfxPath=C:\Users\dobroslav.kolev\Desktop\signing\SSDESPC.pfx -Signing.PfxPassword=password1",
+                    @"generateGenericDistributedEngineMsi -Is32Bit=true -ArtifactPath=C:\Users\dobroslav.kolev\Desktop\bits -SourcePath.Recipes=M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.32Bit -SourcePath.Binaries=M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32Bit -Installer.Version=5.0.0.0 -Signing.PfxPath=C:\Users\dobroslav.kolev\Desktop\signing\SSDESPC.pfx -Signing.PfxPassword=password1"
+
+                };
+            }
+        }
+
         public GenerateGenericDistributedEngineServiceMsiCommand()
         {
 

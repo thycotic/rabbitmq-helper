@@ -20,6 +20,17 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
             get { return "Generates generic MemoryMq Site Connector MSI"; }
         }
 
+        public override string[] Examples
+        {
+            get
+            {
+                return new[]
+                {
+                    @"generateGenericMemoryMqSiteConnectorServiceMsi -ArtifactPath=C:\Users\dobroslav.kolev\Desktop\bits -SourcePath.Recipes=M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service.Wix -SourcePath.Binaries=M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service\bin\Release -Installer.Version=5.0.0.0 -Signing.PfxPath=C:\Users\dobroslav.kolev\Desktop\signing\SSDESPC.pfx -Signing.PfxPassword=password1"
+                };
+            }
+        }
+
         public GenerateGenericMemoryMqSiteConnectorServiceMsiCommand()
         {
 
