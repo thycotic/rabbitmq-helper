@@ -12,7 +12,7 @@ namespace Thycotic.CLI.Commands
             get { return GetCommandName(GetType().Name);}
         }
 
-        private string GetCommandName(string name)
+        private static string GetCommandName(string name)
         {
             var regexCommandAtEnd = new Regex("Command$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -85,6 +85,20 @@ namespace Thycotic.CLI.Commands
             if (!string.IsNullOrWhiteSpace(Description))
             {
                 sb.Append(string.Format(" - {0}", Description));
+            }
+
+            if (Examples != null && Examples.Any())
+            {
+                sb.Append(Environment.NewLine);
+                sb.Append(Environment.NewLine);
+                sb.Append("\tExamples:");
+                sb.Append(Environment.NewLine);
+                Examples.ToList().ForEach(e =>
+                {
+                 
+                    sb.Append(string.Format("\t\t{0}", e));
+                    sb.Append(Environment.NewLine);
+                });
             }
 
             return sb.ToString();

@@ -58,14 +58,14 @@ namespace Thycotic.CLI
 
                     currentMappings.Select(c => !string.IsNullOrWhiteSpace(c.Area) ? c.Area : uncategorizedAreaName).Distinct().OrderBy(a => a).ToList().ForEach(a =>
                     {
-                        Console.WriteLine("{0} command area", a);
+                        Console.WriteLine("{0}:", a.ToUpper());
 
                         if (a == uncategorizedAreaName) a = null;
 
                         var mappings =
                             currentMappings.Where(c => c.Area == a).OrderBy(c => c.Name).Select(c => c.ToString());
 
-                        mappings.ToList().ForEach(m => Console.WriteLine(" - {0}", m));
+                        mappings.ToList().ForEach(m => Console.WriteLine("\t{0}", m));
 
                         Console.WriteLine();
                     });

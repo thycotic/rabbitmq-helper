@@ -5,7 +5,10 @@ namespace Thycotic.CLI.Commands
     public interface ICommand : ICommandFragment
     {
         string Area { get; }
-        string[] Aliases { get; set; }
+        string[] Aliases { get; }
+        string[] Examples { get;  }
+
+
         string Description { get; }
         
     }
