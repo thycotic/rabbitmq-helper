@@ -1,4 +1,7 @@
-﻿using Thycotic.InstallerGenerator.Core.Steps;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using Thycotic.InstallerGenerator.Core.Steps;
 using Thycotic.InstallerGenerator.Core.Zip;
 
 namespace Thycotic.InstallerGenerator.Runbooks.Services
@@ -12,7 +15,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// The default artifact name
         /// </summary>
         public const string DefaultArtifactName = "Thycotic.MemoryMq.SiteConnector.Service";
-        
+
         /// <summary>
         /// Gets or sets the connection string.
         /// </summary>
@@ -37,6 +40,14 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// </value>
         public string Thumbprint { get; set; }
 
+        /// <summary>
+        /// Gets or sets the runner zip path.
+        /// </summary>
+        /// <value>
+        /// The runner zip path.
+        /// </value>
+        public string RunnerZipPath { get; set; }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfiguredMemoryMqSiteConnectorServiceZipGeneratorRunbook"/> class.
@@ -56,36 +67,30 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
 
             Steps = new IInstallerGeneratorStep[]
             {
-                //msi is already avilable
-                //copy the the msi runner
-                //copy the msi runner config
-                //change the msi runner config
-                //zip it
-                
 
+                new ExtractZipFileStep
+                {
+                    Name = "Extract runner zip file",
+                    ZipFilePath = RunnerZipPath,
+                    DestinationPath = SourcePath
+                },
+                //msi is already available in the source path
+                new AppSettingConfigurationChangeStep
+                {
+                    Name = "Applying applicable configuration",
+                    ConfigurationFilePath = Path.Combine(SourcePath, "setup.config"),
+                    Settings = new Dictionary<string, string>
+                    {
+                        {"TODO", "Coming soon"}
+                    }
 
-                //new FileCopyStep
-                //{
-                //    SourcePath = ToolPaths.GetLegacyAgentBootstrapperPath(ApplicationPath),
-                //    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentBootstrap.exe")
-                //},
-                //new FileRenameStep
-                //{
-                //    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe"),
-                //    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe")
-                //},
-                //new FileRenameStep
-                //{
-                //    SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe.config"),
-                //    DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe.config")
-                //},
-                ////TODO: Copy old bootstrapper
-                //new CreateZipStep
-                //{
-                //    Name = "File harvest (Zip)",
-                //    SourcePath = SourcePath,
-                //    ZipFilePath = Path.Combine(WorkingPath, ArtifactName)
-                //}
+                },
+                new CreateZipStep
+                {
+                    Name = "File harvest (Zip)",
+                    SourcePath = SourcePath,
+                    ZipFilePath = Path.Combine(WorkingPath, ArtifactName)
+                }
             };
         }
     }

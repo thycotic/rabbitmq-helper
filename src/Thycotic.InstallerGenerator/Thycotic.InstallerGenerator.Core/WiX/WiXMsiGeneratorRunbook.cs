@@ -72,7 +72,7 @@ namespace Thycotic.InstallerGenerator.Core.WiX
 
             if (!string.IsNullOrWhiteSpace(suffix))
             {
-                sb.Append(string.Format("-{0}", suffix));
+                sb.Append(string.Format(".{0}", suffix));
             }
 
             sb.Append(is64Bit ? ".x64" : ".x86");

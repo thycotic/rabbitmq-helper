@@ -49,6 +49,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                 bool is32Bit;
                 parameters.TryGetBoolean("Is32Bit", out is32Bit);
                 var artifactPath = parameters["ArtifactPath"];
+                var runnerZipPath = parameters["RunnerZipPath"];
                 var msiSourcePath = parameters["SourcePath.MSI"];
 
                 var installerVersion = parameters["Installer.Version"];
@@ -57,6 +58,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                 {
                     Is64Bit = !is32Bit,
                     ArtifactPath = artifactPath,
+                    RunnerZipPath = runnerZipPath,
                     SourcePath = msiSourcePath,
                     Version = installerVersion,
 
