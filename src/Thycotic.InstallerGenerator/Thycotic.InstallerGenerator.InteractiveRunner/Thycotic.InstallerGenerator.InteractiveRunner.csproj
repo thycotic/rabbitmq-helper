@@ -67,6 +67,7 @@
     <Compile Include="Commands\CommandAreas.cs" />
     <Compile Include="Commands\GenerateConfiguredMemoryMqSiteConnectorServiceZipCommand.cs" />
     <Compile Include="Commands\GenerateGenericDistributedEngineServiceMsiCommand.cs" />
+    <Compile Include="Commands\GenerateGenericInstallerRunnerZipCommand.cs" />
     <Compile Include="Commands\GenerateGenericLegacyAgentServiceZipCommand.cs" />
     <Compile Include="Commands\GenerateGenericMemoryMqSiteConnectorServiceMsiCommand.cs" />
     <Compile Include="Program.cs" />
