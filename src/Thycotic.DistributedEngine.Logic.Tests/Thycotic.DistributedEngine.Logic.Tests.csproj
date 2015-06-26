@@ -145,7 +145,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Interop.ActiveDs">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.117\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.120\lib\net451\Interop.ActiveDs.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
@@ -212,17 +212,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Discovery.Core">
-      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.94\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.95\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Discovery.Sources">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.120\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.352\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-  
-    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.117, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.117\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.351, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.351\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.9\lib\net451\Thycotic.Encryption.dll</HintPath>
