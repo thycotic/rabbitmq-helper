@@ -8,7 +8,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
     /// <summary>
     /// Distributed engine service WiX MSI generator runbook
     /// </summary>
-    public class GenericLegacyAgentToEngineServiceZipGeneratorRunbook : InstallerGeneratorRunbook
+    public class GenericLegacyAgentServiceZipGeneratorRunbook : InstallerGeneratorRunbook
     {
         /// <summary>
         /// The default artifact name
@@ -16,9 +16,9 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         public const string DefaultArtifactName = "Legacy.Agent-Thycotic.DistributedEngine.Service";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericLegacyAgentToEngineServiceZipGeneratorRunbook"/> class.
+        /// Initializes a new instance of the <see cref="GenericLegacyAgentServiceZipGeneratorRunbook"/> class.
         /// </summary>
-        public GenericLegacyAgentToEngineServiceZipGeneratorRunbook()
+        public GenericLegacyAgentServiceZipGeneratorRunbook()
         {
             Is64Bit = false;
         }

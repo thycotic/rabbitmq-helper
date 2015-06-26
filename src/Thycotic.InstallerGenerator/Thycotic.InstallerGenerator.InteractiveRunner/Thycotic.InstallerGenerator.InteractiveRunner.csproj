@@ -65,9 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandAreas.cs" />
-    <Compile Include="Commands\ConfiguredInstaller\GenerateConfiguredMemoryMqZipCommand.cs" />
-    <Compile Include="Commands\GenericInstaller\GenerateGenericDistributedEngineMsiCommand.cs" />
-    <Compile Include="Commands\GenericInstaller\GenerateGenericMemoryMqMsiCommand.cs" />
+    <Compile Include="Commands\GenerateConfiguredMemoryMqSiteConnectorServiceZipCommand.cs" />
+    <Compile Include="Commands\GenerateGenericDistributedEngineServiceMsiCommand.cs" />
+    <Compile Include="Commands\GenerateGenericLegacyAgentServiceZipCommand.cs" />
+    <Compile Include="Commands\GenerateGenericMemoryMqSiteConnectorServiceMsiCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolPaths.cs" />

@@ -28,6 +28,7 @@ namespace Thycotic.CLI.Commands
 
         public virtual string Area { get; set; }
         public virtual string[] Aliases { get; set; }
+        public virtual string[] Examples { get; set; }
         public virtual string Description { get; set; }
 
         protected bool Equals(CommandBase other)

@@ -4,11 +4,11 @@ using Thycotic.InstallerGenerator.Core.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
 using Thycotic.Logging;
 
-namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands.GenericInstaller
+namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
 {
-    class GenerateGenericDistributedEngineMsiCommand : CommandBase, IImmediateCommand
+    class GenerateGenericDistributedEngineServiceMsiCommand : CommandBase, IImmediateCommand
     {
-        private readonly ILogWriter _log = Log.Get(typeof(GenerateGenericDistributedEngineMsiCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(GenerateGenericDistributedEngineServiceMsiCommand));
 
         public override string Area
         {
@@ -20,7 +20,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands.GenericInstalle
             get { return "Generates generic Distributed Engine MSI"; }
         }
 
-        public GenerateGenericDistributedEngineMsiCommand()
+        public GenerateGenericDistributedEngineServiceMsiCommand()
         {
 
             Action = parameters =>

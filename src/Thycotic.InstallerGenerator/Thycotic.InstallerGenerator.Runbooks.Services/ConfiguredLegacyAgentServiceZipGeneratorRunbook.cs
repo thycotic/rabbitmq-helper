@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Text;
 using Thycotic.InstallerGenerator.Core;
-using Thycotic.InstallerGenerator.Core.Steps;
 
 namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
     /// <summary>
     /// Distributed engine service WiX MSI generator runbook
     /// </summary>
-    public class LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook : InstallerGeneratorRunbook
+    public class ConfiguredLegacyAgentServiceZipGeneratorRunbook : InstallerGeneratorRunbook
     {
         /// <summary>
         /// The default artifact name
         /// </summary>
-        public const string DefaultArtifactName = "Legacy.Agent-Thycotic.DistributedEngine.Service";
+        public const string DefaultArtifactName = "Thycotic.Legacy.Agent.Service";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook"/> class.
+        /// Initializes a new instance of the <see cref="ConfiguredLegacyAgentServiceZipGeneratorRunbook"/> class.
         /// </summary>
-        public LegacyAgentToEngineServicePreliminaryZipGeneratorRunbook()
+        public ConfiguredLegacyAgentServiceZipGeneratorRunbook()
         {
             Is64Bit = false;
         }

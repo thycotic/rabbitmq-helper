@@ -4,11 +4,11 @@ using Thycotic.InstallerGenerator.Core.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
 using Thycotic.Logging;
 
-namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands.GenericInstaller
+namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
 {
-    class GenerateGenericMemoryMqMsiCommand : CommandBase, IImmediateCommand
+    class GenerateGenericMemoryMqSiteConnectorServiceMsiCommand : CommandBase, IImmediateCommand
     {
-        private readonly ILogWriter _log = Log.Get(typeof(GenerateGenericMemoryMqMsiCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(GenerateGenericMemoryMqSiteConnectorServiceMsiCommand));
 
         public override string Area
         {
@@ -20,7 +20,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands.GenericInstalle
             get { return "Generates generic MemoryMq Site Connector MSI"; }
         }
 
-        public GenerateGenericMemoryMqMsiCommand()
+        public GenerateGenericMemoryMqSiteConnectorServiceMsiCommand()
         {
 
             Action = parameters =>
