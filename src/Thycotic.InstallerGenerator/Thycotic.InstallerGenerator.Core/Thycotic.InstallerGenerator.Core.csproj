@@ -66,6 +66,7 @@
     <Compile Include="Steps\FileRenameStep.cs" />
     <Compile Include="Steps\ExtractZipFileStep.cs" />
     <Compile Include="Steps\ZipCreateFileStep.cs" />
+    <Compile Include="IInstallerGeneratorRunbookWithSigning.cs" />
     <Compile Include="WiX\WiXMsiGeneratorRunbook.cs" />
     <Compile Include="Steps\AppSettingConfigurationChangeStep.cs" />
     <Compile Include="IInstallerGenerator.cs" />

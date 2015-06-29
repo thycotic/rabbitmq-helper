@@ -6,7 +6,7 @@ namespace Thycotic.InstallerGenerator.Core.WiX
     /// <summary>
     /// Sets to generate a Wix MSI. 
     /// </summary>
-    public abstract class WiXMsiGeneratorRunbook : InstallerGeneratorRunbook
+    public abstract class WiXMsiGeneratorRunbook : InstallerGeneratorRunbook, IInstallerGeneratorRunbookWithSigning
     {
         /// <summary>
         /// Gets the artifact extension.

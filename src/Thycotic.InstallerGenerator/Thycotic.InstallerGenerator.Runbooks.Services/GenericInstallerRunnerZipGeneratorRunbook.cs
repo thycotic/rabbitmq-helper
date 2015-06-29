@@ -1,5 +1,5 @@
-﻿using System.IO;
-using System.Text;
+﻿using System;
+using System.IO;
 using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.Core.Steps;
 using Thycotic.InstallerGenerator.Core.Zip;
@@ -9,7 +9,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
     /// <summary>
     /// Distributed engine service WiX MSI generator runbook
     /// </summary>
-    public class GenericInstallerRunnerZipGeneratorRunbook : ZipGeneratorRunbook
+    public class GenericInstallerRunnerZipGeneratorRunbook : ZipGeneratorRunbook, IInstallerGeneratorRunbookWithSigning
     {
         /// <summary>
         /// The default artifact name
@@ -18,6 +18,30 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         {
             get { return "Thycotic.InstallerRunner"; }
         }
+
+        /// <summary>
+        /// Gets or sets the PFX path.
+        /// </summary>
+        /// <value>
+        /// The PFX path.
+        /// </value>
+        public string PfxPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PFX password.
+        /// </summary>
+        /// <value>
+        /// The PFX password.
+        /// </value>
+        public string PfxPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sign tool path provider.
+        /// </summary>
+        /// <value>
+        /// The sign tool path provider.
+        /// </value>
+        public Func<string, string> SignToolPathProvider { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericLegacyAgentServiceZipGeneratorRunbook"/> class.
@@ -35,6 +59,18 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         {
             Steps = new IInstallerGeneratorStep[]
             {
+                new ExternalProcessStep
+                {
+                    Name = "Signing",
+                    WorkingPath = SourcePath,
+                    ExecutablePath = SignToolPathProvider(ApplicationPath),
+                    Parameters = string.Format(@"
+sign 
+/t http://timestamp.digicert.com 
+/f {0}
+/p {1}
+{2}", PfxPath, PfxPassword, "setup.exe")
+                },
                 new CreateZipStep
                 {
                     Name = "File harvest (Zip)",
@@ -43,5 +79,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                 }
             };
         }
+
+
     }
 }

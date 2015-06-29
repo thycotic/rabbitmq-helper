@@ -34,6 +34,9 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                 var binariesSourcePath = parameters["SourcePath.Binaries"];
                 
                 var installerVersion = parameters["Installer.Version"];
+                
+                var pfxPath = parameters["Signing.PfxPath"];
+                var pfxPassword = parameters["Signing.PfxPassword"];
 
                 var steps = new GenericInstallerRunnerZipGeneratorRunbook
                 {
@@ -42,6 +45,11 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                     ArtifactName = artifactName,
                     SourcePath = binariesSourcePath,
                     Version = installerVersion,
+
+                    PfxPath = pfxPath,
+                    PfxPassword = pfxPassword,
+
+                    SignToolPathProvider = applicationPath => ToolPaths.GetSignToolPath(applicationPath),
                 };
                 
                 var wrapper = new InstallerGeneratorWrapper();
