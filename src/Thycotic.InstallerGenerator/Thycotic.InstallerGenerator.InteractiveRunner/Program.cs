@@ -34,7 +34,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             {
                 //superfluous, mostly used for testing and consuming exceptions that are already logged but we want to bubble to the OS
                 Trace.TraceError(ex.Message);
-                throw;
+                Environment.Exit(1);
             }
         }
 
