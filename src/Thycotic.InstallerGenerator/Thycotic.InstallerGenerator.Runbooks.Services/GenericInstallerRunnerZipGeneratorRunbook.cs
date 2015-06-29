@@ -14,7 +14,10 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// <summary>
         /// The default artifact name
         /// </summary>
-        public const string DefaultArtifactName = "Thycotic.InstallerRunner";
+        public override string DefaultArtifactName
+        {
+            get { return "Thycotic.InstallerRunner"; }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericLegacyAgentServiceZipGeneratorRunbook"/> class.
@@ -30,8 +33,6 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// <exception cref="System.ArgumentException">Engine to server communication ingredients missing.</exception>
         public override void BakeSteps()
         {
-            ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Is64Bit, Version);
-
             Steps = new IInstallerGeneratorStep[]
             {
                 new CreateZipStep

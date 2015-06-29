@@ -18,6 +18,15 @@ namespace Thycotic.InstallerGenerator.Core
         /// <returns></returns>
         public string Generate(IInstallerGeneratorRunbook runbook)
         {
+            if (string.IsNullOrWhiteSpace(runbook.ArtifactName))
+            {
+                runbook.ArtifactName = runbook.GetArtifactFileName(runbook.DefaultArtifactName, runbook.ArtifactNameSuffix, runbook.Is64Bit, runbook.Version);
+            }
+
+            var path = Path.GetFullPath(Path.Combine(runbook.WorkingPath, runbook.ArtifactName));
+
+            _log.Info(string.Format("Artifact path will be {0}", path));
+            
             _log.Info("Baking steps");
             runbook.BakeSteps();
 
@@ -28,7 +37,7 @@ namespace Thycotic.InstallerGenerator.Core
                 s.Execute();
             });
             
-            return Path.GetFullPath(Path.Combine(runbook.WorkingPath, runbook.ArtifactName));
+            return path;
         }
     }
 }

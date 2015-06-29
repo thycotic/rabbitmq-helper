@@ -13,7 +13,10 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// <summary>
         /// The default artifact name
         /// </summary>
-        public const string DefaultArtifactName = "Thycotic.Legacy.Agent.Service";
+        public override string DefaultArtifactName
+        {
+            get { return "Thycotic.Legacy.Agent.Service"; }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfiguredLegacyAgentServiceZipGeneratorRunbook"/> class.

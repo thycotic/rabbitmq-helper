@@ -11,7 +11,10 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// <summary>
         /// The default artifact name
         /// </summary>
-        public const string DefaultArtifactName = "Thycotic.MemoryMq.SiteConnector.Service";
+        public override string DefaultArtifactName
+        {
+            get { return "Thycotic.MemoryMq.SiteConnector.Service"; }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericMemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook"/> class.
@@ -27,8 +30,6 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// <exception cref="System.ArgumentException">Pipeline settings ingredients missing</exception>
         public override void BakeSteps()
         {
-            ArtifactName = GetArtifactFileName(DefaultArtifactName, ArtifactNameSuffix, Is64Bit, Version);
-
             Steps = new IInstallerGeneratorStep[]
             {
                 new ExternalProcessStep

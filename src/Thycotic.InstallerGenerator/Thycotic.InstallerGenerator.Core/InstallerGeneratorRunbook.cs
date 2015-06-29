@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using Thycotic.InstallerGenerator.Core.Steps;
 
 namespace Thycotic.InstallerGenerator.Core
@@ -56,6 +57,22 @@ namespace Thycotic.InstallerGenerator.Core
         /// The name of the artifact.
         /// </value>
         public string ArtifactName { get; set; }
+
+        /// <summary>
+        /// Gets the default name of the artifact.
+        /// </summary>
+        /// <value>
+        /// The default name of the artifact.
+        /// </value>
+        public abstract string DefaultArtifactName { get; }
+
+        /// <summary>
+        /// Gets the artifact extension.
+        /// </summary>
+        /// <value>
+        /// The artifact extension.
+        /// </value>
+        public abstract string ArtifactExtension { get; }
 
         /// <summary>
         /// Gets or sets the artifact name suffix.
@@ -127,6 +144,32 @@ namespace Thycotic.InstallerGenerator.Core
         protected string GetPathToFileInSourcePath(string filename)
         {
             return GetPathToFile(SourcePath, filename);
+        }
+
+        /// <summary>
+        /// Gets the name of the artifact file.
+        /// </summary>
+        /// <param name="artifactName">Name of the artifact.</param>
+        /// <param name="suffix">The suffix.</param>
+        /// <param name="is64Bit">if set to <c>true</c> [is64bit].</param>
+        /// <param name="version">The version.</param>
+        /// <returns></returns>
+        public string GetArtifactFileName(string artifactName, string suffix, bool is64Bit, string version)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(artifactName);
+
+            if (!string.IsNullOrWhiteSpace(suffix))
+            {
+                sb.Append(string.Format(".{0}", suffix));
+            }
+
+            sb.Append(is64Bit ? ".x64" : ".x86");
+
+            sb.Append(string.Format(".{0}.{1}", version, ArtifactExtension));
+
+            return sb.ToString();
         }
     }
 }

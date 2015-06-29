@@ -8,29 +8,14 @@ namespace Thycotic.InstallerGenerator.Core.Zip
     public abstract class ZipGeneratorRunbook : InstallerGeneratorRunbook
     {
         /// <summary>
-        /// Gets the name of the artifact file.
+        /// Gets the artifact extension.
         /// </summary>
-        /// <param name="artifactName">Name of the artifact.</param>
-        /// <param name="suffix">The suffix.</param>
-        /// <param name="is64Bit">if set to <c>true</c> [is64bit].</param>
-        /// <param name="version">The version.</param>
-        /// <returns></returns>
-        public static string GetArtifactFileName(string artifactName, string suffix, bool is64Bit, string version)
+        /// <value>
+        /// The artifact extension.
+        /// </value>
+        public override string ArtifactExtension
         {
-            var sb = new StringBuilder();
-
-            sb.Append(artifactName);
-
-            if (!string.IsNullOrWhiteSpace(suffix))
-            {
-                sb.Append(string.Format(".{0}", suffix));
-            }
-
-            sb.Append(is64Bit ? ".x64" : ".x86");
-
-            sb.Append(string.Format(".{0}.zip", version));
-
-            return sb.ToString();
+            get { return "zip"; }
         }
     }
 }
