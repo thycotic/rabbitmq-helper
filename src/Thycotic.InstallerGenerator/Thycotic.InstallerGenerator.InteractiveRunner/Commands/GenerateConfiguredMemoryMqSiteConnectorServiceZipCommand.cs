@@ -1,4 +1,5 @@
-﻿using Thycotic.CLI.Commands;
+﻿using System.IO;
+using Thycotic.CLI.Commands;
 using Thycotic.InstallerGenerator.Core;
 using Thycotic.InstallerGenerator.Core.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
@@ -51,8 +52,16 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                 var artifactPath = parameters["ArtifactPath"];
                 string artifactName;
                 parameters.TryGet("ArtifactName", out artifactName);
-                var runnerZipPath = parameters["RunnerZipPath"];
+                var runnerZipPath = parameters["SourcePath.RunnerZip"];
                 var msiSourcePath = parameters["SourcePath.MSI"];
+
+                if (!File.Exists(msiSourcePath))
+                {
+                    throw new FileNotFoundException(string.Format("MSI could not be found at {0}", msiSourcePath));
+                }
+
+                var msiFileName = new FileInfo(msiSourcePath).Name;
+
 
                 var installerVersion = parameters["Installer.Version"];
 
@@ -61,6 +70,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                     Is64Bit = !is32Bit,
                     ArtifactPath = artifactPath,
                     ArtifactName = artifactName,
+                    MsiFileName = msiFileName,
                     RunnerZipPath = runnerZipPath,
                     SourcePath = msiSourcePath,
                     Version = installerVersion,

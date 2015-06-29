@@ -51,6 +51,14 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// </value>
         public string RunnerZipPath { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the msi file.
+        /// </summary>
+        /// <value>
+        /// The name of the msi file.
+        /// </value>
+        public string MsiFileName { get; set; }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfiguredMemoryMqSiteConnectorServiceZipGeneratorRunbook"/> class.
@@ -79,12 +87,14 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                 new AppSettingConfigurationChangeStep
                 {
                     Name = "Applying applicable configuration",
-                    ConfigurationFilePath = Path.Combine(SourcePath, "setup.config"),
+                    ConfigurationFilePath = Path.Combine(SourcePath, "setup.exe.config"),
                     Settings = new Dictionary<string, string>
                     {
-                        {"TODO", "Coming soon"}
+                        {"MsiFileName", MsiFileName},
+                        {"Pipeline.ConnectionString", ConnectionString},
+                        {"Pipeline.UseSsl", UseSsl.ToString()},
+                        {"Pipeline.Thumbprint", Thumbprint}
                     }
-
                 },
                 new CreateZipStep
                 {
