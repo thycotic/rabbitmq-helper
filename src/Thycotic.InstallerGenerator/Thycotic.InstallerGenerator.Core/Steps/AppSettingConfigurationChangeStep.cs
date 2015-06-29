@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using Thycotic.Logging;
 
@@ -42,6 +43,13 @@ namespace Thycotic.InstallerGenerator.Core.Steps
         /// </summary>
         public void Execute()
         {
+            if (!File.Exists(ConfigurationFilePath))
+            {
+                throw new FileNotFoundException(string.Format("Configuration file not found at {0}", ConfigurationFilePath));
+            }
+
+            _log.Debug(string.Format("Opening {0} for modifications", ConfigurationFilePath));
+
             var configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = ConfigurationFilePath };
             var config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
 
@@ -49,8 +57,19 @@ namespace Thycotic.InstallerGenerator.Core.Steps
             {
                 try
                 {
-                    _log.Info(string.Format("Setting value for {0}", setting.Key));
-                    config.AppSettings.Settings[setting.Key].Value = setting.Value;
+                    if (config.AppSettings.Settings.AllKeys.Contains(setting.Key))
+                    {
+                        _log.Info(string.Format("Replacing value for {0}", setting.Key));
+
+                        config.AppSettings.Settings[setting.Key].Value = setting.Value;
+                    }
+                    else
+                    {
+                        _log.Info(string.Format("Adding value for {0}", setting.Key));
+
+                        config.AppSettings.Settings.Add(setting.Key, setting.Value);
+
+                    }
                 }
                 catch (Exception)
                 {
