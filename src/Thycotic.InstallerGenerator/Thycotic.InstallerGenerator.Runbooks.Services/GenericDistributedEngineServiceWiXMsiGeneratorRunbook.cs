@@ -17,14 +17,6 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericDistributedEngineServiceWiXMsiGeneratorRunbook"/> class.
-        /// </summary>
-        public GenericDistributedEngineServiceWiXMsiGeneratorRunbook()
-        {
-            Is64Bit = true;
-        }
-
-        /// <summary>
         /// Bakes the steps.
         /// </summary>
         /// <exception cref="System.ArgumentException">Engine to server communication ingredients missing.</exception>

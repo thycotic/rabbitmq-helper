@@ -17,14 +17,6 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericMemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook"/> class.
-        /// </summary>
-        public GenericMemoryMqSiteConnectorServiceWiXMsiGeneratorRunbook()
-        {
-            Is64Bit = true;
-        }
-
-        /// <summary>
         /// Bakes the steps.
         /// </summary>
         /// <exception cref="System.ArgumentException">Pipeline settings ingredients missing</exception>

@@ -7,7 +7,7 @@ using Thycotic.InstallerGenerator.Core.Zip;
 namespace Thycotic.InstallerGenerator.Runbooks.Services
 {
     /// <summary>
-    /// Distributed engine service WiX MSI generator runbook
+    /// Memory mq site connector service WiX zip generator runbook
     /// </summary>
     public class ConfiguredMemoryMqSiteConnectorServiceZipGeneratorRunbook : ZipGeneratorRunbook
     {
@@ -58,15 +58,6 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// The name of the msi file.
         /// </value>
         public string MsiFileName { get; set; }
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConfiguredMemoryMqSiteConnectorServiceZipGeneratorRunbook"/> class.
-        /// </summary>
-        public ConfiguredMemoryMqSiteConnectorServiceZipGeneratorRunbook()
-        {
-            Is64Bit = false;
-        }
 
         /// <summary>
         /// Bakes the steps.

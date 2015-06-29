@@ -44,14 +44,6 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         public Func<string, string> SignToolPathProvider { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericLegacyAgentServiceZipGeneratorRunbook"/> class.
-        /// </summary>
-        public GenericInstallerRunnerZipGeneratorRunbook()
-        {
-            Is64Bit = false;
-        }
-
-        /// <summary>
         /// Bakes the steps.
         /// </summary>
         /// <exception cref="System.ArgumentException">Engine to server communication ingredients missing.</exception>
