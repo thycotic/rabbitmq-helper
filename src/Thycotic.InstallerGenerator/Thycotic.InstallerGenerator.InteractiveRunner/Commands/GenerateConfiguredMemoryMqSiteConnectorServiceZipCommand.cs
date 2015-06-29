@@ -40,7 +40,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
                 var connectionString = parameters["Pipeline.ConnectionString"];
                 bool useSsl;
                 string thumbprint = string.Empty;
-                if (!parameters.TryGetBoolean("Pipeline.UseSsl", out useSsl)) return -1;
+                if (!parameters.TryGetBoolean("Pipeline.UseSsl", out useSsl)) return 1;
 
                 if (useSsl)
                 {

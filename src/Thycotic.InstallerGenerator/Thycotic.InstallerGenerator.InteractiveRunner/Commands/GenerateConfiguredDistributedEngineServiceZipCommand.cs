@@ -39,12 +39,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
             {
                 var connectionString = parameters["E2S.ConnectionString"];
                 bool useSsl;
-                if (!parameters.TryGetBoolean("E2S.UseSsl", out useSsl)) return -1;
+                if (!parameters.TryGetBoolean("E2S.UseSsl", out useSsl)) return 1;
 
                 string siteId;
-                if (!parameters.TryGet("E2S.Site", out siteId)) return -1;
+                if (!parameters.TryGet("E2S.SiteId", out siteId)) return 1;
                 string organizationId;
-                if (!parameters.TryGet("E2S.OrganizationID", out organizationId)) return -1;
+                if (!parameters.TryGet("E2S.OrganizationId", out organizationId)) return 1;
 
 
                 bool is32Bit;
