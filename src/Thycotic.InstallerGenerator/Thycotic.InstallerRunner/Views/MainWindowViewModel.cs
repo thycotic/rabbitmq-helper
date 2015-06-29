@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using Thycotic.CLI.OS;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
@@ -27,7 +26,8 @@ namespace Thycotic.InstallerRunner.Views
         private string _latestStatus;
         private Task _monitorTask;
         private Task _installationTask;
-        
+        private bool _isInstallationSuccessful;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -48,6 +48,8 @@ namespace Thycotic.InstallerRunner.Views
                 OnPropertyChanged("ShowLog");
             }
         }
+
+
 
         public string LatestStatus
         {
@@ -72,6 +74,24 @@ namespace Thycotic.InstallerRunner.Views
             get { return _installationTask != null && !_installationTask.IsCompleted; }
         }
 
+        public bool IsInstallationSuccessful
+        {
+            get
+            {
+                return _isInstallationSuccessful;
+            }
+            set
+            {
+                if (_isInstallationSuccessful == value)
+                {
+                    return;
+                }
+
+                _isInstallationSuccessful = value;
+                OnPropertyChanged("IsInstallationSuccessful");
+            }
+        }
+
         public string LogOutput
         {
             get { return _logOutput.ToString(); }
@@ -91,12 +111,6 @@ namespace Thycotic.InstallerRunner.Views
                 {
                     //done installing, notify UI
                     OnPropertyChanged("IsInstalling");
-
-                    if (task.Exception != null)
-                    {
-                        throw task.Exception;
-                    }
-
                 });
 
             //installation starting
@@ -125,18 +139,23 @@ namespace Thycotic.InstallerRunner.Views
                         OnPropertyChanged("LogOutput");
                     }
                 }, _cts.Token)
-                .ContinueWith(task => Task.Delay(TimeSpan.FromSeconds(5)), _cts.Token)
+                .ContinueWith(task => Task.Delay(TimeSpan.FromSeconds(5)).Wait(), _cts.Token)
                 .ContinueWith(task => MonitorLog(), _cts.Token);
         }
 
         private void RunMsi()
         {
-            _log.Info("Extracting MSI parameters");
+            var assemblyEntrypointProvider = new AssemblyEntryPointProvider();
+
+            var workingPath = assemblyEntrypointProvider.GetAssemblyDirectory(GetType());
+
+       
 
             var appSettings = ConfigurationManager.AppSettings;
 
-            var msiPath = appSettings[ConfigurationKeys.PathMsi];
+            var msiFileName = appSettings[ConfigurationKeys.MsiFileName];
 
+            var msiPath = Path.Combine(workingPath, msiFileName);
 
             if (!File.Exists(msiPath))
             {
@@ -149,21 +168,25 @@ namespace Thycotic.InstallerRunner.Views
 
             var parameters = new Dictionary<string, string>();
 
+            _log.Info("Extracting MSI parameters");
+
             //copy all parameters in the app.config to local dictionary
-            appSettings.AllKeys.Where(k => k != ConfigurationKeys.PathMsi)
+            appSettings.AllKeys.Where(k => k != ConfigurationKeys.MsiFileName)
                 .ToList()
-                .ForEach(k => parameters.Add(k, appSettings[k]));
+                .ForEach(k =>
+                {
+                    _log.Info(string.Format("{0} = {1}", k, appSettings[k]));
+
+                    parameters.Add(k, appSettings[k]);
+                });
 
 
             var processRunner = new ExternalProcessRunner();
 
-            var assemblyEntrypointProvider = new AssemblyEntryPointProvider();
-
-            var workingPath = assemblyEntrypointProvider.GetAssemblyDirectory(GetType());
 
             _log.Info(string.Format("Log file will be saved in {0}", Path.Combine(workingPath, "log")));
 
-            var coreMsiParameters = string.Format(@"/i ""{0}"" /qn /log log\install.log", msiPath);
+            var coreMsiParameters = string.Format(@"/i ""{0}"" /log log\install.log", msiPath);
             var serviceParameters = string.Join(" ",
                 parameters.Select(p => string.Format(@"{0}=""{1}""", p.Key, p.Value)));
 
@@ -178,12 +201,28 @@ namespace Thycotic.InstallerRunner.Views
 
             _log.Info("Installing MSI");
 
-            processRunner.Run(processInfo);
+            try
+            {
 
-            _log.Info("Installation completed");
+                processRunner.Run(processInfo);
 
-            LatestStatus = "Installation completed";
+                _log.Info("Installation completed");
 
+                LatestStatus = "Installation completed";
+
+                IsInstallationSuccessful = true;
+
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message, ex.InnerException);
+
+                LatestStatus = "Installation failed";
+
+                IsInstallationSuccessful = false;
+            }
+
+            
             //give the user three seconds to digest what happened
             Task.Delay(TimeSpan.FromSeconds(1)).Wait();
 

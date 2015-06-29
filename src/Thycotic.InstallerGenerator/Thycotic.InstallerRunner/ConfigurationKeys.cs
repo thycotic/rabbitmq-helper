@@ -6,8 +6,8 @@
     internal static class ConfigurationKeys
     {
         /// <summary>
-        /// The path msi
+        /// The filename of the MSI to be run
         /// </summary>
-        public const string PathMsi = "Path.MSI";
+        public const string MsiFileName = "MsiFileName";
     }
 }

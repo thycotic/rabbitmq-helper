@@ -15,38 +15,54 @@ namespace Thycotic.InstallerRunner
 
         public MainWindow()
         {
-            InitializeComponent();
-
-            ConfigureLogging();
-            
             _viewModel = new MainWindowViewModel();
             _viewModel.Initialize();
 
+
+            InitializeComponent();
+
             DataContext = _viewModel;
 
-            var installationTask = _viewModel.Install();
+        }
 
-            installationTask.ContinueWith(task =>
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            try
             {
-                if (task.Exception != null)
-                {
-                    var message =
-                        string.Format("{0}\n\nPlease review the log output and install.log for more information",
-                            task.Exception.Message);
-                    MessageBox.Show(message, "Lack of success ;(", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    //if (MessageBox.Show("Installation completed.\n\nClose installer?", "Success!",
-                    //    MessageBoxButton.OKCancel, MessageBoxImage.Information) == MessageBoxResult.OK)
-                    //{
-                        Application.Current.Dispatcher.Invoke(Close);
-                    //}
-                }
-            });
+                ConfigureLogging();
 
+
+                var installationTask = _viewModel.Install();
+
+                installationTask.ContinueWith(task =>
+                {
+                    if (!_viewModel.IsInstallationSuccessful)
+                    {
+                        const string message = "Please review the log output and install.log for more information";
+
+                        MessageBox.Show(message, "Installation failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        //if (MessageBox.Show("Installation completed.\n\nClose installer?", "Success!",
+                        //    MessageBoxButton.OKCancel, MessageBoxImage.Information) == MessageBoxResult.OK)
+                        //{
+                        Application.Current.Dispatcher.Invoke(Close);
+                        //}
+                    }
+
+
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("An unexpected error has occurred: {0}", ex.Message), "Unexpected error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
+
         private static void ConfigureLogging()
         {
             Log.Configure();
@@ -57,7 +73,7 @@ namespace Thycotic.InstallerRunner
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-        
+
             _viewModel.Dispose();
         }
     }
