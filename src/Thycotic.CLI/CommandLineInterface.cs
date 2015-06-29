@@ -273,7 +273,11 @@ namespace Thycotic.CLI
 
                     if (command is IImmediateCommand)
                     {
-                        command.Action.Invoke(parameters);
+                        var exitCode = command.Action.Invoke(parameters);
+                        if (exitCode != 0)
+                        {
+                            Environment.Exit(exitCode);
+                        }
                     }
                     else
                     {
