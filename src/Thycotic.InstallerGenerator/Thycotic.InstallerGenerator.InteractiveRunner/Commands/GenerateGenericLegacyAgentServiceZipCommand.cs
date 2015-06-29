@@ -1,7 +1,5 @@
-﻿using System;
-using Thycotic.CLI.Commands;
+﻿using Thycotic.CLI.Commands;
 using Thycotic.InstallerGenerator.Core;
-using Thycotic.InstallerGenerator.Core.WiX;
 using Thycotic.InstallerGenerator.Runbooks.Services;
 using Thycotic.Logging;
 
@@ -26,8 +24,8 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
 
             Action = parameters =>
             {
-                bool is32Bit;
-                parameters.TryGetBoolean("Is32Bit", out is32Bit);
+                //bool is32Bit;
+                //parameters.TryGetBoolean("Is32Bit", out is32Bit);
                 var artifactPath = parameters["ArtifactPath"];
                 string artifactName;
                 parameters.TryGet("ArtifactName", out artifactName);
@@ -37,7 +35,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
 
                 var steps = new GenericLegacyAgentServiceZipGeneratorRunbook
                 {
-                    Is64Bit = !is32Bit,
+                    //Is64Bit = !is32Bit,
                     ArtifactPath = artifactPath,
                     ArtifactName = artifactName,
                     SourcePath = binariesSourcePath,
