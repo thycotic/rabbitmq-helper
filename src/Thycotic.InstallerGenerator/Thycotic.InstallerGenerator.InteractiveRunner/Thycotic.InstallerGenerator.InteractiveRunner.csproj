@@ -88,6 +88,9 @@
     <None Include="Examples\Signing\SSDESPC.pfx" />
     <None Include="Examples\Signing\SSDESPC.pvk" />
     <None Include="packages.config" />
+    <None Include="Resources\generateAllInstallers.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Thycotic.CLI\Thycotic.CLI.csproj">
