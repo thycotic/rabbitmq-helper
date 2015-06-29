@@ -112,6 +112,7 @@ namespace Thycotic.InstallerGenerator.Core
         /// </summary>
         protected InstallerGeneratorRunbook()
         {
+            Is64Bit = true;
             ApplicationPath = new AssemblyEntryPointProvider().GetAssemblyDirectory(GetType());
             WorkingPath = Path.GetFullPath(Path.Combine("temp", Guid.NewGuid().ToString()));
             ArtifactPath = Path.GetFullPath(@"artifact");
