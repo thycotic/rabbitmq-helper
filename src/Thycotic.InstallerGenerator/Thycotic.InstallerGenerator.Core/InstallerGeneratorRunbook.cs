@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using Thycotic.InstallerGenerator.Core.Steps;
+using Thycotic.Utility.Reflection;
 
 namespace Thycotic.InstallerGenerator.Core
 {
@@ -111,7 +112,7 @@ namespace Thycotic.InstallerGenerator.Core
         /// </summary>
         protected InstallerGeneratorRunbook()
         {
-            ApplicationPath = Directory.GetCurrentDirectory();
+            ApplicationPath = new AssemblyEntryPointProvider().GetAssemblyDirectory(GetType());
             WorkingPath = Path.GetFullPath(Path.Combine("temp", Guid.NewGuid().ToString()));
             ArtifactPath = Path.GetFullPath(@"artifact");
         }
