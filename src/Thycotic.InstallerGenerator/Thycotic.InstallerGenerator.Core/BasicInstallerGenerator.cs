@@ -18,6 +18,15 @@ namespace Thycotic.InstallerGenerator.Core
         /// <returns></returns>
         public string Generate(IInstallerGeneratorRunbook runbook)
         {
+            _log.Info(string.Format("Application path is {0}", runbook.ApplicationPath));
+            _log.Info(string.Format("Working path is {0}", runbook.WorkingPath));
+            _log.Info(string.Format("Source path is {0}", runbook.SourcePath));
+            if (!string.IsNullOrWhiteSpace(runbook.RecipePath))
+            {
+                _log.Info(string.Format("Recipe path is {0}", runbook.RecipePath));
+            }
+
+
             if (string.IsNullOrWhiteSpace(runbook.ArtifactName))
             {
                 runbook.ArtifactName = runbook.GetArtifactFileName(runbook.DefaultArtifactName, runbook.ArtifactNameSuffix, runbook.Is64Bit, runbook.Version);
@@ -25,7 +34,7 @@ namespace Thycotic.InstallerGenerator.Core
 
             var path = Path.GetFullPath(Path.Combine(runbook.WorkingPath, runbook.ArtifactName));
 
-            _log.Info(string.Format("Artifact path will be {0}", path));
+            _log.Info(string.Format("Full temporary artifact path will be {0}", path));
             
             _log.Info("Baking steps");
             runbook.BakeSteps();
