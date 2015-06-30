@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandAreas.cs" />
+    <Compile Include="Commands\GenerateConfiguredLegacyAgentEngineServiceZipCommand.cs" />
     <Compile Include="Commands\GenerateConfiguredDistributedEngineServiceZipCommand.cs" />
     <Compile Include="Commands\GenerateConfiguredMemoryMqSiteConnectorServiceZipCommand.cs" />
     <Compile Include="Commands\GenerateGenericDistributedEngineServiceMsiCommand.cs" />

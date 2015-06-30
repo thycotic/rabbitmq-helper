@@ -25,7 +25,7 @@ echo 64Bit Memory Mq site connector
 if errorlevel 1 goto end
 
 echo 32Bit Legacy Agent Update
-%ig% generateGenericLegacyAgentServiceZip -ArtifactName=glasvc.zip -ArtifactPath=%artifactPath% -SourcePath.Binaries=-SourcePath.Binaries=%illidanMapPath%\src\Thycotic.DistributedEngine.Service\bin\Release.32Bit -Installer.Version=5.0.0.0 -Signing.PfxPath=%pfxPath% -Signing.PfxPassword=%pfxPassword%
+%ig% generateGenericLegacyAgentServiceZip -ArtifactName=glasvc.32Bit.zip -ArtifactPath=%artifactPath% -SourcePath.Binaries=-SourcePath.Binaries=%illidanMapPath%\src\Thycotic.DistributedEngine.Service\bin\Release.32Bit -Installer.Version=5.0.0.0 -Signing.PfxPath=%pfxPath% -Signing.PfxPassword=%pfxPassword%
 if errorlevel 1 goto end
 
 echo 32Bit Installer Runner
@@ -49,6 +49,10 @@ echo 64Bit Distributed Engine
 
 echo 32Bit Distributed Engine
 %ig% generateConfiguredDistributedEngineServiceZip -Is32Bit=true -ArtifactName=cdesvc.32Bit.zip  -ArtifactPath=%artifactPath% -SourcePath.MSI=%artifactPath%\gdesvc.32Bit.msi -SourcePath.RunnerZip=%artifactPath%\girapp.zip -Installer.Version=5.0.0.0 -E2S.ConnectionString=http://illidan/ihawu -E2S.UseSsl=false -E2S.SiteId=3 -E2S.OrganizationId=1
+
+echo 32Bit Legacy Agent update
+%ig% generateConfiguredLegacyAgentEngineServiceZip -ArtifactName=clasvc.32Bit.zip  -ArtifactPath=%artifactPath% -SourcePath.BinariesZip=%artifactPath%\glasvc.32Bit.zip -Installer.Version=5.0.0.0 -E2S.ConnectionString=http://illidan/ihawu -E2S.UseSsl=false -E2S.SiteId=3 -E2S.OrganizationId=1
+
 
 if errorlevel 1 goto end
 
