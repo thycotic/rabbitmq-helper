@@ -104,7 +104,8 @@ sign
                 {
                     Name = "File harvest (Zip)",
                     SourcePath = SourcePath,
-                    ZipFilePath = Path.Combine(WorkingPath, ArtifactName)
+                    ZipFilePath = Path.Combine(WorkingPath, ArtifactName),
+                    CompressionLevel = ZipFileWriter.MaxCompressionLevel
                 }
             };
         }

@@ -1,3 +1,5 @@
+using System;
+using System.IO.Compression;
 using Thycotic.InstallerGenerator.Core.Zip;
 using Thycotic.Logging;
 
@@ -8,6 +10,8 @@ namespace Thycotic.InstallerGenerator.Core.Steps
     /// </summary>
     public class CreateZipStep : IInstallerGeneratorStep
     {
+        private int _compressionLevel = 3;
+
         /// <summary>
         /// Gets the name.
         /// </summary>
@@ -32,6 +36,31 @@ namespace Thycotic.InstallerGenerator.Core.Steps
         /// </value>
         public string SourcePath { get; set; }
 
+        /// <summary>
+        /// Gets or sets the compression level.
+        /// </summary>
+        /// <value>
+        /// The compression level.
+        /// </value>
+        public int CompressionLevel {
+            get
+            {
+                return _compressionLevel;
+            }
+            set
+            {
+                //0-9 allowed
+                if ((value >= 0) && (value < 10))
+                {
+                    _compressionLevel = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException("value");
+                }
+            }
+        }
+
         private readonly ILogWriter _log = Log.Get(typeof(CreateZipStep));
 
         /// <summary>
@@ -41,7 +70,7 @@ namespace Thycotic.InstallerGenerator.Core.Steps
         {
             var zipFileWriter = new ZipFileWriter();
 
-            zipFileWriter.Compress(SourcePath, ZipFilePath);
+            zipFileWriter.Compress(SourcePath, ZipFilePath, CompressionLevel);
         }
     }
 }

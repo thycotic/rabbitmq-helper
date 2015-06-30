@@ -14,6 +14,16 @@ namespace Thycotic.InstallerGenerator.Core.Zip
     {
         private readonly ILogWriter _log = Log.Get(typeof(ZipFileWriter));
 
+        /// <summary>
+        /// The no compression level
+        /// </summary>
+        public const int NoCompressionLevel = 0;
+
+        /// <summary>
+        /// The maximum compression level
+        /// </summary>
+        public const int MaxCompressionLevel = 9;
+
         //samples from https://github.com/icsharpcode/SharpZipLib/wiki/Zip-Samples#anchorUnpackFull
 
         private void CompressFolder(string path, ZipOutputStream zipStream, int folderOffset)
@@ -29,8 +39,12 @@ namespace Thycotic.InstallerGenerator.Core.Zip
 
                 var entryName = filename.Substring(folderOffset); // Makes the name in zip based on the folder
                 entryName = ZipEntry.CleanName(entryName); // Removes drive from name and fixes slash direction
-                ZipEntry newEntry = new ZipEntry(entryName);
-                newEntry.DateTime = fi.LastWriteTime; // Note the zip format stores 2 second granularity
+                var newEntry = new ZipEntry(entryName)
+                {
+                    DateTime = fi.LastWriteTime, 
+                    Size = fi.Length
+                };
+                // Note the zip format stores 2 second granularity
 
                 // Specifying the AESKeySize triggers AES encryption. Allowable values are 0 (off), 128 or 256.
                 // A password on the ZipOutputStream is required if using AES.
@@ -41,7 +55,6 @@ namespace Thycotic.InstallerGenerator.Core.Zip
                 // If the file may be bigger than 4GB, or you do not need WinXP built-in compatibility, you do not need either,
                 // but the zip will be in Zip64 format which not all utilities can understand.
                 //   zipStream.UseZip64 = UseZip64.Off;
-                newEntry.Size = fi.Length;
 
                 zipStream.PutNextEntry(newEntry);
 
@@ -119,13 +132,17 @@ namespace Thycotic.InstallerGenerator.Core.Zip
         /// </summary>
         /// <param name="sourcePath">The source directory path.</param>
         /// <param name="zipFilePath">The zip file path.</param>
-        public void Compress(string sourcePath, string zipFilePath)
+        /// <param name="compressionLevel">The compression level.</param>
+        public void Compress(string sourcePath, string zipFilePath, int compressionLevel = 3)
         {
 
             using (var fsOut = File.Create(zipFilePath))
             using (var zipStream = new ZipOutputStream(fsOut))
             {
-                zipStream.SetLevel(3); //0-9, 9 being the highest level of compression
+
+                _log.Debug(string.Format("Compressing at level {0}", compressionLevel));
+
+                zipStream.SetLevel(compressionLevel); //0-9, 9 being the highest level of compression
 
                 //zipStream.Password = password; // optional. Null is the same as not setting. Required if using AES.
 
