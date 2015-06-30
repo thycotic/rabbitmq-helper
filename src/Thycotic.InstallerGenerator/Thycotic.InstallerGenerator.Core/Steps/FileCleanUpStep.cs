@@ -12,6 +12,11 @@ namespace Thycotic.InstallerGenerator.Core.Steps
     public class FileCleanUpStep : IInstallerGeneratorStep
     {
         /// <summary>
+        /// The visual studio temporary files pattern
+        /// </summary>
+        public const string VisualStudioTemporaryFilesPattern = @"^.*\.[pdb|old|vshost.exe|vshost.exe.config]$";
+
+        /// <summary>
         /// Gets the name.
         /// </summary>
         /// <value>
