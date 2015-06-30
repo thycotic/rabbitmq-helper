@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -14,7 +15,7 @@ namespace Thycotic.InstallerGenerator.Core.Steps
         /// <summary>
         /// The visual studio temporary files pattern
         /// </summary>
-        public const string VisualStudioTemporaryFilesPattern = @"^.*\.[pdb|old|vshost.exe|vshost.exe.config]$";
+        public const string VisualStudioTemporaryFilesPattern = @"^.*\.pdb|old|vshost.exe|vshost.exe.config$";
 
         /// <summary>
         /// Gets the name.
