@@ -89,15 +89,9 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                 },
                 new FileCleanUpStep
                 {
-                    Name = "Cleaning up .pdb files",
+                    Name = "Cleaning up temporary files",
                     DestinationPath = SourcePath,
-                    FilenamePattern = @"^.*\.pdb$"
-                },
-                new FileCleanUpStep
-                {
-                    Name = "Cleaning up .old files",
-                    DestinationPath = SourcePath,
-                    FilenamePattern = @"^.*\.old$"
+                    FilenamePattern = FileCleanUpStep.VisualStudioTemporaryFilesPattern
                 },
                 new CreateZipStep
                 {

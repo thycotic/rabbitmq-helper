@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Thycotic.InstallerGenerator.Core;
@@ -99,17 +100,20 @@ sign
                     SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe.config"),
                     DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe.config")
                 },
-                new FileCleanUpStep
+                new AppSettingConfigurationChangeStep
                 {
-                    Name = "Cleaning up .pdb files",
-                    DestinationPath = SourcePath,
-                    FilenamePattern = @"^.*\.pdb$"
+                    Name = "Applying applicable configuration",
+                    ConfigurationFilePath = Path.Combine(SourcePath, "SecretServerAgentService.exe.config"),
+                    Settings = new Dictionary<string, string>
+                    {
+                        {"RPCAgentVersion", "n/a"},
+                    }
                 },
                 new FileCleanUpStep
                 {
-                    Name = "Cleaning up .old files",
+                    Name = "Cleaning up temporary files",
                     DestinationPath = SourcePath,
-                    FilenamePattern = @"^.*\.old$"
+                    FilenamePattern = FileCleanUpStep.VisualStudioTemporaryFilesPattern
                 },
                 new CreateZipStep
                 {
