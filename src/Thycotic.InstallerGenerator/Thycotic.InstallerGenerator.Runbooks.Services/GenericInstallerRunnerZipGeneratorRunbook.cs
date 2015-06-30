@@ -63,6 +63,18 @@ sign
 /p {1}
 {2}", PfxPath, PfxPassword, "setup.exe")
                 },
+                new FileCleanUpStep
+                {
+                    Name = "Cleaning up .pdb files",
+                    DestinationPath = SourcePath,
+                    FilenamePattern = @"^.*\.pdb$"
+                },
+                new FileCleanUpStep
+                {
+                    Name = "Cleaning up .old files",
+                    DestinationPath = SourcePath,
+                    FilenamePattern = @"^.*\.old$"
+                },
                 new CreateZipStep
                 {
                     Name = "File harvest (Zip)",

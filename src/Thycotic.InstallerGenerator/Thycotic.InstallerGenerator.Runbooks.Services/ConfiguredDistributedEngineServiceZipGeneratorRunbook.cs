@@ -35,7 +35,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         /// </value>
         public bool UseSsl { get; set; }
 
-        
+
         /// <summary>
         /// Gets or sets the site identifier.
         /// </summary>
@@ -96,6 +96,18 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                         {"E2S.SiteId", SiteId},
                         {"E2S.OrganizationId", OrganizationId}
                     }
+                },
+                new FileCleanUpStep
+                {
+                    Name = "Cleaning up .pdb files",
+                    DestinationPath = SourcePath,
+                    FilenamePattern = @"^.*\.pdb$"
+                },
+                new FileCleanUpStep
+                {
+                    Name = "Cleaning up .old files",
+                    DestinationPath = SourcePath,
+                    FilenamePattern = @"^.*\.old$"
                 },
                 new CreateZipStep
                 {

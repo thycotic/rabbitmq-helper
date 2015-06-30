@@ -24,6 +24,18 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
         {
             Steps = new IInstallerGeneratorStep[]
             {
+                new FileCleanUpStep
+                {
+                    Name = "Cleaning up .pdb files",
+                    DestinationPath = SourcePath,
+                    FilenamePattern = @"^.*\.pdb$"
+                },
+                new FileCleanUpStep
+                {
+                    Name = "Cleaning up .old files",
+                    DestinationPath = SourcePath,
+                    FilenamePattern = @"^.*\.old$"
+                },
                 new ExternalProcessStep
                 {
                     Name = "File harvest (WiX Heat process)",

@@ -99,7 +99,18 @@ sign
                     SourcePath = Path.Combine(SourcePath, "Thycotic.DistributedEngine.Service.exe.config"),
                     DestinationPath = Path.Combine(SourcePath, "SecretServerAgentService.exe.config")
                 },
-                //TODO: Copy old bootstrapper
+                new FileCleanUpStep
+                {
+                    Name = "Cleaning up .pdb files",
+                    DestinationPath = SourcePath,
+                    FilenamePattern = @"^.*\.pdb$"
+                },
+                new FileCleanUpStep
+                {
+                    Name = "Cleaning up .old files",
+                    DestinationPath = SourcePath,
+                    FilenamePattern = @"^.*\.old$"
+                },
                 new CreateZipStep
                 {
                     Name = "File harvest (Zip)",
