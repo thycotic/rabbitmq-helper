@@ -8,7 +8,7 @@ using Thycotic.Utility.Reflection;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
-    internal class InstallErlangCommand : CommandBase
+    internal class InstallErlangCommand : CommandBase, IImmediateCommand
     {
         
         private readonly ILogWriter _log = Log.Get(typeof (InstallErlangCommand));

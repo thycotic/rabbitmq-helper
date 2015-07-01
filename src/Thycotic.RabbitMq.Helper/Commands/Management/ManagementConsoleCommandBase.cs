@@ -6,7 +6,7 @@ using Thycotic.RabbitMq.Helper.Installation;
 
 namespace Thycotic.RabbitMq.Helper.Management
 {
-    internal abstract class ManagementConsoleCommandBase : CommandBase
+    internal abstract class ManagementConsoleCommandBase : CommandBase, IImmediateCommand
     {
         private readonly ILogWriter _log = Log.Get(typeof(ManagementConsoleCommandBase));
 

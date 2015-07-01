@@ -6,7 +6,7 @@ using Thycotic.RabbitMq.Helper.Installation;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
-    internal class SetRabbitMqBaseEnvironmentalVariableCommand : CommandBase
+    internal class SetRabbitMqBaseEnvironmentalVariableCommand : CommandBase, IImmediateCommand
     {
         public const string RabbitMqBaseEnvironmentalVariableName = "RABBITMQ_BASE";
 
