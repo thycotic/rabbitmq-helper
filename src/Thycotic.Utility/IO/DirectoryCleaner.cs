@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Thycotic.Logging;
 
 namespace Thycotic.Utility.IO
 {
@@ -9,6 +10,9 @@ namespace Thycotic.Utility.IO
     /// </summary>
     public class DirectoryCleaner
     {
+
+        private readonly ILogWriter _log = Log.Get(typeof(DirectoryCleaner));
+
         /// <summary>
         /// Cleans the specified path recursively.
         /// </summary>
@@ -29,12 +33,12 @@ namespace Thycotic.Utility.IO
                 {
                     Directory.Delete(path, true);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //_log.Warn("Could not clean path", ex);
+                    _log.Warn("Could not clean path. Will retry...", ex);
                     tries++;
 
-                    Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+                    Task.Delay(TimeSpan.FromSeconds(10)).Wait();
                 }
 
             }
