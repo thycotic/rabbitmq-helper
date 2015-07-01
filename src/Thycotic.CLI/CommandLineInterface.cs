@@ -284,6 +284,11 @@ namespace Thycotic.CLI
                         Task.Factory.StartNew(() => command.Action.Invoke(parameters), CancellationToken).ContinueWith(
                             task =>
                             {
+                                if (task.Result != 0)
+                                {
+                                    _log.Error(string.Format("Command failed because result {0}", task.Result));
+                                }
+
                                 if (task.Exception != null)
                                 {
                                     _log.Error(string.Format("Command failed because {0}", task.Exception.Message), task.Exception);
