@@ -285,7 +285,10 @@
     <Compile Include="Areas\POC\PingConsumerSteps.cs" />
     <Compile Include="EngineToServer\ResponseBusSteps.cs" />
     <Compile Include="Areas\Discovery\MachineConsumerTests.cs" />
+    <Compile Include="IGivenWhenThenTests.cs" />
+    <Compile Include="ISingleClassContractTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.DistributedEngine.Logic\Thycotic.DistributedEngine.Logic.csproj">
@@ -307,10 +310,6 @@
     <ProjectReference Include="..\Thycotic.Messages\Thycotic.Messages.csproj">
       <Project>{bb022c12-4d04-4195-bbb7-baaa0e20fcb7}</Project>
       <Name>Thycotic.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Tests\Thycotic.Utility.Tests.csproj">
-      <Project>{341587C7-483A-442A-BF23-49D1A5138E57}</Project>
-      <Name>Thycotic.Utility.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
