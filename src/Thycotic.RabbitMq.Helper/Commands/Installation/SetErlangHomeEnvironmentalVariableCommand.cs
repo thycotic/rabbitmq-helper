@@ -6,7 +6,7 @@ using Thycotic.RabbitMq.Helper.Installation;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
-    internal class SetErlangHomeEnvironmentalVariableCommand : CommandBase
+    internal class SetErlangHomeEnvironmentalVariableCommand : CommandBase, IImmediateCommand
     {
         public const string ErlangHomeEnvironmentalVariableName = "ERLANG_HOME";
 

@@ -5,7 +5,7 @@ using Thycotic.RabbitMq.Helper.Installation;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
-    internal class CreateRabbitMqConfigDirectoryCommand : CommandBase
+    internal class CreateRabbitMqConfigDirectoryCommand : CommandBase, IImmediateCommand
     {
         
         private readonly ILogWriter _log = Log.Get(typeof (CreateRabbitMqConfigDirectoryCommand));

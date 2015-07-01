@@ -8,7 +8,7 @@ using Thycotic.RabbitMq.Helper.Commands;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class CopyRabbitMqExampleConfigFileCommand : CommandBase
+    internal class CopyRabbitMqExampleConfigFileCommand : CommandBase, IImmediateCommand
     {
 
         private static class TokenNames

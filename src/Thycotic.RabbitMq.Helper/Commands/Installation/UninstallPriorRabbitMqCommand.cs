@@ -10,7 +10,7 @@ using Thycotic.Utility.IO;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
-    internal class UninstallPriorRabbitMqCommand : CommandBase
+    internal class UninstallPriorRabbitMqCommand : CommandBase, IImmediateCommand
     {
 
         private readonly ILogWriter _log = Log.Get(typeof (UninstallPriorRabbitMqCommand));
