@@ -133,6 +133,12 @@
     <Reference Include="FluentAssertions.Core">
       <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NSubstitute">
       <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
       <Private>True</Private>
@@ -145,6 +151,13 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Utility">
+      <HintPath>..\packages\Thycotic.Utility.5.0.0.3\lib\net451\Thycotic.Utility.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -169,10 +182,6 @@
     <ProjectReference Include="..\Thycotic.MemoryMq.SiteConnector.Service\Thycotic.MemoryMq.SiteConnector.Service.csproj">
       <Project>{88bda5ed-1bca-4227-b838-681a709f4ea1}</Project>
       <Name>Thycotic.MemoryMq.SiteConnector.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
-      <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
-      <Name>Thycotic.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

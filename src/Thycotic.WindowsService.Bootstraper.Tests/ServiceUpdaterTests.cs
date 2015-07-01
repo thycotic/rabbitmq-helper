@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading;
 using NSubstitute;
 using NUnit.Framework;
-using Thycotic.Utility.Tests;
 
 namespace Thycotic.WindowsService.Bootstraper.Tests
 {

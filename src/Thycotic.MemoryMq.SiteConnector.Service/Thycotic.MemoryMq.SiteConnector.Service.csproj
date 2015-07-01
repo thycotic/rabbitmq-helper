@@ -175,9 +175,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
+    <Reference Include="Thycotic.CLI">
+      <HintPath>..\packages\Thycotic.CLI.5.0.0.4\lib\net451\Thycotic.CLI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Utility">
+      <HintPath>..\packages\Thycotic.Utility.5.0.0.3\lib\net451\Thycotic.Utility.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Wcf, Version=5.0.0.121, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -219,10 +227,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.CLI\Thycotic.CLI.csproj">
-      <Project>{2dbbc8ec-b150-45c1-82a9-20ccee768443}</Project>
-      <Name>Thycotic.CLI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">
       <Project>{60af5da6-343c-4c6f-9cd5-2b5f04d9af92}</Project>
       <Name>Thycotic.MemoryMq</Name>
@@ -230,10 +234,6 @@
     <ProjectReference Include="..\Thycotic.DistributedEngine.Logic\Thycotic.DistributedEngine.Logic.csproj">
       <Project>{74ec374a-729a-4707-8586-32d10cdc3ecc}</Project>
       <Name>Thycotic.DistributedEngine.Logic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility\Thycotic.Utility.csproj">
-      <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
-      <Name>Thycotic.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
