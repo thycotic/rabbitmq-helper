@@ -58,8 +58,14 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -73,9 +79,15 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Thycotic.CLI">
+      <HintPath>..\..\packages\Thycotic.CLI.5.0.0.4\lib\net451\Thycotic.CLI.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Utility">
+      <HintPath>..\..\packages\Thycotic.Utility.5.0.0.3\lib\net451\Thycotic.Utility.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -134,12 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Thycotic.Utility\Thycotic.Utility.csproj">
-      <Project>{05cf5726-55ee-4b49-9820-1acd32b83711}</Project>
-      <Name>Thycotic.Utility</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
