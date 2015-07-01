@@ -41,7 +41,7 @@ namespace Thycotic.InstallerGenerator.Core.Steps
         /// </value>
         public string FilenamePattern { get; set; }
 
-        private readonly ILogWriter _log = Log.Get(typeof(FileRenameStep));
+        private readonly ILogWriter _log = Log.Get(typeof(FileCleanUpStep));
 
         /// <summary>
         /// Executes the step.
