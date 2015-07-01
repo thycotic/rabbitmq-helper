@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.InteractiveRunner", "Thycotic.InstallerGenerator.InteractiveRunner\Thycotic.InstallerGenerator.InteractiveRunner.csproj", "{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}"
 EndProject
@@ -53,11 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thycotic.DistributedEngine.
 		..\Thycotic.DistributedEngine.Service.WiX.32bit\Product.wxs = ..\Thycotic.DistributedEngine.Service.WiX.32bit\Product.wxs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.CLI", "..\Thycotic.CLI\Thycotic.CLI.csproj", "{2DBBC8EC-B150-45C1-82A9-20CCEE768443}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.WiX", "Thycotic.InstallerGenerator.WiX\Thycotic.InstallerGenerator.WiX.csproj", "{3551DAF3-DBCE-4081-8010-E6AE850E7A67}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Utility", "..\Thycotic.Utility\Thycotic.Utility.csproj", "{05CF5726-55EE-4B49-9820-1ACD32B83711}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerRunner", "Thycotic.InstallerRunner\Thycotic.InstallerRunner.csproj", "{43EEDA3A-03BE-4CA1-BB64-C2122E926606}"
 EndProject
@@ -101,14 +97,6 @@ Global
 		{32AD995B-6A60-4136-A015-3E053E205A39}.MSI|Any CPU.Build.0 = Release|Any CPU
 		{32AD995B-6A60-4136-A015-3E053E205A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32AD995B-6A60-4136-A015-3E053E205A39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
-		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.MSI.32Bit|Any CPU.Build.0 = Release|Any CPU
-		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.MSI|Any CPU.ActiveCfg = Release|Any CPU
-		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.MSI|Any CPU.Build.0 = Release|Any CPU
-		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DBBC8EC-B150-45C1-82A9-20CCEE768443}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,14 +105,6 @@ Global
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.MSI|Any CPU.Build.0 = Release|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05CF5726-55EE-4B49-9820-1ACD32B83711}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
-		{05CF5726-55EE-4B49-9820-1ACD32B83711}.MSI.32Bit|Any CPU.Build.0 = Release|Any CPU
-		{05CF5726-55EE-4B49-9820-1ACD32B83711}.MSI|Any CPU.ActiveCfg = Release|Any CPU
-		{05CF5726-55EE-4B49-9820-1ACD32B83711}.MSI|Any CPU.Build.0 = Release|Any CPU
-		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.MSI.32Bit|Any CPU.ActiveCfg = Release.32Bit|Any CPU
