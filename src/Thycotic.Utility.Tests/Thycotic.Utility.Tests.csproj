@@ -177,6 +177,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>JsonObjectSerializer.feature1.cs</LastGenOutput>
     </None>
+    <None Include="NuGet.Config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
