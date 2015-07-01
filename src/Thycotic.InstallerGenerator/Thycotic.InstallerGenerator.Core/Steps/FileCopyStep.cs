@@ -33,7 +33,7 @@ namespace Thycotic.InstallerGenerator.Core.Steps
         /// </value>
         public string SourcePath { get; set; }
 
-        private readonly ILogWriter _log = Log.Get(typeof(FileRenameStep));
+        private readonly ILogWriter _log = Log.Get(typeof(FileCopyStep));
 
         /// <summary>
         /// Executes the step.
