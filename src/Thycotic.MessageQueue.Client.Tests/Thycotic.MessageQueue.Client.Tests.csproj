@@ -156,6 +156,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Utility.5.0.0.3\lib\net451\Thycotic.Utility.dll</HintPath>
     </Reference>
+    <Reference Include="Thycotic.Utility.Tests">
+      <HintPath>..\packages\Thycotic.Utility.Tests.5.0.0.5\lib\net451\Thycotic.Utility.Tests.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -173,14 +176,11 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="IGivenWhenThenTests.cs" />
-    <Compile Include="ISingleClassContractTests.cs" />
     <Compile Include="MessageEncryptorSteps.cs" />
     <Compile Include="ITestConsumerInvoker.cs" />
     <Compile Include="QueueClient\CommonConnectionSteps.cs" />
     <Compile Include="QueueClient\ExchangeNameProviderSteps.cs" />
     <Compile Include="RequestBusSteps.cs" />
-    <Compile Include="TestBase.cs" />
     <Compile Include="TestConsumerInvoker.cs" />
     <Compile Include="TestMqRequestBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
