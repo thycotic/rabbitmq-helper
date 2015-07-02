@@ -180,9 +180,12 @@
     <Compile Include="BlockingConsumerWrapperDummy.cs" />
     <Compile Include="ConsumerWrapperBaseDummy.cs" />
     <Compile Include="ConsumerWrapperBaseSteps.cs" />
+    <Compile Include="IGivenWhenThenTests.cs" />
+    <Compile Include="ISingleClassContractTests.cs" />
     <Compile Include="LeakyOwned.cs" />
     <Compile Include="LifetimeDummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">
@@ -204,10 +207,6 @@
     <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
       <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
       <Name>Thycotic.Messages.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Utility.Tests\Thycotic.Utility.Tests.csproj">
-      <Project>{341587c7-483a-442a-bf23-49d1a5138e57}</Project>
-      <Name>Thycotic.Utility.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
