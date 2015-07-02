@@ -30,11 +30,13 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
             Action = parameters =>
             {
+                _log.Info("Uninstalling prior version of Erlang");
+
                 var executablePath = InstallationConstants.Erlang.UninstallerPath;
 
                 if (!File.Exists(executablePath))
                 {
-                    _log.Debug("No uninstaller found");
+                    _log.Info("No uninstaller found");
                     return 0;
                 }
 
@@ -45,28 +47,29 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
                 const string silent = "/S";
 
-                _log.Info("Uninstalling prior version of Erlang");
-
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 
-                #region Hack
-                if (Directory.Exists(InstallationConstants.Erlang.InstallPath))
+                try
                 {
-                    //rabbit mq uninstaller seems to be async so we need to monitor the install directory until it's empty
-                    while (Directory.Exists(InstallationConstants.Erlang.InstallPath) && Directory.EnumerateFiles(InstallationConstants.Erlang.InstallPath).Any())
-                    {
-                        Task.Delay(TimeSpan.FromSeconds(1)).Wait();
-                    }
 
-                    //one last wait for system to release resources
-                    Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                    const string erlandProcessKill = " /F /IM epmd.exe";
+                    externalProcessRunner.Run("taskkill", workingPath, erlandProcessKill);
                 }
-                #endregion
-
+                catch (Exception ex)
+                {
+                    _log.Warn("Failed to terminate erlang process. Clean removal might fail", ex);
+                }
 
                 var directoryCleaner = new DirectoryCleaner();
 
-                directoryCleaner.Clean(InstallationConstants.Erlang.InstallPath);
+                try
+                {
+                    directoryCleaner.Clean(InstallationConstants.Erlang.InstallPath);
+                }
+                catch (Exception ex)
+                {
+                    _log.Warn("Failed to clean installation path. Clean removal might fail", ex);
+                }
 
                 return 0;
 

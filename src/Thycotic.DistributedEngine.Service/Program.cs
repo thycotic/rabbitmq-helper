@@ -24,7 +24,16 @@ namespace Thycotic.DistributedEngine.Service
                 cli.AddCustomCommand(new RunServiceCommand());
                 cli.AddCustomCommand(new BoostrapUpdateCommand());
 
-                cli.ConsumeInput(string.Join(" ", args));
+                var input = string.Join(" ", args);
+
+                #region Legacy agent default run command
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    input = SupportedSwitches.RunService;
+                }
+                #endregion
+
+                cli.ConsumeInput(input);
 
             }
             catch (Exception ex)

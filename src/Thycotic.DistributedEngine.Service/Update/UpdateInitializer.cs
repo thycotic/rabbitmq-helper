@@ -54,7 +54,7 @@ namespace Thycotic.DistributedEngine.Service.Update
 
            
             var msiPath = Path.Combine(Path.GetTempPath(),
-                string.Format("SSDEUpdate-{0}.msi", Guid.NewGuid().ToString("N")));
+                string.Format("gdesvcupdate.{0}.msi", Guid.NewGuid().ToString("N")));
 
             _updateTask = Task.Factory.StartNew(() =>
             {
@@ -196,8 +196,8 @@ namespace Thycotic.DistributedEngine.Service.Update
                     CreateNoWindow = true,
                     UseShellExecute = true,
                     WorkingDirectory = GetServiceInstallationPath(),
-                    Arguments = string.Format(@"{0} ""{1}""", Program.SupportedSwitches.Boostrap, msiPath)
-                };
+                    Arguments = string.Format(@"{0} -msiPath=""{1}""", Program.SupportedSwitches.Boostrap, msiPath)
+                }; 
 
                 _log.Info(string.Format("Initializing bootstrapper with arguments: {0}", processInfo.Arguments));
 
