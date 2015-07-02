@@ -38,7 +38,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
                 string password;
                 if (!parameters.TryGet("rabbitMqUsername", out username)) return 1;
                 if (!parameters.TryGet("rabbitMqPw", out password)) return 1;
-                
+
                 var externalProcessRunner = new ExternalProcessRunner
                 {
                     EstimatedProcessDuration = TimeSpan.FromSeconds(15)
@@ -48,15 +48,28 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
 
                 var parameters2 = string.Format("add_user {0} {1}", username, password);
 
-                externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
+                try
+                {
+
+                    externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
+                }
+                catch (Exception ex)
+                {
+                    _log.Warn("Failed to create user. Manual creation might be necessary", ex);
+                }
 
                 _log.Info(string.Format("Granting permissions to user {0}", username));
 
                 parameters2 = string.Format("set_permissions -p / {0} \".*\" \".*\" \".*\"", username);
 
-                externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
-
-
+                try
+                {
+                    externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
+                }
+                catch (Exception ex)
+                {
+                    _log.Warn("Failed to grant permissions to user. Manual grant might be necessary", ex);
+                }
 
                 return 0;
 

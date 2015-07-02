@@ -13,7 +13,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
     internal class UninstallPriorRabbitMqCommand : CommandBase, IImmediateCommand
     {
 
-        private readonly ILogWriter _log = Log.Get(typeof (UninstallPriorRabbitMqCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(UninstallPriorRabbitMqCommand));
 
         public override string Area
         {
@@ -30,11 +30,13 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
             Action = parameters =>
             {
+                _log.Info("Uninstalling prior version of RabbitMq");
+
                 var executablePath = InstallationConstants.RabbitMq.UninstallerPath;
 
                 if (!File.Exists(executablePath))
                 {
-                    _log.Debug("No uninstaller found");
+                    _log.Info("No uninstaller found");
                     return 0;
                 }
 
@@ -44,8 +46,6 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                 var workingPath = directoryInfo.DirectoryName;
 
                 const string silent = "/S";
-
-                _log.Info("Uninstalling prior version of RabbitMq");
 
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 
@@ -66,9 +66,25 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
                 var directoryCleaner = new DirectoryCleaner();
 
-                directoryCleaner.Clean(InstallationConstants.RabbitMq.InstallPath);
+                try
+                {
 
-                directoryCleaner.Clean(InstallationConstants.RabbitMq.ConfigurationPath);
+                    directoryCleaner.Clean(InstallationConstants.RabbitMq.InstallPath);
+                }
+                catch (Exception ex)
+                {
+                    _log.Warn("Failed to clean installation path. Clean removal might fail", ex);
+                }
+
+                try
+                {
+                    directoryCleaner.Clean(InstallationConstants.RabbitMq.ConfigurationPath);
+                }
+                catch (Exception ex)
+                {
+                    _log.Warn("Failed to clean configuration path. Clean removal might fail", ex);
+                }
+
 
                 return 0;
             };

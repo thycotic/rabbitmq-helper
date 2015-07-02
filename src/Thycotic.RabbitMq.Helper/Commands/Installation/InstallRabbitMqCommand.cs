@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Thycotic.CLI.Commands;
 using Thycotic.CLI.OS;
 using Thycotic.Logging;
@@ -59,6 +60,9 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                 _log.Info("Installing RabbitMq, please wait...");
 
                 externalProcessRunner.Run(executablePath, workingPath, silent);
+
+                _log.Info("Letting RabbitMq start up, please wait...");
+                Task.Delay(TimeSpan.FromSeconds(10)).Wait();
 
                 return 0;
             };
