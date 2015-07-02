@@ -159,9 +159,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="DummyObject.cs" />
     <Compile Include="GivenWhenThenTests.cs" />
     <Compile Include="ISingleClassContractTests.cs" />
