@@ -176,7 +176,7 @@
     </None>
     <None Include="NuGet.Config" />
     <None Include="packages.config" />
-    <None Include="Thycotic.Utility.nuspec" />
+    <None Include="Thycotic.Utility.Tests.nuspec" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
