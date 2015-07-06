@@ -67,11 +67,11 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                                                 {
                                                     new OutputCommandFragment
                                                     {
-                                                        Output = "Configuring RabbitMq with ecryption support"
+                                                        Output = "Configuring RabbitMq with encryption support"
                                                     },
                                                     container.Resolve<ConvertCaCerToPemCommand>(),
                                                     container.Resolve<ConvertPfxToPemCommand>(),
-                                                    container.Resolve<CopyRabbitMqExampleConfigFileCommand>(),
+                                                    container.Resolve<CopyRabbitMqExampleSslConfigFileCommand>(),
                                                     container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
                                                     container.Resolve<EnableRabbitManagementPlugin>(),
@@ -85,6 +85,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                                             {
                                                 Steps = new ICommandFragment[]
                                                 {
+                                                    container.Resolve<CopyRabbitMqExampleNonSslConfigFileCommand>(),
                                                     container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
                                                     container.Resolve<EnableRabbitManagementPlugin>(),

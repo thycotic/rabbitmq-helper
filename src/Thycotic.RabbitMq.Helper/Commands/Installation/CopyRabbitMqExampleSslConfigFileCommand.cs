@@ -8,7 +8,7 @@ using Thycotic.RabbitMq.Helper.Commands;
 
 namespace Thycotic.RabbitMq.Helper.Installation
 {
-    internal class CopyRabbitMqExampleConfigFileCommand : CommandBase, IImmediateCommand
+    internal class CopyRabbitMqExampleSslConfigFileCommand : CommandBase, IImmediateCommand
     {
 
         private static class TokenNames
@@ -18,7 +18,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
             public const string PathToKey = "%THYCOTIC_PATHTOKEY%";
         }
 
-        private readonly ILogWriter _log = Log.Get(typeof(CopyRabbitMqExampleConfigFileCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(CopyRabbitMqExampleSslConfigFileCommand));
 
         public override string Area
         {
@@ -30,7 +30,7 @@ namespace Thycotic.RabbitMq.Helper.Installation
             get { return "Copies RabbitMq example configuration file"; }
         }
 
-        public CopyRabbitMqExampleConfigFileCommand()
+        public CopyRabbitMqExampleSslConfigFileCommand()
         {
 
             Action = parameters =>

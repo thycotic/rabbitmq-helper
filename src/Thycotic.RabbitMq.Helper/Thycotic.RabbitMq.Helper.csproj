@@ -86,11 +86,12 @@
     <Compile Include="Commands\Installation\Choice\ErlangLicenseChoiceConsoleCommandFragment.cs" />
     <Compile Include="Commands\Installation\Choice\RabbitMqLicenseChoiceConsoleCommandFragment.cs" />
     <Compile Include="Commands\Installation\Choice\SslChoiceConsoleCommandFragment.cs" />
+    <Compile Include="Commands\Installation\CopyRabbitMqExampleNonSslConfigFileCommand.cs" />
     <Compile Include="Commands\Installation\UninstallConnectorCommand.cs" />
     <Compile Include="Commands\Installation\SetErlangHomeEnvironmentalVariableCommand.cs" />
     <Compile Include="Commands\Management\EnableRabbitManagementPlugin.cs" />
     <Compile Include="Commands\Management\AddRabbitMqUserCommand.cs" />
-    <Compile Include="Commands\Installation\CopyRabbitMqExampleConfigFileCommand.cs" />
+    <Compile Include="Commands\Installation\CopyRabbitMqExampleSslConfigFileCommand.cs" />
     <Compile Include="Commands\Installation\CreateRabbitMqConfigDirectoryCommand.cs" />
     <Compile Include="Commands\Installation\InstallationConstants.cs" />
     <Compile Include="Commands\Installation\InstallConnectorCommand.cs" />
@@ -112,6 +113,7 @@
     </None>
     <None Include="App.config" />
     <EmbeddedResource Include="Content\RabbitMq\3.5.3\Ssl\rabbitmq.config.erlang" />
+    <EmbeddedResource Include="Content\RabbitMq\3.5.3\NonSsl\rabbitmq.config.erlang" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
