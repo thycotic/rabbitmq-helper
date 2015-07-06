@@ -123,6 +123,9 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -155,6 +158,9 @@
       <HintPath>..\packages\Thycotic.Utility.5.0.0.3\lib\net451\Thycotic.Utility.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Thycotic.Utility.Tests">
+      <HintPath>..\packages\Thycotic.Utility.Tests.5.0.0.5\lib\net451\Thycotic.Utility.Tests.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -168,11 +174,8 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="IGivenWhenThenTests.cs" />
-    <Compile Include="ISingleClassContractTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceUpdaterTests.cs" />
-    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.WindowsService.Bootstraper\Thycotic.WindowsService.Bootstraper.csproj">
