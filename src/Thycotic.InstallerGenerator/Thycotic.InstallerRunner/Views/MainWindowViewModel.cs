@@ -203,7 +203,7 @@ namespace Thycotic.InstallerRunner.Views
 
             try
             {
-
+                processRunner.EstimatedProcessDuration = TimeSpan.FromMinutes(10);
                 processRunner.Run(processInfo);
 
                 _log.Info("Installation completed");
