@@ -40,7 +40,7 @@ namespace Thycotic.MessageQueue.Client
         /// <returns></returns>
         public byte[] Encrypt(string exchangeName, byte[] body)
         {
-            Contract.Requires<ArgumentException>(!string.IsNullOrEmpty(exchangeName));
+            Contract.Requires<ArgumentException>(exchangeName != null);
             Contract.Requires<ArgumentException>(body != null);
 
             return default(byte[]);
@@ -54,7 +54,7 @@ namespace Thycotic.MessageQueue.Client
         /// <returns></returns>
         public byte[] Decrypt(string exchangeName, byte[] body)
         {
-            Contract.Requires<ArgumentException>(!string.IsNullOrEmpty(exchangeName));
+            Contract.Requires<ArgumentException>(exchangeName != null);
             Contract.Requires<ArgumentException>(body != null);
 
             return default(byte[]);

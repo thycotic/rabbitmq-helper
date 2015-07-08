@@ -166,7 +166,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="exchangeType">Type of the exchange.</param>
         public void ExchangeDeclare(string exchangeName, string exchangeType)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(exchangeName));
+            Contract.Requires<ArgumentNullException>(exchangeName != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(exchangeType));
 
         }
@@ -231,7 +231,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         public void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(exchange));
+            Contract.Requires<ArgumentNullException>(exchange != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
         }
 
@@ -245,7 +245,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="requeue">if set to <c>true</c> [requeue].</param>
         public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(exchange));
+            Contract.Requires<ArgumentNullException>(exchange != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
         }
 
@@ -282,7 +282,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(queueName));
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(exchangeName));
+            Contract.Requires<ArgumentNullException>(exchangeName != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
         }
 
