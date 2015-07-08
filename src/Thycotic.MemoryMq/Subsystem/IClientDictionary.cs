@@ -49,7 +49,6 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
             Contract.ValueAtReturn(out clientProxy);
-            Contract.Ensures(Contract.Result<bool>() && clientProxy != null);
 
             return default(bool);
         }
