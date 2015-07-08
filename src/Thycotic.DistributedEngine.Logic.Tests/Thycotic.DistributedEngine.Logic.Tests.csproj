@@ -149,8 +149,8 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.216\lib\net451\Jscape.Ssh.dll</HintPath>
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.231\lib\net451\Jscape.Ssh.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -217,9 +217,9 @@
     <Reference Include="Thycotic.Discovery.Sources">
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.120\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.352\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.354, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.354\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.9\lib\net451\Thycotic.Encryption.dll</HintPath>
@@ -244,9 +244,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.193, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.216\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.231, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.231\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>

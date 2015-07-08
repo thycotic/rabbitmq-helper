@@ -182,7 +182,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="body">The body.</param>
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, ICommonModelProperties properties, byte[] body)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(exchangeName));
+            Contract.Requires<ArgumentNullException>(exchangeName != null);
             Contract.Requires<ArgumentNullException>(properties!=null);
             Contract.Requires<ArgumentNullException>(body!=null);
         }
