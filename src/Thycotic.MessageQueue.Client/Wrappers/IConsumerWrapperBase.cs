@@ -85,7 +85,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             //TODO: Dobri to fix!
             //Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(consumerTag));
             //Contract.Requires<ArgumentException>(deliveryTag >= 0); //no needed since ulong
-            Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(exchange));
+            Contract.Requires<ArgumentException>(exchange != null);
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(routingKey));
             Contract.Requires<ArgumentException>(properties != null);
             Contract.Requires<ArgumentException>(body != null);

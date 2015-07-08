@@ -43,7 +43,7 @@ namespace Thycotic.MessageQueue.Client
         /// <param name="persistent">if set to <c>true</c> [persistent].</param>
         public void BasicPublish(string exchangeName, IBasicConsumable request, bool persistent = true)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(exchangeName));
+            Contract.Requires<ArgumentNullException>(exchangeName != null);
             Contract.Requires<ArgumentNullException>(request != null);
         }
 
@@ -57,7 +57,7 @@ namespace Thycotic.MessageQueue.Client
         /// <returns></returns>
         public TResponse BlockingPublish<TResponse>(string exchangeName, IBlockingConsumable request, int timeoutSeconds)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(exchangeName));
+            Contract.Requires<ArgumentNullException>(exchangeName != null);
             Contract.Requires<ArgumentNullException>(request != null);
             Contract.Requires<ArgumentException>(timeoutSeconds > 0);
 
