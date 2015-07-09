@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Net;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
@@ -19,6 +20,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <param name="connectionString">The connection string.</param>
         public UpdateWebClient(string connectionString)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(connectionString));
             _connectionString = connectionString;
         }
 

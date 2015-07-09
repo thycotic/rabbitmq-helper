@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.Contracts;
 using Thycotic.Encryption;
 using Thycotic.Logging;
 
@@ -22,6 +23,7 @@ namespace Thycotic.DistributedEngine.Service.Security
         /// <param name="initializationVector">The initialization vector.</param>
         public bool TryAddKey(string exchangeName, SymmetricKey symmetricKey, InitializationVector initializationVector)
         {
+            Contract.Requires<ArgumentNullException>(exchangeName != null);
             _log.Info(string.Format("Adding symmetric key and initialization vector for {0} exchange", exchangeName));
 
             return _encryptionPairs.TryAdd(exchangeName, new SymmetricKeyPair

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,13 +41,16 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// <param name="recentLogEntryProvider">The recent log entry provider.</param>
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         /// <param name="responseBus">The rest communication provider.</param>
-        public LogRunner(IRecentLogEntryProvider recentLogEntryProvider, 
-            IEngineIdentificationProvider engineIdentificationProvider, 
+        public LogRunner(IRecentLogEntryProvider recentLogEntryProvider,
+            IEngineIdentificationProvider engineIdentificationProvider,
             IResponseBus responseBus)
         {
+            Contract.Requires<ArgumentNullException>(recentLogEntryProvider != null);
+            Contract.Requires<ArgumentNullException>(engineIdentificationProvider != null);
+            Contract.Requires<ArgumentNullException>(responseBus != null);
             _recentLogEntryProvider = recentLogEntryProvider;
             _engineIdentificationProvider = engineIdentificationProvider;
-            _responseBus = responseBus;            
+            _responseBus = responseBus;
         }
 
         private void Pump()
@@ -70,14 +74,14 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             //clear the recent log entries
             _log.Debug("Clearing log entries from provider");
             _recentLogEntryProvider.Clear();
-            
+
             _log.Debug(string.Format("Breaking log dump into batches of {0}", BufferSize));
 
             var batches = logEntries.Count / BufferSize;
 
             //there isn't a full batch left, send it anyway
             if (logEntries.Count % BufferSize > 0) batches++;
-            
+
             Enumerable.Range(0, batches).ToList().ForEach(i =>
             {
                 var batch = logEntries.Skip(i * BufferSize).Take(BufferSize).ToArray();
@@ -140,6 +144,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// </summary>
         public void Dispose()
         {
+            Contract.Assume(_pumpTask != null);
             _log.Info("Log runner is stopping...");
 
             _cts.Cancel();

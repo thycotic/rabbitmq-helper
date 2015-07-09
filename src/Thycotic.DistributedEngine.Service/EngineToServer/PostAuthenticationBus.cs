@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics.Contracts;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -41,6 +43,10 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
             : base(engineToServerConnectionManager)
         {
+            Contract.Requires<ArgumentNullException>(engineToServerConnectionManager != null);
+            Contract.Requires<ArgumentNullException>(objectSerializer != null);
+            Contract.Requires<ArgumentNullException>(authenticatedCommunicationKeyProvider != null);
+            Contract.Requires<ArgumentNullException>(authenticatedCommunicationRequestEncryptor != null);
             _objectSerializer = objectSerializer;
             _authenticatedCommunicationKeyProvider = authenticatedCommunicationKeyProvider;
             _authenticatedCommunicationRequestEncryptor = authenticatedCommunicationRequestEncryptor;
@@ -55,6 +61,8 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <returns></returns>
         protected SymmetricEnvelope WrapRequest(object response)
         {
+            Contract.Ensures(Contract.Result<Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes.SymmetricEnvelope>() != null);
+            Contract.Ensures(Contract.Result<Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes.SymmetricEnvelopeNeedingResponse>() != null);
             var requestString = _objectSerializer.ToBytes(response);
 
             return new SymmetricEnvelope

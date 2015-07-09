@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography.X509Certificates;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes;
@@ -41,6 +42,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor) 
             : base(engineToServerConnectionManager)
         {
+            Contract.Requires<ArgumentNullException>(engineToServerConnectionManager != null);
             _objectSerializer = objectSerializer;
             _authenticationKeyProvider = authenticationKeyProvider;
             _authenticationRequestEncryptor = authenticationRequestEncryptor;

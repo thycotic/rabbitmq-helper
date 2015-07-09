@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Threading;
 using Thycotic.DistributedEngine.Service.Update;
@@ -33,6 +34,8 @@ namespace Thycotic.DistributedEngine.Service
         /// <param name="msiPath">The msi path.</param>
         public void Bootstrap(string msiPath)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(msiPath));
+            
             InterceptChildProcess();
 
             Trace.TraceInformation("Configuring bootstrap logging...");

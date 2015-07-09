@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Reflection;
 using System.Security.Principal;
@@ -30,6 +31,7 @@ namespace Thycotic.DistributedEngine.Service
         /// <param name="engineIdentificationProvider">The engine identification provider.</param>
         public StartupMessageWriter(IEngineIdentificationProvider engineIdentificationProvider)
         {
+            Contract.Requires<ArgumentNullException>(engineIdentificationProvider != null);
             _engineIdentificationProvider = engineIdentificationProvider;
         }
 

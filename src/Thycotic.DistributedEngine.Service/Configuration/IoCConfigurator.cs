@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Autofac;
 using Thycotic.CLI.Configuration;
@@ -119,6 +120,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// <param name="builder">The builder.</param>
         protected void RegisterCore(ContainerBuilder builder)
         {
+            Contract.Requires<ArgumentNullException>(builder != null);
             builder.Register(context => AuthenticationKeyProvider).As<IAuthenticationKeyProvider>().SingleInstance();
             builder.Register(context => IdentityGuidProvider).As<IIdentityGuidProvider>().SingleInstance();
 
@@ -187,7 +189,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
         protected virtual void RegisterPostAuthorization(ContainerBuilder builder, EngineService engineService, bool startConsuming)
         {
-            
+
             builder.RegisterModule(new LicensingModule(_thycoticKeys, _thirdPartyKeys));
 
             builder.RegisterModule(new EngineToServerModule(GetInstanceConfiguration, engineService));
@@ -336,7 +338,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 };
 
                 var response = engineConfigurationBus.GetConfiguration(request);
-                
+
                 if (!response.Success)
                 {
                     throw new ConfigurationErrorsException(response.ErrorMessage);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,6 +44,11 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             IResponseBus responseBus,
             IUpdateInitializer updateInitializer)
         {
+            Contract.Requires<ArgumentNullException>(heartbeatConfigurationProvider != null);
+            Contract.Requires<ArgumentNullException>(engineService != null);
+            Contract.Requires<ArgumentNullException>(engineIdentificationProvider != null);
+            Contract.Requires<ArgumentNullException>(responseBus != null);
+            Contract.Requires<ArgumentNullException>(updateInitializer != null);
             _heartbeatConfigurationProvider = heartbeatConfigurationProvider;
             _engineService = engineService;
             _engineIdentificationProvider = engineIdentificationProvider;
@@ -52,6 +58,8 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
 
         private void Pump()
         {
+            Contract.Assume(ReleaseInformationHelper.Version != null);
+
             if (_cts.IsCancellationRequested)
             {
                 return;
@@ -141,6 +149,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// </summary>
         public void Dispose()
         {
+            Contract.Assume(_pumpTask != null);
             _log.Info("Heartbeat runner is stopping...");
 
             _cts.Cancel();

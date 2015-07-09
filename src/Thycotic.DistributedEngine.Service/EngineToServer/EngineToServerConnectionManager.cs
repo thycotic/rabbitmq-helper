@@ -25,6 +25,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <param name="useSsl"></param>
         public EngineToServerConnectionManager(string connectionStrings, bool useSsl)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(connectionStrings));
             _connectionStrings = connectionStrings.Split(';');
             _useSsl = useSsl;
         }
@@ -106,7 +107,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <returns></returns>
         public virtual IEngineToServerConnection GetConnection(int index = 0)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(index < 0);
+            Contract.Requires<ArgumentOutOfRangeException>(0 <= index);
             return new EngineToServerConnection(_connectionStrings[index], _useSsl);
         }
 

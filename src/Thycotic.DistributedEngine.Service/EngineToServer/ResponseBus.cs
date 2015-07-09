@@ -34,6 +34,10 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
             : base(engineToServerConnectionManager, objectSerializer, authenticatedCommunicationKeyProvider, authenticatedCommunicationRequestEncryptor)
         {
+            Contract.Requires<ArgumentNullException>(engineToServerConnectionManager != null);
+            Contract.Requires<ArgumentNullException>(objectSerializer != null);
+            Contract.Requires<ArgumentNullException>(authenticatedCommunicationKeyProvider != null);
+            Contract.Requires<ArgumentNullException>(authenticatedCommunicationRequestEncryptor != null);
         }
 
         /// <summary>
