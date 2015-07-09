@@ -1,4 +1,6 @@
+using System;
 using System.Configuration;
+using System.Diagnostics.Contracts;
 using Autofac;
 using Thycotic.CLI.Configuration;
 using Thycotic.Logging;
@@ -12,10 +14,11 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
     public class IoCConfigurator : IIoCConfigurator
     {
         //private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
-        
+
         // ReSharper disable once UnusedParameter.Local
         private static string GetOptionalLocalConfiguration(string name, bool throwIfNotFound)
         {
+            Contract.Assume(CommandLineConfigurationManager.AppSettings != null);
             var value = CommandLineConfigurationManager.AppSettings[name];
 
             if (string.IsNullOrWhiteSpace(value))
@@ -53,7 +56,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
         /// <param name="builder">The builder.</param>
         protected virtual void RegisterPreAuthorization(ContainerBuilder builder)
         {
-           //nothing here
+            //nothing here
         }
 
         /// <summary>
@@ -81,7 +84,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
                 RegisterCore(builder);
 
                 RegisterPreAuthorization(builder);
-                
+
                 return builder.Build();
             }
         }
@@ -94,15 +97,17 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
         /// <returns></returns>
         public IContainer BuildAll(SiteConnectorService pipelineService)
         {
+            Contract.Ensures(Contract.Result<IContainer>() != null);
             using (LogContext.Create("IoC - All"))
             {
                 // Create the builder with which components/services are registered.
+
                 var builder = new ContainerBuilder();
 
                 builder.RegisterType<StartupMessageWriter>().As<IStartable>().SingleInstance();
 
                 RegisterCore(builder);
-                
+
                 RegisterPreAuthorization(builder);
 
                 RegisterPostAuthorization(builder, pipelineService);

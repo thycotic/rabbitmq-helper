@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
@@ -33,7 +34,6 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             IAuthenticatedCommunicationRequestEncryptor authenticatedCommunicationRequestEncryptor)
             : base(engineToServerConnectionManager, objectSerializer, authenticatedCommunicationKeyProvider, authenticatedCommunicationRequestEncryptor)
         {
-
         }
 
         /// <summary>

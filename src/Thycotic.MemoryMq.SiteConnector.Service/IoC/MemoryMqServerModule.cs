@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using Autofac;
 using Thycotic.Logging;
 using Thycotic.Utility;
@@ -15,11 +16,13 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.IoC
 
         public MemoryMqServerModule(Func<string, string> configurationProvider)
         {
+            Contract.Assume(_log != null);
             _configurationProvider = configurationProvider;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
+            Contract.Requires<ArgumentNullException>(builder != null);
             base.Load(builder);
 
             using (LogContext.Create("MemoryMq Service"))
@@ -29,7 +32,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.IoC
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
                 ValidConnectionString(connectionString);
-                
+
                 _log.Debug("Initializing Memory Mq server...");
 
                 var useSsl =

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using System.ServiceModel;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.Logic.Update;
@@ -105,6 +106,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <returns></returns>
         public virtual IEngineToServerConnection GetConnection(int index = 0)
         {
+            Contract.Requires<ArgumentOutOfRangeException>(index < 0);
             return new EngineToServerConnection(_connectionStrings[index], _useSsl);
         }
 

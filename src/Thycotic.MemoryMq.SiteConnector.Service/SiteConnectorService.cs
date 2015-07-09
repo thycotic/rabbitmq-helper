@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using Thycotic.CLI.Configuration;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.SiteConnector.Service.Configuration;
 
@@ -48,6 +50,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
         public SiteConnectorService(IIoCConfigurator ioCConfigurator)
         {
             IoCConfigurator = ioCConfigurator;
+            Contract.Assume(_log != null);
             ConfigureLogging();
         }
 
@@ -71,6 +74,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
             try
             {
                 // BuildAll the container to finalize registrations and prepare for object resolution.
+                Contract.Assume(IoCConfigurator != null);
                 _ioCContainer = IoCConfigurator.BuildAll(this);
 
                 //notify any hooks that IoC is configured
@@ -119,6 +123,8 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
             ResetIoCContainer();
 
             var configured = false;
+
+            Contract.Assume(_runningTokenSource != null);
 
             Task.Factory.StartNew(() =>
             {

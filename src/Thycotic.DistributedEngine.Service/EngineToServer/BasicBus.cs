@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.Logic.Update;
 using Thycotic.Logging;
@@ -18,6 +19,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <param name="engineToServerConnectionManager"></param>
         protected BasicBus(IEngineToServerConnectionManager engineToServerConnectionManager)
         {
+            Contract.Requires<ArgumentNullException>(engineToServerConnectionManager != null);
             _engineToServerConnectionManager = engineToServerConnectionManager;
         }
 
