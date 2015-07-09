@@ -206,13 +206,13 @@
       <HintPath>..\packages\Thycotic.CLI.5.0.0.4\lib\net451\Thycotic.CLI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Logging">
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.205, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.205\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Utility">
-      <HintPath>..\packages\Thycotic.Utility.5.0.0.3\lib\net451\Thycotic.Utility.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Utility, Version=5.0.0.11, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Utility.5.0.0.11\lib\net451\Thycotic.Utility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
