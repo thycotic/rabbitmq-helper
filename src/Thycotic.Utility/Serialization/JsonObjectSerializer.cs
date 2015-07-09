@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics.Contracts;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -22,7 +24,9 @@ namespace Thycotic.Utility.Serialization
         public TRequest ToObject<TRequest>(byte[] bytes)
         {
             //TODO: Blow up if you can't deserialize!!!!
-            return JsonConvert.DeserializeObject<TRequest>(Encoding.UTF8.GetString(bytes), _serializerSettings);
+            var str = Encoding.UTF8.GetString(bytes);
+
+            return JsonConvert.DeserializeObject<TRequest>(str, _serializerSettings);
         }
 
         /// <summary>
@@ -33,7 +37,9 @@ namespace Thycotic.Utility.Serialization
         public object ToObject(byte[] bytes)
         {
             //TODO: Blow up if you can't deserialize!!!!
-            return JsonConvert.DeserializeObject<object>(Encoding.UTF8.GetString(bytes), _serializerSettings);
+            var str = Encoding.UTF8.GetString(bytes);
+
+            return JsonConvert.DeserializeObject<object>(str, _serializerSettings);
         }
 
         /// <summary>
@@ -43,7 +49,17 @@ namespace Thycotic.Utility.Serialization
         /// <returns></returns>
         public byte[] ToBytes(object message)
         {
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message, Formatting.None, _serializerSettings));
+            var serialized = JsonConvert.SerializeObject(message, Formatting.None, _serializerSettings);
+
+            if (string.IsNullOrWhiteSpace(serialized))
+            {
+                throw new ApplicationException("Could not serialize");
+            }
+
+            Contract.Assume(serialized != null);
+            Contract.Assume(!string.IsNullOrWhiteSpace(serialized));
+
+            return Encoding.UTF8.GetBytes(serialized);
         }
     }
 }

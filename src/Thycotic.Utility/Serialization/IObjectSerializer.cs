@@ -1,8 +1,12 @@
-﻿namespace Thycotic.Utility.Serialization
+﻿using System;
+using System.Diagnostics.Contracts;
+
+namespace Thycotic.Utility.Serialization
 {
     /// <summary>
     /// Interface for a message serializer
     /// </summary>
+    [ContractClass(typeof(ObjectSerializerContract))]
     public interface IObjectSerializer
     {
         /// <summary>
@@ -26,5 +30,30 @@
         /// <param name="message">The message.</param>
         /// <returns></returns>
         byte[] ToBytes(object message);
+    }
+
+    [ContractClassFor(typeof(IObjectSerializer))]
+    public abstract class ObjectSerializerContract : IObjectSerializer
+    {
+        public TRequest ToObject<TRequest>(byte[] bytes)
+        {
+            Contract.Requires<ArgumentNullException>(bytes != null);
+
+            return default(TRequest);
+        }
+
+        public object ToObject(byte[] bytes)
+        {
+            Contract.Requires<ArgumentNullException>(bytes != null);
+
+            return default(object);
+        }
+
+        public byte[] ToBytes(object message)
+        {
+            Contract.Requires<ArgumentNullException>(message != null);
+
+            return default(byte[]);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Thycotic.Utility
+﻿using System.Diagnostics.Contracts;
+
+namespace Thycotic.Utility
 {
     /// <summary>
     /// DNS specific helpers
@@ -11,8 +13,17 @@
         /// <returns></returns>
         public static string GetDnsHostName()
         {
-            //HACK: Omg ugly
-            return System.Net.Dns.GetHostEntry("LocalHost").HostName;
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+            var hostEntry = System.Net.Dns.GetHostEntry("LocalHost");
+
+            Contract.Assume(hostEntry != null);
+
+            var hostname = hostEntry.HostName;
+
+            Contract.Assume(!string.IsNullOrEmpty(hostname));
+            return hostname;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Thycotic.Utility.Reflection
@@ -17,6 +18,8 @@ namespace Thycotic.Utility.Reflection
         /// <returns></returns>
         public static bool IsAssignableToGenericType(this Type givenType, Type genericType)
         {
+            Contract.Requires<ArgumentNullException>(givenType != null);
+
             var interfaceTypes = givenType.GetInterfaces();
 
             if (interfaceTypes.Any(it => it.IsGenericType && it.GetGenericTypeDefinition() == genericType))

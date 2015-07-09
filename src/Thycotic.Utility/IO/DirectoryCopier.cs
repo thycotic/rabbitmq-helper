@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.IO;
+using System.Runtime.Remoting.Contexts;
 
 namespace Thycotic.Utility.IO
 {
@@ -18,6 +21,9 @@ namespace Thycotic.Utility.IO
         /// + sourcePath</exception>
         public void Copy(string sourcePath, string destinationPath, bool recursive, bool overwrite = false)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(sourcePath));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(destinationPath));
+
 
             // get the subdirectories for the specified directory.
             var dir = new DirectoryInfo(sourcePath);
@@ -41,6 +47,9 @@ namespace Thycotic.Utility.IO
             foreach (var file in files)
             {
                 var temppath = Path.Combine(destinationPath, file.Name);
+
+                Contract.Assume(temppath != null);
+
                 file.CopyTo(temppath, overwrite);
             }
 
