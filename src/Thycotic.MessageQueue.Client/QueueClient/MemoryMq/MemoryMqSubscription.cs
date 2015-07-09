@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.MemoryMq;
@@ -21,16 +22,21 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="server">The model.</param>
         /// <param name="callback">The callback.</param>
-         public MemoryMqSubscription(string queueName, IMemoryMqWcfService server, MemoryMqWcfServiceCallback callback)
+        public MemoryMqSubscription(string queueName, IMemoryMqWcfService server, MemoryMqWcfServiceCallback callback)
         {
+            Contract.Requires<ArgumentNullException>(queueName != null);
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
+            Contract.Requires<ArgumentNullException>(server != null);
+            Contract.Requires<ArgumentNullException>(callback != null);
+
             _server = server;
             _callback = callback;
             _queueName = queueName;
         }
 
-         /// <summary>
-         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-         /// </summary>
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
         }
@@ -41,7 +47,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <value>
         /// The name of the queue.
         /// </value>
-        public string QueueName {get { return _queueName; }
+        public string QueueName
+        {
+            get { return _queueName; }
         }
         /// <summary>
         /// </summary>
@@ -62,10 +70,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             };
 
             var routingKey = _queueName;
-            
+
             _server.QueueBind(_queueName, string.Empty, routingKey);
 
-          
+
 
             var task = Task.Factory.StartNew(() =>
             {
@@ -82,12 +90,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 response = null;
                 return false;
             }
+            else
+            {
+                response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, eventArgs.DeliveryTag,
+                    eventArgs.Redelivered, eventArgs.Exchange,
+                    eventArgs.RoutingKey, new MemoryMqModelProperties(eventArgs.Properties), eventArgs.Body);
 
-            response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, eventArgs.DeliveryTag, eventArgs.Redelivered, eventArgs.Exchange,
-                eventArgs.RoutingKey, new MemoryMqModelProperties(eventArgs.Properties), eventArgs.Body);
-            
-            return true;
-        
+                return true;
+            }
+
         }
     }
 }

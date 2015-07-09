@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Serialization;
@@ -25,6 +26,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="messageEncryptor">The message encryptor.</param>
         public RequestBus(ICommonConnection connection, IObjectSerializer objectSerializer, IMessageEncryptor messageEncryptor)
         {
+            Contract.Requires<ArgumentNullException>(connection != null);
+            Contract.Requires<ArgumentNullException>(objectSerializer != null); 
+            Contract.Requires<ArgumentNullException>(messageEncryptor != null);
+
             _connection = connection;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
@@ -90,7 +95,12 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             {
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
-                    using (var subscription = channel.CreateSubscription(channel.QueueDeclare().QueueName))
+                    var queueName = channel.QueueDeclare().QueueName;
+
+                    //TODO: Not sure about this one... Should revisit -dkk
+                    Contract.Assume(!string.IsNullOrWhiteSpace(queueName));
+
+                    using (var subscription = channel.CreateSubscription(queueName))
                     {
                         var properties = channel.CreateBasicProperties();
                         properties.CorrelationId = Guid.NewGuid().ToString();
@@ -114,6 +124,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient
                         {
                             throw new ApplicationException("Blocking call was disconnected");
                         }
+
+                        //TODO: Not sure about this one... Should revisit -dkk
+                        Contract.Assume(response.BasicProperties != null);
+
                         if (response.BasicProperties.CorrelationId != properties.CorrelationId)
                         {
                             throw new ApplicationException("CorrelationId mismatch");

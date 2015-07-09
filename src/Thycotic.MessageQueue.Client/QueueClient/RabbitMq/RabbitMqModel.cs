@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using RabbitMQ.Client;
 using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.MessageQueue.Client.Wrappers.Proxies;
@@ -40,18 +41,33 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         #region Mapping
         private ICommonQueue Map(QueueDeclareOk rawQueue)
         {
+            Contract.Requires<ArgumentNullException>(rawQueue != null);
+
+            Contract.Ensures(Contract.Result<ICommonQueue>() != null);
+
             return new RabbitMqQueue(rawQueue);
         }
 
         private ICommonModelProperties Map(IBasicProperties properties)
         {
+            Contract.Requires<ArgumentNullException>(properties != null);
+
+            Contract.Ensures(Contract.Result<ICommonModelProperties>() != null);
+
             return new RabbitMqModelProperties(properties);
         }
         #endregion
         
         public ICommonModelProperties CreateBasicProperties()
         {
-            return Map(_rawModel.CreateBasicProperties());
+            var rawProperties = _rawModel.CreateBasicProperties();
+
+            if (rawProperties == null)
+            {
+                throw new ApplicationException("Raw model could not be created");
+            }
+
+            return Map(rawProperties);
         }
 
         public void ConfirmSelect()
@@ -94,7 +110,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 
         public ICommonQueue QueueDeclare()
         {
-            return Map(_rawModel.QueueDeclare());
+            var rawQueue = _rawModel.QueueDeclare();
+            if (rawQueue == null)
+            {
+                throw new ApplicationException("Raw queue could not be declared");
+            }
+
+            return Map(rawQueue);
         }
 
         public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)

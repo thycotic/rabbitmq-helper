@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using Thycotic.Logging;
@@ -28,6 +29,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="callback">The callback.</param>
         public MemoryMqModel(IMemoryMqWcfService server, MemoryMqWcfServiceCallback callback)
         {
+            Contract.Requires<ArgumentNullException>(server != null);
+            Contract.Requires<ArgumentNullException>(callback != null);
+
             _server = server;
             _callback = callback;
 
@@ -55,7 +59,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <value>
         /// The raw value.
         /// </value>
-        public object RawValue { get { return null; } }
+        public object RawValue {
+            get
+            {
+                Contract.Ensures(Contract.Result<object>() == null);
+
+                //there is no raw model
+                return null;
+            } }
 
 
         /// <summary>

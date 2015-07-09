@@ -1,4 +1,6 @@
-﻿using Thycotic.Utility;
+﻿using System;
+using System.Diagnostics.Contracts;
+using Thycotic.Utility;
 
 namespace Thycotic.MessageQueue.Client
 {
@@ -14,7 +16,14 @@ namespace Thycotic.MessageQueue.Client
         /// <returns></returns>
         public static string GetLocalMemoryMqConnectionString(int portNumber = DefaultPorts.MemoryMq.NonSsl)
         {
-            return GetMemoryMqConnectionString(DnsEx.GetDnsHostName(), portNumber);
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+            var hostName = DnsEx.GetDnsHostName();
+
+            Contract.Assume(!string.IsNullOrWhiteSpace(hostName));
+
+            return GetMemoryMqConnectionString(hostName, portNumber);
         }
 
         /// <summary>
@@ -24,7 +33,14 @@ namespace Thycotic.MessageQueue.Client
         /// <returns></returns>
         public static string GetLocalRabbitMqConnectionString(int portNumber = DefaultPorts.RabbitMq.NonSsl)
         {
-            return GetRabbitMqConnectionString(DnsEx.GetDnsHostName(), portNumber);
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+            var hostName = DnsEx.GetDnsHostName();
+
+            Contract.Assume(!string.IsNullOrWhiteSpace(hostName));
+
+            return GetRabbitMqConnectionString(hostName, portNumber);
         }
 
         /// <summary>
@@ -35,6 +51,12 @@ namespace Thycotic.MessageQueue.Client
         /// <returns></returns>
         public static string GetMemoryMqConnectionString(string hostName, int portNumber = DefaultPorts.MemoryMq.NonSsl)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(hostName));
+
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+
             return GetConnectionString(DefaultSchemas.MemoryMq, hostName, portNumber);
         }
 
@@ -46,12 +68,28 @@ namespace Thycotic.MessageQueue.Client
         /// <returns></returns>
         public static string GetRabbitMqConnectionString(string hostName, int portNumber = DefaultPorts.RabbitMq.NonSsl)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(hostName));
+            
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
             return GetConnectionString(DefaultSchemas.RabbitMq, hostName, portNumber);
         }
 
         private static string GetConnectionString(string scheme, string hostName, int portNumber)
         {
-            return string.Format("{0}://{1}:{2}", scheme, hostName, portNumber);
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(scheme));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(hostName));
+
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+            var connectionString = string.Format("{0}://{1}:{2}", scheme, hostName, portNumber);
+
+            Contract.Assume(connectionString != null);
+            Contract.Assume(!string.IsNullOrWhiteSpace(connectionString));
+
+            return connectionString;
         }
     }
 }

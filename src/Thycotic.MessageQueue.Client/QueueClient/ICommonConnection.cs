@@ -57,6 +57,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <returns></returns>
         public ICommonModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor)
         {
+            Contract.Ensures(Contract.Result<ICommonModel>() != null);
+
             return default(ICommonModel);
         }
 

@@ -1,4 +1,6 @@
-﻿using Thycotic.MessageQueue.Client.QueueClient;
+﻿using System;
+using System.Diagnostics.Contracts;
+using Thycotic.MessageQueue.Client.QueueClient;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
 {
@@ -28,6 +30,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// <param name="target">The target.</param>
         public CommonConsumerWrapperProxy(IConsumerWrapperBase target)
         {
+            Contract.Requires<ArgumentNullException>(target != null);
+
             Target = target;
         }
 

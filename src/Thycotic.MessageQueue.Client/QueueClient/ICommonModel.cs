@@ -149,6 +149,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <returns></returns>
         public ICommonModelProperties CreateBasicProperties()
         {
+            Contract.Ensures(Contract.Result<ICommonModelProperties>() != null);
+
             return default(ICommonModelProperties);
         }
 
@@ -255,6 +257,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <returns></returns>
         public ICommonQueue QueueDeclare()
         {
+            Contract.Ensures(Contract.Result<ICommonQueue>() != null);
+
             return default(ICommonQueue);
         }
 
@@ -294,6 +298,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         public ISubscription CreateSubscription(string queueName)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(queueName));
+
+            Contract.Ensures(Contract.Result<ISubscription>() != null);
 
             return default(ISubscription);
         }

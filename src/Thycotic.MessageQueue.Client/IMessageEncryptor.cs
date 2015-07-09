@@ -43,6 +43,8 @@ namespace Thycotic.MessageQueue.Client
             Contract.Requires<ArgumentException>(exchangeName != null);
             Contract.Requires<ArgumentException>(body != null);
 
+            Contract.Ensures(Contract.Result<byte[]>() != null);
+
             return default(byte[]);
         }
 
@@ -56,6 +58,8 @@ namespace Thycotic.MessageQueue.Client
         {
             Contract.Requires<ArgumentException>(exchangeName != null);
             Contract.Requires<ArgumentException>(body != null);
+
+            Contract.Ensures(Contract.Result<byte[]>() != null);
 
             return default(byte[]);
         }

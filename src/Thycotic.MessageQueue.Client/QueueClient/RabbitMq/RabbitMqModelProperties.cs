@@ -1,4 +1,6 @@
-﻿using RabbitMQ.Client;
+﻿using System;
+using System.Diagnostics.Contracts;
+using RabbitMQ.Client;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 {
@@ -23,6 +25,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         /// <param name="rawProperties">The raw properties.</param>
         public RabbitMqModelProperties(IBasicProperties rawProperties)
         {
+            Contract.Requires<ArgumentNullException>(rawProperties != null);
+
             _rawProperties = rawProperties;
         }
 

@@ -1,4 +1,6 @@
-﻿using RabbitMQ.Client;
+﻿using System;
+using System.Diagnostics.Contracts;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
@@ -31,6 +33,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// <param name="target">The target.</param>
         public RabbitMqConsumerWrapperProxy(IConsumerWrapperBase target) : base(target)
         {
+            Contract.Requires<ArgumentNullException>(target != null);
         }
         
         #region Not needed

@@ -1,4 +1,7 @@
-﻿namespace Thycotic.MessageQueue.Client.QueueClient
+﻿using System;
+using System.Diagnostics.Contracts;
+
+namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Raw value extensions
@@ -13,6 +16,11 @@
         /// <returns></returns>
         public static T GetRawValue<T>(this IHasRawValue obj)
         {
+            Contract.Requires<ArgumentNullException>(obj != null);
+            Contract.Requires<ArgumentNullException>(obj.RawValue != null);
+
+            Contract.Ensures(Contract.Result<T>() != null);
+
             return (T) obj.RawValue;
         }
 

@@ -1,4 +1,6 @@
-﻿using Thycotic.MemoryMq;
+﻿using System;
+using System.Diagnostics.Contracts;
+using Thycotic.MemoryMq;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
@@ -79,6 +81,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="rawProperties">The raw properties.</param>
         public MemoryMqModelProperties(MemoryMqProperties rawProperties)
         {
+            Contract.Requires<ArgumentNullException>(rawProperties != null);
+
             _rawProperties = rawProperties;
         }
     }
