@@ -96,6 +96,8 @@ namespace Thycotic.Logging
         [DebuggerStepThrough]
         public static ILogWriter Get(Type type)
         {
+            Contract.Ensures(Contract.Result<ILogWriter>() != null);
+
             return _logWriterFactory.GetLogWriter(type);
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 
 namespace Thycotic.Logging
@@ -32,6 +33,8 @@ namespace Thycotic.Logging
         [DebuggerStepThrough]
         public static LogContext Create(string name)
         {
+            Contract.Ensures(Contract.Result<LogContext>() != null);
+
             return new LogContext(string.Format(CultureInfo.InvariantCulture, "> {0}", name));
         }
 

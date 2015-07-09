@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace Thycotic.Logging
 {
@@ -37,6 +38,8 @@ namespace Thycotic.Logging
         [DebuggerStepThrough]
         public static LogCorrelation Create()
         {
+            Contract.Ensures(Contract.Result<LogCorrelation>() != null);
+
             return new LogCorrelation();
         }
 
