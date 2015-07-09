@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Thycotic.Discovery.Core.Results;
 
@@ -20,6 +21,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <returns></returns>
         public static List<DiscoveryLog> Truncate(this List<DiscoveryLog> logs)
         {
+            Contract.Requires<ArgumentNullException>(logs != null);
+            Contract.Ensures(Contract.Result<List<DiscoveryLog>>() != null);
             List<DiscoveryLog> returnLogs;
             var logBytes = GetBytes(string.Join(TOKEN_SEPARATOR, logs.Select(log => log.Message)));
             if (logBytes.Length < MaxLogByteSize)
