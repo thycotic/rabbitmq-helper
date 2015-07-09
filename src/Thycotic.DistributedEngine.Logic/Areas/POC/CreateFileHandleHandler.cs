@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.IO;
 using System.Threading;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -26,6 +28,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <param name="exchangeNameProvider">The exchange name provider.</param>
         public CreateFileHandler(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
+            Contract.Requires<ArgumentNullException>(bus != null);
+            Contract.Requires<ArgumentNullException>(exchangeNameProvider != null);
             _bus = bus;
             _exchangeNameProvider = exchangeNameProvider;
         }
@@ -36,11 +40,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <param name="request">The request.</param>
         public void ConsumeBasic(CreateDirectoryMessage request)
         {
+            Contract.Requires<ArgumentNullException>(request != null);
             ConsumerConsole.WriteLine("Received directory message but will wait 2 seconds");
 
             if (!Directory.Exists(request.Path))
             {
-                Thread.Sleep(2*1000);
+                Thread.Sleep(2 * 1000);
                 ConsumerConsole.WriteLine(string.Format("Creating directory {0} in fire-and-forget", request.Path));
                 Directory.CreateDirectory(request.Path);
             }
@@ -87,8 +92,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
             ConsumerConsole.WriteLine(string.Format("Creating file {0}", request.FileName));
             File.CreateText(Path.Combine(path, request.FileName));
             ConsumerConsole.WriteLine("File created");
-            
-            
+
+
         }
 
 

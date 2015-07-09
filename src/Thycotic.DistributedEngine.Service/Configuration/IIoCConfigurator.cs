@@ -91,8 +91,6 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// <returns></returns>
         public bool TryAssignConfiguration(Dictionary<string, string> configuration)
         {
-            Contract.Requires<ArgumentNullException>(configuration != null);
-
             return default(bool);
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Response;
@@ -37,6 +38,10 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                 engineToServerConnectionManager, objectSerializer, authenticatedCommunicationKeyProvider,
                 authenticatedCommunicationRequestEncryptor)
         {
+            Contract.Requires<ArgumentNullException>(engineToServerConnectionManager != null);
+            Contract.Requires<ArgumentNullException>(authenticatedCommunicationRequestEncryptor != null);
+            Contract.Requires<ArgumentNullException>(objectSerializer != null);
+            Contract.Requires<ArgumentNullException>(authenticatedCommunicationKeyProvider != null);
             _engineIdentificationProvider = engineIdentificationProvider;
         }
 

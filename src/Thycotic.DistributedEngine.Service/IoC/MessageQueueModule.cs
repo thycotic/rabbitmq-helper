@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
+using System.IdentityModel.Metadata;
 using System.Linq;
 using Autofac;
 using Thycotic.DistributedEngine.Service.Security;
@@ -19,7 +21,15 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
         public MessageQueueModule(Func<string, string> configurationProvider)
         {
+            Contract.Requires<ArgumentNullException>(configurationProvider != null);
             _configurationProvider = configurationProvider;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariants()
+        {
+            Contract.Invariant(_configurationProvider != null);
+            Contract.Invariant(_log != null);
         }
 
         private void LoadRabbitMq(ContainerBuilder builder)

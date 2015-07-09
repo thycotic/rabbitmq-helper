@@ -1,4 +1,6 @@
-﻿using Thycotic.MessageQueue.Client;
+﻿using System;
+using System.Diagnostics.Contracts;
+using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Common;
@@ -21,6 +23,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <param name="exchangeNameProvider">The exchange name provider.</param>
         public ChainMessageConsumer(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
+            Contract.Requires<ArgumentNullException>(bus != null);
+            Contract.Requires<ArgumentNullException>(exchangeNameProvider != null);
             _bus = bus;
             _exchangeNameProvider = exchangeNameProvider;
         }

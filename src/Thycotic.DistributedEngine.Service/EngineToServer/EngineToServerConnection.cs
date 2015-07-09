@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.Logging;
 using Thycotic.Wcf;
@@ -22,6 +23,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
         public EngineToServerConnection(string connectionString, bool useSsl)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(connectionString));
             _connectionString = connectionString;
             _useSsl = useSsl;
         }
