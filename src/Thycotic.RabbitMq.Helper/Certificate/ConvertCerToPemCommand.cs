@@ -38,7 +38,6 @@ namespace Thycotic.RabbitMq.Helper.Certificate
             Action = parameters =>
             {
                 string path;
-                string password;
                 if (!parameters.TryGet("cacertpath", out path)) return 1;
                 
                 ConvertToPem(path);
