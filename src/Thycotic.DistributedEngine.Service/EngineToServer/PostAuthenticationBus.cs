@@ -62,7 +62,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         protected SymmetricEnvelope WrapRequest(object response)
         {
             Contract.Ensures(Contract.Result<Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes.SymmetricEnvelope>() != null);
-            Contract.Ensures(Contract.Result<Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Envelopes.SymmetricEnvelopeNeedingResponse>() != null);
+
             var requestString = _objectSerializer.ToBytes(response);
 
             return new SymmetricEnvelope
