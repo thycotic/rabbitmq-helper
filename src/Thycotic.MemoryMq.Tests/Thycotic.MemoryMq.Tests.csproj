@@ -191,32 +191,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Collections\ConcurrentPriorityQueue.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ConcurrentPriorityQueue.feature.cs</LastGenOutput>
-    </None>
-    <None Include="MemoryMqWcfService.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>MemoryMqWcfService.feature.cs</LastGenOutput>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Subsystem\ClientDictionary.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ClientDictionary.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Subsystem\ExchangeDictionary.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ExchangeDictionary.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Subsystem\MessageQueueProxy.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>MessageQueueProxy.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Subsystem\RoutingSlip.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>RoutingSlip.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

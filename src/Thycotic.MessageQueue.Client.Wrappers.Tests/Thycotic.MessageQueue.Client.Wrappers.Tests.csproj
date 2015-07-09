@@ -211,18 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="BlockingBasicConsumerWrapper.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>BlockingBasicConsumerWrapper.feature.cs</LastGenOutput>
-    </None>
-    <None Include="BasicConsumerWrapper.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>BasicConsumerWrapper.feature.cs</LastGenOutput>
-    </None>
-    <None Include="ConsumerWrapperBase.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ConsumerWrapperBase.feature.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>
