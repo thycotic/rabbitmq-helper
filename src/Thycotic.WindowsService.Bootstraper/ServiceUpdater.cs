@@ -71,6 +71,9 @@ namespace Thycotic.WindowsService.Bootstraper
                     try
                     {
 
+                        //already checked with IsNullOrWhiteSpace
+                        Contract.Assume(!string.IsNullOrEmpty(_workingPath));
+
                         var directoryInfo = new DirectoryInfo(_workingPath);
 
                         directoryInfo.GetFiles().ToList().ForEach(f => f.Delete());

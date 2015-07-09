@@ -41,6 +41,8 @@ namespace Thycotic.WindowsService.Bootstraper
 
             //Task.Delay(TimeSpan.FromSeconds(5)).Wait();
 
+            Contract.Assume(managementObject.Scope != null);
+
             managementObject.Scope.Connect();
 
             return new Win32Service(managementObject);
