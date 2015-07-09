@@ -22,7 +22,6 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.IoC
 
         protected override void Load(ContainerBuilder builder)
         {
-            Contract.Requires<ArgumentNullException>(builder != null);
             base.Load(builder);
 
             using (LogContext.Create("MemoryMq Service"))
