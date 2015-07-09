@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics.Contracts;
+
 namespace Thycotic.MemoryMq.Subsystem
 {
     /// <summary>
@@ -28,6 +31,8 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="queue">The queue.</param>
         public Mailbox(RoutingSlip routingSlip, IMessageQueue queue)
         {
+            Contract.Requires<ArgumentNullException>(routingSlip != null);
+            Contract.Requires<ArgumentNullException>(queue != null);
             RoutingSlip = routingSlip;
             Queue = new MessageQueueProxy(queue);
         }
