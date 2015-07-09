@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Threading;
 using Thycotic.Logging;
@@ -14,6 +15,9 @@ namespace Thycotic.WindowsService.Bootstraper
             var cts = new CancellationTokenSource();
 
             var workingPath = Directory.GetCurrentDirectory();
+
+            Contract.Assume(!string.IsNullOrWhiteSpace(workingPath));
+
             var backupPath = Path.Combine(workingPath, ServiceUpdater.BackupDirectoryName);
 
             var serviceName = args[0];

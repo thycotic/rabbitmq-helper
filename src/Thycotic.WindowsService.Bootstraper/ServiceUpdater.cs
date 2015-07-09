@@ -29,6 +29,7 @@ namespace Thycotic.WindowsService.Bootstraper
         private readonly string _backupPath;
         private readonly string _serviceName;
         private readonly string _msiPath;
+
         private readonly ILogWriter _log = Log.Get(typeof(ServiceUpdater));
 
         public ServiceUpdater(CancellationTokenSource cts, IServiceManagerInteractor serviceManagerInteractor, IProcessRunner processRunner, string workingPath, string backupPath, string serviceName, string msiPath)

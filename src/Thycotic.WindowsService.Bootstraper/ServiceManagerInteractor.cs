@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Management;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,9 @@ namespace Thycotic.WindowsService.Bootstraper
 
         public ServiceManagerInteractor(CancellationTokenSource cts, string serviceName)
         {
+            Contract.Requires<ArgumentNullException>(cts != null);
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(serviceName));
+
             _cts = cts;
             _serviceName = serviceName;
 
@@ -97,7 +101,11 @@ namespace Thycotic.WindowsService.Bootstraper
                     break;
                 }
 
-                Task.Delay(TimeSpan.FromSeconds(5), _cts.Token).Wait(_cts.Token);
+                var delayTask = Task.Delay(TimeSpan.FromSeconds(5), _cts.Token);
+
+                Contract.Assume(delayTask != null);
+
+                delayTask.Wait(_cts.Token);
             }
         }
 
@@ -117,7 +125,11 @@ namespace Thycotic.WindowsService.Bootstraper
                     break;
                 }
 
-                Task.Delay(TimeSpan.FromSeconds(5), _cts.Token).Wait(_cts.Token);
+                var delayTask = Task.Delay(TimeSpan.FromSeconds(5), _cts.Token);
+
+                Contract.Assume(delayTask != null);
+                
+                delayTask.Wait(_cts.Token);
             }
         }
         #endregion
