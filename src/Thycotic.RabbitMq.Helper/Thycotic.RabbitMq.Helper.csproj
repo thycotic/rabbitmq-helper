@@ -173,7 +173,7 @@
     <CodeContractsBaseLineFile>..\..\baseline.xml</CodeContractsBaseLineFile>
     <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
     <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
-    <CodeContractsFailBuildOnWarnings>True</CodeContractsFailBuildOnWarnings>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
     <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
