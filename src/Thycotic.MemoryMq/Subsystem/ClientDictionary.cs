@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Thycotic.Logging;
 using Thycotic.Wcf;
@@ -24,6 +26,8 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <param name="callbackChannelProvider">The callback channel provider.</param>
         public ClientDictionary(ICallbackChannelProvider callbackChannelProvider)
         {
+            Contract.Requires<ArgumentNullException>(callbackChannelProvider != null);
+
             _callbackChannelProvider = callbackChannelProvider;
         }
 

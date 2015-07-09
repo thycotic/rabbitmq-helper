@@ -1,4 +1,6 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.ServiceModel;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.Subsystem;
 using Thycotic.Wcf;
@@ -34,6 +36,8 @@ namespace Thycotic.MemoryMq
         /// </summary>
         public MemoryMqWcfService(ICallbackChannelProvider callbackChannelProvider)
         {
+            Contract.Requires<ArgumentNullException>(callbackChannelProvider != null);
+
             _exchanges = new ExchangeDictionary();
             _bindings = new BindingDictionary();
             _clients = new ClientDictionary(callbackChannelProvider);
@@ -46,6 +50,11 @@ namespace Thycotic.MemoryMq
         /// </summary>
         public MemoryMqWcfService(IExchangeDictionary exchanges, IBindingDictionary bindings, IClientDictionary clients, IMessageDispatcher dispatcher)
         {
+            Contract.Requires<ArgumentNullException>(exchanges != null);
+            Contract.Requires<ArgumentNullException>(bindings != null);
+            Contract.Requires<ArgumentNullException>(clients != null);
+            Contract.Requires<ArgumentNullException>(dispatcher != null);
+
             _exchanges = exchanges;
             _bindings = bindings;
             _clients = clients;

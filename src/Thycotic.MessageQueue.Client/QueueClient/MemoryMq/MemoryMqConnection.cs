@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
@@ -34,6 +35,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
         public MemoryMqConnection(string url, string userName, string password, bool useSsl)
         {
+            Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(url));
+            //TODO: remove after username and password are no longer required
+            Contract.Requires<ArgumentException>(userName != null);
+            Contract.Requires<ArgumentException>(password != null);
+
             _connectionFactory = new MemoryMqWcfServiceConnectionFactory { Uri = url, UseSsl = useSsl, Username = userName, Password = password, RequestedHeartbeat = 300 };
             ResetConnection();
         }
