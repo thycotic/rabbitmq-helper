@@ -217,12 +217,13 @@
     <Reference Include="Thycotic.Discovery.Sources">
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.120\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.354, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.357, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.354\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.357\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Encryption">
-      <HintPath>..\packages\Thycotic.Encryption.5.0.0.9\lib\net451\Thycotic.Encryption.dll</HintPath>
+    <Reference Include="Thycotic.Encryption, Version=5.0.0.11, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Encryption.5.0.0.11\lib\net451\Thycotic.Encryption.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Foundation, Version=2.5.0.0, Culture=neutral, PublicKeyToken=d3c50e8fc4a39908, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
