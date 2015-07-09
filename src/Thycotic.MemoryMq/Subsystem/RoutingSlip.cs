@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 
 namespace Thycotic.MemoryMq.Subsystem
 {
@@ -41,6 +42,7 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <returns></returns>
         protected bool Equals(RoutingSlip other)
         {
+            Contract.Requires<ArgumentNullException>(other != null);
             return string.Equals(RoutingKey, other.RoutingKey) && string.Equals(Exchange, other.Exchange);
         }
 
