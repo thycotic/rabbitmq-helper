@@ -25,13 +25,6 @@ namespace Thycotic.DistributedEngine.Service.IoC
             _configurationProvider = configurationProvider;
         }
 
-        [ContractInvariantMethod]
-        private void ObjectInvariants()
-        {
-            Contract.Invariant(_configurationProvider != null);
-            Contract.Invariant(_log != null);
-        }
-
         private void LoadRabbitMq(ContainerBuilder builder)
         {
             using (LogContext.Create("RabbitMq"))

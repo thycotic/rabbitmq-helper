@@ -116,6 +116,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         {
             Contract.Requires<ArgumentNullException>(engineService != null);
 
+            Contract.Ensures(Contract.Result<IContainer>() != null);
             return default(IContainer);
         }
 

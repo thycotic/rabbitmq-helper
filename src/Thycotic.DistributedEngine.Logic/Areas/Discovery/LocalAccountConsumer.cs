@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
@@ -26,6 +27,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="scannerFactory"></param>
         public LocalAccountConsumer(IResponseBus responseBus, IScannerFactory scannerFactory)
         {
+            Contract.Requires<ArgumentNullException>(responseBus != null);
+            Contract.Requires<ArgumentNullException>(scannerFactory != null);
+
             _responseBus = responseBus;
             _scannerFactory = scannerFactory;
         }
@@ -36,23 +40,28 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanLocalAccountMessage request)
         {
+            Contract.Assume(_log != null);
             try
             {
                 _log.Info(string.Format("{0} : Scan Local Accounts", request.Input.ComputerName));
-                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
-                var result = scanner.ScanComputerForLocalAccounts(request.Input);
+                var scanner = this.EnsureNotNull(_scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId), "No scanner returned");
+                var result = this.EnsureNotNull(scanner.ScanComputerForLocalAccounts(request.Input), "Scanner returned no result");
+                
                 _log.Info(string.Format("{0} : Found {1} Local Accounts (Log: {2})",
                     request.Input.ComputerName,
-                    result != null ? result.LocalAccounts.Length : -1,
-                    result != null ? string.Join("; ", result.Logs.Select(l => l.Message)) : string.Empty));
+                    result != null ? this.EnsureNotNull(result.LocalAccounts, "Result has no local accounts").Length : -1,
+                    result != null ? string.Join("; ", this.EnsureNotNull(result.Logs, "Result has no log items").Select(l => l.Message)) : string.Empty));
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
                     Total = result.LocalAccounts.Count(),
                     Take = request.Input.PageSize
                 };
+                this.EnsureNotNull(result.Logs, "Logs do not exist");
                 var truncatedLog = result.Logs.Truncate();
-                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
+                
+
+                Enumerable.Range(0, this.EnsureGreaterThanOrEqualTo(paging.BatchCount, 0)).ToList().ForEach(x =>
                 {
                     var response = new ScanLocalAccountResponse
                     {

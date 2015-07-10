@@ -316,13 +316,5 @@ namespace Thycotic.WindowsService.Bootstraper
             }
         }
 
-        /// <summary>
-        /// Objects the invariant.
-        /// </summary>
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this._log != null);
-        }
     }
 }

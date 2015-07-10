@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
@@ -27,6 +28,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
         /// <param name="responseBus"></param>
         public SecretHeartbeatConsumer(IResponseBus responseBus)
         {
+            Contract.Requires<ArgumentNullException>(responseBus!= null);
             _responseBus = responseBus;
         }
 
@@ -37,12 +39,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
         /// <returns></returns>
         public void Consume(SecretHeartbeatMessage request)
         {
+            Contract.Assume(_log != null);
+
             _log.Info(string.Format("Got a heartbeat request for Secret Id {0}", request.SecretId));
 
             try
             {
-                var verifier = new DefaultPasswordChangerFactory().ResolveCredentialVerifier(request.VerifyCredentialsInfo);
-                var verifyResult = verifier.VerifyCredentials(request.VerifyCredentialsInfo);
+                var verifier = this.EnsureNotNull(new DefaultPasswordChangerFactory().ResolveCredentialVerifier(request.VerifyCredentialsInfo), "Verifier was not returned");
+                var verifyResult = this.EnsureNotNull(verifier.VerifyCredentials(request.VerifyCredentialsInfo),"Result was not returned.");
 
                 var response = new SecretHeartbeatResponse
                 {

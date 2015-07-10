@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.Contracts;
+using System.Linq;
 using Thycotic.DistributedEngine.Logic.Areas.PasswordChanging;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
@@ -21,6 +22,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.General
         /// <param name="request">The request.</param>
         public CredentialOperationResult Consume(DomainCredentialTestMessage request)
         {
+            Contract.Assume(_log != null);
+
             _log.Info(string.Format("Got a Domain credential validation request for Domain: {0} using user {1}\\{2}", request.Domain, request.UserDomain, request.UserName));
 
             var domainVerifier = new DomainValidationVerifier();
@@ -34,13 +37,13 @@ namespace Thycotic.DistributedEngine.Logic.Areas.General
                 UseSSL = request.UseSsl
             };
 
-            var result = domainVerifier.VerifyCredentials(verifyInfo);
+            var result = this.EnsureNotNull(domainVerifier.VerifyCredentials(verifyInfo),"No result was returned.");
 
             _log.Info(string.Format("Credential validation result for Domain {0} using user {1}\\{2}: {3}", 
                 request.Domain, request.UserDomain, request.UserName, 
                 result.Status == OperationStatus.Success 
                     ? "Success" 
-                    : string.Format("Failure ({0})", string.Join(", ", result.Errors.Select(e => e.Message)))));
+                    : string.Format("Failure ({0})", string.Join(", ", this.EnsureNotNull(result.Errors, "Result has no error items").Select(e => e.Message)))));
 
             return result;
         }

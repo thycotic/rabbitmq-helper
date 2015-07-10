@@ -47,6 +47,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <returns></returns>
         public IUpdateWebClient OpenLiveUpdateWebClient()
         {
+            Contract.Ensures(Contract.Result<IUpdateWebClient>() != null);
             return default(IUpdateWebClient);
         }
 

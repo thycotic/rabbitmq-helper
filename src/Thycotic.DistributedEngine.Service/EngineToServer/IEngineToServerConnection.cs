@@ -53,6 +53,8 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         {
             Contract.Requires<ArgumentNullException>(callback != null);
 
+            Contract.Ensures(Contract.Result<IEngineToServerCommunicationWcfService>() != null);
+
             return default(IEngineToServerCommunicationWcfService);
         }
 

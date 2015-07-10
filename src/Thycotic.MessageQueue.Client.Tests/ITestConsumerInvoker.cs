@@ -47,6 +47,8 @@ namespace Thycotic.MessageQueue.Client.Tests
         {
             Contract.Requires<ArgumentNullException>(consumable != null);
 
+            Contract.Ensures(Contract.Result<TResponse>() != null);
+
             return default(TResponse);
         }
     }

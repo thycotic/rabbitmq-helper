@@ -21,8 +21,6 @@ namespace Thycotic.WindowsService.Bootstraper
             Contract.Requires<ArgumentNullException>(cts != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(serviceName));
 
-            Contract.Ensures(_log != null);
-
             _cts = cts;
             _serviceName = serviceName;
 
@@ -90,6 +88,8 @@ namespace Thycotic.WindowsService.Bootstraper
 
         public void StartService()
         {
+            Contract.Assume(_log != null);
+
             InteractiveWithService(service =>
             {
                 _log.Info("Starting service");
@@ -115,6 +115,8 @@ namespace Thycotic.WindowsService.Bootstraper
 
         public void StopService()
         {
+            Contract.Assume(_log != null);
+
             InteractiveWithService(service =>
             {
                 _log.Info("Stopping service");
@@ -138,13 +140,5 @@ namespace Thycotic.WindowsService.Bootstraper
         }
         #endregion
 
-        /// <summary>
-        /// Objects the invariant.
-        /// </summary>
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this._log != null);
-        }
     }
 }

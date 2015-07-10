@@ -329,6 +329,7 @@
     <Compile Include="Areas\POC\ThrowTriggerConsumer.cs" />
     <Compile Include="Areas\POC\StepConsumer.cs" />
     <Compile Include="Areas\POC\HelloWorldConsumer.cs" />
+    <Compile Include="MixedContractExtensions.cs" />
     <Compile Include="EngineToServer\IUpdateBus.cs" />
     <Compile Include="EngineToServer\IConfigurationBus.cs" />
     <Compile Include="EngineToServer\IResponseBus.cs" />

@@ -39,6 +39,8 @@ namespace Thycotic.Messages.Common
         {
             Contract.Requires<ArgumentNullException>(request != null);
 
+            Contract.Ensures(Contract.Result<TResponse>() != null);
+
             return default(TResponse);
         }
     }

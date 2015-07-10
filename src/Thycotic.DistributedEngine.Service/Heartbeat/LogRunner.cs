@@ -182,11 +182,5 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 Exception = logEntry.Exception
             };
         }
-
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this._log != null);
-        }
     }
 }

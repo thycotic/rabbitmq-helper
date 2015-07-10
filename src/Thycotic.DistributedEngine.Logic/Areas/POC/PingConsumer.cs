@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
@@ -22,6 +23,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <param name="responseBus">The response bus.</param>
         public PingConsumer(IResponseBus responseBus)
         {
+            Contract.Requires<ArgumentNullException>(responseBus != null);
+
             _responseBus = responseBus;
         }
 
@@ -32,6 +35,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <param name="request">The request.</param>
         public void Consume(PingMessage request)
         {
+            Contract.Ensures(_log != null);
+
             _log.Debug(string.Format("Consuming ping sequence #{0}", request.Sequence));
 
             try

@@ -351,14 +351,5 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                        TryAssignThirdPartyKeys(response.ThirdPartyKeys);
             }
         }
-
-        /// <summary>
-        /// Objects the invariant.
-        /// </summary>
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this._log != null);
-        }
     }
 }

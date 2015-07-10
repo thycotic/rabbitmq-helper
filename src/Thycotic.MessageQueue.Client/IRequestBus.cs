@@ -61,6 +61,8 @@ namespace Thycotic.MessageQueue.Client
             Contract.Requires<ArgumentNullException>(request != null);
             Contract.Requires<ArgumentException>(timeoutSeconds > 0);
 
+            Contract.Ensures(Contract.Result<TResponse>() != null);
+
             return default(TResponse);
         }
 
