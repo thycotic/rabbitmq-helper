@@ -49,6 +49,7 @@ namespace Thycotic.Utility.IO
                 var temppath = Path.Combine(destinationPath, file.Name);
 
                 Contract.Assume(temppath != null);
+                Contract.Assume(!string.IsNullOrEmpty(temppath));
 
                 file.CopyTo(temppath, overwrite);
             }
@@ -65,6 +66,12 @@ namespace Thycotic.Utility.IO
                 }
 
                 var temppath = Path.Combine(destinationPath, subdir.Name);
+
+                //comes from files
+                Contract.Assume(!string.IsNullOrWhiteSpace(subdir.FullName));
+
+                //comes from path combine
+                Contract.Assume(!string.IsNullOrWhiteSpace(temppath));
 
                 Copy(subdir.FullName, temppath, true, overwrite);
             }

@@ -205,6 +205,7 @@
     <Compile Include="IO\DirectoryCleaner.cs" />
     <Compile Include="IO\DirectoryCopier.cs" />
     <Compile Include="DnsEx.cs" />
+    <Compile Include="MixedContracts\MixedContractsExtensions.cs" />
     <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="Reflection\AssemblyEntryPointProvider.cs" />
     <Compile Include="Serialization\IObjectSerializer.cs" />
