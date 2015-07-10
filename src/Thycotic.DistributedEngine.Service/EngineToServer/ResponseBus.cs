@@ -175,5 +175,14 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
 
             base.Dispose();
         }
+
+        /// <summary>
+        /// Objects the invariant.
+        /// </summary>
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this._log != null);
+        }
     }
 }

@@ -58,7 +58,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                     response.SecretDependencyId = info.SecretDependencyId;
                     response.TransactionGuid = guid;
 
-                    Thread.Sleep(info.WaitBeforeSeconds*1000);
+                    Thread.Sleep(info.WaitBeforeSeconds * 1000);
                     messages.Add(GetDependencyStartedLogEntry(info));
                     var result = new DependencyChangeDispatcher(request.WmiTimeout).ExecuteDependencyAction(info);
                     messages.Add(GetDependencyFinishedLogEntry(info, result));
@@ -77,7 +77,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                         Success = false,
                         SecretId = request.SecretId,
                         TransactionGuid = guid,
-                        StatusMessages = new[] {ex.ToString()},
+                        StatusMessages = new[] { ex.ToString() },
                         Last = index == request.DependencyChangeInfos.Length - 1,
                         LogMessages = messages.ToArray(),
                     };
@@ -94,9 +94,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         {
             var hasMachine = !string.IsNullOrEmpty(info.MachineName);
             return !hasMachine
-                    ? new DependencyChangeResponseMessageToLocalize {MessageName = "DependencyStartedRunningOnMachineOnSite", Params = new object[] { info.ServiceName, info.MachineName, _exchangeNameProvider.GetCurrentExchange() } }
-                    : new DependencyChangeResponseMessageToLocalize {MessageName = "DependencyStartedRunningOnSite", Params = new object[] { info.ServiceName, _exchangeNameProvider.GetCurrentExchange() }};
-           
+                    ? new DependencyChangeResponseMessageToLocalize { MessageName = "DependencyStartedRunningOnMachineOnSite", Params = new object[] { info.ServiceName, info.MachineName, _exchangeNameProvider.GetCurrentExchange() } }
+                    : new DependencyChangeResponseMessageToLocalize { MessageName = "DependencyStartedRunningOnSite", Params = new object[] { info.ServiceName, _exchangeNameProvider.GetCurrentExchange() } };
+
         }
 
         private DependencyChangeResponseMessageToLocalize GetDependencyFinishedLogEntry(IDependencyChangeInfo info, OperationResult result)
@@ -104,7 +104,16 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
             var machineName = (info.MachineName ?? "").Trim();
             return !string.IsNullOrEmpty(machineName)
                 ? new DependencyChangeResponseMessageToLocalize { Success = result.Success, MessageName = result.Success ? "SuccessfullyUpdatedDependencyOnMachine" : "FailedToUpdateDependencyOnMachine", Params = new object[] { info.ServiceName, machineName } }
-                : new DependencyChangeResponseMessageToLocalize {Success = result.Success, MessageName = result.Success ? "SuccessfullyUpdatedDependency" : "FailedToUpdateDependency", Params = new object[] {info.ServiceName}};
+                : new DependencyChangeResponseMessageToLocalize { Success = result.Success, MessageName = result.Success ? "SuccessfullyUpdatedDependency" : "FailedToUpdateDependency", Params = new object[] { info.ServiceName } };
+        }
+
+        /// <summary>
+        /// Objects the invariant.
+        /// </summary>
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this._log != null);
         }
     }
 }

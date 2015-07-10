@@ -14,7 +14,7 @@ namespace Thycotic.WindowsService.Bootstraper
         private readonly string _serviceName;
 
 
-        private readonly ILogWriter _log = Log.Get(typeof (ServiceManagerInteractor));
+        private readonly ILogWriter _log = Log.Get(typeof(ServiceManagerInteractor));
 
         public ServiceManagerInteractor(CancellationTokenSource cts, string serviceName)
         {
@@ -130,10 +130,19 @@ namespace Thycotic.WindowsService.Bootstraper
                 var delayTask = Task.Delay(TimeSpan.FromSeconds(5), _cts.Token);
 
                 Contract.Assume(delayTask != null);
-                
+
                 delayTask.Wait(_cts.Token);
             }
         }
         #endregion
+
+        /// <summary>
+        /// Objects the invariant.
+        /// </summary>
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this._log != null);
+        }
     }
 }

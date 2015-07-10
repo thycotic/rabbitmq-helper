@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Autofac.Features.OwnedInstances;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
@@ -73,7 +74,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                     if (changeResult.Status == OperationStatus.Success && request.SecretChangeDependencyMessage != null)
                     {
-                        runDependencies = true;                        
+                        runDependencies = true;
                     }
                 }
                 else
@@ -86,7 +87,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                     {
                         Status = OperationStatus.Unknown,
                         SecretId = request.SecretId,
-                        StatusMessages = new[] {message},
+                        StatusMessages = new[] { message },
                         CommandExecutionResults = new List<CommandExecutionResult>().ToArray(),
                         OldPassword = string.Empty,
                         NewPassword = string.Empty
@@ -115,6 +116,15 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                 _responseBus.ExecuteAsync(response);
                 _log.Error(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.Status));
             }
+        }
+
+        /// <summary>
+        /// Objects the invariant.
+        /// </summary>
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this._log != null);
         }
     }
 }

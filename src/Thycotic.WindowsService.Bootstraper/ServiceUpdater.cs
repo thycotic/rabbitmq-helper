@@ -34,7 +34,7 @@ namespace Thycotic.WindowsService.Bootstraper
 
         public ServiceUpdater(CancellationTokenSource cts, IServiceManagerInteractor serviceManagerInteractor, IProcessRunner processRunner, string workingPath, string backupPath, string serviceName, string msiPath)
         {
-            Contract.Requires<ArgumentNullException>( cts != null);
+            Contract.Requires<ArgumentNullException>(cts != null);
             Contract.Requires<ArgumentNullException>(serviceManagerInteractor != null);
             Contract.Requires<ArgumentNullException>(processRunner != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(workingPath));
@@ -71,7 +71,7 @@ namespace Thycotic.WindowsService.Bootstraper
                     try
                     {
 
-                        //already checked with IsNullOrWhiteSpace
+                        //already checked with IsNullOrWhiteSpace but directory info requires IsNullOrEmpty
                         Contract.Assume(!string.IsNullOrEmpty(_workingPath));
 
                         var directoryInfo = new DirectoryInfo(_workingPath);
@@ -118,7 +118,7 @@ namespace Thycotic.WindowsService.Bootstraper
                 Directory.CreateDirectory(path);
             }
         }
-        
+
         private void CheckMsi()
         {
             if (!File.Exists(_msiPath))
@@ -311,6 +311,15 @@ namespace Thycotic.WindowsService.Bootstraper
                     throw;
                 }
             }
+        }
+
+        /// <summary>
+        /// Objects the invariant.
+        /// </summary>
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this._log != null);
         }
     }
 }

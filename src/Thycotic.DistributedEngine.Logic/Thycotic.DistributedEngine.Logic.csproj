@@ -134,7 +134,8 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Static Analysis\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\Thycotic.DistributedEngine.Logic.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
