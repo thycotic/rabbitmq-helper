@@ -20,7 +20,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <param name="connectionString">The connection string.</param>
         public UpdateWebClient(string connectionString)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(connectionString));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString));
             _connectionString = connectionString;
         }
 

@@ -40,6 +40,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             Contract.Requires<ArgumentException>(userName != null);
             Contract.Requires<ArgumentException>(password != null);
 
+            Contract.Ensures(_log != null);
+
             _connectionFactory = new MemoryMqWcfServiceConnectionFactory { Uri = url, UseSsl = useSsl, Username = userName, Password = password, RequestedHeartbeat = 300 };
             ResetConnection();
         }

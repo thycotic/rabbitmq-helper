@@ -22,7 +22,7 @@ namespace Thycotic.WindowsService.Bootstraper
 
             var serviceName = args[0];
 
-            if (string.IsNullOrEmpty(serviceName))
+            if (string.IsNullOrWhiteSpace(serviceName))
             {
                 throw new ApplicationException("Service name is required");
             }

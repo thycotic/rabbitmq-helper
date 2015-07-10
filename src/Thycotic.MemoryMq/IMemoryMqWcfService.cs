@@ -82,7 +82,7 @@ namespace Thycotic.MemoryMq
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, MemoryMqProperties properties, byte[] body)
         {
             Contract.Requires<ArgumentNullException>(exchangeName !=null);
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
             Contract.Requires<ArgumentNullException>(properties != null);
             Contract.Requires<ArgumentNullException>(body != null);
         }
@@ -95,9 +95,9 @@ namespace Thycotic.MemoryMq
         /// <param name="routingKey">The routing key.</param>
         public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(queueName));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
             Contract.Requires<ArgumentNullException>(exchangeName != null);
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Thycotic.MemoryMq
         /// <param name="queueName">Name of the queue.</param>
         public void BasicConsume(string queueName)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(queueName));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Thycotic.MemoryMq
         public void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple)
         {
             Contract.Requires<ArgumentNullException>(exchange != null);
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Thycotic.MemoryMq
         public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
             Contract.Requires<ArgumentNullException>(exchange != null);
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
         }
 
         /// <summary>

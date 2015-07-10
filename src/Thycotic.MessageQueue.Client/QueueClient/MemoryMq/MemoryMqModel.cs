@@ -32,6 +32,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             Contract.Requires<ArgumentNullException>(server != null);
             Contract.Requires<ArgumentNullException>(callback != null);
 
+            Contract.Ensures(_log != null);
+
             _server = server;
             _callback = callback;
 

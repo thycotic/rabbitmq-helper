@@ -92,7 +92,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
         private DependencyChangeResponseMessageToLocalize GetDependencyStartedLogEntry(IDependencyChangeInfo info)
         {
-            var hasMachine = !string.IsNullOrEmpty(info.MachineName);
+            var hasMachine = !string.IsNullOrWhiteSpace(info.MachineName);
             return !hasMachine
                     ? new DependencyChangeResponseMessageToLocalize { MessageName = "DependencyStartedRunningOnMachineOnSite", Params = new object[] { info.ServiceName, info.MachineName, _exchangeNameProvider.GetCurrentExchange() } }
                     : new DependencyChangeResponseMessageToLocalize { MessageName = "DependencyStartedRunningOnSite", Params = new object[] { info.ServiceName, _exchangeNameProvider.GetCurrentExchange() } };
@@ -102,7 +102,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         private DependencyChangeResponseMessageToLocalize GetDependencyFinishedLogEntry(IDependencyChangeInfo info, OperationResult result)
         {
             var machineName = (info.MachineName ?? "").Trim();
-            return !string.IsNullOrEmpty(machineName)
+            return !string.IsNullOrWhiteSpace(machineName)
                 ? new DependencyChangeResponseMessageToLocalize { Success = result.Success, MessageName = result.Success ? "SuccessfullyUpdatedDependencyOnMachine" : "FailedToUpdateDependencyOnMachine", Params = new object[] { info.ServiceName, machineName } }
                 : new DependencyChangeResponseMessageToLocalize { Success = result.Success, MessageName = result.Success ? "SuccessfullyUpdatedDependency" : "FailedToUpdateDependency", Params = new object[] { info.ServiceName } };
         }

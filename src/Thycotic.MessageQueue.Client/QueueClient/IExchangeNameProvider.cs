@@ -28,6 +28,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <returns></returns>
         public string GetCurrentExchange()
         {
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
             return default(string);
         }
     }

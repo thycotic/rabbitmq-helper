@@ -72,7 +72,7 @@ namespace Thycotic.WindowsService.Bootstraper
                     {
 
                         //already checked with IsNullOrWhiteSpace but directory info requires IsNullOrEmpty
-                        Contract.Assume(!string.IsNullOrEmpty(_workingPath));
+                        Contract.Assume(!string.IsNullOrWhiteSpace(_workingPath));
 
                         var directoryInfo = new DirectoryInfo(_workingPath);
 
@@ -131,6 +131,9 @@ namespace Thycotic.WindowsService.Bootstraper
 
         private void CheckWorkingPathAccess()
         {
+
+            //already checked with IsNullOrWhiteSpace but directory info requires IsNullOrEmpty
+            Contract.Assume(!string.IsNullOrWhiteSpace(_workingPath));
 
             if (!Directory.Exists(_workingPath))
             {

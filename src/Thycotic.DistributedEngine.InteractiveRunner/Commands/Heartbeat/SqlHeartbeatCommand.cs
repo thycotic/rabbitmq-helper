@@ -104,7 +104,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Commands.Heartbeat
         //        if (ItemValues.ContainsKey(passwordFieldName))
         //        {
         //            string value = ItemValues[passwordFieldName];
-        //            if (!string.IsNullOrEmpty(value))
+        //            if (!string.IsNullOrWhiteSpace(value))
         //            {
         //                return value;
         //            }
@@ -118,8 +118,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Commands.Heartbeat
 
         //    public IPasswordInfoProvider TranslateInfoDictionary()
         //    {
-        //        (from x in InfoDictionary.Where(info => !string.IsNullOrEmpty(info.Key) && !string.IsNullOrEmpty(info.Value))
-        //         join y in ItemValues.Where(info => !string.IsNullOrEmpty(info.Key) && !string.IsNullOrEmpty(info.Value)) on new { fld = x.Value.ToLower() } equals new { fld = "$" + y.Key.ToLower() }
+        //        (from x in InfoDictionary.Where(info => !string.IsNullOrWhiteSpace(info.Key) && !string.IsNullOrWhiteSpace(info.Value))
+        //         join y in ItemValues.Where(info => !string.IsNullOrWhiteSpace(info.Key) && !string.IsNullOrWhiteSpace(info.Value)) on new { fld = x.Value.ToLower() } equals new { fld = "$" + y.Key.ToLower() }
         //         select new { x.Key, y.Value }).ToList().ForEach((x) =>
         //         {
         //             InfoDictionary[x.Key] = x.Value;
@@ -132,16 +132,16 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Commands.Heartbeat
         //        (from info in InfoDictionary
         //         join item in ItemValues on new
         //         {
-        //             fld = !string.IsNullOrEmpty(info.Value) ? info.Value.ToLower() : string.Empty
+        //             fld = !string.IsNullOrWhiteSpace(info.Value) ? info.Value.ToLower() : string.Empty
         //         } equals new
         //         {
-        //             fld = "$" + (!string.IsNullOrEmpty(item.Key) ? item.Key.ToLower() : string.Empty)
+        //             fld = "$" + (!string.IsNullOrWhiteSpace(item.Key) ? item.Key.ToLower() : string.Empty)
 
         //         } into y_g
         //         from item in y_g.DefaultIfEmpty()
-        //         join scrubber in customScrubber.Where(x => !string.IsNullOrEmpty(x.Key) && x.Value != null) on info.Key.ToLower() equals scrubber.Key.ToLower() into a_g
+        //         join scrubber in customScrubber.Where(x => !string.IsNullOrWhiteSpace(x.Key) && x.Value != null) on info.Key.ToLower() equals scrubber.Key.ToLower() into a_g
         //         from scrubber in a_g.DefaultIfEmpty()
-        //         let unscrubbedValue = !string.IsNullOrEmpty(item.Value) ? item.Value : info.Value
+        //         let unscrubbedValue = !string.IsNullOrWhiteSpace(item.Value) ? item.Value : info.Value
         //         let replacementValue = scrubber.Value != null ? scrubber.Value.Invoke(unscrubbedValue) : unscrubbedValue
         //         where info.Value != replacementValue
         //         select new

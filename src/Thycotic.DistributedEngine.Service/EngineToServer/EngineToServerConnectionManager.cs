@@ -25,7 +25,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <param name="useSsl"></param>
         public EngineToServerConnectionManager(string connectionStrings, bool useSsl)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(connectionStrings));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionStrings));
             _connectionStrings = connectionStrings.Split(';');
             _useSsl = useSsl;
         }

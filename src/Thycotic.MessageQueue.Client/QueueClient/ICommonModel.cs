@@ -169,7 +169,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         public void ExchangeDeclare(string exchangeName, string exchangeType)
         {
             Contract.Requires<ArgumentNullException>(exchangeName != null);
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(exchangeType));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(exchangeType));
 
         }
 
@@ -234,7 +234,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         public void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple)
         {
             Contract.Requires<ArgumentNullException>(exchange != null);
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
             Contract.Requires<ArgumentNullException>(exchange != null);
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="arguments">The arguments.</param>
         public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(queueName));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
 
             return default(ICommonQueue);
         }
@@ -285,9 +285,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="routingKey">The routing key.</param>
         public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(queueName));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
             Contract.Requires<ArgumentNullException>(exchangeName != null);
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(routingKey));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <returns></returns>
         public ISubscription CreateSubscription(string queueName)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(queueName));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
 
             Contract.Ensures(Contract.Result<ISubscription>() != null);
 
@@ -312,7 +312,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="consumer">The consumer.</param>
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(queueName));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
             Contract.Requires<ArgumentNullException>(consumer!=null);
         }
 

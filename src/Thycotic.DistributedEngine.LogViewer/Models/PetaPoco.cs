@@ -96,7 +96,7 @@ namespace PetaPoco
 			var providerName = "System.Data.SqlClient";
 			if (ConfigurationManager.ConnectionStrings[connectionStringName] != null)
 			{
-				if (!string.IsNullOrEmpty(ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName))
+				if (!string.IsNullOrWhiteSpace(ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName))
 					providerName = ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName;
 			}
 			else
@@ -434,7 +434,7 @@ namespace PetaPoco
 			_dbType.PreExecute(cmd);
 
 			// Call logging
-			if (!String.IsNullOrEmpty(sql))
+			if (!string.IsNullOrWhiteSpace(sql))
 				DoPreExecute(cmd);
 
 			return cmd;
@@ -2834,7 +2834,7 @@ namespace PetaPoco
 
 		private void Build(StringBuilder sb, List<object> args, Sql lhs)
 		{
-			if (!String.IsNullOrEmpty(_sql))
+			if (!string.IsNullOrWhiteSpace(_sql))
 			{
 				// Add SQL to the string
 				if (sb.Length > 0)
@@ -4142,7 +4142,7 @@ namespace PetaPoco
 
 			public override string GetAutoIncrementExpression(TableInfo ti)
 			{
-				if (!string.IsNullOrEmpty(ti.SequenceName))
+				if (!string.IsNullOrWhiteSpace(ti.SequenceName))
 					return string.Format("{0}.nextval", ti.SequenceName);
 
 				return null;

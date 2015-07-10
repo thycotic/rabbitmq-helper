@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Reflection;
 using System.Security.Principal;
@@ -29,7 +30,11 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
             _log.Debug("Application is starting...");
             _log.Info(string.Format("Running as {0}", GetUserName()));
 
-            Task.Delay(StartupMessageDelay).ContinueWith(task => 
+            var delayTask = Task.Delay(StartupMessageDelay);
+
+            Contract.Assume(delayTask != null);
+            
+            delayTask.ContinueWith(task => 
             {
                 //from http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Dobri is awesome
                 var logoStream =

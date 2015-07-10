@@ -21,6 +21,8 @@ namespace Thycotic.WindowsService.Bootstraper
             Contract.Requires<ArgumentNullException>(cts != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(serviceName));
 
+            Contract.Ensures(_log != null);
+
             _cts = cts;
             _serviceName = serviceName;
 
