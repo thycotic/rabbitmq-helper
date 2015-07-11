@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using Org.BouncyCastle.OpenSsl;
@@ -23,7 +24,8 @@ namespace Thycotic.RabbitMq.Helper.Certificate
             get { return "convertCaCertToPem"; }
         }
 
-        public override string Area {
+        public override string Area
+        {
             get { return "Certificate"; }
         }
 
@@ -39,7 +41,7 @@ namespace Thycotic.RabbitMq.Helper.Certificate
             {
                 string path;
                 if (!parameters.TryGet("cacertpath", out path)) return 1;
-                
+
                 ConvertToPem(path);
 
                 return 0;
@@ -47,6 +49,7 @@ namespace Thycotic.RabbitMq.Helper.Certificate
             };
         }
 
+        [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "File info bogus warning")]
         private void ConvertToPem(string cacertpath)
         {
 
@@ -93,6 +96,6 @@ namespace Thycotic.RabbitMq.Helper.Certificate
             _log.Info("Done");
         }
 
-        
+
     }
 }

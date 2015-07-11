@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -53,6 +54,7 @@ namespace Thycotic.RabbitMq.Helper.Certificate
             };
         }
 
+        [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "File info bogus warning")]
         private void ConvertToPem(string pfxPath, string password)
         {
 

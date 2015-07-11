@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -55,6 +56,8 @@ namespace Thycotic.RabbitMq.Helper.Installation
                     {
                         File.Delete(installerPath);
                     }
+
+                    Contract.Assume(installerPath.Length != 0);
 
                     File.Move(tempPath, installerPath);
 
