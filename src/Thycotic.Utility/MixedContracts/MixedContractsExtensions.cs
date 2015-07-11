@@ -3,6 +3,38 @@ using System.Diagnostics.Contracts;
 
 namespace Thycotic.Utility.MixedContracts
 {
+
+    /// <summary>
+    /// Mixed contracts exception
+    /// </summary>
+    public class MixedContractsException : ApplicationException
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MixedContractsException"/> class.
+        /// </summary>
+        public MixedContractsException() : base()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MixedContractsException"/> class.
+        /// </summary>
+        /// <param name="message">A message that describes the error.</param>
+        public MixedContractsException(string message) : base(message)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MixedContractsException"/> class.
+        /// </summary>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception. If the <paramref name="innerException" /> parameter is not a null reference, the current exception is raised in a catch block that handles the inner exception.</param>
+        public MixedContractsException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+    }
+
     /// <summary>
     /// Mixed contract extensions for code that does not have its own contracts
     /// </summary>
@@ -22,7 +54,7 @@ namespace Thycotic.Utility.MixedContracts
 
             if (target == null)
             {
-                throw new ApplicationException(message);
+                throw new MixedContractsException(message);
             }
 
             Contract.Assume(target != null);
@@ -46,7 +78,7 @@ namespace Thycotic.Utility.MixedContracts
 
             if (!(lhs >= rhs))
             {
-                throw new ApplicationException(message);
+                throw new MixedContractsException(message);
             }
 
             Contract.Assume(lhs >= rhs);

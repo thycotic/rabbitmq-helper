@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf;
+using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
@@ -113,7 +114,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <returns></returns>
         public bool ForceInitialize()
         {
-            return _connection.Value != null;
+            if (_connection != null)
+            {
+
+                return _connection.Value != null;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -133,6 +142,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             {
                 try
                 {
+                    if (_connection == null)
+                    {
+                        throw new ApplicationException("No connection available");
+                    }
+
+                    //connection is lazy init
+                    Contract.Assume(_connection.Value != null);
+
                     return _connection.Value.CreateModel();
                 }
                 //catch (OperationInterruptedException ex)
@@ -160,12 +177,20 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
         private void CloseCurrentConnection()
         {
+            Contract.Assume(_log != null);
+
             if (_connection == null)
             {
                 return;
             }
 
-            if (!_connection.IsValueCreated || !_connection.Value.IsOpen) return;
+            if (!_connection.IsValueCreated || !_connection.Value.IsOpen)
+            {
+                Contract.Assume(_connection.Value == null);
+                return;
+            }
+
+            Contract.Assume(_connection.Value != null);
 
             _log.Debug("Closing connection...");
             _connection.Value.Close(2 * 1000);

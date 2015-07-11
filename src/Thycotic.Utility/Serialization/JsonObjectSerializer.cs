@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Text;
 using Newtonsoft.Json;
+using Thycotic.Utility.MixedContracts;
 
 namespace Thycotic.Utility.Serialization
 {
@@ -18,15 +19,15 @@ namespace Thycotic.Utility.Serialization
         /// <summary>
         /// Turns the array of bytes into an object of the specified type.
         /// </summary>
-        /// <typeparam name="TRequest">The type of the request.</typeparam>
+        /// <typeparam name="TObject">The type of the request.</typeparam>
         /// <param name="bytes">The bytes.</param>
         /// <returns></returns>
-        public TRequest ToObject<TRequest>(byte[] bytes)
+        public TObject ToObject<TObject>(byte[] bytes)
         {
-            //TODO: Blow up if you can't deserialize!!!!
             var str = Encoding.UTF8.GetString(bytes);
 
-            return JsonConvert.DeserializeObject<TRequest>(str, _serializerSettings);
+            //TODO: Blow up if you can't deserialize!!!!
+            return this.EnsureNotNull(JsonConvert.DeserializeObject<TObject>(str, _serializerSettings), "Failed to deserialize");
         }
 
         /// <summary>
@@ -36,10 +37,10 @@ namespace Thycotic.Utility.Serialization
         /// <returns></returns>
         public object ToObject(byte[] bytes)
         {
-            //TODO: Blow up if you can't deserialize!!!!
             var str = Encoding.UTF8.GetString(bytes);
 
-            return JsonConvert.DeserializeObject<object>(str, _serializerSettings);
+            //TODO: Blow up if you can't deserialize!!!!
+            return this.EnsureNotNull(JsonConvert.DeserializeObject<object>(str, _serializerSettings), "Failed to deserialize");
         }
 
         /// <summary>

@@ -56,6 +56,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="timeoutMilliseconds">The timeout milliseconds.</param>
         /// <param name="response">The <see cref="CommonDeliveryEventArgs" /> instance containing the event data.</param>
         /// <returns></returns>
+        //TODO: disabling contract because the eventArgs is set in an event and static checker is confused -dkk
+        [ContractVerification(false)]
         public bool Next(int timeoutMilliseconds, out CommonDeliveryEventArgs response)
         {
             MemoryMqDeliveryEventArgs eventArgs = null;
@@ -71,9 +73,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
             var routingKey = _queueName;
 
+            //because _queueName already has this contract
+            Contract.Assume(!string.IsNullOrWhiteSpace(routingKey));
+
             _server.QueueBind(_queueName, string.Empty, routingKey);
-
-
 
             var task = Task.Factory.StartNew(() =>
             {

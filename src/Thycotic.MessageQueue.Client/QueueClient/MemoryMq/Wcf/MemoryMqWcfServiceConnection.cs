@@ -1,4 +1,6 @@
-﻿using Thycotic.MemoryMq;
+﻿using System;
+using System.Diagnostics.Contracts;
+using Thycotic.MemoryMq;
 using Thycotic.Wcf;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
@@ -17,6 +19,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
         public MemoryMqWcfServiceConnection(IMemoryMqWcfService service, MemoryMqWcfServiceCallback callback)
             : base(service, callback)
         {
+            Contract.Requires<ArgumentNullException>(service != null);
+            Contract.Requires<ArgumentNullException>(callback != null);
+
         }
 
         /// <summary>

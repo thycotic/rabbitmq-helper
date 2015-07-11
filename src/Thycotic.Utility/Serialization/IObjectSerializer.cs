@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Security.Cryptography;
 
 namespace Thycotic.Utility.Serialization
 {
@@ -48,6 +49,8 @@ namespace Thycotic.Utility.Serialization
         {
             Contract.Requires<ArgumentNullException>(bytes != null);
 
+            Contract.Ensures(Contract.Result<TRequest>() != null);
+
             return default(TRequest);
         }
 
@@ -60,6 +63,8 @@ namespace Thycotic.Utility.Serialization
         {
             Contract.Requires<ArgumentNullException>(bytes != null);
 
+            Contract.Ensures(Contract.Result<object>() != null);
+
             return default(object);
         }
 
@@ -71,6 +76,8 @@ namespace Thycotic.Utility.Serialization
         public byte[] ToBytes(object message)
         {
             Contract.Requires<ArgumentNullException>(message != null);
+
+            Contract.Ensures(Contract.Result<byte[]>() != null);
 
             return default(byte[]);
         }

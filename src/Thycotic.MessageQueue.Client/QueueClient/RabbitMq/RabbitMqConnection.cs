@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 using RabbitMQ.Client;
@@ -35,6 +36,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
         public RabbitMqConnection(string url, string userName, string password, bool useSsl)
         {
+            Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(url));
+            Contract.Requires<ArgumentException>(userName != null);
+            Contract.Requires<ArgumentException>(password != null);
+
             _connectionFactory = new ConnectionFactory
             {
                 Uri = url,
