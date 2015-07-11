@@ -40,7 +40,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanMachineMessage request)
         {
-            Contract.Assume(_log != null);
+            
 
             try
             {

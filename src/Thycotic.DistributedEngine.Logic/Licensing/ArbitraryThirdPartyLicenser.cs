@@ -28,7 +28,7 @@ namespace Thycotic.DistributedEngine.Logic.Licensing
 
         public void Start()
         {
-            Contract.Assume(_log != null);
+            
 
             _log.Debug(string.Format("Applying {0} keys to ArbitraryThirdPart library", this.EnsureNotNull(_thirdPartyLicenseKeyProvider.Keys).Count));
         }

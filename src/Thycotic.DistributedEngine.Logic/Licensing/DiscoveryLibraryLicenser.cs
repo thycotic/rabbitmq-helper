@@ -22,7 +22,7 @@ namespace Thycotic.DistributedEngine.Logic.Licensing
 
         public void Start()
         {
-            Contract.Assume(_log != null);
+            
 
             _log.Debug(string.Format("Applying {0} keys to Discovery library", this.EnsureNotNull(_thycoticLicenseKeyProvider.Keys).Count));
             var keyDictionary = _thycoticLicenseKeyProvider.Keys.ToDictionary(x => x.Key, x => x.Value);

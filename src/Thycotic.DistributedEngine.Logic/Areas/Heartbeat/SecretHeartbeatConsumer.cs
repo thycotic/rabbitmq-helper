@@ -39,7 +39,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
         /// <returns></returns>
         public void Consume(SecretHeartbeatMessage request)
         {
-            Contract.Assume(_log != null);
+            
 
             _log.Info(string.Format("Got a heartbeat request for Secret Id {0}", request.SecretId));
 

@@ -16,7 +16,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.IoC
 
         public MemoryMqServerModule(Func<string, string> configurationProvider)
         {
-            Contract.Assume(_log != null);
+            
             _configurationProvider = configurationProvider;
         }
 

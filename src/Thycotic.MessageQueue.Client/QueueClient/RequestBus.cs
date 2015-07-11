@@ -97,9 +97,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient
                 {
                     var queueName = channel.QueueDeclare().QueueName;
 
-                    //TODO: Not sure about this one... Should revisit -dkk
-                    Contract.Assume(!string.IsNullOrWhiteSpace(queueName));
-
                     using (var subscription = channel.CreateSubscription(queueName))
                     {
                         var properties = channel.CreateBasicProperties();
@@ -124,9 +121,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient
                         {
                             throw new ApplicationException("Blocking call was disconnected");
                         }
-
-                        //TODO: Not sure about this one... Should revisit -dkk
-                        Contract.Assume(response.BasicProperties != null);
 
                         if (response.BasicProperties.CorrelationId != properties.CorrelationId)
                         {

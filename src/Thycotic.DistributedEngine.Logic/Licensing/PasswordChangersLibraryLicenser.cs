@@ -24,7 +24,7 @@ namespace Thycotic.DistributedEngine.Logic.Licensing
 
         public void Start()
         {
-            Contract.Assume(_log != null);
+            
 
             _log.Debug(string.Format("Applying {0} keys to PasswordChangers library",
                 this.EnsureNotNull(_thycoticLicenseKeyProvider.Keys).Count));

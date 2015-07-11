@@ -50,7 +50,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service
         public SiteConnectorService(IIoCConfigurator ioCConfigurator)
         {
             IoCConfigurator = ioCConfigurator;
-            Contract.Assume(_log != null);
+            
             ConfigureLogging();
         }
 

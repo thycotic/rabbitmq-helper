@@ -22,7 +22,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.General
         /// <param name="request">The request.</param>
         public CredentialOperationResult Consume(DomainCredentialTestMessage request)
         {
-            Contract.Assume(_log != null);
+            
 
             _log.Info(string.Format("Got a Domain credential validation request for Domain: {0} using user {1}\\{2}", request.Domain, request.UserDomain, request.UserName));
 

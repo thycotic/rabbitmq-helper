@@ -177,7 +177,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
         private void CloseCurrentConnection()
         {
-            Contract.Assume(_log != null);
+            
 
             if (_connection == null)
             {

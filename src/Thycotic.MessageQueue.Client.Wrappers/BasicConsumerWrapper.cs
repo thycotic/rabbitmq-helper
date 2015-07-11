@@ -105,7 +105,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     if (message.ExpiresOn != null)
                     {
                         //message has expired and should not be relayed when expired
-                        if (message.ExpiresOn < DateTime.UtcNow && !message.RelayEvenIfExpired)
+                        if (message.ExpiresOn.Value < DateTime.UtcNow && !message.RelayEvenIfExpired)
                         {
                             requeue = false;
 

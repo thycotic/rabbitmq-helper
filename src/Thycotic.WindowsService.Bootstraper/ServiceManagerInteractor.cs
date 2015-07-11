@@ -88,7 +88,7 @@ namespace Thycotic.WindowsService.Bootstraper
 
         public void StartService()
         {
-            Contract.Assume(_log != null);
+            
 
             InteractiveWithService(service =>
             {
@@ -115,7 +115,7 @@ namespace Thycotic.WindowsService.Bootstraper
 
         public void StopService()
         {
-            Contract.Assume(_log != null);
+            
 
             InteractiveWithService(service =>
             {

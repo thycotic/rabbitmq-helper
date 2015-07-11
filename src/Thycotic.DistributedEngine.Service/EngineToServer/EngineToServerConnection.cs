@@ -80,7 +80,9 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         {
             var uri = new Uri(_connectionString);
 
-            switch (uri.Scheme)
+            var scheme = uri.Scheme;
+
+            switch (scheme)
             {
                 case "net.tcp":
                     _log.Info(string.Format("Using Net/TCP channel to {0}", _connectionString));

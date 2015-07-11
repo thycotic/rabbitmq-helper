@@ -40,7 +40,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanLocalAccountMessage request)
         {
-            Contract.Assume(_log != null);
+            
             try
             {
                 _log.Info(string.Format("{0} : Scan Local Accounts", request.Input.ComputerName));
