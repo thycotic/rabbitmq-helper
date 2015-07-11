@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.Logging;
@@ -76,13 +77,12 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotSupportedException">Requested schema does not have a supported channel</exception>
+        [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "Uri would be invalid without a scheme")]
         public IEngineToServerCommunicationWcfService OpenChannel(IEngineToServerCommunicationCallback callback)
         {
             var uri = new Uri(_connectionString);
 
-            var scheme = uri.Scheme;
-
-            switch (scheme)
+            switch (uri.Scheme)
             {
                 case "net.tcp":
                     _log.Info(string.Format("Using Net/TCP channel to {0}", _connectionString));
@@ -101,6 +101,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotSupportedException">Requested schema does not have a supported channel</exception>
+        [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "Uri would be invalid without a scheme")]
         public IUpdateWebClient OpenUpdateWebClient()
         {
             var uri = new Uri(_connectionString);

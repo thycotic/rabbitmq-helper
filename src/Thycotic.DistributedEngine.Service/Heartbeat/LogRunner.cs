@@ -55,7 +55,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
 
         private void Pump()
         {
-            if (!_flush && _cts.IsCancellationRequested)
+            if (!_flush && _cts.Token.IsCancellationRequested)
             {
                 return;
             }
@@ -124,7 +124,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                     {
                         _log.Error("Failed to send log to server", task.Exception);
                     }
-                })
+                }, _cts.Token)
                 //schedule
                 .ContinueWith(task => WaitPumpAndSchedule(), _cts.Token);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
@@ -56,11 +57,12 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             _updateInitializer = updateInitializer;
         }
 
+       [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "Bogus warning about _cts.Token.IsCancellationRequested")]
         private void Pump()
         {
             Contract.Assume(ReleaseInformationHelper.Version != null);
 
-            if (_cts.IsCancellationRequested)
+            if (_cts.Token.IsCancellationRequested)
             {
                 return;
             }
@@ -82,7 +84,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 throw new ConfigurationErrorsException(response.ErrorMessage);
             }
 
-            if (_cts.IsCancellationRequested)
+            if (_cts.Token.IsCancellationRequested)
             {
                 return;
             }
@@ -111,7 +113,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
 
         private void WaitPumpAndSchedule()
         {
-            if (_cts.IsCancellationRequested)
+            if (_cts.Token.IsCancellationRequested)
             {
                 return;
             }
@@ -129,7 +131,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                     _log.Error("Failed to send heart beat to server. Recycling", task.Exception);
 
                     _engineService.Recycle(true);
-                })
+                }, _cts.Token)
                 //schedule
                 .ContinueWith(task => WaitPumpAndSchedule(), _cts.Token);
         }

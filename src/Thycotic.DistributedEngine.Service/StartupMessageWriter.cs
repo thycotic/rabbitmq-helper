@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Reflection;
@@ -70,7 +71,7 @@ namespace Thycotic.DistributedEngine.Service
             });
         }
 
-
+        [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "Identity is checked for null")]
         private static string GetUserName()
         {
             var windowsIdentity = WindowsIdentity.GetCurrent();
