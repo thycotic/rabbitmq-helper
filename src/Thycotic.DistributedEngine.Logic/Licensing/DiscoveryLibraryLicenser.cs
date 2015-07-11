@@ -24,7 +24,7 @@ namespace Thycotic.DistributedEngine.Logic.Licensing
         {
             
 
-            _log.Debug(string.Format("Applying {0} keys to Discovery library", this.EnsureNotNull(_thycoticLicenseKeyProvider.Keys).Count));
+            _log.Debug(string.Format("Applying {0} keys to Discovery library", _thycoticLicenseKeyProvider.Keys.Count));
             var keyDictionary = _thycoticLicenseKeyProvider.Keys.ToDictionary(x => x.Key, x => x.Value);
             Discovery.Sources.Aspects.LicenseKeyHelper.LicenseKeys = keyDictionary;
         }

@@ -45,17 +45,17 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             try
             {
                 _log.Info(string.Format("{0} : Scan Dependencies ({1})", request.Input.ComputerName, GetDependencyTypeName(request.Input.DependencyScannerType)));
-                var scanner = this.EnsureNotNull(_scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId), "No scanner returned");
-                var result = this.EnsureNotNull(scanner.ScanComputerForDependencies(request.Input), "Scanner returned no result");
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+                var result = scanner.ScanComputerForDependencies(request.Input);
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
-                    Total = this.EnsureNotNull(result.DependencyItems, "Result has no dependency items").Count(),
+                    Total = result.DependencyItems.Count(),
                     Take = request.Input.PageSize
                 };
-                var truncatedLog = this.EnsureNotNull(result.Logs, "Result has no log items").Truncate();
+                var truncatedLog = result.Logs.Truncate();
 
-                Enumerable.Range(0, this.EnsureGreaterThanOrEqualTo(paging.BatchCount, 0)).ToList().ForEach(x =>
+                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
                     var response = new ScanDependencyResponse
                     {

@@ -30,7 +30,7 @@ namespace Thycotic.DistributedEngine.Logic.Licensing
         {
             
 
-            _log.Debug(string.Format("Applying {0} keys to ArbitraryThirdPart library", this.EnsureNotNull(_thirdPartyLicenseKeyProvider.Keys).Count));
+            _log.Debug(string.Format("Applying {0} keys to ArbitraryThirdPart library", _thirdPartyLicenseKeyProvider.Keys.Count));
         }
     }
 }

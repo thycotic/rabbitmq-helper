@@ -45,20 +45,20 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             try
             {
                 _log.Info(string.Format("{0} : Scan Machines", request.Input.HostRange));
-                var scanner = this.EnsureNotNull(_scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId),"No scanner returned");
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
                 
-                var result = this.EnsureNotNull(scanner.ScanForMachines(request.Input),"No result returned");
+                var result = scanner.ScanForMachines(request.Input);
 
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
-                    Total = this.EnsureNotNull(result.Computers,"No computers were returned from result.").Count(),
+                    Total = result.Computers.Count(),
                     Take = request.Input.PageSize
                 };
 
-                var truncatedLog = this.EnsureNotNull(result.Logs,"No logs were returned from result").Truncate();
+                var truncatedLog = result.Logs.Truncate();
                 
-                Enumerable.Range(0, this.EnsureGreaterThanOrEqualTo(paging.BatchCount,0)).ToList().ForEach(x =>
+                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
                     var response = new ScanMachineResponse
                     {

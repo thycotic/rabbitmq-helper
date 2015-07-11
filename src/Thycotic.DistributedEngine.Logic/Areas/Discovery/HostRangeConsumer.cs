@@ -45,16 +45,16 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             try
             {
                 _log.Info(string.Format("{0} : Scan Host Range", request.Input.Domain));
-                var scanner = this.EnsureNotNull(_scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId), "No scanner returned");
-                var result = this.EnsureNotNull(scanner.ScanForHostRanges(request.Input), "Scanner returned no result");
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+                var result = scanner.ScanForHostRanges(request.Input);
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
-                    Total = this.EnsureNotNull(result.HostRangeItems, "Result has not host ranges").Count(),
+                    Total = result.HostRangeItems.Count(),
                     Take = request.Input.PageSize
                 };
-                var truncatedLog = this.EnsureNotNull(result.Logs, "Result has no log items").Truncate();
-                Enumerable.Range(0, this.EnsureGreaterThanOrEqualTo(paging.BatchCount, 0)).ToList().ForEach(x =>
+                var truncatedLog = result.Logs.Truncate();
+                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
                     var response = new ScanHostRangeResponse
                     {

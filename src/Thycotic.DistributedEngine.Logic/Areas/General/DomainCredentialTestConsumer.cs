@@ -37,13 +37,13 @@ namespace Thycotic.DistributedEngine.Logic.Areas.General
                 UseSSL = request.UseSsl
             };
 
-            var result = this.EnsureNotNull(domainVerifier.VerifyCredentials(verifyInfo),"No result was returned.");
+            var result = domainVerifier.VerifyCredentials(verifyInfo);
 
             _log.Info(string.Format("Credential validation result for Domain {0} using user {1}\\{2}: {3}", 
                 request.Domain, request.UserDomain, request.UserName, 
                 result.Status == OperationStatus.Success 
                     ? "Success" 
-                    : string.Format("Failure ({0})", string.Join(", ", this.EnsureNotNull(result.Errors, "Result has no error items").Select(e => e.Message)))));
+                    : string.Format("Failure ({0})", string.Join(", ", result.Errors.Select(e => e.Message)))));
 
             return result;
         }

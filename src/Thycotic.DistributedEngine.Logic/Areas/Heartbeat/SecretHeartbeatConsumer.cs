@@ -45,8 +45,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
 
             try
             {
-                var verifier = this.EnsureNotNull(new DefaultPasswordChangerFactory().ResolveCredentialVerifier(request.VerifyCredentialsInfo), "Verifier was not returned");
-                var verifyResult = this.EnsureNotNull(verifier.VerifyCredentials(request.VerifyCredentialsInfo),"Result was not returned.");
+                var verifier = new DefaultPasswordChangerFactory().ResolveCredentialVerifier(request.VerifyCredentialsInfo);
+                var verifyResult = verifier.VerifyCredentials(request.VerifyCredentialsInfo);
 
                 var response = new SecretHeartbeatResponse
                 {
@@ -75,7 +75,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
                 {
                     Status = OperationStatus.Unknown,
                     SecretId = request.SecretId,
-                    Errors = new List<Error> {new SharedTypes.PasswordChangers.Error(ex.Message, ex.ToString())},
+                    Errors = new List<Error> {new Error(ex.Message, ex.ToString())},
                     Log = new List<LogEntry>()
                 };
                 _log.Info(string.Format("Heartbeat Result for Secret Id {0}: Success: False ({1})", request.SecretId, ex ));

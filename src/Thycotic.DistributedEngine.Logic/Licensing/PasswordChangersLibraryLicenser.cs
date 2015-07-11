@@ -27,7 +27,7 @@ namespace Thycotic.DistributedEngine.Logic.Licensing
             
 
             _log.Debug(string.Format("Applying {0} keys to PasswordChangers library",
-                this.EnsureNotNull(_thycoticLicenseKeyProvider.Keys).Count));
+                _thycoticLicenseKeyProvider.Keys.Count));
             var keyDictionary = _thycoticLicenseKeyProvider.Keys.ToDictionary(x => x.Key, x => x.Value);
             PasswordChangers.Aspects.LicenseKeyHelper.LicenseKeys = keyDictionary;
         }
