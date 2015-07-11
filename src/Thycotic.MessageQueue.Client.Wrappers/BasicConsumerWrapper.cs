@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
@@ -36,6 +37,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             IMessageEncryptor messageEncryptor, Func<Owned<TConsumer>> consumerFactory)
             : base(connection, exchangeNameProvider)
         {
+            Contract.Requires<ArgumentNullException>(connection != null);
+            Contract.Requires<ArgumentNullException>(exchangeNameProvider != null);
+            Contract.Requires<ArgumentNullException>(objectSerializer != null);
+            Contract.Requires<ArgumentNullException>(messageEncryptor != null);
+            Contract.Requires<ArgumentNullException>(consumerFactory != null);
+
             _consumerFactory = consumerFactory;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -36,6 +37,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="exchangeNameProvider">The exchange name provider.</param>
         protected ConsumerWrapperBase(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider)
         {
+            Contract.Requires<ArgumentNullException>(connection != null);
+            Contract.Requires<ArgumentNullException>(exchangeNameProvider != null);
+
             _connection = connection;
             _exchangeNameProvider = exchangeNameProvider;
             _connection.ConnectionCreated += (sender, args) => CommonModel = CreateModel();
