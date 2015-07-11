@@ -220,16 +220,16 @@
     <CodeContractsAssertsToContractsCheckBox>True</CodeContractsAssertsToContractsCheckBox>
     <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
     <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
-    <CodeContractsMissingPublicEnsuresAsWarnings>True</CodeContractsMissingPublicEnsuresAsWarnings>
+    <CodeContractsMissingPublicEnsuresAsWarnings>False</CodeContractsMissingPublicEnsuresAsWarnings>
     <CodeContractsInferRequires>True</CodeContractsInferRequires>
-    <CodeContractsInferEnsures>True</CodeContractsInferEnsures>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
     <CodeContractsInferEnsuresAutoProperties>True</CodeContractsInferEnsuresAutoProperties>
-    <CodeContractsInferObjectInvariants>True</CodeContractsInferObjectInvariants>
-    <CodeContractsSuggestAssumptions>True</CodeContractsSuggestAssumptions>
-    <CodeContractsSuggestAssumptionsForCallees>True</CodeContractsSuggestAssumptionsForCallees>
-    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestAssumptionsForCallees>False</CodeContractsSuggestAssumptionsForCallees>
+    <CodeContractsSuggestRequires>False</CodeContractsSuggestRequires>
     <CodeContractsNecessaryEnsures>True</CodeContractsNecessaryEnsures>
-    <CodeContractsSuggestObjectInvariants>True</CodeContractsSuggestObjectInvariants>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
     <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
     <CodeContractsRunInBackground>False</CodeContractsRunInBackground>
     <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
@@ -242,13 +242,13 @@
     <CodeContractsExtraAnalysisOptions />
     <CodeContractsSQLServerOption />
     <CodeContractsBaseLineFile>..\..\baseline.xml</CodeContractsBaseLineFile>
-    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
     <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
-    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsFailBuildOnWarnings>True</CodeContractsFailBuildOnWarnings>
     <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
-    <CodeContractsAnalysisWarningLevel>3</CodeContractsAnalysisWarningLevel>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
