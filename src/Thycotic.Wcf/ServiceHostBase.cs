@@ -1,10 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.IdentityModel.Selectors;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.ServiceModel.Security;
-using System.Threading.Tasks;
 using Thycotic.Logging;
 
 namespace Thycotic.Wcf
@@ -29,6 +28,10 @@ namespace Thycotic.Wcf
         /// <param name="userNamePasswordValidator"></param>
         public ServiceHostBase(string connectionString, UserNamePasswordValidator userNamePasswordValidator = null)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString));
+
+            Contract.Assume(_log != null);
+
             _connectionString = connectionString;
             _userNamePasswordValidator = userNamePasswordValidator;
 
@@ -43,6 +46,11 @@ namespace Thycotic.Wcf
         /// <param name="userNamePasswordValidator">The user name password validator.</param>
         public ServiceHostBase(string connectionString, string thumbprint, UserNamePasswordValidator userNamePasswordValidator = null)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(thumbprint));
+
+            Contract.Assume(_log != null);
+
             _connectionString = connectionString;
             _thumbprint = thumbprint;
             _userNamePasswordValidator = userNamePasswordValidator;
@@ -81,6 +89,10 @@ namespace Thycotic.Wcf
                 serviceBinding = new NetTcpBinding(SecurityMode.None);
             }
 
+            Contract.Assume(serviceBinding != null);
+            Contract.Assume(serviceBinding.Security != null);
+            Contract.Assume(serviceBinding.Security.Message != null);
+
             if (_userNamePasswordValidator != null)
             {
                 serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
@@ -90,12 +102,17 @@ namespace Thycotic.Wcf
                 serviceBinding.Security.Message.ClientCredentialType = MessageCredentialType.None;
             }
 
-            _host = new ServiceHost(typeof (TServer));
+            _host = new ServiceHost(typeof(TServer));
 
-            _host.AddServiceEndpoint(typeof (TEndPoint), serviceBinding, _connectionString);
+            _host.AddServiceEndpoint(typeof(TEndPoint), serviceBinding, _connectionString);
+
+            Contract.Assume(_host.Credentials != null);
+            Contract.Assume(_host.Credentials.ServiceCertificate != null);
 
             if (_useSsl)
             {
+
+
                 _host.Credentials.ServiceCertificate.SetCertificate(
                     StoreLocation.LocalMachine,
                     StoreName.My,
@@ -104,6 +121,8 @@ namespace Thycotic.Wcf
 
                 if (_userNamePasswordValidator != null)
                 {
+                    Contract.Assume(_host.Credentials.UserNameAuthentication != null);
+
                     _host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode =
                         UserNamePasswordValidationMode.Custom;
                     _host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator =
@@ -126,6 +145,9 @@ namespace Thycotic.Wcf
 
             try
             {
+                //the reference is not been reset anywhere
+                Contract.Assume(_host != null);
+
                 _host.Open();
             }
             catch (Exception ex)
@@ -140,7 +162,7 @@ namespace Thycotic.Wcf
         public virtual void Stop()
         {
             if (_host == null) return;
-            
+
             switch (_host.State)
             {
                 case CommunicationState.Opened:

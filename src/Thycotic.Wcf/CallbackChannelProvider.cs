@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics.Contracts;
 using System.ServiceModel;
 
 namespace Thycotic.Wcf
@@ -13,7 +15,24 @@ namespace Thycotic.Wcf
         /// <returns></returns>
         public TCallback GetCallbackChannel<TCallback>()
         {
-            return OperationContext.Current.GetCallbackChannel<TCallback>();
+            if (OperationContext.Current == null)
+            {
+                throw new ApplicationException("No operation context available");
+            }
+
+            Contract.Assume(OperationContext.Current != null);
+
+            var callback = OperationContext.Current.GetCallbackChannel<TCallback>();
+
+
+            if (callback == null)
+            {
+                throw new ApplicationException("Could not get callback channel");
+            }
+
+            Contract.Assume(callback != null);
+
+            return callback;
         }
     }
 }

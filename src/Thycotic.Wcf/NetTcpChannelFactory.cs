@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using Thycotic.Logging;
@@ -27,6 +28,9 @@ namespace Thycotic.Wcf
 
             if (useEnvelopeAuth)
             {
+                Contract.Assume(clientBinding.Security != null);
+                Contract.Assume(clientBinding.Security.Message != null);
+
                 clientBinding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
             }
 

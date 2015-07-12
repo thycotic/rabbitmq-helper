@@ -1,4 +1,6 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.ServiceModel;
 
 namespace Thycotic.Wcf
 {
@@ -14,8 +16,19 @@ namespace Thycotic.Wcf
         /// <returns></returns>
         public static IContextChannel ToContextChannel(this IWcfServerCallback callback)
         {
-// ReSharper disable once SuspiciousTypeConversion.Global
-            return (IContextChannel) callback;
+            Contract.Ensures(Contract.Result<IContextChannel>() != null);
+
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var contextChannel = callback as IContextChannel;
+
+            if (contextChannel == null)
+            {
+                throw new ApplicationException("Unable to cast callback to context channel");
+            }
+
+            Contract.Assume(contextChannel != null);
+
+            return contextChannel;
         }
 
         /// <summary>
@@ -25,8 +38,20 @@ namespace Thycotic.Wcf
         /// <returns></returns>
         public static ICommunicationObject ToCommunicationObject(this IWcfService service)
         {
-// ReSharper disable once SuspiciousTypeConversion.Global
-            return (ICommunicationObject) service;
+
+            Contract.Ensures(Contract.Result<ICommunicationObject>() != null);
+
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var communicationObject = service as ICommunicationObject;
+
+            if (communicationObject == null)
+            {
+                throw new ApplicationException("Unable to cast service to communication object");
+            }
+
+            Contract.Assume(communicationObject != null);
+
+            return communicationObject;
         }
     }
 }
