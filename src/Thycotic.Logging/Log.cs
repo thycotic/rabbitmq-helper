@@ -37,6 +37,10 @@ namespace Thycotic.Logging
         public static void AttachRecentEventsMemoryAppender()
         {
             var repository = (Hierarchy)LogManager.GetRepository();
+
+            Contract.Assume(repository != null);
+            Contract.Assume(repository.Root != null);
+
             repository.Root.AddAppender(new MemoryAppenderWithCount
             {
                 Name = BuiltInLogNames.RecentEventsMemoryAppender
@@ -72,7 +76,22 @@ namespace Thycotic.Logging
         [DebuggerStepThrough]
         public static IEnumerable<IAppender> GetAppenders()
         {
-            return LogManager.GetRepository().GetAppenders();
+            Contract.Ensures(Contract.Result<IEnumerable<IAppender>>() != null);
+
+            var repository = LogManager.GetRepository();
+
+            Contract.Assume(repository != null);
+
+            var appenders = repository.GetAppenders();
+
+            if (appenders == null)
+            {
+                throw new ApplicationException("No appenders found");
+            }
+
+            Contract.Assume(appenders != null);
+
+            return appenders;
         }
 
 
@@ -98,7 +117,16 @@ namespace Thycotic.Logging
         {
             Contract.Ensures(Contract.Result<ILogWriter>() != null);
 
-            return _logWriterFactory.GetLogWriter(type);
+            var writer = _logWriterFactory.GetLogWriter(type);
+
+            if (writer == null)
+            {
+                throw new ApplicationException("Could not get log writer");
+            }
+
+            Contract.Assume(writer != null);
+
+            return writer;
         }
 
         private class GenericLogWriterFactory : ILogWriterFactory
@@ -124,7 +152,16 @@ namespace Thycotic.Logging
             [DebuggerStepThrough]
             public GenericLogWriter(Type type)
             {
+                Contract.Ensures(_log2 != null);
+
                 _log2 = LogManager.GetLogger(type);
+
+                if (_log2 == null)
+                {
+                    throw new ApplicationException("Could not create underlying logger");
+                }
+
+                Contract.Assume(_log2 != null);
             }
 
             /// <summary>

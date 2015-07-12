@@ -26,9 +26,29 @@ namespace Thycotic.Logging
         [DebuggerStepThrough]
         private LogCorrelation()
         {
+            Contract.Ensures(_context != null);
+
             Id = Guid.NewGuid().ToString();
 
-            _context = log4net.ThreadContext.Stacks[CorrelationName].Push(Id);
+            Contract.Assume(log4net.ThreadContext.Stacks != null);
+
+            var stack = log4net.ThreadContext.Stacks[CorrelationName];
+
+            if (stack == null)
+            {
+                throw new ApplicationException("Could not retrieve correlation stack");
+            }
+
+            var context = stack.Push(Id);
+            if (context == null)
+            {
+                throw new ApplicationException("Log context could not be established");
+            }
+
+            Contract.Assume(context != null);
+
+            _context = context;
+
         }
 
         /// <summary>

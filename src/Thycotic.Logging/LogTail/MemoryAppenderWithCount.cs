@@ -19,7 +19,7 @@ namespace Thycotic.Logging.LogTail
             {
                 lock (m_eventsList)
                 {
-                    return m_eventsList.Count;
+                    return m_eventsList != null ? m_eventsList.Count : 0;
                 }
             }
         }

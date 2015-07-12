@@ -21,7 +21,29 @@ namespace Thycotic.Logging
         [DebuggerStepThrough]
         private LogContext(string name)
         {
-            _context = log4net.ThreadContext.Stacks[ContextName].Push(name);
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(name));
+
+            Contract.Ensures(_context != null);
+
+            Contract.Assume(log4net.ThreadContext.Stacks != null);
+
+            var stack = log4net.ThreadContext.Stacks[ContextName];
+
+            if (stack == null)
+            {
+                throw new ApplicationException("Could not retrieve context stack");
+            }
+
+            var context = stack.Push(name);
+
+            if (context == null)
+            {
+                throw new ApplicationException("Log context could not be established");
+            }
+
+            Contract.Assume(context != null);
+
+            _context = context;
             _stopwatch.Start();
         }
 
@@ -33,9 +55,15 @@ namespace Thycotic.Logging
         [DebuggerStepThrough]
         public static LogContext Create(string name)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(name));
+            
             Contract.Ensures(Contract.Result<LogContext>() != null);
 
-            return new LogContext(string.Format(CultureInfo.InvariantCulture, "> {0}", name));
+            var nameIndented = string.Format(CultureInfo.InvariantCulture, "> {0}", name);
+
+            Contract.Assume(!string.IsNullOrWhiteSpace(nameIndented));
+
+            return new LogContext(nameIndented);
         }
 
         /// <summary>

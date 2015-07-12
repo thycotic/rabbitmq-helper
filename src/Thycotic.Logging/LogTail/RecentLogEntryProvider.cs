@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using log4net.Core;
 using Thycotic.Logging.Models;
@@ -29,6 +30,23 @@ namespace Thycotic.Logging.LogTail
                                 .SingleOrDefault(a => a is MemoryAppenderWithCount && a.Name == BuiltInLogNames.RecentEventsMemoryAppender));
         }
 
+        private MemoryAppenderWithCount ActualAppender
+        {
+            get
+            {
+                var actualAppender = _appender.Value;
+
+                if (actualAppender == null)
+                {
+                    throw new ApplicationException("No recent log appender found");
+                }
+
+                Contract.Assume(actualAppender != null);
+
+                return actualAppender;
+            }
+        }
+
         /// <summary>
         /// Gets the count.
         /// </summary>
@@ -37,7 +55,7 @@ namespace Thycotic.Logging.LogTail
         /// </value>
         public int Count
         {
-            get { return _appender.Value.Count; }
+            get { return ActualAppender.Count; }
         }
 
         /// <summary>
@@ -46,7 +64,14 @@ namespace Thycotic.Logging.LogTail
         /// <returns></returns>
         public LogEntry[] GetEntries()
         {
-            return _appender.Value.GetEvents().ToArray().Select(Map).ToArray();
+            var events = ActualAppender.GetEvents();
+
+            if (events == null)
+            {
+                throw new ApplicationException("No events enumerable retrieved");
+            }
+
+            return events.ToArray().Select(Map).ToArray();
         }
 
         /// <summary>
@@ -56,7 +81,7 @@ namespace Thycotic.Logging.LogTail
         {
             _log.Debug("Clearing log");
 
-            _appender.Value.Clear();
+            ActualAppender.Clear();
         }
 
         private static LogEntry Map(LoggingEvent loggingEvent)
@@ -69,7 +94,7 @@ namespace Thycotic.Logging.LogTail
                 Correlation = loggingEvent.Properties.Contains(LogCorrelation.CorrelationName) ? (string)loggingEvent.Properties[LogCorrelation.CorrelationName] : string.Empty,
                 Context = loggingEvent.Properties.Contains(LogContext.ContextName) ? (string)loggingEvent.Properties[LogContext.ContextName] : string.Empty,
                 Thread = loggingEvent.ThreadName,
-                Level = loggingEvent.Level.DisplayName,
+                Level = loggingEvent.Level != null ? loggingEvent.Level.DisplayName : string.Empty,
                 Message = loggingEvent.RenderedMessage,
                 Exception = loggingEvent.GetExceptionString()
             };
