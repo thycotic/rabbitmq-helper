@@ -80,6 +80,8 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <returns></returns>
         protected SymmetricEnvelopeNeedingResponse WrapRequest<TResponse>(object response)
         {
+            Contract.Ensures(Contract.Result<SymmetricEnvelopeNeedingResponse>() != null);
+
             var requestString = _objectSerializer.ToBytes(response);
 
             return new SymmetricEnvelopeNeedingResponse
