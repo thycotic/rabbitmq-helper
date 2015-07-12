@@ -29,6 +29,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         /// <param name="consumerFactory"></param>
         public SecretBasicChangePasswordConsumer(IResponseBus responseBus, Func<Owned<IBasicConsumer<SecretChangeDependencyMessage>>> consumerFactory)
         {
+            Contract.Requires<ArgumentNullException>(responseBus != null);
+            Contract.Requires<ArgumentNullException>(consumerFactory != null);
+
             _responseBus = responseBus;
             _consumerFactory = consumerFactory;
         }
