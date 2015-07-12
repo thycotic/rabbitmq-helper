@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.IO;
 
 namespace Thycotic.InstallerGenerator.InteractiveRunner
 {
@@ -16,6 +18,11 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         /// <returns></returns>
         public static string GetSignToolPath(string applicationPath)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(applicationPath));
+
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
             return Path.Combine(applicationPath, LibPath, "signtool.exe"); 
         }
     }

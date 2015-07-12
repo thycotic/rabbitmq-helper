@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -94,7 +95,12 @@ namespace Thycotic.InstallerRunner.Views
 
         public string LogOutput
         {
-            get { return _logOutput.ToString(); }
+            get
+            {
+                Contract.Ensures(Contract.Result<string>() != null);
+
+                return _logOutput.ToString();
+            }
         }
 
         public void Initialize()

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.IO;
 
 namespace Thycotic.InstallerGenerator.WiX
 {
@@ -16,7 +18,12 @@ namespace Thycotic.InstallerGenerator.WiX
         /// <returns></returns>
         public static string GetHeatPath(string applicationPath)
         {
-            return Path.Combine(applicationPath, LibPath, "heat.exe"); 
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(applicationPath));
+
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+            return Path.Combine(applicationPath, LibPath, "heat.exe");
         }
 
         /// <summary>
@@ -26,7 +33,12 @@ namespace Thycotic.InstallerGenerator.WiX
         /// <returns></returns>
         public static string GetCandlePath(string applicationPath)
         {
-             return Path.Combine(applicationPath, LibPath, "candle.exe"); 
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(applicationPath));
+
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+            return Path.Combine(applicationPath, LibPath, "candle.exe");
         }
 
         /// <summary>
@@ -36,7 +48,12 @@ namespace Thycotic.InstallerGenerator.WiX
         /// <returns></returns>
         public static string GetLightPath(string applicationPath)
         {
-             return Path.Combine(applicationPath, LibPath, "light.exe"); 
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(applicationPath));
+
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+            return Path.Combine(applicationPath, LibPath, "light.exe");
         }
 
     }

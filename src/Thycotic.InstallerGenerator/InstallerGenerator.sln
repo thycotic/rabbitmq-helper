@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.InstallerGenerator.InteractiveRunner", "Thycotic.InstallerGenerator.InteractiveRunner\Thycotic.InstallerGenerator.InteractiveRunner.csproj", "{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}"
 EndProject
@@ -63,6 +63,7 @@ Global
 		MSI.32Bit|Any CPU = MSI.32Bit|Any CPU
 		MSI|Any CPU = MSI|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Static Analysis|Any CPU = Static Analysis|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -73,6 +74,8 @@ Global
 		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.MSI|Any CPU.Build.0 = Release|Any CPU
 		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
+		{B52ECDEC-134C-454E-B12F-F3A7E6D4E90D}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
 		{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
@@ -81,6 +84,8 @@ Global
 		{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}.MSI|Any CPU.Build.0 = Release|Any CPU
 		{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
+		{3C2D28BE-DDA0-4768-B968-4EC89B52BB9E}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
 		{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
@@ -89,6 +94,8 @@ Global
 		{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}.MSI|Any CPU.Build.0 = Release|Any CPU
 		{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
+		{D9A5CFF6-89D2-4801-AD50-2FF3B147DFF4}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
 		{32AD995B-6A60-4136-A015-3E053E205A39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32AD995B-6A60-4136-A015-3E053E205A39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32AD995B-6A60-4136-A015-3E053E205A39}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
@@ -97,6 +104,8 @@ Global
 		{32AD995B-6A60-4136-A015-3E053E205A39}.MSI|Any CPU.Build.0 = Release|Any CPU
 		{32AD995B-6A60-4136-A015-3E053E205A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32AD995B-6A60-4136-A015-3E053E205A39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32AD995B-6A60-4136-A015-3E053E205A39}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
+		{32AD995B-6A60-4136-A015-3E053E205A39}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
@@ -105,6 +114,8 @@ Global
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.MSI|Any CPU.Build.0 = Release|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
+		{3551DAF3-DBCE-4081-8010-E6AE850E7A67}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
 		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.MSI.32Bit|Any CPU.ActiveCfg = Release.32Bit|Any CPU
@@ -113,6 +124,8 @@ Global
 		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.MSI|Any CPU.Build.0 = Release|Any CPU
 		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
+		{43EEDA3A-03BE-4CA1-BB64-C2122E926606}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
