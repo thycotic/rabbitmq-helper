@@ -6,8 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
 using Thycotic.Logging;
 using Thycotic.Utility.IO;
+using Thycotic.WindowsService.Bootstraper.Zip;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
@@ -242,69 +245,14 @@ namespace Thycotic.WindowsService.Bootstraper
             }
         }
 
+  
         private void ExtractUpdateZip(int retryCount = 0)
         {
+            _log.Info(string.Format("Extracting Zip file with arguments: {0}", retryCount));
 
-            //var processInfo = new ProcessStartInfo("msiexec")
-            //{
-            //    CreateNoWindow = true,
-            //    RedirectStandardOutput = true,
-            //    UseShellExecute = false,
-            //    WorkingDirectory = _workingPath,
-            //    Arguments = string.Format(@"/i {0} /qn /log log\SSDEUpdate-{1}.log", _updatePath, retryCount)
-            //};
+            var zfe = new ZipFileExtractor();
 
-            //_log.Info(string.Format("Running MSI with arguments: {0}", processInfo.Arguments));
-
-
-            //Process process = null;
-
-            //var task = Task.Factory.StartNew(() =>
-            //{
-            //    try
-            //    {
-            //        process = _processRunner.Start(processInfo);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw new ApplicationException("Could not start process", ex);
-            //    }
-
-
-            //    if (process == null)
-            //    {
-            //        throw new ApplicationException("Process could not start");
-            //    }
-
-            //    process.WaitForExit();
-
-            //}, _cts.Token);
-
-            ////wait for 30 seconds for process to complete
-            //task.Wait(TimeSpan.FromSeconds(30));
-
-            ////there was an exception, rethrow it
-            //if (task.Exception != null)
-            //{
-            //    throw task.Exception;
-            //}
-
-            //if (process != null)
-            //{
-            //    if (!process.HasExited)
-            //    {
-            //        _log.Warn("Process has not exited. Forcing exit");
-            //        process.Kill();
-            //    }
-
-            //    //process didn't exit correctly, extract output and throw
-            //    if (process.ExitCode != 0)
-            //    {
-            //        var output = process.StandardOutput.ReadToEnd();
-
-            //        throw new ApplicationException("Process failed", new Exception(output));
-            //    }
-            //}
+            zfe.Extract(_updatePath, _workingPath);
         }
 
         /// <summary>
