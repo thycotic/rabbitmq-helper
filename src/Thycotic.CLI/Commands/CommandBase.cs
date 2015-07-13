@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -33,6 +34,8 @@ namespace Thycotic.CLI.Commands
 
         protected bool Equals(CommandBase other)
         {
+            Contract.Requires<ArgumentNullException>(other != null);
+
             return string.Equals(Name, other.Name) && string.Equals(Area, other.Area) && Equals(Aliases, other.Aliases);
         }
 

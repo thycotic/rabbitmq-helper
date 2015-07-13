@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -94,6 +95,8 @@ namespace Thycotic.CLI
         /// <returns></returns>
         public IContainer DiscoverCommands(Assembly assembly = null)
         {
+            Contract.Ensures(Contract.Result<IContainer>() != null);
+
             using (LogContext.Create("CLI configuration"))
             {
                 ClearCommands();

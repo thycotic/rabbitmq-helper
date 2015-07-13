@@ -18,7 +18,12 @@ namespace Thycotic.CLI
         }
 
         public IEnumerable<string> AllKeys {
-            get { return _dictionary.Keys; }
+            get
+            {
+                Contract.Ensures(Contract.Result<IEnumerable<string>>() != null);
+
+                return _dictionary.Keys;
+            }
         }
 
         public bool TryGet(string name, out string value)
@@ -38,6 +43,8 @@ namespace Thycotic.CLI
 
         public bool TryGetBoolean(string name, out bool value)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(name));
+
             string booleanString;
             value = false;
 
