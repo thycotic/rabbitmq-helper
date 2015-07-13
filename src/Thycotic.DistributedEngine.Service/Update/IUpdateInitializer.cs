@@ -12,7 +12,8 @@ namespace Thycotic.DistributedEngine.Service.Update
         /// <summary>
         /// Applies the latest update.
         /// </summary>
-        void ApplyLatestUpdate();
+        /// <param name="isLegacyAgent">if set to <c>true</c> [is legacy].</param>
+        void ApplyLatestUpdate(bool isLegacyAgent = false);
     }
 
 
@@ -25,7 +26,8 @@ namespace Thycotic.DistributedEngine.Service.Update
         /// <summary>
         /// Applies the latest update.
         /// </summary>
-        public void ApplyLatestUpdate()
+        /// <param name="isLegacyAgent">if set to <c>true</c> [is legacy].</param>
+        public void ApplyLatestUpdate(bool isLegacyAgent = false)
         {
         }
 
