@@ -52,8 +52,14 @@ namespace Thycotic.DistributedEngine.Service
                 {
                     var cts = new CancellationTokenSource();
 
-                    //TODO: Maybe not hardcoded -dkk
-                    const string serviceName = "Thycotic.DistributedEngine.Service";
+                    //HACK: Maybe not hardcoded -dkk
+                    var serviceName = "Thycotic.DistributedEngine.Service";
+
+                    if (isLegacyAgent)
+                    {
+                        serviceName = "Secret Server Agent";
+                    }
+
                     var serviceManagerInteractor = new ServiceManagerInteractor(cts, serviceName);
 
                     var processRunner = new ProcessRunner();
@@ -73,7 +79,7 @@ namespace Thycotic.DistributedEngine.Service
                     //delete the update file regardless of update outcome
                     if (File.Exists(updatePath))
                     {
-                        _log.Info(string.Format("Deleting MSI file from {0}", updatePath));
+                        _log.Info(string.Format("Deleting update file from {0}", updatePath));
                         File.Delete(updatePath);
                     }
                 }
