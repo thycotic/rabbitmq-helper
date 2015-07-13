@@ -60,8 +60,6 @@ namespace Thycotic.Wcf
         {
             get
             {
-                Contract.Ensures(Contract.Result<EventHandler>() != null);
-
                 return default(EventHandler);
             }
             set {  }
