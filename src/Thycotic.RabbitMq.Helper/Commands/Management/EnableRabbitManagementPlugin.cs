@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using Thycotic.CLI.OS;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Commands.Installation;
 using Thycotic.RabbitMq.Helper.Installation;
 using Thycotic.RabbitMq.Helper.Management;
+using Thycotic.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Management
 {

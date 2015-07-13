@@ -2,9 +2,9 @@
 using System.IO;
 using System.Threading.Tasks;
 using Thycotic.CLI.Commands;
-using Thycotic.CLI.OS;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Installation;
+using Thycotic.Utility.OS;
 using Thycotic.Utility.Reflection;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation

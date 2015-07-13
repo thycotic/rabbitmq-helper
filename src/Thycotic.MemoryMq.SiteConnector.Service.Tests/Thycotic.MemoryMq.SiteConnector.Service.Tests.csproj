@@ -156,9 +156,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Utility, Version=5.0.0.14, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.Utility, Version=5.0.0.16, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Utility.5.0.0.14\lib\net451\Thycotic.Utility.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Utility.5.0.0.16\lib\net451\Thycotic.Utility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>

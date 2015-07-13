@@ -186,7 +186,7 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -199,7 +199,7 @@
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Utility">
-      <HintPath>..\packages\Thycotic.Utility.5.0.0.14\lib\net451\Thycotic.Utility.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Utility.5.0.0.16\lib\net451\Thycotic.Utility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

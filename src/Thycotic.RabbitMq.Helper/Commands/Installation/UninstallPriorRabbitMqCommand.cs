@@ -3,10 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Thycotic.CLI.Commands;
-using Thycotic.CLI.OS;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Installation;
 using Thycotic.Utility.IO;
+using Thycotic.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
