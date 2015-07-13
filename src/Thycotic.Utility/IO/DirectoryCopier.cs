@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Runtime.Remoting.Contexts;
 
 namespace Thycotic.Utility.IO
 {

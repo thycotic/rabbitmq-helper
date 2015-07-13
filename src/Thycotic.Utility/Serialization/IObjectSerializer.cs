@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.Security.Cryptography;
 
 namespace Thycotic.Utility.Serialization
 {

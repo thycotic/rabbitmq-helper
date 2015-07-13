@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 
-namespace Thycotic.CLI.OS
+namespace Thycotic.Utility.OS
 {
     /// <summary>
     /// External process runner

@@ -12,7 +12,7 @@ namespace Thycotic.Utility.MixedContracts
         /// <summary>
         /// Initializes a new instance of the <see cref="MixedContractsException"/> class.
         /// </summary>
-        public MixedContractsException() : base()
+        public MixedContractsException()
         {
         }
 
