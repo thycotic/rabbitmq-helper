@@ -107,6 +107,7 @@ sign
                     Settings = new Dictionary<string, string>
                     {
                         {"RPCAgentVersion", "n/a"},
+                        {"IsLegacyAgent", "true"},
                     }
                 },
                 new FileCleanUpStep
