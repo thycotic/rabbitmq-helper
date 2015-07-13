@@ -107,7 +107,8 @@ namespace Thycotic.DistributedEngine.Service.Update
                 while (File.Exists(msiPath) && !_cts.IsCancellationRequested)
                 {
                     //TODO: Hardcode? -dkk
-                    Task.Delay(TimeSpan.FromSeconds(5)).Wait(_cts.Token);
+                    //TODO: THis seems too long but updates seem to take forever on VMs
+                    Task.Delay(TimeSpan.FromMinutes(10)).Wait(_cts.Token);
                 }
 
                 if (_cts.IsCancellationRequested)
