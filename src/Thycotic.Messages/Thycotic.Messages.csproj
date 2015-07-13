@@ -203,17 +203,17 @@
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.95\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.204\lib\net451\Thycotic.Logging.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Wcf, Version=5.0.0.121, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.Wcf, Version=5.0.0.123, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.121\lib\net451\Thycotic.Wcf.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.123\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
