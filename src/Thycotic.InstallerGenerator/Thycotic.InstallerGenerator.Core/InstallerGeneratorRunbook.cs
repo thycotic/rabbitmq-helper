@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
 using Thycotic.InstallerGenerator.Core.Steps;
@@ -135,6 +136,11 @@ namespace Thycotic.InstallerGenerator.Core
         /// <returns></returns>
         protected string GetPathToFileInWorkingPath(string filename)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(filename));
+
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
             return GetPathToFile(WorkingPath, filename);
         }
 
@@ -145,6 +151,11 @@ namespace Thycotic.InstallerGenerator.Core
         /// <returns></returns>
         protected string GetPathToFileInSourcePath(string filename)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(filename));
+
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
             return GetPathToFile(SourcePath, filename);
         }
 

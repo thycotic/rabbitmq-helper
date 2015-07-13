@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
@@ -135,6 +136,8 @@ namespace Thycotic.InstallerGenerator.Core.Zip
         /// <param name="compressionLevel">The compression level.</param>
         public void Compress(string sourcePath, string zipFilePath, int compressionLevel = 3)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(sourcePath));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(zipFilePath));
 
             using (var fsOut = File.Create(zipFilePath))
             using (var zipStream = new ZipOutputStream(fsOut))
@@ -166,6 +169,9 @@ namespace Thycotic.InstallerGenerator.Core.Zip
         /// <param name="directionPath">The source directory path.</param>
         public void Extract(string zipFilePath, string directionPath)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(zipFilePath));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(directionPath));
+
             ExtractZipFile(zipFilePath, string.Empty, directionPath);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using Thycotic.Logging;
 using Thycotic.Utility.IO;
@@ -76,6 +77,12 @@ namespace Thycotic.InstallerGenerator.Core
         public string Generate<TSteps>(IInstallerGenerator<TSteps> generator, TSteps steps, bool overwriteExistingArtifact = true)
             where TSteps : IInstallerGeneratorRunbook
         {
+            Contract.Requires<ArgumentNullException>(generator != null);
+            Contract.Requires<ArgumentNullException>(steps != null);
+
+            Contract.Ensures(Contract.Result<string>() != null);
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
             try
             {
                 _log.Info("Generating installer");
@@ -92,6 +99,8 @@ namespace Thycotic.InstallerGenerator.Core
                     {
                         throw new ApplicationException("Generator did not produce an artifact");
                     }
+
+                    Contract.Assume(!string.IsNullOrEmpty(Path.GetFullPath(steps.ArtifactPath)));
 
                     if (!Directory.Exists(Path.GetFullPath(steps.ArtifactPath)))
                     {

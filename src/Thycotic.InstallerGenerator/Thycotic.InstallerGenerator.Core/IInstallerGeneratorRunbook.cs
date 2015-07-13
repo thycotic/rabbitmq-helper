@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics.Contracts;
 using Thycotic.InstallerGenerator.Core.Steps;
 
 namespace Thycotic.InstallerGenerator.Core
@@ -5,6 +7,7 @@ namespace Thycotic.InstallerGenerator.Core
     /// <summary>
     /// Interface for an installer generator runbook
     /// </summary>
+    [ContractClass(typeof(InstallerGeneratorRunbookContract))]
     public interface IInstallerGeneratorRunbook
     {
         /// <summary>
@@ -109,5 +112,166 @@ namespace Thycotic.InstallerGenerator.Core
         /// Bakes the steps.
         /// </summary>
         void BakeSteps();
+    }
+
+    /// <summary>
+    /// Contract for IInstallerGeneratorRunbook
+    /// </summary>
+    [ContractClassFor(typeof(IInstallerGeneratorRunbook))]
+    public abstract class InstallerGeneratorRunbookContract : IInstallerGeneratorRunbook
+    {
+        /// <summary>
+        /// Gets or sets the application path.
+        /// </summary>
+        /// <value>
+        /// The application path.
+        /// </value>
+        public string ApplicationPath
+        {
+            get { return string.Empty; }
+            set { }
+        }
+
+        /// <summary>
+        /// Gets or sets the working path.
+        /// </summary>
+        /// <value>
+        /// The working path.
+        /// </value>
+        public string WorkingPath
+        {
+            get { return string.Empty; }
+            set { }
+        }
+
+        /// <summary>
+        /// Gets or sets the recipe path.
+        /// </summary>
+        /// <value>
+        /// The recipe path.
+        /// </value>
+        public string RecipePath
+        {
+            get { return string.Empty; }
+            set { }
+        }
+
+        /// <summary>
+        /// Gets or sets the source path.
+        /// </summary>
+        /// <value>
+        /// The source path.
+        /// </value>
+        public string SourcePath
+        {
+            get { return string.Empty; }
+            set { }
+        }
+
+        /// <summary>
+        /// Gets or sets the artifact path.
+        /// </summary>
+        /// <value>
+        /// The artifact path.
+        /// </value>
+        public string ArtifactPath
+        {
+            get { return string.Empty; }
+            set { }
+        }
+
+        /// <summary>
+        /// Gets the default name of the artifact.
+        /// </summary>
+        /// <value>
+        /// The default name of the artifact.
+        /// </value>
+        public string DefaultArtifactName
+        {
+            get { return string.Empty; }
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the artifact.
+        /// </summary>
+        /// <value>
+        /// The name of the artifact.
+        /// </value>
+        public string ArtifactName
+        {
+            get { return string.Empty; }
+            set { }
+        }
+
+        /// <summary>
+        /// Gets or sets the artifact name suffix.
+        /// </summary>
+        /// <value>
+        /// The artifact name suffix.
+        /// </value>
+        public string ArtifactNameSuffix
+        {
+            get { return string.Empty; }
+            set { }
+        }
+
+        /// <summary>
+        /// Gets or sets the version.
+        /// </summary>
+        /// <value>
+        /// The version.
+        /// </value>
+        public string Version
+        {
+            get { return string.Empty; }
+            set { }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [is64 bit].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [is64 bit]; otherwise, <c>false</c>.
+        /// </value>
+        public bool Is64Bit
+        {
+            get { return false; }
+            set { }
+        }
+
+        /// <summary>
+        /// Gets the steps.
+        /// </summary>
+        /// <value>
+        /// The steps.
+        /// </value>
+        public IInstallerGeneratorStep[] Steps
+        {
+            get { return default(IInstallerGeneratorStep[]); }
+        }
+
+        /// <summary>
+        /// Gets the name of the artifact file.
+        /// </summary>
+        /// <param name="artifactName">Name of the artifact.</param>
+        /// <param name="suffix">The suffix.</param>
+        /// <param name="is64Bit">if set to <c>true</c> [is64 bit].</param>
+        /// <param name="version">The version.</param>
+        /// <returns></returns>
+        public string GetArtifactFileName(string artifactName, string suffix, bool is64Bit, string version)
+        {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(artifactName));
+
+            return default(string);
+        }
+
+        /// <summary>
+        /// Bakes the steps.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void BakeSteps()
+        {
+
+        }
     }
 }
