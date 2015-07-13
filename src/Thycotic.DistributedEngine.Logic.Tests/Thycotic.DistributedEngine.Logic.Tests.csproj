@@ -217,9 +217,9 @@
     <Reference Include="Thycotic.Discovery.Sources">
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.120\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.358, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.359, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.358\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.359\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption, Version=5.0.0.11, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
