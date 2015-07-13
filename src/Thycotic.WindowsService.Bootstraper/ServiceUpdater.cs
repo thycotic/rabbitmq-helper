@@ -11,6 +11,9 @@ using Thycotic.Utility.IO;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
+    /// <summary>
+    /// Service updater
+    /// </summary>
     public class ServiceUpdater : IServiceUpdater
     {
         /// <summary>
@@ -18,8 +21,14 @@ namespace Thycotic.WindowsService.Bootstraper
         /// </summary>
         public const string BackupDirectoryName = "backup";
 
+        /// <summary>
+        /// The log directory name
+        /// </summary>
         public const string LogDirectoryName = "log";
 
+        /// <summary>
+        /// The data directory name
+        /// </summary>
         public const string DataDirectoryName = "data";
 
         private readonly CancellationTokenSource _cts;
@@ -32,6 +41,16 @@ namespace Thycotic.WindowsService.Bootstraper
 
         private readonly ILogWriter _log = Log.Get(typeof(ServiceUpdater));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceUpdater"/> class.
+        /// </summary>
+        /// <param name="cts">The CTS.</param>
+        /// <param name="serviceManagerInteractor">The service manager interactor.</param>
+        /// <param name="processRunner">The process runner.</param>
+        /// <param name="workingPath">The working path.</param>
+        /// <param name="backupPath">The backup path.</param>
+        /// <param name="serviceName">Name of the service.</param>
+        /// <param name="msiPath">The msi path.</param>
         public ServiceUpdater(CancellationTokenSource cts, IServiceManagerInteractor serviceManagerInteractor, IProcessRunner processRunner, string workingPath, string backupPath, string serviceName, string msiPath)
         {
             Contract.Requires<ArgumentNullException>(cts != null);
@@ -232,6 +251,14 @@ namespace Thycotic.WindowsService.Bootstraper
             directoryCopier.Copy(_backupPath, _workingPath, true, true);
         }
 
+        /// <summary>
+        /// Updates the service.
+        /// </summary>
+        /// <exception cref="System.AggregateException">
+        /// Failed to run MSI
+        /// or
+        /// MSI failed to execute successfully
+        /// </exception>
         public void Update()
         {
             using (LogCorrelation.Create())

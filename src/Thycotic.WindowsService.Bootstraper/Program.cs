@@ -6,6 +6,9 @@ using Thycotic.Logging;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
+    /// <summary>
+    /// Bootstrapper test program
+    /// </summary>
     public class Program
     {
         private static void Main(string[] args)

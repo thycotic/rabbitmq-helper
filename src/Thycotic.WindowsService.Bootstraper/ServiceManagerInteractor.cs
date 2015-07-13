@@ -8,6 +8,9 @@ using Thycotic.WindowsService.Bootstraper.Wmi;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
+    /// <summary>
+    /// Service manager interactor
+    /// </summary>
     public class ServiceManagerInteractor : IServiceManagerInteractor
     {
         private readonly CancellationTokenSource _cts;
@@ -16,6 +19,11 @@ namespace Thycotic.WindowsService.Bootstraper
 
         private readonly ILogWriter _log = Log.Get(typeof(ServiceManagerInteractor));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceManagerInteractor"/> class.
+        /// </summary>
+        /// <param name="cts">The CTS.</param>
+        /// <param name="serviceName">Name of the service.</param>
         public ServiceManagerInteractor(CancellationTokenSource cts, string serviceName)
         {
             Contract.Requires<ArgumentNullException>(cts != null);
@@ -86,6 +94,9 @@ namespace Thycotic.WindowsService.Bootstraper
 
         #region Service start/stop
 
+        /// <summary>
+        /// Starts the service.
+        /// </summary>
         public void StartService()
         {
             
@@ -113,6 +124,9 @@ namespace Thycotic.WindowsService.Bootstraper
             }
         }
 
+        /// <summary>
+        /// Stops the service.
+        /// </summary>
         public void StopService()
         {
             

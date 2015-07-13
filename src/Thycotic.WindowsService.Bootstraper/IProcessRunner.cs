@@ -1,13 +1,20 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
-using System.Runtime.Remoting.Messaging;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
+    /// <summary>
+    /// Process runner
+    /// </summary>
     [ContractClass(typeof(ProcessRunnerContractClass))]
     public interface IProcessRunner
     {
+        /// <summary>
+        /// Starts the specified process information.
+        /// </summary>
+        /// <param name="processInfo">The process information.</param>
+        /// <returns></returns>
         Process Start(ProcessStartInfo processInfo);
     }
 
@@ -17,10 +24,11 @@ namespace Thycotic.WindowsService.Bootstraper
     [ContractClassFor(typeof (IProcessRunner))]
     public abstract class ProcessRunnerContractClass : IProcessRunner
     {
+
         /// <summary>
-        /// Starts the Process Runner.
+        /// Starts the specified process information.
         /// </summary>
-        /// <param name="processInfo">Process info.</param>
+        /// <param name="processInfo">The process information.</param>
         /// <returns></returns>
         public Process Start(ProcessStartInfo processInfo)
         {
