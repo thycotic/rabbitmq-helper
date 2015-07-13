@@ -135,6 +135,11 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                     GetOptionalLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.SiteId,
                         false);
 
+                //TODO: Move to constant
+                var isLegacyAgent=
+                      Convert.ToBoolean(GetOptionalLocalConfiguration("IsLegacyAgent",//ConfigurationKeys.EngineToServerCommunication.
+                        false));
+
                 return new EngineIdentificationProvider
                 {
                     SiteId =
@@ -144,7 +149,9 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                         Convert.ToInt32(
                             GetLocalConfiguration(ConfigurationKeys.EngineToServerCommunication.OrganizationId)),
                     FriendlyName = DnsEx.GetDnsHostName(),
-                    IdentityGuid = identityGuidProvider.IdentityGuid
+                    IdentityGuid = identityGuidProvider.IdentityGuid,
+                    IsLegacyAgent = isLegacyAgent
+
                 };
             }).As<IEngineIdentificationProvider>().SingleInstance();
         }

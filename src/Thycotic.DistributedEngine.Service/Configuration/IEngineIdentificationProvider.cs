@@ -56,6 +56,14 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// The exchange identifier.
         /// </value>
         int? SiteId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the is legacy agent.
+        /// </summary>
+        /// <value>
+        /// The is legacy agent.
+        /// </value>
+        bool IsLegacyAgent { get; set; }
     }
 
 
@@ -112,5 +120,13 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// The exchange identifier.
         /// </value>
         public int? SiteId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the is legacy agent.
+        /// </summary>
+        /// <value>
+        /// The is legacy agent.
+        /// </value>
+        public bool IsLegacyAgent { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
         /// <summary>
         /// Gets the update.
         /// </summary>
-        public void GetUpdate(string path, bool isLegacyAgent = false)
+        public void GetUpdate(string path)
         {
             WrapInteraction(channel =>
             {
@@ -57,23 +57,23 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
 
                 if (channel is IDuplexEngineToServerCommunicationWcfService)
                 {
-                    ExtractOverNetTcp(path, isLegacyAgent);
+                    ExtractOverNetTcp(path);
                 }
                 else if (channel is IUnidirectionalEngineToServerCommunicationWcfService)
                 {
-                    ExtractOverHttp(path, isLegacyAgent);
+                    ExtractOverHttp(path);
                 }
             }, Callback);
         }
 
-        private void ExtractOverNetTcp(string path, bool isLegacyAgent)
+        private void ExtractOverNetTcp(string path)
         {
             var response = WrapInteraction(channel =>
             {
                 var request = new EngineUpdateRequest
                 {
                     Is64Bit = _engineIdentificationProvider.Is64Bit,
-                    IsLegacyAgent = isLegacyAgent,
+                    IsLegacyAgent = _engineIdentificationProvider.IsLegacyAgent,
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
                     Version = ReleaseInformationHelper.Version.ToString()
@@ -103,14 +103,14 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             }
         }
 
-        private void ExtractOverHttp(string path, bool isLegacyAgent)
+        private void ExtractOverHttp(string path)
         {
             var response = WrapInteraction(webClient =>
             {
                 var request = new EngineUpdateOverHttpRequest
                 {
                     Is64Bit = _engineIdentificationProvider.Is64Bit,
-                    IsLegacyAgent = isLegacyAgent,
+                    IsLegacyAgent = _engineIdentificationProvider.IsLegacyAgent,
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
                     Version = ReleaseInformationHelper.Version.ToString()

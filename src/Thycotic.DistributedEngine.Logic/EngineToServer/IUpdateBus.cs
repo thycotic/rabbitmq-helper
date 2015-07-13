@@ -13,8 +13,7 @@ namespace Thycotic.DistributedEngine.Logic.EngineToServer
         /// Gets the update.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <param name="isLegacyAgent">if set to <c>true</c> [is legacy agent].</param>
-        void GetUpdate(string path, bool isLegacyAgent = false);
+        void GetUpdate(string path);
     }
 
 
@@ -28,8 +27,7 @@ namespace Thycotic.DistributedEngine.Logic.EngineToServer
         /// Gets the update.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <param name="isLegacyAgent"></param>
-        public void GetUpdate(string path, bool isLegacyAgent = false)
+        public void GetUpdate(string path)
         {
         }
 

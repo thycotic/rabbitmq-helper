@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
+using Thycotic.DistributedEngine.Service.Configuration;
 using Thycotic.Logging;
 using Thycotic.Utility;
 using Thycotic.Utility.IO;
@@ -21,6 +22,7 @@ namespace Thycotic.DistributedEngine.Service.Update
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         private readonly IUpdateBus _updateBus;
+        private readonly IEngineIdentificationProvider _engineIdentificationProvider;
 
         private readonly object _syncRoot = new object();
         private Task _updateTask;
@@ -28,18 +30,20 @@ namespace Thycotic.DistributedEngine.Service.Update
         private readonly ILogWriter _log = Log.Get(typeof(UpdateInitializer));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateInitializer"/> class.
+        /// Initializes a new instance of the <see cref="UpdateInitializer" /> class.
         /// </summary>
         /// <param name="updateBus">The update bus.</param>
-        public UpdateInitializer(IUpdateBus updateBus)
+        /// <param name="engineIdentificationProvider">The engine identification provider.</param>
+        public UpdateInitializer(IUpdateBus updateBus, IEngineIdentificationProvider engineIdentificationProvider)
         {
             _updateBus = updateBus;
+            _engineIdentificationProvider = engineIdentificationProvider;
         }
 
         /// <summary>
         /// Applies the latest update.
         /// </summary>
-        public void ApplyLatestUpdate(bool isLegacyAgent = false)
+        public void ApplyLatestUpdate()
         {
             _log.Info(string.Format("This engine version is outdated ({0}). Updating...", ReleaseInformationHelper.Version));
 
@@ -56,7 +60,7 @@ namespace Thycotic.DistributedEngine.Service.Update
             var updatePath = Path.Combine(Path.GetTempPath(),
                 string.Format("gdesvcupdate.{0}.{1}",
                     Guid.NewGuid().ToString("N"),
-                    !isLegacyAgent ? "msi" : "zip"));
+                    !_engineIdentificationProvider.IsLegacyAgent ? "msi" : "zip"));
 
             _updateTask = Task.Factory.StartNew(() =>
             {
@@ -72,7 +76,7 @@ namespace Thycotic.DistributedEngine.Service.Update
                     {
                         _log.Info("Initializing update download...");
 
-                        _updateBus.GetUpdate(updatePath, isLegacyAgent);
+                        _updateBus.GetUpdate(updatePath);
                     }
 
                     //don't try to apply the update when cancellation is requested
@@ -82,7 +86,7 @@ namespace Thycotic.DistributedEngine.Service.Update
                         throw new TaskCanceledException("Update was cancelled");
                     }
 
-                    Bootstrap(updatePath, isLegacyAgent);
+                    Bootstrap(updatePath, _engineIdentificationProvider.IsLegacyAgent);
 
                 }
                 catch (Exception ex)
