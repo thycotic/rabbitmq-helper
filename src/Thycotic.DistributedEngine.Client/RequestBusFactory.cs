@@ -9,7 +9,7 @@ using Thycotic.Utility.Serialization;
 namespace Thycotic.DistributedEngine.Client
 {
     /// <summary>
-    /// Basic request bus factory
+    /// Request bus factory
     /// </summary>
     public static class RequestBusFactory
     {
