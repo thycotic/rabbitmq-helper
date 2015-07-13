@@ -239,7 +239,7 @@ namespace Thycotic.CLI
                 commandName = commandMatches[0].Groups[0].Value;
             }
 
-            var regexParameters = new Regex(@"-([\w.]+)=\""?([\d\w\s.:/\\\[\]@]+)\""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            var regexParameters = new Regex(@"-([^=]+)=""?([^""]+?)""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             var parameterMatches = regexParameters.Matches(input);
 
