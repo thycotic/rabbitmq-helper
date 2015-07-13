@@ -150,7 +150,7 @@ namespace Thycotic.CLI
             _commandCustomMappings.Clear();
         }
 
-        private IEnumerable<ICommand> GetCurrentCommandMappings()
+        public IEnumerable<ICommand> GetCurrentCommandMappings()
         {
             return _commandCustomMappings.Union(_commandBuiltInMappings);
         }
