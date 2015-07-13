@@ -41,7 +41,7 @@ namespace Thycotic.DistributedEngine.Client
         }
 
         /// <summary>
-        /// Gets the memory mq bus.
+        /// Gets the Memory mq bus.
         /// </summary>
         /// <param name="url">The URL.</param>
         /// <param name="userName">Name of the user.</param>
