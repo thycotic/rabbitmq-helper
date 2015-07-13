@@ -41,7 +41,7 @@ namespace Thycotic.WindowsService.Bootstraper.Tests
            }
 
 
-           Sut = new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath);
+           Sut = new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath, false);
 
         }
 
@@ -71,13 +71,13 @@ namespace Thycotic.WindowsService.Bootstraper.Tests
         {
 
 
-            ShouldFail<ArgumentNullException>("Precondition failed: cts != null", () => new ServiceUpdater(null, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath));
-            ShouldFail<ArgumentNullException>("Precondition failed: serviceManagerInteractor != null", () => new ServiceUpdater(_cts, null, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath));
-            ShouldFail<ArgumentNullException>("Precondition failed: processRunner != null", () => new ServiceUpdater(_cts, _serviceManagerInteractor, null, _workingPath, _backupPath, _serviceName, _msiPath));
-            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(workingPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, null, _backupPath, _serviceName, _msiPath));
-            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(backupPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, null, _serviceName, _msiPath));
-            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(serviceName)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, null, _msiPath));
-            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(msiPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, null));
+            ShouldFail<ArgumentNullException>("Precondition failed: cts != null", () => new ServiceUpdater(null, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath, false));
+            ShouldFail<ArgumentNullException>("Precondition failed: serviceManagerInteractor != null", () => new ServiceUpdater(_cts, null, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath, false));
+            ShouldFail<ArgumentNullException>("Precondition failed: processRunner != null", () => new ServiceUpdater(_cts, _serviceManagerInteractor, null, _workingPath, _backupPath, _serviceName, _msiPath, false));
+            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(workingPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, null, _backupPath, _serviceName, _msiPath, false));
+            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(backupPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, null, _serviceName, _msiPath, false));
+            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(serviceName)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, null, _msiPath, false));
+            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(msiPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, null, false));
         }
 
         [Test]
@@ -109,47 +109,5 @@ namespace Thycotic.WindowsService.Bootstraper.Tests
               //TODO: Flesh out -dkk
             });
         }
-
-        //TODO: Remove after test numbers match up
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        [TestCase(12, 4, 3)]
-        public void DummyTestUntilSpecflowReplace(int n, int d, int q)
-        {
-            Assert.AreEqual(q, n / d);
-        }
-
     }
 }

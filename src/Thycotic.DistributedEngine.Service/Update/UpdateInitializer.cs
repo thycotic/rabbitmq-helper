@@ -39,7 +39,7 @@ namespace Thycotic.DistributedEngine.Service.Update
         /// <summary>
         /// Applies the latest update.
         /// </summary>
-        public void ApplyLatestUpdate()
+        public void ApplyLatestUpdate(bool isLegacyAgent = false)
         {
             _log.Info(string.Format("This engine version is outdated ({0}). Updating...", ReleaseInformationHelper.Version));
 
@@ -52,9 +52,11 @@ namespace Thycotic.DistributedEngine.Service.Update
                 }
             }
 
-           
-            var msiPath = Path.Combine(Path.GetTempPath(),
-                string.Format("gdesvcupdate.{0}.msi", Guid.NewGuid().ToString("N")));
+
+            var updatePath = Path.Combine(Path.GetTempPath(),
+                string.Format("gdesvcupdate.{0}.{1}",
+                    Guid.NewGuid().ToString("N"),
+                    !isLegacyAgent ? "msi" : "zip"));
 
             _updateTask = Task.Factory.StartNew(() =>
             {
@@ -70,7 +72,7 @@ namespace Thycotic.DistributedEngine.Service.Update
                     {
                         _log.Info("Initializing update download...");
 
-                        _updateBus.GetUpdate(msiPath);
+                        _updateBus.GetUpdate(updatePath, isLegacyAgent);
                     }
 
                     //don't try to apply the update when cancellation is requested
@@ -80,17 +82,17 @@ namespace Thycotic.DistributedEngine.Service.Update
                         throw new TaskCanceledException("Update was cancelled");
                     }
 
-                    Bootstrap(msiPath);
+                    Bootstrap(updatePath, isLegacyAgent);
 
                 }
                 catch (Exception ex)
                 {
                     _log.Error("Bootstrap failed", ex);
 
-                    if (File.Exists(msiPath))
+                    if (File.Exists(updatePath))
                     {
-                        _log.Info(string.Format("Deleting MSI file from {0}", msiPath));
-                        File.Delete(msiPath);
+                        _log.Info(string.Format("Deleting MSI file from {0}", updatePath));
+                        File.Delete(updatePath);
                     }
                 }
             }, _cts.Token).ContinueWith(task =>
@@ -104,10 +106,11 @@ namespace Thycotic.DistributedEngine.Service.Update
 
                 //wait for the update to complete
                 //the update file will be deleted by the child process when the update is done
-                while (File.Exists(msiPath) && !_cts.IsCancellationRequested)
+                while (File.Exists(updatePath) && !_cts.IsCancellationRequested)
                 {
                     //TODO: Hardcode? -dkk
-                    Task.Delay(TimeSpan.FromSeconds(5)).Wait(_cts.Token);
+                    //TODO: THis seems too long but updates seem to take forever on VMs
+                    Task.Delay(TimeSpan.FromMinutes(10)).Wait(_cts.Token);
                 }
 
                 if (_cts.IsCancellationRequested)
@@ -170,7 +173,7 @@ namespace Thycotic.DistributedEngine.Service.Update
         }
 
 
-        private void Bootstrap(string msiPath)
+        private void Bootstrap(string updatePath, bool isLegacyAgent)
         {
             using (LogContext.Create("Update bootstrap"))
             {
@@ -196,7 +199,7 @@ namespace Thycotic.DistributedEngine.Service.Update
                     CreateNoWindow = true,
                     UseShellExecute = true,
                     WorkingDirectory = GetServiceInstallationPath(),
-                    Arguments = string.Format(@"{0} -msiPath=""{1}""", Program.SupportedSwitches.Boostrap, msiPath)
+                    Arguments = string.Format(@"{0} -updatePath=""{1}"" -isLegacyAgent={2}", Program.SupportedSwitches.Boostrap, updatePath, isLegacyAgent)
                 }; 
 
                 _log.Info(string.Format("Initializing bootstrapper with arguments: {0}", processInfo.Arguments));

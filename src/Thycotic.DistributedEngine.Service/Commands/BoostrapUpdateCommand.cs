@@ -29,15 +29,19 @@ namespace Thycotic.DistributedEngine.Service.Commands
             {
                 _log.Info("Beginning bootstrap");
 
-                string msiPath;
-                if (!parameters.TryGet("msiPath", out msiPath))
+                
+                string updatePath;
+                if (!parameters.TryGet("updatePath", out updatePath))
                 {
-                    throw new ArgumentException("MSI path required");
+                    throw new ArgumentException("Update path required");
                 }
+
+                bool isLegacyAgent;
+                parameters.TryGetBoolean("isLegacyAgent", out isLegacyAgent);
                 
                 var eub = new EngineUpdateBootstrapper();
 
-                eub.Bootstrap(msiPath);
+                eub.Bootstrap(updatePath, isLegacyAgent);
 
 
                 _log.Info("Boostrap completed");

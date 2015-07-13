@@ -31,10 +31,12 @@ namespace Thycotic.DistributedEngine.Service
         /// <summary>
         /// Bootstraps the specified msi path and run it as an external process.
         /// </summary>
-        /// <param name="msiPath">The msi path.</param>
-        public void Bootstrap(string msiPath)
+        /// <param name="updatePath">The msi path.</param>
+        /// <param name="isLegacyAgent">if set to <c>true</c> [is legacy agent].</param>
+        /// <exception cref="System.ApplicationException">Engine update bootstrapper failed</exception>
+        public void Bootstrap(string updatePath, bool isLegacyAgent)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(msiPath));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(updatePath));
             
             InterceptChildProcess();
 
@@ -57,7 +59,7 @@ namespace Thycotic.DistributedEngine.Service
                     var processRunner = new ProcessRunner();
 
                     var serviceUpdater = new ServiceUpdater(cts, serviceManagerInteractor, processRunner, GetServiceInstallationPath(), GetServiceBackupPath(),
-                        serviceName, msiPath);
+                        serviceName, updatePath, isLegacyAgent);
 
                     serviceUpdater.Update();
                 }
@@ -69,10 +71,10 @@ namespace Thycotic.DistributedEngine.Service
                 finally
                 {
                     //delete the update file regardless of update outcome
-                    if (File.Exists(msiPath))
+                    if (File.Exists(updatePath))
                     {
-                        _log.Info(string.Format("Deleting MSI file from {0}", msiPath));
-                        File.Delete(msiPath);
+                        _log.Info(string.Format("Deleting MSI file from {0}", updatePath));
+                        File.Delete(updatePath);
                     }
                 }
             }

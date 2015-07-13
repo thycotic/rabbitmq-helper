@@ -6,8 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
 using Thycotic.Logging;
 using Thycotic.Utility.IO;
+using Thycotic.WindowsService.Bootstraper.Zip;
 
 namespace Thycotic.WindowsService.Bootstraper
 {
@@ -37,12 +40,13 @@ namespace Thycotic.WindowsService.Bootstraper
         private readonly string _workingPath;
         private readonly string _backupPath;
         private readonly string _serviceName;
-        private readonly string _msiPath;
+        private readonly string _updatePath;
+        private readonly bool _isLegacyAgent;
 
         private readonly ILogWriter _log = Log.Get(typeof(ServiceUpdater));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceUpdater"/> class.
+        /// Initializes a new instance of the <see cref="ServiceUpdater" /> class.
         /// </summary>
         /// <param name="cts">The CTS.</param>
         /// <param name="serviceManagerInteractor">The service manager interactor.</param>
@@ -50,8 +54,9 @@ namespace Thycotic.WindowsService.Bootstraper
         /// <param name="workingPath">The working path.</param>
         /// <param name="backupPath">The backup path.</param>
         /// <param name="serviceName">Name of the service.</param>
-        /// <param name="msiPath">The msi path.</param>
-        public ServiceUpdater(CancellationTokenSource cts, IServiceManagerInteractor serviceManagerInteractor, IProcessRunner processRunner, string workingPath, string backupPath, string serviceName, string msiPath)
+        /// <param name="updatePath">The msi path.</param>
+        /// <param name="isLegacyAgent">if set to <c>true</c> [is legacy agent].</param>
+        public ServiceUpdater(CancellationTokenSource cts, IServiceManagerInteractor serviceManagerInteractor, IProcessRunner processRunner, string workingPath, string backupPath, string serviceName, string updatePath, bool isLegacyAgent)
         {
             Contract.Requires<ArgumentNullException>(cts != null);
             Contract.Requires<ArgumentNullException>(serviceManagerInteractor != null);
@@ -59,7 +64,7 @@ namespace Thycotic.WindowsService.Bootstraper
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(workingPath));
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(backupPath));
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(serviceName));
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(msiPath));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(updatePath));
 
             _cts = cts;
             _serviceManagerInteractor = serviceManagerInteractor;
@@ -67,7 +72,8 @@ namespace Thycotic.WindowsService.Bootstraper
             _workingPath = workingPath;
             _backupPath = backupPath;
             _serviceName = serviceName;
-            _msiPath = msiPath;
+            _updatePath = updatePath;
+            _isLegacyAgent = isLegacyAgent;
         }
 
         private void CleanServiceDirectory()
@@ -138,14 +144,14 @@ namespace Thycotic.WindowsService.Bootstraper
             }
         }
 
-        private void CheckMsi()
+        private void CheckUpdate()
         {
-            if (!File.Exists(_msiPath))
+            if (!File.Exists(_updatePath))
             {
-                throw new FileNotFoundException(string.Format("MSI does not exist in {0}", _msiPath));
+                throw new FileNotFoundException(string.Format("MSI does not exist in {0}", _updatePath));
             }
 
-            _log.Info(string.Format("MSI is {0}", _msiPath));
+            _log.Info(string.Format("MSI is {0}", _updatePath));
         }
 
         private void CheckWorkingPathAccess()
@@ -174,7 +180,7 @@ namespace Thycotic.WindowsService.Bootstraper
 
         }
 
-        private void RunMsi(int retryCount = 0)
+        private void RunUpdateMsi(int retryCount = 0)
         {
 
             var processInfo = new ProcessStartInfo("msiexec")
@@ -183,7 +189,7 @@ namespace Thycotic.WindowsService.Bootstraper
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 WorkingDirectory = _workingPath,
-                Arguments = string.Format(@"/i {0} /qn /log log\SSDEUpdate-{1}.log", _msiPath, retryCount)
+                Arguments = string.Format(@"/i {0} /qn /log log\SSDEUpdate-{1}.log", _updatePath, retryCount)
             };
 
             _log.Info(string.Format("Running MSI with arguments: {0}", processInfo.Arguments));
@@ -239,6 +245,16 @@ namespace Thycotic.WindowsService.Bootstraper
             }
         }
 
+  
+        private void ExtractUpdateZip(int retryCount = 0)
+        {
+            _log.Info(string.Format("Extracting Zip file with arguments: {0}", retryCount));
+
+            var zfe = new ZipFileExtractor();
+
+            zfe.Extract(_updatePath, _workingPath);
+        }
+
         /// <summary>
         /// Restores from backup.
         /// </summary>
@@ -269,7 +285,7 @@ namespace Thycotic.WindowsService.Bootstraper
                 {
                     _log.Info(string.Format("Running bootstrap process for {0}", _serviceName));
 
-                    CheckMsi();
+                    CheckUpdate();
 
                     CheckWorkingPathAccess();
 
@@ -296,8 +312,14 @@ namespace Thycotic.WindowsService.Bootstraper
 
                         try
                         {
-
-                            RunMsi(exceptions.Count);
+                            if (!_isLegacyAgent)
+                            {
+                                RunUpdateMsi(exceptions.Count);
+                            }
+                            else
+                            {
+                                ExtractUpdateZip(exceptions.Count);
+                            }
 
                             installed = true;
                         }
