@@ -1,8 +1,12 @@
 ﻿using System;
 using NSubstitute;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Utility.Testing.TestChain
 {
+    /// <summary>
+    /// Tested substitute helper on top of NSubstitute
+    /// </summary>
     public static class TestedSubstitute
     {
 

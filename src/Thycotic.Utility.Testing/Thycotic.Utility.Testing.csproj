@@ -131,6 +131,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NSubstitute, Version=1.8.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NSubstitute.1.8.2.0\lib\net45\NSubstitute.dll</HintPath>
@@ -142,6 +148,12 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Thycotic.Logging">
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Utility">
+      <HintPath>..\packages\Thycotic.Utility.5.0.0.19\lib\net451\Thycotic.Utility.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -160,14 +172,15 @@
     <Compile Include="BDD\BehaviorTestBase.cs" />
     <Compile Include="TestChain\TestedSubstitute.cs" />
     <Compile Include="TestChain\UnitTestsForAttribute.cs" />
-    <Compile Include="TestChain\UnitTestsRequiredAttributes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="NuGet.Config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Thycotic.Utility.Testing.nuspec" />
   </ItemGroup>
   <ItemGroup />
