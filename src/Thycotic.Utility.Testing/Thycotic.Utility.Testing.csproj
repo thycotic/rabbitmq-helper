@@ -158,6 +158,9 @@
     <Compile Include="BDD\NegativeTestExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BDD\BehaviorTestBase.cs" />
+    <Compile Include="TestChain\TestedSubstitute.cs" />
+    <Compile Include="TestChain\UnitTestsForAttribute.cs" />
+    <Compile Include="TestChain\UnitTestsRequiredAttributes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
