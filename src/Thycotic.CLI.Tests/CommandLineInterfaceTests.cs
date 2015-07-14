@@ -1,19 +1,19 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using Thycotic.Utility.Tests;
+using Thycotic.Utility.Testing.BDD;
 
 namespace Thycotic.CLI.Tests
 {
     [TestFixture]
-    public class CommandLineInterfaceTests : TestBase<CommandLineInterface>
+    public class CommandLineInterfaceTests : BehaviorTestBase<CommandLineInterface>
     {
         private const string ApplicationName = "Test";
         private const string CoreAreaName = "Test";
 
 
-        [TestFixtureSetUp]
-        public override void Setup()
+        [SetUp]
+        public override void SetUp()
         {
             Sut = new CommandLineInterface(ApplicationName, CoreAreaName);
         }
