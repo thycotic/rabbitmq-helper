@@ -3,12 +3,14 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Threading.Tasks;
 using Thycotic.Logging;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Utility.IO
 {
     /// <summary>
     /// Directory cleaner
     /// </summary>
+    [UnitTestsRequired]
     public class DirectoryCleaner
     {
 

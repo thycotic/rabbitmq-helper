@@ -2,12 +2,14 @@
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Reflection;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Utility.Reflection
 {
     /// <summary>
     /// Assembly entry point provider
     /// </summary>
+    [UnitTestsRequired]
     public class AssemblyEntryPointProvider
     {
         /// <summary>

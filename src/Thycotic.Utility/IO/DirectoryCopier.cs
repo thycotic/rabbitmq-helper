@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.IO;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Utility.IO
 {
     /// <summary>
     /// Directory copier
     /// </summary>
+    [UnitTestsRequired]
     public class DirectoryCopier
     {
         /// <summary>

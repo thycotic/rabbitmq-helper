@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Utility.Serialization
 {
     /// <summary>
     /// Interface for a message serializer
     /// </summary>
+    [UnitTestsRequired]
     [ContractClass(typeof(ObjectSerializerContract))]
     public interface IObjectSerializer
     {
