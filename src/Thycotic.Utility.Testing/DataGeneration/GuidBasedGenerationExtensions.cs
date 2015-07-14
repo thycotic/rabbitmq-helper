@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.Utility.Tests.DataGeneration
+namespace Thycotic.Utility.Testing.DataGeneration
 {
     public static class GuidBasedGenerationExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using Thycotic.Utility.Tests.CodeContracts;
+using Thycotic.Utility.Testing.CodeContracts;
 
-namespace Thycotic.Utility.Tests.BDD
+namespace Thycotic.Utility.Testing.BDD
 {
     /// <summary>
     /// Base Behavior-Driven test class. http://martinfowler.com/bliki/GivenWhenThen.html/// </summary>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.Utility.Tests.BDD
+namespace Thycotic.Utility.Testing.BDD
 {
     public static class NegativeTestExtensions
     {

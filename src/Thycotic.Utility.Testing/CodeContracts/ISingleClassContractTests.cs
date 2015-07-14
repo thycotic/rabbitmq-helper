@@ -1,4 +1,4 @@
-﻿namespace Thycotic.Utility.Tests.CodeContracts
+﻿namespace Thycotic.Utility.Testing.CodeContracts
 {
     public interface ISingleClassContractTests
     {
