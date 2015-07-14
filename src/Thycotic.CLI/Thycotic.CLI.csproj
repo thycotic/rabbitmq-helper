@@ -211,6 +211,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLineParser.cs" />
     <Compile Include="Configuration\CommandLineConfigurationManager.cs" />
     <Compile Include="Fragments\NoopCommandFragement.cs" />
     <Compile Include="Fragments\OutputCommandFragment.cs" />

@@ -175,7 +175,7 @@ namespace Thycotic.CLI
                 throw new ArgumentException("No input provided");
             }
 
-            var commandName = ParseInput(input, out parameters);
+            var commandName = CommandLineParser.ParseInput(input, out parameters);
             HandleCommand(commandName, parameters);
 
         }
@@ -202,7 +202,7 @@ namespace Thycotic.CLI
                     input = PromptForInput();
                 }
 
-                var commandName = ParseInput(input, out parameters);
+                var commandName = CommandLineParser.ParseInput(input, out parameters);
                 HandleCommand(commandName, parameters);
 
                 //reset so there is no initial input
@@ -221,36 +221,6 @@ namespace Thycotic.CLI
             var input = Console.ReadLine();
 
             return !string.IsNullOrWhiteSpace(input) ? input.Trim() : string.Empty;
-        }
-
-        private static string ParseInput(string input, out ConsoleCommandParameters parameters)
-        {
-            var commandName = string.Empty;
-            parameters = new ConsoleCommandParameters();
-
-            //no command
-            if (string.IsNullOrWhiteSpace(input)) return commandName;
-
-            var regexCommand = new Regex(@"^([\w]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
-
-            var commandMatches = regexCommand.Matches(input);
-            if (commandMatches.Count == 1)
-            {
-                commandName = commandMatches[0].Groups[0].Value;
-            }
-
-            var regexParameters = new Regex(@"-([^=]+)=""?([^""]+?)""?", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
-
-            var parameterMatches = regexParameters.Matches(input);
-
-            foreach (Match parameterMatch in parameterMatches)
-            {
-                // -foo="bar baz" => [1] = foo, [2] = bar baz
-                parameters[parameterMatch.Groups[1].Value] = parameterMatch.Groups[2].Value.Trim();
-            }
-
-             return commandName;
-
         }
 
         private void HandleCommand(string commandName, ConsoleCommandParameters parameters)
