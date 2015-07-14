@@ -1,4 +1,123 @@
-﻿//Feature: ExchangeDictionary
+﻿using System.Linq;
+using FluentAssertions;
+using NUnit.Framework;
+using Thycotic.MemoryMq.Subsystem;
+using Thycotic.Utility.Testing.BDD;
+using Thycotic.Utility.Testing.DataGeneration;
+
+namespace Thycotic.MemoryMq.Tests.Subsystem
+{
+    [TestFixture]
+    public class ExchangeDictionaryTests : BehaviorTestBase<ExchangeDictionary>
+    {
+        [TestFixtureSetUp]
+        public override void SetUp()
+        {
+            Sut = new ExchangeDictionary();
+        }
+
+        [Test]
+        public override void ConstructorParametersDoNotExceptInvalidParameters()
+        {
+            //nothing in the constructor
+        }
+
+        /// <summary>
+        /// Exchanges the should not be empty when message is pushed.
+        /// </summary>
+        [Test]
+        public void ExchangeShouldNotBeEmptyWhenMessageIsPushed()
+        {
+            Given(() =>
+            {
+               //nothing 
+            });
+
+            When(() =>
+            {
+                var routingSlip = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
+                Sut.Publish(routingSlip, new MemoryMqDeliveryEventArgs());
+            });
+
+            Then(() =>
+            {
+                Sut.IsEmpty.Should().BeFalse();
+            });
+        }
+
+        /// <summary>
+        /// Shoulds the be able to push to multiple mailboxes.
+        /// </summary>
+        [Test]
+        public void ShouldBeAbleToPushToMultipleMailboxes()
+        {
+            Given(() =>
+            {
+                //nothing 
+            });
+
+            var routingSlip1 = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
+            var eventArgs1 = new MemoryMqDeliveryEventArgs();
+            var routingSlip2 = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
+            var eventArgs2 = new MemoryMqDeliveryEventArgs();
+            var routingSlip3= new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
+            var eventArgs3 = new MemoryMqDeliveryEventArgs();
+
+            var routingSlip4 = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
+
+            When(() =>
+            {
+                Sut.Publish(routingSlip1, eventArgs1);
+                Sut.Publish(routingSlip2, eventArgs2);
+                Sut.Publish(routingSlip3, eventArgs3);
+            });
+
+            Then(() =>
+            {
+                Sut.Mailboxes.Count.Should().Be(3);
+                Sut.Mailboxes.Select(m => m.RoutingSlip).Contains(routingSlip1).Should().BeTrue();
+                Sut.Mailboxes.Select(m => m.RoutingSlip).Contains(routingSlip2).Should().BeTrue();
+                Sut.Mailboxes.Select(m => m.RoutingSlip).Contains(routingSlip3).Should().BeTrue();
+
+                Sut.Mailboxes.Select(m => m.RoutingSlip).Contains(routingSlip4).Should().BeFalse();
+
+            });
+        }
+
+        /// <summary>
+        /// Shoulds the not be empty when pulling message without ack.
+        /// </summary>
+        [Test]
+        public void ShouldNotBeEmptyWhenPullingMessageWithoutAck()
+        {
+            Given(() =>
+            {
+                var routingSlip = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
+                var eventArgs = new MemoryMqDeliveryEventArgs();
+
+                Sut.Publish(routingSlip, eventArgs);
+            });
+
+
+            When(() =>
+            {
+                MemoryMqDeliveryEventArgs eventArgs;
+                Sut.Mailboxes.First().Queue.TryDequeue(out eventArgs);
+            });
+
+            Then(() =>
+            {
+                Sut.Mailboxes.Count.Should().Be(1);
+                Sut.IsEmpty.Should().BeFalse();
+
+            });
+        }
+    }
+}
+
+
+
+//Feature: ExchangeDictionary
 
 //Background: 
 //    Given there exists a ExchangeDictionary stored in the scenario as ExchangeDictionaryTest
@@ -7,37 +126,6 @@
 //Scenario: An new exchange dictionary should be empty
 //    Then the scenario object IExchangeDictionary ExchangeDictionaryTest is empty
 
-//Scenario: Pushing messages to exchange
-//    Given there exists a RoutingSlip stored in the scenario as RoutingSlipTest with exchange TestChange and routing key TestRoutingKey
-//    And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest
-//    When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest and message delivery arguments MemoryMqDeliveryEventArgsTest
-//    Then the scenario object IExchangeDictionary ExchangeDictionaryTest is not empty
-
-//Scenario: Pushing messages to mailbox
-//    Given there exists a RoutingSlip stored in the scenario as RoutingSlipTest with exchange TestChange and routing key TestRoutingKey
-//    And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest
-//    When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest and message delivery arguments MemoryMqDeliveryEventArgsTest
-//    Then the scenario object IExchangeDictionary ExchangeDictionaryTest has 1 mailbox(es)
-//    Then the scenario object IExchangeDictionary ExchangeDictionaryTest has a mailbox matching RoutingSlipTest
-
-//Scenario: Pushing messages to multiple mailboxes
-//    Given there exists a RoutingSlip stored in the scenario as RoutingSlipTest with exchange TestChange and routing key TestRoutingKey
-//    And there exists a RoutingSlip stored in the scenario as RoutingSlipTest2 with exchange TestChange2 and routing key TestRoutingKey2
-//    And there exists a RoutingSlip stored in the scenario as RoutingSlipTest3 with exchange TestChange3 and routing key TestRoutingKey3
-//    And there exists a RoutingSlip stored in the scenario as RoutingSlipTest4 with exchange TestChange4 and routing key TestRoutingKey4
-//    And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest
-//    And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest2
-//    And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest3
-//    And there exists a MemoryMqDeliveryEventArgs stored in the scenario as MemoryMqDeliveryEventArgsTest4
-//    When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest and message delivery arguments MemoryMqDeliveryEventArgsTest
-//    When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest2 and message delivery arguments MemoryMqDeliveryEventArgsTest2
-//    When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest3 and message delivery arguments MemoryMqDeliveryEventArgsTest3
-//    When the method Publish on IExchangeDictionary ExchangeDictionaryTest is called with routing slip RoutingSlipTest4 and message delivery arguments MemoryMqDeliveryEventArgsTest4
-//    Then the scenario object IExchangeDictionary ExchangeDictionaryTest has 4 mailbox(es)
-//    Then the scenario object IExchangeDictionary ExchangeDictionaryTest has a mailbox matching RoutingSlipTest
-//    Then the scenario object IExchangeDictionary ExchangeDictionaryTest has a mailbox matching RoutingSlipTest2
-//    Then the scenario object IExchangeDictionary ExchangeDictionaryTest has a mailbox matching RoutingSlipTest3
-//    Then the scenario object IExchangeDictionary ExchangeDictionaryTest has a mailbox matching RoutingSlipTest4
 
 //Scenario: Dequeueing without ack or nak
 //    Given there exists a RoutingSlip stored in the scenario as RoutingSlipTest with exchange TestChange and routing key TestRoutingKey
