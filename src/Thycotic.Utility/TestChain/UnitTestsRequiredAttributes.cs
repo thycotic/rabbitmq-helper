@@ -1,6 +1,6 @@
 using System;
 
-namespace Thycotic.Utility.Testing.TestChain
+namespace Thycotic.Utility.TestChain
 {
     /// <summary>
     ///     Attribute used to mark classes as requiring unit tests. Any type this attribute is applied to has to have unit
