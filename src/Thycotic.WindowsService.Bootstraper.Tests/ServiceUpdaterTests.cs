@@ -4,12 +4,12 @@ using System.IO;
 using System.Threading;
 using NSubstitute;
 using NUnit.Framework;
-using Thycotic.Utility.Tests;
+using Thycotic.Utility.Testing.BDD;
 
 namespace Thycotic.WindowsService.Bootstraper.Tests
 {
     [TestFixture]
-    class ServiceUpdaterTests : TestBase<ServiceUpdater>
+    class ServiceUpdaterTests : BehaviorTestBase<ServiceUpdater>
     {
         private CancellationTokenSource _cts;
         private IServiceManagerInteractor _serviceManagerInteractor;
@@ -20,7 +20,7 @@ namespace Thycotic.WindowsService.Bootstraper.Tests
         private string _msiPath;
 
         [TestFixtureSetUp]
-        public override void Setup()
+        public override void SetUp()
         {
            _cts = new CancellationTokenSource();
            _serviceManagerInteractor = Substitute.For<IServiceManagerInteractor>();
@@ -69,13 +69,13 @@ namespace Thycotic.WindowsService.Bootstraper.Tests
         [Test]
         public override void ConstructorParametersDoNotExceptInvalidParameters()
         {
-            ShouldFail<ArgumentNullException>("Precondition failed: cts != null", () => new ServiceUpdater(null, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath, false));
-            ShouldFail<ArgumentNullException>("Precondition failed: serviceManagerInteractor != null", () => new ServiceUpdater(_cts, null, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath, false));
-            ShouldFail<ArgumentNullException>("Precondition failed: processRunner != null", () => new ServiceUpdater(_cts, _serviceManagerInteractor, null, _workingPath, _backupPath, _serviceName, _msiPath, false));
-            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(workingPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, null, _backupPath, _serviceName, _msiPath, false));
-            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(backupPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, null, _serviceName, _msiPath, false));
-            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(serviceName)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, null, _msiPath, false));
-            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(updatePath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, null, false));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: cts != null", () => new ServiceUpdater(null, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath, false));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: serviceManagerInteractor != null", () => new ServiceUpdater(_cts, null, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath, false));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: processRunner != null", () => new ServiceUpdater(_cts, _serviceManagerInteractor, null, _workingPath, _backupPath, _serviceName, _msiPath, false));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(workingPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, null, _backupPath, _serviceName, _msiPath, false));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(backupPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, null, _serviceName, _msiPath, false));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(serviceName)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, null, _msiPath, false));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(updatePath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, null, false));
         }
 
         [Test]
