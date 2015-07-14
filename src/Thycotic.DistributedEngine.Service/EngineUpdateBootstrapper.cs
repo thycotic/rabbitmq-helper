@@ -17,6 +17,26 @@ namespace Thycotic.DistributedEngine.Service
     /// </summary>
     public class EngineUpdateBootstrapper
     {
+
+        /// <summary>
+        /// Service names. These match what's in Computer Services
+        /// </summary>
+        private static class ServiceNames
+        {
+
+            /// <summary>
+            /// The distributed engine
+            /// </summary>
+            public const string DistributedEngine = "Thycotic.DistributedEngine.Service";
+
+
+            /// <summary>
+            /// The legacy agent
+            /// </summary>
+            public const string LegacyAgent = "Secret Server Agent";
+        }
+
+
         private readonly ILogWriter _log = Log.Get(typeof (EngineUpdateBootstrapper));
 
         private readonly AssemblyEntryPointProvider _assemblyEntryPointProvider = new AssemblyEntryPointProvider();
@@ -52,13 +72,7 @@ namespace Thycotic.DistributedEngine.Service
                 {
                     var cts = new CancellationTokenSource();
 
-                    //HACK: Maybe not hardcoded -dkk
-                    var serviceName = "Thycotic.DistributedEngine.Service";
-
-                    if (isLegacyAgent)
-                    {
-                        serviceName = "Secret Server Agent";
-                    }
+                    var serviceName = isLegacyAgent ? ServiceNames.LegacyAgent : ServiceNames.DistributedEngine;
 
                     var serviceManagerInteractor = new ServiceManagerInteractor(cts, serviceName);
 
