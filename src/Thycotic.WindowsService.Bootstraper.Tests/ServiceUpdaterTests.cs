@@ -69,15 +69,13 @@ namespace Thycotic.WindowsService.Bootstraper.Tests
         [Test]
         public override void ConstructorParametersDoNotExceptInvalidParameters()
         {
-
-
             ShouldFail<ArgumentNullException>("Precondition failed: cts != null", () => new ServiceUpdater(null, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath, false));
             ShouldFail<ArgumentNullException>("Precondition failed: serviceManagerInteractor != null", () => new ServiceUpdater(_cts, null, _processRunner, _workingPath, _backupPath, _serviceName, _msiPath, false));
             ShouldFail<ArgumentNullException>("Precondition failed: processRunner != null", () => new ServiceUpdater(_cts, _serviceManagerInteractor, null, _workingPath, _backupPath, _serviceName, _msiPath, false));
             ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(workingPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, null, _backupPath, _serviceName, _msiPath, false));
             ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(backupPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, null, _serviceName, _msiPath, false));
             ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(serviceName)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, null, _msiPath, false));
-            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(msiPath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, null, false));
+            ShouldFail<ArgumentNullException>("Precondition failed: !string.IsNullOrWhiteSpace(updatePath)", () => new ServiceUpdater(_cts, _serviceManagerInteractor, _processRunner, _workingPath, _backupPath, _serviceName, null, false));
         }
 
         [Test]
