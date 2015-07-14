@@ -1,19 +1,22 @@
 ﻿using System;
+using Thycotic.Utility.Tests.CodeContracts;
 
-namespace Thycotic.Utility.Tests
+namespace Thycotic.Utility.Tests.BDD
 {
-    public abstract class TestBase<TSut> : ISingleClassContractTests, IGivenWhenThenTests
+    /// <summary>
+    /// Base Behavior-Driven test class. http://martinfowler.com/bliki/GivenWhenThen.html/// </summary>
+    /// <typeparam name="TSut">The type of the sut.</typeparam>
+    public abstract class BehaviorTestBase<TSut> : ISingleClassContractTests, ICustomTestFixture
     {
         public TSut Sut { get; set; }
         
-        public virtual void Setup()
+        public virtual void SetUp()
         {
         }
 
         public virtual void TearDown()
         {
         }
-
 
         public abstract void ConstructorParametersDoNotExceptInvalidParameters();
 
@@ -54,30 +57,6 @@ namespace Thycotic.Utility.Tests
             }
         }
 
-        public void ShouldFail<TException>(string message, Func<object> func)
-        {
-            try
-            {
-                func.Invoke();
-
-                throw new Exception("Exception was expected");
-            }
-            catch (Exception ex)
-            {
-                if (ex is TException)
-                {
-                    if (ex.Message != message)
-                    {
-                        throw new Exception(string.Format("Exception was cause but had the wrong message. Expected \"{0}\". Got \"{1}\"", message, ex.Message), ex);
-                    }
-
-                }
-                else
-                {
-                    throw new Exception(string.Format("Exception is not of the correct type. Expected {0}. Got {1}", typeof(TException).FullName, ex.GetType().FullName), ex);
-                }
-
-            }
-        }
+        
     }
 }

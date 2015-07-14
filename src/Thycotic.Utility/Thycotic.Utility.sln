@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Utility", "Thycotic.Utility.csproj", "{05CF5726-55EE-4B49-9820-1ACD32B83711}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Utility.Tests", "..\Thycotic.Utility.Tests\Thycotic.Utility.Tests.csproj", "{341587C7-483A-442A-BF23-49D1A5138E57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,12 @@ Global
 		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
 		{05CF5726-55EE-4B49-9820-1ACD32B83711}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
+		{341587C7-483A-442A-BF23-49D1A5138E57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{341587C7-483A-442A-BF23-49D1A5138E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{341587C7-483A-442A-BF23-49D1A5138E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{341587C7-483A-442A-BF23-49D1A5138E57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{341587C7-483A-442A-BF23-49D1A5138E57}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{341587C7-483A-442A-BF23-49D1A5138E57}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

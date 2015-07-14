@@ -1,0 +1,11 @@
+﻿using System.Reflection;
+[assembly: AssemblyTitle("Thycotic.Utility.Testing")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Thycotic")]
+[assembly: AssemblyProduct("Internal Thycotic")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
