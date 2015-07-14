@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Messages.Common
 {
     /// <summary>
     /// Interface for a blocking consumable
     /// </summary>
+    [UnitTestsRequired]
     [ContractClass(typeof(BasicConsumableContract))]
     public interface IBasicConsumable : IConsumable
     {

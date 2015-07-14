@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
-using NSubstitute;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Serialization;
+using Thycotic.Utility.Testing.TestChain;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
    
-
+    [Obsolete]
     public class BasicConsumerWrapperDummy : BasicConsumerWrapper<BasicConsumableDummy, IBasicConsumer<BasicConsumableDummy>>
     {
         public Task HandleTask { get; set; }
@@ -24,7 +23,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
         protected override ICommonModel CreateModel()
         {
-            return Substitute.For<ICommonModel>();
+            return TestedSubstitute.For<ICommonModel>();
         }
 
         protected override Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,

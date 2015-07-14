@@ -1,13 +1,50 @@
-﻿using Thycotic.Messages.Common;
+﻿using System;
+using Autofac.Features.OwnedInstances;
+using NSubstitute;
+using NUnit.Framework;
+using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.Messages.Common;
+using Thycotic.Utility.Serialization;
 using Thycotic.Utility.Testing.BDD;
+using Thycotic.Utility.Testing.TestChain;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
     public class BasicConsumerWrapperTests : BehaviorTestBase<BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>>
     {
+        private ICommonConnection _commonConnection;
+        private IExchangeNameProvider _exchangeNameProvider;
+        private IObjectSerializer _objectSerializer;
+        private IMessageEncryptor _messageEncryptor;
+        private Func<Owned<IBasicConsumer<IBasicConsumable>>> _consumerFactory;
+
+        [SetUp]
+        public override void SetUp()
+        {
+
+            _commonConnection = TestedSubstitute.For<ICommonConnection>();
+            _exchangeNameProvider = TestedSubstitute.For<IExchangeNameProvider>();
+            //TODO: Move to unit tested sub -dkk
+            _objectSerializer = Substitute.For<IObjectSerializer>();
+            _messageEncryptor = TestedSubstitute.For<IMessageEncryptor>();
+            _consumerFactory =
+                () =>
+                    new LeakyOwned<IBasicConsumer<IBasicConsumable>>(
+                        TestedSubstitute.For<IBasicConsumer<IBasicConsumable>>(), new LifetimeDummy());
+
+
+            
+            Sut = new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _consumerFactory);
+        }
+
+        [Test]
         public override void ConstructorParametersDoNotExceptInvalidParameters()
         {
-            
+             this.ShouldFail<ArgumentNullException>("Precondition failed: connection != null", () =>  new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(null, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _consumerFactory));
+             this.ShouldFail<ArgumentNullException>("Precondition failed: exchangeNameProvider != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, null, _objectSerializer, _messageEncryptor, _consumerFactory));
+             this.ShouldFail<ArgumentNullException>("Precondition failed: objectSerializer != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, null, _messageEncryptor, _consumerFactory));
+             this.ShouldFail<ArgumentNullException>("Precondition failed: messageEncryptor != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, null, _consumerFactory));
+             this.ShouldFail<ArgumentNullException>("Precondition failed: consumerFactory != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, null));
         }
     }
 }
