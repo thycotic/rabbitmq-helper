@@ -142,8 +142,9 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thycotic.Utility.Testing">
-      <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.5\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
+    <Reference Include="Thycotic.Utility.Testing, Version=5.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.6\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>

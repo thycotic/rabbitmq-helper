@@ -1,4 +1,19 @@
-﻿//Feature: BasicConsumerWrapper
+﻿using Thycotic.Messages.Common;
+using Thycotic.Utility.Testing.BDD;
+
+namespace Thycotic.MessageQueue.Client.Wrappers.Tests
+{
+    public class BasicConsumerWrapperTests : BehaviorTestBase<BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>>
+    {
+        public override void ConstructorParametersDoNotExceptInvalidParameters()
+        {
+            
+        }
+    }
+}
+
+
+//Feature: BasicConsumerWrapper
 	
 
 //Background: 
