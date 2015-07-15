@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Thycotic.CLI.OS;
 using Thycotic.Logging;
 using Thycotic.Logging.LogTail;
+using Thycotic.Utility.OS;
 using Thycotic.Utility.Reflection;
 
 namespace Thycotic.InstallerRunner.Views
