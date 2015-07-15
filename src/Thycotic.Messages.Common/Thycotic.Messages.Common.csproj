@@ -200,7 +200,7 @@
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Utility">
-      <HintPath>..\packages\Thycotic.Utility.5.0.0.19\lib\net451\Thycotic.Utility.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Utility.5.0.0.21\lib\net451\Thycotic.Utility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
