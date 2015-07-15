@@ -184,8 +184,8 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         /// Should not be empty when negatively acknowledging a message.
         /// </summary>
         [Test]
-        [TestCase(false, true)]
-        [TestCase(true, false)]
+        [TestCase(false, true, Description = "Shouldn't requeue and should be empty")]
+        [TestCase(true, false, Description = "Should requeue and shouldn't be empty")]
         public void ShouldNotBeEmptyWhenNegativelyAcknowledgingAMessage(bool requeue, bool empty)
         {
             var routingSlip = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
@@ -309,8 +309,8 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         /// <param name="messageCount">The message count.</param>
         /// <param name="exists">if set to <c>true</c> [exists].</param>
         [Test]
-        [TestCase(5, true)]
-        [TestCase(0, false)]
+        [TestCase(5, true, Description = "Should queue up 5 message and store file should exist")]
+        [TestCase(0, false, "Shouldn't queue up any messages and there shouldn't be a store file")]
         public void ShouldPersistMessagesOnDispose(int messageCount, bool exists)
         {
             Given(() =>

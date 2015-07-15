@@ -12,5 +12,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         public DateTime? ExpiresOn { get; set; }
 
         public bool RelayEvenIfExpired { get; set; }
+
+        public string Content { get; set; }
     }
 }

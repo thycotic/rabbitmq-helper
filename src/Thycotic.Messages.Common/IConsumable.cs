@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics.Contracts;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Messages.Common
 {
     /// <summary>
     /// Interface for a consumable
     /// </summary>
+    [UnitTestsRequired]
     [ContractClass(typeof(ConsumableContract))]
     public interface IConsumable
     {
