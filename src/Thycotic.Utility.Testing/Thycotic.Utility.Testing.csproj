@@ -151,8 +151,9 @@
     <Reference Include="Thycotic.Logging">
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Utility">
-      <HintPath>..\packages\Thycotic.Utility.5.0.0.19\lib\net451\Thycotic.Utility.dll</HintPath>
+    <Reference Include="Thycotic.Utility, Version=5.0.0.20, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Utility.5.0.0.20\lib\net451\Thycotic.Utility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
