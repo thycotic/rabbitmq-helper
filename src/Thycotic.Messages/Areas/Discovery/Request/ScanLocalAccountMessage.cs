@@ -1,11 +1,12 @@
 ﻿using Thycotic.Discovery.Core.Inputs;
+using Thycotic.Messages.Common;
 
 namespace Thycotic.Messages.Areas.Discovery.Request
 {
     /// <summary>
     /// Scan Local Account Message
     /// </summary>
-    public class ScanLocalAccountMessage : ScanMessageBase
+    public class ScanLocalAccountMessage : ScanMessageBase, IBlockingConsumable
     {
         /// <summary>
         /// Computer Id
