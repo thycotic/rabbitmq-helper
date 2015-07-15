@@ -279,9 +279,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Thycotic.CLI, Version=5.0.0.16, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Thycotic.CLI.5.0.0.16\lib\net451\Thycotic.CLI.dll</HintPath>
+    <Reference Include="Thycotic.CLI">
+      <HintPath>..\..\packages\Thycotic.CLI.5.0.0.18\lib\net451\Thycotic.CLI.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
