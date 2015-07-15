@@ -263,7 +263,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.CLI">
-      <HintPath>..\packages\Thycotic.CLI.5.0.0.17\lib\net451\Thycotic.CLI.dll</HintPath>
+      <HintPath>..\packages\Thycotic.CLI.5.0.0.18\lib\net451\Thycotic.CLI.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.97, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
