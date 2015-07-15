@@ -1,6 +1,5 @@
 ﻿using System;
 using Autofac.Features.OwnedInstances;
-using NSubstitute;
 using NUnit.Framework;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
@@ -24,8 +23,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             _commonConnection = TestedSubstitute.For<ICommonConnection>();
             _exchangeNameProvider = TestedSubstitute.For<IExchangeNameProvider>();
-            //TODO: Move to unit tested sub -dkk
-            _objectSerializer = Substitute.For<IObjectSerializer>();
+            _objectSerializer = TestedSubstitute.For<IObjectSerializer>();
             _messageEncryptor = TestedSubstitute.For<IMessageEncryptor>();
             _consumerFactory =
                 () =>
