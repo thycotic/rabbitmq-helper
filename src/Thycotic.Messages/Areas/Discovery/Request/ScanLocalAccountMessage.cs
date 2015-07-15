@@ -6,7 +6,7 @@ namespace Thycotic.Messages.Areas.Discovery.Request
     /// <summary>
     /// Scan Local Account Message
     /// </summary>
-    public class ScanLocalAccountMessage : ScanMessageBase, IBlockingConsumable
+    public class ScanLocalAccountMessage : ScanMessageBase
     {
         /// <summary>
         /// Computer Id
