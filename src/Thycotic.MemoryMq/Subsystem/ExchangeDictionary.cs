@@ -63,6 +63,8 @@ namespace Thycotic.MemoryMq.Subsystem
         {
             _log.Debug(string.Format("Accepting message for {0}", routingSlip));
 
+            body.RoutingKey = routingSlip.ToString();
+
             _data.GetOrAdd(routingSlip, s => new MessageQueue());
 
             _data[routingSlip].Enqueue(body);

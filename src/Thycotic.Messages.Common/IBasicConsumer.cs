@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Messages.Common
 {
@@ -7,6 +8,7 @@ namespace Thycotic.Messages.Common
     /// Interface for a consumer that accepts a request
     /// </summary>
     /// <typeparam name="TRequest">The type of the request.</typeparam>
+    [UnitTestsRequired]
     [ContractClass(typeof(BasicConsumerContract<>))]
     public interface IBasicConsumer<in TRequest> : IConsumer 
         where TRequest : class, IBasicConsumable 

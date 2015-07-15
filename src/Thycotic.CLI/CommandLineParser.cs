@@ -26,7 +26,7 @@ namespace Thycotic.CLI
             // -key="another value"
             // input can contain multiple arguments
             // the argument key should be any string not containing spaces, the argument value can contain spaces if it is surrounded in quotes
-            var regexParameters = new Regex(@"-(""(?:\\.|[^""])*""|[^\s]*)=\s*(""(?:\\.|[^""])*""|[^\s]*)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            var regexParameters = new Regex(@"-(""(?:\\.|[^""])*""|[^\s]*)=(""(?:\\.|[^""])*""|[^\s]*)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             var parameterMatches = regexParameters.Matches(input);
 

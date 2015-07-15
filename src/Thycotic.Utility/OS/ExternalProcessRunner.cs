@@ -2,12 +2,14 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Thycotic.Logging;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Utility.OS
 {
     /// <summary>
     /// External process runner
     /// </summary>
+    [UnitTestsRequired]
     public class ExternalProcessRunner
     {
         private readonly ILogWriter _log = Log.Get(typeof (ExternalProcessRunner));

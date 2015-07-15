@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics.Contracts;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Interface for an exchange provider
     /// </summary>
+    [UnitTestsRequired]
     [ContractClass(typeof(ExchangeNameProviderContract))]
     public interface IExchangeNameProvider
     {

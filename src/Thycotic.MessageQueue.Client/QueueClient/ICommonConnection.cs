@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Interface for a Memory Mq connection
     /// </summary>
+    [UnitTestsRequired]
     [ContractClass(typeof(CommonConnectionContract))]
     public interface ICommonConnection : IDisposable
     {

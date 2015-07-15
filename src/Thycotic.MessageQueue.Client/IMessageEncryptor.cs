@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.MessageQueue.Client
 {
     /// <summary>
     /// Interface for a message encryptor
     /// </summary>
+    [UnitTestsRequired]
     [ContractClass(typeof(MessageEncyptorContract))]
     public interface IMessageEncryptor
     {
