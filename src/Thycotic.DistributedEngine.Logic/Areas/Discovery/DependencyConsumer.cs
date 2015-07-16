@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using Thycotic.Discovery.Core.Elements;
+using Thycotic.Discovery.Core.Results;
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -14,7 +17,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
     /// <summary>
     /// Dependency Consumer
     /// </summary>
-    public class DependencyConsumer : IBasicConsumer<ScanDependencyMessage>
+    public class DependencyConsumer : IBasicConsumer<ScanDependencyMessage>, IBlockingConsumer<ScanDependencyBlockingMessage, ScanDependencyResponse>
     {
         private readonly IResponseBus _responseBus;
         private readonly IScannerFactory _scannerFactory;
@@ -40,8 +43,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanDependencyMessage request)
         {
-            
-
             try
             {
                 _log.Info(string.Format("{0} : Scan Dependencies ({1})", request.Input.ComputerName, GetDependencyTypeName(request.Input.DependencyScannerType)));
@@ -57,20 +58,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
-                    var response = new ScanDependencyResponse
-                    {
-                        BatchId = batchId,
-                        ComputerId = request.ComputerId,
-                        DependencyItems = result.DependencyItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                        DependencyScannerType = request.Input.DependencyScannerType,
-                        DiscoverySourceId = request.DiscoverySourceId,
-                        ErrorCode = result.ErrorCode,
-                        ErrorMessage = result.ErrorMessage,
-                        Logs = truncatedLog,
-                        Paging = paging,
-                        StatusMessages = { },
-                        Success = result.Success
-                    };
+                    var response = FormatResponse(request.ComputerId, request.DiscoverySourceId, result.ErrorMessage,
+                        truncatedLog, new string[0], result.Success,
+                        result.DependencyItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        request.Input.DependencyScannerType, result.ErrorCode, batchId, paging);
                     _log.Info(string.Format("{0} : Send Dependency ({1}) Results Batch {2} of {3}", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType), x + 1, paging.BatchCount));
                     _responseBus.Execute(response);
                     paging.Skip = paging.NextSkip;
@@ -80,6 +71,52 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             {
                 _log.Error(string.Format("{0} : Scan Dependencies for DependencyScannerType: {1} Failed using ScannerId: {2}", request.Input.ComputerName, GetDependencyTypeName(request.Input.DependencyScannerType), request.DiscoveryScannerId), e);
             }
+        }
+
+        /// <summary>
+        /// Scan Dependencies
+        /// </summary>
+        /// <param name="request"></param>
+        public ScanDependencyResponse Consume(ScanDependencyBlockingMessage request)
+        {
+            try
+            {
+                _log.Info(string.Format("{0} : Scan Dependencies ({1})", request.Input.ComputerName, GetDependencyTypeName(request.Input.DependencyScannerType)));
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+                var result = scanner.ScanComputerForDependencies(request.Input);
+                var truncatedLog = result.Logs.Truncate();
+                _log.Info(string.Format("{0} : Send Dependency ({1})", request.Input.ComputerName, GetDependencyTypeName(result.DependencyScannerType)));
+                return FormatResponse(request.ComputerId, request.DiscoverySourceId, result.ErrorMessage,
+                    truncatedLog, new string[0], result.Success, result.DependencyItems,
+                    request.Input.DependencyScannerType, result.ErrorCode);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("{0} : Scan Dependencies for DependencyScannerType: {1} Failed using ScannerId: {2}", request.Input.ComputerName, GetDependencyTypeName(request.Input.DependencyScannerType), request.DiscoveryScannerId);
+                _log.Error(message, e);
+                return FormatResponse(request.ComputerId, request.DiscoverySourceId, message,
+                    new List<DiscoveryLog>(), new string[0], false, new DependencyItem[0],
+                    request.Input.DependencyScannerType);
+            }
+        }
+
+        private ScanDependencyResponse FormatResponse(int computerId, int discoverySourceId, string errorMessage, List<DiscoveryLog> logs, 
+            string[] statusMessages, bool success, DependencyItem[] dependencyItems, int dependencyScannerType, int errorCode = 0, Guid batchId = default(Guid), Paging paging = null)
+        {
+            return new ScanDependencyResponse
+            {
+                ComputerId = computerId,
+                DiscoverySourceId = discoverySourceId,
+                ErrorMessage = errorMessage,
+                Logs = logs,
+                StatusMessages = statusMessages,
+                Success = success,
+                DependencyItems = dependencyItems,
+                DependencyScannerType = dependencyScannerType,
+                ErrorCode = errorCode,
+                BatchId = batchId,
+                Paging = paging
+            };
         }
 
         private static string GetDependencyTypeName(int dependencyScannerTypeId)

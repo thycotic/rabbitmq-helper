@@ -17,7 +17,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
     /// <summary>
     /// Local Account Consumer
     /// </summary>
-    public class LocalAccountConsumer : IBasicConsumer<ScanLocalAccountMessage>
+    public class LocalAccountConsumer : IBasicConsumer<ScanLocalAccountMessage>, IBlockingConsumer<ScanLocalAccountBlockingMessage, ScanLocalAccountResponse>
     {
         private readonly IResponseBus _responseBus;
         private readonly IScannerFactory _scannerFactory;
@@ -65,20 +65,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
 
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
-                    var response = new ScanLocalAccountResponse
-                    {
-                        BatchId = batchId,
-                        ComputerAvailable = result.ComputerAvailable,
-                        ComputerId = request.ComputerId,
-                        DiscoverySourceId = request.DiscoverySourceId,
-                        ErrorCode = result.ErrorCode,
-                        ErrorMessage = result.ErrorMessage,
-                        LocalAccounts = result.LocalAccounts.Skip(paging.Skip).Take(paging.Take).ToArray(),
-                        Logs = truncatedLog,
-                        Paging = paging,
-                        StatusMessages = { },
-                        Success = result.Success
-                    };
+                    var response = FormatResponse(request.ComputerId, request.DiscoverySourceId, result.Success,
+                        result.ComputerAvailable, result.ErrorMessage,
+                        result.LocalAccounts.Skip(paging.Skip).Take(paging.Take).ToArray(), truncatedLog, new string[0],
+                        result.ErrorCode, batchId, paging);
                     _log.Info(string.Format("{0}: Send Local Account Results Batch {1} of {2}", request.Input.ComputerName, x + 1, paging.BatchCount));
                     _responseBus.Execute(response);
                     paging.Skip = paging.NextSkip;
@@ -90,6 +80,53 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             }
         }
 
-    
+        /// <summary>
+        /// Consumes the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public ScanLocalAccountResponse Consume(ScanLocalAccountBlockingMessage request)
+        {
+            try
+            {
+                _log.Info(string.Format("{0} : Scan Local Accounts", request.Input.ComputerName));
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+                var result = scanner.ScanComputerForLocalAccounts(request.Input);
+
+                _log.Info(string.Format("{0} : Found {1} Local Accounts (Log: {2})",
+                    request.Input.ComputerName,
+                    result != null ? result.LocalAccounts.Length : -1,
+                    result != null ? string.Join("; ", result.Logs.Select(l => l.Message)) : string.Empty));
+                var truncatedLog = result.Logs.Truncate();
+                return FormatResponse(request.ComputerId, request.DiscoverySourceId, result.Success,
+                    result.ComputerAvailable, result.ErrorMessage, result.LocalAccounts, truncatedLog, new string[0], result.ErrorCode);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("{0} : Scan Local Accounts Failed", request.Input.ComputerName);
+                _log.Error(message, e);
+                return FormatResponse(request.ComputerId, request.DiscoverySourceId, false, false, message,
+                    new LocalAccount[0], new List<DiscoveryLog>(), new string[0]);
+            }
+        }
+
+        private ScanLocalAccountResponse FormatResponse(int computerId, int discoverySourceId, bool success, bool computerAvailable, string errorMessage, 
+            LocalAccount[] localAccounts, List<DiscoveryLog> discoveryLogs, string[] statusMessages, int errorCode = 0, Guid batchId = default(Guid), Paging paging = null)
+        {
+            return new ScanLocalAccountResponse()
+            {
+                ComputerId = computerId,
+                DiscoverySourceId = discoverySourceId,
+                Success = success,
+                ComputerAvailable = computerAvailable,
+                ErrorMessage = errorMessage,
+                LocalAccounts = localAccounts,
+                Logs = discoveryLogs,
+                StatusMessages = statusMessages,
+                ErrorCode = errorCode,
+                BatchId = batchId,
+                Paging = paging
+            };
+        }
     }
 }
