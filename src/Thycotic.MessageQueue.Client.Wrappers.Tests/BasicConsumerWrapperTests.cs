@@ -1,252 +1,222 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
+using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Serialization;
 using Thycotic.Utility.Testing.BDD;
+using Thycotic.Utility.Testing.DataGeneration;
 using Thycotic.Utility.Testing.TestChain;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {
     public class BasicConsumerWrapperTests : BehaviorTestBase<BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>>
     {
+        private CancellationTokenSource _cts = new CancellationTokenSource();
+        private string _exchangeName;
+        private ICommonModel _model;
         private ICommonConnection _commonConnection;
         private IExchangeNameProvider _exchangeNameProvider;
         private IObjectSerializer _objectSerializer;
         private IMessageEncryptor _messageEncryptor;
         private Func<Owned<IBasicConsumer<IBasicConsumable>>> _consumerFactory;
+        private IBasicConsumer<IBasicConsumable> _consumer;
+
+        private void WaitToOpenChannel()
+        {
+            //wait for the connection to fire and assign the command model
+            while (Sut.CommonModel == null)
+            {
+                Task.Delay(TimeSpan.FromMilliseconds(500)).Wait();
+            }
+        }
+
+        private void WaitToForAsyncComplete()
+        {
+            //wait for the model to receive and ack or nack, effectively signling completion
+            _cts.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(30));
+        }
 
         [SetUp]
         public override void SetUp()
         {
+            _cts = new CancellationTokenSource();
+            _model = TestedSubstitute.For<ICommonModel>();
 
-            _commonConnection = TestedSubstitute.For<ICommonConnection>();
+            //since we don't have access to the inner task used the model to know when consumption is done.
+            _model.When(m=> m.BasicAck(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
+            _model.When(m=> m.BasicNack(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
+
+            _commonConnection = new TestConnection(_model);
             _exchangeNameProvider = TestedSubstitute.For<IExchangeNameProvider>();
-            _objectSerializer = TestedSubstitute.For<IObjectSerializer>();
+            _exchangeName = this.GenerateUniqueDummyName();
+            _exchangeNameProvider.GetCurrentExchange().Returns(_exchangeName);
+
+
+            _objectSerializer = new JsonObjectSerializer();
             _messageEncryptor = TestedSubstitute.For<IMessageEncryptor>();
+
+            //just return what is sent (skip the first argument - exchange - and return the bytes)
+            _messageEncryptor.Encrypt(Arg.Any<string>(), Arg.Any<byte[]>()).Returns(info => info.Args().Skip(1).First());
+
+            //just return what is sent (skip the first argument - exchange - and return the bytes)
+            _messageEncryptor.Decrypt(Arg.Any<string>(), Arg.Any<byte[]>()).Returns(info => info.Args().Skip(1).First());
+
+            _consumer = TestedSubstitute.For<IBasicConsumer<IBasicConsumable>>();
+
             _consumerFactory =
                 () =>
                     new LeakyOwned<IBasicConsumer<IBasicConsumable>>(
-                        TestedSubstitute.For<IBasicConsumer<IBasicConsumable>>(), new LifetimeDummy());
+                        _consumer, new LifetimeDummy());
 
-
-            
             Sut = new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _consumerFactory);
         }
 
+        /// <summary>
+        /// Constructors the parameters do not except invalid parameters.
+        /// </summary>
         [Test]
         public override void ConstructorParametersDoNotExceptInvalidParameters()
         {
-             this.ShouldFail<ArgumentNullException>("Precondition failed: connection != null", () =>  new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(null, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _consumerFactory));
-             this.ShouldFail<ArgumentNullException>("Precondition failed: exchangeNameProvider != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, null, _objectSerializer, _messageEncryptor, _consumerFactory));
-             this.ShouldFail<ArgumentNullException>("Precondition failed: objectSerializer != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, null, _messageEncryptor, _consumerFactory));
-             this.ShouldFail<ArgumentNullException>("Precondition failed: messageEncryptor != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, null, _consumerFactory));
-             this.ShouldFail<ArgumentNullException>("Precondition failed: consumerFactory != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, null));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: connection != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(null, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: exchangeNameProvider != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, null, _objectSerializer, _messageEncryptor, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: objectSerializer != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, null, _messageEncryptor, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: messageEncryptor != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, null, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: consumerFactory != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, null));
+        }
+
+        /// <summary>
+        /// Basic deliver should relay when appropriate.
+        /// </summary>
+        /// <param name="redelivered">if set to <c>true</c> [redelivered].</param>
+        /// <param name="expired">if set to <c>true</c> [expired].</param>
+        /// <param name="relayIfExpired">if set to <c>true</c> [relay if expired].</param>
+        [Test]
+        [TestCase(false, false, false, TestName = "Normal execution")]
+        [TestCase(true, false, false, TestName = "Relay redelivered")]
+        [TestCase(false, true, false, TestName = "Don't relay expired")]
+        [TestCase(false, true, true, TestName = "Relay expired")]
+        public void HandleBasicDeliverShouldRelayWhenAppropriate(bool redelivered,  bool expired, bool relayIfExpired)
+        {
+            var consumerTag = string.Empty;
+            ulong deliveryTag = 0;
+            var routingKey = string.Empty;
+            ICommonModelProperties properties = null;
+            BasicConsumableDummy consumable = null;
+            byte[] body = null;
+
+            Given(() =>
+            {
+
+                consumerTag = this.GenerateUniqueDummyName();
+                deliveryTag = 1;
+                routingKey = this.GenerateUniqueDummyName();
+                properties = TestedSubstitute.For<ICommonModelProperties>();
+                consumable = new BasicConsumableDummy
+                {
+                    Content = this.GenerateUniqueDummyName(),
+                    RelayEvenIfExpired = relayIfExpired,
+                    ExpiresOn = expired ? DateTime.UtcNow - TimeSpan.FromSeconds(30) : (DateTime?) null
+                   
+                };
+                body = _objectSerializer.ToBytes(consumable);
+
+                Sut.StartConsuming();
+
+                _consumer.When(c => c.Consume(Arg.Any<IBasicConsumable>())).Do(info =>
+                {
+                    var consumable2 = (BasicConsumableDummy) info.Args().First();
+                    
+                    consumable2.Content.Should().Be(consumable.Content);
+                });
+            });
+
+            
+
+            When(() =>
+            {
+                WaitToOpenChannel();
+
+                Sut.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, _exchangeName, routingKey, properties, body);
+
+                WaitToForAsyncComplete();
+            });
+
+
+            Then(() =>
+            {
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
+
+                if (!expired || relayIfExpired)
+                {
+                    _consumer.Received().Consume(Arg.Any<BasicConsumableDummy>());
+
+                    Sut.CommonModel.Received().BasicAck(deliveryTag, _exchangeName, routingKey, false);
+                }
+                else
+                {
+                    _consumer.DidNotReceive().Consume(Arg.Any < IBasicConsumable>());
+                    _consumer.DidNotReceive().Consume(Arg.Any<BasicConsumableDummy>());
+
+                    Sut.CommonModel.Received().BasicNack(deliveryTag, _exchangeName, routingKey, false, false);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Basic deliver should not relay corrupted.
+        /// </summary>
+        [Test]
+        public void HandleBasicDeliverShouldNotRelayCorrupted()
+        {
+            var consumerTag = string.Empty;
+            ulong deliveryTag = 0;
+            var redelivered = false;
+            var routingKey = string.Empty;
+            ICommonModelProperties properties = null;
+            byte[] body = null;
+
+            Given(() =>
+            {
+
+                consumerTag = this.GenerateUniqueDummyName();
+                deliveryTag = 1;
+                redelivered = false;
+                routingKey = this.GenerateUniqueDummyName();
+                properties = TestedSubstitute.For<ICommonModelProperties>();
+                body = Encoding.UTF8.GetBytes(this.GenerateUniqueDummyName());
+
+                Sut.StartConsuming();
+            });
+
+
+
+            When(() =>
+            {
+                WaitToOpenChannel();
+
+                Sut.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, _exchangeName, routingKey, properties, body);
+
+                WaitToForAsyncComplete();
+            });
+
+
+            Then(() =>
+            {
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
+
+                _consumer.DidNotReceive().Consume(Arg.Any<IBasicConsumable>());
+                _consumer.DidNotReceive().Consume(Arg.Any<BasicConsumableDummy>());
+
+                Sut.CommonModel.Received().BasicNack(deliveryTag, _exchangeName, routingKey, false, false);
+
+            });
         }
     }
 }
-
-
-//Feature: BasicConsumerWrapper
-	
-
-//Background: 
-//    Given there exists a substitute object for ICommonConnection stored in the scenario as CommonConnectionTest
-//    And there exists a substitute object for IExchangeNameProvider stored in the scenario as ExchangeNameProviderTest
-//    And there exists a substitute object for IBasicConsumer<BasicConsumableDummy> stored in the scenario as BasicConsumerTest
-//    And there exists a basic consumer factory function stored in the scenario as ConsumerFactoryTest which returns Owned<IBasicConsumer<BasicConsumableDummy>> of IBasicConsumer<BasicConsumableDummy> BasicConsumerTest
-//    And there exists a substitute object for IObjectSerializer stored in the scenario as ObjectSerializerTest
-//    And there exists a substitute object for IMessageEncryptor stored in the scenario as MessageEncryptorTest
-//    And there exists a BasicConsumableDummy stored in the scenario as BasicConsumableDummyTest
-//    And the scenario object BasicConsumableDummy BasicConsumableDummyTest is not expired	
-//    And the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns BasicConsumableDummy BasicConsumableDummyTest
-//    And there exists a BasicConsumerWrapperDummy stored in the scenario as BasicConsumerWrapperDummyTest with CommonConnection CommonConnectionTest, ExchangeNameProvider ExchangeNameProviderTest, ConsumerFactory ConsumerFactoryTest, ObjectSerializer ObjectSerializerTest and MessageEncryptor MessageEncryptorTest
-
-//Scenario: HandleBasicDeliver should relay message
-//    Given the scenario object BasicConsumableDummy BasicConsumableDummyTest is not expired	
-//    When the connection is established on ICommonConnection CommonConnectionTest
-//    When the method HandleBasicDeliver on BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
-//    Then the method Consume on IBasicConsumer<BasicConsumableDummy> BasicConsumerTest is called
-//    Then the method BasicAck on the CommonModel of BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
-	
-//Scenario: HandleBasicDeliver should not relay expired message
-//    Given the scenario object BasicConsumableDummy BasicConsumableDummyTest is expired
-//    And the scenario object BasicConsumableDummy BasicConsumableDummyTest should not be relayed if it is expired
-//    When the connection is established on ICommonConnection CommonConnectionTest
-//    When the method HandleBasicDeliver on BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
-//    Then the method Consume on IBasicConsumer<BasicConsumableDummy> BasicConsumerTest is not called
-//    Then the method BasicNack on the CommonModel of BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
-	
-//Scenario: HandleBasicDeliver should throw away non parsable message
-//    Given the ToObject method on IObjectSerializer substitute ObjectSerializerTest returns corrupted BasicConsumableDummy message
-//    When the connection is established on ICommonConnection CommonConnectionTest
-//    When the method HandleBasicDeliver on BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
-//    Then the method Consume on IBasicConsumer<BasicConsumableDummy> BasicConsumerTest is not called
-//    Then the method BasicNack on the CommonModel of BasicConsumerWrapperDummy BasicConsumerWrapperDummyTest is called
-	
-
-
-
-//using System;
-//using System.Runtime.Serialization;
-//using System.Threading.Tasks;
-//using Autofac.Features.OwnedInstances;
-//using FluentAssertions;
-//using NSubstitute;
-//using TechTalk.SpecFlow;
-//using Thycotic.MemoryMq;
-//using Thycotic.MessageQueue.Client.QueueClient;
-//using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
-//using Thycotic.Messages.Common;
-//using Thycotic.Utility.Serialization;
-//using Thycotic.Utility.Specflow;
-
-//namespace Thycotic.MessageQueue.Client.Wrappers.Tests
-//{
-//    [Binding]
-//    public class BasicConsumerWrapperSteps
-//    {
-//        [Given(@"there exists a substitute object for IBasicConsumer<BasicConsumableDummy> stored in the scenario as (\w+)")]
-//        public void GivenThereExistsASubstituteObjectForIBasicConsumerBasicConsumableDummyStoredInTheScenario(string basicConsumerName)
-//        {
-//            this.GetScenarioContext().SetSubstitute<IBasicConsumer<BasicConsumableDummy>>(basicConsumerName);
-//        }
-
-
-//        [Given(@"there exists a BasicConsumableDummy stored in the scenario as (\w+)")]
-//        public void GivenThereExistsABasicConsumableDummyStoredInTheScenario(string basicConsumableName)
-//        {
-//            this.GetScenarioContext().Set(basicConsumableName, new BasicConsumableDummy());
-//        }
-
-//        [Given(@"there exists a basic consumer factory function stored in the scenario as (\w+) which returns Owned<IBasicConsumer<BasicConsumableDummy>> of IBasicConsumer<BasicConsumableDummy> (\w+)")]
-//        public void GivenThereExistsABasicConsumerFactoryFunctionStoredInTheScenario(string consumerFactoryFunctionName, string basicConsumerName)
-//        {
-//            var context = this.GetScenarioContext();
-//            var consumer = context.Get<IBasicConsumer<BasicConsumableDummy>>(basicConsumerName);
-//            Func<Owned<IBasicConsumer<BasicConsumableDummy>>> func =
-//                () => new LeakyOwned<IBasicConsumer<BasicConsumableDummy>>(consumer, new LifetimeDummy());
-//            this.GetScenarioContext().Set(consumerFactoryFunctionName, func);
-//        }
-
-//        [Given(@"the ToObject method on IObjectSerializer substitute (\w+) returns BasicConsumableDummy (\w+)")]
-//        public void GivenTheToObjectMethodOnIObjectSerializerSubstitutReturns(string objectSerializerName, string consumableName)
-//        {
-//            var objectSerializer = this.GetScenarioContext().Get<IObjectSerializer>(objectSerializerName);
-
-//            objectSerializer.ToObject<BasicConsumableDummy>(Arg.Any<byte[]>()).Returns(this.GetScenarioContext().Get<BasicConsumableDummy>(consumableName));
-//        }
-//        [Given(@"the ToObject method on IObjectSerializer substitute (\w+) returns corrupted BasicConsumableDummy message")]
-//        public void GivenTheToObjectMethodOnIObjectSerializerSubstitutReturnsCorruptedMessage(string objectSerializerName)
-//        {
-//            var objectSerializer = this.GetScenarioContext().Get<IObjectSerializer>(objectSerializerName);
-
-//            objectSerializer.When(s => s.ToObject<BasicConsumableDummy>(Arg.Any<byte[]>())).Throw<SerializationException>();
-//        }
-
-
-//        [Given(
-//            @"there exists a BasicConsumerWrapperDummy stored in the scenario as (\w+) with CommonConnection (\w+), ExchangeNameProvider (\w+), ConsumerFactory (\w+), ObjectSerializer (\w+) and MessageEncryptor (\w+)"
-//            )]
-//        public void
-//            GivenThereExistsAConsumerWrapperBaseDummyStoredInTheScenario(
-//            string consumerWrapperName, string connectionName, string exchangeProviderName, string consumerFactoryName,
-//            string objectSerializerName, string messageEncryptorName)
-//        {
-//            var connection = this.GetScenarioContext().Get<ICommonConnection>(connectionName);
-//            var exchangeNameProvider = this.GetScenarioContext().Get<IExchangeNameProvider>(exchangeProviderName);
-//            var consumerFactory = this.GetScenarioContext().Get<Func<Owned<IBasicConsumer<BasicConsumableDummy>>>>(consumerFactoryName);
-//            var objectSerializer = this.GetScenarioContext().Get<IObjectSerializer>(objectSerializerName);
-//            var messageEncryptor = this.GetScenarioContext().Get<IMessageEncryptor>(messageEncryptorName);
-
-//            this.GetScenarioContext()
-//                .Set(consumerWrapperName,
-//                    new BasicConsumerWrapperDummy(connection, exchangeNameProvider, objectSerializer, messageEncryptor,
-//                        consumerFactory));
-//        }
-
-//        [Given(@"the scenario object BasicConsumableDummy (\w+) is not expired")]
-//        public void GivenTheScenarioObjectBasicConsumableDummyIsNotExpired(string consumableName)
-//        {
-//            var consumable = this.GetScenarioContext().Get<BasicConsumableDummy>(consumableName);
-//            consumable.ExpiresOn = DateTime.UtcNow + TimeSpan.FromSeconds(30);
-//        }
-
-//        [Given(@"the scenario object BasicConsumableDummy (\w+) is expired")]
-//        public void GivenTheScenarioObjectBasicConsumableDummyIsExpired(string consumableName)
-//        {
-//            var consumable = this.GetScenarioContext().Get<BasicConsumableDummy>(consumableName);
-//            consumable.ExpiresOn = DateTime.UtcNow;
-//        }
-
-//        [Given(@"the scenario object BasicConsumableDummy (\w+) should not be relayed if it is expired")]
-//        public void GivenTheScenarioObjectBasicConsumableDummyShouldNotBeRedeliveredIfItIsExpired(string consumableName)
-//        {
-//            var consumable = this.GetScenarioContext().Get<BasicConsumableDummy>(consumableName);
-//            consumable.RelayEvenIfExpired = false;
-//        }
-
-//        [When(@"the method HandleBasicDeliver on BasicConsumerWrapperDummy (\w+) is called")]
-//        public void WhenTheMethodHandleBasicDeliverOnBasicConsumerWrapperDummyIsCalled(string consumerWrapperName)
-//        {
-//            var consumerWrapper = this.GetScenarioContext().Get<BasicConsumerWrapperDummy>(consumerWrapperName);
-
-//            var consumerTag = Guid.NewGuid().ToString();
-//            const ulong deliveryTag = 1;
-//            const bool redelivered = false;
-//            var exchange = Guid.NewGuid().ToString();
-//            var routingKey = Guid.NewGuid().ToString();
-//            var body = new byte[10];
-//            var properties = new MemoryMqModelProperties(new MemoryMqProperties());
-
-//            consumerWrapper.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, exchange, routingKey, properties,
-//                body);
-
-//            consumerWrapper.HandleTask.Wait(TimeSpan.FromSeconds(15));
-
-//            consumerWrapper.HandleTask.IsCompleted.Should().BeTrue("Handle task should be completed");
-//        }
-
-//        [Then(@"the method ToObject on IObjectSerializer substitute (\w+) is called")]
-//        public void ThenTheMethodToObjectOnIObjectSerializerIsCalled(string objectSerializerName)
-//        {
-//            var objectSerializer = this.GetScenarioContext().Get<IObjectSerializer>(objectSerializerName);
-
-//            objectSerializer.Received().ToObject<BasicConsumableDummy>(Arg.Any<byte[]>());
-//        }
-
-//        [Then(@"the method Consume on IBasicConsumer<BasicConsumableDummy> (\w+) is called")]
-//        public void ThenTheMethodConsumeOnIBasicConsumerIsCalled(string consumerName)
-//        {
-//            var consumer = this.GetScenarioContext().Get<IBasicConsumer<BasicConsumableDummy>>(consumerName);
-
-//            consumer.Received().Consume(Arg.Any<BasicConsumableDummy>());
-//        }
-
-//        [Then(@"the method Consume on IBasicConsumer<BasicConsumableDummy> (\w+) is not called")]
-//        public void ThenTheMethodConsumeOnIBasicConsumerIsNotCalled(string consumerName)
-//        {
-//            var consumer = this.GetScenarioContext().Get<IBasicConsumer<BasicConsumableDummy>>(consumerName);
-
-//            consumer.DidNotReceive().Consume(Arg.Any<BasicConsumableDummy>());
-//        }
-
-
-//        [Then(@"the method BasicAck on the CommonModel of BasicConsumerWrapperDummy (\w+) is called")]
-//        public void ThenTheMethodBasicAckOnTheCommonModelOfBasicConsumerWrapperDummyIsCalled(string consumerWrapperName)
-//        {
-//            var consumerWrapper = this.GetScenarioContext().Get<BasicConsumerWrapperDummy>(consumerWrapperName);
-//            consumerWrapper.CommonModel.Received().BasicAck(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>());
-//        }
-
-
-//        [Then(@"the method BasicNack on the CommonModel of BasicConsumerWrapperDummy (\w+) is called")]
-//        public void ThenTheMethodBasicNackOnTheCommonModelOfBasicConsumerWrapperDummyIsCalled(string consumerWrapperName)
-//        {
-//            var consumerWrapper = this.GetScenarioContext().Get<BasicConsumerWrapperDummy>(consumerWrapperName);
-//            consumerWrapper.CommonModel.Received().BasicNack(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<bool>());
-//        }
-
-//    }
-//}

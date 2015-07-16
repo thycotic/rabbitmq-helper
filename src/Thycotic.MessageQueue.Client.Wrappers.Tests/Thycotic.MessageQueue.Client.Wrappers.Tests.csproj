@@ -183,16 +183,15 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="BasicConsumableDummy.cs" />
-    <Compile Include="BlockingConsumerWrapperSteps.cs" />
-    <Compile Include="BasicConsumerWrapperDummy.cs" />
+    <Compile Include="BlockingConsumerWrapperTests.cs" />
     <Compile Include="BasicConsumerWrapperTests.cs" />
     <Compile Include="BlockingConsumableDummy.cs" />
-    <Compile Include="BlockingConsumerWrapperDummy.cs" />
     <Compile Include="ConsumerWrapperBaseDummy.cs" />
     <Compile Include="ConsumerWrapperBaseSteps.cs" />
     <Compile Include="LeakyOwned.cs" />
     <Compile Include="LifetimeDummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Thycotic.MessageQueue.Client.Wrappers;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Interface for a Memory Mq model
     /// </summary>
+    [UnitTestsRequired]
     [ContractClass(typeof(CommonModelContract))]
     public interface ICommonModel : IHasRawValue, IDisposable
     {

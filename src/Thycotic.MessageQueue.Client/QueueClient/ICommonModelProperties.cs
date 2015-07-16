@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics.Contracts;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Inte3rface for model properties
     /// </summary>
+    [UnitTestsRequired]
     [ContractClass(typeof(CommonModelPropertiesContract))]
     public interface ICommonModelProperties : IHasRawValue
     {

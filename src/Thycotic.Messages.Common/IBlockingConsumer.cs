@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Messages.Common
 {
@@ -8,6 +9,7 @@ namespace Thycotic.Messages.Common
     /// </summary>
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
+    [UnitTestsRequired]
     [ContractClass(typeof(BlockingConsumerContract<,>))]
     public interface IBlockingConsumer<in TRequest, out TResponse> : IConsumer
         where TRequest : class, IBlockingConsumable
