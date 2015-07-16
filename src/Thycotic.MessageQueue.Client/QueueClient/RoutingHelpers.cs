@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.Messages.Common;
 
@@ -22,7 +23,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             Contract.Ensures(Contract.Result<string>() != null);
             Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
-            return obj.GetType().FullName;
+            var supplement = obj.GetType().GetInterfaces().Contains(typeof(IBlockingConsumable)) ? "Blocking" : "Basic";
+            return string.Format("{0}:{1}", obj.GetType().FullName, supplement);
         }
 
         /// <summary>
@@ -39,7 +41,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             Contract.Ensures(Contract.Result<string>() != null);
             Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
-            return consumableType.FullName;
+            var supplement = consumableType.GetInterfaces().Contains(typeof(IBlockingConsumable)) ? "Blocking" : "Basic";
+            return string.Format("{0}:{1}", consumableType.FullName, supplement);
         }
 
         /// <summary>
