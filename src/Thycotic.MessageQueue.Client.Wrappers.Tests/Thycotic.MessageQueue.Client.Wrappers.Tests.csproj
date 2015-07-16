@@ -183,7 +183,6 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="BasicConsumableDummy.cs" />
-    <Compile Include="BlockingConsumerWrapperTests.cs" />
     <Compile Include="BasicConsumerWrapperTests.cs" />
     <Compile Include="BlockingConsumableDummy.cs" />
     <Compile Include="ConsumerWrapperBaseDummy.cs" />
