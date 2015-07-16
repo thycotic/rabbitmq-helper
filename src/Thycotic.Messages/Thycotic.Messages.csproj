@@ -220,6 +220,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanHostRangeMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanLocalAccountBlockingMessage.cs" />
