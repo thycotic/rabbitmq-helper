@@ -52,6 +52,7 @@ namespace Thycotic.RabbitMq.Helper.Certificate
         [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "File info bogus warning")]
         private void ConvertToPem(string cacertpath)
         {
+            _log.Info(string.Format("Attempting to convert {0} to .pem file...", cacertpath));
 
             var file = new FileInfo(cacertpath);
 
