@@ -168,12 +168,10 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="BasicConsumableDummy.cs" />
-    <Compile Include="BasicConsumerDummy.cs" />
-    <Compile Include="BlockingConsumableDummy.cs" />
+    <Compile Include="TestBasicConsumable.cs" />
+    <Compile Include="TestBlockingConsumable.cs" />
     <Compile Include="BlockingConsumerInterfaceSteps.cs" />
     <Compile Include="BasicConsumerInterfaceSteps.cs" />
-    <Compile Include="BlockingConsumerDummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
