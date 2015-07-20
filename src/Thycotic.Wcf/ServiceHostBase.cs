@@ -79,13 +79,13 @@ namespace Thycotic.Wcf
 
             if (_useSsl)
             {
-                _log.Info("Host will offer encrypted connection");
+                _log.Debug("Host will offer encrypted connection");
                 serviceBinding =
                     new NetTcpBinding(_userNamePasswordValidator != null ? SecurityMode.TransportWithMessageCredential : SecurityMode.Transport);
             }
             else
             {
-                _log.Warn("Host will not offer encrypted connection");
+                _log.Debug("Host will not offer encrypted connection");
                 serviceBinding = new NetTcpBinding(SecurityMode.None);
             }
 
@@ -132,7 +132,7 @@ namespace Thycotic.Wcf
             else
             {
                 //message user/password doesn't allow non-ssl use                 
-                _log.Warn("Host will not be able to validate client credentials. Use SSL for increased security");
+                _log.Debug("Host will not be able to validate client credentials. Use SSL for increased security");
             }
             try
             {
