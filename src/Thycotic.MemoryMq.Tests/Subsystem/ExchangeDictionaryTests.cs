@@ -57,7 +57,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         {
             Given(() =>
             {
-               //nothing 
+                //nothing 
             });
 
             When(() =>
@@ -87,7 +87,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             var eventArgs1 = new MemoryMqDeliveryEventArgs();
             var routingSlip2 = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
             var eventArgs2 = new MemoryMqDeliveryEventArgs();
-            var routingSlip3= new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
+            var routingSlip3 = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
             var eventArgs3 = new MemoryMqDeliveryEventArgs();
 
             var routingSlip4 = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
@@ -193,7 +193,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
             Given(() =>
             {
                 var eventArgs = new MemoryMqDeliveryEventArgs();
-                
+
                 Sut.Publish(routingSlip, eventArgs);
             });
 
@@ -226,11 +226,19 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         {
             Given(() =>
             {
+                //post json
+                const string jsonExchange = @"{""ExchangeTag"":null}";
+                const string jsonRoutingKey = @"{""RoutingKeyTag"":null}";
+                var routingSlip = new RoutingSlip(jsonExchange, jsonRoutingKey);
+                var eventArgs = new MemoryMqDeliveryEventArgs();
+
+                Sut.Publish(routingSlip, eventArgs);
+                
                 //post a few messages
-                Enumerable.Range(0,5).ToList().ForEach(i =>
+                Enumerable.Range(0, 5).ToList().ForEach(i =>
                 {
-                    var routingSlip = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
-                    var eventArgs = new MemoryMqDeliveryEventArgs();
+                    routingSlip = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
+                    eventArgs = new MemoryMqDeliveryEventArgs();
 
                     Sut.Publish(routingSlip, eventArgs);
                 });
@@ -262,13 +270,24 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
 
             Given(() =>
             {
-                
+
+                //post json
+                const string jsonExchange = @"{""ExchangeTag"":null}";
+                const string jsonRoutingKey = @"{""RoutingKeyTag"":null}";
+                var routingSlip = new RoutingSlip(jsonExchange, jsonRoutingKey);
+                var eventArgs = new MemoryMqDeliveryEventArgs
+                {
+                    Body = Encoding.UTF8.GetBytes(this.GenerateUniqueDummyName())
+                };
+
+                messages.Add(new Tuple<RoutingSlip, MemoryMqDeliveryEventArgs>(routingSlip, eventArgs));
+                Sut.Publish(routingSlip, eventArgs);
 
                 //post a few messages
                 Enumerable.Range(0, 5).ToList().ForEach(i =>
                 {
-                    var routingSlip = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
-                    var eventArgs = new MemoryMqDeliveryEventArgs
+                    routingSlip = new RoutingSlip(this.GenerateUniqueDummyName(), this.GenerateUniqueDummyName());
+                    eventArgs = new MemoryMqDeliveryEventArgs
                     {
                         Body = Encoding.UTF8.GetBytes(this.GenerateUniqueDummyName())
                     };
