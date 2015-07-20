@@ -220,6 +220,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Connectivity\Response\PingResponse.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanHostRangeMessage.cs" />
@@ -232,7 +233,7 @@
     <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
     <Compile Include="Areas\POC\Request\ChainMessage.cs" />
-    <Compile Include="Areas\POC\Request\PingMessage.cs" />
+    <Compile Include="Areas\Connectivity\Request\PingMessage.cs" />
     <Compile Include="Areas\POC\Request\SortListMessage.cs" />
     <Compile Include="Areas\POC\Request\ThrowTriggerMessage.cs" />
     <Compile Include="Areas\POC\Request\StepMessage.cs" />

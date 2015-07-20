@@ -321,7 +321,7 @@
     <Compile Include="Commands\CommandAreas.cs" />
     <Compile Include="Commands\PasswordChanging\SqlPasswordChangeCommand.cs" />
     <Compile Include="Commands\POC\CreateFileCommand.cs" />
-    <Compile Include="Commands\POC\FloodCommand.cs" />
+    <Compile Include="Commands\Connectivity\FloodCommand.cs" />
     <Compile Include="Commands\Heartbeat\SqlHeartbeatCommand.cs" />
     <Compile Include="Commands\POC\MultiplePublishCommand.cs" />
     <Compile Include="Commands\POC\StepCommand.cs" />

@@ -1,11 +1,11 @@
 ﻿using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.Areas.POC.Request
+namespace Thycotic.Messages.Areas.Connectivity.Request
 {
     /// <summary>
     /// Hello world message
     /// </summary>
-    public class PingMessage : BasicConsumableBase
+    public class PingMessage : BlockingConsumableBase
     {
 
         /// <summary>
