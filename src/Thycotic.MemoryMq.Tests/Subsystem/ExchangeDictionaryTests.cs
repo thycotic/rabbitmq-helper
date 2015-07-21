@@ -310,7 +310,7 @@ namespace Thycotic.MemoryMq.Tests.Subsystem
         /// <param name="exists">if set to <c>true</c> [exists].</param>
         [Test]
         [TestCase(5, true, Description = "Should queue up 5 message and store file should exist")]
-        [TestCase(0, false, "Shouldn't queue up any messages and there shouldn't be a store file")]
+        [TestCase(0, false, Description = "Shouldn't queue up any messages and there shouldn't be a store file")]
         public void ShouldPersistMessagesOnDispose(int messageCount, bool exists)
         {
             Given(() =>

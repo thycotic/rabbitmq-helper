@@ -89,6 +89,9 @@ namespace Thycotic.RabbitMq.Helper.Installation
 
         private static void ReplaceToken(ref string contents, string tokenName, string value)
         {
+            //rabbit doesn't like single slashed in paths
+            value = value.Replace(@"\", @"\\");
+
             contents = contents.Replace(tokenName, value);
         }
     }

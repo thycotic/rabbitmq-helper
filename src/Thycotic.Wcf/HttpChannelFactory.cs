@@ -67,7 +67,7 @@ namespace Thycotic.Wcf
             }
             else
             {
-                Log.Warn("Channel will not send client credentials. Use SSL for increased security");
+                Log.Debug("Channel will not send client credentials. Use SSL for increased security");
             }
 
             return channelFactory.CreateChannel();

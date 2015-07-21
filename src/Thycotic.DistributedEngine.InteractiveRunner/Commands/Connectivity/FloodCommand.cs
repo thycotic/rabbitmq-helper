@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using Thycotic.CLI.Commands;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.Messages.Areas.Connectivity;
+using Thycotic.Messages.Areas.Connectivity.Request;
+using Thycotic.Messages.Areas.Connectivity.Response;
 using Thycotic.Messages.Areas.POC.Request;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Commands.POC
@@ -49,7 +53,16 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Commands.POC
                             Sequence = i
                         };
 
-                        _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
+                        var stopWatch = new Stopwatch();
+                        stopWatch.Start();
+                        var response = _bus.BlockingPublish<PingResponse>(exchangeNameProvider.GetCurrentExchange(), message, 5);
+                        stopWatch.Stop();
+
+                        var total = stopWatch.ElapsedMilliseconds;
+                        var inEngineTotal = total - response.RoundTripToServerElapsedMilliseconds;
+                        var onBusTotal = total - inEngineTotal;
+
+                        _log.Info(string.Format("Ping round trip took {0} ms (On bus: {1} ms; In engine: {2} ms)", total, onBusTotal, inEngineTotal));
 
                         if (i%10000 == 0)
                         {

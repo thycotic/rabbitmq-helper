@@ -58,6 +58,8 @@ namespace Thycotic.RabbitMq.Helper.Certificate
         private void ConvertToPem(string pfxPath, string password)
         {
 
+            _log.Info(string.Format("Attempting to convert {0} to .pem file...", pfxPath));
+
             var file = new FileInfo(pfxPath);
 
             if (file.Extension.ToLower() != ".pfx")

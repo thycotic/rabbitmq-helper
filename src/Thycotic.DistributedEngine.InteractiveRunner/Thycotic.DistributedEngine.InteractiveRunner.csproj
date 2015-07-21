@@ -273,9 +273,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.127\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.361, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.363, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.361\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.363\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.11\lib\net451\Thycotic.Encryption.dll</HintPath>
@@ -308,9 +308,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Utility.5.0.0.21\lib\net451\Thycotic.Utility.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Wcf, Version=5.0.0.124, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.Wcf, Version=5.0.0.125, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.124\lib\net451\Thycotic.Wcf.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -321,7 +321,7 @@
     <Compile Include="Commands\CommandAreas.cs" />
     <Compile Include="Commands\PasswordChanging\SqlPasswordChangeCommand.cs" />
     <Compile Include="Commands\POC\CreateFileCommand.cs" />
-    <Compile Include="Commands\POC\FloodCommand.cs" />
+    <Compile Include="Commands\Connectivity\FloodCommand.cs" />
     <Compile Include="Commands\Heartbeat\SqlHeartbeatCommand.cs" />
     <Compile Include="Commands\POC\MultiplePublishCommand.cs" />
     <Compile Include="Commands\POC\StepCommand.cs" />

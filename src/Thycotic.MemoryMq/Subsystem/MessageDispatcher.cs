@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,11 +16,9 @@ namespace Thycotic.MemoryMq.Subsystem
         private readonly IBindingDictionary _bindings;
         private readonly IClientDictionary _clientDictionary;
         private CancellationTokenSource _cts;
-        private Task _monitoringTask;
 
         private readonly ILogWriter _log = Log.Get(typeof(MessageDispatcher));
-
-        private readonly LogCorrelation _correlation = LogCorrelation.Create();
+        private Task _pumpTask;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageDispatcher"/> class.
@@ -32,91 +31,91 @@ namespace Thycotic.MemoryMq.Subsystem
             _exchange = exchange;
             _bindings = bindings;
             _clientDictionary = clientDictionary;
+        }
 
-            if (_correlation == null)
+        private void Pump()
+        {
+            if (!_exchange.IsEmpty)
             {
-                throw new ApplicationException("No correlation");
+                _exchange.Mailboxes.ToList().ForEach(mailbox =>
+                {
+                    string queueName;
+                    if (!_bindings.TryGetBinding(mailbox.RoutingSlip, out queueName))
+                    {
+                        //no binding for the routing slip
+                        return;
+                    }
+
+                    if (mailbox.Queue.IsEmpty)
+                    {
+                        //nothing in the queue
+                        return;
+                    }
+
+                    IMemoryMqWcfServiceCallback callback;
+                    if (!_clientDictionary.TryGetClient(queueName, out callback))
+                    {
+                        //no client for the queue
+                        return;
+                    }
+
+
+                    MemoryMqDeliveryEventArgs body;
+                    if (!mailbox.Queue.TryDequeue(out body))
+                    {
+                        //nothing in the queue
+                        return;
+                    }
+
+                    try
+                    {
+                        //this will only fail if WCF fails
+                        //otherwise errors will be nacked by the client
+                        callback.SendMessage(body);
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Error("Failed to send message to client. Requeing message", ex);
+
+                        mailbox.Queue.NegativelyAcknoledge(body.DeliveryTag, true);
+                    }
+                });
             }
         }
 
-        private void MonitorAndDispatch()
+        private void WaitPumpAndSchedule()
         {
-            do
+            if (_cts.Token.IsCancellationRequested)
             {
-                if (!_exchange.IsEmpty)
+                return;
+            }
+
+            _pumpTask = Task.Factory.StartNew(task => Pump(), _cts.Token)
+                //react to errors
+                .ContinueWith(task =>
                 {
-                    _exchange.Mailboxes.ToList().ForEach(mailbox =>
-                    {
-                        string queueName;
-                        if (!_bindings.TryGetBinding(mailbox.RoutingSlip, out queueName))
-                        {
-                            //no binding for the routing slip
-                            return;
-                        }
+                    if (task.Exception == null) return;
 
-                        if (mailbox.Queue.IsEmpty)
-                        {
-                            //nothing in the queue
-                            return;
-                        }
+                    _log.Error("Failed to pump messages", task.Exception);
 
-                        IMemoryMqWcfServiceCallback callback;
-                        if (!_clientDictionary.TryGetClient(queueName, out callback))
-                        {
-                            //no client for the queue
-                            return;
-                        }
-
-
-                        MemoryMqDeliveryEventArgs body;
-                        if (!mailbox.Queue.TryDequeue(out body))
-                        {
-                            //nothing in the queue
-                            return;
-                        }
-
-                        try
-                        {
-                            //this will only fail if WCF fails
-                            //otherwise errors will be nacked by the client
-                            callback.SendMessage(body);
-                        }
-                        catch (Exception ex)
-                        {
-                            _log.Error("Failed to send message to client. Requeing message", ex);
-
-                            mailbox.Queue.NegativelyAcknoledge(body.DeliveryTag, true);
-                        }
-                        
-
-                        //trip the processors to keep the order. 
-                        //otherwise, tasks are scheduled at exactly the same time and might fire out of order
-                        //Thread.Sleep(1);
-                    });
-
-                }
-                
-
-            } while (!_cts.IsCancellationRequested);
+                }, _cts.Token)
+                //wait
+                .ContinueWith(task => Task.Delay(TimeSpan.FromMilliseconds(5)).Wait(), _cts.Token)
+                //schedule
+                .ContinueWith(task => WaitPumpAndSchedule(), _cts.Token);
         }
-
+        
         /// <summary>
-        /// Starts this instance.
+        /// Perform once-off startup processing.
         /// </summary>
         public void Start()
         {
-            if (_cts != null || _monitoringTask != null)
-            {
-                throw new ApplicationException("Dispatcher already running");
-            }
-
-            _log.Debug("Staring message monitoring");
-
-            Task.Factory.StartNew(() => _exchange.RestorePersistedMessages());
+            Stop();
 
             _cts = new CancellationTokenSource();
-            _monitoringTask = Task.Factory.StartNew(MonitorAndDispatch);
+            _log.Info("Message dispatching starting");
 
+            Task.Factory.StartNew(WaitPumpAndSchedule);
         }
 
         /// <summary>
@@ -124,17 +123,33 @@ namespace Thycotic.MemoryMq.Subsystem
         /// </summary>
         public void Stop()
         {
-            if (_cts != null)
+            if (_pumpTask == null)
             {
-                _cts.Cancel();
+                return;
             }
 
-            if (_monitoringTask != null)
+            if (_cts == null)
             {
-                _log.Debug("Stopping message monitoring");
-
-                _monitoringTask.Wait();
+                return;
             }
+
+            Contract.Assume(_pumpTask != null);
+            _log.Info("Message dispatcher is stopping...");
+
+            _cts.Cancel();
+
+            _log.Debug("Waiting for message dispatcher to complete...");
+
+            try
+            {
+                _pumpTask.Wait();
+            }
+            catch (AggregateException ex)
+            {
+                ex.InnerExceptions.Where(e => !(e is TaskCanceledException)).ToList().ForEach(e => _log.Error(e.Message, e));
+            }
+
+            _cts = null;
         }
 
         /// <summary>
