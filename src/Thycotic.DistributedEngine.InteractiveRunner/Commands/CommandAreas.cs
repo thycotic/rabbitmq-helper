@@ -6,6 +6,6 @@
         public const string TestFunctions = "Test Functions";
         public const string Poc = "Proof Of Concept";
         public const string Uncategorized = "Uncategorized";
-        
+        public const string Discovery = "Discovery";
     }
 }
