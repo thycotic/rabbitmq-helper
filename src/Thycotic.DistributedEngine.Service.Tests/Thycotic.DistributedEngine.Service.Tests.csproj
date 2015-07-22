@@ -138,8 +138,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.ActiveDs">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.131\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.3.2.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.TaskScheduler.1.0.0.5\lib\net20\Microsoft.Win32.TaskScheduler.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -157,22 +170,63 @@
       <Private>True</Private>
       <HintPath>..\packages\PostSharp.4.1.12\lib\net35-client\PostSharp.dll</HintPath>
     </Reference>
+    <Reference Include="SecureBlackbox, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SecureBlackbox.SSHClient, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.SSHClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SecureBlackbox.SSHCommon, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.SSHCommon.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SecureBlackbox.SSHServer, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.SSHServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.97, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.BlackBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6faa24c50f43cf8d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.97\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.363, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.100, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.131, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.131\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.364, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.364\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.363\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption, Version=5.0.0.11, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.11\lib\net451\Thycotic.Encryption.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Foundation, Version=2.5.0.0, Culture=neutral, PublicKeyToken=d3c50e8fc4a39908, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Foundation.2.5.0.0\lib\net451\Thycotic.Foundation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Licensing, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Licensing.Common, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Licensing.Public, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.Public.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -191,8 +245,8 @@
       <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.10\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Wcf, Version=5.0.0.125, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
   <Choose>
