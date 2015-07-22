@@ -51,7 +51,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
             }
             catch (Exception ex)
             {
-                _log.Error("Failed to pong back to server", ex);
+                const string message = "Failed to callback to server";
+
+                _log.Error(message, ex);
+
+                throw new ApplicationException(message, ex);
             }
 
             return new PingResponse
