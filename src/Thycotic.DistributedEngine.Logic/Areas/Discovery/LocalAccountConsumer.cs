@@ -52,7 +52,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                 _log.Info(string.Format("{0} : Found {1} Local Accounts (Log: {2})",
                     request.Input.ComputerName,
                     result != null ? result.LocalAccounts.Length : -1,
-                    result != null ? string.Join("; ", result.Logs.Select(l => l.Message)) : string.Empty));
+                    result != null ? string.Join("; ", result.Logs.Select(l => l.Message.Trim())) : string.Empty));
                 var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
