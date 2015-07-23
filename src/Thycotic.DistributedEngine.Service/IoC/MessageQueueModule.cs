@@ -48,7 +48,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 }
                 else
                 {
-                    _log.Warn("RabbitMq is not using encryption");
+                    _log.Debug("RabbitMq is not using encryption");
                 }
 
                 builder.Register(context => new RabbitMqConnection(connectionString, userName, password, useSsl))
@@ -80,7 +80,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 }
                 else
                 {
-                    _log.Warn("MemoryMq is not using encryption");
+                    _log.Debug("MemoryMq is not using encryption");
                 }
 
 

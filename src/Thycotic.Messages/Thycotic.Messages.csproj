@@ -199,9 +199,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.97, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.100, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.97\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -214,12 +214,9 @@
     <Reference Include="Thycotic.Utility">
       <HintPath>..\packages\Thycotic.Utility.5.0.0.21\lib\net451\Thycotic.Utility.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Wcf, Version=5.0.0.124, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.124\lib\net451\Thycotic.Wcf.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Connectivity\Response\PingResponse.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanHostRangeMessage.cs" />
@@ -232,7 +229,7 @@
     <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
     <Compile Include="Areas\POC\Request\ChainMessage.cs" />
-    <Compile Include="Areas\POC\Request\PingMessage.cs" />
+    <Compile Include="Areas\Connectivity\Request\PingMessage.cs" />
     <Compile Include="Areas\POC\Request\SortListMessage.cs" />
     <Compile Include="Areas\POC\Request\ThrowTriggerMessage.cs" />
     <Compile Include="Areas\POC\Request\StepMessage.cs" />

@@ -9,6 +9,7 @@ using NSubstitute;
 using NUnit.Framework;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
+using Thycotic.Messages.Common.Tests;
 using Thycotic.Utility.Serialization;
 using Thycotic.Utility.Testing.BDD;
 using Thycotic.Utility.Testing.DataGeneration;
@@ -108,7 +109,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             ulong deliveryTag = 0;
             var routingKey = string.Empty;
             ICommonModelProperties properties = null;
-            BasicConsumableDummy consumable = null;
+            TestBasicConsumable consumable = null;
             byte[] body = null;
 
             Given(() =>
@@ -118,7 +119,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
                 deliveryTag = 1;
                 routingKey = this.GenerateUniqueDummyName();
                 properties = TestedSubstitute.For<ICommonModelProperties>();
-                consumable = new BasicConsumableDummy
+                consumable = new TestBasicConsumable
                 {
                     Content = this.GenerateUniqueDummyName(),
                     RelayEvenIfExpired = relayIfExpired,
@@ -131,7 +132,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
                 _consumer.When(c => c.Consume(Arg.Any<IBasicConsumable>())).Do(info =>
                 {
-                    var consumable2 = (BasicConsumableDummy) info.Args().First();
+                    var consumable2 = (TestBasicConsumable)info.Args().First();
                     
                     consumable2.Content.Should().Be(consumable.Content);
                 });
@@ -155,14 +156,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
                 if (!expired || relayIfExpired)
                 {
-                    _consumer.Received().Consume(Arg.Any<BasicConsumableDummy>());
+                    _consumer.Received().Consume(Arg.Any<TestBasicConsumable>());
 
                     Sut.CommonModel.Received().BasicAck(deliveryTag, _exchangeName, routingKey, false);
                 }
                 else
                 {
                     _consumer.DidNotReceive().Consume(Arg.Any < IBasicConsumable>());
-                    _consumer.DidNotReceive().Consume(Arg.Any<BasicConsumableDummy>());
+                    _consumer.DidNotReceive().Consume(Arg.Any<TestBasicConsumable>());
 
                     Sut.CommonModel.Received().BasicNack(deliveryTag, _exchangeName, routingKey, false, false);
                 }
@@ -212,7 +213,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
                 Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
                 _consumer.DidNotReceive().Consume(Arg.Any<IBasicConsumable>());
-                _consumer.DidNotReceive().Consume(Arg.Any<BasicConsumableDummy>());
+                _consumer.DidNotReceive().Consume(Arg.Any<TestBasicConsumable>());
 
                 Sut.CommonModel.Received().BasicNack(deliveryTag, _exchangeName, routingKey, false, false);
 

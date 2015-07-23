@@ -1,9 +1,8 @@
 ﻿using System;
-using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueue.Client.Wrappers.Tests
+namespace Thycotic.Messages.Common.Tests
 {
-    public class BasicConsumableDummy : IBasicConsumable
+    public class TestBasicConsumable : IBasicConsumable
     {
         public int Version { get; set; }
 

@@ -179,7 +179,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 }
                 else
                 {
-                    _log.Warn("Connection to server is not using encryption");
+                    _log.Debug("Connection to server is not using encryption");
                 }
 
                 return new EngineToServerConnectionManager(connectionString, useSsl);

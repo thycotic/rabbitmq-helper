@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Utility.Testing.TestChain;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 {

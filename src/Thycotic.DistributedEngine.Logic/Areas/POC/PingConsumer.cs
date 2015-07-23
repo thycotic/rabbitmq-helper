@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
-using Thycotic.Messages.Areas.POC.Request;
+using Thycotic.Messages.Areas.Connectivity.Request;
+using Thycotic.Messages.Areas.Connectivity.Response;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.POC
@@ -11,7 +13,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
     /// <summary>
     /// Simple Hello World consumer
     /// </summary>
-    public class PingConsumer : IBasicConsumer<PingMessage>
+    public class PingConsumer : IBlockingConsumer<PingMessage, PingResponse>
     {
         private readonly IResponseBus _responseBus;
 
@@ -33,20 +35,33 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// Consumes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        public void Consume(PingMessage request)
+        public PingResponse Consume(PingMessage request)
         {
             Contract.Ensures(_log != null);
 
             _log.Debug(string.Format("Consuming ping sequence #{0}", request.Sequence));
 
+            var stopWatch = new Stopwatch();
+
             try
             {
+                stopWatch.Start();
                 _responseBus.ExecuteAsync(new EnginePingRequest());
+                stopWatch.Stop();
             }
             catch (Exception ex)
             {
-                _log.Error("Failed to pong back to server", ex);
+                const string message = "Failed to callback to server";
+
+                _log.Error(message, ex);
+
+                throw new ApplicationException(message, ex);
             }
+
+            return new PingResponse
+            {
+                RoundTripToServerElapsedMilliseconds = stopWatch.ElapsedMilliseconds
+            };
         }
     }
 }

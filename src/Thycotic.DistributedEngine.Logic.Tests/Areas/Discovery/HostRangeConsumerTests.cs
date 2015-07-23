@@ -17,6 +17,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.Discovery
         [Test]
         public void ShouldHandleErrorReturnWhenScanningHostRanges()
         {
+
             var responseBus = Substitute.For<IResponseBus>();
             var scannerFactory = Substitute.For<IScannerFactory>();
             var discoveryScanner = Substitute.For<IDiscoveryScanner>();

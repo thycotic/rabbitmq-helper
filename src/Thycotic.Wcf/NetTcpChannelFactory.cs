@@ -67,7 +67,7 @@ namespace Thycotic.Wcf
             }
             else
             {
-                Log.Warn("Channel will not send client credentials. Use SSL for increased security");
+                Log.Debug("Channel will not send client credentials. Use SSL for increased security");
             }
 
             return channelFactory.CreateChannel();
@@ -103,13 +103,8 @@ namespace Thycotic.Wcf
             }
             else
             {
-                Log.Warn("Channel will not send client credentials. Use SSL for increased security");
+                Log.Debug("Channel will not send client credentials. Use SSL for increased security");
             }
-
-            //TODO: Do i need to worry about that since this is ephemeral? -dkk
-            //channelFactory.Closed += new EventHandler(DuplexChannelFactory_Closed);
-            //channelFactory.Closing += new EventHandler(DuplexChannelFactory_Closing);
-            //channelFactory.Faulted += new EventHandler(DuplexChannelFactory_Faulted);
 
             return channelFactory.CreateChannel();
         }
