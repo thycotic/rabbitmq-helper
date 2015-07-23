@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.IO;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.Logging;
 using Thycotic.Wcf;
@@ -50,7 +51,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             var baseUri = new Uri(_connectionString, UriKind.Absolute);
 
             //fixes things like /ihawu or /ss_qa
-            var nestedRoute = string.Format("{0}/{1}", baseUri.AbsolutePath, route);
+            var nestedRoute = Path.Combine(baseUri.AbsolutePath, route);
 
             var uri = new Uri(baseUri, new Uri(nestedRoute, UriKind.Relative));
 

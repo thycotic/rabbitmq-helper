@@ -147,8 +147,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Interop.ActiveDs">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.127\lib\net451\Interop.ActiveDs.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.132\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.231\lib\net451\Jscape.Ssh.dll</HintPath>
@@ -213,17 +213,17 @@
       <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.97, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.100, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.97\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.127, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.127\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+    <Reference Include="Thycotic.Discovery.Sources">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.132\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.363, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.364, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.364\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.363\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Encryption, Version=5.0.0.11, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -266,8 +266,8 @@
       <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.10\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Wcf, Version=5.0.0.125, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
   <Choose>

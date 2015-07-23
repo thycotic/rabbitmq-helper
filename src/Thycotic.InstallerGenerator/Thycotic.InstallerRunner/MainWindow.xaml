@@ -32,6 +32,6 @@
                  Text="{Binding Path=LogOutput, Mode=OneWay}" 
                  IsReadOnly="True" 
                  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
-        <CheckBox Grid.Row="3" Content="Show detailed log" IsChecked="{Binding Path=ShowLog}"/>
+        <CheckBox Grid.Row="3" Content="Show detailed log" IsChecked="{Binding Path=ShowLog}" Margin="7,7,0,7"/>
     </Grid>
 </Window>
