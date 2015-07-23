@@ -38,7 +38,7 @@ namespace Thycotic.MessageQueue.Client.Tests
 
             //just return what is sent (skip the first argument - exchange - and return the bytes)
             _messageEncryptor.Decrypt(Arg.Any<string>(), Arg.Any<byte[]>()).Returns(info => info.Args().Skip(1).First());
-            
+
             Sut = new RequestBus(_commonConnection, _objectSerializer, _messageEncryptor);
         }
 
@@ -47,7 +47,7 @@ namespace Thycotic.MessageQueue.Client.Tests
         {
             this.ShouldFail<ArgumentNullException>("Precondition failed: connection != null", () => new RequestBus(null, _objectSerializer, _messageEncryptor));
             this.ShouldFail<ArgumentNullException>("Precondition failed: objectSerializer != null", () => new RequestBus(_commonConnection, null, _messageEncryptor));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: messageEncryptor != null", () => new RequestBus(_commonConnection,_objectSerializer, null));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: messageEncryptor != null", () => new RequestBus(_commonConnection, _objectSerializer, null));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Thycotic.MessageQueue.Client.Tests
                 //nothing
             });
 
-           byte[] body = null;
+            byte[] body = null;
             var routingKey = string.Empty;
 
             When(() =>
@@ -83,12 +83,12 @@ namespace Thycotic.MessageQueue.Client.Tests
                 _model.Received().ExchangeDeclare(_exchangeName, DefaultConfigValues.ExchangeType);
 
                 _model.Received().CreateBasicProperties();
-                
+
                 _model.Received().BasicPublish(_exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory,
                     DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, Arg.Any<ICommonModelProperties>(), body);
 
                 _model.Received().WaitForConfirmsOrDie(DefaultConfigValues.ConfirmationTimeout);
-                
+
 
 
             });
@@ -98,7 +98,7 @@ namespace Thycotic.MessageQueue.Client.Tests
         public void ShouldBlockingPublishMessageToBus()
         {
             //TODO: Clean up this test and make BLocking publish
-            
+
             //Given(() =>
             //{
             //    //nothing
