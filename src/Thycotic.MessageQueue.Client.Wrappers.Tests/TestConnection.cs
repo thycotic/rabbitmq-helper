@@ -15,7 +15,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
         public EventHandler ConnectionCreated { get; set; }
 
-        public string ServerVersion { get; private set; }
+        public string GetServerVersion()
+        {
+            return null;
+        }
 
         public bool ForceInitialize()
         {

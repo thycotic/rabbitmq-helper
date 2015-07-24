@@ -68,7 +68,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         /// <summary>
         /// Holds the Rabbit MQ version retrieved from the server.
         /// </summary>
-        public string ServerVersion {get { return _version; } }
+        public string GetServerVersion() { return _version; }
 
         #region Mapping
         private static ICommonModel Map(IModel createModel)

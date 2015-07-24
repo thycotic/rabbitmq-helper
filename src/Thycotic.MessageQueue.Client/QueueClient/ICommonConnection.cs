@@ -15,7 +15,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <summary>
         /// Holds the Queue version retrieved from the server.
         /// </summary>
-        string ServerVersion { get; }
+        string GetServerVersion();
 
         /// <summary>
         /// Forces the initialization.
@@ -80,7 +80,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <summary>
         /// Holds the Queue Server version retrieved from the server.
         /// </summary>
-        public string ServerVersion { get { return null; } }
+        public string GetServerVersion() { return null; }
 
         /// <summary>
         /// Dispose
