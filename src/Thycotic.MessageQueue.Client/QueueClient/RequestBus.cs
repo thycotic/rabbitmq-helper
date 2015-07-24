@@ -33,7 +33,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             _connection = connection;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
+            ServerVersion = connection.ServerVersion;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ServerVersion { get; private set; }
 
         /// <summary>
         /// Publishes the specified request as a fire-and-forget

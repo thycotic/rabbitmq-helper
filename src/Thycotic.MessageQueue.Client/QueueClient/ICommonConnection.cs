@@ -13,6 +13,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient
     {
 
         /// <summary>
+        /// Holds the Queue version retrieved from the server.
+        /// </summary>
+        string ServerVersion { get; }
+
+        /// <summary>
         /// Forces the initialization.
         /// </summary>
         bool ForceInitialize();
@@ -71,6 +76,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// The connection created.
         /// </value>
         public EventHandler ConnectionCreated { get; set; }
+
+        /// <summary>
+        /// Holds the Queue Server version retrieved from the server.
+        /// </summary>
+        public string ServerVersion { get { return null; } }
 
         /// <summary>
         /// Dispose

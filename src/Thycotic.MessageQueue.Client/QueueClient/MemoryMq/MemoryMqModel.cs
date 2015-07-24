@@ -142,6 +142,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         }
 
         /// <summary>
+        /// Queries the MemoryMQ Server for its version
+        /// </summary>
+        /// <returns>The version of the MemoryMQ Server</returns>
+        public string GetServerVersion()
+        {
+            return _server.GetServerVersion();
+        }
+
+        /// <summary>
         /// Waits for confirms or die.
         /// </summary>
         /// <param name="confirmationTimeout">The confirmation timeout.</param>

@@ -24,6 +24,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         private readonly ConnectionFactory _connectionFactory;
         private Lazy<IConnection> _connection;
         private bool _terminated;
+        private string _version;
 
         private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConnection));
 
@@ -64,6 +65,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 
         }
 
+        /// <summary>
+        /// Holds the Rabbit MQ version retrieved from the server.
+        /// </summary>
+        public string ServerVersion {get { return _version; } }
+
         #region Mapping
         private static ICommonModel Map(IModel createModel)
         {
@@ -81,6 +87,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 try
                 {
                     var cn = _connectionFactory.CreateConnection();
+                    object version;
+                    cn.ServerProperties.TryGetValue("version", out version);
+
+                    _version = System.Text.Encoding.UTF8.GetString((byte[])version);
+
 
                     _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 

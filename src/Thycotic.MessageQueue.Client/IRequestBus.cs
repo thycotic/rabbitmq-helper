@@ -11,6 +11,11 @@ namespace Thycotic.MessageQueue.Client
     public interface IRequestBus : IDisposable
     {
         /// <summary>
+        /// The Rabbit / MemoryMq Version
+        /// </summary>
+        string ServerVersion { get; }
+
+        /// <summary>
         /// Publishes the specified request as a fire-and-forget
         /// </summary>
         /// <param name="exchangeName">Name of the exchange.</param>
@@ -35,6 +40,11 @@ namespace Thycotic.MessageQueue.Client
     [ContractClassFor(typeof(IRequestBus))]
     public abstract class RequestBusContract : IRequestBus
     {
+        /// <summary>
+        /// The Rabbit / MemoryMq Version
+        /// </summary>
+        public string ServerVersion { get; private set; }
+
         /// <summary>
         /// Publishes the specified request as a fire-and-forget
         /// </summary>

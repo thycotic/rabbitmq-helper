@@ -9,7 +9,7 @@ using Thycotic.Messages.Common;
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
     /// <summary>
-    /// Rabbit Mq Connection
+    /// Memory Mq Connection
     /// </summary>
     public class MemoryMqConnection : ICommonConnection
     {
@@ -24,6 +24,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         private readonly MemoryMqWcfServiceConnectionFactory _connectionFactory;
         private Lazy<IMemoryMqWcfServiceConnection> _connection;
         private bool _terminated;
+        private string _version = null;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqConnection));
 
@@ -63,6 +64,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     //if the connection closes recover it
                     cn.ConnectionShutdown += RecoverConnection;
 
+                    if (_version == null)
+                    {
+                        using (var model = cn.CreateModel())
+                        {
+                            _log.Info("I'm getting a new server version now!");
+                            _version = ((MemoryMqModel) model).GetServerVersion();
+                        }
+                    }
+
                     //if there are subscribers that care to know when a connection is created, notify them
                     if (ConnectionCreated != null)
                     {
@@ -94,6 +104,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 }
             });
         }
+
+        /// <summary>
+        /// Holds the Memory MQ version retrieved from the server.
+        /// </summary>
+        public string ServerVersion { get { return _version; } }
 
         private void RecoverConnection(object connection, EventArgs reason)
         {
