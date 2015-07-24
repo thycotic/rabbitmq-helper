@@ -67,7 +67,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 return;
             }
 
-            _log.Info("Heart beating back to server");
+            _log.Info("Calling back to the server");
 
             var request = new EngineHeartbeatRequest
             {
@@ -128,7 +128,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 {
                     if (task.Exception == null) return;
 
-                    _log.Error("Failed to send heart beat to server. Recycling", task.Exception);
+                    _log.Error("Failed to callback to the server. Recycling", task.Exception);
 
                     _engineService.Recycle(true);
                 }, _cts.Token)
@@ -141,7 +141,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         /// </summary>
         public void Start()
         {
-            _log.Info(string.Format("Heartbeat runner is starting for every {0} seconds...", _heartbeatConfigurationProvider.HeartbeatIntervalSeconds));
+            _log.Info(string.Format("Callback runner is starting for every {0} seconds...", _heartbeatConfigurationProvider.HeartbeatIntervalSeconds));
 
             Task.Factory.StartNew(WaitPumpAndSchedule);
         }
@@ -152,11 +152,11 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
         public void Dispose()
         {
             Contract.Assume(_pumpTask != null);
-            _log.Info("Heartbeat runner is stopping...");
+            _log.Info("Callback runner is stopping...");
 
             _cts.Cancel();
 
-            _log.Debug("Waiting for heartbeat runner to complete...");
+            _log.Debug("Waiting for callback runner to complete...");
 
             try
             {
