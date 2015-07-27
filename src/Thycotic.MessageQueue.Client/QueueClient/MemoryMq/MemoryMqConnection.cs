@@ -197,7 +197,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
             if (!_connection.IsValueCreated || !_connection.Value.IsOpen)
             {
-                Contract.Assume(_connection.Value == null);
                 return;
             }
 
