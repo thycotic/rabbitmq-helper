@@ -206,8 +206,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 _log.Debug("Connection closed");
             }
 
-            //TODO: Current version of Rabbit API seems to hang dispose...
-            _connection.Value.Dispose();
+            //TODO: Current version of Rabbit API seems to hang dispose when the connection was closed by server
+            if (_connection.Value.CloseReason.ReplyCode != 320)
+            {
+                _connection.Value.Dispose();
+            }
             _connection = null;
         }
 

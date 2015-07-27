@@ -47,7 +47,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
             _connection = connection;
             _exchangeNameProvider = exchangeNameProvider;
-            _connection.ConnectionCreated += (sender, args) => CommonModel = CreateModel();
+            _connection.ConnectionCreated += (sender, args) => CreateModel();
 
             _exchangeName = _exchangeNameProvider.GetCurrentExchange();
 
@@ -60,10 +60,16 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// Creates the model.
         /// </summary>
         /// <returns></returns>
-        protected virtual ICommonModel CreateModel()
+        protected void CreateModel()
         {
             try
             {
+                if (CommonModel != null)
+                {
+                    CommonModel.Dispose();
+                    CommonModel = null;
+                }
+
                 using (LogContext.Create(_queueName))
                 using (LogContext.Create("Creating model"))
                 {
@@ -94,7 +100,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                     _log.Info("Model ready");
 
-                    return model;
+                    CommonModel = model;
                 }
             }
             catch (Exception ex)
