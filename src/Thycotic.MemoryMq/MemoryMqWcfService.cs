@@ -125,6 +125,15 @@ namespace Thycotic.MemoryMq
         }
 
         /// <summary>
+        /// Returns the version of the MemoryMQ Server
+        /// </summary>
+        /// <returns>The version of the MemoryMQ Server</returns>
+        public string GetServerVersion()
+        {
+            return typeof (MemoryMqWcfService).Assembly.GetName().Version.ToString();
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()

@@ -9,7 +9,7 @@ using Thycotic.Messages.Common;
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
     /// <summary>
-    /// Rabbit Mq Connection
+    /// Memory Mq Connection
     /// </summary>
     public class MemoryMqConnection : ICommonConnection
     {
@@ -61,7 +61,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 
                     //if the connection closes recover it
-                    cn.ConnectionShutdown += RecoverConnection;
+                    cn.ConnectionShutdown += RecoverConnection;                    
 
                     //if there are subscribers that care to know when a connection is created, notify them
                     if (ConnectionCreated != null)
@@ -93,6 +93,17 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     throw;
                 }
             });
+        }
+
+        /// <summary>
+        /// Holds the Memory MQ version retrieved from the server.
+        /// </summary>
+        public string GetServerVersion()
+        {
+            using (var model = _connection.Value.CreateModel())
+            {
+                return ((MemoryMqModel)model).GetServerVersion();
+            }
         }
 
         private void RecoverConnection(object connection, EventArgs reason)
@@ -186,7 +197,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
             if (!_connection.IsValueCreated || !_connection.Value.IsOpen)
             {
-                Contract.Assume(_connection.Value == null);
                 return;
             }
 

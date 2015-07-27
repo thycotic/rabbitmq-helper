@@ -24,7 +24,12 @@ namespace Thycotic.MessageQueue.Client.Tests
         {
             _consumerInvoker = consumerInvoker;
         }
-        
+
+        /// <summary>
+        /// Queue version
+        /// </summary>
+        public string ServerVersion { get; private set; }
+
         /// <summary>
         /// Publishes the specified request as a fire-and-forget
         /// </summary>

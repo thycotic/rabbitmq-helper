@@ -61,6 +61,13 @@ namespace Thycotic.MemoryMq
         [OperationContract(IsOneWay = true)]
         void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue);
 
+        /// <summary>
+        /// Returns the version of the MemoryMQ Server
+        /// </summary>
+        /// <returns>The version of the MemoryMQ Server</returns>
+        [OperationContract(IsOneWay = false)]
+        string GetServerVersion();
+
 
     }
 
@@ -134,6 +141,15 @@ namespace Thycotic.MemoryMq
         {
             Contract.Requires<ArgumentNullException>(exchange != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
+        }
+
+        /// <summary>
+        /// Returns the version of the MemoryMQ Server
+        /// </summary>
+        /// <returns>The version of the MemoryMQ Server</returns>
+        public string GetServerVersion()
+        {
+            return null;
         }
 
         /// <summary>
