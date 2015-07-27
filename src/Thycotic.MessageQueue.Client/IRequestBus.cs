@@ -11,9 +11,9 @@ namespace Thycotic.MessageQueue.Client
     public interface IRequestBus : IDisposable
     {
         /// <summary>
-        /// The Rabbit / MemoryMq Version
+        /// Site connector version
         /// </summary>
-        string ServerVersion { get; }
+        Version ServerVersion { get; }
 
         /// <summary>
         /// Publishes the specified request as a fire-and-forget
@@ -41,9 +41,9 @@ namespace Thycotic.MessageQueue.Client
     public abstract class RequestBusContract : IRequestBus
     {
         /// <summary>
-        /// The Rabbit / MemoryMq Version
+        /// Site connector version
         /// </summary>
-        public string ServerVersion { get; private set; }
+        public Version ServerVersion { get; private set; }
 
         /// <summary>
         /// Publishes the specified request as a fire-and-forget

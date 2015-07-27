@@ -8,9 +8,9 @@
 
 //@mytag
 
-//Scenario: StartConsuming calls ForceInitialize on CommonConnection
+//Scenario: StartConsuming calls ResetConnection on CommonConnection
 //    When the method StartConsuming on ConsumerWrapperBaseDummy ConsumerWrapperBaseDummyTest is called
-//    Then the method ForceInitialize on ICommonConnection substitute CommonConnectionTest is called
+//    Then the method ResetConnection on ICommonConnection substitute CommonConnectionTest is called
 
 
 //using NSubstitute;
@@ -40,12 +40,12 @@
 //            consumerWrapper.StartConsuming();
 //        }
 
-//        [Then(@"the method ForceInitialize on ICommonConnection substitute (\w+) is called")]
+//        [Then(@"the method ResetConnection on ICommonConnection substitute (\w+) is called")]
 //        public void ThenTheMethodForceInitializeOnCommonConnectionSubstituteIsCalled(string connectionName)
 //        {
 //            var connection = this.GetScenarioContext().Get<ICommonConnection>(connectionName);
 
-//            connection.Received().ForceInitialize();
+//            connection.Received().ResetConnection();
 //        }
 //    }
 //}

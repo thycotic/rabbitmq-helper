@@ -49,10 +49,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                     var consumerWrapperType = wrapperType.MakeGenericType(messageType, consumerType);
 
+                    if (!messageType.Name.Contains("Ping"))
+                    {
+                        return;
+                    }
+
                     var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
 
                     _consumerWrappers.Add(consumerWrapper);
-
                     consumerWrapper.StartConsuming();
                 });
             });
@@ -69,13 +73,18 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 var messageType = targetInterface.GetGenericArguments()[0];
                 var responseType = targetInterface.GetGenericArguments()[1];
 
+                if (!messageType.Name.Contains("Ping"))
+                {
+                    return;
+                }
+
                 var consumerWrapperType = wrapperType.MakeGenericType(messageType, responseType, consumerType);
 
                 var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
-
                 _consumerWrappers.Add(consumerWrapper);
 
                 consumerWrapper.StartConsuming();
+
             });
         }
 

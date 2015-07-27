@@ -39,19 +39,20 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
             _communicationObject = _server.ToCommunicationObject();
             
-            Action<object, EventArgs> connectionShutdownHandler = (model, reason) =>
+            _communicationObject.Faulted += (sender, args) =>
+            {
+                ((ICommunicationObject)sender).Abort();
+            };
+            _communicationObject.Closed += (sender, args) =>
             {
                 if (ModelShutdown != null)
                 {
-                    ModelShutdown(model, new ModelShutdownEventArgs
+                    ModelShutdown(this, new ModelShutdownEventArgs
                     {
-                        ReplyText = "No shutdown information available"
+                        ReplyText = "Likely loss of connection"
                     });
                 }
             };
-
-            _communicationObject.Faulted += (sender, args) => connectionShutdownHandler(sender, args);
-            _communicationObject.Closed += (sender, args) => connectionShutdownHandler(sender, args);
 
         }
 
@@ -145,7 +146,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// Queries the MemoryMQ Server for its version
         /// </summary>
         /// <returns>The version of the MemoryMQ Server</returns>
-        public string GetServerVersion()
+        public Version GetServerVersion()
         {
             return _server.GetServerVersion();
         }

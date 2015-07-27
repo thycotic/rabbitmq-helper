@@ -19,14 +19,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         {
             return null;
         }
+        public Version ServerVersion { get; private set; }
 
-        public bool ForceInitialize()
+        public void ResetConnection()
         {
             Task.Factory.StartNew(() =>
             {
                 ConnectionCreated(this, new EventArgs());
             });
-            return true;
         }
 
         public ICommonModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor)

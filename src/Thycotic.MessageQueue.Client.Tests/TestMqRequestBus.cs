@@ -28,7 +28,7 @@ namespace Thycotic.MessageQueue.Client.Tests
         /// <summary>
         /// Queue version
         /// </summary>
-        public string ServerVersion { get; private set; }
+        public Version ServerVersion { get; private set; }
 
         /// <summary>
         /// Publishes the specified request as a fire-and-forget

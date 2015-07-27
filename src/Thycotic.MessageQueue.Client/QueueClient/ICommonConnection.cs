@@ -11,16 +11,23 @@ namespace Thycotic.MessageQueue.Client.QueueClient
     [ContractClass(typeof(CommonConnectionContract))]
     public interface ICommonConnection : IDisposable
     {
+        /// <summary>
+        /// Gets or sets the connection created.
+        /// </summary>
+        /// <value>
+        /// The connection created.
+        /// </value>
+        EventHandler ConnectionCreated { get; set; }
 
         /// <summary>
         /// Holds the Queue version retrieved from the server.
         /// </summary>
-        string GetServerVersion();
+        Version ServerVersion { get; }
 
         /// <summary>
         /// Forces the initialization.
         /// </summary>
-        bool ForceInitialize();
+        void ResetConnection();
 
         /// <summary>
         /// Opens the channel.
@@ -30,15 +37,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="retryDelayGrowthFactor">The retry delay growth factor.</param>
         /// <returns></returns>
         ICommonModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor);
-
-        /// <summary>
-        /// Gets or sets the connection created.
-        /// </summary>
-        /// <value>
-        /// The connection created.
-        /// </value>
-        EventHandler ConnectionCreated { get; set; }
-
     }
 
     /// <summary>
@@ -48,11 +46,23 @@ namespace Thycotic.MessageQueue.Client.QueueClient
     public abstract class CommonConnectionContract : ICommonConnection
     {
         /// <summary>
+        /// Gets or sets the connection created.
+        /// </summary>
+        /// <value>
+        /// The connection created.
+        /// </value>
+        public EventHandler ConnectionCreated { get; set; }
+
+        /// <summary>
+        /// Holds the Queue Server version retrieved from the server.
+        /// </summary>
+        public Version ServerVersion { get { return null; } }
+
+        /// <summary>
         /// Forces the initialization.
         /// </summary>
-        public bool ForceInitialize()
+        public void ResetConnection()
         {
-            return default(bool);
         }
 
         /// <summary>
@@ -68,19 +78,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient
 
             return default(ICommonModel);
         }
-
-        /// <summary>
-        /// Gets or sets the connection created.
-        /// </summary>
-        /// <value>
-        /// The connection created.
-        /// </value>
-        public EventHandler ConnectionCreated { get; set; }
-
-        /// <summary>
-        /// Holds the Queue Server version retrieved from the server.
-        /// </summary>
-        public string GetServerVersion() { return null; }
 
         /// <summary>
         /// Dispose

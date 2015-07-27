@@ -21,7 +21,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <summary>
         /// Alias for the re-open delay
         /// </summary>
-        public const int ReOpenDelay = 10*1000; //10 seconds
+        public static readonly TimeSpan ReOpenDelay = TimeSpan.FromSeconds(10);
 
         /// <summary>
         /// Alias for the confirmation timeout

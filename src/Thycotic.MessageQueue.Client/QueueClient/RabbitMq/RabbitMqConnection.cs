@@ -13,6 +13,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
     /// </summary>
     public class RabbitMqConnection : ICommonConnection
     {
+        private readonly ConnectionFactory _connectionFactory;
+        private Lazy<IConnection> _connection;
+        private bool _terminated;
+        private Lazy<Version> _serverVersion; 
+
+        private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConnection));
+
         /// <summary>
         /// Gets or sets the connection created.
         /// </summary>
@@ -20,13 +27,12 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         /// The connection created.
         /// </value>
         public EventHandler ConnectionCreated { get; set; }
+        
+        /// <summary>
+        /// Holds the Rabbit MQ version retrieved from the server.
+        /// </summary>
+        public Version ServerVersion { get { return _serverVersion.Value; } }
 
-        private readonly ConnectionFactory _connectionFactory;
-        private Lazy<IConnection> _connection;
-        private bool _terminated;
-        private string _version;
-
-        private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConnection));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RabbitMqConnection" /> class.
@@ -60,15 +66,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     //AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch | SslPolicyErrors.RemoteCertificateChainErrors,
                 };
             }
-           
+
             ResetConnection();
 
         }
-
-        /// <summary>
-        /// Holds the Rabbit MQ version retrieved from the server.
-        /// </summary>
-        public string GetServerVersion() { return _version; }
 
         #region Mapping
         private static ICommonModel Map(IModel createModel)
@@ -77,7 +78,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         }
         #endregion
 
-        private void ResetConnection()
+        /// <summary>
+        /// Resets the connection.
+        /// </summary>
+        public void ResetConnection()
         {
             CloseCurrentConnection();
 
@@ -87,23 +91,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 try
                 {
                     var cn = _connectionFactory.CreateConnection();
-                    object version;
-                    cn.ServerProperties.TryGetValue("version", out version);
-
-                    _version = System.Text.Encoding.UTF8.GetString((byte[])version);
-
-
-                    _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
+                                        
+                    _log.Debug(string.Format("Creating connection to {0}", _connectionFactory.HostName));
 
                     //if the connection closes recover it
                     cn.ConnectionShutdown += RecoverConnection;
-
-                    //if there are subscribers that care to know when a connection is created, notify them
-                    if (ConnectionCreated != null)
-                    {
-                        Task.Delay(TimeSpan.FromMilliseconds(500))
-                            .ContinueWith(task => ConnectionCreated(this, new EventArgs()));
-                    }
 
                     return cn;
                 }
@@ -119,6 +111,28 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     throw;
                 }
             });
+
+            _serverVersion = new Lazy<Version>(() =>
+            {
+                object versionBytes;
+                _connection.Value.ServerProperties.TryGetValue("version", out versionBytes);
+
+                if (versionBytes == null)
+                {
+                    throw new ApplicationException("Could not retrieve RabbitMq version");
+                }
+
+                return Version.Parse(System.Text.Encoding.UTF8.GetString((byte[])versionBytes));
+
+            });
+
+            //if there are subscribers that care to know when a connection is created, notify them
+            if (ConnectionCreated != null)
+            {
+                Task.Delay(TimeSpan.FromMilliseconds(500))
+                    .ContinueWith(task => ConnectionCreated(this, new EventArgs()));
+            }
+
         }
 
         private void RecoverConnection(IConnection connection, ShutdownEventArgs reason)
@@ -132,15 +146,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             _log.Warn(string.Format("Connection closed because {0}", reason));
             ResetConnection();
 
-        }
-
-        /// <summary>
-        /// Forces the initialization.
-        /// </summary>
-        /// <returns></returns>
-        public bool ForceInitialize()
-        {
-            return _connection.Value != null;
         }
 
         /// <summary>
@@ -192,11 +197,18 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 return;
             }
 
-            if (!_connection.IsValueCreated || !_connection.Value.IsOpen) return;
+            if (!_connection.IsValueCreated) return;
 
-            _log.Debug("Closing connection...");
-            _connection.Value.Close(2 * 1000);
-            _log.Debug("Connection closed");
+            if (_connection.Value.IsOpen)
+            {
+                _log.Debug("Closing connection...");
+                _connection.Value.Close(2 * 1000);
+                _log.Debug("Connection closed");
+            }
+
+            //TODO: Current version of Rabbit API seems to hang dispose...
+            _connection.Value.Dispose();
+            _connection = null;
         }
 
         /// <summary>
