@@ -52,7 +52,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 }
 
                 builder.Register(context => new RabbitMqConnection(connectionString, userName, password, useSsl))
-                    .As<ICommonConnection>().SingleInstance();
+                    .As<ICommonConnection>().InstancePerDependency();
             }
 
         }
@@ -85,7 +85,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
 
                 builder.Register(context => new MemoryMqConnection(connectionString, userName, password, useSsl))
-                    .As<ICommonConnection>().SingleInstance();
+                    .As<ICommonConnection>().InstancePerDependency();
             }
         }
 

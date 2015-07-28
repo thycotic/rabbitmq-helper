@@ -128,9 +128,9 @@ namespace Thycotic.MemoryMq
         /// Returns the version of the MemoryMQ Server
         /// </summary>
         /// <returns>The version of the MemoryMQ Server</returns>
-        public Version GetServerVersion()
+        public string GetServerVersion()
         {
-            return GetType().Assembly.GetName().Version;
+            return typeof (MemoryMqWcfService).Assembly.GetName().Version.ToString();
         }
 
         /// <summary>

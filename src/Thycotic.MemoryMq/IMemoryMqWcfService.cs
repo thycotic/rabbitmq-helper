@@ -66,7 +66,7 @@ namespace Thycotic.MemoryMq
         /// </summary>
         /// <returns>The version of the MemoryMQ Server</returns>
         [OperationContract(IsOneWay = false)]
-        Version GetServerVersion();
+        string GetServerVersion();
 
 
     }
@@ -147,9 +147,9 @@ namespace Thycotic.MemoryMq
         /// Returns the version of the MemoryMQ Server
         /// </summary>
         /// <returns>The version of the MemoryMQ Server</returns>
-        public Version GetServerVersion()
+        public string GetServerVersion()
         {
-            return default(Version);
+            return null;
         }
 
         /// <summary>

@@ -13,13 +13,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
     /// </summary>
     public class MemoryMqConnection : ICommonConnection
     {
-        private readonly MemoryMqWcfServiceConnectionFactory _connectionFactory;
-        private Lazy<IMemoryMqWcfServiceConnection> _connection;
-        private bool _terminated;
-        private Lazy<Version> _serverVersion; 
-
-        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqConnection));
-
         /// <summary>
         /// Gets or sets the connection created.
         /// </summary>
@@ -28,10 +21,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// </value>
         public EventHandler ConnectionCreated { get; set; }
 
-        /// <summary>
-        /// Holds the Memory MQ version retrieved from the server.
-        /// </summary>
-        public Version ServerVersion { get { return _serverVersion.Value; }}
+        private readonly MemoryMqWcfServiceConnectionFactory _connectionFactory;
+        private Lazy<IMemoryMqWcfServiceConnection> _connection;
+        private bool _terminated;
+
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqConnection));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqConnection" /> class.
@@ -46,14 +40,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             //TODO: remove after username and password are no longer required
             Contract.Requires<ArgumentException>(userName != null);
             Contract.Requires<ArgumentException>(password != null);
+
+            Contract.Ensures(_log != null);
+
             _connectionFactory = new MemoryMqWcfServiceConnectionFactory { Uri = url, UseSsl = useSsl, Username = userName, Password = password, RequestedHeartbeat = 300 };
             ResetConnection();
         }
 
-        /// <summary>
-        /// Resets the connection.
-        /// </summary>
-        public void ResetConnection()
+        private void ResetConnection()
         {
             CloseCurrentConnection();
 
@@ -64,11 +58,26 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 {
                     var cn = _connectionFactory.CreateConnection();
 
-                    _log.Debug(string.Format("Creating connection to {0}", _connectionFactory.HostName));
+                    _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 
                     //if the connection closes recover it
+                    cn.ConnectionShutdown += RecoverConnection;                    
 
-                    cn.ConnectionShutdown += RecoverConnection;
+                    //if there are subscribers that care to know when a connection is created, notify them
+                    if (ConnectionCreated != null)
+                    {
+                        Task.Delay(TimeSpan.FromMilliseconds(500))
+                            .ContinueWith(task =>
+                            {
+                                //it's possible that the connection is terminated prior since the delay
+                                if (_terminated)
+                                {
+                                    return;
+                                }
+
+                                ConnectionCreated(this, new EventArgs());
+                            });
+                    }
 
                     return cn;
                 }
@@ -84,25 +93,19 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     throw;
                 }
             });
-
-            _serverVersion = new Lazy<Version>(() =>
-            {
-                using (var model = _connection.Value.CreateModel())
-                {
-                    _log.Debug("Retrieving server version");
-                    return ((MemoryMqModel)model).GetServerVersion();
-                }
-            });
-
-
-            //if there are subscribers that care to know when a connection is created, notify them
-            if (ConnectionCreated != null)
-            {
-                Task.Delay(TimeSpan.FromMilliseconds(500))
-                    .ContinueWith(task => ConnectionCreated(this, new EventArgs()));
-            }
-
         }
+
+        /// <summary>
+        /// Holds the Memory MQ version retrieved from the server.
+        /// </summary>
+        public string GetServerVersion()
+        {
+            using (var model = _connection.Value.CreateModel())
+            {
+                return ((MemoryMqModel)model).GetServerVersion();
+            }
+        }
+
         private void RecoverConnection(object connection, EventArgs reason)
         {
             //if this was actually requested, don't recover the connection and let it die
@@ -114,6 +117,23 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             _log.Warn(string.Format("Connection closed because {0}", reason));
             ResetConnection();
 
+        }
+
+        /// <summary>
+        /// Forces the initialization.
+        /// </summary>
+        /// <returns></returns>
+        public bool ForceInitialize()
+        {
+            if (_connection != null)
+            {
+
+                return _connection.Value != null;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -133,10 +153,22 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             {
                 try
                 {
+                    if (_connection == null)
+                    {
+                        throw new ApplicationException("No connection available");
+                    }
+
+                    //connection is lazy init
+                    Contract.Assume(_connection.Value != null);
+
                     return _connection.Value.CreateModel();
-
                 }
+                //catch (OperationInterruptedException ex)
+                //{
+                //    if (ex.ShutdownReason != null) _log.Debug(ex.ShutdownReason.ReplyText);
 
+                //    throw;
+                //}
                 catch (Exception ex)
                 {
                     _log.Error(string.Format("Failed to open a channel, {0} retry attempts remaining", remainingRetryAttempts), ex);
@@ -156,22 +188,25 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
         private void CloseCurrentConnection()
         {
+            
+
             if (_connection == null)
             {
                 return;
             }
 
-            if (!_connection.IsValueCreated) return;
-
-            if (_connection.Value.IsOpen)
+            if (!_connection.IsValueCreated || !_connection.Value.IsOpen)
             {
-                _log.Debug("Closing connection...");
-                _connection.Value.Close(2 * 1000);
-                _log.Debug("Connection closed");
+                return;
             }
 
+            Contract.Assume(_connection.Value != null);
+
+            _log.Debug("Closing connection...");
+            _connection.Value.Close(2 * 1000);
             _connection.Value.Dispose();
             _connection = null;
+            _log.Debug("Connection closed");
         }
 
         /// <summary>

@@ -18,13 +18,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         private readonly ILogWriter _log = Log.Get(typeof(RequestBus));
         private bool _disposed;
 
-
-        /// <summary>
-        /// Site connector version 
-        /// </summary>
-        public Version ServerVersion { get; private set; }
-
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestBus" /> class.
         /// </summary>
@@ -40,10 +33,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             _connection = connection;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
-            ServerVersion = connection.ServerVersion;
-
-            _log.Info(string.Format("Site connection version is {0}", ServerVersion));
+            ServerVersion = connection.GetServerVersion();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ServerVersion { get; private set; }
 
         /// <summary>
         /// Publishes the specified request as a fire-and-forget

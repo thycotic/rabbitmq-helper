@@ -11,7 +11,6 @@ using Thycotic.CLI.Commands;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.DistributedEngine.Service;
 using Thycotic.DistributedEngine.Service.Security;
-using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.MemoryMq.SiteConnector.Service;
 using Thycotic.MessageQueue.Client;
@@ -27,10 +26,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             public const string PipelineDisabled = "pd";
             public const string ConsumptionDisabled = "cd";
         }
-
-        public static EngineService EngineService {get; set;}
-
-        public static SiteConnectorService ConnectorService { get; set; } 
 
         private static readonly ILogWriter Log = Logging.Log.Get(typeof(Program));
         /// <summary>
@@ -49,13 +44,14 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
                 Trace.TraceInformation("Starting interactive runner...");
 
+                SiteConnectorService pipelineService = null;
                 if (startPipeline)
                 {
                     //Trace.TraceInformation("Starting pipeline...");
                     using (LogContext.Create("Pipeline service startup"))
                     {
-                        ConnectorService = new SiteConnectorService();
-                        ConnectorService.Start();
+                        pipelineService = new SiteConnectorService();
+                        pipelineService.Start();
                     }
                 }
                 else
@@ -63,20 +59,20 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     Trace.TraceInformation("Pipeline is disabled...");
                 }
 
-                
+                EngineService engineService;
                 using (LogContext.Create("Engine service startup"))
                 {
                     Trace.TraceInformation("Starting engine...");
                     var startConsuming = !args.Contains(CommandLineSwitches.ConsumptionDisabled);
 
-                    EngineService = new EngineService(startConsuming);
+                    engineService = new EngineService(startConsuming);
 
-                    ConfigureMockConfiguration(EngineService);
+                    ConfigureMockConfiguration(engineService);
 
                     //every time engine IoCContainer changes reconfigure the CLI
-                    EngineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
+                    engineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
 
-                    EngineService.Start();
+                    engineService.Start();
                
 
                 //begin the input loop but after the logo prints
@@ -99,14 +95,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 cli.Wait();
 
                 //Trace.TraceInformation("Stopping engine...");
-                if (EngineService != null)
-                {
-                    EngineService.Stop();
-                }
-                if (startPipeline && ConnectorService != null)
+                engineService.Stop();
+
+                if (startPipeline)
                 {
                     //Trace.TraceInformation("Stopping pipeline...");
-                    ConnectorService.Stop();
+                    pipelineService.Stop();
                 }
 
                 #endregion

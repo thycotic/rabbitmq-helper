@@ -25,16 +25,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly ICommonConnection _connection;
         private readonly IExchangeNameProvider _exchangeNameProvider;
 
-        private readonly string _exchangeName;
-        private readonly string _routingKey;
-        private readonly string _queueName;
-
         private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
         private bool _disposed;
         
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TConsumable, TConsumer}"/> class.
         /// </summary>
@@ -47,13 +42,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
             _connection = connection;
             _exchangeNameProvider = exchangeNameProvider;
-            _connection.ConnectionCreated += (sender, args) => CreateModel();
-
-            _exchangeName = _exchangeNameProvider.GetCurrentExchange();
-
-            _routingKey = this.GetRoutingKey(typeof(TConsumable));
-
-            _queueName = this.GetQueueName(_exchangeName, typeof(TConsumer), typeof(TConsumable));
+            _connection.ConnectionCreated += (sender, args) => CommonModel = CreateModel();
         }
 
         /// <summary>
@@ -64,20 +53,18 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         {
             try
             {
-                if (CommonModel != null)
-                {
-                    CommonModel.Dispose();
-                    CommonModel = null;
-                }
+                var exchangeName = _exchangeNameProvider.GetCurrentExchange();
 
-                using (LogContext.Create(_queueName))
-                using (LogContext.Create("Creating model"))
-                {
+                var routingKey = this.GetRoutingKey(typeof(TConsumable));
+
+                var queueName = this.GetQueueName(exchangeName, typeof(TConsumer), typeof(TConsumable));
+
                     const int retryAttempts = -1; //forever
                     const int retryDelayGrowthFactor = 1;
 
-                    var model = _connection.OpenChannel(retryAttempts, Convert.ToInt32(DefaultConfigValues.ReOpenDelay.TotalMilliseconds),
-                        retryDelayGrowthFactor);
+                var model = _connection.OpenChannel(retryAttempts, DefaultConfigValues.ReOpenDelay, retryDelayGrowthFactor);
+
+                _log.Debug(string.Format("Channel opened for {0}", queueName));
 
                     //TODO: Re-enable when Memory Mq honors this -dkk
                     //const int prefetchSize = 0;
@@ -88,21 +75,18 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                     model.ModelShutdown += RecoverConnection;
 
-                    model.ExchangeDeclare(_exchangeName, DefaultConfigValues.ExchangeType);
+                model.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
 
-                    model.QueueDeclare(_queueName, true, false, false, null);
-                    model.QueueBind(_queueName, _exchangeName, _routingKey);
+                model.QueueDeclare(queueName, true, false, false, null);
+                model.QueueBind(queueName, exchangeName, routingKey);
 
                     const bool noAck = false; //since this consumer will send an acknowledgement
                     var consumer = this;
 
-                    model.BasicConsume(_queueName, noAck, consumer); //we will ack, hence no-ack=false
-
-                    _log.Info("Model ready");
+                model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
 
                     CommonModel = model;
                 }
-            }
             catch (Exception ex)
             {
                 _log.Error(string.Format("Could not create model because {0}", ex.Message), ex);
@@ -115,30 +99,25 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// </summary>
         public void StartConsuming()
         {
-            using (LogContext.Create(_queueName))
-            using (LogContext.Create("Start consuming"))
-            {
                 try
                 {
-                    _connection.ResetConnection();
+                //forcing the connection to initialized causes the 
+                //ConnectionCreated to fire and as a results the model will be recreated
+                _connection.ForceInitialize();
                 }
                 catch (Exception ex)
                 {
                     //if there is an issue opening the channel, clean up and rethrow
-                    _log.Error(string.Format("Failed to establish connection because {0}", ex.Message));
+                _log.Error(string.Format("Failed to connect because {0}", ex.Message));
 
-                    _log.Info(string.Format("Sleeping for {0}s before reconnecting", DefaultConfigValues.ReOpenDelay.TotalSeconds));
+                _log.Info("Sleeping before reconnecting");
 
                     Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => StartConsuming());
                 }
             }
-        }
 
         private void RecoverConnection(object model, ModelShutdownEventArgs reason)
         {
-            using (LogContext.Create(_queueName))
-            using (LogContext.Create("Recovery"))
-            {
                 if (_terminated)
                 {
                     return;
@@ -148,11 +127,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                 Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task =>
                 {
-                    _log.Info("Reopening channel...");
+                _log.Debug("Reopening channel...");
                     StartConsuming();
                 });
             }
-        }
 
         /// <summary>
         /// Starts the handle task.
