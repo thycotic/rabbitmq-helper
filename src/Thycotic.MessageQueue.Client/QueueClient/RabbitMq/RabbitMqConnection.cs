@@ -20,10 +20,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         /// The connection created.
         /// </value>
         public EventHandler ConnectionCreated { get; set; }
-        
+
         private readonly ConnectionFactory _connectionFactory;
-        private Lazy<IConnection> _connection;
-        private Lazy<Version> _serverVersion;
+        private IConnection _connection;
+        private Version _serverVersion;
         private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConnection));
@@ -33,7 +33,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         /// </summary>
         public string ServerVersion
         {
-            get { return _serverVersion.Value.ToString(); }
+            get { return _serverVersion.ToString(); }
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 
         }
 
-        
+
         #region Mapping
         private static ICommonModel Map(IModel createModel)
         {
@@ -85,62 +85,43 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         {
             CloseCurrentConnection();
 
-            _connection = new Lazy<IConnection>(() =>
-            {
-                _log.Debug("Opening connection...");
-                try
-                {
-                    var cn = _connectionFactory.CreateConnection();
-                    
-                    _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 
-                    //if the connection closes recover it
-                    cn.ConnectionShutdown += RecoverConnection;
-
-                    //if there are subscribers that care to know when a connection is created, notify them
-                    if (ConnectionCreated != null)
-                    {
-                        Task.Delay(TimeSpan.FromMilliseconds(500))
-                            .ContinueWith(task =>
-                            {
-                                //it's possible that the connection is terminated prior since the delay
-                                if (_terminated)
-                                {
-                                    return;
-                                }
-
-                                ConnectionCreated(this, new EventArgs());
-                            });
-                    }
-
-                    return cn;
-                }
-                catch (Exception ex)
-                {
-                    //if there is an issue opening the channel, clean up and rethrow
-                    _log.Error(string.Format("Failed to connect because {0}", ex.Message));
-
-                    _log.Info("Sleeping before reconnecting");
-
-                    Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
-
-                    throw;
-                }
-            });
-
-            _serverVersion = new Lazy<Version>(() =>
+            _log.Debug("Opening connection...");
+            try
             {
                 var cn = _connectionFactory.CreateConnection();
-                object version;
-                cn.ServerProperties.TryGetValue("version", out version);
 
-                if (version == null)
-                {
-                    throw new ApplicationException("Version could not be determined");
-                }
+                GetServerVersion(cn);
 
-                return Version.Parse(System.Text.Encoding.UTF8.GetString((byte[]) version));
-            });
+                _log.Info(string.Format("Connection opened to {0}", _connectionFactory.HostName));
+
+                //if the connection closes recover it
+                cn.ConnectionShutdown += RecoverConnection;
+
+                _connection = cn;
+            }
+            catch (Exception ex)
+            {
+                _log.Warn(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms. {2} Use DEBUG logging for more details.", _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay, ex.Message));
+                _log.Debug(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms", _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay), ex);
+
+                Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
+
+                throw;
+            }
+        }
+
+        private void GetServerVersion(IConnection cn)
+        {
+            object version;
+            cn.ServerProperties.TryGetValue("version", out version);
+
+            if (version == null)
+            {
+                throw new ApplicationException("Version could not be determined");
+            }
+
+            _serverVersion = Version.Parse(System.Text.Encoding.UTF8.GetString((byte[])version));
         }
 
         private void RecoverConnection(IConnection connection, ShutdownEventArgs reason)
@@ -151,18 +132,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 return;
             }
 
-            _log.Warn(string.Format("Connection closed because {0}", reason));
+            _log.Warn(string.Format("Recovering connection because {0}", reason != null ? reason.ToString() : "Reason unknown"));
             ResetConnection();
 
-        }
-
-        /// <summary>
-        /// Forces the initialization.
-        /// </summary>
-        /// <returns></returns>
-        public bool ForceInitialize()
-        {
-            return _connection.Value != null;
         }
 
         /// <summary>
@@ -178,11 +150,17 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             var remainingRetryAttempts = retryAttempts;
             float retryDelay = retryDelayMs;
 
+            if (_connection == null || !_connection.IsOpen)
+            {
+                throw new ApplicationException("No open connection available");
+            }
+
             do
             {
                 try
                 {
-                    return Map(_connection.Value.CreateModel());
+
+                    return Map(_connection.CreateModel());
                 }
                 catch (OperationInterruptedException ex)
                 {
@@ -192,7 +170,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(string.Format("Failed to open a channel, {0} retry attempts remaining", remainingRetryAttempts), ex);
+                    _log.Error(
+                        string.Format("Failed to open a channel, {0} retry attempts remaining",
+                            remainingRetryAttempts), ex);
 
                     //too many retries, just stop
                     if (remainingRetryAttempts == 0) throw;
@@ -200,9 +180,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     //modeled after Binary Exponential back off. The more initialization fails, the longer we wait to retry or we ultimately fail
                     Thread.Sleep((Convert.ToInt32(retryDelay)));
                     retryDelay *= retryDelayGrowthFactor;
-                    remainingRetryAttempts--;
+                    if (remainingRetryAttempts != -1)
+                    {
+                        remainingRetryAttempts--;
+                    }
                 }
-            } while (remainingRetryAttempts > 0);
+            } while (remainingRetryAttempts > 0 || remainingRetryAttempts == -1);
+
 
             throw new ApplicationException("Channel should have opened");
         }
@@ -214,22 +198,17 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 return;
             }
 
-            if (!_connection.IsValueCreated) 
-			{
-			return;
-			}
-
-            if (_connection.Value.IsOpen)
+            if (_connection.IsOpen)
             {
                 _log.Debug("Closing connection...");
-                _connection.Value.Close(2 * 1000);
+                _connection.Close(2 * 1000);
                 _log.Debug("Connection closed");
             }
 
-            //TODO: Current version of Rabbit API seems to hang dispose when the connection was closed by server
-            if (_connection.Value.CloseReason.ReplyCode != 320)
+            //HACK: Current version of Rabbit API seems to hang dispose when the connection was closed by server
+            if (_connection.CloseReason.ReplyCode != 320)
             {
-                _connection.Value.Dispose();
+                _connection.Dispose();
             }
             _connection = null;
         }

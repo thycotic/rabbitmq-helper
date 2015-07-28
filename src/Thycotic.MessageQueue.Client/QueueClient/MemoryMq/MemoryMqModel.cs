@@ -20,7 +20,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         private readonly MemoryMqWcfServiceCallback _callback;
         private readonly ICommunicationObject _communicationObject;
 
-        private readonly ILogWriter _log = Log.Get(typeof (MemoryMqModel));
+        private readonly ILogWriter _log = Log.Get(typeof(MemoryMqModel));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqModel" /> class.
@@ -38,21 +38,38 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             _callback = callback;
 
             _communicationObject = _server.ToCommunicationObject();
-            
-            Action<object, EventArgs> connectionShutdownHandler = (model, reason) =>
+
+            _communicationObject.Faulted += (sender, args) =>
             {
-                if (ModelShutdown != null)
+                try
                 {
-                    ModelShutdown(model, new ModelShutdownEventArgs
-                    {
-                        ReplyText = "No shutdown information available"
-                    });
+                    _communicationObject.Abort();
                 }
+                finally
+                {
+                    _communicationObject.Close();
+                }
+                
             };
-
-            _communicationObject.Faulted += (sender, args) => connectionShutdownHandler(sender, args);
-            _communicationObject.Closed += (sender, args) => connectionShutdownHandler(sender, args);
-
+            _communicationObject.Closed += (sender, args) =>
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    if (ModelShutdown != null)
+                    {
+                        ModelShutdown(sender, new ModelShutdownEventArgs
+                        {
+                            ReplyText = "No shutdown information available"
+                        });
+                    }
+                }).ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                    {
+                        _log.Error("Failed to close channel", task.Exception);
+                    }
+                });
+            };
         }
 
         /// <summary>
@@ -61,14 +78,16 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <value>
         /// The raw value.
         /// </value>
-        public object RawValue {
+        public object RawValue
+        {
             get
             {
                 Contract.Ensures(Contract.Result<object>() == null);
 
                 //there is no raw model
                 return null;
-            } }
+            }
+        }
 
 
         /// <summary>

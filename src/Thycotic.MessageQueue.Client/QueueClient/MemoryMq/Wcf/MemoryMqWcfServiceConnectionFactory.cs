@@ -35,11 +35,17 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
             try
             {
 
-                var callback = new MemoryMqWcfServiceCallback();
+                Func<MemoryMqWcfServiceCallback> callbackFactory = () => new MemoryMqWcfServiceCallback();
 
-                var channel = NetTcpChannelFactory.CreateDuplexChannel<IMemoryMqWcfService>(Uri, callback, UseSsl, Username, Password);
+                Func<MemoryMqWcfServiceCallback, IMemoryMqWcfService> channelFactory =
+                    callback2 =>
+                        NetTcpChannelFactory.CreateDuplexChannel<IMemoryMqWcfService>(Uri, callback2, UseSsl, Username,
+                            Password);
+
+                var noOpCallback = callbackFactory();
+                var service = NetTcpChannelFactory.CreateDuplexChannel<IMemoryMqWcfService>(Uri, noOpCallback, UseSsl, Username, Password);
                 
-                return new MemoryMqWcfServiceConnection(channel, callback);
+                return new MemoryMqWcfServiceConnection(service, channelFactory, callbackFactory);
             }
             catch (Exception ex)
             {

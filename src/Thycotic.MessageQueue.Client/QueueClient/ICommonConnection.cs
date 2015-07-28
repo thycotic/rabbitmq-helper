@@ -18,11 +18,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         string ServerVersion { get; }
 
         /// <summary>
-        /// Forces the initialization.
-        /// </summary>
-        bool ForceInitialize();
-
-        /// <summary>
         /// Opens the channel.
         /// </summary>
         /// <param name="retryAttempts">The retry attempts.</param>
@@ -51,14 +46,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// Server version
         /// </summary>
         public string ServerVersion { get; set; }
-
-        /// <summary>
-        /// Forces the initialization.
-        /// </summary>
-        public bool ForceInitialize()
-        {
-            return default(bool);
-        }
 
         /// <summary>
         /// Opens the channel.

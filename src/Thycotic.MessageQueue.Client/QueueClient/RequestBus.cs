@@ -160,8 +160,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
                 return;
             }
 
-            _connection.Dispose();
-
+            //do not dispose the connection
             _disposed = true;
         }
     }
