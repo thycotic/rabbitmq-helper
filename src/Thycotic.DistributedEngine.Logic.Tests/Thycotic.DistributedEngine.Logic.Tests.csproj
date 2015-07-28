@@ -147,7 +147,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Interop.ActiveDs">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.132\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.134\lib\net451\Interop.ActiveDs.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
@@ -162,9 +162,8 @@
       <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.3.2.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.TaskScheduler.1.0.0.5\lib\net20\Microsoft.Win32.TaskScheduler.dll</HintPath>
+    <Reference Include="Microsoft.Win32.TaskScheduler">
+      <HintPath>..\packages\Thycotic.TaskScheduler.1.0.0.19\lib\net40\Microsoft.Win32.TaskScheduler.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -218,7 +217,7 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Thycotic.Discovery.Sources">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.132\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.134\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.364, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
