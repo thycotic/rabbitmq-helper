@@ -23,9 +23,19 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
         private readonly MemoryMqWcfServiceConnectionFactory _connectionFactory;
         private Lazy<IMemoryMqWcfServiceConnection> _connection;
+        private Lazy<Version> _serverVersion;
         private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqConnection));
+
+
+        /// <summary>
+        /// Server version
+        /// </summary>
+        public string ServerVersion
+        {
+            get { return _serverVersion.ToString(); }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqConnection" /> class.
@@ -61,7 +71,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 
                     //if the connection closes recover it
-                    cn.ConnectionShutdown += RecoverConnection;                    
+                    cn.ConnectionShutdown += RecoverConnection;
 
                     //if there are subscribers that care to know when a connection is created, notify them
                     if (ConnectionCreated != null)
@@ -93,17 +103,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     throw;
                 }
             });
-        }
 
-        /// <summary>
-        /// Holds the Memory MQ version retrieved from the server.
-        /// </summary>
-        public string GetServerVersion()
-        {
-            using (var model = _connection.Value.CreateModel())
+            _serverVersion = new Lazy<Version>(() =>
             {
-                return ((MemoryMqModel)model).GetServerVersion();
-            }
+                using (var versionModel = _connection.Value.CreateModel())
+                {
+                    //TODO: Change backend to return Version not string
+                    return Version.Parse(((MemoryMqModel)versionModel).GetServerVersion());
+                }
+            });
         }
 
         private void RecoverConnection(object connection, EventArgs reason)
@@ -125,15 +133,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <returns></returns>
         public bool ForceInitialize()
         {
-            if (_connection != null)
-            {
 
-                return _connection.Value != null;
-            }
-            else
-            {
-                return false;
-            }
+            return _connection.Value != null;
         }
 
         /// <summary>
@@ -153,14 +154,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             {
                 try
                 {
-                    if (_connection == null)
-                    {
-                        throw new ApplicationException("No connection available");
-                    }
-
-                    //connection is lazy init
-                    Contract.Assume(_connection.Value != null);
-
                     return _connection.Value.CreateModel();
                 }
                 //catch (OperationInterruptedException ex)
@@ -188,25 +181,28 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 
         private void CloseCurrentConnection()
         {
-            
+
 
             if (_connection == null)
             {
                 return;
             }
 
-            if (!_connection.IsValueCreated || !_connection.Value.IsOpen)
+            if (!_connection.IsValueCreated)
             {
                 return;
             }
 
-            Contract.Assume(_connection.Value != null);
+            if (_connection.Value.IsOpen)
+            {
+                _log.Debug("Closing connection...");
+                _connection.Value.Close(2 * 1000);
+                _log.Debug("Connection closed");
+            }
 
-            _log.Debug("Closing connection...");
-            _connection.Value.Close(2 * 1000);
             _connection.Value.Dispose();
             _connection = null;
-            _log.Debug("Connection closed");
+
         }
 
         /// <summary>

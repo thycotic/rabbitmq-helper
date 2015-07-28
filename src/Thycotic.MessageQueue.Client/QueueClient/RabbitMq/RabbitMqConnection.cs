@@ -23,10 +23,18 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         
         private readonly ConnectionFactory _connectionFactory;
         private Lazy<IConnection> _connection;
+        private Lazy<Version> _serverVersion;
         private bool _terminated;
-        private string _version;
 
         private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConnection));
+
+        /// <summary>
+        /// Holds the Rabbit MQ version retrieved from the server.
+        /// </summary>
+        public string ServerVersion
+        {
+            get { return _serverVersion.Value.ToString(); }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RabbitMqConnection" /> class.
@@ -65,11 +73,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 
         }
 
-        /// <summary>
-        /// Holds the Rabbit MQ version retrieved from the server.
-        /// </summary>
-        public string GetServerVersion() { return _version; }
-
+        
         #region Mapping
         private static ICommonModel Map(IModel createModel)
         {
@@ -87,12 +91,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 try
                 {
                     var cn = _connectionFactory.CreateConnection();
-                    object version;
-                    cn.ServerProperties.TryGetValue("version", out version);
-
-                    _version = System.Text.Encoding.UTF8.GetString((byte[])version);
-                                        
-
+                    
                     _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 
                     //if the connection closes recover it
@@ -102,7 +101,16 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     if (ConnectionCreated != null)
                     {
                         Task.Delay(TimeSpan.FromMilliseconds(500))
-                            .ContinueWith(task => ConnectionCreated(this, new EventArgs()));
+                            .ContinueWith(task =>
+                            {
+                                //it's possible that the connection is terminated prior since the delay
+                                if (_terminated)
+                                {
+                                    return;
+                                }
+
+                                ConnectionCreated(this, new EventArgs());
+                            });
                     }
 
                     return cn;
@@ -119,7 +127,21 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     throw;
                 }
             });
-            }
+
+            _serverVersion = new Lazy<Version>(() =>
+            {
+                var cn = _connectionFactory.CreateConnection();
+                object version;
+                cn.ServerProperties.TryGetValue("version", out version);
+
+                if (version == null)
+                {
+                    throw new ApplicationException("Version could not be determined");
+                }
+
+                return Version.Parse(System.Text.Encoding.UTF8.GetString((byte[]) version));
+            });
+        }
 
         private void RecoverConnection(IConnection connection, ShutdownEventArgs reason)
         {
@@ -192,7 +214,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 return;
             }
 
-            if (!_connection.IsValueCreated) return;
+            if (!_connection.IsValueCreated) 
+			{
+			return;
+			}
 
             if (_connection.Value.IsOpen)
             {

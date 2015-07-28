@@ -13,9 +13,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
     {
 
         /// <summary>
-        /// Holds the Queue version retrieved from the server.
+        /// Server version
         /// </summary>
-        string GetServerVersion();
+        string ServerVersion { get; }
 
         /// <summary>
         /// Forces the initialization.
@@ -47,6 +47,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient
     [ContractClassFor(typeof(ICommonConnection))]
     public abstract class CommonConnectionContract : ICommonConnection
     {
+        /// <summary>
+        /// Server version
+        /// </summary>
+        public string ServerVersion { get; set; }
+
         /// <summary>
         /// Forces the initialization.
         /// </summary>

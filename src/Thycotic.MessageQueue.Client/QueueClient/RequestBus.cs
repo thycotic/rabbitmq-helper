@@ -33,7 +33,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             _connection = connection;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
-            ServerVersion = connection.GetServerVersion();
+            ServerVersion = connection.ServerVersion;
         }
 
         /// <summary>
