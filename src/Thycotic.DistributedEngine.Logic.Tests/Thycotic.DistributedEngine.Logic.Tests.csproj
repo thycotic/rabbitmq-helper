@@ -147,12 +147,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Interop.ActiveDs">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.132\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.134\lib\net451\Interop.ActiveDs.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.237\lib\net451\Jscape.Ssh.dll</HintPath>
+    <Reference Include="Jscape.Ssh">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.238\lib\net451\Jscape.Ssh.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -162,9 +162,8 @@
       <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.3.2.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.TaskScheduler.1.0.0.5\lib\net20\Microsoft.Win32.TaskScheduler.dll</HintPath>
+    <Reference Include="Microsoft.Win32.TaskScheduler">
+      <HintPath>..\packages\Thycotic.TaskScheduler.1.0.0.19\lib\net40\Microsoft.Win32.TaskScheduler.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -218,7 +217,7 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Thycotic.Discovery.Sources">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.132\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.134\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.364, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
@@ -249,10 +248,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.237, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.237\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.PasswordChangers">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.238\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
