@@ -20,15 +20,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             get { return GetType().Assembly.GetName().Version.ToString(); }
         }
 
-        public bool ForceInitialize()
-        {
-            Task.Factory.StartNew(() =>
-            {
-                ConnectionCreated(this, new EventArgs());
-            });
-            return true;
-        }
-
         public ICommonModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor)
         {
             return _model;
