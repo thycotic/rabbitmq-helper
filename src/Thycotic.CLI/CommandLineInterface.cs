@@ -152,6 +152,8 @@ namespace Thycotic.CLI
 
         public IEnumerable<ICommand> GetCurrentCommandMappings()
         {
+            Contract.Ensures(Contract.Result<IEnumerable<ICommand>>() != null);
+
             return _commandCustomMappings.Union(_commandBuiltInMappings);
         }
 

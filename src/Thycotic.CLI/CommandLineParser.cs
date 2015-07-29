@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics.Contracts;
+using System.Text.RegularExpressions;
 
 namespace Thycotic.CLI
 {
@@ -6,6 +7,8 @@ namespace Thycotic.CLI
     {
         public static string ParseInput(string input, out ConsoleCommandParameters parameters)
         {
+            Contract.Ensures(Contract.Result<string>() != null);
+
             var commandName = string.Empty;
             parameters = new ConsoleCommandParameters();
 
