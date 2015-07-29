@@ -21,8 +21,9 @@ namespace Thycotic.DistributedEngine.Client
         /// <param name="password">The password.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
+        /// <param name="connection">The connection for the bus which should be disposed after the bus is no longer needed.</param>
         /// <returns></returns>
-        public static IRequestBus GetRabbitMqBus(string url, string userName, string password, bool useSsl, IMessageEncryptor messageEncryptor)
+        public static IRequestBus GetRabbitMqBus(string url, string userName, string password, bool useSsl, IMessageEncryptor messageEncryptor, out ICommonConnection connection)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(url));
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(userName));
@@ -31,11 +32,9 @@ namespace Thycotic.DistributedEngine.Client
 
             Contract.Ensures(Contract.Result<IRequestBus>() != null);
             
-            var connection = new RabbitMqConnection(url, userName, password, useSsl);
+            connection = new RabbitMqConnection(url, userName, password, useSsl);
 
             var objectSerializer = new JsonObjectSerializer();
-
-            
 
             return new RequestBus(connection, objectSerializer, messageEncryptor);
         }
@@ -48,8 +47,9 @@ namespace Thycotic.DistributedEngine.Client
         /// <param name="password">The password.</param>
         /// <param name="useSsl">if set to <c>true</c> [use SSL].</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
+        /// <param name="connection">The connection for the bus which should be disposed after the bus is no longer needed.</param>
         /// <returns></returns>
-        public static IRequestBus GetMemoryMqBus(string url, string userName, string password, bool useSsl, IMessageEncryptor messageEncryptor)
+        public static IRequestBus GetMemoryMqBus(string url, string userName, string password, bool useSsl, IMessageEncryptor messageEncryptor, out ICommonConnection connection)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(url));
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(userName));
@@ -58,7 +58,7 @@ namespace Thycotic.DistributedEngine.Client
 
             Contract.Ensures(Contract.Result<IRequestBus>() != null);
 
-            var connection = new MemoryMqConnection(url, userName, password, useSsl);
+            connection = new MemoryMqConnection(url, userName, password, useSsl);
 
             var objectSerializer = new JsonObjectSerializer();
 
