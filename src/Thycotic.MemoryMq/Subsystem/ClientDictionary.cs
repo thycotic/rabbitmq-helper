@@ -44,9 +44,11 @@ namespace Thycotic.MemoryMq.Subsystem
             //have the consumer remove itself when it disconnects
             channel.Closed += (sender, args) =>
             {
-                _log.Debug("Detaching consumer");
+                _log.Debug(string.Format("Removing client for {0}", queueName));
                 GetClientList(queueName).RemoveClient(callback);
             };
+
+            _log.Debug(string.Format("Adding client for {0}", queueName));
 
             GetClientList(queueName).AddClient(callback);
         }
@@ -90,7 +92,7 @@ namespace Thycotic.MemoryMq.Subsystem
             {
                 var channel = callback.ToContextChannel();
 
-                _log.Debug(string.Format("Adding consumer with session ID {0}", channel.SessionId));
+                _log.Debug(string.Format("Adding client with session ID {0}", channel.SessionId));
 
                 lock (_data)
                 {
@@ -105,6 +107,8 @@ namespace Thycotic.MemoryMq.Subsystem
             public void RemoveClient(IMemoryMqWcfServiceCallback callback)
             {
                 var channel = callback.ToContextChannel();
+
+                _log.Debug(string.Format("Removing client with session ID {0}", channel.SessionId));
 
                 lock (_data)
                 {
