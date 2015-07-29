@@ -12,10 +12,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
     /// <summary>
     /// Simple Hello World consumer
     /// </summary>
-    public class CreateFileHandler :
+    public class CreateFileConsumer :
         //IConsumer<CreateDirectoryMessage>,
         IBlockingConsumer<CreateDirectoryMessage, BlockingConsumerResult>,
-        IBasicConsumer<CreateFileMessage>
+        IBasicConsumer<CreateFileMessage>, IRegisterForPocOnly
     {
         private readonly IRequestBus _bus;
         private readonly IExchangeNameProvider _exchangeNameProvider;
@@ -26,7 +26,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// </summary>
         /// <param name="bus">The bus.</param>
         /// <param name="exchangeNameProvider">The exchange name provider.</param>
-        public CreateFileHandler(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
+        public CreateFileConsumer(IRequestBus bus, IExchangeNameProvider exchangeNameProvider)
         {
             Contract.Requires<ArgumentNullException>(bus != null);
             Contract.Requires<ArgumentNullException>(exchangeNameProvider != null);

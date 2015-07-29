@@ -13,14 +13,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
     {
 
         /// <summary>
-        /// Holds the Queue version retrieved from the server.
+        /// Server version
         /// </summary>
-        string GetServerVersion();
-
-        /// <summary>
-        /// Forces the initialization.
-        /// </summary>
-        bool ForceInitialize();
+        string ServerVersion { get; }
 
         /// <summary>
         /// Opens the channel.
@@ -48,12 +43,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
     public abstract class CommonConnectionContract : ICommonConnection
     {
         /// <summary>
-        /// Forces the initialization.
+        /// Server version
         /// </summary>
-        public bool ForceInitialize()
-        {
-            return default(bool);
-        }
+        public string ServerVersion { get; set; }
 
         /// <summary>
         /// Opens the channel.

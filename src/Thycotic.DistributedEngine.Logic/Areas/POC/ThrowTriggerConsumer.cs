@@ -8,7 +8,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
     /// <summary>
     /// Consumer that just throws an exception
     /// </summary>
-    public class ThrowTriggerConsumer : IBlockingConsumer<ThrowTriggerMessage, BlockingConsumerResult>
+    public class ThrowTriggerConsumer : IBlockingConsumer<ThrowTriggerMessage, BlockingConsumerResult>, IRegisterForPocOnly
     {
         private readonly ILogWriter _log = Log.Get(typeof(ThrowTriggerConsumer));
 

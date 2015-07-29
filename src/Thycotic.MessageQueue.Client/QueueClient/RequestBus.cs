@@ -33,7 +33,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             _connection = connection;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
-            ServerVersion = connection.GetServerVersion();
+            ServerVersion = connection.ServerVersion;
         }
 
         /// <summary>
@@ -160,8 +160,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
                 return;
             }
 
-            _connection.Dispose();
-
+            //do not dispose the connection
             _disposed = true;
         }
     }

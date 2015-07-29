@@ -8,7 +8,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
     /// <summary>
     /// Sort list RPC consumer
     /// </summary>
-    public class SortListConsumer : IBlockingConsumer<SortListMessage, SortListResponse>
+    public class SortListConsumer : IBlockingConsumer<SortListMessage, SortListResponse>, IRegisterForPocOnly
     {
         //private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 

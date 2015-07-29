@@ -21,6 +21,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <summary>
         /// Alias for the re-open delay
         /// </summary>
+        //TODO: Turn into a TimeSpan
         public const int ReOpenDelay = 10*1000; //10 seconds
 
         /// <summary>

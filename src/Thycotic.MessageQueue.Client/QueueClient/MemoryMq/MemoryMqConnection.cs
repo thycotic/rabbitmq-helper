@@ -22,10 +22,20 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         public EventHandler ConnectionCreated { get; set; }
 
         private readonly MemoryMqWcfServiceConnectionFactory _connectionFactory;
-        private Lazy<IMemoryMqWcfServiceConnection> _connection;
+        private IMemoryMqWcfServiceConnection _connection;
+        private Version _serverVersion;
         private bool _terminated;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqConnection));
+
+
+        /// <summary>
+        /// Server version
+        /// </summary>
+        public string ServerVersion
+        {
+            get { return _serverVersion.ToString(); }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqConnection" /> class.
@@ -41,9 +51,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             Contract.Requires<ArgumentException>(userName != null);
             Contract.Requires<ArgumentException>(password != null);
 
-            Contract.Ensures(_log != null);
-
-            _connectionFactory = new MemoryMqWcfServiceConnectionFactory { Uri = url, UseSsl = useSsl, Username = userName, Password = password, RequestedHeartbeat = 300 };
+            _connectionFactory = new MemoryMqWcfServiceConnectionFactory
+            {
+                Uri = url,
+                UseSsl = useSsl,
+                Username = userName,
+                Password = password,
+                RequestedHeartbeat = 300
+            };
             ResetConnection();
         }
 
@@ -51,59 +66,35 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         {
             CloseCurrentConnection();
 
-            _connection = new Lazy<IMemoryMqWcfServiceConnection>(() =>
+
+            _log.Debug("Opening connection...");
+            try
             {
-                _log.Debug("Opening connection...");
-                try
-                {
-                    var cn = _connectionFactory.CreateConnection();
+                var cn = _connectionFactory.CreateConnection();
+                
+                GetServerVersion(cn);
 
-                    _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
+                _log.Info(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 
-                    //if the connection closes recover it
-                    cn.ConnectionShutdown += RecoverConnection;                    
+                //if the connection closes recover it
+                cn.ConnectionShutdown += RecoverConnection;
 
-                    //if there are subscribers that care to know when a connection is created, notify them
-                    if (ConnectionCreated != null)
-                    {
-                        Task.Delay(TimeSpan.FromMilliseconds(500))
-                            .ContinueWith(task =>
-                            {
-                                //it's possible that the connection is terminated prior since the delay
-                                if (_terminated)
-                                {
-                                    return;
-                                }
+                _connection = cn;
+            }
+            catch (Exception ex)
+            {
+   			    _log.Warn(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms. {2} Use DEBUG logging for more details.", _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay, ex.Message));
+                _log.Debug(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms", _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay), ex);
 
-                                ConnectionCreated(this, new EventArgs());
-                            });
-                    }
-
-                    return cn;
-                }
-                catch (Exception ex)
-                {
-                    //if there is an issue opening the channel, clean up and rethrow
-                    _log.Error(string.Format("Failed to connect because {0}", ex.Message));
-
-                    _log.Info("Sleeping before reconnecting");
-
-                    Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
-
-                    throw;
-                }
-            });
+                Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
+            }
         }
 
-        /// <summary>
-        /// Holds the Memory MQ version retrieved from the server.
-        /// </summary>
-        public string GetServerVersion()
+        private void GetServerVersion(IMemoryMqWcfServiceConnection cn)
         {
-            using (var model = _connection.Value.CreateModel())
-            {
-                return ((MemoryMqModel)model).GetServerVersion();
-            }
+            //TODO: Change backend to return Version not string
+            _serverVersion = Version.Parse(cn.Connection.GetServerVersion());
+
         }
 
         private void RecoverConnection(object connection, EventArgs reason)
@@ -114,26 +105,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 return;
             }
 
-            _log.Warn(string.Format("Connection closed because {0}", reason));
+            _log.Warn(string.Format("Recovering connection"));//" because {0}", reason != null ? reason.ToString() : "Reason unknown"));
             ResetConnection();
 
-        }
-
-        /// <summary>
-        /// Forces the initialization.
-        /// </summary>
-        /// <returns></returns>
-        public bool ForceInitialize()
-        {
-            if (_connection != null)
-            {
-
-                return _connection.Value != null;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         /// <summary>
@@ -149,29 +123,27 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             var remainingRetryAttempts = retryAttempts;
             float retryDelay = retryDelayMs;
 
+            if (_connection == null || !_connection.IsOpen)
+            {
+                throw new ApplicationException("No open connection available");
+            }
+
             do
             {
                 try
                 {
-                    if (_connection == null)
-                    {
-                        throw new ApplicationException("No connection available");
-                    }
-
-                    //connection is lazy init
-                    Contract.Assume(_connection.Value != null);
-
-                    return _connection.Value.CreateModel();
+                    return _connection.CreateModel();
                 }
                 //catch (OperationInterruptedException ex)
                 //{
                 //    if (ex.ShutdownReason != null) _log.Debug(ex.ShutdownReason.ReplyText);
-
                 //    throw;
                 //}
                 catch (Exception ex)
                 {
-                    _log.Error(string.Format("Failed to open a channel, {0} retry attempts remaining", remainingRetryAttempts), ex);
+                    _log.Error(
+                        string.Format("Failed to open a channel, {0} retry attempts remaining",
+                            remainingRetryAttempts), ex);
 
                     //too many retries, just stop
                     if (remainingRetryAttempts == 0) throw;
@@ -179,34 +151,34 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     //modeled after Binary Exponential back off. The more initialization fails, the longer we wait to retry or we ultimately fail
                     Thread.Sleep((Convert.ToInt32(retryDelay)));
                     retryDelay *= retryDelayGrowthFactor;
-                    remainingRetryAttempts--;
+                    if (remainingRetryAttempts != -1)
+                    {
+                        remainingRetryAttempts--;
+                    }
                 }
-            } while (remainingRetryAttempts > 0);
+            } while (remainingRetryAttempts > 0 || remainingRetryAttempts == -1);
+
 
             throw new ApplicationException("Channel should have opened");
         }
 
         private void CloseCurrentConnection()
         {
-            
-
             if (_connection == null)
             {
                 return;
             }
 
-            if (!_connection.IsValueCreated || !_connection.Value.IsOpen)
+            if (_connection.IsOpen)
             {
-                return;
+                _log.Debug("Closing connection...");
+                _connection.Close(2 * 1000);
+                _log.Debug("Connection closed");
             }
 
-            Contract.Assume(_connection.Value != null);
-
-            _log.Debug("Closing connection...");
-            _connection.Value.Close(2 * 1000);
-            _connection.Value.Dispose();
+            _connection.Dispose();
             _connection = null;
-            _log.Debug("Connection closed");
+
         }
 
         /// <summary>

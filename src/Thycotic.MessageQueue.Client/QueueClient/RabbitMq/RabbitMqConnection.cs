@@ -22,11 +22,19 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         public EventHandler ConnectionCreated { get; set; }
 
         private readonly ConnectionFactory _connectionFactory;
-        private Lazy<IConnection> _connection;
+        private IConnection _connection;
+        private Version _serverVersion;
         private bool _terminated;
-        private string _version;
 
         private readonly ILogWriter _log = Log.Get(typeof(RabbitMqConnection));
+
+        /// <summary>
+        /// Holds the Rabbit MQ version retrieved from the server.
+        /// </summary>
+        public string ServerVersion
+        {
+            get { return _serverVersion.ToString(); }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RabbitMqConnection" /> class.
@@ -60,15 +68,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     //AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch | SslPolicyErrors.RemoteCertificateChainErrors,
                 };
             }
-           
+
             ResetConnection();
 
         }
 
-        /// <summary>
-        /// Holds the Rabbit MQ version retrieved from the server.
-        /// </summary>
-        public string GetServerVersion() { return _version; }
 
         #region Mapping
         private static ICommonModel Map(IModel createModel)
@@ -81,44 +85,41 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
         {
             CloseCurrentConnection();
 
-            _connection = new Lazy<IConnection>(() =>
+
+            _log.Debug("Opening connection...");
+            try
             {
-                _log.Debug("Opening connection...");
-                try
-                {
-                    var cn = _connectionFactory.CreateConnection();
-                    object version;
-                    cn.ServerProperties.TryGetValue("version", out version);
+                var cn = _connectionFactory.CreateConnection();
 
-                    _version = System.Text.Encoding.UTF8.GetString((byte[])version);
+                GetServerVersion(cn);
 
+                _log.Info(string.Format("Connection opened to {0}", _connectionFactory.HostName));
 
-                    _log.Debug(string.Format("Connection opened to {0}", _connectionFactory.HostName));
+                //if the connection closes recover it
+                cn.ConnectionShutdown += RecoverConnection;
 
-                    //if the connection closes recover it
-                    cn.ConnectionShutdown += RecoverConnection;
+                _connection = cn;
+            }
+            catch (Exception ex)
+            {
+                _log.Warn(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms. {2} Use DEBUG logging for more details.", _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay, ex.Message));
+                _log.Debug(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms", _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay), ex);
 
-                    //if there are subscribers that care to know when a connection is created, notify them
-                    if (ConnectionCreated != null)
-                    {
-                        Task.Delay(TimeSpan.FromMilliseconds(500))
-                            .ContinueWith(task => ConnectionCreated(this, new EventArgs()));
-                    }
+                Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
+            }
+        }
 
-                    return cn;
-                }
-                catch (Exception ex)
-                {
-                    //if there is an issue opening the channel, clean up and rethrow
-                    _log.Error(string.Format("Failed to connect because {0}", ex.Message));
+        private void GetServerVersion(IConnection cn)
+        {
+            object version;
+            cn.ServerProperties.TryGetValue("version", out version);
 
-                    _log.Info("Sleeping before reconnecting");
+            if (version == null)
+            {
+                throw new ApplicationException("Version could not be determined");
+            }
 
-                    Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
-
-                    throw;
-                }
-            });
+            _serverVersion = Version.Parse(System.Text.Encoding.UTF8.GetString((byte[])version));
         }
 
         private void RecoverConnection(IConnection connection, ShutdownEventArgs reason)
@@ -129,18 +130,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 return;
             }
 
-            _log.Warn(string.Format("Connection closed because {0}", reason));
+            _log.Warn(string.Format("Recovering connection because {0}", reason != null ? reason.ToString() : "Reason unknown"));
             ResetConnection();
 
-        }
-
-        /// <summary>
-        /// Forces the initialization.
-        /// </summary>
-        /// <returns></returns>
-        public bool ForceInitialize()
-        {
-            return _connection.Value != null;
         }
 
         /// <summary>
@@ -156,11 +148,17 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             var remainingRetryAttempts = retryAttempts;
             float retryDelay = retryDelayMs;
 
+            if (_connection == null || !_connection.IsOpen)
+            {
+                throw new ApplicationException("No open connection available");
+            }
+
             do
             {
                 try
                 {
-                    return Map(_connection.Value.CreateModel());
+
+                    return Map(_connection.CreateModel());
                 }
                 catch (OperationInterruptedException ex)
                 {
@@ -170,7 +168,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(string.Format("Failed to open a channel, {0} retry attempts remaining", remainingRetryAttempts), ex);
+                    _log.Error(
+                        string.Format("Failed to open a channel, {0} retry attempts remaining",
+                            remainingRetryAttempts), ex);
 
                     //too many retries, just stop
                     if (remainingRetryAttempts == 0) throw;
@@ -178,9 +178,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     //modeled after Binary Exponential back off. The more initialization fails, the longer we wait to retry or we ultimately fail
                     Thread.Sleep((Convert.ToInt32(retryDelay)));
                     retryDelay *= retryDelayGrowthFactor;
-                    remainingRetryAttempts--;
+                    if (remainingRetryAttempts != -1)
+                    {
+                        remainingRetryAttempts--;
+                    }
                 }
-            } while (remainingRetryAttempts > 0);
+            } while (remainingRetryAttempts > 0 || remainingRetryAttempts == -1);
+
 
             throw new ApplicationException("Channel should have opened");
         }
@@ -192,11 +196,19 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 return;
             }
 
-            if (!_connection.IsValueCreated || !_connection.Value.IsOpen) return;
+            if (_connection.IsOpen)
+            {
+                _log.Debug("Closing connection...");
+                _connection.Close(2 * 1000);
+                _log.Debug("Connection closed");
+            }
 
-            _log.Debug("Closing connection...");
-            _connection.Value.Close(2 * 1000);
-            _log.Debug("Connection closed");
+            //HACK: Current version of Rabbit API seems to hang dispose when the connection was closed by server
+            if (_connection.CloseReason.ReplyCode != 320)
+            {
+                _connection.Dispose();
+            }
+            _connection = null;
         }
 
         /// <summary>

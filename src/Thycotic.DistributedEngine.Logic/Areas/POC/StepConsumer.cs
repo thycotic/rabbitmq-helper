@@ -7,7 +7,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
     /// <summary>
     /// Slow RPC consumer
     /// </summary>
-    public class StepConsumer : IBlockingConsumer<StepMessage, BlockingConsumerResult>
+    public class StepConsumer : IBlockingConsumer<StepMessage, BlockingConsumerResult>, IRegisterForPocOnly
     {
         //private readonly ILogWriter _log = Log.Get(typeof(SlowRpcConsumer));
 

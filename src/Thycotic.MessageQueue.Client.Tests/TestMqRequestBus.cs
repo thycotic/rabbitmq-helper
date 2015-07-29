@@ -17,6 +17,11 @@ namespace Thycotic.MessageQueue.Client.Tests
 
         private Task _lastTask;
 
+        public string ServerVersion
+        {
+            get { return GetType().Assembly.GetName().Version.ToString(); }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TestMqRequestBus"/> class.
         /// </summary>
@@ -25,10 +30,7 @@ namespace Thycotic.MessageQueue.Client.Tests
             _consumerInvoker = consumerInvoker;
         }
 
-        /// <summary>
-        /// Queue version
-        /// </summary>
-        public string ServerVersion { get; private set; }
+
 
         /// <summary>
         /// Publishes the specified request as a fire-and-forget

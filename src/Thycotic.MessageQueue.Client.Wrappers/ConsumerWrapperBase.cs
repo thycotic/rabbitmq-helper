@@ -23,13 +23,21 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         public ICommonModel CommonModel { get; private set; }
 
         private readonly ICommonConnection _connection;
-        private readonly IExchangeNameProvider _exchangeNameProvider;
 
+        private readonly string _exchangeName;
+        private readonly string _routingKey;
+        private readonly string _queueName;
+
+        private bool _recovering;
         private bool _terminated;
+        private bool _disposed;
+
+        private readonly object _syncRoot = new object();
 
         private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
-        private bool _disposed;
-        
+
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TConsumable, TConsumer}"/> class.
         /// </summary>
@@ -41,30 +49,29 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             Contract.Requires<ArgumentNullException>(exchangeNameProvider != null);
 
             _connection = connection;
-            _exchangeNameProvider = exchangeNameProvider;
-            _connection.ConnectionCreated += (sender, args) => CommonModel = CreateModel();
+            _exchangeName = exchangeNameProvider.GetCurrentExchange();
+            _routingKey = this.GetRoutingKey(typeof(TConsumable));
+            _queueName = this.GetQueueName(_exchangeName, typeof(TConsumer), typeof(TConsumable));
         }
 
         /// <summary>
         /// Creates the model.
         /// </summary>
         /// <returns></returns>
-        protected virtual ICommonModel CreateModel()
+        private void CreateModel()
         {
-            try
+            lock (_syncRoot)
             {
-                var exchangeName = _exchangeNameProvider.GetCurrentExchange();
-
-                var routingKey = this.GetRoutingKey(typeof(TConsumable));
-
-                var queueName = this.GetQueueName(exchangeName, typeof(TConsumer), typeof(TConsumable));
+                if (CommonModel != null)
+                {
+                    CommonModel.Dispose();
+                }
 
                 const int retryAttempts = -1; //forever
                 const int retryDelayGrowthFactor = 1;
 
-                var model = _connection.OpenChannel(retryAttempts, DefaultConfigValues.ReOpenDelay, retryDelayGrowthFactor);
-
-                _log.Debug(string.Format("Channel opened for {0}", queueName));
+                var model = _connection.OpenChannel(retryAttempts, DefaultConfigValues.ReOpenDelay,
+                    retryDelayGrowthFactor);
 
                 //TODO: Re-enable when Memory Mq honors this -dkk
                 //const int prefetchSize = 0;
@@ -75,22 +82,20 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                 model.ModelShutdown += RecoverConnection;
 
-                model.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
+                model.ExchangeDeclare(_exchangeName, DefaultConfigValues.ExchangeType);
 
-                model.QueueDeclare(queueName, true, false, false, null);
-                model.QueueBind(queueName, exchangeName, routingKey);
+                model.QueueDeclare(_queueName, true, false, false, null);
+                model.QueueBind(_queueName, _exchangeName, _routingKey);
+
+                _log.Info(string.Format("Channel opened for {0}", _queueName));
+
 
                 const bool noAck = false; //since this consumer will send an acknowledgement
                 var consumer = this;
 
-                model.BasicConsume(queueName, noAck, consumer); //we will ack, hence no-ack=false
+                model.BasicConsume(_queueName, noAck, consumer); //we will ack, hence no-ack=false
 
-                return model;
-            }
-            catch (Exception ex)
-            {
-                _log.Error(string.Format("Could not create model because {0}", ex.Message), ex);
-                throw;
+                CommonModel = model;
             }
         }
 
@@ -99,37 +104,66 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// </summary>
         public void StartConsuming()
         {
-            try
+            lock (_log)
             {
-                //forcing the connection to initialized causes the 
-                //ConnectionCreated to fire and as a results the model will be recreated
-                _connection.ForceInitialize();
+                _log.Debug(string.Format("Consuming {0}", _queueName));
             }
-            catch (Exception ex)
+            CreateModel();
+             
+        }
+
+        private void RecoverConnectionWorker(Exception ex)
+        {
+            _log.Warn(string.Format("Encountered issue with channel for {0}. Will reconnect in {1}ms. {2} Use DEBUG logging for more details.", _queueName, DefaultConfigValues.ReOpenDelay, ex.Message));
+            _log.Debug(string.Format("Encountered issue with channel for {0}. Will reconnect in {1}ms", _queueName, DefaultConfigValues.ReOpenDelay), ex);
+
+            Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task =>
             {
-                //if there is an issue opening the channel, clean up and rethrow
-                _log.Error(string.Format("Failed to connect because {0}", ex.Message));
+                lock (_syncRoot)
+                {
+                    if (_terminated)
+                    {
+                        return;
+                    }
 
-                _log.Info("Sleeping before reconnecting");
+                    if (!_recovering)
+                    {
+                        return;
+                    }
 
-                Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => StartConsuming());
-            }
+                    StartConsuming();
+
+                    //if we get to this line, there was no exception and consuming has begun
+                    _recovering = false;
+                }
+            }).ContinueWith(task =>
+            {
+                if (task.Exception == null) return;
+
+                RecoverConnectionWorker(task.Exception);
+            });
         }
 
         private void RecoverConnection(object model, ModelShutdownEventArgs reason)
         {
-            if (_terminated)
+            lock (_syncRoot)
             {
-                return;
+                if (_terminated)
+                {
+                    return;
+                }
+
+                if (_recovering)
+                {
+                    return;
+                }
+            
+                _recovering = true;
+
             }
 
-            _log.Warn(string.Format("Channel closed because {0}", reason.ReplyText));
-
-            Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task =>
-            {
-                _log.Debug("Reopening channel...");
-                StartConsuming();
-            });
+            RecoverConnectionWorker(new ApplicationException(reason.ReplyText));
+            
         }
 
         /// <summary>
@@ -184,10 +218,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             _log.Debug("Closing channel...");
             CommonModel.Dispose();
             _log.Debug("Channel closed");
+            CommonModel = null;
 
-            _log.Debug("Closing connection...");
-            _connection.Dispose();
-            _log.Debug("Connection closed");
+            //do not dispose the connection
 
             _disposed = true;
         }

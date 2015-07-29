@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+using System.Threading.Tasks;
 
 namespace Thycotic.Wcf
 {
@@ -54,16 +55,35 @@ namespace Thycotic.Wcf
             Callback = callback;
             _communicationObject = service.ToCommunicationObject();
 
-            Action<object, EventArgs> connectionShutdownHandler = (sender, args) =>
+            _communicationObject.Faulted += (sender, args) =>
             {
-                if (ConnectionShutdown != null)
+                try
                 {
-                    ConnectionShutdown(sender, args);
+                    _communicationObject.Abort();
                 }
-            };
+                finally
+                {
+                    _communicationObject.Close();
+                }
 
-            _communicationObject.Faulted += (sender, args) => connectionShutdownHandler(sender, args);
-            _communicationObject.Closed += (sender, args) => connectionShutdownHandler(sender, args);
+            };
+            _communicationObject.Closed += (sender, args) =>
+            {
+                Task.Factory.StartNew(() =>
+                {
+
+                    if (ConnectionShutdown != null)
+                    {
+                        ConnectionShutdown(sender, args);
+                    }
+                }).ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                    {
+                        System.Diagnostics.Trace.TraceError(task.Exception.Message);
+                    }
+                });
+            };
         }
 
 
@@ -72,7 +92,7 @@ namespace Thycotic.Wcf
         /// </summary>
         /// <param name="timeoutMilliseconds">The timeout milliseconds.</param>
         /// <exception cref="System.ApplicationException">Failed to close connection</exception>
-        public void Close(int timeoutMilliseconds)
+        public virtual void Close(int timeoutMilliseconds)
         {
             try
             {
@@ -87,7 +107,7 @@ namespace Thycotic.Wcf
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             Callback.Dispose();
         }
