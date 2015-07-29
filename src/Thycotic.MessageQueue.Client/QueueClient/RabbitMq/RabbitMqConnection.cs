@@ -106,8 +106,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 _log.Debug(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms", _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay), ex);
 
                 Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
-
-                throw;
             }
         }
 
