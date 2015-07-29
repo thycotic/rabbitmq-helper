@@ -10,7 +10,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
     /// <summary>
     /// Simple Hello World consumer
     /// </summary>
-    public class ChainMessageConsumer : IBasicConsumer<ChainMessage>
+    public class ChainMessageConsumer : IBasicConsumer<ChainMessage>, IRegisterForPocOnly
     {
         private readonly IRequestBus _bus;
         private readonly IExchangeNameProvider _exchangeNameProvider;

@@ -6,7 +6,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
     /// <summary>
     /// Simple Hello World consumer
     /// </summary>
-    public class HelloWorldConsumer : IBasicConsumer<HelloWorldMessage>
+    public class HelloWorldConsumer : IBasicConsumer<HelloWorldMessage>, IRegisterForPocOnly
     {
         //private readonly ILogWriter _log = Log.Get(typeof(HelloWorldConsumer));
 

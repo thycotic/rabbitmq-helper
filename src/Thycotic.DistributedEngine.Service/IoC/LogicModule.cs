@@ -31,6 +31,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
             builder.RegisterAssemblyTypes(logicAssembly)
                 .Where(t => t.IsAssignableToGenericType(type))
+                .Where(t => !typeof(IRegisterForPocOnly).IsAssignableFrom(t)) //disabled POC functionality
                 .AsSelf() //wrappers use explicit names through constructor types
                 .AsImplementedInterfaces() //all other resolution
                 .InstancePerDependency();

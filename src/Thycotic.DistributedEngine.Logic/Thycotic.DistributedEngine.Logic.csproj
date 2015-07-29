@@ -321,10 +321,11 @@
     <Compile Include="Areas\PasswordChanging\SecretPrivilegeChangePasswordConsumer.cs" />
     <Compile Include="Areas\PasswordChanging\SecretTestDependencyConsumer.cs" />
     <Compile Include="Areas\PasswordChanging\SecretRunDependenciesConsumer.cs" />
-    <Compile Include="Areas\POC\CreateFileHandleHandler.cs" />
+    <Compile Include="Areas\POC\CreateFileConsumer.cs" />
     <Compile Include="Areas\POC\ChainMessageConsumer.cs" />
     <Compile Include="Areas\POC\ConsumerConsole.cs" />
-    <Compile Include="Areas\POC\PingConsumer.cs" />
+    <Compile Include="Areas\POC\IRegisterForPocOnly.cs" />
+    <Compile Include="Areas\Connectivity\PingConsumer.cs" />
     <Compile Include="Areas\POC\SortListConsumer.cs" />
     <Compile Include="Areas\POC\ThrowTriggerConsumer.cs" />
     <Compile Include="Areas\POC\StepConsumer.cs" />

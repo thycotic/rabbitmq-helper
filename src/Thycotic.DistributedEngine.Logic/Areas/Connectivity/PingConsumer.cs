@@ -2,13 +2,14 @@
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
+using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.Connectivity.Request;
 using Thycotic.Messages.Areas.Connectivity.Response;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.DistributedEngine.Logic.Areas.POC
+namespace Thycotic.DistributedEngine.Logic.Areas.Connectivity
 {
     /// <summary>
     /// Simple Hello World consumer
