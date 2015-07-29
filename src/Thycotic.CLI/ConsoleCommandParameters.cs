@@ -13,8 +13,17 @@ namespace Thycotic.CLI
 
         public string this[string key]
         {
-            get { return _dictionary[key]; }
-            set { _dictionary[key] = value; }
+            get
+            {
+                Contract.Requires(key != null); 
+                return _dictionary[key];
+            }
+            set
+            {
+                Contract.Requires(key != null);
+
+                _dictionary[key] = value;
+            }
         }
 
         public IEnumerable<string> AllKeys {
