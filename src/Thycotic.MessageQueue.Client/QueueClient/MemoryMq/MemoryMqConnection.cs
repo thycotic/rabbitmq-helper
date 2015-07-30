@@ -59,13 +59,17 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 Password = password,
                 RequestedHeartbeat = 300
             };
-            ResetConnection();
+            ResetConnection(false);
         }
 
-        private void ResetConnection()
+        private void ResetConnection(bool autoRetry = true)
         {
             CloseCurrentConnection();
 
+            if (_terminated)
+            {
+                return;
+            }
 
             _log.Debug("Opening connection...");
             try
@@ -83,10 +87,20 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             }
             catch (Exception ex)
             {
-   			    _log.Warn(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms. {2} Use DEBUG logging for more details.", _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay, ex.Message));
-                _log.Debug(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms", _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay), ex);
+                if (autoRetry)
+                {
+                    _log.Warn(string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms. {2} Use DEBUG logging for more details.",
+                        _connectionFactory.HostName, DefaultConfigValues.ReOpenDelay, ex.Message));
+                    _log.Debug(
+                        string.Format("Encountered issue connecting to {0}. Will reconnect in {1}ms", _connectionFactory.HostName,
+                            DefaultConfigValues.ReOpenDelay), ex);
 
-                Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
+                    Task.Delay(DefaultConfigValues.ReOpenDelay).ContinueWith(task => ResetConnection());
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 
