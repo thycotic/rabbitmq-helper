@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Autofac;
+using Autofac.Core;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Reflection;
 
@@ -37,7 +39,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
         private void StartActionConsumers(Type baseConsumertype, Type wrapperType)
         {
-            var consumerTypes = _context.ComponentRegistry.Registrations.Where(r => r.Activator.LimitType.IsAssignableToGenericType(baseConsumertype));
+            var consumerTypes =
+                _context.ComponentRegistry.GetDistinctRegistrations()
+                    .Where(r => r.Activator.LimitType.IsAssignableToGenericType(baseConsumertype));
 
             consumerTypes.ToList().ForEach(ct =>
             {
@@ -60,22 +64,27 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
         private void StartFunctionConsumers(Type baseConsumertype, Type wrapperType)
         {
-            var consumerTypes = _context.ComponentRegistry.Registrations.Where(r => r.Activator.LimitType.IsAssignableToGenericType(baseConsumertype));
+            var consumerTypes =
+                _context.ComponentRegistry.GetDistinctRegistrations()
+                    .Where(r => r.Activator.LimitType.IsAssignableToGenericType(baseConsumertype));
 
             consumerTypes.ToList().ForEach(ct =>
             {
                 var consumerType = ct.Activator.LimitType;
-                var targetInterface = consumerType.GetInterfaces().Single(t => t.IsAssignableToGenericType(baseConsumertype));
-                var messageType = targetInterface.GetGenericArguments()[0];
-                var responseType = targetInterface.GetGenericArguments()[1];
+                var targetInterfaces = consumerType.GetInterfaces().Where(t => t.IsAssignableToGenericType(baseConsumertype));
+                targetInterfaces.ToList().ForEach(ti =>
+                {
+                    var messageType = ti.GetGenericArguments()[0];
+                    var responseType = ti.GetGenericArguments()[1];
 
-                var consumerWrapperType = wrapperType.MakeGenericType(messageType, responseType, consumerType);
+                    var consumerWrapperType = wrapperType.MakeGenericType(messageType, responseType, consumerType);
 
-                var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
+                    var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
 
-                _consumerWrappers.Add(consumerWrapper);
+                    _consumerWrappers.Add(consumerWrapper);
 
-                consumerWrapper.StartConsuming();
+                    consumerWrapper.StartConsuming();
+                });
             });
         }
 
@@ -109,6 +118,22 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             }
 
             _disposed = true;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class AutofacConsumerRegistrationExtensions
+    {
+        /// <summary>
+        /// Gets the distinct registrations. Addresses issue where when interfaces are implemented by a type, the type will be returned more than once.
+        /// </summary>
+        /// <param name="registry">The registry.</param>
+        /// <returns></returns>
+        public static IEnumerable<IComponentRegistration> GetDistinctRegistrations(this IComponentRegistry registry)
+        {
+            return registry.Registrations.GroupBy(r => r.Activator.LimitType).Select(grp => grp.First());
         }
     }
 }
