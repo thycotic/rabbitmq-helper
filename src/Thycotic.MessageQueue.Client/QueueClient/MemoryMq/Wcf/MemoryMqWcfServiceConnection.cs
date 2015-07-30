@@ -128,6 +128,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
         /// <requires exception="T:System.ArgumentOutOfRangeException" csharp="timeoutMilliseconds &gt;= 0" vb="timeoutMilliseconds &gt;= 0">timeoutMilliseconds &gt;= 0</requires>
         public void Close(int timeoutMilliseconds)
         {
+			//clean up the individual channels
             lock (_channels)
             {
                 _channels.ToList().ForEach(c =>
@@ -150,6 +151,21 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf
 
                 _channels.Clear();
             }
+
+			//clean up the underlying connection
+            try
+            {
+                var state = _communicationObject.State;
+                if (state == CommunicationState.Opened)
+                {
+                    _communicationObject.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Debug("Failed to close connection", ex);
+            }
+
         }
 
         /// <summary>
