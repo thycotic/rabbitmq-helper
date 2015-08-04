@@ -182,6 +182,10 @@ namespace Thycotic.DistributedEngine.Service
                     catch
                     {
                         _log.Warn("Could not configure, trying in 30 seconds");
+
+                        //HACK: Is this the best way? -dkk
+                        IoCConfigurator.ClearConfiguration();
+
                         Task.Delay(TimeSpan.FromSeconds(30)).Wait(_runningTokenSource.Token);
                     }
                 }
