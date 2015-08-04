@@ -179,6 +179,9 @@
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
@@ -252,6 +255,7 @@
     <None Include="App.config" />
     <EmbeddedResource Include="Content\RabbitMq\3.5.3\Ssl\rabbitmq.config.erlang" />
     <EmbeddedResource Include="Content\RabbitMq\3.5.3\NonSsl\rabbitmq.config.erlang" />
+    <None Include="app.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
