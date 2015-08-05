@@ -6,11 +6,11 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
     /// <summary>
     /// Locked/log file reader
     /// </summary>
-    public class LockedFiledReader
+    public class LockedFileReader
     {
         private readonly string _path;
 
-        public LockedFiledReader(string path)
+        public LockedFileReader(string path)
         {
             _path = path;
         }

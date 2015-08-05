@@ -234,7 +234,7 @@
     <Compile Include="Commands\Installation\CopyRabbitMqExampleNonSslConfigFileCommand.cs" />
     <Compile Include="Commands\Installation\UninstallConnectorCommand.cs" />
     <Compile Include="Commands\Installation\SetErlangHomeEnvironmentalVariableCommand.cs" />
-    <Compile Include="Commands\Management\LockedFiledReader.cs" />
+    <Compile Include="Commands\Management\LockedFileReader.cs" />
     <Compile Include="Commands\Management\TailRabbitMqSaslLog.cs" />
     <Compile Include="Commands\Management\TailRabbitMqLog.cs" />
     <Compile Include="Commands\Management\ValidateConnectivityCommand.cs" />

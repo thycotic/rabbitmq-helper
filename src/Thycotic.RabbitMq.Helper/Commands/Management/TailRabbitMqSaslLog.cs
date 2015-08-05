@@ -38,7 +38,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
             {
                 _log.Info(string.Format("Printing tail for {0}", logPath));
 
-                var lockedFileReader = new LockedFiledReader(logPath);
+                var lockedFileReader = new LockedFileReader(logPath);
 
                 var lines = lockedFileReader.GetTailLines(linesToPrint);
 
