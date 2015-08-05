@@ -51,6 +51,8 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 
+                _log.Info("Installation process completed");
+
                 return 0;
             };
         }

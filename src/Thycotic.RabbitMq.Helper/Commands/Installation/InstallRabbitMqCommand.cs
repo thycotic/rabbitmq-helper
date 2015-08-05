@@ -63,6 +63,8 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                 _log.Info("Waiting for RabbitMq process to start...");
                 Task.Delay(TimeSpan.FromSeconds(10)).Wait();
 
+                _log.Info("Installation process completed");
+
                 return 0;
             };
         }
