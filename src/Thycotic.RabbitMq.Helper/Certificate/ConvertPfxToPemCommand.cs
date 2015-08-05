@@ -43,8 +43,16 @@ namespace Thycotic.RabbitMq.Helper.Certificate
             {
                 string path;
                 string password;
-                if (!parameters.TryGet("pfxPath", out path)) return 1;
-                if (!parameters.TryGet("pfxPw", out password)) return 1;
+                if (!parameters.TryGet("pfxPath", out path))
+                {
+                    _log.Error("Pfx certificate path is required");
+                    return 1;
+                }
+                if (!parameters.TryGet("pfxPw", out password))
+                {
+                    _log.Error("Pfx certificate password is required");
+                    return 1;
+                }
                 
                 ConvertToPem(path, password);
 

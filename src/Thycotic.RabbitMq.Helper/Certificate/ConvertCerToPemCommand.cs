@@ -39,7 +39,11 @@ namespace Thycotic.RabbitMq.Helper.Certificate
             Action = parameters =>
             {
                 string path;
-                if (!parameters.TryGet("cacertpath", out path)) return 1;
+                if (!parameters.TryGet("cacertpath", out path))
+                {
+                    _log.Error("CA certificate path is required");
+                    return 1;
+                }
 
                 ConvertToPem(path);
 
