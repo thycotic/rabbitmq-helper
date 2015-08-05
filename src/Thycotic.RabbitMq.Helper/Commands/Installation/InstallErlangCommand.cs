@@ -47,7 +47,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
                 const string silent = "/S";
 
-                _log.Info("Installing Erlang, please wait...");
+                _log.Info("Installing Erlang...");
 
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 

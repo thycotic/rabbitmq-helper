@@ -57,11 +57,11 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
                 const string silent = "/S";
 
-                _log.Info("Installing RabbitMq, please wait...");
+                _log.Info("Installing RabbitMq...");
 
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 
-                _log.Info("Letting RabbitMq to start up, please wait...");
+                _log.Info("Waiting for RabbitMq process to start...");
                 Task.Delay(TimeSpan.FromSeconds(10)).Wait();
 
                 return 0;
