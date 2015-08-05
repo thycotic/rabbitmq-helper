@@ -24,6 +24,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
 
         public EnableRabbitManagementPluginCommand()
         {
+            const string pluginUrl = "http://localhost:15672/";
             const string executable = "rabbitmq-plugins.bat";
             var pluginsExecutablePath = Path.Combine(InstallationConstants.RabbitMq.BinPath, executable);
 
@@ -38,9 +39,8 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
 
                 externalProcessRunner.Run(pluginsExecutablePath, WorkingPath, parameters2);
 
-
-                _log.Info("Opening management console");
-                Process.Start("http://localhost:15672/");
+                _log.Info(string.Format("Opening management console at {0}", pluginUrl));
+                Process.Start(pluginUrl);
 
                 return 0;
             };
