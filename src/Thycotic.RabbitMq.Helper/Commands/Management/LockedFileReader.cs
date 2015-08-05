@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Management
@@ -17,6 +18,8 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
 
         public string[] GetTailLines(int linesToReturn)
         {
+            Contract.Ensures(Contract.Result<System.String[]>() != null);
+
             using (var fileStream = new FileStream(_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (var streamReader = new StreamReader(fileStream))
