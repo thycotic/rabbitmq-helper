@@ -44,7 +44,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                             File.Delete(RabbitMqInstallerPath);
                         }
 
-                        File.Move(offlineRabbitMqInstallerPath, RabbitMqInstallerPath);
+                        File.Copy(offlineRabbitMqInstallerPath, RabbitMqInstallerPath);
                     }
                 }
                 else

@@ -44,7 +44,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                             File.Delete(ErlangInstallerPath);
                         }
 
-                        File.Move(offlineErlangInstallerPath, ErlangInstallerPath);
+                        File.Copy(offlineErlangInstallerPath, ErlangInstallerPath);
                     }
                 }
                 else
