@@ -1,7 +1,6 @@
-﻿using Thycotic.CLI;
-using Thycotic.CLI.Fragments;
+﻿using Thycotic.CLI.Fragments;
 
-namespace Thycotic.RabbitMq.Helper.Installation.Choice
+namespace Thycotic.RabbitMq.Helper.Commands.Installation.Choice
 {
     internal class SslChoiceConsoleCommandFragment : BinaryCommandFragment
     {
@@ -14,10 +13,7 @@ namespace Thycotic.RabbitMq.Helper.Installation.Choice
                 {
                     return WhenTrue.Action.Invoke(parameters);
                 }
-                else
-                {
-                    return WhenFalse.Action.Invoke(parameters);
-                }
+                return WhenFalse.Action.Invoke(parameters);
             };
         }
     }

@@ -1,12 +1,10 @@
 ﻿using System.IO;
 using System.Reflection;
-using Thycotic.CLI;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Certificate;
-using Thycotic.RabbitMq.Helper.Commands;
 
-namespace Thycotic.RabbitMq.Helper.Installation
+namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
     internal class CopyRabbitMqExampleSslConfigFileCommand : CommandBase, IImmediateCommand
     {

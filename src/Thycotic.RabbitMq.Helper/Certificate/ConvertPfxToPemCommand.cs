@@ -6,10 +6,9 @@ using System.Security.Cryptography.X509Certificates;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Security.Certificates;
-using Thycotic.CLI;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
-using Thycotic.RabbitMq.Helper.Installation;
+using Thycotic.RabbitMq.Helper.Commands.Installation;
 
 namespace Thycotic.RabbitMq.Helper.Certificate
 {

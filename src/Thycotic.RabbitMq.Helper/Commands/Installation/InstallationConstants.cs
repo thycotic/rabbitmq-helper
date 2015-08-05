@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Thycotic.RabbitMq.Helper.Installation
+namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
     public static class InstallationConstants
     {

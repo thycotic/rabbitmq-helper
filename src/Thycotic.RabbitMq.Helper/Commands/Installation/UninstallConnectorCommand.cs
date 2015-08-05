@@ -1,13 +1,12 @@
 ﻿using Autofac;
 using Thycotic.CLI.Commands;
 using Thycotic.CLI.Fragments;
-using Thycotic.Logging;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
     class UninstallConnectorCommand : WorkflowCommand, IImmediateCommand
     {
-        private readonly ILogWriter _log = Log.Get(typeof(UninstallConnectorCommand));
+        //private readonly ILogWriter _log = Log.Get(typeof(UninstallConnectorCommand));
 
         public override string Name
         {

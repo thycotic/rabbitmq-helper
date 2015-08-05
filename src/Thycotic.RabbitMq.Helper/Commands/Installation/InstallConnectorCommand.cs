@@ -1,17 +1,15 @@
 ﻿using Autofac;
 using Thycotic.CLI.Commands;
 using Thycotic.CLI.Fragments;
-using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Certificate;
+using Thycotic.RabbitMq.Helper.Commands.Installation.Choice;
 using Thycotic.RabbitMq.Helper.Commands.Management;
-using Thycotic.RabbitMq.Helper.Installation;
-using Thycotic.RabbitMq.Helper.Installation.Choice;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
     class InstallConnectorCommand : WorkflowCommand, IImmediateCommand
     {
-        private readonly ILogWriter _log = Log.Get(typeof(InstallConnectorCommand));
+        //private readonly ILogWriter _log = Log.Get(typeof(InstallConnectorCommand));
 
         public override string Name
         {

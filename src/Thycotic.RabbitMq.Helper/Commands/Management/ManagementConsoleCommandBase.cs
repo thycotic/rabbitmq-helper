@@ -1,10 +1,9 @@
 ﻿using System.IO;
-using Thycotic.CLI;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
-using Thycotic.RabbitMq.Helper.Installation;
+using Thycotic.RabbitMq.Helper.Commands.Installation;
 
-namespace Thycotic.RabbitMq.Helper.Management
+namespace Thycotic.RabbitMq.Helper.Commands.Management
 {
     internal abstract class ManagementConsoleCommandBase : CommandBase, IImmediateCommand
     {

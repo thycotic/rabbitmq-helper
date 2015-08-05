@@ -2,7 +2,6 @@
 using System.Threading;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
-using Thycotic.RabbitMq.Helper.Installation;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
@@ -50,7 +49,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                 }
                 else
                 {
-                    var forceDownload = false;
+                    bool forceDownload;
                     if (parameters.TryGetBoolean("forceDownload", out forceDownload) &&
                         forceDownload)
                     {

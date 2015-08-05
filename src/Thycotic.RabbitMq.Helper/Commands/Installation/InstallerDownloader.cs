@@ -2,11 +2,10 @@
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Net;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using Thycotic.Logging;
 
-namespace Thycotic.RabbitMq.Helper.Installation
+namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {
     class InstallerDownloader
     {

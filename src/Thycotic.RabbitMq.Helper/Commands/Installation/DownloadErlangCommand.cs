@@ -2,7 +2,6 @@
 using System.Threading;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
-using Thycotic.RabbitMq.Helper.Installation;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Installation
 {

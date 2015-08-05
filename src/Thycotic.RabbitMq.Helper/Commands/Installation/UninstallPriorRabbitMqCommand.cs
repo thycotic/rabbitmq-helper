@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
-using Thycotic.RabbitMq.Helper.Installation;
 using Thycotic.Utility.IO;
 using Thycotic.Utility.OS;
 

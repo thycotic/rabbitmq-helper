@@ -1,7 +1,6 @@
-using Thycotic.CLI;
 using Thycotic.CLI.Fragments;
 
-namespace Thycotic.RabbitMq.Helper.Installation.Choice
+namespace Thycotic.RabbitMq.Helper.Commands.Installation.Choice
 {
     internal class ErlangLicenseChoiceConsoleCommandFragment : BinaryCommandFragment
     {
