@@ -24,6 +24,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
 
         public EnableRabbitManagementPluginCommand()
         {
+            //we have to use local host because guest account does not work under FQDN
             const string pluginUrl = "http://localhost:15672/";
             const string executable = "rabbitmq-plugins.bat";
             var pluginsExecutablePath = Path.Combine(InstallationConstants.RabbitMq.BinPath, executable);

@@ -1,7 +1,7 @@
 ﻿using System;
 using RabbitMQ.Client;
 using Thycotic.Logging;
-using Thycotic.RabbitMq.Helper.Commands.Installation;
+using Thycotic.Utility;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Management
 {
@@ -76,7 +76,8 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
         {
             const int nonSslPort = 5672;
             const int sslPost = 5671;
-            var url = string.Format("amqp://localhost:{0}", useSsl ? sslPost : nonSslPort);
+            //using FQDN to avoid running into errors when under SSL
+            var url = string.Format("amqp://{0}:{1}", DnsEx.GetDnsHostName(), useSsl ? sslPost : nonSslPort);
 
             _log.Info(string.Format("Getting connection for {0}", url));
 
