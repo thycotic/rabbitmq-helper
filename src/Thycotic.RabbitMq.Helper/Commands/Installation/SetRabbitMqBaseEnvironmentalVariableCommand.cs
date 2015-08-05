@@ -26,7 +26,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
             Action = parameters =>
             {
-                _log.Info("Setting RabbitMq environmental variables for RabbitMq");
+                _log.Info("Setting RabbitMq environmental variables");
 
                 var targets = new[]
                 {

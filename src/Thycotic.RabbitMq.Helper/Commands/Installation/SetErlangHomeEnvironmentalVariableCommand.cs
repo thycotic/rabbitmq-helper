@@ -9,7 +9,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
     {
         public const string ErlangHomeEnvironmentalVariableName = "ERLANG_HOME";
 
-        private readonly ILogWriter _log = Log.Get(typeof (SetRabbitMqBaseEnvironmentalVariableCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(SetErlangHomeEnvironmentalVariableCommand));
 
         public override string Area
         {
