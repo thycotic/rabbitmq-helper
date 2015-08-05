@@ -8,7 +8,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
     internal class ValidateConnectivityCommand : ManagementConsoleCommandBase
     {
 
-        private readonly ILogWriter _log = Log.Get(typeof(InstallRabbitMqCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(ValidateConnectivityCommand));
 
         public override string Area
         {

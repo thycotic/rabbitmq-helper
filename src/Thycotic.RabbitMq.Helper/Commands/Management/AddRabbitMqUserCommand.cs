@@ -8,7 +8,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
     internal class AddRabbitMqUserCommand : ManagementConsoleCommandBase
     {
 
-        private readonly ILogWriter _log = Log.Get(typeof(InstallRabbitMqCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(AddRabbitMqUserCommand));
 
         public override string Area
         {
