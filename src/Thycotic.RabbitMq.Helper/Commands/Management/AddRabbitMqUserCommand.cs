@@ -35,8 +35,16 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
 
                 string username;
                 string password;
-                if (!parameters.TryGet("rabbitMqUsername", out username)) return 1;
-                if (!parameters.TryGet("rabbitMqPw", out password)) return 1;
+                if (!parameters.TryGet("rabbitMqUsername", out username))
+                {
+                    _log.Error("RabbitMq username is required");
+                    return 1;
+                }
+                if (!parameters.TryGet("rabbitMqPw", out password))
+                {
+                    _log.Error("RabbitMq password is required");
+                    return 1;
+                }
 
                 var externalProcessRunner = new ExternalProcessRunner
                 {

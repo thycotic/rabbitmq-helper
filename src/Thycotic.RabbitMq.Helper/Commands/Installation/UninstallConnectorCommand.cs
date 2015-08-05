@@ -30,8 +30,10 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
             {
                 container.Resolve<UninstallPriorRabbitMqCommand>(),
                 container.Resolve<UninstallPriorErlangCommand>(),
-
-
+                new OutputCommandFragment
+                {
+                    Output = "Connector has been uninstalled."
+                }
             };
         }
     }
