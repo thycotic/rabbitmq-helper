@@ -17,7 +17,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
 
         public override string Description
         {
-            get { return "Adds a basic user to RabbitMq"; }
+            get { return "Validates connectivity to RabbitMq"; }
         }
 
         public ValidateConnectivityCommand()
