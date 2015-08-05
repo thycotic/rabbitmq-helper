@@ -7,7 +7,6 @@ namespace Thycotic.RabbitMq.Helper.Installation.Choice
     {
         public SslChoiceConsoleCommandFragment()
         {
-            var oldAction = Action;
             Action = parameters =>
             {
                 bool useSsl;
@@ -15,14 +14,10 @@ namespace Thycotic.RabbitMq.Helper.Installation.Choice
                 {
                     return WhenTrue.Action.Invoke(parameters);
                 }
-
-                bool noSsl;
-                if (parameters.TryGetBoolean("noSsl", out noSsl) && noSsl)
+                else
                 {
                     return WhenFalse.Action.Invoke(parameters);
                 }
-
-                return oldAction.Invoke(parameters);
             };
         }
     }
