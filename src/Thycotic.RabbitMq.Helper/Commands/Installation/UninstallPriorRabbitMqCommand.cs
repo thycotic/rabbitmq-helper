@@ -37,6 +37,9 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                 if (!File.Exists(executablePath))
                 {
                     _log.Info("No uninstaller found");
+
+                    CleanUpFolders();
+
                     return 0;
                 }
 
@@ -49,7 +52,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 
-                #region Hack
+                _log.Info("Waiting for RabbitMq process to exit...");
                 if (Directory.Exists(InstallationConstants.RabbitMq.BinPath))
                 {
                     //rabbit mq uninstaller seems to be async so we need to monitor the install directory until it's empty
@@ -62,32 +65,36 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                     Task.Delay(TimeSpan.FromSeconds(1)).Wait();
                 }
 
-                #endregion
+                CleanUpFolders();
 
-                var directoryCleaner = new DirectoryCleaner();
-
-                try
-                {
-
-                    directoryCleaner.Clean(InstallationConstants.RabbitMq.InstallPath);
-                }
-                catch (Exception ex)
-                {
-                    _log.Warn("Failed to clean installation path. Clean removal might fail", ex);
-                }
-
-                try
-                {
-                    directoryCleaner.Clean(InstallationConstants.RabbitMq.ConfigurationPath);
-                }
-                catch (Exception ex)
-                {
-                    _log.Warn("Failed to clean configuration path. Clean removal might fail", ex);
-                }
-
+                _log.Info("Uninstallation process completed");
 
                 return 0;
             };
+        }
+
+        private void CleanUpFolders()
+        {
+            var directoryCleaner = new DirectoryCleaner();
+
+            try
+            {
+
+                directoryCleaner.Clean(InstallationConstants.RabbitMq.InstallPath);
+            }
+            catch (Exception ex)
+            {
+                _log.Warn("Failed to clean installation path. Clean removal might fail", ex);
+            }
+
+            try
+            {
+                directoryCleaner.Clean(InstallationConstants.RabbitMq.ConfigurationPath);
+            }
+            catch (Exception ex)
+            {
+                _log.Warn("Failed to clean configuration path. Clean removal might fail", ex);
+            }
         }
     }
 }

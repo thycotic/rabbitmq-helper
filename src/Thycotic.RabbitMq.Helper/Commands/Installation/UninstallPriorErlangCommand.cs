@@ -36,6 +36,9 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                 if (!File.Exists(executablePath))
                 {
                     _log.Info("No uninstaller found");
+
+                    CleanUpFolders();
+
                     return 0;
                 }
 
@@ -59,23 +62,30 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                     _log.Warn("Failed to terminate erlang process. Clean removal might fail", ex);
                 }
 
-                _log.Info("Letting Erlang process to close, please wait...");
+                _log.Info("Waiting for Erlang process to exit...");
                 Task.Delay(TimeSpan.FromSeconds(10)).Wait();
 
-                var directoryCleaner = new DirectoryCleaner();
+                CleanUpFolders();
 
-                try
-                {
-                    directoryCleaner.Clean(InstallationConstants.Erlang.InstallPath);
-                }
-                catch (Exception ex)
-                {
-                    _log.Warn("Failed to clean installation path. Clean removal might fail", ex);
-                }
+                _log.Info("Uninstallation process completed");
 
                 return 0;
 
             };
+        }
+
+        private void CleanUpFolders()
+        {
+            var directoryCleaner = new DirectoryCleaner();
+
+            try
+            {
+                directoryCleaner.Clean(InstallationConstants.Erlang.InstallPath);
+            }
+            catch (Exception ex)
+            {
+                _log.Warn("Failed to clean installation path. Clean removal might fail", ex);
+            }
         }
     }
 }
