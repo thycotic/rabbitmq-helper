@@ -74,6 +74,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                                                     container.Resolve<CopyRabbitMqExampleSslConfigFileCommand>(),
                                                     container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
+                                                    container.Resolve<ValidateConnectivityCommand>(),
                                                     container.Resolve<EnableRabbitManagementPlugin>(),
                                                     new OutputCommandFragment
                                                     {
@@ -88,6 +89,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                                                     container.Resolve<CopyRabbitMqExampleNonSslConfigFileCommand>(),
                                                     container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
+                                                    container.Resolve<ValidateConnectivityCommand>(),
                                                     container.Resolve<EnableRabbitManagementPlugin>(),
                                                     new OutputCommandFragment
                                                     {
