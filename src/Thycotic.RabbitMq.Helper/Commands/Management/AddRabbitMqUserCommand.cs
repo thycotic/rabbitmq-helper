@@ -51,7 +51,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
                     EstimatedProcessDuration = TimeSpan.FromSeconds(15)
                 };
 
-                _log.Info(string.Format("Adding user {0}", username));
+                _log.Info(string.Format("Adding limited-access user {0}", username));
 
                 var parameters2 = string.Format("add_user {0} {1}", username, password);
 
@@ -62,7 +62,8 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
                 }
                 catch (Exception ex)
                 {
-                    _log.Warn("Failed to create user. Manual creation might be necessary", ex);
+                    _log.Error("Failed to create user. Manual creation might be necessary", ex);
+                    return 1;
                 }
 
                 _log.Info(string.Format("Granting permissions to user {0}", username));
@@ -75,7 +76,8 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
                 }
                 catch (Exception ex)
                 {
-                    _log.Warn("Failed to grant permissions to user. Manual grant might be necessary", ex);
+                    _log.Error("Failed to grant permissions to user. Manual grant might be necessary", ex);
+                    return 1;
                 }
 
                 return 0;
