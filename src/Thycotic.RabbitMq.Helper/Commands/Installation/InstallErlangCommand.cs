@@ -37,7 +37,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
                 var externalProcessRunner = new ExternalProcessRunner
                 {
-                    EstimatedProcessDuration = TimeSpan.FromMinutes(2)
+                    EstimatedProcessDuration = TimeSpan.FromMinutes(10)
                 };
 
 
