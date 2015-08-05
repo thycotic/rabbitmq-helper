@@ -73,7 +73,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                                                     container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
                                                     container.Resolve<ValidateConnectivityCommand>(),
-                                                    container.Resolve<EnableRabbitManagementPlugin>(),
+                                                    container.Resolve<EnableRabbitManagementPluginCommand>(),
                                                     new OutputCommandFragment
                                                     {
                                                         Output = "RabbitMq is ready to use with encryption. Please open port 5671 on the machine firewall."
@@ -88,7 +88,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                                                     container.Resolve<InstallRabbitMqCommand>(),
                                                     container.Resolve<AddRabbitMqUserCommand>(),
                                                     container.Resolve<ValidateConnectivityCommand>(),
-                                                    container.Resolve<EnableRabbitManagementPlugin>(),
+                                                    container.Resolve<EnableRabbitManagementPluginCommand>(),
                                                     new OutputCommandFragment
                                                     {
                                                         Output = "RabbitMq is ready to use without encryption. Please open port 5672 on the machine firewall."

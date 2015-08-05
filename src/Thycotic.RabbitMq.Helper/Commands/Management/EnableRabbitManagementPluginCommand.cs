@@ -7,7 +7,7 @@ using Thycotic.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Management
 {
-    internal class EnableRabbitManagementPlugin : ManagementConsoleCommandBase
+    internal class EnableRabbitManagementPluginCommand : ManagementConsoleCommandBase
     {
 
         private readonly ILogWriter _log = Log.Get(typeof(InstallRabbitMqCommand));
@@ -22,7 +22,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
             get { return "Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)"; }
         }
 
-        public EnableRabbitManagementPlugin()
+        public EnableRabbitManagementPluginCommand()
         {
             const string executable = "rabbitmq-plugins.bat";
             var pluginsExecutablePath = Path.Combine(InstallationConstants.RabbitMq.BinPath, executable);
