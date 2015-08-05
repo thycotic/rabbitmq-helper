@@ -8,15 +8,17 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
         private static class EnvironmentalVariables
         {
             public static readonly string ProgramFiles = Environment.GetEnvironmentVariable("ProgramFiles");
-            public static readonly string ProgramFiles32Bit = Environment.GetEnvironmentVariable("ProgramFiles(x86)");
+            public static readonly string ProgramFiles32Bit = Environment.Is64BitOperatingSystem ? Environment.GetEnvironmentVariable("ProgramFiles(x86)") : ProgramFiles;
         }
 
         public static class Erlang
         {
             public static readonly Version Version = new Version(17, 5);
 
-            public const string DownloadUrl =
-                "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_3_general/esl-erlang_17.5-1~windows_amd64.exe";
+            public static readonly string DownloadUrl =
+                Environment.Is64BitOperatingSystem?
+                "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_3_general/esl-erlang_17.5-1~windows_amd64.exe" :
+                "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_3_general/esl-erlang_17.5-1~windows_i386.exe";
 
             public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4");
             public static readonly string UninstallerPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4", "uninstall.exe");
