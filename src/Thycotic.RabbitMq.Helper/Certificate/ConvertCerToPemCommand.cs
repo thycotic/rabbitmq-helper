@@ -16,7 +16,7 @@ namespace Thycotic.RabbitMq.Helper.Certificate
         public static readonly string CertificatePath = Path.Combine(InstallationConstants.RabbitMq.ConfigurationPath,
             "ca.pem");
 
-        private readonly ILogWriter _log = Log.Get(typeof(ConvertPfxToPemCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(ConvertCaCerToPemCommand));
 
         public override string Name
         {
