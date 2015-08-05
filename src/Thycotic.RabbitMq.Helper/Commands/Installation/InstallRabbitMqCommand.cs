@@ -61,7 +61,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
                 externalProcessRunner.Run(executablePath, workingPath, silent);
 
-                _log.Info("Letting RabbitMq start up, please wait...");
+                _log.Info("Letting RabbitMq to start up, please wait...");
                 Task.Delay(TimeSpan.FromSeconds(10)).Wait();
 
                 return 0;

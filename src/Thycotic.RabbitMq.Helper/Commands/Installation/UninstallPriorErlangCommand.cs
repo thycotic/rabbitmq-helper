@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Installation;
@@ -57,6 +58,9 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                 {
                     _log.Warn("Failed to terminate erlang process. Clean removal might fail", ex);
                 }
+
+                _log.Info("Letting Erlang process to close, please wait...");
+                Task.Delay(TimeSpan.FromSeconds(10)).Wait();
 
                 var directoryCleaner = new DirectoryCleaner();
 
