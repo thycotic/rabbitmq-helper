@@ -139,7 +139,7 @@
       <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="Interop.ActiveDs">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.134\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.135\lib\net451\Interop.ActiveDs.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net">
@@ -168,37 +168,36 @@
       <Private>True</Private>
       <HintPath>..\packages\PostSharp.4.1.12\lib\net35-client\PostSharp.dll</HintPath>
     </Reference>
-    <Reference Include="SecureBlackbox, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.dll</HintPath>
+    <Reference Include="SecureBlackbox">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SecureBlackbox.SSHClient, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.SSHClient.dll</HintPath>
+    <Reference Include="SecureBlackbox.SSHClient">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SecureBlackbox.SSHCommon, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.SSHCommon.dll</HintPath>
+    <Reference Include="SecureBlackbox.SSHCommon">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHCommon.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SecureBlackbox.SSHServer, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\SecureBlackbox.SSHServer.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SecureBlackbox.SSHServer">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thycotic.BlackBox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6faa24c50f43cf8d, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.14\lib\net451\Thycotic.BlackBox.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Thycotic.BlackBox">
+      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\Thycotic.BlackBox.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.100, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Discovery.Sources">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.134\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.135\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.364, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
