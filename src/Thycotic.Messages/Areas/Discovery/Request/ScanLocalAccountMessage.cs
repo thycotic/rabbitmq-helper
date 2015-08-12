@@ -1,4 +1,5 @@
-﻿using Thycotic.Discovery.Core.Inputs;
+﻿using System;
+using Thycotic.Discovery.Core.Inputs;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.Messages.Areas.Discovery.Request
@@ -8,6 +9,11 @@ namespace Thycotic.Messages.Areas.Discovery.Request
     /// </summary>
     public class ScanLocalAccountMessage : ScanMessageBase
     {
+        /// <summary>
+        /// Batch Id
+        /// </summary>
+        public Guid BatchId { get; set; }
+
         /// <summary>
         /// Computer Id
         /// </summary>

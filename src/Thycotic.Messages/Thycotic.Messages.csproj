@@ -220,7 +220,6 @@
     <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanHostRangeMessage.cs" />
-    <Compile Include="Areas\Discovery\Request\ScanLocalAccountBlockingMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanLocalAccountMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanMachineMessage.cs">
       <SubType>Code</SubType>
