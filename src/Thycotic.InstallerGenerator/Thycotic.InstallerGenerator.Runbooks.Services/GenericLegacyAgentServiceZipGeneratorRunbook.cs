@@ -73,6 +73,7 @@ namespace Thycotic.InstallerGenerator.Runbooks.Services
                     ExecutablePath = SignToolPathProvider(ApplicationPath),
                     Parameters = string.Format(@"
 sign 
+/fd SHA265
 /t http://timestamp.digicert.com 
 /f {0}
 /p {1}
@@ -90,6 +91,7 @@ sign
                     ExecutablePath = SignToolPathProvider(ApplicationPath),
                     Parameters = string.Format(@"
 sign 
+/fd SHA265
 /t http://timestamp.digicert.com 
 /f {0}
 /p {1}
