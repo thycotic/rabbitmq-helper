@@ -17,8 +17,8 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
 
             public static readonly string DownloadUrl =
                 Environment.Is64BitOperatingSystem?
-                "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_3_general/esl-erlang_17.5-1~windows_amd64.exe" :
-                "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_3_general/esl-erlang_17.5-1~windows_i386.exe";
+                "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_1_general/esl-erlang_17.5-1~windows_amd64.exe" :
+                "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_1_general/esl-erlang_17.5-1~windows_i386.exe";
 
             public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4");
             public static readonly string UninstallerPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4", "uninstall.exe");
