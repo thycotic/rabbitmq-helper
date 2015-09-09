@@ -25,6 +25,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="context">The context.</param>
         public ConsumerWrapperFactory(IComponentContext context)
         {
+            Contract.Requires<ArgumentNullException>(context != null);
+
             _context = context;
         }
 
@@ -133,6 +135,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <returns></returns>
         public static IEnumerable<IComponentRegistration> GetDistinctRegistrations(this IComponentRegistry registry)
         {
+            Contract.Requires(registry != null);
+            Contract.Ensures(Contract.Result<IEnumerable<IComponentRegistration>>() != null); 
+
             return registry.Registrations.GroupBy(r => r.Activator.LimitType).Select(grp => grp.First());
         }
     }
