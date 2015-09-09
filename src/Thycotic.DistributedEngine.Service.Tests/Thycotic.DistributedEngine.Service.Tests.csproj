@@ -138,8 +138,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.ActiveDs">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.135\lib\net451\Interop.ActiveDs.dll</HintPath>
+    <Reference Include="Interop.ActiveDs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cda7f064205a299b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.142\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net">
@@ -196,8 +197,8 @@
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Sources">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.135\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.142, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.142\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.364, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
@@ -213,17 +214,13 @@
       <HintPath>..\packages\Thycotic.Foundation.2.5.0.0\lib\net451\Thycotic.Foundation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Licensing, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Licensing.Common, Version=1.0.0.20, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Licensing.Public.1.0.0.20\lib\net35\Thycotic.Licensing.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Licensing.Common, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.Licensing.Public, Version=1.0.0.10, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Licensing.1.0.0.10\lib\net35\Thycotic.Licensing.Public.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Licensing.Public, Version=1.0.0.20, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Licensing.Public.1.0.0.20\lib\net35\Thycotic.Licensing.Public.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
