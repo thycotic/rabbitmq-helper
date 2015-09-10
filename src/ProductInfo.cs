@@ -1,8 +1,8 @@
 using System.Reflection;
 
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Thycotic")]
-[assembly: AssemblyProduct("Secret Service")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
+[assembly: AssemblyCompany("Thycotic Software Ltd.")]
+[assembly: AssemblyProduct("Secret Server")]
+[assembly: AssemblyCopyright("Copyright © Thycotic Software Ltd. 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
