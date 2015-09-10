@@ -3,8 +3,15 @@
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Thycotic.DistributedEngine.CertificateHelper")]
+[assembly: AssemblyTitle("Thycotic.RabbitMq.Helper")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Thycotic Software Ltd.")]
+[assembly: AssemblyProduct("Secret Server")]
+[assembly: AssemblyCopyright("Copyright © Thycotic Software Ltd. 2015")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+
 
 // Version information for an assembly consists of the following four values:
 //

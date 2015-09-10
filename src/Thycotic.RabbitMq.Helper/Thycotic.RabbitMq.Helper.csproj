@@ -222,9 +222,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="Certificate\ConvertCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
     <Compile Include="Commands\CommandAreas.cs" />
