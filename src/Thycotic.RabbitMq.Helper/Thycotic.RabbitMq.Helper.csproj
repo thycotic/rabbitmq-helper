@@ -232,6 +232,7 @@
     <Compile Include="Commands\Installation\Choice\RabbitMqLicenseChoiceConsoleCommandFragment.cs" />
     <Compile Include="Commands\Installation\Choice\SslChoiceConsoleCommandFragment.cs" />
     <Compile Include="Commands\Installation\CopyRabbitMqExampleNonSslConfigFileCommand.cs" />
+    <Compile Include="Commands\Installation\PrintDownloadLocationsCommand.cs" />
     <Compile Include="Commands\Installation\UninstallConnectorCommand.cs" />
     <Compile Include="Commands\Installation\SetErlangHomeEnvironmentalVariableCommand.cs" />
     <Compile Include="Commands\Management\LockedFileReader.cs" />

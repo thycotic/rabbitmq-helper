@@ -17,6 +17,19 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
             get { return CommandAreas.Installation; }
         }
 
+
+        public override string[] Aliases
+        {
+            get
+            {
+                return new[]
+                {
+                    "ie"
+                };
+            }
+            set { }
+        }
+
         public override string Description
         {
             get { return "Installs Erlang"; }

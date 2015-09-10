@@ -18,6 +18,19 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
             get { return CommandAreas.Installation; }
         }
 
+
+        public override string[] Aliases
+        {
+            get
+            {
+                return new[]
+                {
+                    "ue"
+                };
+            }
+            set { }
+        }
+
         public override string Description
         {
             get { return "Uninstalls prior installation of Erlang"; }
