@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Reflection;
 using Autofac;
 using Thycotic.CLI.Configuration;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
@@ -341,7 +342,8 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                     HostName = engineIdentificationProvider.HostName,
                     FriendlyName = engineIdentificationProvider.FriendlyName,
                     IdentityGuid = engineIdentificationProvider.IdentityGuid,
-                    Version = ReleaseInformationHelper.Version.ToString()
+                    //TODO: Update thycotic.ulility to use the call below, update thycotic.uility
+                    Version = Assembly.GetExecutingAssembly().GetName().Version.ToString()// ReleaseInformationHelper.Version.ToString()
                 };
 
                 var response = engineConfigurationBus.GetConfiguration(request);
