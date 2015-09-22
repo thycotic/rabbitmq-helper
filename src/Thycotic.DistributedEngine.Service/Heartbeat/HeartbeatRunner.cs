@@ -69,11 +69,12 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
 
             _log.Info("Calling back to the server");
 
+            var version = typeof(EngineService).Assembly.GetName().Version;
             var request = new EngineHeartbeatRequest
             {
                 IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                 OrganizationId = _engineIdentificationProvider.OrganizationId,
-                Version = ReleaseInformationHelper.Version.ToString(),
+                Version = version.ToString(),
                 LastActivity = DateTime.UtcNow
             };
 
