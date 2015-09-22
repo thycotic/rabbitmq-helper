@@ -335,7 +335,6 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                 var engineIdentificationProvider = tempContainer.Resolve<IEngineIdentificationProvider>();
                 var engineConfigurationBus = tempContainer.Resolve<IConfigurationBus>();
 
-                var version = typeof (EngineService).Assembly.GetName().Version;
                 var request = new EngineConfigurationRequest
                 {
                     SiteId = engineIdentificationProvider.SiteId,
@@ -343,7 +342,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
                     HostName = engineIdentificationProvider.HostName,
                     FriendlyName = engineIdentificationProvider.FriendlyName,
                     IdentityGuid = engineIdentificationProvider.IdentityGuid,
-                    Version =  version.ToString()
+                    Version = TempReleaseInformationHelper.Version.ToString()
                 };
 
                 var response = engineConfigurationBus.GetConfiguration(request);

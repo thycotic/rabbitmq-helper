@@ -60,7 +60,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
        [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "Bogus warning about _cts.Token.IsCancellationRequested")]
         private void Pump()
         {
-            Contract.Assume(ReleaseInformationHelper.Version != null);
+            Contract.Assume(TempReleaseInformationHelper.Version != null);
 
             if (_cts.Token.IsCancellationRequested)
             {
@@ -69,12 +69,11 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
 
             _log.Info("Calling back to the server");
 
-            var version = typeof(EngineService).Assembly.GetName().Version;
             var request = new EngineHeartbeatRequest
             {
                 IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                 OrganizationId = _engineIdentificationProvider.OrganizationId,
-                Version = version.ToString(),
+                Version = TempReleaseInformationHelper.Version.ToString(),
                 LastActivity = DateTime.UtcNow
             };
 

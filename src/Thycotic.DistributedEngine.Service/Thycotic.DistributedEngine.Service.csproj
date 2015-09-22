@@ -422,6 +422,7 @@
     <Compile Include="IoC\MessageQueueModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TempReleaseInformationHelper.cs" />
     <Compile Include="Update\IUpdateInitializer.cs" />
     <Compile Include="Update\UpdateInitializer.cs" />
   </ItemGroup>

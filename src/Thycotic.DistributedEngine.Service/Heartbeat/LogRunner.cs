@@ -90,7 +90,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
                 {
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
-                    Version = ReleaseInformationHelper.Version.ToString(),
+                    Version = TempReleaseInformationHelper.Version.ToString(),
                     LogEntries = batch
                 };
 
