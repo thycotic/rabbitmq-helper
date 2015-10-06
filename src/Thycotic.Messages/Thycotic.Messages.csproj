@@ -234,6 +234,8 @@
     <Compile Include="Areas\POC\Request\StepMessage.cs" />
     <Compile Include="Areas\POC\Request\HelloWorldMessage.cs" />
     <Compile Include="Areas\POC\Response\SortListResponse.cs" />
+    <Compile Include="Authenticate\Request\AuthenticateByAdMessage.cs" />
+    <Compile Include="Authenticate\Response\AuthenticateByAdResponse.cs" />
     <Compile Include="General\DomainCredentialTestMessage.cs" />
     <Compile Include="Heartbeat\Request\SecretHeartbeatMessage.cs" />
     <Compile Include="PasswordChanging\IDependencyChangerInfo.cs" />

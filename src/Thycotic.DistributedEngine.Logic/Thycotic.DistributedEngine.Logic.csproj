@@ -244,6 +244,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Management" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
@@ -308,6 +309,7 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\Authentication\AuthenticateByAdConsumer.cs" />
     <Compile Include="Areas\Discovery\DependencyConsumer.cs" />
     <Compile Include="Areas\Discovery\DiscoveryLogExtensions.cs" />
     <Compile Include="Areas\Discovery\LocalAccountConsumer.cs" />
