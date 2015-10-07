@@ -21,7 +21,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Authentication
         /// <returns>AuthenticateByAdResponse</returns>
         public AuthenticateByAdResponse Consume(AuthenticateByAdMessage request)
         {
-            _log.Info(string.Format("Got an Authenticate-By-AD request for {0}@{1}", request.Username, request.UserDomain));
+            _log.Info(string.Format("Got an Authenticate-By-AD request for {0}@{1}: ", request.Username, request.UserDomain));
 
             string domainandusername = request.Ldaps ? String.Concat(request.Username, "@", request.UserDomain) : String.Concat(request.UserDomain, "\\", request.Username);
             string domainConnectionString = request.Port != 389 ? request.DomainToAuthenticateTo + ":" + request.Port : request.DomainToAuthenticateTo;
@@ -33,12 +33,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Authentication
             }
             catch (Exception ex)
             {
+                _log.Info(string.Format("Authenticate-By-AD for {0}@{1}: Failure", request.Username, request.UserDomain));
                 return new AuthenticateByAdResponse {Success = false, ErrorMessage = ex.ToString()};
             }
             finally
             {
                 user.Dispose();
             }
+            _log.Info(string.Format("Authenticate-By-AD for {0}@{1}: Success", request.Username, request.UserDomain));
             return new AuthenticateByAdResponse {Success = true};
         }
     }
