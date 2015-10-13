@@ -99,7 +99,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Commands.Discovery
                 ComputerId = i,
                 DiscoveryScannerId = 6,
                 DiscoverySourceId = 1,
-                ExpiresOn = DateTime.Now + TimeSpan.FromDays(5),
+                ExpiresOn = DateTime.UtcNow + TimeSpan.FromDays(5),
                 Input = new ScanComputerInput
                 {
                     AuthenticationAccountInfos = authenticationAccountInfos,
