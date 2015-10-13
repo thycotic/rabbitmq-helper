@@ -170,7 +170,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             return new EngineLogEntry
             {
                 Id = logEntry.Id,
-                Date = logEntry.Date,
+                Date = logEntry.Date.ToUniversalTime(),
                 UserId = logEntry.UserId,
                 ServiceRole = logEntry.ServiceRole,
                 Correlation = logEntry.Correlation,
