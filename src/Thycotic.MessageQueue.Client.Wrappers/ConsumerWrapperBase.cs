@@ -36,6 +36,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
         private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
 
+        /// <summary>
+        /// PriorityScheduler to use (sets thread priority)
+        /// </summary>
+        protected PriorityScheduler PriorityScheduler;
+
 
 
         /// <summary>
@@ -52,6 +57,15 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             _exchangeName = exchangeNameProvider.GetCurrentExchange();
             _routingKey = this.GetRoutingKey(typeof(TConsumable));
             _queueName = this.GetQueueName(_exchangeName, typeof(TConsumer), typeof(TConsumable));
+        }
+
+        /// <summary>
+        /// Sets the priority
+        /// </summary>
+        /// <param name="scheduler"></param>
+        public void SetPriority(IPriorityScheduler scheduler)
+        {
+            PriorityScheduler = (PriorityScheduler)scheduler;
         }
 
         /// <summary>

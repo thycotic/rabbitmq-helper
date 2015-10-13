@@ -220,6 +220,7 @@
     <Compile Include="ConnectionStringHelpers.cs" />
     <Compile Include="DefaultSchemas.cs" />
     <Compile Include="DefaultPorts.cs" />
+    <Compile Include="IPriorityScheduler.cs" />
     <Compile Include="IRequestBus.cs" />
     <Compile Include="QueueClient\CommonDeliveryEventArgs.cs" />
     <Compile Include="QueueClient\ExchangeNameProvider.cs" />

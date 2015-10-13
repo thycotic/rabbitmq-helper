@@ -1,4 +1,5 @@
-﻿using Thycotic.CLI.Commands;
+﻿using System;
+using Thycotic.CLI.Commands;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
@@ -32,12 +33,22 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Commands.POC
                 string content;
                 if (!parameters.TryGet("content", out content)) return 1;
 
+                int count = 1;
+                string countString;
+                if (parameters.TryGet("count", out countString))
+                {
+                    count = Int32.Parse(countString);
+                }
+
                 var message = new HelloWorldMessage
                 {
                     Content = content
                 };
 
-                _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
+                for (int i = 0; i < count; i++)
+                {
+                    _bus.BasicPublish(exchangeNameProvider.GetCurrentExchange(), message);
+                }
 
                 _log.Info("Posting completed");
 

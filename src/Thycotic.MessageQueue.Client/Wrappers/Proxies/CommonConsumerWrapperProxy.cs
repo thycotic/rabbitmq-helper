@@ -63,6 +63,15 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         }
 
         /// <summary>
+        /// Sets Thread Priority for proxied Wrapper
+        /// </summary>
+        /// <param name="scheduler"></param>
+        public void SetPriority(IPriorityScheduler scheduler)
+        {
+            Target.SetPriority(scheduler);
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()

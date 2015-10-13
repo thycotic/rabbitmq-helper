@@ -224,6 +224,7 @@
     <Compile Include="BasicConsumerWrapper.cs" />
     <Compile Include="BlockingConsumerWrapper.cs" />
     <Compile Include="ConsumerWrapperBase.cs" />
+    <Compile Include="PriorityScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Authentication
     /// <summary>
     /// Authenticate By AD Consumer
     /// </summary>
+    [ConsumerPriority(Priority.Highest)]
     public class AuthenticateByAdConsumer : IBlockingConsumer<AuthenticateByAdMessage, AuthenticateByAdResponse>
     {
         private readonly ILogWriter _log = Log.Get(typeof(AuthenticateByAdConsumer));
