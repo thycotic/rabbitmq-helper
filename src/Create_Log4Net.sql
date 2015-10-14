@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[Log]
 (
 [Id] [int] NOT NULL IDENTITY(1, 1),
 [Date] [datetime] NOT NULL,
+[HostName] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [UserID] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [ServiceRole] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [Correlation] [nvarchar] (350) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
