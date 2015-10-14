@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MessageQueue.Client", "Thycotic.MessageQueue.Client\Thycotic.MessageQueue.Client.csproj", "{23D33205-A493-4977-831A-3487EC2042D6}"
 EndProject
@@ -306,5 +306,8 @@ Global
 		{88BDA5ED-1BCA-4227-B838-681A709F4EA1} = {B8F73DAD-1146-4E09-914A-035D2BA99476}
 		{EF4A40F4-0BEF-4D0A-9106-C9DDF9D8D857} = {B8F73DAD-1146-4E09-914A-035D2BA99476}
 		{DDEABD7C-BFD5-49F0-94FB-D803B2F7C685} = {8F1CF29E-0250-42FE-87BC-67BE9F0658BF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 EndGlobal

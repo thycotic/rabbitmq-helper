@@ -151,12 +151,29 @@
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Thycotic.Discovery.Core">
+      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.368, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.368\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Encryption">
+      <HintPath>..\packages\Thycotic.Encryption.5.0.0.11\lib\net451\Thycotic.Encryption.dll</HintPath>
+    </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.SharedTypes">
+      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.21, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -165,6 +182,10 @@
     <Reference Include="Thycotic.Utility.Testing, Version=5.0.0.10, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.10\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.Wcf">
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <Choose>

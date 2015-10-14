@@ -185,6 +185,8 @@
       <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
@@ -201,12 +203,11 @@
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.143\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.364, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.364\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.368, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.368\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Encryption, Version=5.0.0.11, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Thycotic.Encryption">
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.11\lib\net451\Thycotic.Encryption.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -226,7 +227,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.SharedTypes">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -238,9 +239,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.10\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Wcf, Version=5.0.0.125, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+    <Reference Include="Thycotic.Wcf">
       <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <Choose>
