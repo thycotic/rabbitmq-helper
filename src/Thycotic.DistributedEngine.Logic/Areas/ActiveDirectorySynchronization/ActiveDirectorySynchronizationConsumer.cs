@@ -62,7 +62,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
                     //TODO - Use batch id?
-//                    var response = new ActiveDirectorySynchronizationResponse(result.SyncedGroups, result.Logs);
                     _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", request.ActiveDirectoryDomainInfos.Select(d => d.DomainName)), x + 1, paging.BatchCount));
                     _responseBus.Execute(mappedResponse);
                     paging.Skip = paging.NextSkip;                        
