@@ -15,10 +15,22 @@ namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
         /// 
         /// </summary>
         public string DomainName { get; set; }
+
+        private List<ActiveDirectorySynchronizationGroup> _groupInfos = new List<ActiveDirectorySynchronizationGroup>();
         /// <summary>
         /// 
         /// </summary>
-        public List<ActiveDirectorySynchronizationGroup> GroupInfos { get; set; }
+        public List<ActiveDirectorySynchronizationGroup> GroupInfos
+        {
+            get
+            {
+                return _groupInfos;
+            }
+            set
+            {
+                _groupInfos = value;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
