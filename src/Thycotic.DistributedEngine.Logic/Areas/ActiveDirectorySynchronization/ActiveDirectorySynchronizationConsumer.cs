@@ -82,6 +82,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                 {
                     ADGuid = group.ADGuid,
                     DistinguishedName = group.DistinguishedName,
+                    DomainDistinguishedName = group.DomainDistinguishedName
                 };
                 mappedGroup.MemberUsers = group.MemberUsers.Select(u => new ActiveDirectorySynchronizationUserData()
                 {
