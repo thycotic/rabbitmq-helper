@@ -254,9 +254,21 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Interop.ActiveDs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cda7f064205a299b, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.143\lib\net451\Interop.ActiveDs.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.255\lib\net451\Jscape.Ssh.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -353,6 +365,10 @@
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.255, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.255\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
