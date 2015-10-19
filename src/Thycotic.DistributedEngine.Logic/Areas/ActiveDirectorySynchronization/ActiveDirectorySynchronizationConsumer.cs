@@ -10,7 +10,7 @@ using Thycotic.Messages.Areas.ActiveDirectorySynchronization;
 using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.General;
 using ActiveDirectorySynchronizationDomainInfo = Thycotic.ActiveDirectorySynchronization.ActiveDirectorySynchronizationDomainInfo;
-using ActiveDirectorySynchronizationResponse = Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectorySynchronization.ActiveDirectorySynchronizationResponse;
+using ActiveDirectorySynchronizationResponse = Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectorySynchronization.Response.ActiveDirectorySynchronizationResponse;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 {
@@ -61,6 +61,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
+                    var response = new ActiveDirectorySynchronizationResponse
+                    {
+                        SyncedGroups = mappedResponse.SyncedGroups.Skip(paging.Skip).Take(paging.Take).ToList(),
+                        Logs = mappedResponse.Logs.Skip(paging.Skip).Take(paging.Take).ToList()
+                    };
                     //TODO - Use batch id?
                     _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", request.ActiveDirectoryDomainInfos.Select(d => d.DomainName)), x + 1, paging.BatchCount));
                     _responseBus.Execute(mappedResponse);

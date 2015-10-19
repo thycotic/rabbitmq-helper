@@ -254,8 +254,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.ActiveDirectorySynchronization, Version=1.0.0.17, Culture=neutral, PublicKeyToken=029133c20de6def0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.ActiveDirectorySynchronization.1.0.0.17\lib\net451\Thycotic.ActiveDirectorySynchronization.dll</HintPath>
+    <Reference Include="Thycotic.ActiveDirectorySynchronization, Version=1.0.0.18, Culture=neutral, PublicKeyToken=029133c20de6def0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.ActiveDirectorySynchronization.1.0.0.18\lib\net451\Thycotic.ActiveDirectorySynchronization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.BlackBox">
@@ -270,8 +271,8 @@
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.143\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.375, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.375\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.377, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.377\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Encryption">
