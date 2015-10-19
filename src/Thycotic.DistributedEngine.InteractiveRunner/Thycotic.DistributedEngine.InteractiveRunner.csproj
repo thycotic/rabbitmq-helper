@@ -219,7 +219,7 @@
       <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.255\lib\net451\Jscape.Ssh.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="log4net">
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -232,8 +232,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NSubstitute">
       <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
@@ -279,8 +279,9 @@
       <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.CLI">
-      <HintPath>..\packages\Thycotic.CLI.5.0.0.18\lib\net451\Thycotic.CLI.dll</HintPath>
+    <Reference Include="Thycotic.CLI, Version=5.0.0.35, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.CLI.5.0.0.35\lib\net451\Thycotic.CLI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.100, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
@@ -288,6 +289,10 @@
     </Reference>
     <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.143, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.143\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.375, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.375\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Encryption, Version=5.0.0.11, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
@@ -307,8 +312,8 @@
       <HintPath>..\packages\Thycotic.Licensing.Public.1.0.0.20\lib\net35\Thycotic.Licensing.Public.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.255, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.255\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
@@ -320,6 +325,10 @@
     </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Utility.5.0.0.29\lib\net451\Thycotic.Utility.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Wcf, Version=5.0.0.125, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

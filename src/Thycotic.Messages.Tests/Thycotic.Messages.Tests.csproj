@@ -148,15 +148,17 @@
       <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.255\lib\net451\Jscape.Ssh.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="log4net">
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NSubstitute, Version=1.8.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -214,8 +216,9 @@
       <HintPath>..\packages\Thycotic.Licensing.Public.1.0.0.20\lib\net35\Thycotic.Licensing.Public.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Logging">
+    <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.255, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.255\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
@@ -229,9 +232,9 @@
       <HintPath>..\packages\Thycotic.Utility.5.0.0.29\lib\net451\Thycotic.Utility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Utility.Testing, Version=5.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.10\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
+    <Reference Include="Thycotic.Utility.Testing, Version=5.0.0.20, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.20\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <Choose>

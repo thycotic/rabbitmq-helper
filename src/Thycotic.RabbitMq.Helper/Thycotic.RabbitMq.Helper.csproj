@@ -199,7 +199,7 @@
       <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.255\lib\net451\Jscape.Ssh.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="log4net">
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -208,8 +208,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PostSharp, Version=4.0.41.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.4.0.41\lib\net35-client\PostSharp.dll</HintPath>
@@ -251,8 +251,9 @@
       <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.CLI">
-      <HintPath>..\packages\Thycotic.CLI.5.0.0.18\lib\net451\Thycotic.CLI.dll</HintPath>
+    <Reference Include="Thycotic.CLI, Version=5.0.0.35, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.CLI.5.0.0.35\lib\net451\Thycotic.CLI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.100, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
@@ -279,8 +280,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.255, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.255\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
