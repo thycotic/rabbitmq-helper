@@ -68,7 +68,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                     };
                     //TODO - Use batch id?
                     _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", request.ActiveDirectoryDomainInfos.Select(d => d.DomainName)), x + 1, paging.BatchCount));
-                    _responseBus.Execute(mappedResponse);
+                    _responseBus.Execute(response);
                     paging.Skip = paging.NextSkip;                        
                 });
             }
