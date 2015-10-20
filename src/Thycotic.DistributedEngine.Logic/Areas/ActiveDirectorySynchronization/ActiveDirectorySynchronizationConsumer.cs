@@ -99,7 +99,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                     Name = u.Name,
                     DomainName = u.DomainName,
                     OUPath = u.OUPath,
-                    DisplayName = u.DisplayName,                    
+                    DisplayName = u.DisplayName,
+                    Enabled = u.Active
+                    
                 }).ToList();
                 mappedGroups.Add(mappedGroup);
             }
