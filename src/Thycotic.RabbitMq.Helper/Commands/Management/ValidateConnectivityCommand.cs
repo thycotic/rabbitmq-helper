@@ -15,6 +15,18 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
             get { return CommandAreas.Management; }
         }
 
+        public override string[] Aliases
+        {
+            get
+            {
+                return new[]
+                {
+                    "vc"
+                };
+            }
+            set { }
+        }
+
         public override string Description
         {
             get { return "Validates connectivity to RabbitMq"; }
@@ -48,9 +60,24 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
                 bool useSsl;
                 parameters.TryGetBoolean("useSsl", out useSsl);
 
+                string hostname;
+                parameters.TryGet("hostname", out hostname);
+
+                if (useSsl && string.IsNullOrWhiteSpace(hostname))
+                {
+                    _log.Info("Using host name from certificate");
+                    parameters.TryGet("pfxSubjectName", out hostname);
+                }
+
+                if (string.IsNullOrWhiteSpace(hostname))
+                {
+                    _log.Info("Using current machine name as host name");
+                    hostname = DnsEx.GetDnsHostName();
+                }
+
                 try
                 {
-                    using (var connection = GetConnection(username, password, useSsl))
+                    using (var connection = GetConnection(hostname, username, password, useSsl))
                     {
                         using (var model = connection.CreateModel())
                         {
@@ -63,8 +90,8 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
                 }
                 catch (Exception ex)
                 {
-                    _log.Error("Connection failed", ex);
-                    return 1;
+                    _log.Warn("Connection failed. There might be an issues with the installation. Please check the RabbitMq log files.", ex);
+                    return 0;
                 }
 
                 return 0;
@@ -72,12 +99,12 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
             };
         }
 
-        private IConnection GetConnection(string userName, string password, bool useSsl)
+        private IConnection GetConnection(string hostname, string userName, string password, bool useSsl)
         {
             const int nonSslPort = 5672;
             const int sslPost = 5671;
             //using FQDN to avoid running into errors when under SSL
-            var url = string.Format("amqp://{0}:{1}", DnsEx.GetDnsHostName(), useSsl ? sslPost : nonSslPort);
+            var url = string.Format("amqp://{0}:{1}", hostname, useSsl ? sslPost : nonSslPort);
 
             _log.Info(string.Format("Getting connection for {0}", url));
 
