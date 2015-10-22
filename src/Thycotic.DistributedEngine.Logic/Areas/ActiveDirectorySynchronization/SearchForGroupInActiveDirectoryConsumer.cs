@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Org.BouncyCastle.Ocsp;
@@ -9,13 +10,14 @@ using Thycotic.Messages.Areas.ActiveDirectorySynchronization;
 using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.General;
 using ActiveDirectorySynchronizationDomainInfo = Thycotic.ActiveDirectorySynchronization.ActiveDirectorySynchronizationDomainInfo;
+using SearchForGroupInActiveDirectoryResponse = Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectorySynchronization.Response.SearchForGroupInActiveDirectoryResponse;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 {
     /// <summary>
     /// Machine Consumer
     /// </summary>
-    public class SearchForGroupInActiveDirectoryConsumer : IBasicConsumer<SearchForGroupInActiveDirectoryMessage>
+    public class SearchForGroupInActiveDirectoryConsumer : IBlockingConsumer<SearchForGroupInActiveDirectoryMessage, SearchForGroupInActiveDirectoryResponse>
     {
         private readonly IResponseBus _responseBus;
         private readonly ILogWriter _log = Log.Get(typeof(SearchForGroupInActiveDirectoryConsumer));
@@ -34,7 +36,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
         /// Scan Machines
         /// </summary>
         /// <param name="request"></param>
-        public void Consume(SearchForGroupInActiveDirectoryMessage request)
+        public SearchForGroupInActiveDirectoryResponse Consume(SearchForGroupInActiveDirectoryMessage request)
         {
             try
             {
@@ -68,7 +70,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
-                    var response = new EngineToServerCommunication.Areas.ActiveDirectorySynchronization.Response.SearchForGroupInActiveDirectoryResponse()
+                    var response = new SearchForGroupInActiveDirectoryResponse()
                     {
                         //This .Cast might not work
                         ADObjects = result.ADObjects.Cast<EngineToServerCommunication.Areas.ActiveDirectorySynchronization.ADObject>().Skip(paging.Skip).Take(paging.Take).ToList(),
@@ -77,13 +79,16 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                     //TODO - Use batch id?
                     _log.Info(string.Format("{0} : Send Domain Search Results Batch {1} of {2}", string.Join(", ", request.DomainInfo.DomainName), x + 1, paging.BatchCount));
                     _responseBus.Execute(response);
-                    paging.Skip = paging.NextSkip;                        
+                    paging.Skip = paging.NextSkip;
                 });
             }
             catch (Exception e)
             {
-                _log.Error("Scan Domains Failed: ",  e);
+                const string error = "Scan Domains Failed";
+                _log.Error(error + ": ", e);
+                return new SearchForGroupInActiveDirectoryResponse(new List<EngineToServerCommunication.Areas.ActiveDirectorySynchronization.ADObject>(), error);
             }
+            return null;
         }
     }
 }

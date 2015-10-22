@@ -6,7 +6,7 @@ namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
     /// <summary>
     /// Search For Group in AD Message
     /// </summary>
-    public class SearchForGroupInActiveDirectoryMessage : BasicConsumableBase
+    public class SearchForGroupInActiveDirectoryMessage : BlockingConsumableBase
     {
         /// <summary>
         /// 
