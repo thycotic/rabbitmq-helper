@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Thycotic.ActiveDirectorySynchronization;
+using Thycotic.ActiveDirectorySynchronization.Core;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectorySynchronization;
+using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectorySynchronization.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.ActiveDirectorySynchronization;
 using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.General;
-using ActiveDirectorySynchronizationDomainInfo = Thycotic.ActiveDirectorySynchronization.ActiveDirectorySynchronizationDomainInfo;
-using ActiveDirectorySynchronizationResponse = Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectorySynchronization.Response.ActiveDirectorySynchronizationResponse;
+//using ActiveDirectorySynchronizationDomainInfo = Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationDomainInfo;
+//using ActiveDirectorySynchronizationResponse = Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationResponse;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 {
@@ -57,11 +59,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                     Take = request.BatchSize
                 };
 
-                ActiveDirectorySynchronizationResponse mappedResponse = MapADSyncResultToEngineToServerType(result);
+                var mappedResponse = MapADSyncResultToEngineToServerType(result);
 
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
-                    var response = new ActiveDirectorySynchronizationResponse
+                    var response = new EngineToServerActiveDirectorySynchronizationResponse
                     {
                         SyncedGroups = mappedResponse.SyncedGroups.Skip(paging.Skip).Take(paging.Take).ToList(),
                         Logs = mappedResponse.Logs.Skip(paging.Skip).Take(paging.Take).ToList()
@@ -78,12 +80,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
             }
         }
 
-        private ActiveDirectorySynchronizationResponse MapADSyncResultToEngineToServerType(Thycotic.ActiveDirectorySynchronization.ActiveDirectorySynchronizationResponse result)
+        private EngineToServerActiveDirectorySynchronizationResponse MapADSyncResultToEngineToServerType(ActiveDirectorySynchronizationResponse result)
         {
-            var mappedGroups = new List<ActiveDirectorySynchronizationGroupData>();
+            var mappedGroups = new List<EngineToServerActiveDirectorySynchronizationGroupData>();
             foreach (var group in result.SyncedGroups)
             {
-                var mappedGroup = new ActiveDirectorySynchronizationGroupData()
+                var mappedGroup = new EngineToServerActiveDirectorySynchronizationGroupData()
                 {
                     ADGuid = group.ADGuid,
                     DistinguishedName = group.DistinguishedName,
@@ -91,7 +93,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                     Name = group.Name,
                     DomainName = group.DomainName
                 };
-                mappedGroup.MemberUsers = group.MemberUsers.Select(u => new ActiveDirectorySynchronizationUserData()
+                mappedGroup.MemberUsers = group.MemberUsers.Select(u => new EngineToServerActiveDirectorySynchronizationUserData()
                 {
                     DistinguishedName = u.DistinguishedName,
                     ADGuid = u.ADGuid,
@@ -105,7 +107,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                 }).ToList();
                 mappedGroups.Add(mappedGroup);
             }
-            var mappedLogData = result.Logs.Select(l => new ActiveDirectorySynchronizationLogData()
+            var mappedLogData = result.Logs.Select(l => new EngineToServerActiveDirectorySynchronizationLogData()
             {
                 DomainName = l.DomainName,
                 GroupName = l.GroupName,
@@ -113,7 +115,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                 Errors = l.Errors
             }).ToList();
 
-            return new ActiveDirectorySynchronizationResponse(mappedGroups, mappedLogData);
+            return new EngineToServerActiveDirectorySynchronizationResponse(mappedGroups, mappedLogData);
         }
 
         private List<ActiveDirectorySynchronizationDomainInfo> MapMessageToADSyncLibrary(List<ActiveDirectorySynchronizationDomain> infos)

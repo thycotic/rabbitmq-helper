@@ -17,7 +17,7 @@ namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
         /// </summary>
         /// <param name="domainInfo"></param>
         public ActiveDirectorySynchronizationDomain(
-            Thycotic.ActiveDirectorySynchronization.ActiveDirectorySynchronizationDomainInfo domainInfo)
+            Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationDomainInfo domainInfo)
         {
             DistinguishedName = domainInfo.DistinguishedName;
             DomainName = domainInfo.DomainName;
