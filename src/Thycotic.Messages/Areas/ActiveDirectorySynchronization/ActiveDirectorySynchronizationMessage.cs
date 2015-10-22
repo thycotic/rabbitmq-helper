@@ -4,7 +4,7 @@ using Thycotic.Messages.Common;
 namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
 {
     /// <summary>
-    /// Scan Machine Message
+    /// ADSync Message
     /// </summary>
     public class ActiveDirectorySynchronizationMessage : BasicConsumableBase
     {
