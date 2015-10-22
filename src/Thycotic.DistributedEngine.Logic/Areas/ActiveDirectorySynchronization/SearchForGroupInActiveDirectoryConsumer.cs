@@ -72,8 +72,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                 {
                     var response = new SearchForGroupInActiveDirectoryResponse()
                     {
-                        //This .Cast might not work
-                        ADObjects = result.ADObjects.Cast<EngineToServerCommunication.Areas.ActiveDirectorySynchronization.ADObject>().Skip(paging.Skip).Take(paging.Take).ToList(),
+                        ADObjects = ConvertADobjectsToADObjects(result.ADObjects).ToList(),
                         Error = result.Error
                     };
                     //TODO - Use batch id?
@@ -89,6 +88,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                 return new SearchForGroupInActiveDirectoryResponse(new List<EngineToServerCommunication.Areas.ActiveDirectorySynchronization.ADObject>(), error);
             }
             return null;
+        }
+
+        private IEnumerable<EngineToServerCommunication.Areas.ActiveDirectorySynchronization.ADObject> ConvertADobjectsToADObjects(IEnumerable<ADObject> adObjects)
+        {
+            return adObjects.Select(adObject => new EngineToServerCommunication.Areas.ActiveDirectorySynchronization.ADObject
+            {
+                ADGuid = adObject.ADGuid, Name = adObject.Name
+            }).ToList();
         }
     }
 }
