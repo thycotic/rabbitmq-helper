@@ -10,6 +10,28 @@ namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
         /// <summary>
         /// 
         /// </summary>
+        public ActiveDirectorySynchronizationDomain() { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domainInfo"></param>
+        public ActiveDirectorySynchronizationDomain(
+            Thycotic.ActiveDirectorySynchronization.ActiveDirectorySynchronizationDomainInfo domainInfo)
+        {
+            DistinguishedName = domainInfo.DistinguishedName;
+            DomainName = domainInfo.DomainName;
+            LdapTimeoutInSeconds = domainInfo.LdapTimeoutInSeconds;
+            Password = domainInfo.Password;
+            Port = domainInfo.Port;
+            ProtocolVersion = domainInfo.ProtocolVersion;
+            UseSecureLdap = domainInfo.UseSecureLdap;
+            UserName = domainInfo.UserName;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string DistinguishedName { get; set; }
         /// <summary>
         /// 
