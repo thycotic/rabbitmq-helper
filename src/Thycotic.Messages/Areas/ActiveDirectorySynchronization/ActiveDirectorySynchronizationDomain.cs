@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
 {
@@ -19,6 +20,7 @@ namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
         public ActiveDirectorySynchronizationDomain(
             Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationDomainInfo domainInfo)
         {
+            Contract.Requires(domainInfo != null);
             DistinguishedName = domainInfo.DistinguishedName;
             DomainName = domainInfo.DomainName;
             LdapTimeoutInSeconds = domainInfo.LdapTimeoutInSeconds;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -97,6 +98,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <returns></returns>
         protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
         {
+            Contract.Ensures(Contract.Result<bool>() == false);
             return false; // we might not want to execute task that should schedule as high or low priority inline
         }
     }
