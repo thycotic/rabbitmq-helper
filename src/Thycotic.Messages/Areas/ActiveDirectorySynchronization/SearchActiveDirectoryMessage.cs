@@ -4,9 +4,9 @@ using Thycotic.Messages.Common;
 namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
 {
     /// <summary>
-    /// Search For Group in AD Message
+    /// Search AD Message
     /// </summary>
-    public class SearchForGroupInActiveDirectoryMessage : BlockingConsumableBase
+    public class SearchActiveDirectoryMessage : BlockingConsumableBase
     {
         /// <summary>
         /// 

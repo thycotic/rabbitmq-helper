@@ -1,48 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
 using Thycotic.ActiveDirectorySynchronization;
 using Thycotic.ActiveDirectorySynchronization.Core;
-using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.ActiveDirectorySynchronization;
 using Thycotic.Messages.Common;
-using Thycotic.SharedTypes.General;
 using ActiveDirectorySynchronizationDomainInfo = Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationDomainInfo;
-using SearchForGroupInActiveDirectoryResponse = Thycotic.ActiveDirectorySynchronization.Core.SearchForGroupInActiveDirectoryResponse;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 {
     /// <summary>
     /// Machine Consumer
     /// </summary>
-    public class SearchForGroupInActiveDirectoryConsumer : IBlockingConsumer<SearchForGroupInActiveDirectoryMessage, SearchForGroupInActiveDirectoryResponse>
+    public class GetUserADObjectsForGroupConsumer : IBlockingConsumer<SearchActiveDirectoryMessage, SearchActiveDirectoryResponse>
     {
-        private readonly IResponseBus _responseBus;
-        private readonly ILogWriter _log = Log.Get(typeof(SearchForGroupInActiveDirectoryConsumer));
+        private readonly ILogWriter _log = Log.Get(typeof(GetUserADObjectsForGroupConsumer));
 
         /// <summary>
-        /// Machine Consumer
-        /// </summary>
-        /// <param name="responseBus"></param>
-        public SearchForGroupInActiveDirectoryConsumer(IResponseBus responseBus)
-        {
-            Contract.Requires<ArgumentNullException>(responseBus != null);
-            _responseBus = responseBus;
-        }
-
-        /// <summary>
-        /// Scan Machines
+        /// Get User AD Objects for Group
         /// </summary>
         /// <param name="request"></param>
-        public SearchForGroupInActiveDirectoryResponse Consume(SearchForGroupInActiveDirectoryMessage request)
+        public SearchActiveDirectoryResponse Consume(SearchActiveDirectoryMessage request)
         {
             try
             {
-                _log.Info(string.Format("{0} : Searching For Groups", string.Join(", ", request.DomainInfo.DomainName)));
+                _log.Info(string.Format("{0} : Searching For Users", string.Join(", ", request.DomainInfo.DomainName)));
 
-                var input = new SearchForGroupInActiveDirectoryInput
+                var input = new SearchActiveDirectoryInput
                 {
                     BatchSize = request.BatchSize,
                     ActiveDirectoryDomainInfo = new ActiveDirectorySynchronizationDomainInfo
@@ -59,15 +43,14 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                     NamesToExclude = request.NamesToExclude
                 };
 
-                return new ActiveDirectorySynchronizer().SearchForGroupInActiveDirectory(input);
-
+                return new ActiveDirectorySynchronizer().GetUserADObjectsForGroupInActiveDirectory(input);
             }
             catch (Exception e)
             {
                 const string error = "Scan Domains Failed";
                 _log.Error(error + ": ", e);
                 return
-                    new SearchForGroupInActiveDirectoryResponse(
+                    new SearchActiveDirectoryResponse(
                         new List<ADObject>(), error);
             }
         }

@@ -11,13 +11,11 @@ using Thycotic.Logging;
 using Thycotic.Messages.Areas.ActiveDirectorySynchronization;
 using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.General;
-//using ActiveDirectorySynchronizationDomainInfo = Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationDomainInfo;
-//using ActiveDirectorySynchronizationResponse = Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationResponse;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 {
     /// <summary>
-    /// Machine Consumer
+    /// ADSync Consumer
     /// </summary>
     public class ActiveDirectorySynchronizationConsumer : IBasicConsumer<ActiveDirectorySynchronizationMessage>
     {
@@ -25,7 +23,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
         private readonly ILogWriter _log = Log.Get(typeof(ActiveDirectorySynchronizationConsumer));
 
         /// <summary>
-        /// Machine Consumer
+        /// ADSync Consumer
         /// </summary>
         /// <param name="responseBus"></param>
         public ActiveDirectorySynchronizationConsumer(IResponseBus responseBus)
@@ -35,7 +33,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
         }
 
         /// <summary>
-        /// Scan Machines
+        /// Scan AD
         /// </summary>
         /// <param name="request"></param>
         public void Consume(ActiveDirectorySynchronizationMessage request)
@@ -52,7 +50,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 
                 var result = new ActiveDirectorySynchronizer().ScanGroupsAndProcessChanges(input);
 
-                var batchId = Guid.NewGuid();
                 var paging = new Paging
                 {
                     Total = result.SyncedGroups.Count,
@@ -68,7 +65,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                         SyncedGroups = mappedResponse.SyncedGroups.Skip(paging.Skip).Take(paging.Take).ToList(),
                         Logs = mappedResponse.Logs.Skip(paging.Skip).Take(paging.Take).ToList()
                     };
-                    //TODO - Use batch id?
                     _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", request.ActiveDirectoryDomainInfos.Select(d => d.DomainName)), x + 1, paging.BatchCount));
                     _responseBus.Execute(response);
                     paging.Skip = paging.NextSkip;                        
@@ -145,7 +141,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 
             }
             return mappedInfos;
-
         }
     }
 }

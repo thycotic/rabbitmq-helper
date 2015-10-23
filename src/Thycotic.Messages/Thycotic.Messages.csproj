@@ -253,12 +253,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.ActiveDirectorySynchronization, Version=1.0.0.24, Culture=neutral, PublicKeyToken=029133c20de6def0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.ActiveDirectorySynchronization.1.0.0.24\lib\net451\Thycotic.ActiveDirectorySynchronization.dll</HintPath>
+    <Reference Include="Thycotic.ActiveDirectorySynchronization, Version=1.0.0.27, Culture=neutral, PublicKeyToken=029133c20de6def0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectorySynchronization.1.0.0.27\lib\net451\Thycotic.ActiveDirectorySynchronization.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.ActiveDirectorySynchronization.Core, Version=1.0.0.2, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.ActiveDirectorySynchronization.Core.1.0.0.2\lib\net451\Thycotic.ActiveDirectorySynchronization.Core.dll</HintPath>
+    <Reference Include="Thycotic.ActiveDirectorySynchronization.Core, Version=1.0.0.5, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectorySynchronization.Core.1.0.0.5\lib\net451\Thycotic.ActiveDirectorySynchronization.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.BlackBox, Version=5.0.0.17, Culture=neutral, PublicKeyToken=6faa24c50f43cf8d, processorArchitecture=MSIL">
@@ -313,7 +313,7 @@
   <ItemGroup>
     <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationDomain.cs" />
     <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationGroup.cs" />
-    <Compile Include="Areas\ActiveDirectorySynchronization\SearchForGroupInActiveDirectoryMessage.cs" />
+    <Compile Include="Areas\ActiveDirectorySynchronization\SearchActiveDirectoryMessage.cs" />
     <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationMessage.cs" />
     <Compile Include="Areas\Connectivity\Response\PingResponse.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
