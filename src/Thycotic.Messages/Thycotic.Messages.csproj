@@ -253,8 +253,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.ActiveDirectorySynchronization, Version=1.0.0.27, Culture=neutral, PublicKeyToken=029133c20de6def0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.ActiveDirectorySynchronization.1.0.0.27\lib\net451\Thycotic.ActiveDirectorySynchronization.dll</HintPath>
+    <Reference Include="Thycotic.ActiveDirectorySynchronization, Version=1.0.0.28, Culture=neutral, PublicKeyToken=029133c20de6def0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectorySynchronization.1.0.0.28\lib\net451\Thycotic.ActiveDirectorySynchronization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.ActiveDirectorySynchronization.Core, Version=1.0.0.5, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">

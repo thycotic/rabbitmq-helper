@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Thycotic.ActiveDirectorySynchronization;
 using Thycotic.ActiveDirectorySynchronization.Core;
+using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.ActiveDirectorySynchronization;
 using Thycotic.Messages.Common;
@@ -12,19 +14,19 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
     /// <summary>
     /// Machine Consumer
     /// </summary>
-    public class GetUserADObjectsForGroupConsumer : IBlockingConsumer<SearchActiveDirectoryMessage, SearchActiveDirectoryResponse>
+    public class SearchActiveDirectoryConsumer : IBlockingConsumer<SearchActiveDirectoryMessage, SearchActiveDirectoryResponse>
     {
-        private readonly ILogWriter _log = Log.Get(typeof(GetUserADObjectsForGroupConsumer));
+        private readonly ILogWriter _log = Log.Get(typeof(SearchActiveDirectoryConsumer));
 
         /// <summary>
-        /// Get User AD Objects for Group
+        /// Search for Group AD Objects
         /// </summary>
         /// <param name="request"></param>
         public SearchActiveDirectoryResponse Consume(SearchActiveDirectoryMessage request)
         {
             try
             {
-                _log.Info(string.Format("{0} : Searching For Users", string.Join(", ", request.DomainInfo.DomainName)));
+                _log.Info(string.Format("{0} : Searching For Groups", string.Join(", ", request.DomainInfo.DomainName)));
 
                 var input = new SearchActiveDirectoryInput
                 {
@@ -43,7 +45,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                     NamesToExclude = request.NamesToExclude
                 };
 
-                return new ActiveDirectorySynchronizer().GetUserADObjectsForGroupInActiveDirectory(input);
+                if (input.NamesToExclude == null)
+                {
+                    return new ActiveDirectorySynchronizer().GetUserADObjectsForGroupInActiveDirectory(input);
+                }
+                return new ActiveDirectorySynchronizer().SearchForGroupADObjectsInActiveDirectory(input);
             }
             catch (Exception e)
             {
