@@ -48,7 +48,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                     ,ActiveDirectoryDomainInfos = MapMessageToADSyncLibrary(request.ActiveDirectoryDomainInfos)
                 };
 
-                var result = new ActiveDirectorySynchronizer().ScanGroupsAndProcessChanges(input);
+                var result = new ActiveDirectorySynchronizer().QueryGroupsAndMembers(input);
 
                 var paging = new Paging
                 {
