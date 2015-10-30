@@ -194,7 +194,7 @@
       <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+    <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -204,7 +204,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Jscape.Ssh">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.257\lib\net451\Jscape.Ssh.dll</HintPath>
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.258\lib\net451\Jscape.Ssh.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -297,7 +297,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.PasswordChangers">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.257\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.258\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">

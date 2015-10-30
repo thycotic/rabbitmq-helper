@@ -124,14 +124,6 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
-      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="FluentAssertions, Version=3.4.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.dll</HintPath>
@@ -140,19 +132,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Jscape.Ssh">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.257\lib\net451\Jscape.Ssh.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -167,63 +148,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp, Version=4.0.41.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <HintPath>..\packages\PostSharp.4.0.41\lib\net35-client\PostSharp.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SecureBlackbox, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SecureBlackbox.SSHClient, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHClient.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SecureBlackbox.SSHCommon, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHCommon.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SecureBlackbox.SSHServer, Version=12.0.262.0, Culture=neutral, PublicKeyToken=dd7d30884001c5e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.Protocols" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thycotic.BlackBox, Version=5.0.0.17, Culture=neutral, PublicKeyToken=6faa24c50f43cf8d, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\Thycotic.BlackBox.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.Encryption">
-      <HintPath>..\packages\Thycotic.Encryption.5.0.0.13\lib\net451\Thycotic.Encryption.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.Foundation, Version=2.5.0.0, Culture=neutral, PublicKeyToken=d3c50e8fc4a39908, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Foundation.2.5.0.0\lib\net451\Thycotic.Foundation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.Licensing.Common, Version=1.0.0.20, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Licensing.Public.1.0.0.20\lib\net35\Thycotic.Licensing.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.Licensing.Public, Version=1.0.0.20, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Licensing.Public.1.0.0.20\lib\net35\Thycotic.Licensing.Public.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.PasswordChangers">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.257\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
