@@ -345,16 +345,6 @@
     <Compile Include="EngineToServer\IUpdateBus.cs" />
     <Compile Include="EngineToServer\IConfigurationBus.cs" />
     <Compile Include="EngineToServer\IResponseBus.cs" />
-    <Compile Include="Licensing\DiscoveryLibraryLicenser.cs" />
-    <Compile Include="Licensing\ILibraryLicenser.cs" />
-    <Compile Include="Licensing\ArbitraryThirdPartyLicenser.cs" />
-    <Compile Include="Licensing\Providers\ILicenseKeyProvider.cs" />
-    <Compile Include="Licensing\Providers\IThirdPartyLicenseKeyProvider.cs" />
-    <Compile Include="Licensing\Providers\IThycoticLicenseKeyProvider.cs" />
-    <Compile Include="Licensing\Providers\LicenseKeyProvider.cs" />
-    <Compile Include="Licensing\PasswordChangersLibraryLicenser.cs" />
-    <Compile Include="Licensing\Providers\ThirdPartyLicenseKeyProvider.cs" />
-    <Compile Include="Licensing\Providers\ThycoticLicenseKeyProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringSplitter.cs" />
     <Compile Include="Update\EngineToServerCommunicationCallback.cs" />

@@ -384,7 +384,6 @@
     <Compile Include="IoC\EngineToServerModule.cs" />
     <Compile Include="Heartbeat\LogRunner.cs" />
     <Compile Include="IoC\DiscoveryModule.cs" />
-    <Compile Include="IoC\LicensingModule.cs" />
     <Compile Include="IoC\UpdateModule.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

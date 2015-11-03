@@ -32,8 +32,6 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         #endregion
 
         private Dictionary<string, string> _instanceConfiguration;
-        private Dictionary<string, string> _thycoticKeys;
-        private Dictionary<string, string> _thirdPartyKeys;
 
         private readonly ILogWriter _log = Log.Get(typeof(IoCConfigurator));
 
@@ -197,9 +195,6 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// <param name="startConsuming">if set to <c>true</c> [start consuming].</param>
         protected virtual void RegisterPostAuthorization(ContainerBuilder builder, EngineService engineService, bool startConsuming)
         {
-
-            builder.RegisterModule(new LicensingModule(_thycoticKeys, _thirdPartyKeys));
-
             builder.RegisterModule(new EngineToServerModule(GetInstanceConfiguration, engineService));
 
             builder.RegisterModule(new UpdateModule());
@@ -291,27 +286,6 @@ namespace Thycotic.DistributedEngine.Service.Configuration
             return true;
         }
 
-        private bool TryAssignThycoticKeys(Dictionary<string, string> keys)
-        {
-            //no keys
-            if (keys == null || !keys.Any()) return true;
-
-            _thycoticKeys = keys;
-
-            return true;
-        }
-
-        private bool TryAssignThirdPartyKeys(Dictionary<string, string> keys)
-        {
-            //no keys
-            if (keys == null || !keys.Any()) return true;
-
-            _thirdPartyKeys = keys;
-
-            return true;
-        }
-
-
         /// <summary>
         /// Tries the get remote configuration.
         /// </summary>
@@ -354,9 +328,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
 
                 updateNeeded = response.UpdateNeeded;
 
-                return TryAssignConfiguration(response.Configuration) &&
-                       TryAssignThycoticKeys(response.ThycoticKeys) &&
-                       TryAssignThirdPartyKeys(response.ThirdPartyKeys);
+                return TryAssignConfiguration(response.Configuration);
             }
         }
     }
