@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using Thycotic.Messages.Common;
@@ -82,7 +83,25 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     var consumerWrapperType = wrapperType.MakeGenericType(messageType, responseType, consumerType);
 
                     var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
-
+                    var customPriorityAttribute = (ConsumerPriority)consumerType.GetCustomAttribute(typeof(ConsumerPriority));
+                    if (customPriorityAttribute != null)
+                    {
+                        switch (customPriorityAttribute.Priority)
+                        {
+                            case Priority.BelowNormal:
+                                consumerWrapper.SetPriority(PriorityScheduler.BelowNormal);
+                                break;
+                            case Priority.Normal:
+                                consumerWrapper.SetPriority(PriorityScheduler.Normal);
+                                break;
+                            case Priority.AboveNormal:
+                                consumerWrapper.SetPriority(PriorityScheduler.AboveNormal);
+                                break;
+                            case Priority.Highest:
+                                consumerWrapper.SetPriority(PriorityScheduler.Highest);
+                                break;
+                        }
+                    }
                     _consumerWrappers.Add(consumerWrapper);
 
                     consumerWrapper.StartConsuming();

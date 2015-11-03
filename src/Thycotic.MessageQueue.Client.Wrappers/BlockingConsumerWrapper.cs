@@ -51,7 +51,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             _messageEncryptor = messageEncryptor;
             _consumerFactory = consumerFactory;
             _connection = connection;
-
+            PriorityScheduler = PriorityScheduler.AboveNormal;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             return Task.Factory.StartNew(() => ExecuteMessage(deliveryTag, exchange, routingKey, properties, body),
                 CancellationToken.None,
                 TaskCreationOptions.None,
-                TaskSchedulerHelper.FromCurrentSynchronizationContext());
+                PriorityScheduler);
         }
 
         /// <summary>

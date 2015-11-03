@@ -38,6 +38,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// </remarks>
         void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body);
+
+        /// <summary>
+        /// Set the Priority Scheduler.
+        /// </summary>
+        /// <param name="scheduler"></param>
+        void SetPriority(IPriorityScheduler scheduler);
     }
 
     /// <summary>
@@ -90,6 +96,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             Contract.Requires<ArgumentException>(properties != null);
             Contract.Requires<ArgumentException>(body != null);
             Contract.Requires<ArgumentException>(body.Length > 0);
+        }
+
+        /// <summary>
+        /// Set the Priority Scheduler.
+        /// </summary>
+        /// <param name="scheduler"></param>
+        public void SetPriority(IPriorityScheduler scheduler)
+        {
         }
 
         /// <summary>

@@ -7,7 +7,6 @@ using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Serialization;
-using Thycotic.Utility.Threading;
 
 namespace Thycotic.MessageQueue.Client.Wrappers
 {
@@ -24,7 +23,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly IObjectSerializer _objectSerializer;
         private readonly IMessageEncryptor _messageEncryptor;
         private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BasicConsumerWrapper{TConsumable, TConsumer}"/> class.
         /// </summary>
@@ -46,8 +45,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             _consumerFactory = consumerFactory;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
+            PriorityScheduler = PriorityScheduler.Normal;
         }
-
 
         /// <summary>
         /// Starts the handle task.
@@ -66,7 +65,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             return Task.Factory.StartNew(() => ExecuteMessage(deliveryTag, redelivered, exchange, routingKey, body),
                 CancellationToken.None, 
                 TaskCreationOptions.None,
-                TaskSchedulerHelper.FromCurrentSynchronizationContext());
+                PriorityScheduler);
         }
 
         /// <summary>
