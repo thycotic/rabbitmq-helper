@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using Thycotic.ActiveDirectorySynchronization;
-using Thycotic.ActiveDirectorySynchronization.Core;
+using Thycotic.ActiveDirectory;
+using Thycotic.ActiveDirectory.Core;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectorySynchronization;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectorySynchronization.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;

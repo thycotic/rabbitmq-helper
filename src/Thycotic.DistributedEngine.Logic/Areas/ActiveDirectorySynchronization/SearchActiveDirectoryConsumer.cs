@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Thycotic.ActiveDirectorySynchronization;
-using Thycotic.ActiveDirectorySynchronization.Core;
+using Thycotic.ActiveDirectory;
+using Thycotic.ActiveDirectory.Core;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.ActiveDirectorySynchronization;
 using Thycotic.Messages.Common;
-using ActiveDirectorySynchronizationDomainInfo = Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationDomainInfo;
+using ActiveDirectorySynchronizationDomainInfo = Thycotic.ActiveDirectory.Core.ActiveDirectorySynchronizationDomainInfo;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
 {
