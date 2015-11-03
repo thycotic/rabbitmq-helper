@@ -7,14 +7,26 @@ using Thycotic.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.Commands.Management
 {
-    internal class EnableRabbitManagementPluginCommand : ManagementConsoleCommandBase
+    internal class EnableRabbitMqManagementPluginCommand : ManagementConsoleCommandBase
     {
 
-        private readonly ILogWriter _log = Log.Get(typeof(EnableRabbitManagementPluginCommand));
+        private readonly ILogWriter _log = Log.Get(typeof(EnableRabbitMqManagementPluginCommand));
 
         public override string Area
         {
             get { return CommandAreas.Management; }
+        }
+
+        public override string[] Aliases
+        {
+            get
+            {
+                return new[]
+                {
+                    "ermqmp"
+                };
+            }
+            set { }
         }
 
         public override string Description
@@ -22,7 +34,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
             get { return "Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)"; }
         }
 
-        public EnableRabbitManagementPluginCommand()
+        public EnableRabbitMqManagementPluginCommand()
         {
             //we have to use local host because guest account does not work under FQDN
             const string pluginUrl = "http://localhost:15672/";

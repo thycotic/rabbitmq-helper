@@ -15,6 +15,18 @@ namespace Thycotic.RabbitMq.Helper.Commands.Management
             get { return CommandAreas.Management; }
         }
 
+        public override string[] Aliases
+        {
+            get
+            {
+                return new[]
+                {
+                    "armqu"
+                };
+            }
+            set { }
+        }
+
         public override string Description
         {
             get { return "Adds a basic user to RabbitMq"; }

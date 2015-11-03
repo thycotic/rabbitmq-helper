@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Security.Certificates;
+using Thycotic.CLI;
 using Thycotic.CLI.Commands;
 using Thycotic.Logging;
 using Thycotic.RabbitMq.Helper.Commands.Installation;
@@ -54,7 +55,7 @@ namespace Thycotic.RabbitMq.Helper.Certificate
                     return 1;
                 }
                 
-                ConvertToPem(path, password);
+                ConvertToPem(path, password, parameters);
 
                 return 0;
 
@@ -62,7 +63,7 @@ namespace Thycotic.RabbitMq.Helper.Certificate
         }
 
         [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "File info bogus warning")]
-        private void ConvertToPem(string pfxPath, string password)
+        private void ConvertToPem(string pfxPath, string password, ConsoleCommandParameters parameters)
         {
 
             _log.Info(string.Format("Attempting to convert {0} to .pem file...", pfxPath));
@@ -90,6 +91,8 @@ namespace Thycotic.RabbitMq.Helper.Certificate
             {
                 throw new CertificateException("Could not open PFX. Perhaps the password is wrong", ex);
             }
+
+            parameters["pfxSubjectName"] = cert.GetNameInfo(X509NameType.SimpleName, false);// cert.SubjectName.Name;
 
             var rsa = (RSACryptoServiceProvider)cert.PrivateKey;
 

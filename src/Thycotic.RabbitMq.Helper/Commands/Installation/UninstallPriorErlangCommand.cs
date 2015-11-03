@@ -75,7 +75,7 @@ namespace Thycotic.RabbitMq.Helper.Commands.Installation
                 }
 
                 _log.Info("Waiting for Erlang process to exit...");
-                Task.Delay(TimeSpan.FromSeconds(10)).Wait();
+                Task.Delay(TimeSpan.FromSeconds(15)).Wait();
 
                 CleanUpFolders();
 
