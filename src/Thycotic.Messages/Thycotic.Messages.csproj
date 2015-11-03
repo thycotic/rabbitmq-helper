@@ -293,6 +293,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Thycotic.ActiveDirectorySynchronization\src\Thycotic.ActiveDirectory.Core\Thycotic.ActiveDirectory.Core.csproj">
+      <Project>{dff206d5-504e-4828-9be7-c997fbeddf2c}</Project>
+      <Name>Thycotic.ActiveDirectory.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
       <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
       <Name>Thycotic.Messages.Common</Name>

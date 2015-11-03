@@ -352,6 +352,14 @@
     <Compile Include="Update\EngineToServerCommunicationCallback.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Thycotic.ActiveDirectorySynchronization\src\Thycotic.ActiveDirectory.Core\Thycotic.ActiveDirectory.Core.csproj">
+      <Project>{dff206d5-504e-4828-9be7-c997fbeddf2c}</Project>
+      <Name>Thycotic.ActiveDirectory.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Thycotic.ActiveDirectorySynchronization\src\Thycotic.ActiveDirectory\Thycotic.ActiveDirectory.csproj">
+      <Project>{d2b1b536-9af6-4a79-92be-c68206661010}</Project>
+      <Name>Thycotic.ActiveDirectory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thycotic.MessageQueue.Client\Thycotic.MessageQueue.Client.csproj">
       <Project>{23d33205-a493-4977-831a-3487ec2042d6}</Project>
       <Name>Thycotic.MessageQueue.Client</Name>
