@@ -154,22 +154,8 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thycotic.Discovery.Core">
-      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.389\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.Encryption">
-      <HintPath>..\packages\Thycotic.Encryption.5.0.0.13\lib\net451\Thycotic.Encryption.dll</HintPath>
-    </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.SharedTypes">
-      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
@@ -178,10 +164,6 @@
     </Reference>
     <Reference Include="Thycotic.Utility.Testing, Version=5.0.0.20, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.20\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.Wcf">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
