@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
+namespace Thycotic.Messages.Areas.ActiveDirectory
 {
     /// <summary>
     /// 
     /// </summary>
-    public class ActiveDirectorySynchronizationGroup
+    public class GroupInfo
     {
         /// <summary>
         /// 

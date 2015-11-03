@@ -310,8 +310,8 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
-    <Compile Include="Areas\ActiveDirectorySynchronization\SearchActiveDirectoryConsumer.cs" />
-    <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationConsumer.cs" />
+    <Compile Include="Areas\ActiveDirectory\GenericQueryConsumer.cs" />
+    <Compile Include="Areas\ActiveDirectory\QueryGroupsAndMembersConsumer.cs" />
     <Compile Include="Areas\Authentication\AuthenticateByAdConsumer.cs" />
     <Compile Include="Areas\Discovery\DependencyConsumer.cs" />
     <Compile Include="Areas\Discovery\DiscoveryLogExtensions.cs" />

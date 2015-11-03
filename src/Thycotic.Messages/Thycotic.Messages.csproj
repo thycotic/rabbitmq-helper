@@ -221,10 +221,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationDomain.cs" />
-    <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationGroup.cs" />
-    <Compile Include="Areas\ActiveDirectorySynchronization\SearchActiveDirectoryMessage.cs" />
-    <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\DomainInfo.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupInfo.cs" />
+    <Compile Include="Areas\ActiveDirectory\QueryMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupsAndMembersQueryMessage.cs" />
     <Compile Include="Areas\Connectivity\Response\PingResponse.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />

@@ -1,30 +1,30 @@
 ﻿using System.Collections.Generic;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
+namespace Thycotic.Messages.Areas.ActiveDirectory
 {
     /// <summary>
     /// Search AD Message
     /// </summary>
-    public abstract class SearchActiveDirectoryMessage : BlockingConsumableBase
+    public abstract class QueryMessage : BlockingConsumableBase
     {
         /// <summary>
         /// 
         /// </summary>
-        public ActiveDirectorySynchronizationDomain DomainInfo { get; set; }
+        public DomainInfo DomainInfo { get; set; }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class SearchActiveDirectoryForAllUsersMessage : SearchActiveDirectoryMessage
+    public class AllUsersByDomainQueryMessage : QueryMessage
     {
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class SearchActiveDirectoryForUsersByGroupsMessage : SearchActiveDirectoryMessage
+    public class UsersByGroupsQueryMessage : QueryMessage
     {
         /// <summary>
         /// 
@@ -45,7 +45,7 @@ namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
     /// <summary>
     /// 
     /// </summary>
-    public class SearchActiveDirectoryForGroupsMessage : SearchActiveDirectoryMessage
+    public class GroupsByDomainQueryMessage : QueryMessage
     {
         /// <summary>
         /// 

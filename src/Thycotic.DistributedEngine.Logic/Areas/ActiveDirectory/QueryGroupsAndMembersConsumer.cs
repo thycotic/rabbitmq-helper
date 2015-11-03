@@ -8,25 +8,28 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirecto
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectory.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
-using Thycotic.Messages.Areas.ActiveDirectorySynchronization;
+using Thycotic.Messages.Areas.ActiveDirectory;
 using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.General;
+using DomainInfo = Thycotic.ActiveDirectory.Core.DomainInfo;
+using GroupInfo = Thycotic.ActiveDirectory.Core.GroupInfo;
+using QueryLogEntry = Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectory.QueryLogEntry;
 
-namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
+namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
 {
     /// <summary>
     /// ADSync Consumer
     /// </summary>
-    public class ActiveDirectorySynchronizationConsumer : IBasicConsumer<ActiveDirectorySynchronizationMessage>
+    public class QueryGroupsAndMembersConsumer : IBasicConsumer<GroupsAndMembersQueryMessage>
     {
         private readonly IResponseBus _responseBus;
-        private readonly ILogWriter _log = Log.Get(typeof(ActiveDirectorySynchronizationConsumer));
+        private readonly ILogWriter _log = Log.Get(typeof(QueryGroupsAndMembersConsumer));
 
         /// <summary>
         /// ADSync Consumer
         /// </summary>
         /// <param name="responseBus"></param>
-        public ActiveDirectorySynchronizationConsumer(IResponseBus responseBus)
+        public QueryGroupsAndMembersConsumer(IResponseBus responseBus)
         {
             Contract.Requires<ArgumentNullException>(responseBus != null);
             _responseBus = responseBus;
@@ -36,27 +39,27 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
         /// Scan AD
         /// </summary>
         /// <param name="request"></param>
-        public void Consume(ActiveDirectorySynchronizationMessage request)
+        public void Consume(GroupsAndMembersQueryMessage request)
         {
             try
             {
-                _log.Info(string.Format("{0} : Syncing Groups", string.Join(", ", request.ActiveDirectoryDomainInfos.Select(d=>d.DomainName))));
+                _log.Info(string.Format("{0} : Syncing Groups", string.Join(", ", request.DomainInfos.Select(d=>d.DomainName))));
 
-                var input = new ActiveDirectorySynchronizationInput()
+                var input = new QueryInput()
                 {
                     BatchSize = request.BatchSize
-                    ,ActiveDirectoryDomainInfos = MapMessageToADSyncLibrary(request.ActiveDirectoryDomainInfos)
+                    ,Domains = Convert(request.DomainInfos)
                 };
 
-                var result = new ActiveDirectorySynchronizer().QueryGroupsAndMembers(input);
+                var result = new ActiveDirectorySearcher().QueryGroupsAndMembers(input);
 
                 var paging = new Paging
                 {
-                    Total = result.SyncedGroups.Count,
+                    Total = result.GroupsFound.Count,
                     Take = request.BatchSize
                 };
 
-                var mappedResponse = MapADSyncResultToEngineToServerType(result);
+                var mappedResponse = Convert(result);
 
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
@@ -65,7 +68,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                         GroupsFound = mappedResponse.GroupsFound.Skip(paging.Skip).Take(paging.Take).ToList(),
                         Logs = mappedResponse.Logs.Skip(paging.Skip).Take(paging.Take).ToList()
                     };
-                    _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", request.ActiveDirectoryDomainInfos.Select(d => d.DomainName)), x + 1, paging.BatchCount));
+                    _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", request.DomainInfos.Select(d => d.DomainName)), x + 1, paging.BatchCount));
                     _responseBus.Execute(response);
                     paging.Skip = paging.NextSkip;                        
                 });
@@ -76,10 +79,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
             }
         }
 
-        private GroupsAndMembersQueryResponse MapADSyncResultToEngineToServerType(ActiveDirectorySynchronizationResponse result)
+        private GroupsAndMembersQueryResponse Convert(GroupsAndMembersQueryResult result)
         {
             var mappedGroups = new List<GroupQueryInfo>();
-            foreach (var group in result.SyncedGroups)
+            foreach (var group in result.GroupsFound)
             {
                 var mappedGroup = new GroupQueryInfo
                 {
@@ -114,12 +117,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
             return new GroupsAndMembersQueryResponse(mappedGroups, mappedLogData);
         }
 
-        private List<ActiveDirectorySynchronizationDomainInfo> MapMessageToADSyncLibrary(List<ActiveDirectorySynchronizationDomain> infos)
+        private List<DomainInfo> Convert(List<Messages.Areas.ActiveDirectory.DomainInfo> infos)
         {
-            var mappedInfos = new List<ActiveDirectorySynchronizationDomainInfo>();
+            var mappedInfos = new List<DomainInfo>();
             foreach (var requestInfo in infos)
             {
-                var mappedInfo = new ActiveDirectorySynchronizationDomainInfo()
+                var mappedInfo = new DomainInfo()
                 {
                     DistinguishedName = requestInfo.DistinguishedName,
                     DomainName = requestInfo.DomainName,
@@ -131,7 +134,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                     ProtocolVersion = requestInfo.ProtocolVersion
                 };
 
-                mappedInfo.GroupInfos = requestInfo.GroupInfos.Select(g => new ActiveDirectorySynchronizationGroupInfo()
+                mappedInfo.GroupInfos = requestInfo.GroupInfos.Select(g => new GroupInfo()
                 {
                     ADGuid = g.ADGuid,
                     DistinguishedName = g.DistinguishedName,
