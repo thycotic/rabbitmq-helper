@@ -78,12 +78,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{F137
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagnostics", "Diagnostics", "{191FBFB2-18CE-45F8-AFA7-96E6183AB7D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.ActiveDirectory.Core", "..\..\Thycotic.ActiveDirectorySynchronization\src\Thycotic.ActiveDirectory.Core\Thycotic.ActiveDirectory.Core.csproj", "{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.ActiveDirectory", "..\..\Thycotic.ActiveDirectorySynchronization\src\Thycotic.ActiveDirectory\Thycotic.ActiveDirectory.csproj", "{D2B1B536-9AF6-4A79-92BE-C68206661010}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Thycotic.ActiveDirectory", "..\..\Thycotic.ActiveDirectorySynchronization\src\UnitTests.Thycotic.ActiveDirectory\UnitTests.Thycotic.ActiveDirectory.csproj", "{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -287,36 +281,6 @@ Global
 		{F3E9DA0D-B1DC-4AB5-B99D-998E10CFAEC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3E9DA0D-B1DC-4AB5-B99D-998E10CFAEC1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F3E9DA0D-B1DC-4AB5-B99D-998E10CFAEC1}.Static Analysis|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.MSI.32Bit|Any CPU.Build.0 = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.MSI|Any CPU.ActiveCfg = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.MSI|Any CPU.Build.0 = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.MSI.32Bit|Any CPU.Build.0 = Release|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.MSI|Any CPU.ActiveCfg = Release|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.MSI|Any CPU.Build.0 = Release|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
-		{D2B1B536-9AF6-4A79-92BE-C68206661010}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.MSI.32Bit|Any CPU.Build.0 = Release|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.MSI|Any CPU.ActiveCfg = Release|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.MSI|Any CPU.Build.0 = Release|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
-		{2803FEB5-0AE4-41EC-8458-4B5FDCB9011B}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
