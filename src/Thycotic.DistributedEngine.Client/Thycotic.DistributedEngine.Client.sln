@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Common", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MemoryMq", "..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj", "{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.ActiveDirectory.Core", "..\..\..\Thycotic.ActiveDirectorySynchronization\src\Thycotic.ActiveDirectory.Core\Thycotic.ActiveDirectory.Core.csproj", "{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,12 +50,6 @@ Global
 		{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
 		{60AF5DA6-343C-4C6F-9CD5-2B5F04D9AF92}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
-		{DFF206D5-504E-4828-9BE7-C997FBEDDF2C}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

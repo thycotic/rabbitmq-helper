@@ -203,6 +203,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Thycotic.ActiveDirectory.Core, Version=1.0.0.9, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.0.9\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.100, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
@@ -274,10 +278,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Thycotic.ActiveDirectorySynchronization\src\Thycotic.ActiveDirectory.Core\Thycotic.ActiveDirectory.Core.csproj">
-      <Project>{dff206d5-504e-4828-9be7-c997fbeddf2c}</Project>
-      <Name>Thycotic.ActiveDirectory.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
       <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
       <Name>Thycotic.Messages.Common</Name>
