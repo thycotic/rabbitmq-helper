@@ -1,42 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using Thycotic.ActiveDirectorySynchronization;
-using Thycotic.ActiveDirectorySynchronization.Core;
+using Thycotic.ActiveDirectory;
+using Thycotic.ActiveDirectory.Core;
 using Thycotic.Logging;
-using Thycotic.Messages.Areas.ActiveDirectorySynchronization;
+using Thycotic.Messages.Areas.ActiveDirectory;
 using Thycotic.Messages.Common;
-using ActiveDirectorySynchronizationDomainInfo = Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationDomainInfo;
+using DomainInfo = Thycotic.ActiveDirectory.Core.DomainInfo;
 
-namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
+namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
 {
     /// <summary>
     /// Consumer for searching AD objects.
     /// </summary>
-    public class SearchActiveDirectoryConsumer : 
-        IBlockingConsumer<SearchActiveDirectoryForAllUsersMessage, SearchActiveDirectoryResponse>,
-        IBlockingConsumer<SearchActiveDirectoryForGroupsMessage, SearchActiveDirectoryResponse>,
-        IBlockingConsumer<SearchActiveDirectoryForUsersByGroupsMessage, SearchActiveDirectoryResponse>
+    public class GenericQueryConsumer : 
+        IBlockingConsumer<AllUsersByDomainQueryMessage, ADObjectsQueryResult>,
+        IBlockingConsumer<GroupsByDomainQueryMessage, ADObjectsQueryResult>,
+        IBlockingConsumer<UsersByGroupsQueryMessage, ADObjectsQueryResult>
     {
-        private readonly ILogWriter _log = Log.Get(typeof(SearchActiveDirectoryConsumer));
+        private readonly ILogWriter _log = Log.Get(typeof(GenericQueryConsumer));
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public SearchActiveDirectoryResponse Consume(SearchActiveDirectoryForAllUsersMessage request)
+        public ADObjectsQueryResult Consume(AllUsersByDomainQueryMessage request)
         {
             try
             {
                 _log.Info(string.Format("{0} : Searching for all users.", string.Join(", ", request.DomainInfo.DomainName)));
 
-                return new ActiveDirectorySynchronizer().GetAllUserADObjectsInActiveDirectory(ConvertRequestToActiveDirectoryDomainInfo(request));
+                return new ActiveDirectorySearcher().GetAllUserADObjectsInActiveDirectory(ConvertRequestToActiveDirectoryDomainInfo(request));
             }
             catch (Exception e)
             {
                 const string error = "Search for all users failed";
                 _log.Error(error + ": ", e);
-                return new SearchActiveDirectoryResponse(new List<ADObject>(), error);
+                return new ADObjectsQueryResult(new List<ADObject>(), error);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public SearchActiveDirectoryResponse Consume(SearchActiveDirectoryForGroupsMessage request)
+        public ADObjectsQueryResult Consume(GroupsByDomainQueryMessage request)
         {
             try
             {
@@ -54,17 +54,17 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                 var input = new SearchActiveDirectoryInput
                 {
                     BatchSize = request.BatchSize,
-                    ActiveDirectoryDomainInfo = ConvertRequestToActiveDirectoryDomainInfo(request),
+                    Domain = ConvertRequestToActiveDirectoryDomainInfo(request),
                     Filter = request.Filter
                 };
 
-                return new ActiveDirectorySynchronizer().SearchForGroupADObjectsInActiveDirectory(input);
+                return new ActiveDirectorySearcher().SearchForGroupADObjectsInActiveDirectory(input);
             }
             catch (Exception e)
             {
                 const string error = "Search for groups failed";
                 _log.Error(error + ": ", e);
-                return new SearchActiveDirectoryResponse(new List<ADObject>(), error);
+                return new ADObjectsQueryResult(new List<ADObject>(), error);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public SearchActiveDirectoryResponse Consume(SearchActiveDirectoryForUsersByGroupsMessage request)
+        public ADObjectsQueryResult Consume(UsersByGroupsQueryMessage request)
         {
             try
             {
@@ -82,24 +82,24 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectorySynchronization
                 var input = new SearchActiveDirectoryInput
                 {
                     BatchSize = request.BatchSize,
-                    ActiveDirectoryDomainInfo = ConvertRequestToActiveDirectoryDomainInfo(request),
+                    Domain = ConvertRequestToActiveDirectoryDomainInfo(request),
                     Filter = request.Filter,
                     NamesToExclude = request.NamesToExclude
                 };
 
-                return new ActiveDirectorySynchronizer().GetUserADObjectsForGroupInActiveDirectory(input);
+                return new ActiveDirectorySearcher().GetUserADObjectsForGroupInActiveDirectory(input);
             }
             catch (Exception e)
             {
                 const string error = "Search for users in groups failed";
                 _log.Error(error + ": ", e);
-                return new SearchActiveDirectoryResponse(new List<ADObject>(), error);
+                return new ADObjectsQueryResult(new List<ADObject>(), error);
             }
         }
 
-        private static ActiveDirectorySynchronizationDomainInfo ConvertRequestToActiveDirectoryDomainInfo(SearchActiveDirectoryMessage request)
+        private static DomainInfo ConvertRequestToActiveDirectoryDomainInfo(QueryMessage request)
         {
-            return new ActiveDirectorySynchronizationDomainInfo
+            return new DomainInfo
             {
                 DistinguishedName = request.DomainInfo.DistinguishedName,
                 DomainName = request.DomainInfo.DomainName,

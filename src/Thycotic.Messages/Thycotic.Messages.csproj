@@ -187,14 +187,6 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -211,20 +203,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.ActiveDirectorySynchronization.Core, Version=1.0.0.5, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.ActiveDirectorySynchronization.Core.1.0.0.5\lib\net451\Thycotic.ActiveDirectorySynchronization.Core.dll</HintPath>
+    <Reference Include="Thycotic.ActiveDirectory.Core, Version=1.0.0.9, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.0.9\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.100, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.377, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.378\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.Encryption">
-      <HintPath>..\packages\Thycotic.Encryption.5.0.0.13\lib\net451\Thycotic.Encryption.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Logging">
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
@@ -238,16 +223,12 @@
       <HintPath>..\packages\Thycotic.Utility.5.0.0.29\lib\net451\Thycotic.Utility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Wcf, Version=5.0.0.125, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationDomain.cs" />
-    <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationGroup.cs" />
-    <Compile Include="Areas\ActiveDirectorySynchronization\SearchActiveDirectoryMessage.cs" />
-    <Compile Include="Areas\ActiveDirectorySynchronization\ActiveDirectorySynchronizationMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\DomainInfo.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupInfo.cs" />
+    <Compile Include="Areas\ActiveDirectory\QueryMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupsAndMembersQueryMessage.cs" />
     <Compile Include="Areas\Connectivity\Response\PingResponse.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />

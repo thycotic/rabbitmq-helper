@@ -203,23 +203,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.Discovery.Core">
-      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.389\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.Encryption">
-      <HintPath>..\packages\Thycotic.Encryption.5.0.0.13\lib\net451\Thycotic.Encryption.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Thycotic.Logging">
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.SharedTypes">
-      <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Utility.5.0.0.29\lib\net451\Thycotic.Utility.dll</HintPath>
@@ -261,7 +246,9 @@
     <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -1,27 +1,28 @@
 ﻿using System.Collections.Generic;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
+namespace Thycotic.Messages.Areas.ActiveDirectory
 {
     /// <summary>
     /// ADSync Message
     /// </summary>
-    public class ActiveDirectorySynchronizationMessage : BasicConsumableBase
+    public class GroupsAndMembersQueryMessage : BasicConsumableBase
     {
 
-        private List<ActiveDirectorySynchronizationDomain> _activeDirectoryDomainInfos = new List<ActiveDirectorySynchronizationDomain>();
+        private List<DomainInfo> _domainInfos = new List<DomainInfo>();
+        
         /// <summary>
         /// Domain and Group Information
         /// </summary>
-        public List<ActiveDirectorySynchronizationDomain> ActiveDirectoryDomainInfos
+        public List<DomainInfo> DomainInfos
         {
             get
             {
-                return _activeDirectoryDomainInfos;
+                return _domainInfos;
             }
             set
             {
-                _activeDirectoryDomainInfos = value;
+                _domainInfos = value;
             }
         }
 
