@@ -6,23 +6,23 @@ namespace Thycotic.Messages.Areas.ActiveDirectory
     /// <summary>
     /// ADSync Message
     /// </summary>
-    public class GroupsAndMembersQueryMessage : BasicConsumableBase
+    public class ADSyncMessage : BasicConsumableBase
     {
 
-        private List<DomainInfo> _domainInfos = new List<DomainInfo>();
+        private List<DomainInfo> _domains = new List<DomainInfo>();
         
         /// <summary>
         /// Domain and Group Information
         /// </summary>
-        public List<DomainInfo> DomainInfos
+        public List<DomainInfo> Domains
         {
             get
             {
-                return _domainInfos;
+                return _domains;
             }
             set
             {
-                _domainInfos = value;
+                _domains = value;
             }
         }
 

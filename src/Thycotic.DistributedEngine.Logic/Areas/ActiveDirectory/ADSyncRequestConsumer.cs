@@ -20,16 +20,16 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
     /// <summary>
     /// ADSync Consumer
     /// </summary>
-    public class QueryGroupsAndMembersConsumer : IBasicConsumer<GroupsAndMembersQueryMessage>
+    public class ADSyncRequestConsumer : IBasicConsumer<ADSyncMessage>
     {
         private readonly IResponseBus _responseBus;
-        private readonly ILogWriter _log = Log.Get(typeof(QueryGroupsAndMembersConsumer));
+        private readonly ILogWriter _log = Log.Get(typeof(ADSyncRequestConsumer));
 
         /// <summary>
         /// ADSync Consumer
         /// </summary>
         /// <param name="responseBus"></param>
-        public QueryGroupsAndMembersConsumer(IResponseBus responseBus)
+        public ADSyncRequestConsumer(IResponseBus responseBus)
         {
             Contract.Requires<ArgumentNullException>(responseBus != null);
             _responseBus = responseBus;
@@ -38,17 +38,17 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         /// <summary>
         /// Scan AD
         /// </summary>
-        /// <param name="request"></param>
-        public void Consume(GroupsAndMembersQueryMessage request)
+        /// <param name="message"></param>
+        public void Consume(ADSyncMessage message)
         {
             try
             {
-                _log.Info(string.Format("{0} : Syncing Groups", string.Join(", ", request.DomainInfos.Select(d=>d.DomainName))));
+                _log.Info(string.Format("{0} : Syncing Groups", string.Join(", ", message.Domains.Select(d=>d.DomainName))));
 
                 var input = new QueryInput()
                 {
-                    BatchSize = request.BatchSize
-                    ,Domains = Convert(request.DomainInfos)
+                    BatchSize = message.BatchSize
+                    ,Domains = Convert(message.Domains)
                 };
 
                 var result = new ActiveDirectorySearcher().QueryGroupsAndMembers(input);
@@ -56,19 +56,19 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                 var paging = new Paging
                 {
                     Total = result.GroupsFound.Count,
-                    Take = request.BatchSize
+                    Take = message.BatchSize
                 };
 
                 var mappedResponse = Convert(result);
 
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
                 {
-                    var response = new GroupsAndMembersQueryResponse
+                    var response = new ADSyncResponse
                     {
-                        GroupsFound = mappedResponse.GroupsFound.Skip(paging.Skip).Take(paging.Take).ToList(),
+                        Groups = mappedResponse.Groups.Skip(paging.Skip).Take(paging.Take).ToList(),
                         Logs = mappedResponse.Logs.Skip(paging.Skip).Take(paging.Take).ToList()
                     };
-                    _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", request.DomainInfos.Select(d => d.DomainName)), x + 1, paging.BatchCount));
+                    _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", message.Domains.Select(d => d.DomainName)), x + 1, paging.BatchCount));
                     _responseBus.Execute(response);
                     paging.Skip = paging.NextSkip;                        
                 });
@@ -79,7 +79,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
             }
         }
 
-        private GroupsAndMembersQueryResponse Convert(GroupsAndMembersQueryResult result)
+        private ADSyncResponse Convert(GroupsAndMembersQueryResult result)
         {
             var mappedGroups = new List<GroupQueryInfo>();
             foreach (var group in result.GroupsFound)
@@ -114,7 +114,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                 Errors = l.Errors
             }).ToList();
 
-            return new GroupsAndMembersQueryResponse(mappedGroups, mappedLogData);
+            return new ADSyncResponse(mappedGroups, mappedLogData);
         }
 
         private List<DomainInfo> Convert(List<Messages.Areas.ActiveDirectory.DomainInfo> infos)
