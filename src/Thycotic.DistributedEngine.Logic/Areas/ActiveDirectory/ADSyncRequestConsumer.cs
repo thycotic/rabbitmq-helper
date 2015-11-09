@@ -48,29 +48,44 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                 var input = new QueryInput()
                 {
                     BatchSize = message.BatchSize
-                    ,Domains = Convert(message.Domains)
+                    ,
+                    Domains = Convert(message.Domains)
                 };
 
-                var result = new ActiveDirectorySearcher().QueryGroupsAndMembers(input);
+                GroupsAndMembersQueryResult result = new ActiveDirectorySearcher().QueryGroupsAndMembers(input);
+                var mappedResponse = MapADSyncResultToEngineToServerType(result);
 
                 var paging = new Paging
                 {
-                    Total = result.GroupsFound.Count,
+                    Total = mappedResponse.Keys.Count,
                     Take = message.BatchSize
                 };
 
-                var mappedResponse = Convert(result);
-
-                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
+                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(batchNumer =>
                 {
-                    var response = new ADSyncResponse
+                    var pagedUsers = mappedResponse.Skip(paging.Skip).Take(paging.Take).ToList();
+                    var groups = pagedUsers.SelectMany(pu => pu.Value).ToList();
+                    foreach (var group in groups)
                     {
-                        Groups = mappedResponse.Groups.Skip(paging.Skip).Take(paging.Take).ToList(),
-                        Logs = mappedResponse.Logs.Skip(paging.Skip).Take(paging.Take).ToList()
+                        var group2 = group;
+                        group.MemberUsers = mappedResponse.Keys.Where(mr => mappedResponse[mr].Any(g => g.ADGuid == group2.ADGuid)).ToList();
+                    }
+                    var mappedLogData = result.Logs.Select(l => new QueryLogEntry
+                    {
+                        DomainName = l.DomainName,
+                        GroupName = l.GroupName,
+                        UserName = l.UserName,
+                        Errors = l.Errors
+                    }).ToList();
+
+                    var response = new ADSyncResponse(groups, mappedLogData)
+                {
+                        BatchNumber = batchNumer,
+                        BatchCount = paging.BatchCount
                     };
-                    _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", message.Domains.Select(d => d.DomainName)), x + 1, paging.BatchCount));
+                    _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", message.Domains.Select(d => d.DomainName)), batchNumer + 1, paging.BatchCount));
                     _responseBus.Execute(response);
-                    paging.Skip = paging.NextSkip;                        
+                    paging.Skip = paging.NextSkip;
                 });
             }
             catch (Exception e)
@@ -79,7 +94,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
             }
         }
 
-        private ADSyncResponse Convert(GroupsAndMembersQueryResult result)
+        private Dictionary<UserQueryInfo, List<GroupQueryInfo>> MapADSyncResultToEngineToServerType(GroupsAndMembersQueryResult result)
         {
             var mappedGroups = new List<GroupQueryInfo>();
             foreach (var group in result.GroupsFound)
@@ -102,19 +117,32 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                     OUPath = u.OUPath,
                     DisplayName = u.DisplayName,
                     Enabled = u.Active
-                    
+
                 }).ToList();
                 mappedGroups.Add(mappedGroup);
             }
-            var mappedLogData = result.Logs.Select(l => new QueryLogEntry
-            {
-                DomainName = l.DomainName,
-                GroupName = l.GroupName,
-                UserName = l.UserName,
-                Errors = l.Errors
-            }).ToList();
 
-            return new ADSyncResponse(mappedGroups, mappedLogData);
+            //Flip it into groups-by-user
+            var allUsers = mappedGroups.SelectMany(x => x.MemberUsers);
+            var groupsPerUserDictionary = new Dictionary<UserQueryInfo, List<GroupQueryInfo>>();
+            foreach (var user in allUsers)
+            {
+                var groupsUserIsIn = mappedGroups.Where(g => g.MemberUsers.Any(u => u == user)).ToList();
+                foreach (var group in groupsUserIsIn)
+                {
+                    group.MemberUsers = new List<UserQueryInfo>();
+                }
+                if (groupsPerUserDictionary.Keys.Any(key => key == user))
+                {
+                    groupsPerUserDictionary[user].AddRange(groupsUserIsIn);
+                }
+                else
+                {
+                    groupsPerUserDictionary.Add(user, groupsUserIsIn);
+                }
+            }
+
+            return groupsPerUserDictionary;
         }
 
         private List<DomainInfo> Convert(List<Messages.Areas.ActiveDirectory.DomainInfo> infos)
@@ -138,7 +166,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                 {
                     ADGuid = g.ADGuid,
                     DistinguishedName = g.DistinguishedName,
-                    Name = g.Name,                    
+                    Name = g.Name,
                 }).ToList();
                 mappedInfos.Add(mappedInfo);
 
