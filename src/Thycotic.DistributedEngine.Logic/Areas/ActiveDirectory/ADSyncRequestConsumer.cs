@@ -44,7 +44,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
             try
             {
                 _log.Info(string.Format("{0} : Syncing Groups", string.Join(", ", message.Domains.Select(d=>d.DomainName))));
-
+                Guid batchGuid = Guid.NewGuid();
                 var input = new QueryInput()
                 {
                     BatchSize = message.BatchSize
@@ -63,6 +63,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
 
                 Enumerable.Range(0, paging.BatchCount).ToList().ForEach(batchNumer =>
                 {
+                    //TODO: JRPTK Needs to be simplified
                     var pagedUsers = mappedResponse.Skip(paging.Skip).Take(paging.Take).ToList();
                     var groups = pagedUsers.SelectMany(pu => pu.Value).ToList();
                     foreach (var group in groups)
@@ -78,15 +79,17 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                         Errors = l.Errors
                     }).ToList();
 
-                    var response = new ADSyncResponse(groups, mappedLogData)
-                {
-                        BatchNumber = batchNumer,
-                        BatchCount = paging.BatchCount
+                    var response = new ADSyncBatchResponse(groups, mappedLogData)
+                    {
+                        BatchGuid = batchGuid,
+                        BatchCount = paging.BatchCount,
+                        IsBatchComplete = batchNumer + 1 == paging.BatchCount
                     };
                     _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", message.Domains.Select(d => d.DomainName)), batchNumer + 1, paging.BatchCount));
                     _responseBus.Execute(response);
                     paging.Skip = paging.NextSkip;
                 });
+
             }
             catch (Exception e)
             {
@@ -97,6 +100,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         private Dictionary<UserQueryInfo, List<GroupQueryInfo>> MapADSyncResultToEngineToServerType(GroupsAndMembersQueryResult result)
         {
             var mappedGroups = new List<GroupQueryInfo>();
+            // JATK - Filter only synchronization groups.
             foreach (var group in result.GroupsFound)
             {
                 var mappedGroup = new GroupQueryInfo
