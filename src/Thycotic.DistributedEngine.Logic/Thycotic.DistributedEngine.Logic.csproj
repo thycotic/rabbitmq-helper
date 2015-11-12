@@ -318,8 +318,10 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\ActiveDirectory\BatchExtensions.cs" />
     <Compile Include="Areas\ActiveDirectory\GenericQueryConsumer.cs" />
     <Compile Include="Areas\ActiveDirectory\ADSyncRequestConsumer.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupQueryInfoPager.cs" />
     <Compile Include="Areas\Authentication\AuthenticateByAdConsumer.cs" />
     <Compile Include="Areas\Discovery\DependencyConsumer.cs" />
     <Compile Include="Areas\Discovery\DiscoveryLogExtensions.cs" />

@@ -10,7 +10,6 @@ using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.ActiveDirectory;
 using Thycotic.Messages.Common;
-using Thycotic.SharedTypes.General;
 using DomainInfo = Thycotic.ActiveDirectory.Core.DomainInfo;
 using GroupInfo = Thycotic.ActiveDirectory.Core.GroupInfo;
 using QueryLogEntry = Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectory.QueryLogEntry;
@@ -22,6 +21,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
     /// </summary>
     public class ADSyncRequestConsumer : IBasicConsumer<ADSyncMessage>
     {
+        private const int DEFAULT_PAGE_SIZE = 100;
         private readonly IResponseBus _responseBus;
         private readonly ILogWriter _log = Log.Get(typeof(ADSyncRequestConsumer));
 
@@ -43,61 +43,100 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         {
             try
             {
-                _log.Info(string.Format("{0} : Syncing Groups", string.Join(", ", message.Domains.Select(d=>d.DomainName))));
                 Guid batchGuid = Guid.NewGuid();
-                var input = new QueryInput()
+                _log.Info(string.Format("{0} : Starting AD groups/users scan for {1}.", batchGuid, string.Join(", ", message.Domains.Select(d => d.DomainName))));
+
+                var adScanQueryInput = new QueryInput
                 {
-                    BatchSize = message.BatchSize
-                    ,
+                    BatchSize = message.BatchSize,
                     Domains = Convert(message.Domains)
                 };
+                GroupsAndMembersQueryResult adScanResult = new ActiveDirectorySearcher().QueryGroupsAndMembers(adScanQueryInput);
 
-                GroupsAndMembersQueryResult result = new ActiveDirectorySearcher().QueryGroupsAndMembers(input);
-                var mappedResponse = MapADSyncResultToEngineToServerType(result);
+                var mappedResponse = MapADScanResultToEngineToServerType(adScanResult);
 
-                var paging = new Paging
+                var pager = new GroupQueryInfoPager(mappedResponse, DEFAULT_PAGE_SIZE).GetEnumerator();
+
+                /*
+                 * Send batches with Group/User info.
+                 */
+                int batchNumber = 0;
+                while (pager.MoveNext())
                 {
-                    Total = mappedResponse.Keys.Count,
-                    Take = message.BatchSize
-                };
-
-                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(batchNumer =>
-                {
-                    //TODO: JRPTK Needs to be simplified
-                    var pagedUsers = mappedResponse.Skip(paging.Skip).Take(paging.Take).ToList();
-                    var groups = pagedUsers.SelectMany(pu => pu.Value).ToList();
-                    foreach (var group in groups)
+                    IEnumerable<GroupQueryInfo> currentBatchGroups = pager.Current.ToList();
+                    if (!currentBatchGroups.Any())
                     {
-                        var group2 = group;
-                        group.MemberUsers = mappedResponse.Keys.Where(mr => mappedResponse[mr].Any(g => g.ADGuid == group2.ADGuid)).ToList();
+                        continue;
                     }
-                    var mappedLogData = result.Logs.Select(l => new QueryLogEntry
-                    {
-                        DomainName = l.DomainName,
-                        GroupName = l.GroupName,
-                        UserName = l.UserName,
-                        Errors = l.Errors
-                    }).ToList();
 
-                    var response = new ADSyncBatchResponse(groups, mappedLogData)
+                    batchNumber++;
+                    _log.Info(string.Format("{0} : Sending AD groups/users scan results. Batch {1}", batchGuid, batchNumber));
+                    var response = new ADSyncBatchResponse
                     {
                         BatchGuid = batchGuid,
-                        BatchCount = paging.BatchCount,
-                        IsBatchComplete = batchNumer + 1 == paging.BatchCount
-                    };
-                    _log.Info(string.Format("{0} : Send Domain Scan Results Batch {1} of {2}", string.Join(", ", message.Domains.Select(d => d.DomainName)), batchNumer + 1, paging.BatchCount));
-                    _responseBus.Execute(response);
-                    paging.Skip = paging.NextSkip;
-                });
+                        BatchCount = null,
+                        IsBatchComplete = false,
+                        Groups = currentBatchGroups.ToList(),
+                        Logs = new List<QueryLogEntry>()
 
+                    };
+                    _responseBus.Execute(response);
+                }
+
+                /*
+                 * Send batches with logging info.
+                 */
+                var mappedLogData = adScanResult.Logs.Select(log => new QueryLogEntry
+                {
+                    DomainName = log.DomainName,
+                    GroupName = log.GroupName,
+                    UserName = log.UserName,
+                    Errors = log.Errors
+                }).ToList();
+
+                foreach (var logBatch in mappedLogData.Batch(DEFAULT_PAGE_SIZE))
+                {
+                    batchNumber++;
+                    _log.Info(string.Format("{0} : Sending AD groups/users scan logs. Batch {1}", batchGuid, batchNumber));
+
+                    var response = new ADSyncBatchResponse
+                    {
+                        BatchGuid = batchGuid,
+                        BatchCount = null,
+                        IsBatchComplete = false,
+                        Groups = new List<GroupQueryInfo>(),
+                        Logs = logBatch.ToList()
+
+                    };
+                    _responseBus.Execute(response);
+                }
+
+                /*
+                 * Send final batch.
+                 */
+                batchNumber++;
+                _log.Info(string.Format("{0} : Sending AD groups/users scan final batch. Batch {1}", batchGuid, batchNumber));
+
+                var lastResponse = new ADSyncBatchResponse
+                {
+                    BatchGuid = batchGuid,
+                    BatchCount = batchNumber,
+                    IsBatchComplete = true,
+                    Groups = new List<GroupQueryInfo>(),
+                    Logs = new List<QueryLogEntry>()
+
+                };
+                _responseBus.Execute(lastResponse);
+
+                _log.Info(string.Format("{0} : Sending AD groups/users scan complete.", batchGuid));
             }
             catch (Exception e)
             {
-                _log.Error("Scan Domains Failed: ",  e);
+                _log.Error("AD groups/users scan failed: ", e);
             }
         }
 
-        private Dictionary<UserQueryInfo, List<GroupQueryInfo>> MapADSyncResultToEngineToServerType(GroupsAndMembersQueryResult result)
+        private IList<GroupQueryInfo> MapADScanResultToEngineToServerType(GroupsAndMembersQueryResult result)
         {
             var mappedGroups = new List<GroupQueryInfo>();
             // JATK - Filter only synchronization groups.
@@ -125,28 +164,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                 }).ToList();
                 mappedGroups.Add(mappedGroup);
             }
-
-            //Flip it into groups-by-user
-            var allUsers = mappedGroups.SelectMany(x => x.MemberUsers);
-            var groupsPerUserDictionary = new Dictionary<UserQueryInfo, List<GroupQueryInfo>>();
-            foreach (var user in allUsers)
-            {
-                var groupsUserIsIn = mappedGroups.Where(g => g.MemberUsers.Any(u => u == user)).ToList();
-                foreach (var group in groupsUserIsIn)
-                {
-                    group.MemberUsers = new List<UserQueryInfo>();
-                }
-                if (groupsPerUserDictionary.Keys.Any(key => key == user))
-                {
-                    groupsPerUserDictionary[user].AddRange(groupsUserIsIn);
-                }
-                else
-                {
-                    groupsPerUserDictionary.Add(user, groupsUserIsIn);
-                }
-            }
-
-            return groupsPerUserDictionary;
+            return mappedGroups;
         }
 
         private List<DomainInfo> Convert(List<Messages.Areas.ActiveDirectory.DomainInfo> infos)

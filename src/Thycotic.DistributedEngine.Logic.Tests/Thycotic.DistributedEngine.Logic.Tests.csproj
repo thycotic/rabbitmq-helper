@@ -283,6 +283,8 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\ActiveDirectory\ADSyncRequestConsumerTests.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupQueryInfoPagerTests.cs" />
     <Compile Include="Areas\Authentication\AuthenticateByAdConsumerTests.cs" />
     <Compile Include="Areas\Discovery\HostRangeConsumerTests.cs" />
     <Compile Include="Areas\Discovery\DependencyConsumerTests.cs" />
