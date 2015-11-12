@@ -211,6 +211,14 @@
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Thycotic.ActiveDirectory">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.1.0.0.33\lib\net451\Thycotic.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.ActiveDirectory.Core">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.0.9\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.BlackBox">
       <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>

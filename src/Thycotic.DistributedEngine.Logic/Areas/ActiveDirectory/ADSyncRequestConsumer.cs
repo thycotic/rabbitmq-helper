@@ -23,16 +23,19 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
     {
         private const int DEFAULT_PAGE_SIZE = 100;
         private readonly IResponseBus _responseBus;
+        private readonly IActiveDirectorySearcher _activeDirectorySearcher;
         private readonly ILogWriter _log = Log.Get(typeof(ADSyncRequestConsumer));
 
         /// <summary>
         /// ADSync Consumer
         /// </summary>
         /// <param name="responseBus"></param>
-        public ADSyncRequestConsumer(IResponseBus responseBus)
+        /// <param name="activeDirectorySearcher"></param>
+        public ADSyncRequestConsumer(IResponseBus responseBus, IActiveDirectorySearcher activeDirectorySearcher)
         {
             Contract.Requires<ArgumentNullException>(responseBus != null);
             _responseBus = responseBus;
+            _activeDirectorySearcher = activeDirectorySearcher;
         }
 
         /// <summary>
@@ -51,9 +54,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                     BatchSize = message.BatchSize,
                     Domains = Convert(message.Domains)
                 };
-                GroupsAndMembersQueryResult adScanResult = new ActiveDirectorySearcher().QueryGroupsAndMembers(adScanQueryInput);
+                GroupsAndMembersQueryResult adScanResult = _activeDirectorySearcher.QueryGroupsAndMembers(adScanQueryInput);
 
-                var mappedResponse = MapADScanResultToEngineToServerType(adScanResult);
+                var synchronizationGroups = message.Domains.SelectMany(d => d.GroupInfos).ToList();
+
+                var mappedResponse = MapADScanResultToEngineToServerType(adScanResult, synchronizationGroups);
 
                 var pager = new GroupQueryInfoPager(mappedResponse, DEFAULT_PAGE_SIZE).GetEnumerator();
 
@@ -136,11 +141,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
             }
         }
 
-        private IList<GroupQueryInfo> MapADScanResultToEngineToServerType(GroupsAndMembersQueryResult result)
+        private IList<GroupQueryInfo> MapADScanResultToEngineToServerType(GroupsAndMembersQueryResult result, List<Messages.Areas.ActiveDirectory.GroupInfo> synchronizationGroups)
         {
             var mappedGroups = new List<GroupQueryInfo>();
-            // JATK - Filter only synchronization groups.
-            foreach (var group in result.GroupsFound)
+            
+            List<GroupInfo> syncGroupsFound = result.GroupsFound.Where(g => synchronizationGroups.Any(sg => sg.ADGuid == g.ADGuid)).ToList();
+            foreach (var group in syncGroupsFound)
             {
                 var mappedGroup = new GroupQueryInfo
                 {
