@@ -319,6 +319,7 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="Areas\ActiveDirectory\BatchExtensions.cs" />
+    <Compile Include="Areas\ActiveDirectory\ResolveDomainNameConsumer.cs" />
     <Compile Include="Areas\ActiveDirectory\GenericQueryConsumer.cs" />
     <Compile Include="Areas\ActiveDirectory\ADSyncRequestConsumer.cs" />
     <Compile Include="Areas\ActiveDirectory\GroupQueryInfoPager.cs" />
