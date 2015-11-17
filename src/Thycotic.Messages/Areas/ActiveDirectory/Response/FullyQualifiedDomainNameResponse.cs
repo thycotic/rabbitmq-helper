@@ -24,7 +24,7 @@ namespace Thycotic.Messages.Areas.ActiveDirectory.Response
         {
             get
             {
-                return !String.IsNullOrEmpty(this.ErrorMessage);
+                return String.IsNullOrEmpty(this.ErrorMessage);
             }
         }
     }
