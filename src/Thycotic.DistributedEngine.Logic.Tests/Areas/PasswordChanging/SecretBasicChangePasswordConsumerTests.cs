@@ -65,11 +65,6 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.PasswordChanging
         [Ignore("Will resolve tomorrow -dkk")]
         public void ShouldReturnErrorDueToIncorrectCredentials()
         {
-            PasswordChangers.Aspects.LicenseKeyHelper.LicenseKeys = new Dictionary<string, string>
-            {
-                {"BFPJR-AB3JZ-NPWH5-U29TR-WMG14", "FOR DEVELOPMENT PURPOSES ONLY"}
-            };
-
             var responseBus = Substitute.For<IResponseBus>();
             var info = new WindowsAccountBasicChangeInfo
             {
@@ -88,7 +83,6 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.PasswordChanging
             consumer.Consume(message);
 
             responseBus.Received().ExecuteAsync(Arg.Is<RemotePasswordChangeResponse>(x => x.Status == OperationStatus.AccessDenied));
-            PasswordChangers.Aspects.LicenseKeyHelper.LicenseKeys = null;
         }
     }
 }

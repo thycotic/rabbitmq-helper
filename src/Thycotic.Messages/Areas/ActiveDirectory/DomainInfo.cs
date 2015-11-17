@@ -1,24 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
+namespace Thycotic.Messages.Areas.ActiveDirectory
 {
     /// <summary>
     /// 
     /// </summary>
-    public class ActiveDirectorySynchronizationDomain
+    public class DomainInfo
     {
         /// <summary>
         /// 
         /// </summary>
-        public ActiveDirectorySynchronizationDomain() { }
+        public DomainInfo() { }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="domainInfo"></param>
-        public ActiveDirectorySynchronizationDomain(
-            Thycotic.ActiveDirectorySynchronization.Core.ActiveDirectorySynchronizationDomainInfo domainInfo)
+        public DomainInfo(Thycotic.ActiveDirectory.Core.DomainInfo domainInfo)
         {
             Contract.Requires(domainInfo != null);
             DistinguishedName = domainInfo.DistinguishedName;
@@ -40,11 +39,11 @@ namespace Thycotic.Messages.Areas.ActiveDirectorySynchronization
         /// </summary>
         public string DomainName { get; set; }
 
-        private List<ActiveDirectorySynchronizationGroup> _groupInfos = new List<ActiveDirectorySynchronizationGroup>();
+        private List<GroupInfo> _groupInfos = new List<GroupInfo>();
         /// <summary>
         /// 
         /// </summary>
-        public List<ActiveDirectorySynchronizationGroup> GroupInfos
+        public List<GroupInfo> GroupInfos
         {
             get
             {

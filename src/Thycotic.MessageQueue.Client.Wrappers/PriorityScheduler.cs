@@ -15,23 +15,23 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <summary>
         /// Highest
         /// </summary>
-        public static PriorityScheduler Highest = new PriorityScheduler(ThreadPriority.Highest);
+        public readonly static PriorityScheduler Highest = new PriorityScheduler(ThreadPriority.Highest);
         /// <summary>
         /// AboveNormal
         /// </summary>
-        public static PriorityScheduler AboveNormal = new PriorityScheduler(ThreadPriority.AboveNormal);
+        public readonly static PriorityScheduler AboveNormal = new PriorityScheduler(ThreadPriority.AboveNormal);
         /// <summary>
         /// BelowNormal
         /// </summary>
-        public static PriorityScheduler BelowNormal = new PriorityScheduler(ThreadPriority.BelowNormal);
+        public readonly static PriorityScheduler BelowNormal = new PriorityScheduler(ThreadPriority.BelowNormal);
         /// <summary>
         /// Lowest
         /// </summary>
-        public static PriorityScheduler Lowest = new PriorityScheduler(ThreadPriority.Lowest);
+        public readonly static PriorityScheduler Lowest = new PriorityScheduler(ThreadPriority.Lowest);
         /// <summary>
         /// Normal
         /// </summary>
-        public static PriorityScheduler Normal = new PriorityScheduler(ThreadPriority.Normal);
+        public readonly static PriorityScheduler Normal = new PriorityScheduler(ThreadPriority.Normal);
 
         private BlockingCollection<Task> _tasks = new BlockingCollection<Task>();
         private Thread[] _threads;

@@ -135,7 +135,7 @@
       <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="Interop.ActiveDs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cda7f064205a299b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.143\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.144\lib\net451\Interop.ActiveDs.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <Private>True</Private>
     </Reference>
@@ -198,12 +198,13 @@
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.143, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.143\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.144, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.144\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.389\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.395, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.395\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.13\lib\net451\Thycotic.Encryption.dll</HintPath>

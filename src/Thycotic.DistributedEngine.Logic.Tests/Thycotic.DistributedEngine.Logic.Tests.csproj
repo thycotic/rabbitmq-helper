@@ -147,12 +147,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Interop.ActiveDs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cda7f064205a299b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.143\lib\net451\Interop.ActiveDs.dll</HintPath>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.144\lib\net451\Interop.ActiveDs.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Jscape.Ssh">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.258\lib\net451\Jscape.Ssh.dll</HintPath>
+    <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.259\lib\net451\Jscape.Ssh.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -210,6 +211,14 @@
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Thycotic.ActiveDirectory, Version=1.0.0.38, Culture=neutral, PublicKeyToken=029133c20de6def0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.1.0.0.38\lib\net451\Thycotic.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.ActiveDirectory.Core">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.0.9\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.BlackBox">
       <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>
@@ -218,12 +227,13 @@
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.100\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.143, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.143\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
+    <Reference Include="Thycotic.Discovery.Sources">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.144\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.389\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.395, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.395\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.13\lib\net451\Thycotic.Encryption.dll</HintPath>
@@ -244,8 +254,9 @@
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.PasswordChangers">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.258\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.259, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.259\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
@@ -280,6 +291,8 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\ActiveDirectory\ADSyncRequestConsumerTests.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupQueryInfoPagerTests.cs" />
     <Compile Include="Areas\Authentication\AuthenticateByAdConsumerTests.cs" />
     <Compile Include="Areas\Discovery\HostRangeConsumerTests.cs" />
     <Compile Include="Areas\Discovery\DependencyConsumerTests.cs" />
