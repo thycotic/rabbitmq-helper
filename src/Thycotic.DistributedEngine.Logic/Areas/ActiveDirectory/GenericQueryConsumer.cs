@@ -55,7 +55,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                 {
                     BatchSize = request.BatchSize,
                     Domain = ConvertRequestToActiveDirectoryDomainInfo(request),
-                    Filter = request.Filter
+                    Filter = request.Filter,
+                    NamesToExclude = request.NamesToExclude
                 };
 
                 return new ActiveDirectorySearcher().SearchForGroupADObjectsInActiveDirectory(input);

@@ -225,14 +225,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\ActiveDirectory\AllUsersByDomainQueryMessage.cs" />
     <Compile Include="Areas\ActiveDirectory\DomainInfo.cs" />
     <Compile Include="Areas\ActiveDirectory\GroupInfo.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupsByDomainQueryMessage.cs" />
     <Compile Include="Areas\ActiveDirectory\QueryMessage.cs" />
     <Compile Include="Areas\ActiveDirectory\ADSyncMessage.cs" />
     <Compile Include="Areas\ActiveDirectory\ResolveFullyQualifiedDomainNameMessage.cs" />
     <Compile Include="Areas\ActiveDirectory\ResolveDomainDistinguishedNameMessage.cs" />
     <Compile Include="Areas\ActiveDirectory\Response\FullyQualifiedDomainNameResponse.cs" />
     <Compile Include="Areas\ActiveDirectory\Response\DomainDistinguishedNameResponse.cs" />
+    <Compile Include="Areas\ActiveDirectory\UsersByGroupsQueryMessage.cs" />
     <Compile Include="Areas\Connectivity\Response\PingResponse.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
