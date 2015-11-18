@@ -65,7 +65,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                     SecureSocketLayer = request.UseSSL
                 };
 
-                var fqdn = DistinguishedNameHelper.ResolveDomainDistinguishedName(request.FriendlyDomainName, request.UserPrincipalName, request.UserPassword, connectionSettings);
+                var fqdn = DistinguishedNameHelper.ResolveFullyQualifiedDomainNameFromFriendlyName(request.FriendlyDomainName, request.UserPrincipalName, request.UserPassword, connectionSettings);
                 _log.Debug("Resolve domain to " + (fqdn ?? "(null)"));
 
                 return new FullyQualifiedDomainNameResponse
