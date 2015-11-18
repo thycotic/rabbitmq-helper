@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using Autofac;
-using Thycotic.ActiveDirectory;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
@@ -20,15 +19,8 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
             _log.Debug("Initializing consumers...");
 
-            builder.RegisterType<ActiveDirectorySearcher>()
-                .AsSelf()
-                .AsImplementedInterfaces()
-                .InstancePerDependency();
-
             LoadConsumers(builder, typeof (IBasicConsumer<>));
             LoadConsumers(builder, typeof (IBlockingConsumer<,>));
-
-            builder.RegisterModule(new DiscoveryModule());
         }
 
         private void LoadConsumers(ContainerBuilder builder, Type type)

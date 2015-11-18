@@ -390,6 +390,7 @@
     <Compile Include="EngineToServer\UpdateBus.cs" />
     <Compile Include="EngineToServer\UpdateWebClient.cs" />
     <Compile Include="EngineUpdateBootstrapper.cs" />
+    <Compile Include="IoC\ActiveDirectoryModule.cs" />
     <Compile Include="IoC\EngineToServerModule.cs" />
     <Compile Include="Heartbeat\LogRunner.cs" />
     <Compile Include="IoC\DiscoveryModule.cs" />

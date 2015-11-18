@@ -5,6 +5,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using Thycotic.ActiveDirectory;
 using Thycotic.CLI.Configuration;
 using Thycotic.DistributedEngine.EngineToServerCommunication;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
@@ -205,6 +206,8 @@ namespace Thycotic.DistributedEngine.Service.Configuration
             {
                 builder.RegisterModule(new LogicModule());
                 builder.RegisterModule(new WrappersModule());
+                builder.RegisterModule(new DiscoveryModule());
+                builder.RegisterModule(new ActiveDirectoryModule());
             }
             else
             {
