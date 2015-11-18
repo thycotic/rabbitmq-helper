@@ -37,11 +37,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
 
             var currentPage = new List<GroupQueryInfo>();
             GroupQueryInfo currentGroup = null;
-            int usersProcessed = 0;
+            int itemsProcessed = 0;
             foreach (var group in _groups)
             {
                 currentGroup = CopyWithoutMembers(group);
                 currentPage.Add(currentGroup);
+                itemsProcessed++;
 
                 foreach (var user in group.MemberUsers)
                 {
@@ -51,20 +52,28 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                         currentPage.Add(currentGroup);
                     }
                     currentGroup.MemberUsers.Add(user);
-                    usersProcessed++;
+                    itemsProcessed++;
 
-                    if (usersProcessed >= _pageSize)
+                    if (itemsProcessed >= _pageSize)
                     {
                         yield return currentPage;
 
                         currentPage = new List<GroupQueryInfo>();
                         currentGroup = null;
-                        usersProcessed = 0;
+                        itemsProcessed = 0;
                     }
+                }
+
+                if (itemsProcessed >= _pageSize)
+                {
+                    yield return currentPage;
+
+                    currentPage = new List<GroupQueryInfo>();
+                    itemsProcessed = 0;
                 }
             }
 
-            if (usersProcessed > 0)
+            if (itemsProcessed > 0)
             {
                 yield return currentPage;
             }

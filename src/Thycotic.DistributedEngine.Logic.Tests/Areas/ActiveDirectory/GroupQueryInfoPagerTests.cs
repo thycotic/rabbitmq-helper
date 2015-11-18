@@ -74,7 +74,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.ActiveDirectory
                 }
             };
 
-            var pager = new GroupQueryInfoPager(groupQueryInfos, 2).GetEnumerator();
+            var pager = new GroupQueryInfoPager(groupQueryInfos, 3).GetEnumerator();
 
             Assert.That(pager.MoveNext(), Is.True);
             Assert.That(pager.Current.Count(), Is.EqualTo(1));
@@ -86,6 +86,38 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.ActiveDirectory
             Assert.That(pager.Current, Has.All.Matches<GroupQueryInfo>(g => g.ADGuid == "Group1"));
             Assert.That(pager.Current.First().MemberUsers, Has.Some.Matches<UserQueryInfo>(u => u.ADGuid == "User3"));
             Assert.That(pager.Current.First().MemberUsers, Has.Some.Matches<UserQueryInfo>(u => u.ADGuid == "User4"));
+            Assert.That(pager.MoveNext(), Is.False);
+        }
+
+        [Test]
+        public void ShouldReturnGroupsInSeparatePagesIfGroupsExceedPageSize()
+        {
+            var groupQueryInfos = new List<GroupQueryInfo>
+            {
+                new GroupQueryInfo { ADGuid = "Group1" },
+                new GroupQueryInfo { ADGuid = "Group2" },
+                new GroupQueryInfo { ADGuid = "Group3" },
+                new GroupQueryInfo { ADGuid = "Group4" },
+                new GroupQueryInfo { ADGuid = "Group5" }
+            };
+
+            var pager = new GroupQueryInfoPager(groupQueryInfos, 2).GetEnumerator();
+
+            Assert.That(pager.MoveNext(), Is.True);
+            Assert.That(pager.Current.Count(), Is.EqualTo(2));
+            Assert.That(pager.Current, Has.Some.Matches<GroupQueryInfo>(g => g.ADGuid == "Group1"));
+            Assert.That(pager.Current, Has.Some.Matches<GroupQueryInfo>(g => g.ADGuid == "Group2"));
+            
+            Assert.That(pager.MoveNext(), Is.True);
+            Assert.That(pager.Current.Count(), Is.EqualTo(2));
+            Assert.That(pager.Current, Has.Some.Matches<GroupQueryInfo>(g => g.ADGuid == "Group3"));
+            Assert.That(pager.Current, Has.Some.Matches<GroupQueryInfo>(g => g.ADGuid == "Group4"));
+
+            
+            Assert.That(pager.MoveNext(), Is.True);
+            Assert.That(pager.Current.Count(), Is.EqualTo(1));
+            Assert.That(pager.Current, Has.Some.Matches<GroupQueryInfo>(g => g.ADGuid == "Group5"));
+
             Assert.That(pager.MoveNext(), Is.False);
         }
     }

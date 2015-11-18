@@ -60,7 +60,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
 
                 var mappedResponse = MapADScanResultToEngineToServerType(adScanResult, synchronizationGroups);
 
-                var pager = new GroupQueryInfoPager(mappedResponse, DEFAULT_PAGE_SIZE).GetEnumerator();
+                var pager = new GroupQueryInfoPager(mappedResponse, message.BatchSize).GetEnumerator();
 
                 /*
                  * Send batches with Group/User info.
