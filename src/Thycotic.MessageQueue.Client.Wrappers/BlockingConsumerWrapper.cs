@@ -7,7 +7,6 @@ using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Serialization;
-using Thycotic.Utility.Threading;
 
 namespace Thycotic.MessageQueue.Client.Wrappers
 {
@@ -30,15 +29,16 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TConsumable, TResponse, TConsumer}"/> class.
+        /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TConsumable, TResponse, TConsumer}" /> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <param name="exchangeNameProvider">The exchange name provider.</param>
         /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
+        /// <param name="prioritySchedulerProvider">The priority scheduler provider.</param>
         /// <param name="consumerFactory">The handler factory.</param>
         public BlockingConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IObjectSerializer objectSerializer,
-            IMessageEncryptor messageEncryptor, Func<Owned<TConsumer>> consumerFactory)
+            IMessageEncryptor messageEncryptor, IPrioritySchedulerProvider prioritySchedulerProvider,  Func<Owned<TConsumer>> consumerFactory)
             : base(connection, exchangeNameProvider)
         {
             Contract.Requires<ArgumentNullException>(connection != null);
@@ -51,7 +51,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             _messageEncryptor = messageEncryptor;
             _consumerFactory = consumerFactory;
             _connection = connection;
-            PriorityScheduler = PriorityScheduler.AboveNormal;
+            PriorityScheduler = prioritySchedulerProvider.AboveNormal;
         }
 
         /// <summary>

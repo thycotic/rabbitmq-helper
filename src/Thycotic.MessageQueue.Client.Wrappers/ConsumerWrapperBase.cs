@@ -39,9 +39,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <summary>
         /// PriorityScheduler to use (sets thread priority)
         /// </summary>
-        protected PriorityScheduler PriorityScheduler;
-
-
+        protected PriorityScheduler PriorityScheduler { get; set; }
+        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsumerWrapperBase{TConsumable, TConsumer}"/> class.

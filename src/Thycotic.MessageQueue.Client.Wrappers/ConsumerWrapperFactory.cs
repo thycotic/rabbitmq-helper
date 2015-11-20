@@ -82,6 +82,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                     var consumerWrapperType = wrapperType.MakeGenericType(messageType, responseType, consumerType);
 
+                    var prioritySchedulerProvider = _context.Resolve<IPrioritySchedulerProvider>();
+
                     var consumerWrapper = (IConsumerWrapperBase)_context.Resolve(consumerWrapperType);
                     var customPriorityAttribute = (ConsumerPriority)consumerType.GetCustomAttribute(typeof(ConsumerPriority));
                     if (customPriorityAttribute != null)
@@ -89,16 +91,16 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                         switch (customPriorityAttribute.Priority)
                         {
                             case Priority.BelowNormal:
-                                consumerWrapper.SetPriority(PriorityScheduler.BelowNormal);
+                                consumerWrapper.SetPriority(prioritySchedulerProvider.BelowNormal);
                                 break;
                             case Priority.Normal:
-                                consumerWrapper.SetPriority(PriorityScheduler.Normal);
+                                consumerWrapper.SetPriority(prioritySchedulerProvider.Normal);
                                 break;
                             case Priority.AboveNormal:
-                                consumerWrapper.SetPriority(PriorityScheduler.AboveNormal);
+                                consumerWrapper.SetPriority(prioritySchedulerProvider.AboveNormal);
                                 break;
                             case Priority.Highest:
-                                consumerWrapper.SetPriority(PriorityScheduler.Highest);
+                                consumerWrapper.SetPriority(prioritySchedulerProvider.Highest);
                                 break;
                         }
                     }
