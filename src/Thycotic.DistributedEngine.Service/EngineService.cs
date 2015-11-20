@@ -167,7 +167,12 @@ namespace Thycotic.DistributedEngine.Service
             ResetIoCContainer();
 
             var configured = false;
-
+            if (SynchronizationContext.Current == null)
+            {
+                var context = new SynchronizationContext();
+                SynchronizationContext.SetSynchronizationContext(context);
+            }
+            PriorityScheduler.InitSynchronizationContext();
             Task.Factory.StartNew(() =>
             {
                 //keep trying to configure until success or the running source is cancelled

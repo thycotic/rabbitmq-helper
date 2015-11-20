@@ -37,6 +37,13 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private Thread[] _threads;
         private ThreadPriority _priority;
         private readonly int _maximumConcurrencyLevel = Math.Max(1, Environment.ProcessorCount);
+        private readonly SynchronizationContext _synchronizationContext;
+
+        /// <summary>
+        /// This method must be called from a thread where the SynchronizationContext has been set before any other static method on the
+        /// PriorityScheduler is called.
+        /// </summary>
+        public static void InitSynchronizationContext() { }
 
         /// <summary>
         /// PriorityScheduler
@@ -45,6 +52,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         public PriorityScheduler(ThreadPriority priority)
         {
             _priority = priority;
+            SynchronizationContext current = SynchronizationContext.Current;
+            if (current == null)
+            {
+                throw new InvalidOperationException("No Current Synchronization Context - was InitSynchronizationContext called first?");
+            }
+            _synchronizationContext = current;
         }
 
         /// <summary>
@@ -80,8 +93,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     int local = i;
                     _threads[i] = new Thread(() =>
                     {
+                        SynchronizationContext.SetSynchronizationContext(_synchronizationContext);
                         foreach (Task t in _tasks.GetConsumingEnumerable())
+                        {
                             TryExecuteTask(t);
+                        }
                     });
                     _threads[i].Priority = _priority;
                     _threads[i].IsBackground = true;
