@@ -219,14 +219,18 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 
             try
             {
+                var replyCode = _connection.CloseReason.ReplyCode;
+                _log.Debug(string.Format("Connection close reason reply code is {0}", replyCode));
+
                 //https://www.rabbitmq.com/amqp-0-9-1-reference.html
                 //HACK: Current version of Rabbit API seems to hang dispose when the connection was closed by server
-                switch (_connection.CloseReason.ReplyCode)
+                switch (replyCode)
                 {
                     //erlang crash / internal error
                     case 541:
                     //service restart
                     case 320:
+                        _log.Warn(string.Format("Connection will not be disposed. Close reason reply code is {0}", replyCode));
                         break;
                     default:
                         _connection.Dispose();
