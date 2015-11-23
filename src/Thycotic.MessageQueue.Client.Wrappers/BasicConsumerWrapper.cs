@@ -41,6 +41,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             Contract.Requires<ArgumentNullException>(exchangeNameProvider != null);
             Contract.Requires<ArgumentNullException>(objectSerializer != null);
             Contract.Requires<ArgumentNullException>(messageEncryptor != null);
+            Contract.Requires<ArgumentNullException>(prioritySchedulerProvider != null);
             Contract.Requires<ArgumentNullException>(consumerFactory != null);
 
             _consumerFactory = consumerFactory;

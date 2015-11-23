@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.Threading;
 
 namespace Thycotic.MessageQueue.Client.Wrappers
 {
@@ -34,6 +36,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="syncContext"></param>
         public PrioritySchedulerProvider(SynchronizationContext syncContext)
         {
+            Contract.Requires<ArgumentNullException>(syncContext != null, "Synchronization context cannot be null");
+
             Highest = new PriorityScheduler(syncContext, ThreadPriority.Highest);
             AboveNormal = new PriorityScheduler(syncContext, ThreadPriority.AboveNormal);
             BelowNormal = new PriorityScheduler(syncContext, ThreadPriority.BelowNormal);

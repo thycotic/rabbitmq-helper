@@ -34,6 +34,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         public ADSyncRequestConsumer(IResponseBus responseBus, IActiveDirectorySearcher activeDirectorySearcher)
         {
             Contract.Requires<ArgumentNullException>(responseBus != null);
+            Contract.Requires<ArgumentNullException>(activeDirectorySearcher != null);
+
             _responseBus = responseBus;
             _activeDirectorySearcher = activeDirectorySearcher;
         }

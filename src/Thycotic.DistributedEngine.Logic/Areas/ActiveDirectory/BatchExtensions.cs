@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
@@ -18,6 +19,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         public static IEnumerable<IEnumerable<T>> Batch<T>(
             this IEnumerable<T> source, int size)
         {
+            Contract.Ensures(Contract.Result<IEnumerable<IEnumerable<T>>>() != null);
+
             T[] bucket = null;
             var count = 0;
 
