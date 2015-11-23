@@ -190,7 +190,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 _log.Debug("Connection closed");
             }
 
-            _connection.Dispose();
+            try
+            {
+                _connection.Dispose();
+            }
+            catch (Exception ex)
+            {
+                _log.Warn("Failed to clean up connection", ex);
+            }
+            
             _connection = null;
 
         }

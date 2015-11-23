@@ -217,10 +217,26 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 _log.Debug("Connection closed");
             }
 
-            //HACK: Current version of Rabbit API seems to hang dispose when the connection was closed by server
-            if (_connection.CloseReason.ReplyCode != 320)
+            try
             {
-                _connection.Dispose();
+                //https://www.rabbitmq.com/amqp-0-9-1-reference.html
+                //HACK: Current version of Rabbit API seems to hang dispose when the connection was closed by server
+                switch (_connection.CloseReason.ReplyCode)
+                {
+                    //erlang crash / internal error
+                    case 541:
+                    //service restart
+                    case 320:
+                        break;
+                    default:
+                        _connection.Dispose();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Warn("Failed to clean up connection", ex);
+
             }
             _connection = null;
         }
