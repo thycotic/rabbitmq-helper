@@ -40,12 +40,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// The type.
         /// </value>
         string Type { get; set; }
-
+        
         /// <summary>
-        /// Sets the persistent.
+        /// Gets or sets a value indicating whether this <see cref="ICommonModelProperties"/> is persistent.
         /// </summary>
-        /// <param name="persistent">if set to <c>true</c> [persistent].</param>
-        void SetPersistent(bool persistent);
+        /// <value>
+        ///   <c>true</c> if persistent; otherwise, <c>false</c>.
+        /// </value>
+        bool Persistent { get; set; }
     }
 
     /// <summary>
@@ -89,12 +91,12 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         public string Type { get; set; }
 
         /// <summary>
-        /// Sets the persistent.
+        /// Gets or sets a value indicating whether this <see cref="ICommonModelProperties" /> is persistent.
         /// </summary>
-        /// <param name="persistent">if set to <c>true</c> [persistent].</param>
-        public void SetPersistent(bool persistent)
-        {
-        }
+        /// <value>
+        ///   <c>true</c> if persistent; otherwise, <c>false</c>.
+        /// </value>
+        public bool Persistent { get; set; }
 
         /// <summary>
         /// Gets the raw value.

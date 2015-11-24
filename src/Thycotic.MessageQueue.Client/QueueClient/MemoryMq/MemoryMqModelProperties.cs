@@ -66,12 +66,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         }
 
         /// <summary>
-        /// Sets the persistent.
+        /// Gets or sets a value indicating whether this <see cref="ICommonModelProperties" /> is persistent.
         /// </summary>
-        /// <param name="persistent">if set to <c>true</c> [persistent].</param>
-        public void SetPersistent(bool persistent)
+        /// <value>
+        ///   <c>true</c> if persistent; otherwise, <c>false</c>.
+        /// </value>
+        public bool Persistent
         {
-            //TODO: Implement persistence
+            get { return _rawProperties.Persistent; }
+            set { _rawProperties.Persistent = value; }
         }
 
 

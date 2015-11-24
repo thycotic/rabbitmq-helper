@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading;
 using Autofac;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.Logging;
+using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Reflection;
 using Module = Autofac.Module;
@@ -16,6 +18,14 @@ namespace Thycotic.DistributedEngine.Service.IoC
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
+
+
+            builder.Register(context =>
+            {
+                var syncContext = SynchronizationContext.Current ?? new SynchronizationContext();
+
+                return new PrioritySchedulerProvider(syncContext);
+            }).As<IPrioritySchedulerProvider>().SingleInstance();
 
             _log.Debug("Initializing consumers...");
 

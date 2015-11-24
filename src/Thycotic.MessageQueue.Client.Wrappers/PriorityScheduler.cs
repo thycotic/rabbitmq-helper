@@ -12,52 +12,24 @@ namespace Thycotic.MessageQueue.Client.Wrappers
     /// </summary>
     public class PriorityScheduler : TaskScheduler, IPriorityScheduler
     {
-        /// <summary>
-        /// Highest
-        /// </summary>
-        public readonly static PriorityScheduler Highest = new PriorityScheduler(ThreadPriority.Highest);
-        /// <summary>
-        /// AboveNormal
-        /// </summary>
-        public readonly static PriorityScheduler AboveNormal = new PriorityScheduler(ThreadPriority.AboveNormal);
-        /// <summary>
-        /// BelowNormal
-        /// </summary>
-        public readonly static PriorityScheduler BelowNormal = new PriorityScheduler(ThreadPriority.BelowNormal);
-        /// <summary>
-        /// Lowest
-        /// </summary>
-        public readonly static PriorityScheduler Lowest = new PriorityScheduler(ThreadPriority.Lowest);
-        /// <summary>
-        /// Normal
-        /// </summary>
-        public readonly static PriorityScheduler Normal = new PriorityScheduler(ThreadPriority.Normal);
-
-        private BlockingCollection<Task> _tasks = new BlockingCollection<Task>();
+        private readonly BlockingCollection<Task> _tasks = new BlockingCollection<Task>();
         private Thread[] _threads;
-        private ThreadPriority _priority;
+        private readonly ThreadPriority _priority;
         private readonly int _maximumConcurrencyLevel = Math.Max(1, Environment.ProcessorCount);
         private readonly SynchronizationContext _synchronizationContext;
 
         /// <summary>
-        /// This method must be called from a thread where the SynchronizationContext has been set before any other static method on the
-        /// PriorityScheduler is called.
-        /// </summary>
-        public static void InitSynchronizationContext() { }
-
-        /// <summary>
         /// PriorityScheduler
         /// </summary>
-        /// <param name="priority"></param>
-        public PriorityScheduler(ThreadPriority priority)
+        /// <param name="context">The context.</param>
+        /// <param name="priority">The priority.</param>
+        /// <exception cref="System.InvalidOperationException">No Current Synchronization Context - was InitSynchronizationContext called first?</exception>
+        public PriorityScheduler(SynchronizationContext context, ThreadPriority priority)
         {
+            Contract.Requires<ArgumentNullException>(context != null, "Context is required");
+
             _priority = priority;
-            SynchronizationContext current = SynchronizationContext.Current;
-            if (current == null)
-            {
-                throw new InvalidOperationException("No Current Synchronization Context - was InitSynchronizationContext called first?");
-            }
-            _synchronizationContext = current;
+            _synchronizationContext = context;
         }
 
         /// <summary>

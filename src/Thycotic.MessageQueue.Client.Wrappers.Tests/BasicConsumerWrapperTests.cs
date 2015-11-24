@@ -26,8 +26,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         private IExchangeNameProvider _exchangeNameProvider;
         private IObjectSerializer _objectSerializer;
         private IMessageEncryptor _messageEncryptor;
+        private IPrioritySchedulerProvider _prioritySchedulerProvider;
         private Func<Owned<IBasicConsumer<IBasicConsumable>>> _consumerFactory;
         private IBasicConsumer<IBasicConsumable> _consumer;
+        
 
         private void WaitToOpenChannel()
         {
@@ -51,8 +53,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             _model = TestedSubstitute.For<ICommonModel>();
 
             //since we don't have access to the inner task used the model to know when consumption is done.
-            _model.When(m=> m.BasicAck(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
-            _model.When(m=> m.BasicNack(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
+            _model.When(m => m.BasicAck(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
+            _model.When(m => m.BasicNack(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
 
             _commonConnection = new TestConnection(_model);
             _exchangeNameProvider = TestedSubstitute.For<IExchangeNameProvider>();
@@ -69,6 +71,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             //just return what is sent (skip the first argument - exchange - and return the bytes)
             _messageEncryptor.Decrypt(Arg.Any<string>(), Arg.Any<byte[]>()).Returns(info => info.Args().Skip(1).First());
 
+            _prioritySchedulerProvider = TestedSubstitute.For<IPrioritySchedulerProvider>();
+            var testContext = new SynchronizationContext();
+            _prioritySchedulerProvider.Lowest.Returns(new PriorityScheduler(testContext, ThreadPriority.Lowest));
+            _prioritySchedulerProvider.BelowNormal.Returns(new PriorityScheduler(testContext, ThreadPriority.BelowNormal));
+            _prioritySchedulerProvider.Normal.Returns(new PriorityScheduler(testContext, ThreadPriority.Normal));
+            _prioritySchedulerProvider.AboveNormal.Returns(new PriorityScheduler(testContext, ThreadPriority.AboveNormal));
+            _prioritySchedulerProvider.Highest.Returns(new PriorityScheduler(testContext, ThreadPriority.Highest));
+
             _consumer = TestedSubstitute.For<IBasicConsumer<IBasicConsumable>>();
 
             _consumerFactory =
@@ -76,7 +86,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
                     new LeakyOwned<IBasicConsumer<IBasicConsumable>>(
                         _consumer, new LifetimeDummy());
 
-            Sut = new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _consumerFactory);
+            Sut = new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory);
         }
 
         /// <summary>
@@ -85,11 +95,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         [Test]
         public override void ConstructorParametersDoNotExceptInvalidParameters()
         {
-            this.ShouldFail<ArgumentNullException>("Precondition failed: connection != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(null, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _consumerFactory));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: exchangeNameProvider != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, null, _objectSerializer, _messageEncryptor, _consumerFactory));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: objectSerializer != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, null, _messageEncryptor, _consumerFactory));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: messageEncryptor != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, null, _consumerFactory));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: consumerFactory != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, null));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: connection != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(null, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: exchangeNameProvider != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, null, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: objectSerializer != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, null, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: messageEncryptor != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, null, _prioritySchedulerProvider, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: prioritySchedulerProvider != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, null, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: consumerFactory != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, null));
         }
 
         /// <summary>
@@ -103,7 +114,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         [TestCase(true, false, false, TestName = "Relay redelivered")]
         [TestCase(false, true, false, TestName = "Don't relay expired")]
         [TestCase(false, true, true, TestName = "Relay expired")]
-        public void HandleBasicDeliverShouldRelayWhenAppropriate(bool redelivered,  bool expired, bool relayIfExpired)
+        public void HandleBasicDeliverShouldRelayWhenAppropriate(bool redelivered, bool expired, bool relayIfExpired)
         {
             var consumerTag = string.Empty;
             ulong deliveryTag = 0;
@@ -123,8 +134,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
                 {
                     Content = this.GenerateUniqueDummyName(),
                     RelayEvenIfExpired = relayIfExpired,
-                    ExpiresOn = expired ? DateTime.UtcNow - TimeSpan.FromSeconds(30) : (DateTime?) null
-                   
+                    ExpiresOn = expired ? DateTime.UtcNow - TimeSpan.FromSeconds(30) : (DateTime?)null
+
                 };
                 body = _objectSerializer.ToBytes(consumable);
 
@@ -133,12 +144,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
                 _consumer.When(c => c.Consume(Arg.Any<IBasicConsumable>())).Do(info =>
                 {
                     var consumable2 = (TestBasicConsumable)info.Args().First();
-                    
+
                     consumable2.Content.Should().Be(consumable.Content);
                 });
             });
 
-            
+
 
             When(() =>
             {
@@ -162,7 +173,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
                 }
                 else
                 {
-                    _consumer.DidNotReceive().Consume(Arg.Any < IBasicConsumable>());
+                    _consumer.DidNotReceive().Consume(Arg.Any<IBasicConsumable>());
                     _consumer.DidNotReceive().Consume(Arg.Any<TestBasicConsumable>());
 
                     Sut.CommonModel.Received().BasicNack(deliveryTag, _exchangeName, routingKey, false, false);

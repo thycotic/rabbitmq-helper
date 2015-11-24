@@ -25,27 +25,29 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BasicConsumerWrapper{TConsumable, TConsumer}"/> class.
+        /// Initializes a new instance of the <see cref="BasicConsumerWrapper{TConsumable, TConsumer}" /> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <param name="exchangeNameProvider">The exchange name provider.</param>
         /// <param name="objectSerializer">The object serializer.</param>
         /// <param name="messageEncryptor">The message encryptor.</param>
+        /// <param name="prioritySchedulerProvider">The priority scheduler provider.</param>
         /// <param name="consumerFactory">The handler factory.</param>
         public BasicConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IObjectSerializer objectSerializer,
-            IMessageEncryptor messageEncryptor, Func<Owned<TConsumer>> consumerFactory)
+            IMessageEncryptor messageEncryptor, IPrioritySchedulerProvider prioritySchedulerProvider, Func<Owned<TConsumer>> consumerFactory)
             : base(connection, exchangeNameProvider)
         {
             Contract.Requires<ArgumentNullException>(connection != null);
             Contract.Requires<ArgumentNullException>(exchangeNameProvider != null);
             Contract.Requires<ArgumentNullException>(objectSerializer != null);
             Contract.Requires<ArgumentNullException>(messageEncryptor != null);
+            Contract.Requires<ArgumentNullException>(prioritySchedulerProvider != null);
             Contract.Requires<ArgumentNullException>(consumerFactory != null);
 
             _consumerFactory = consumerFactory;
             _objectSerializer = objectSerializer;
             _messageEncryptor = messageEncryptor;
-            PriorityScheduler = PriorityScheduler.Normal;
+            PriorityScheduler = prioritySchedulerProvider.Normal;
         }
 
         /// <summary>
