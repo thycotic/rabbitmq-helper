@@ -147,7 +147,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         {
             var mappedGroups = new List<GroupQueryInfo>();
             
-            List<GroupInfo> syncGroupsFound = result.GroupsFound.Where(g => synchronizationGroups.Any(sg => sg.ADGuid == g.ADGuid)).ToList();
+            List<GroupInfo> syncGroupsFound = result.GroupsFound;
             foreach (var group in syncGroupsFound)
             {
                 var mappedGroup = new GroupQueryInfo

@@ -107,6 +107,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                 Password = request.DomainInfo.Password,
                 ProtocolVersion = request.DomainInfo.ProtocolVersion,
                 UserName = request.DomainInfo.UserName,
+                Port = request.DomainInfo.Port,
                 LdapTimeoutInSeconds = request.DomainInfo.LdapTimeoutInSeconds,
                 UseSecureLdap = request.DomainInfo.UseSecureLdap
             };

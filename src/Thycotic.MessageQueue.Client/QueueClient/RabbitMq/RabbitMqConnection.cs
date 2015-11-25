@@ -162,7 +162,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             _serverVersion = Version.Parse(System.Text.Encoding.UTF8.GetString((byte[])version));
         }
 
-        private void RecoverConnection(IConnection connection, ShutdownEventArgs reason)
+        private void RecoverConnection(object connection, ShutdownEventArgs reason)
         {
             //if this was actually requested, don't recover the connection and let it die
             if (_terminated)

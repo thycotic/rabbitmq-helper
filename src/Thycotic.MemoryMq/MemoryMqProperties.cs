@@ -35,5 +35,14 @@ namespace Thycotic.MemoryMq
         [DataMember]
         public string ReplyTo { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="MemoryMqProperties"/> is persistent. Property is not currently used.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if persistent; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool Persistent { get; set; }
+
     }
 }

@@ -61,7 +61,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
                     channel.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
 
                     var properties = channel.CreateBasicProperties();
-                    properties.SetPersistent(persistent);
+                    properties.Persistent = persistent;
 
                     channel.BasicPublish(exchangeName, routingKey, DefaultConfigValues.Model.Publish.Mandatory,
                         DefaultConfigValues.Model.Publish.DoNotDeliverImmediatelyOrRequireAListener, properties,

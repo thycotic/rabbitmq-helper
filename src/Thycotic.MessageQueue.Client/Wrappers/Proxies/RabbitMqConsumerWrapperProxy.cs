@@ -12,6 +12,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
     /// </summary>
     public class RabbitMqConsumerWrapperProxy : CommonConsumerWrapperProxy, IBasicConsumer
     {
+        
+
         /// <summary>
         /// Retrieve the IModel this consumer is associated
         /// with, for use in acknowledging received messages, for
@@ -24,7 +26,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// <summary>
         /// Signaled when the consumer gets cancelled.
         /// </summary>
-        public event ConsumerCancelledEventHandler ConsumerCancelled;
+        public event EventHandler<ConsumerEventArgs> ConsumerCancelled;
 #pragma warning restore 0067
 
         /// <summary>
@@ -75,10 +77,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// <summary>
         /// Called when the model shuts down.
         /// </summary>
-        /// <param name="model"></param>
-        /// <param name="reason"></param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void HandleModelShutdown(IModel model, ShutdownEventArgs reason)
+        /// <param name="model">Common AMQP model.</param>
+        /// <param name="reason">Information about the reason why a particular model, session, or connection was destroyed.</param>
+        public void HandleModelShutdown(object model, ShutdownEventArgs reason)
         {
             //throw new NotImplementedException();
         }
