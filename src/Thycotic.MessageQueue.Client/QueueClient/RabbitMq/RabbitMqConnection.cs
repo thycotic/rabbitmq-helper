@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RabbitMQ.Client;
@@ -13,6 +15,30 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
     /// </summary>
     public class RabbitMqConnection : ICommonConnection
     {
+        /// <summary>
+        /// HACK: Current version of Rabbit API seems to hang dispose when the connection was closed by server
+        /// </summary>
+        /// <example>https://www.rabbitmq.com/amqp-0-9-1-reference.html</example>
+        private static readonly Lazy<int[]> ReplyCodesToAvoidDisposeOn = new Lazy<int[]>(() =>
+        {
+            var replyCodes = ConfigurationManager.AppSettings["RabbitMqConnection.ReplyCodesToAvoidDisposeOn"];
+
+            if (string.IsNullOrWhiteSpace(replyCodes))
+            {
+                return new[]
+                {
+                    //erlang crash / internal error
+                    541,
+                    //service restart
+                    320
+                };
+            }
+
+            var rawReplyCodes = replyCodes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            return rawReplyCodes.Select(rc => Convert.ToInt32(rc.Trim())).ToArray();
+        });
+
         /// <summary>
         /// Gets or sets the connection created.
         /// </summary>
@@ -222,19 +248,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 var replyCode = _connection.CloseReason.ReplyCode;
                 _log.Debug(string.Format("Connection close reason reply code is {0}", replyCode));
 
-                //https://www.rabbitmq.com/amqp-0-9-1-reference.html
-                //HACK: Current version of Rabbit API seems to hang dispose when the connection was closed by server
-                switch (replyCode)
+                if (!ReplyCodesToAvoidDisposeOn.Value.Contains(replyCode))
                 {
-                    //erlang crash / internal error
-                    case 541:
-                    //service restart
-                    case 320:
-                        _log.Warn(string.Format("Connection will not be disposed. Close reason reply code is {0}", replyCode));
-                        break;
-                    default:
-                        _connection.Dispose();
-                        break;
+                    _connection.Dispose();
+                }
+                else
+                {
+                    _log.Warn("Encountered problematic reply code which causes connection disposal to hang the application. Connection will not be disposed.");
                 }
             }
             catch (Exception ex)
