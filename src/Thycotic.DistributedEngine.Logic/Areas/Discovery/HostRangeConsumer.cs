@@ -6,6 +6,7 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Res
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.Discovery.Request;
+using Thycotic.Messages.Areas.Discovery.Response;
 using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.General;
 
@@ -14,7 +15,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
     /// <summary>
     /// Host Range Consumer
     /// </summary>
-    public class HostRangeConsumer : IBasicConsumer<ScanHostRangeMessage>
+    public class HostRangeConsumer : IBasicConsumer<ScanHostRangeMessage>, IBlockingConsumer<ScanHostRangeBlockingMessage, ScanHostRangeBlockingResponse>
     {
         private readonly IResponseBus _responseBus;
         private readonly IScannerFactory _scannerFactory;
@@ -40,8 +41,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <param name="request"></param>
         public void Consume(ScanHostRangeMessage request)
         {
-            
-
             try
             {
                 _log.Info(string.Format("{0} : Scan Host Range", request.Input.Domain));
@@ -76,6 +75,40 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
             catch (Exception e)
             {
                 _log.Error(string.Format("{0} : Scan Host Range Failed using ScannerId: {1}", request.Input.Domain, request.DiscoveryScannerId), e);
+            }
+        }
+
+        /// <summary>
+        /// Scan Host Range Blocking
+        /// </summary>
+        /// <param name="request"></param>
+        public ScanHostRangeBlockingResponse Consume(ScanHostRangeBlockingMessage request)
+        {
+            var response = new ScanHostRangeBlockingResponse();
+            try
+            {
+                _log.Info(string.Format("{0} : Scan Host Range", request.Input.Domain));
+                var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
+                var result = scanner.ScanForHostRanges(request.Input);
+                var truncatedLog = result.Logs.Truncate();
+                response = new ScanHostRangeBlockingResponse
+                {
+                    DiscoverySourceId = request.DiscoverySourceId,
+                    ErrorCode = result.ErrorCode,
+                    ErrorMessage = result.ErrorMessage,
+                    HostRangeItems = result.HostRangeItems,
+                    Logs = truncatedLog,
+                    Success = result.Success
+                };
+                    _log.Info(string.Format("{0} : Send Host Range Blocking Results ({1})", request.Input.Domain, result.HostRangeItems.Length));
+                return response;
+            }
+            catch (Exception e)
+            {
+                var errorMessage = string.Format("{0} : Scan Host Range Failed using ScannerId: {1}", request.Input.Domain, request.DiscoveryScannerId);
+                _log.Error(errorMessage, e);
+                response.ErrorMessage = errorMessage;
+                return response;
             }
         }
     }
