@@ -239,7 +239,7 @@
     <Compile Include="Areas\Connectivity\Response\PingResponse.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
-    <Compile Include="Areas\Discovery\Request\ScanHostRangeBlockingMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\SpecificOuScanHostRangeMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanHostRangeMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanLocalAccountMessage.cs" />
     <Compile Include="Areas\Discovery\Request\ScanMachineMessage.cs">
