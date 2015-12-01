@@ -100,6 +100,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
                     var response = new SpecificOuScanHostRangeResponse
                     {
                         BatchId = batchId,
+                        BatchGuid = batchId,
+                        BatchCount = paging.BatchCount,
                         DiscoverySourceId = request.DiscoverySourceId,
                         ErrorCode = result.ErrorCode,
                         ErrorMessage = result.ErrorMessage,
