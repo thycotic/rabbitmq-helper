@@ -6,7 +6,6 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Res
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.Discovery.Request;
-using Thycotic.Messages.Areas.Discovery.Response;
 using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.General;
 
@@ -15,7 +14,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
     /// <summary>
     /// Host Range Consumer
     /// </summary>
-    public class HostRangeConsumer : IBasicConsumer<ScanHostRangeMessage>, IBlockingConsumer<ScanHostRangeBlockingMessage, ScanHostRangeBlockingResponse>
+    public class HostRangeConsumer : IBasicConsumer<ScanHostRangeMessage>, IBasicConsumer<SpecificOuScanHostRangeMessage>
     {
         private readonly IResponseBus _responseBus;
         private readonly IScannerFactory _scannerFactory;
@@ -79,36 +78,45 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         }
 
         /// <summary>
-        /// Scan Host Range Blocking
+        /// Specific OU Host Range
         /// </summary>
         /// <param name="request"></param>
-        public ScanHostRangeBlockingResponse Consume(ScanHostRangeBlockingMessage request)
+        public void Consume(SpecificOuScanHostRangeMessage request)
         {
-            var response = new ScanHostRangeBlockingResponse();
             try
             {
-                _log.Info(string.Format("{0} : Scan Host Range", request.Input.Domain));
+                _log.Info(string.Format("{0} : Specific OU Scan Host Range", request.Input.Domain));
                 var scanner = _scannerFactory.GetDiscoveryScanner(request.DiscoveryScannerId);
                 var result = scanner.ScanForHostRanges(request.Input);
-                var truncatedLog = result.Logs.Truncate();
-                response = new ScanHostRangeBlockingResponse
+                var batchId = Guid.NewGuid();
+                var paging = new Paging
                 {
-                    DiscoverySourceId = request.DiscoverySourceId,
-                    ErrorCode = result.ErrorCode,
-                    ErrorMessage = result.ErrorMessage,
-                    HostRangeItems = result.HostRangeItems,
-                    Logs = truncatedLog,
-                    Success = result.Success
+                    Total = result.HostRangeItems.Count(),
+                    Take = request.Input.PageSize
                 };
-                    _log.Info(string.Format("{0} : Send Host Range Blocking Results ({1})", request.Input.Domain, result.HostRangeItems.Length));
-                return response;
+                var truncatedLog = result.Logs.Truncate();
+                Enumerable.Range(0, paging.BatchCount).ToList().ForEach(x =>
+                {
+                    var response = new SpecificOuScanHostRangeResponse
+                    {
+                        BatchId = batchId,
+                        DiscoverySourceId = request.DiscoverySourceId,
+                        ErrorCode = result.ErrorCode,
+                        ErrorMessage = result.ErrorMessage,
+                        HostRangeItems = result.HostRangeItems.Skip(paging.Skip).Take(paging.Take).ToArray(),
+                        Logs = truncatedLog,
+                        Paging = paging,
+                        StatusMessages = { },
+                        Success = result.Success
+                    };
+                    _log.Info(string.Format("{0} : Send Specific OU Host Range Results Batch {1} of {2} ({3} total results)", request.Input.Domain, x + 1, paging.BatchCount, result.HostRangeItems.Length));
+                    _responseBus.Execute(response);
+                    paging.Skip = paging.NextSkip;
+                });
             }
             catch (Exception e)
             {
-                var errorMessage = string.Format("{0} : Scan Host Range Failed using ScannerId: {1}", request.Input.Domain, request.DiscoveryScannerId);
-                _log.Error(errorMessage, e);
-                response.ErrorMessage = errorMessage;
-                return response;
+                _log.Error(string.Format("{0} : Specific OU Scan Host Range Failed using ScannerId: {1}", request.Input.Domain, request.DiscoveryScannerId), e);
             }
         }
     }
