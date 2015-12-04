@@ -70,6 +70,10 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
 
             _log.Debug("Extracting log entries from provider");
             var logEntries = _recentLogEntryProvider.GetEntries().Select(MapLogEntries).ToList();
+            foreach (var entry in logEntries)
+            {
+                entry.Date = entry.Date.ToUniversalTime();
+            }
 
             //clear the recent log entries
             _log.Debug("Clearing log entries from provider");
