@@ -38,6 +38,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         {
             var description = new TopicDescription(topicName)
             {
+                EnableExpress = true,
                 EnableFilteringMessagesBeforePublishing = true
             };
 
@@ -68,6 +69,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         {
             var description = new QueueDescription(queueName)
             {
+                EnableExpress = true,
                 EnableDeadLetteringOnMessageExpiration = true
             };
 
@@ -138,6 +140,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
 
             var description = new SubscriptionDescription(topicName, subscriptionName)
             {
+                EnableDeadLetteringOnMessageExpiration = true,
+                EnableDeadLetteringOnFilterEvaluationExceptions = true,
                 RequiresSession = sessions,
                 ForwardTo = queueName
             };
