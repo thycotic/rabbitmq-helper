@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
+﻿namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
 {
     /// <summary>
     /// Interface for an Azure service bus manager.
@@ -32,5 +30,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <param name="deleteExisting">if set to <c>true</c> [delete previous].</param>
         void CreateRoutingKeyQueueSubscription(string queueName, string topicName, string routingKey, bool sessions = false,
             bool deleteExisting = false);
+
+        /// <summary>
+        /// Deletes the queue asynchronously.
+        /// </summary>
+        /// <param name="queueName">Name of the queue.</param>
+        void DeleteQueueAsync(string queueName);
     }
 }

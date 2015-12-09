@@ -1,11 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.ServiceBus.Messaging;
-using Thycotic.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
-using Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf;
 using Thycotic.MessageQueue.Client.Wrappers;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
@@ -38,6 +33,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// </summary>
         public void Dispose()
         {
+            var manager = _connection.CreateManager();
+
+            manager.DeleteQueueAsync(_queueName);
+
+
         }
 
         /// <summary>
@@ -57,9 +57,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public bool Next(int timeoutMilliseconds, out CommonDeliveryEventArgs response)
         {
-
             var requestClient = _connection.CreateQueueClient(_queueName);
-
+            
             var message = requestClient.Receive(TimeSpan.FromMilliseconds(timeoutMilliseconds));
 
             if (message == null)

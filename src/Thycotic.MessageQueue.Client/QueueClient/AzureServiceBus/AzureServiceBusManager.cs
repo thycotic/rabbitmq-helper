@@ -103,6 +103,19 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             CreateSqlStringSubscription(queueName, topicName, AzureServiceBusConnection.SubscriptionNames.RoutingKey, routingKey, sessions, deleteExisting);
         }
 
+        /// <summary>
+        /// Deletes the queue asynchronously.
+        /// </summary>
+        /// <param name="queueName">Name of the queue.</param>
+        public void DeleteQueueAsync(string queueName)
+        {
+             // Delete the topic if it already exists
+            if (_namespaceManager.QueueExists(queueName))
+            {
+                _namespaceManager.DeleteQueueAsync(queueName);
+            }
+        }
+
         private static string GetHashValue(string input)
         {
             return HashValues.GetOrAdd(input, i =>
