@@ -55,7 +55,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 builder.Register(context => new RabbitMqConnection(connectionString, userName, password, useSsl))
                     .As<ICommonConnection>().SingleInstance();
 
-                LoadRequestBus<ulong>(builder);
+                LoadRequestBus(builder);
             }
 
         }
@@ -90,7 +90,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 builder.Register(context => new MemoryMqConnection(connectionString, userName, password, useSsl))
                     .As<ICommonConnection>().SingleInstance();
 
-                LoadRequestBus<ulong>(builder);
+                LoadRequestBus(builder);
             }
         }
 
@@ -110,11 +110,11 @@ namespace Thycotic.DistributedEngine.Service.IoC
                 builder.Register(context => new AzureServiceBusConnection(connectionString))
                     .As<ICommonConnection>().SingleInstance();
                 
-                LoadRequestBus<Guid>(builder);
+                LoadRequestBus(builder);
             }
         }
 
-        private void LoadRequestBus<TDeliveryTag>(ContainerBuilder builder)
+        private void LoadRequestBus(ContainerBuilder builder)
         {
             using (LogContext.Create("Exchange"))
             {
