@@ -111,20 +111,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the error.
-        /// </summary>
-        /// <value>
-        /// The error.
-        /// </value>
-        public string Error
-        {
-            get { return _rawProperties.GetCustomProperty<string>("Error"); }
-            set { _rawProperties.SetCustomProperty("Error", value); }
-        }
-
-      
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AzureServiceBusModelProperties"/> class.
         /// </summary>
         public AzureServiceBusModelProperties()
@@ -156,7 +142,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
 
             if (_stream == null)
             {
-                throw new ApplicationException("Message is not mutable");
+                throw new ApplicationException("Message is immutable");
             }
 
             _stream.SetLength(0);

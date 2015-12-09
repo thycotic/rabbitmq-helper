@@ -8,11 +8,6 @@ using Thycotic.MessageQueue.Client.Wrappers;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
 {
-
-    //exchange - topic
-    //routingKey - routing key
-    //queue - NOT USED
-
     /// <summary>
     /// Azure service bus model
     /// </summary>
