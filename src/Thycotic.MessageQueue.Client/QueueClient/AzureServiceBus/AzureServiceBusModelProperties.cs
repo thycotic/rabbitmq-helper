@@ -26,7 +26,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// Gets if there is a ReplyTo in the properties
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public bool IsReplyToPresent()
         {
             return !string.IsNullOrWhiteSpace(ReplyTo);

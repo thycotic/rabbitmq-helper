@@ -130,7 +130,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <param name="retryDelayMs">The retry delay ms.</param>
         /// <param name="retryDelayGrowthFactor">The retry delay growth factor.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public ICommonModel OpenChannel(int retryAttempts, int retryDelayMs, float retryDelayGrowthFactor)
         {
             return new AzureServiceBusModel(this);

@@ -58,10 +58,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// with, for use in acknowledging received messages, for
         /// instance.
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public ICommonModel CommonModel
         {
-            get { throw new NotImplementedException(); }
+            get { return null; }
         }
 
         /// <summary>

@@ -19,7 +19,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// with, for use in acknowledging received messages, for
         /// instance.
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public IModel Model { get { return CommonModel.GetRawValue<IModel>(); } }
 
 #pragma warning disable 0067
@@ -44,10 +43,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// consumer with the broker.
         /// </summary>
         /// <param name="consumerTag"></param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void HandleBasicConsumeOk(string consumerTag)
         {
-            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -55,10 +52,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// consumer from the broker.
         /// </summary>
         /// <param name="consumerTag"></param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void HandleBasicCancelOk(string consumerTag)
         {
-            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -68,10 +63,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// cancellation due to basicCancel.
         /// </summary>
         /// <param name="consumerTag"></param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void HandleBasicCancel(string consumerTag)
         {
-            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -81,7 +74,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// <param name="reason">Information about the reason why a particular model, session, or connection was destroyed.</param>
         public void HandleModelShutdown(object model, ShutdownEventArgs reason)
         {
-            //throw new NotImplementedException();
         }
         #endregion
 
@@ -95,7 +87,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// <param name="routingKey"></param>
         /// <param name="properties"></param>
         /// <param name="body"></param>
-        /// <exception cref="System.NotImplementedException"></exception>
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>

@@ -185,7 +185,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="prefetchSize">Size of the prefetch.</param>
         /// <param name="prefetchCount">The prefetch count.</param>
         /// <param name="global">if set to <c>true</c> global.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void BasicQos(uint prefetchSize, ushort prefetchCount, bool global)
         {
             //nothing here
@@ -198,7 +197,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="exchange"></param>
         /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void BasicAck(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple)
         {
             _server.BasicAck(deliveryTag, exchange, routingKey, multiple);
@@ -212,7 +210,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         /// <param name="requeue">if set to <c>true</c> [requeue].</param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void BasicNack(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
             _server.BasicNack(deliveryTag, exchange, routingKey, multiple, requeue);
@@ -236,7 +233,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="exclusive">if set to <c>true</c> [exclusive].</param>
         /// <param name="autoDelete">if set to <c>true</c> [automatic delete].</param>
         /// <param name="arguments">The arguments.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public ICommonQueue AutoDeleteQueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
             return new MemoryMqQueue(queueName);
@@ -248,7 +244,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="exchangeName">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void QueueBind(string queueName, string exchangeName, string routingKey)
         {
             _server.QueueBind(queueName, exchangeName, routingKey);
@@ -259,7 +254,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// </summary>
         /// <param name="queueName"></param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public ISubscription CreateSubscription(string queueName)
         {
             return new MemoryMqSubscription(queueName, _server, _callback);

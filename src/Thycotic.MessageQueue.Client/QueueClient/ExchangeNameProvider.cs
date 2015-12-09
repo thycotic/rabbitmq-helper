@@ -17,7 +17,6 @@
         /// Gets the current change.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public string GetCurrentExchange()
         {
             return ExchangeName;

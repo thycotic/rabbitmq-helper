@@ -153,7 +153,6 @@ namespace Thycotic.MemoryMq.Subsystem
         /// <summary>
         /// Negatively acknowledge all pending delivery tags.
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void NegativelyAcknoledgeAllPending()
         {
             List<ulong> unackedDeliveryTags;
