@@ -55,7 +55,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
 
             try
             {
-                using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
+                using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, Convert.ToInt32(DefaultConfigValues.Model.RetryDelay.TotalMilliseconds), DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
                     channel.ConfirmSelect();
                     channel.ExchangeDeclare(exchangeName, DefaultConfigValues.ExchangeType);
@@ -99,7 +99,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
 
             try
             {
-                using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
+                using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, Convert.ToInt32(DefaultConfigValues.Model.RetryDelay.TotalMilliseconds), DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
                     var queueName = channel.AutoDeleteQueueDeclare().QueueName;
 

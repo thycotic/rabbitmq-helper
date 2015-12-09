@@ -153,7 +153,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                     using (
                         var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts,
-                            DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
+                            Convert.ToInt32(DefaultConfigValues.Model.RetryDelay.TotalMilliseconds), DefaultConfigValues.Model.RetryDelayGrowthFactor))
                     {
                         channel.ConfirmSelect();
 

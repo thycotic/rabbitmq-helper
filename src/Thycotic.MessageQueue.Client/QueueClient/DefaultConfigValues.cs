@@ -21,8 +21,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <summary>
         /// Alias for the re-open delay
         /// </summary>
-        //TODO: Turn into a TimeSpan
-        public const int ReOpenDelay = 10*1000; //10 seconds
+        public static readonly TimeSpan ReOpenDelay = TimeSpan.FromSeconds(10);
 
         /// <summary>
         /// Alias for the confirmation timeout
@@ -42,7 +41,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             /// <summary>
             /// Alias for the retry delay in milliseconds
             /// </summary>
-            public const int RetryDelayMs = 100;
+            public static readonly TimeSpan RetryDelay = TimeSpan.FromMilliseconds(100);
 
             /// <summary>
             /// Alias for the retry delay growth factor

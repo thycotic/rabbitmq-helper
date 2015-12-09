@@ -93,7 +93,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 const int retryAttempts = -1; //forever
                 const int retryDelayGrowthFactor = 1;
 
-                var model = _connection.OpenChannel(retryAttempts, DefaultConfigValues.ReOpenDelay,
+                var model = _connection.OpenChannel(retryAttempts, Convert.ToInt32(DefaultConfigValues.ReOpenDelay.TotalMilliseconds),
                     retryDelayGrowthFactor);
 
                 //TODO: Re-enable when Memory Mq honors this -dkk
