@@ -157,8 +157,6 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
             var queueType = _configurationProvider(ConfigurationKeys.Pipeline.QueueType);
 
-            queueType = SupportedMessageQueues.AzureServiceBus;
-
             switch (queueType)
             {
                 case SupportedMessageQueues.MemoryMq:
