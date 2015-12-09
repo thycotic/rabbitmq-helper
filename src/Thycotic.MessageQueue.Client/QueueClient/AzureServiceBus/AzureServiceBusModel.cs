@@ -112,17 +112,26 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate,
             ICommonModelProperties properties, byte[] body)
         {
-            var topicClient = _connection.CreateTopicClient(exchangeName);
-
-            properties.CorrelationId = routingKey;
 
             var azureProperties = (AzureServiceBusModelProperties)properties;
             azureProperties.Exchange = exchangeName;
             azureProperties.RoutingKey = routingKey;
-            
+
             azureProperties.SetBytes(body);
 
-            topicClient.Send(properties.GetRawValue<BrokeredMessage>());
+            var message = properties.GetRawValue<BrokeredMessage>();
+
+            //this is a directed message without an exchange
+            if (string.IsNullOrEmpty(exchangeName))
+            {
+                var messageSender = _connection.CreateSender(routingKey);
+                messageSender.Send(message);
+            }
+            else
+            {
+                var topicClient = _connection.CreateTopicClient(exchangeName);
+                topicClient.Send(message);
+            }
         }
 
         /// <summary>
@@ -247,7 +256,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
                 }
             }
 
-            _requestClient = _connection.CreateQueueClient(queueName);
+            _requestClient = _connection.CreateReceiver(queueName);
 
             _consumeTask = Task.Factory.StartNew(() =>
             {

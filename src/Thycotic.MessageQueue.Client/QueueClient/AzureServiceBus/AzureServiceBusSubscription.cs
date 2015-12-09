@@ -36,8 +36,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             var manager = _connection.CreateManager();
 
             manager.DeleteQueueAsync(_queueName);
-
-
         }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public bool Next(int timeoutMilliseconds, out CommonDeliveryEventArgs response)
         {
-            var requestClient = _connection.CreateQueueClient(_queueName);
+            var requestClient = _connection.CreateReceiver(_queueName);
             
             var message = requestClient.Receive(TimeSpan.FromMilliseconds(timeoutMilliseconds));
 

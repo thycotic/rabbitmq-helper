@@ -76,31 +76,30 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             return messagingFactory.CreateTopicClient(topicPath);
         }
 
-        ///// <summary>
-        ///// Creates the subscription client.
-        ///// </summary>
-        ///// <param name="topicPath">The topic path.</param>
-        ///// <param name="subscriptionName">Name of the subscription.</param>
-        ///// <returns></returns>
-        //public SubscriptionClient CreateSubscriptionClient(string topicPath, string subscriptionName)
-        //{
-        //    var messagingFactory = GetFactory(_connectionString);
-
-        //    return messagingFactory.CreateSubscriptionClient(topicPath, subscriptionName, ReceiveMode.PeekLock);
-        //}
-
         /// <summary>
-        /// Creates the queue client.
+        /// Creates the message sender.
         /// </summary>
-        /// <param name="queueName">Name of the queue.</param>
+        /// <param name="entityName">Name of the entity.</param>
         /// <returns></returns>
-        public MessageReceiver CreateQueueClient(string queueName)
+        public MessageSender CreateSender(string entityName)
         {
             var messagingFactory = GetFactory(_connectionString);
 
-            return messagingFactory.CreateMessageReceiver(queueName, ReceiveMode.PeekLock);
+            return messagingFactory.CreateMessageSender(entityName);
         }
+        
+        /// <summary>
+        /// Creates the queue client.
+        /// </summary>
+        /// <param name="entityName">Name of the entity.</param>
+        /// <returns></returns>
+        public MessageReceiver CreateReceiver(string entityName)
+        {
+            var messagingFactory = GetFactory(_connectionString);
 
+            return messagingFactory.CreateMessageReceiver(entityName, ReceiveMode.PeekLock);
+        }
+       
         private static MessagingFactory GetFactory(string connectionString)
         {
             var match = ConnectionStringRegex.Matches(connectionString);

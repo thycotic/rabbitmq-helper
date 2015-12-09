@@ -24,20 +24,18 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         TopicClient CreateTopicClient(string topicPath);
 
         /// <summary>
-        /// Creates the queue client.
+        /// Creates the sender.
         /// </summary>
-        /// <param name="queueName">Name of the queue.</param>
+        /// <param name="entityName">Name of the entity.</param>
         /// <returns></returns>
-        MessageReceiver CreateQueueClient(string queueName);
+        MessageSender CreateSender(string entityName);
 
-        ///// <summary>
-        ///// Creates the subscription client.
-        ///// </summary>
-        ///// <param name="topicPath">The topic path.</param>
-        ///// <param name="subscriptionName">Name of the subscription.</param>
-        ///// <returns></returns>
-        //SubscriptionClient CreateSubscriptionClient(string topicPath, string subscriptionName);
+        /// <summary>
+        /// Creates the receiver.
+        /// </summary>
+        /// <param name="entityName">Name of the entity.</param>
+        /// <returns></returns>
+        MessageReceiver CreateReceiver(string entityName);
 
-        
     }
 }

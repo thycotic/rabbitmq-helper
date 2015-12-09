@@ -162,7 +162,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                         properties.CorrelationId = correlationId;
                         properties.ResponseType = responseType;
 
-                        var replyToExchangeName = originatingExchangeName;//string.Empty;
+                        //reply-to's do not use exchange names since there is a reply-to address
+                        var replyToExchangeName = string.Empty;
 
                         channel.BasicPublish(replyToExchangeName, routingKey,
                             DefaultConfigValues.Model.Publish.NotMandatory,
