@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
@@ -29,6 +30,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <param name="connection">The connection.</param>
         public AzureServiceBusModel(IAzureServiceBusConnection connection)
         {
+            Contract.Requires<ArgumentNullException>(connection != null);
+
             _connection = connection;
             IsOpen = true;
         }
@@ -39,8 +42,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <value>
         /// The raw value.
         /// </value>
-        public object RawValue {
-            get { return null; }
+        public object RawValue
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<object>() == null);
+
+                //there is no raw model
+                return null;
+            }
         }
 
 

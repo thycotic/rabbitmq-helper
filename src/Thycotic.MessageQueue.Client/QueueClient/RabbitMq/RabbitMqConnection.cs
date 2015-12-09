@@ -170,7 +170,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 return;
             }
 
-            _log.Warn(string.Format("Recovering connection because {0}", reason != null ? reason.ToString() : "Reason unknown"));
+            _log.Warn(string.Format("Recovering connection because {0}", reason));
             ResetConnection();
 
         }

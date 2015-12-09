@@ -1,4 +1,6 @@
-﻿using Thycotic.MessageQueue.Client.Wrappers;
+﻿using System;
+using System.Diagnostics.Contracts;
+using Thycotic.MessageQueue.Client.Wrappers;
 
 namespace Thycotic.MessageQueue.Client.QueueClient
 {
@@ -75,6 +77,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         public CommonDeliveryEventArgs(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
+            Contract.Requires<ArgumentNullException>(deliveryTag != null);
+
             ConsumerTag = consumerTag;
             DeliveryTag = new DeliveryTagWrapper(deliveryTag.Value);
             Redelivered = redelivered;

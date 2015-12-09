@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace Thycotic.MessageQueue.Client.Wrappers
 {
@@ -33,6 +34,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// </returns>
         public static implicit operator ulong(DeliveryTagWrapper value)
         {
+            Contract.Requires<ArgumentNullException>(value != null);
+
             return (ulong)value.Value;
         }
 
@@ -45,6 +48,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// </returns>
         public static implicit operator Guid(DeliveryTagWrapper value)
         {
+            Contract.Requires<ArgumentNullException>(value != null);
+
             return (Guid)value.Value;
         }
     }

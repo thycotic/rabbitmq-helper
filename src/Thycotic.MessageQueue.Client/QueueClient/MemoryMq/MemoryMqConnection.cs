@@ -119,7 +119,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 return;
             }
 
-            _log.Warn(string.Format("Recovering connection"));//" because {0}", reason != null ? reason.ToString() : "Reason unknown"));
+            //reason has no useful information
+            _log.Warn("Recovering connection");
             ResetConnection();
 
         }

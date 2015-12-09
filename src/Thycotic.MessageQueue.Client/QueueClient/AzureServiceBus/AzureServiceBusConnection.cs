@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.ServiceBus;
@@ -52,6 +53,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <param name="connectionString">The connection string.</param>
         public AzureServiceBusConnection(string connectionString)
         {
+            Contract.Requires<ArgumentNullException>(connectionString != null);
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString));
+
             _connectionString = connectionString;
         }
 

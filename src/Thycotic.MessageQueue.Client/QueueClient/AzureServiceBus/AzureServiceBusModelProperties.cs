@@ -155,6 +155,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public byte[] GetBytes()
         {
+            Contract.Ensures(Contract.Result<byte[]>() != null);
+
             return _rawProperties.GetBytes();
         }
     }
@@ -171,6 +173,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public static string GetCustomePropertyKey(string key)
         {
+            Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(key));
+
+            Contract.Ensures(Contract.Result<string>() != null);
+
             return string.Format("X-Thy-{0}", key);
         }
 
@@ -182,6 +188,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public static bool HasCustomProperty(this BrokeredMessage message, string key)
         {
+            Contract.Requires<ArgumentNullException>(message != null);
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(key));
+
             return message.Properties.ContainsKey(GetCustomePropertyKey(key));
         }
 
@@ -194,6 +203,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public static T GetCustomProperty<T>(this BrokeredMessage message, string key)
         {
+            Contract.Requires<ArgumentNullException>(message != null);
+
             return message.HasCustomProperty(key) ? (T)message.Properties[GetCustomePropertyKey(key)] : default(T);
         }
 
@@ -218,6 +229,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public static byte[] GetBytes(this BrokeredMessage message)
         {
+            Contract.Requires<ArgumentNullException>(message != null);
+
+            Contract.Ensures(Contract.Result<byte[]>() != null);
+
             using (var ms = new MemoryStream())
             {
                 message.GetBody<Stream>().CopyTo(ms);
