@@ -16,6 +16,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
     /// <typeparam name="TConsumable">The type of the request.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <typeparam name="TConsumer">The type of the handler.</typeparam>
+    /// <seealso cref="Thycotic.MessageQueue.Client.Wrappers.ConsumerWrapperBase{TConsumable,TConsumer}" />
     public class BlockingConsumerWrapper<TConsumable, TResponse, TConsumer> : ConsumerWrapperBase<TConsumable, TConsumer>
         where TConsumable : class, IBlockingConsumable
         where TResponse : class
@@ -66,7 +67,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="properties">The properties.</param>
         /// <param name="body">The body.</param>
         /// <returns></returns>
-        protected override Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
+        protected override Task StartHandleTask(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
 
@@ -84,7 +85,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="routingKey">The routing key.</param>
         /// <param name="properties">The properties.</param>
         /// <param name="body">The body.</param>
-        private void ExecuteMessage(ulong deliveryTag, string exchangeName, string routingKey, ICommonModelProperties properties, byte[] body)
+        private void ExecuteMessage(DeliveryTagWrapper deliveryTag, string exchangeName, string routingKey, ICommonModelProperties properties, byte[] body)
         {
             using (LogCorrelation.Create())
             {
@@ -141,7 +142,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             }
         }
 
-        private void Respond(string originatingExchangeName, string replyTo, object response, string correlationId, string type)
+        private void Respond(string originatingExchangeName, string replyTo, object response, string correlationId, string responseType)
         {
             using (LogContext.Create("Respond"))
             {
@@ -159,10 +160,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                         var properties = channel.CreateBasicProperties();
 
                         properties.CorrelationId = correlationId;
-                        properties.Type = type;
+                        properties.ResponseType = responseType;
 
-                        //reply-to's do not use exchange names since there is a reply-to address
-                        var replyToExchangeName = string.Empty;
+                        var replyToExchangeName = originatingExchangeName;//string.Empty;
 
                         channel.BasicPublish(replyToExchangeName, routingKey,
                             DefaultConfigValues.Model.Publish.NotMandatory,

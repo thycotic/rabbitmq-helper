@@ -14,10 +14,10 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 {ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
                 {ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
                 {
-                    ConfigurationKeys.Pipeline.ConnectionString,
+                    ConfigurationKeys.Pipeline.MemoryMq.ConnectionString,
                     ConnectionStringHelpers.GetLocalMemoryMqConnectionString()
                 },
-                {ConfigurationKeys.Pipeline.UseSsl, "false"}
+                {ConfigurationKeys.Pipeline.MemoryMq.UseSsl, "false"}
             };
         }
 
@@ -29,10 +29,10 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 {ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
                 {ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.MemoryMq},
                 {
-                    ConfigurationKeys.Pipeline.ConnectionString,
+                    ConfigurationKeys.Pipeline.MemoryMq.ConnectionString,
                     ConnectionStringHelpers.GetLocalMemoryMqConnectionString(DefaultPorts.MemoryMq.Ssl)
                 },
-                {ConfigurationKeys.Pipeline.UseSsl, "true"}
+                {ConfigurationKeys.Pipeline.MemoryMq.UseSsl, "true"}
             };
         }
 
@@ -43,12 +43,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 {ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
                 {ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
                 {
-                    ConfigurationKeys.Pipeline.ConnectionString,
+                    ConfigurationKeys.Pipeline.RabbitMq.ConnectionString,
                     ConnectionStringHelpers.GetLocalRabbitMqConnectionString()
                 },
-                {ConfigurationKeys.Pipeline.UserName, "j@c.com"},
-                {ConfigurationKeys.Pipeline.Password, "password1"},
-                {ConfigurationKeys.Pipeline.UseSsl, "false"}
+                {ConfigurationKeys.Pipeline.RabbitMq.UserName, "j@c.com"},
+                {ConfigurationKeys.Pipeline.RabbitMq.Password, "password1"},
+                {ConfigurationKeys.Pipeline.RabbitMq.UseSsl, "false"}
             };
         }
 
@@ -61,12 +61,12 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Configuration
                 {ConfigurationKeys.Exchange.Name, LoopbackExchangeName},
                 {ConfigurationKeys.Pipeline.QueueType, SupportedMessageQueues.RabbitMq},
                 {
-                    ConfigurationKeys.Pipeline.ConnectionString,
+                    ConfigurationKeys.Pipeline.RabbitMq.ConnectionString,
                     ConnectionStringHelpers.GetLocalRabbitMqConnectionString(DefaultPorts.RabbitMq.Ssl)
                 },
-                {ConfigurationKeys.Pipeline.UserName, "j@c.com"},
-                {ConfigurationKeys.Pipeline.Password, "password1"},
-                {ConfigurationKeys.Pipeline.UseSsl, "true"}
+                {ConfigurationKeys.Pipeline.RabbitMq.UserName, "j@c.com"},
+                {ConfigurationKeys.Pipeline.RabbitMq.Password, "password1"},
+                {ConfigurationKeys.Pipeline.RabbitMq.UseSsl, "true"}
             };
         }
     }

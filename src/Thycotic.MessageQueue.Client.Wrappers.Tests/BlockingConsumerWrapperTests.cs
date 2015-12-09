@@ -54,8 +54,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             _model = TestedSubstitute.For<ICommonModel>();
 
             //since we don't have access to the inner task used the model to know when consumption is done.
-            _model.When(m => m.BasicAck(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
-            _model.When(m => m.BasicNack(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
+            _model.When(m => m.BasicAck(Arg.Any<DeliveryTagWrapper>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
+            _model.When(m => m.BasicNack(Arg.Any<DeliveryTagWrapper>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
 
             _commonConnection = new TestConnection(_model);
             _exchangeNameProvider = TestedSubstitute.For<IExchangeNameProvider>();
@@ -110,7 +110,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             //TODO: Clean up this test and make BLocking publish
 
             var consumerTag = string.Empty;
-            ulong deliveryTag = 0;
+            var deliveryTag = new DeliveryTagWrapper(0);
             var redelivered = false;
             var routingKey = string.Empty;
             ICommonModelProperties properties = null;
@@ -121,7 +121,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             {
 
                 consumerTag = this.GenerateUniqueDummyName();
-                deliveryTag = 1;
+                deliveryTag = new DeliveryTagWrapper(1);
                 redelivered = false;
                 routingKey = this.GenerateUniqueDummyName();
                 properties = TestedSubstitute.For<ICommonModelProperties>();
@@ -156,7 +156,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             Then(() =>
             {
-                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<CancellationToken>(), Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
                 _consumer.Received().Consume(Arg.Any<TestBlockingConsumable>());
 
@@ -174,7 +174,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             //TODO: Clean up this test and make BLocking publish
 
             var consumerTag = string.Empty;
-            ulong deliveryTag = 0;
+            var deliveryTag = new DeliveryTagWrapper(0);
             var redelivered = false;
             var routingKey = string.Empty;
             ICommonModelProperties properties = null;
@@ -184,7 +184,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             {
 
                 consumerTag = this.GenerateUniqueDummyName();
-                deliveryTag = 1;
+                deliveryTag = new DeliveryTagWrapper(1);
                 redelivered = false;
                 routingKey = this.GenerateUniqueDummyName();
                 properties = TestedSubstitute.For<ICommonModelProperties>();
@@ -207,7 +207,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             Then(() =>
             {
-                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<CancellationToken>(), Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
                 _consumer.DidNotReceive().Consume(Arg.Any<IBlockingConsumable>());
                 _consumer.DidNotReceive().Consume(Arg.Any<TestBlockingConsumable>());

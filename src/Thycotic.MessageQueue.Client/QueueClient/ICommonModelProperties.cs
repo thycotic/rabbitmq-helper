@@ -39,7 +39,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <value>
         /// The type.
         /// </value>
-        string Type { get; set; }
+        string ResponseType { get; set; }
         
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="ICommonModelProperties"/> is persistent.
@@ -88,7 +88,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <value>
         /// The type.
         /// </value>
-        public string Type { get; set; }
+        public string ResponseType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="ICommonModelProperties" /> is persistent.

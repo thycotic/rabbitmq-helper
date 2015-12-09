@@ -15,6 +15,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
     /// </summary>
     /// <typeparam name="TConsumable">The type of the request.</typeparam>
     /// <typeparam name="TConsumer">The type of the handler.</typeparam>
+    /// <seealso cref="Thycotic.MessageQueue.Client.Wrappers.ConsumerWrapperBase{TConsumable,TConsumer}" />
     public class BasicConsumerWrapper<TConsumable, TConsumer> : ConsumerWrapperBase<TConsumable, TConsumer>
         where TConsumable : class, IBasicConsumable
         where TConsumer : IBasicConsumer<TConsumable>
@@ -61,7 +62,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="properties">The properties.</param>
         /// <param name="body">The body.</param>
         /// <returns></returns>
-        protected override Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
+        protected override Task StartHandleTask(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
             return Task.Factory.StartNew(() => ExecuteMessage(deliveryTag, redelivered, exchange, routingKey, body),
@@ -78,7 +79,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="exchangeName">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
         /// <param name="body">The body.</param>
-        private void ExecuteMessage(ulong deliveryTag, bool redelivered, string exchangeName, string routingKey, byte[] body)
+        private void ExecuteMessage(DeliveryTagWrapper deliveryTag, bool redelivered, string exchangeName, string routingKey, byte[] body)
         {
             const bool multiple = false;
 

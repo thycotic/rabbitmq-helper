@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MemoryMq;
@@ -198,7 +199,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple)
+        public void BasicAck(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple)
         {
             _server.BasicAck(deliveryTag, exchange, routingKey, multiple);
         }
@@ -212,7 +213,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         /// <param name="requeue">if set to <c>true</c> [requeue].</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
+        public void BasicNack(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
             _server.BasicNack(deliveryTag, exchange, routingKey, multiple, requeue);
         }
@@ -267,11 +268,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <summary>
         /// Basics the consume.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="noAck">if set to <c>true</c> [no ack].</param>
         /// <param name="consumer">The consumer.</param>
-        public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
+        public void BasicConsume(CancellationToken token, string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
+            //TODO: Honor the cancellation token
+
             //when the server sends us something, process it
             _callback.BytesReceived +=
                 (sender, deliveryArgs) => Task.Factory
@@ -279,7 +283,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     {
                         var properties = Map(deliveryArgs.Properties);
 
-                        consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, deliveryArgs.DeliveryTag,
+                        consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, new DeliveryTagWrapper(deliveryArgs.DeliveryTag),
                             deliveryArgs.Redelivered, deliveryArgs.Exchange,
                             deliveryArgs.RoutingKey, properties, deliveryArgs.Body);
                     })

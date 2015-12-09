@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using RabbitMQ.Client;
 using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.MessageQueue.Client.Wrappers.Proxies;
@@ -96,13 +97,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             _rawModel.BasicQos(prefetchSize, prefetchCount, global);
         }
 
-        public void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple)
+        public void BasicAck(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple)
         {
             //rabbit does not exchange or routing key information
             _rawModel.BasicAck(deliveryTag, multiple);
         }
 
-        public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
+        public void BasicNack(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
             //rabbit does not exchange or routing key information
             _rawModel.BasicNack(deliveryTag, multiple, requeue);
@@ -134,8 +135,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             return new RabbitMqSubscription(this, queueName);
         }
 
-        public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
+        public void BasicConsume(CancellationToken token, string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
+            //TODO: Honor the cancellation token
+
             _rawModel.BasicConsume(queueName, noAck, new RabbitMqConsumerWrapperProxy(consumer));
         }
 

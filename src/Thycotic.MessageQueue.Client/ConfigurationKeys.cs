@@ -1,4 +1,6 @@
-﻿namespace Thycotic.MessageQueue.Client
+﻿using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
+
+namespace Thycotic.MessageQueue.Client
 {
     /// <summary>
     /// Configuration keys
@@ -31,30 +33,86 @@
         /// </summary>
         public static class Pipeline
         {
+
             /// <summary>
             /// The queue type
             /// </summary>
             public const string QueueType = "Pipeline.QueueType";
 
             /// <summary>
-            /// The connection string
+            /// MemoryMq specific configuration keys
             /// </summary>
-            public const string ConnectionString = MemoryMq.ConfigurationKeys.ConnectionString;
+            public class MemoryMq 
+            {
+                /// <summary>
+                /// The connection string
+                /// </summary>
+                public const string ConnectionString = "Pipeline.ConnectionString";
+
+                /// <summary>
+                /// The user name
+                /// </summary>
+                public const string UserName = "Pipeline.UserName";
+
+                /// <summary>
+                /// The password
+                /// </summary>
+                public const string Password = "Pipeline.Password";
+
+                /// <summary>
+                /// Whether or not to use SSL
+                /// </summary>
+                public static string UseSsl = "Pipeline.UseSsl";
+
+                /// <summary>
+                /// The thumbprint
+                /// </summary>
+                public static string Thumbprint = "Pipeline.Thumbprint";
+            }
 
             /// <summary>
-            /// The user name
+            /// RabbitMq specific configuration keys
             /// </summary>
-            public const string UserName = MemoryMq.ConfigurationKeys.UserName;
+            public class RabbitMq
+            {
+                /// <summary>
+                /// The connection string
+                /// </summary>
+                public const string ConnectionString = "Pipeline.ConnectionString";
+
+                /// <summary>
+                /// The user name
+                /// </summary>
+                public const string UserName = "Pipeline.UserName";
+
+                /// <summary>
+                /// The password
+                /// </summary>
+                public const string Password = "Pipeline.Password";
+
+                /// <summary>
+                /// Whether or not to use SSL
+                /// </summary>
+                public static string UseSsl = "Pipeline.UseSsl";
+
+                /// <summary>
+                /// The thumbprint
+                /// </summary>
+                public static string Thumbprint = "Pipeline.Thumbprint";
+            }
 
             /// <summary>
-            /// The password
+            /// MemoryMq specific configuration keys
             /// </summary>
-            public const string Password = MemoryMq.ConfigurationKeys.Password;
+            public class AzureServiceBus 
+            {
 
-            /// <summary>
-            /// Whether or not to use SSL
-            /// </summary>
-            public static string UseSsl = MemoryMq.ConfigurationKeys.UseSsl;
+                /// <summary>
+                /// The connection string
+                /// </summary>
+                public const string ConnectionString = "Pipeline.ConnectionString";
+
+            }
         }
 
         /// <summary>

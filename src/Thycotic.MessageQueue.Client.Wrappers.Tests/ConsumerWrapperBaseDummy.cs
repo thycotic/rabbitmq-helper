@@ -23,7 +23,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
         }
 
-        protected override Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
+        protected override Task StartHandleTask(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
             return Task.Delay(TimeSpan.FromMilliseconds(0));

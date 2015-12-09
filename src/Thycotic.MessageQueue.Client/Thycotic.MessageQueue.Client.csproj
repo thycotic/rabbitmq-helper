@@ -187,6 +187,14 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.ServiceBus.3.0.9\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -200,6 +208,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -227,6 +236,14 @@
     <Compile Include="DefaultPorts.cs" />
     <Compile Include="IPriorityScheduler.cs" />
     <Compile Include="IRequestBus.cs" />
+    <Compile Include="QueueClient\AzureServiceBus\AzureServiceBusConnection.cs" />
+    <Compile Include="QueueClient\AzureServiceBus\AzureServiceBusManager.cs" />
+    <Compile Include="QueueClient\AzureServiceBus\AzureServiceBusModel.cs" />
+    <Compile Include="QueueClient\AzureServiceBus\AzureServiceBusModelProperties.cs" />
+    <Compile Include="QueueClient\AzureServiceBus\AzureServiceBusSubscription.cs" />
+    <Compile Include="QueueClient\AzureServiceBus\IAzureServiceBusConnection.cs" />
+    <Compile Include="QueueClient\AzureServiceBus\IAzureServiceBusManager.cs" />
+    <Compile Include="QueueClient\AzureServiceBus\AzureServiceBusQueue.cs" />
     <Compile Include="QueueClient\CommonDeliveryEventArgs.cs" />
     <Compile Include="QueueClient\ExchangeNameProvider.cs" />
     <Compile Include="QueueClient\ICommonConnection.cs" />
@@ -258,6 +275,7 @@
     <Compile Include="QueueClient\DefaultConfigValues.cs" />
     <Compile Include="QueueClient\RoutingHelpers.cs" />
     <Compile Include="SupportedMessageQueues.cs" />
+    <Compile Include="Wrappers\DeliveryTagWrapper.cs" />
     <Compile Include="Wrappers\IConsumerWrapperBase.cs" />
     <Compile Include="Wrappers\Proxies\CommonConsumerWrapperProxy.cs" />
     <Compile Include="Wrappers\Proxies\RabbitMqConsumerWrapperProxy.cs" />

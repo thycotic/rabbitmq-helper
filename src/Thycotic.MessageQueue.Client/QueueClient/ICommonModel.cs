@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.Utility.TestChain;
 
@@ -80,7 +81,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="exchange"></param>
         /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
-        void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple);
+        void BasicAck(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple);
 
         /// <summary>
         /// Basics the nack.
@@ -90,7 +91,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         /// <param name="requeue">if set to <c>true</c> [requeue].</param>
-        void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue);
+        void BasicNack(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple, bool requeue);
 
         /// <summary>
         /// Queues the declare.
@@ -126,17 +127,18 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <summary>
         /// Basics the consume.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="noAck">if set to <c>true</c> [no ack].</param>
         /// <param name="consumer">The consumer.</param>
-        void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer);
+        void BasicConsume(CancellationToken token, string queueName, bool noAck, IConsumerWrapperBase consumer);
 
         /// <summary>
         /// Closes this instance.
         /// </summary>
         void Close();
 
-        
+
     }
 
     /// <summary>
@@ -187,8 +189,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         public void BasicPublish(string exchangeName, string routingKey, bool mandatory, bool immediate, ICommonModelProperties properties, byte[] body)
         {
             Contract.Requires<ArgumentNullException>(exchangeName != null);
-            Contract.Requires<ArgumentNullException>(properties!=null);
-            Contract.Requires<ArgumentNullException>(body!=null);
+            Contract.Requires<ArgumentNullException>(properties != null);
+            Contract.Requires<ArgumentNullException>(body != null);
         }
 
         /// <summary>
@@ -233,8 +235,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="exchange"></param>
         /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
-        public void BasicAck(ulong deliveryTag, string exchange, string routingKey, bool multiple)
+        public void BasicAck(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple)
         {
+            Contract.Requires<ArgumentNullException>(deliveryTag != null);
             Contract.Requires<ArgumentNullException>(exchange != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
         }
@@ -247,8 +250,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="routingKey"></param>
         /// <param name="multiple">if set to <c>true</c> [multiple].</param>
         /// <param name="requeue">if set to <c>true</c> [requeue].</param>
-        public void BasicNack(ulong deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
+        public void BasicNack(DeliveryTagWrapper deliveryTag, string exchange, string routingKey, bool multiple, bool requeue)
         {
+            Contract.Requires<ArgumentNullException>(deliveryTag != null);
             Contract.Requires<ArgumentNullException>(exchange != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(routingKey));
         }
@@ -309,13 +313,15 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <summary>
         /// Basics the consume.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="noAck">if set to <c>true</c> [no ack].</param>
         /// <param name="consumer">The consumer.</param>
-        public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
+        public void BasicConsume(CancellationToken token, string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
+            Contract.Requires<ArgumentNullException>(token != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
-            Contract.Requires<ArgumentNullException>(consumer!=null);
+            Contract.Requires<ArgumentNullException>(consumer != null);
         }
 
 

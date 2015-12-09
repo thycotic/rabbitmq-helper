@@ -102,7 +102,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         public void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties,
             byte[] body)
         {
-            Target.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, exchange, routingKey, new RabbitMqModelProperties(properties), body);
+            Target.HandleBasicDeliver(consumerTag, new DeliveryTagWrapper(deliveryTag), redelivered, exchange, routingKey, new RabbitMqModelProperties(properties), body);
         }
 
     }

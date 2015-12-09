@@ -36,7 +36,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
-        void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
+        void HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body);
 
         /// <summary>
@@ -85,12 +85,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
-        public void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
+        public void HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
-            //TODO: Dobri to fix!
             //Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(consumerTag));
-            //Contract.Requires<ArgumentException>(deliveryTag >= 0); //no needed since ulong
+            Contract.Requires<ArgumentException>(deliveryTag != null);
             Contract.Requires<ArgumentException>(exchange != null);
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(routingKey));
             Contract.Requires<ArgumentException>(properties != null);

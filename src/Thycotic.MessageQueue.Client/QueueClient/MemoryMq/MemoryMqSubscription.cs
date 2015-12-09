@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf;
+using Thycotic.MessageQueue.Client.Wrappers;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
 {
@@ -95,7 +96,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             }
             else
             {
-                response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, eventArgs.DeliveryTag,
+                response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, new DeliveryTagWrapper(eventArgs.DeliveryTag),
                     eventArgs.Redelivered, eventArgs.Exchange,
                     eventArgs.RoutingKey, new MemoryMqModelProperties(eventArgs.Properties), eventArgs.Body);
 

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.IdentityModel.Metadata;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Autofac;
 using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus;
 using Thycotic.MessageQueue.Client.QueueClient.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
 
@@ -30,18 +31,18 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("RabbitMq"))
             {
                 var connectionString =
-                    _configurationProvider(ConfigurationKeys.Pipeline.ConnectionString);
+                    _configurationProvider(ConfigurationKeys.Pipeline.RabbitMq.ConnectionString);
                 _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-                var userName = _configurationProvider(ConfigurationKeys.Pipeline.UserName);
+                var userName = _configurationProvider(ConfigurationKeys.Pipeline.RabbitMq.UserName);
                 _log.Info(string.Format("RabbitMq username is {0}", userName));
 
-                var password = _configurationProvider(ConfigurationKeys.Pipeline.Password);
+                var password = _configurationProvider(ConfigurationKeys.Pipeline.RabbitMq.Password);
                 _log.Info(string.Format("RabbitMq password is {0}",
                     string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.RabbitMq.UseSsl));
                 if (useSsl)
                 {
                     _log.Info("RabbitMq using encryption");
@@ -53,6 +54,8 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
                 builder.Register(context => new RabbitMqConnection(connectionString, userName, password, useSsl))
                     .As<ICommonConnection>().SingleInstance();
+
+                LoadRequestBus<ulong>(builder);
             }
 
         }
@@ -62,18 +65,18 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("MemoryMq"))
             {
                 var connectionString =
-                    _configurationProvider(ConfigurationKeys.Pipeline.ConnectionString);
+                    _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-                var userName = _configurationProvider(ConfigurationKeys.Pipeline.UserName);
+                var userName = _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.UserName);
                 _log.Info(string.Format("MemoryMq username is {0}", userName));
 
-                var password = _configurationProvider(ConfigurationKeys.Pipeline.Password);
+                var password = _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.Password);
                 _log.Info(string.Format("MemoryMq password is {0}",
                     string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.UseSsl));
                 if (useSsl)
                 {
                     _log.Info("MemoryMq using encryption");
@@ -86,10 +89,32 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
                 builder.Register(context => new MemoryMqConnection(connectionString, userName, password, useSsl))
                     .As<ICommonConnection>().SingleInstance();
+
+                LoadRequestBus<ulong>(builder);
             }
         }
 
-        private void LoadRequestBus(ContainerBuilder builder)
+        private void LoadAzureServiceBus(ContainerBuilder builder)
+        {
+            using (LogContext.Create("Azure ServiceBus"))
+            {
+                var connectionString =
+                    _configurationProvider(ConfigurationKeys.Pipeline.AzureServiceBus.ConnectionString);
+
+                connectionString =
+                    @"Endpoint=sb://bus01-qa01-ss-east-us-thycotic.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=vuaqtrteQG53qu18ZFKOzz74XRiOnNnrY1lmXL+tZm8=";
+                
+                _log.Info(string.Format("Azure ServiceBus connection is {0}", 
+                    Regex.Replace(connectionString, @"SharedAccessKeyName=\w+|SharedAccessKey=.*", "*")));
+
+                builder.Register(context => new AzureServiceBusConnection(connectionString))
+                    .As<ICommonConnection>().SingleInstance();
+                
+                LoadRequestBus<Guid>(builder);
+            }
+        }
+
+        private void LoadRequestBus<TDeliveryTag>(ContainerBuilder builder)
         {
             using (LogContext.Create("Exchange"))
             {
@@ -131,17 +156,23 @@ namespace Thycotic.DistributedEngine.Service.IoC
             _log.Debug("Initializing message queue dependencies...");
 
             var queueType = _configurationProvider(ConfigurationKeys.Pipeline.QueueType);
-            
-            if (queueType == SupportedMessageQueues.RabbitMq)
-            {
-                LoadRabbitMq(builder);
-            }
-            else
-            {
-                LoadMemoryMq(builder);
-            }
 
-            LoadRequestBus(builder);
+            queueType = SupportedMessageQueues.AzureServiceBus;
+
+            switch (queueType)
+            {
+                case SupportedMessageQueues.MemoryMq:
+                    LoadMemoryMq(builder);
+                    break;
+                case SupportedMessageQueues.RabbitMq:
+                    LoadRabbitMq(builder);
+                    break;
+                case  SupportedMessageQueues.AzureServiceBus:
+                    LoadAzureServiceBus(builder);
+                    break;
+                default:
+                    throw new NotSupportedException(string.Format("{0} is not supported", queueType));
+            }
         }
     }
 }

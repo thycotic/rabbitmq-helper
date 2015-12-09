@@ -60,7 +60,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             Contract.Ensures(Contract.Result<string>() != null);
             Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
-            var queueName = string.Format("{0}:{1}:{2}", exchangeName, consumerType.FullName, consumer.GetRoutingKey(consumableType));
+            var queueName = string.Format("{0}-{1}-{2}", exchangeName, consumerType.FullName, consumer.GetRoutingKey(consumableType));
 
             Contract.Assume(queueName != null);
             Contract.Assume(!string.IsNullOrWhiteSpace(queueName));

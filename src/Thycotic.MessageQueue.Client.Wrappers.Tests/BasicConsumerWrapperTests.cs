@@ -29,7 +29,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         private IPrioritySchedulerProvider _prioritySchedulerProvider;
         private Func<Owned<IBasicConsumer<IBasicConsumable>>> _consumerFactory;
         private IBasicConsumer<IBasicConsumable> _consumer;
-        
+
 
         private void WaitToOpenChannel()
         {
@@ -53,8 +53,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             _model = TestedSubstitute.For<ICommonModel>();
 
             //since we don't have access to the inner task used the model to know when consumption is done.
-            _model.When(m => m.BasicAck(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
-            _model.When(m => m.BasicNack(Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
+            _model.When(m => m.BasicAck(Arg.Any<DeliveryTagWrapper>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
+            _model.When(m => m.BasicNack(Arg.Any<DeliveryTagWrapper>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<bool>())).Do(info => _cts.Cancel());
 
             _commonConnection = new TestConnection(_model);
             _exchangeNameProvider = TestedSubstitute.For<IExchangeNameProvider>();
@@ -117,7 +117,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         public void HandleBasicDeliverShouldRelayWhenAppropriate(bool redelivered, bool expired, bool relayIfExpired)
         {
             var consumerTag = string.Empty;
-            ulong deliveryTag = 0;
+            var deliveryTag = new DeliveryTagWrapper(0);
             var routingKey = string.Empty;
             ICommonModelProperties properties = null;
             TestBasicConsumable consumable = null;
@@ -127,7 +127,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             {
 
                 consumerTag = this.GenerateUniqueDummyName();
-                deliveryTag = 1;
+                deliveryTag = new DeliveryTagWrapper(1);
                 routingKey = this.GenerateUniqueDummyName();
                 properties = TestedSubstitute.For<ICommonModelProperties>();
                 consumable = new TestBasicConsumable
@@ -163,7 +163,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             Then(() =>
             {
-                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<CancellationToken>(), Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
                 if (!expired || relayIfExpired)
                 {
@@ -188,7 +188,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         public void HandleBasicDeliverShouldNotRelayCorrupted()
         {
             var consumerTag = string.Empty;
-            ulong deliveryTag = 0;
+            var deliveryTag = new DeliveryTagWrapper(0);
             var redelivered = false;
             var routingKey = string.Empty;
             ICommonModelProperties properties = null;
@@ -198,7 +198,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             {
 
                 consumerTag = this.GenerateUniqueDummyName();
-                deliveryTag = 1;
+                deliveryTag = new DeliveryTagWrapper(1);
                 redelivered = false;
                 routingKey = this.GenerateUniqueDummyName();
                 properties = TestedSubstitute.For<ICommonModelProperties>();
@@ -221,7 +221,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             Then(() =>
             {
-                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<CancellationToken>(), Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
                 _consumer.DidNotReceive().Consume(Arg.Any<IBasicConsumable>());
                 _consumer.DidNotReceive().Consume(Arg.Any<TestBasicConsumable>());

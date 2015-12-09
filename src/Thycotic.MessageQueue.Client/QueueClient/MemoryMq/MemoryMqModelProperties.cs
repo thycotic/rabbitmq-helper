@@ -59,7 +59,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <value>
         /// The type.
         /// </value>
-        public string Type
+        public string ResponseType
         {
             get { return _rawProperties.Type; }
             set { _rawProperties.Type = value; }

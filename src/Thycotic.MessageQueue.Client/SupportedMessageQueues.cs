@@ -14,5 +14,10 @@
         /// Alias for memory message queue
         /// </summary>
         public const string MemoryMq = "MemoryMq";
+
+        /// <summary>
+        /// Alias for azure service bus
+        /// </summary>
+        public const string AzureServiceBus = "AzureServiceBus";
     }
 }

@@ -1,6 +1,7 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.MessagePatterns;
+using Thycotic.MessageQueue.Client.Wrappers;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 {
@@ -30,7 +31,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 return false;
             }
 
-            response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, eventArgs.DeliveryTag, eventArgs.Redelivered, eventArgs.Exchange,
+            response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, new DeliveryTagWrapper(eventArgs.DeliveryTag), eventArgs.Redelivered, eventArgs.Exchange,
                 eventArgs.RoutingKey, new RabbitMqModelProperties(eventArgs.BasicProperties), eventArgs.Body);
             return true;
         }

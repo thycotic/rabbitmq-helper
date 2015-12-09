@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -12,6 +13,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
     /// </summary>
     /// <typeparam name="TConsumable">The type of the request.</typeparam>
     /// <typeparam name="TConsumer">The type of the handler.</typeparam>
+    /// <seealso cref="Thycotic.MessageQueue.Client.Wrappers.IConsumerWrapperBase" />
     public abstract class ConsumerWrapperBase<TConsumable, TConsumer> : IConsumerWrapperBase
         where TConsumable : IConsumable
     {
@@ -35,6 +37,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly object _syncRoot = new object();
 
         private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
+        private CancellationTokenSource _cts;
 
         /// <summary>
         /// PriorityScheduler to use (sets thread priority)
@@ -80,6 +83,13 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     CommonModel.Dispose();
                 }
 
+                if (_cts != null)
+                {
+                    _cts.Cancel();
+                }
+
+                _cts = new CancellationTokenSource();
+
                 const int retryAttempts = -1; //forever
                 const int retryDelayGrowthFactor = 1;
 
@@ -101,12 +111,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 model.QueueBind(_queueName, _exchangeName, _routingKey);
 
                 _log.Info(string.Format("Channel opened for {0}", _queueName));
-
-
+                
                 const bool noAck = false; //since this consumer will send an acknowledgement
                 var consumer = this;
 
-                model.BasicConsume(_queueName, noAck, consumer); //we will ack, hence no-ack=false
+                model.BasicConsume(_cts.Token, _queueName, noAck, consumer); //we will ack, hence no-ack=false
 
                 CommonModel = model;
             }
@@ -190,7 +199,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="properties">The properties.</param>
         /// <param name="body">The body.</param>
         /// <returns></returns>
-        protected abstract Task StartHandleTask(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
+        protected abstract Task StartHandleTask(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange,
             string routingKey,
             ICommonModelProperties properties, byte[] body);
 
@@ -207,7 +216,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
-        public void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange,
+        public void HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange,
             string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
@@ -222,6 +231,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             if (_disposed)
             {
                 return;
+            }
+
+            if (_cts != null)
+            {
+                _cts.Cancel();
             }
 
             _terminated = true;

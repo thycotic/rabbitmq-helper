@@ -1,4 +1,6 @@
-﻿namespace Thycotic.MessageQueue.Client.QueueClient
+﻿using Thycotic.MessageQueue.Client.Wrappers;
+
+namespace Thycotic.MessageQueue.Client.QueueClient
 {
     /// <summary>
     /// Deliver event arguments
@@ -19,7 +21,7 @@
         /// <value>
         /// The delivery tag.
         /// </value>
-        public ulong DeliveryTag { get; set; }
+        public DeliveryTagWrapper DeliveryTag { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="CommonDeliveryEventArgs"/> is redelivered.
@@ -70,11 +72,11 @@
         /// <param name="routingKey">The routing key.</param>
         /// <param name="properties">The properties.</param>
         /// <param name="body">The body.</param>
-        public CommonDeliveryEventArgs(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey,
+        public CommonDeliveryEventArgs(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
             ConsumerTag = consumerTag;
-            DeliveryTag = deliveryTag;
+            DeliveryTag = new DeliveryTagWrapper(deliveryTag.Value);
             Redelivered = redelivered;
             Exchange = exchange;
             RoutingKey = routingKey;
