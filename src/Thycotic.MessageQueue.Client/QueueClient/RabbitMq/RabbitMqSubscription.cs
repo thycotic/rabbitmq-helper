@@ -33,7 +33,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                 return false;
             }
 
-            _model.BasicAck(new DeliveryTagWrapper(eventArgs.DeliveryTag), eventArgs.Exchange, eventArgs.RoutingKey, false);
+            _subscription.Ack(eventArgs);
 
             response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, new DeliveryTagWrapper(eventArgs.DeliveryTag), eventArgs.Redelivered, eventArgs.Exchange,
                 eventArgs.RoutingKey, new RabbitMqModelProperties(eventArgs.BasicProperties), eventArgs.Body);
