@@ -222,9 +222,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// Queues the declare.
         /// </summary>
         /// <returns></returns>
-        public ICommonQueue QueueDeclare()
+        public ICommonQueue AutoDeleteQueueDeclare()
         {
-            var queueName = Guid.NewGuid().ToString();
+            var queueName = string.Format("temp-{0}", Guid.NewGuid());
             return new MemoryMqQueue(queueName);
         }
 
@@ -237,7 +237,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="autoDelete">if set to <c>true</c> [automatic delete].</param>
         /// <param name="arguments">The arguments.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
+        public ICommonQueue AutoDeleteQueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
             return new MemoryMqQueue(queueName);
         }

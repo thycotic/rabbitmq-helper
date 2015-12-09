@@ -101,7 +101,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             {
                 using (var channel = _connection.OpenChannel(DefaultConfigValues.Model.RetryAttempts, DefaultConfigValues.Model.RetryDelayMs, DefaultConfigValues.Model.RetryDelayGrowthFactor))
                 {
-                    var queueName = channel.QueueDeclare().QueueName;
+                    var queueName = channel.AutoDeleteQueueDeclare().QueueName;
 
                     using (var subscription = channel.CreateSubscription(queueName))
                     {

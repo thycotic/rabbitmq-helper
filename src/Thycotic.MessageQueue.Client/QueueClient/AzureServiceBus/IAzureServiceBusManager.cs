@@ -17,8 +17,9 @@
         /// Creates the queue.
         /// </summary>
         /// <param name="queueName">Name of the topic.</param>
+        /// <param name="autoDelete">if set to <c>true</c> [automatic delete].</param>
         /// <param name="deleteExisting">if set to <c>true</c> [delete existing].</param>
-        void CreateQueue(string queueName, bool deleteExisting = false);
+        void CreateQueue(string queueName, bool autoDelete = false, bool deleteExisting = false);
 
         /// <summary>
         /// Creates the routing key subscription.
@@ -30,11 +31,5 @@
         /// <param name="deleteExisting">if set to <c>true</c> [delete previous].</param>
         void CreateRoutingKeyQueueSubscription(string queueName, string topicName, string routingKey, bool sessions = false,
             bool deleteExisting = false);
-
-        /// <summary>
-        /// Deletes the queue asynchronously.
-        /// </summary>
-        /// <param name="queueName">Name of the queue.</param>
-        void DeleteQueueAsync(string queueName);
     }
 }

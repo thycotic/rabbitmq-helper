@@ -33,9 +33,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// </summary>
         public void Dispose()
         {
-            var manager = _connection.CreateManager();
-
-            manager.DeleteQueueAsync(_queueName);
         }
 
         /// <summary>
@@ -66,6 +63,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             }
             else
             {
+                requestClient.Complete(message.LockToken);
+
                 var properties = new AzureServiceBusModelProperties(message);
 
                 response = new CommonDeliveryEventArgs(string.Empty, new DeliveryTagWrapper(message.LockToken),

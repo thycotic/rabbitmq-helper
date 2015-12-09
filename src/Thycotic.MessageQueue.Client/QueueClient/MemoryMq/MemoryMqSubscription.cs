@@ -96,6 +96,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
             }
             else
             {
+                _server.BasicAck(eventArgs.DeliveryTag, eventArgs.Exchange, eventArgs.RoutingKey, false);
+
                 response = new CommonDeliveryEventArgs(eventArgs.ConsumerTag, new DeliveryTagWrapper(eventArgs.DeliveryTag),
                     eventArgs.Redelivered, eventArgs.Exchange,
                     eventArgs.RoutingKey, new MemoryMqModelProperties(eventArgs.Properties), eventArgs.Body);

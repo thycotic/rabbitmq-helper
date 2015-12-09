@@ -64,14 +64,20 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// Creates the queue.
         /// </summary>
         /// <param name="queueName">Name of the topic.</param>
+        /// <param name="autoDelete">if set to <c>true</c> [automatic delete].</param>
         /// <param name="deleteExisting">if set to <c>true</c> [delete existing].</param>
-        public void CreateQueue(string queueName, bool deleteExisting = false)
+        public void CreateQueue(string queueName, bool autoDelete = false, bool deleteExisting = false)
         {
             var description = new QueueDescription(queueName)
             {
                 EnableExpress = true,
                 EnableDeadLetteringOnMessageExpiration = true
             };
+
+            if (autoDelete)
+            {
+                description.AutoDeleteOnIdle = TimeSpan.FromMinutes(5);
+            }
 
             // Delete the topic if it already exists
             if (_namespaceManager.QueueExists(queueName))
@@ -103,19 +109,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             bool deleteExisting = false)
         {
             CreateSqlStringSubscription(queueName, topicName, AzureServiceBusConnection.SubscriptionNames.RoutingKey, routingKey, sessions, deleteExisting);
-        }
-
-        /// <summary>
-        /// Deletes the queue asynchronously.
-        /// </summary>
-        /// <param name="queueName">Name of the queue.</param>
-        public void DeleteQueueAsync(string queueName)
-        {
-             // Delete the topic if it already exists
-            if (_namespaceManager.QueueExists(queueName))
-            {
-                _namespaceManager.DeleteQueueAsync(queueName);
-            }
         }
 
         private static string GetHashValue(string input)

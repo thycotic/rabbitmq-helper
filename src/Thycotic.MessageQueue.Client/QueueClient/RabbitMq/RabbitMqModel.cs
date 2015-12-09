@@ -109,7 +109,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             _rawModel.BasicNack(deliveryTag, multiple, requeue);
         }
 
-        public ICommonQueue QueueDeclare()
+        public ICommonQueue AutoDeleteQueueDeclare()
         {
             var rawQueue = _rawModel.QueueDeclare();
             if (rawQueue == null)
@@ -120,7 +120,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             return Map(rawQueue);
         }
 
-        public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
+        public ICommonQueue AutoDeleteQueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
            return Map( _rawModel.QueueDeclare(queueName, durable, exclusive, autoDelete, arguments));
         }

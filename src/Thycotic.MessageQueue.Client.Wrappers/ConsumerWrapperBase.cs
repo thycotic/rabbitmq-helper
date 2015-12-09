@@ -107,7 +107,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                 model.ExchangeDeclare(_exchangeName, DefaultConfigValues.ExchangeType);
 
-                model.QueueDeclare(_queueName, true, false, false, null);
+                model.AutoDeleteQueueDeclare(_queueName, true, false, false, null);
                 model.QueueBind(_queueName, _exchangeName, _routingKey);
 
                 _log.Info(string.Format("Channel opened for {0}", _queueName));
