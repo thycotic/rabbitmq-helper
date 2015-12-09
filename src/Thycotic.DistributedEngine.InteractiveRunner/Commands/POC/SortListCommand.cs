@@ -38,7 +38,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner.Commands.POC
                     Items = Enumerable.Range(0, 25).ToList().Select(i => Guid.NewGuid().ToString()).ToArray()
                 };
 
-                var response = _bus.BlockingPublish<SortListResponse>(exchangeNameProvider.GetCurrentExchange(), message, 30*1000);
+                var response = _bus.BlockingPublish<SortListResponse>(exchangeNameProvider.GetCurrentExchange(), message, 30);
 
                 _log.Info("Posting completed.");
 
