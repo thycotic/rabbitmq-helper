@@ -78,13 +78,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         {
             get
             {
-                //always permanent
-                return true;//return _rawProperties.Persistent;
+                return _rawProperties.ForcePersistence;
             }
             set
             {
-                //always permanent
-                //_rawProperties.Persistent = value;
+                _rawProperties.ForcePersistence = value;
             }
         }
 
