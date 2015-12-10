@@ -260,7 +260,6 @@
     <Compile Include="QueueClient\MemoryMq\Wcf\MemoryMqWcfServiceConnectionFactory.cs" />
     <Compile Include="QueueClient\ModelShutdownEventArgs.cs" />
     <Compile Include="QueueClient\ICommonQueue.cs" />
-    <Compile Include="QueueClient\ProcessCounter.cs" />
     <Compile Include="QueueClient\RabbitMq\RabbitMqModel.cs" />
     <Compile Include="QueueClient\RabbitMq\RabbitMqModelProperties.cs" />
     <Compile Include="QueueClient\RabbitMq\RabbitMqQueue.cs" />

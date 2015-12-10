@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
+using Thycotic.Logging;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Reflection;
 
@@ -18,7 +19,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly IComponentContext _context;
 
         private readonly HashSet<IConsumerWrapperBase> _consumerWrappers = new HashSet<IConsumerWrapperBase>();
+
         private bool _disposed;
+
+        private readonly ILogWriter _log = Log.Get(typeof (ConsumerWrapperFactory));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsumerWrapperFactory"/> class.
@@ -123,10 +127,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
             var exceptions = new List<Exception>();
 
-            _consumerWrappers.ToList().ForEach(cw =>
+            _consumerWrappers.AsParallel().ForAll(cw =>
             {
                 try
                 {
+                    _log.Debug(string.Format("Disposing {0}", cw.GetType().FullName));
+
                     cw.Dispose();
                 }
                 catch (Exception ex)

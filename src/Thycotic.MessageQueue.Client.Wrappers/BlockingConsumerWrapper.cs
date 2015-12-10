@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
 using Thycotic.Logging;
@@ -26,8 +25,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly IMessageEncryptor _messageEncryptor;
         private readonly Func<Owned<TConsumer>> _consumerFactory;
         private readonly ICommonConnection _connection;
-        private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
 
+        private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockingConsumerWrapper{TConsumable, TResponse, TConsumer}" /> class.
@@ -77,10 +76,15 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 return Task.FromResult(false);
             }
 
-            return Task.Factory.StartNew(() => ExecuteMessage(deliveryTag, exchange, routingKey, properties, body),
-                CancellationToken.None,
+            var task = Task.Factory.StartNew(() => ExecuteMessage(deliveryTag, exchange, routingKey, properties, body),
+                ActiveTasks.Token,
                 TaskCreationOptions.None,
                 PriorityScheduler);
+
+            ActiveTasks.AddTask(task);
+
+            return task;
+
         }
 
         /// <summary>
@@ -100,7 +104,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                 try
                 {
-                    
+
                     TConsumable message;
 
                     try
@@ -120,20 +124,27 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     {
                         response = consumer.Value.Consume(message);
 
-                        _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TConsumable))));
+                        _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof (TConsumable))));
                     }
 
                     CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, false);
                 }
+                catch (ObjectDisposedException)
+                {
+                    CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, false, requeue: false);
+
+                    response = new BlockingConsumerError { Message = "Engine shutting down" };
+                    responseType = BlockingConsumerResponseTypes.Error;
+                }
                 catch (Exception ex)
                 {
                     _log.Error(
-                        string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TConsumable)),
+                        string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof (TConsumable)),
                             ex.Message), ex);
 
                     CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, false, requeue: false);
 
-                    response = new BlockingConsumerError { Message = ex.Message };
+                    response = new BlockingConsumerError {Message = ex.Message};
                     responseType = BlockingConsumerResponseTypes.Error;
                 }
 

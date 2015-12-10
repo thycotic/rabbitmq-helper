@@ -12,7 +12,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
     internal class RabbitMqModel : ICommonModel
     {
         private readonly IModel _rawModel;
-        private readonly ProcessCounter _processCounter;
 
         private readonly object _syncRoot = new object();
         private bool _disposed;
@@ -43,8 +42,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     });
                 }
             };
-
-            _processCounter = new ProcessCounter(GetType());
         }
 
 
@@ -146,14 +143,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 
         public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            _rawModel.BasicConsume(queueName, noAck, new RabbitMqConsumerWrapperProxy(consumer, _processCounter));
+            _rawModel.BasicConsume(queueName, noAck, new RabbitMqConsumerWrapperProxy(consumer));
         }
 
         public void Close()
         {
-            //wait for all processes to exit
-            _processCounter.Wait(TimeSpan.FromSeconds(10));
-
             _rawModel.Close();
         }
 
@@ -166,7 +160,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     return;
                 }
 
-                _rawModel.Close();
+                Close();
                 _rawModel.Dispose();
 
                 _disposed = true;

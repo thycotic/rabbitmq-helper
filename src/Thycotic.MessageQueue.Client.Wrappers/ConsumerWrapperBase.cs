@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -17,6 +16,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
     public abstract class ConsumerWrapperBase<TConsumable, TConsumer> : IConsumerWrapperBase
         where TConsumable : IConsumable
     {
+        /// <summary>
+        /// The active tasks
+        /// </summary>
+        protected readonly ActiveTasksMonitor ActiveTasks = new ActiveTasksMonitor(typeof(TConsumer));
+
         /// <summary>
         /// Retrieve the IModel this consumer is associated
         /// with, for use in acknowledging received messages, for
@@ -229,14 +233,16 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
             if (CommonModel == null || !CommonModel.IsOpen) return;
 
+            ActiveTasks.Cancel();
+
+            //TODO: Change this when consumers can cancel or honor a token
+            ActiveTasks.Wait(TimeSpan.FromMinutes(5));
+
             _log.Debug("Closing channel...");
             CommonModel.Close();
 
             _log.Debug("Disposing channel...");
             CommonModel.Dispose();
-
-            _log.Debug("Channel closed");
-            CommonModel = null;
 
             //do not dispose the connection
 

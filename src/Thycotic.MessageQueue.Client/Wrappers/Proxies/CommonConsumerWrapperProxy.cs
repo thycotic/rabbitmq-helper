@@ -10,8 +10,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
     /// </summary>
     public class CommonConsumerWrapperProxy : IConsumerWrapperBase
     {
-        private readonly ProcessCounter _processCounter;
-
         /// <summary>
         /// The target of the proxy.
         /// </summary>
@@ -31,14 +29,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// Initializes a new instance of the <see cref="CommonConsumerWrapperProxy" /> class.
         /// </summary>
         /// <param name="target">The target.</param>
-        /// <param name="processCounter">The process counter.</param>
-        public CommonConsumerWrapperProxy(IConsumerWrapperBase target, ProcessCounter processCounter)
+        public CommonConsumerWrapperProxy(IConsumerWrapperBase target)
         {
             Contract.Requires<ArgumentNullException>(target != null);
-            Contract.Requires<ArgumentNullException>(processCounter != null);
-
+            
             Target = target;
-            _processCounter = processCounter;
         }
 
         /// <summary>
@@ -65,17 +60,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         public Task HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey, ICommonModelProperties properties,
             byte[] body)
         {
-            //add another process to the counter
-            _processCounter.Increment();
-
             var task = Target.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, exchange, routingKey, properties, body);
 
-            //wait for the task to complete and decrement the counter
-            task.ContinueWith(task2 => { _processCounter.Decrement(); });
-
             return task;
-
-
         }
 
         /// <summary>

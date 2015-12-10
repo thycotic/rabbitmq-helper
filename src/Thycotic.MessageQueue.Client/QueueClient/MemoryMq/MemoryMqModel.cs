@@ -20,7 +20,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         private readonly IMemoryMqWcfService _server;
         private readonly MemoryMqWcfServiceCallback _callback;
         private readonly ICommunicationObject _communicationObject;
-        private readonly ProcessCounter _processCounter;
 
         private readonly object _syncRoot = new object();
         private bool _disposed;
@@ -76,8 +75,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     }
                 });
             };
-
-            _processCounter = new ProcessCounter(GetType());
         }
 
         /// <summary>
@@ -276,27 +273,25 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         {
             //when the server sends us something, process it
             _callback.BytesReceived +=
-                (sender, deliveryArgs) => Task.Factory
-                    .StartNew(() =>
-                    {
-                        var properties = Map(deliveryArgs.Properties);
+                (sender, deliveryArgs) =>
+                {
+                    var properties = Map(deliveryArgs.Properties);
 
-                        var proxy = new CommonConsumerWrapperProxy(consumer, _processCounter);
+                    var proxy = new CommonConsumerWrapperProxy(consumer);
 
-                        proxy.HandleBasicDeliver(deliveryArgs.ConsumerTag,
-                            new DeliveryTagWrapper(deliveryArgs.DeliveryTag),
-                            deliveryArgs.Redelivered, deliveryArgs.Exchange,
-                            deliveryArgs.RoutingKey, properties, deliveryArgs.Body);
+                    proxy.HandleBasicDeliver(deliveryArgs.ConsumerTag,
+                        new DeliveryTagWrapper(deliveryArgs.DeliveryTag),
+                        deliveryArgs.Redelivered, deliveryArgs.Exchange,
+                        deliveryArgs.RoutingKey, properties, deliveryArgs.Body)
 
-
-                    }, TaskCreationOptions.None)
-                    .ContinueWith(task =>
-                    {
-                        if (task.Exception != null)
+                        .ContinueWith(task =>
                         {
-                            _log.Error("Failed to consume message", task.Exception);
-                        }
-                    }, TaskContinuationOptions.None);
+                            if (task.Exception != null)
+                            {
+                                _log.Error("Failed to consume message", task.Exception);
+                            }
+                        }, TaskContinuationOptions.None);
+                };
 
             //tell the server we want to consume
             _server.BasicConsume(queueName);
@@ -307,9 +302,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// </summary>
         public void Close()
         {
-            //wait for all processes to exit
-            _processCounter.Wait(TimeSpan.FromSeconds(10));
-
             _communicationObject.Close();
 
             _callback.BytesReceived = null;

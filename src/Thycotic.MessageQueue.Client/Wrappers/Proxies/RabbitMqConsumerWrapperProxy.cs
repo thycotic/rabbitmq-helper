@@ -32,11 +32,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// Initializes a new instance of the <see cref="RabbitMqConsumerWrapperProxy" /> class.
         /// </summary>
         /// <param name="target">The target.</param>
-        /// <param name="processCounter">The process counter.</param>
-        public RabbitMqConsumerWrapperProxy(IConsumerWrapperBase target, ProcessCounter processCounter) : base(target, processCounter)
+        public RabbitMqConsumerWrapperProxy(IConsumerWrapperBase target) : base(target)
         {
             Contract.Requires<ArgumentNullException>(target != null);
-            Contract.Requires<ArgumentNullException>(processCounter != null);
         }
         
         #region Not needed

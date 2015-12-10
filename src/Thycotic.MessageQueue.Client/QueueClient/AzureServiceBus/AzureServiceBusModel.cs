@@ -17,7 +17,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
     {
         private readonly IAzureServiceBusConnection _connection;
         private MessageReceiver _requestClient;
-        private readonly ProcessCounter _processCounter;
 
         private Task _consumeTask;
         private CancellationTokenSource _cts;
@@ -37,7 +36,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             Contract.Requires<ArgumentNullException>(connection != null);
 
             _connection = connection;
-            _processCounter = new ProcessCounter(GetType());
 
             IsOpen = true;
         }
@@ -296,14 +294,21 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
 
                         var properties = Map(message);
 
-                        var proxy = new CommonConsumerWrapperProxy(consumer, _processCounter);
-                        
+                        var proxy = new CommonConsumerWrapperProxy(consumer);
+
                         proxy.HandleBasicDeliver(string.Empty, new DeliveryTagWrapper(message.LockToken),
                             message.DeliveryCount > 0,
                             properties.Exchange,
                             properties.RoutingKey,
-                            properties, message.GetBytes());
+                            properties, message.GetBytes())
 
+                            .ContinueWith(task =>
+                            {
+                                if (task.Exception != null)
+                                {
+                                    _log.Error("Failed to consume message", task.Exception);
+                                }
+                            }, TaskContinuationOptions.None);
                     }
 
                     catch (Exception ex)
@@ -332,9 +337,6 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         {
             //should exit cleanly
             _cts.Cancel();
-
-            //wait for all processes to exit
-            _processCounter.Wait(TimeSpan.FromSeconds(10));
 
             lock (_syncRoot)
             {

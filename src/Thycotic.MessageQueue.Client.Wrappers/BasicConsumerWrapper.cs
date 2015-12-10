@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
 using Thycotic.Logging;
@@ -23,6 +22,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly Func<Owned<TConsumer>> _consumerFactory;
         private readonly IObjectSerializer _objectSerializer;
         private readonly IMessageEncryptor _messageEncryptor;
+
         private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
 
         /// <summary>
@@ -65,20 +65,28 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         protected override Task StartHandleTask(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
-            return Task.Factory.StartNew(() => ExecuteMessage(deliveryTag, redelivered, exchange, routingKey, body),
-                CancellationToken.None, 
+            var task = Task.Factory
+                .StartNew(() => ExecuteMessage(deliveryTag, redelivered, exchange, routingKey, body),
+                ActiveTasks.Token,
                 TaskCreationOptions.None,
                 PriorityScheduler);
+
+            ActiveTasks.AddTask(task);
+
+            return task;
         }
 
         /// <summary>
         /// Executes the message.
         /// </summary>
         /// <param name="deliveryTag">The delivery tag.</param>
-        /// <param name="redelivered"></param>
+        /// <param name="redelivered">if set to <c>true</c> [redelivered].</param>
         /// <param name="exchangeName">The exchange.</param>
         /// <param name="routingKey">The routing key.</param>
         /// <param name="body">The body.</param>
+        /// <exception cref="System.ApplicationException">Failed to decrypt or deserialize message. Message will not be requeued
+        /// or
+        /// Message has expired</exception>
         private void ExecuteMessage(DeliveryTagWrapper deliveryTag, bool redelivered, string exchangeName, string routingKey, byte[] body)
         {
             const bool multiple = false;
@@ -126,12 +134,17 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     {
                         consumer.Value.Consume(message);
                     }
-                    
+
                     _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TConsumable))));
 
-                    
+
                     CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, multiple);
 
+                }
+                catch (ObjectDisposedException)
+                {
+                    //ioc container is being disposed, requeue
+                    CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, multiple, requeue);
                 }
                 catch (Exception ex)
                 {
