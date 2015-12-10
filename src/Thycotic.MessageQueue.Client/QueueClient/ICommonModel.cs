@@ -127,11 +127,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <summary>
         /// Basics the consume.
         /// </summary>
-        /// <param name="token">The token.</param>
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="noAck">if set to <c>true</c> [no ack].</param>
         /// <param name="consumer">The consumer.</param>
-        void BasicConsume(CancellationToken token, string queueName, bool noAck, IConsumerWrapperBase consumer);
+        void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer);
 
         /// <summary>
         /// Closes this instance.
@@ -313,13 +312,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <summary>
         /// Basics the consume.
         /// </summary>
-        /// <param name="token">The token.</param>
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="noAck">if set to <c>true</c> [no ack].</param>
         /// <param name="consumer">The consumer.</param>
-        public void BasicConsume(CancellationToken token, string queueName, bool noAck, IConsumerWrapperBase consumer)
+        public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            Contract.Requires<ArgumentNullException>(token != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
             Contract.Requires<ArgumentNullException>(consumer != null);
         }

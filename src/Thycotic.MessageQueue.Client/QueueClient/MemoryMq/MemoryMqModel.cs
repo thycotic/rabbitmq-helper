@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MemoryMq;
 using Thycotic.MessageQueue.Client.QueueClient.MemoryMq.Wcf;
 using Thycotic.MessageQueue.Client.Wrappers;
+using Thycotic.MessageQueue.Client.Wrappers.Proxies;
 using Thycotic.Wcf;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
@@ -20,8 +20,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         private readonly IMemoryMqWcfService _server;
         private readonly MemoryMqWcfServiceCallback _callback;
         private readonly ICommunicationObject _communicationObject;
+        private readonly ProcessCounter _processCounter;
+
+        private readonly object _syncRoot = new object();
+        private bool _disposed;
 
         private readonly ILogWriter _log = Log.Get(typeof(MemoryMqModel));
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMqModel" /> class.
@@ -50,7 +55,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                 {
                     _communicationObject.Close();
                 }
-                
+
             };
             _communicationObject.Closed += (sender, args) =>
             {
@@ -71,6 +76,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     }
                 });
             };
+
+            _processCounter = new ProcessCounter(GetType());
         }
 
         /// <summary>
@@ -262,14 +269,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <summary>
         /// Basics the consume.
         /// </summary>
-        /// <param name="token">The token.</param>
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="noAck">if set to <c>true</c> [no ack].</param>
         /// <param name="consumer">The consumer.</param>
-        public void BasicConsume(CancellationToken token, string queueName, bool noAck, IConsumerWrapperBase consumer)
+        public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            //TODO: Honor the cancellation token
-
             //when the server sends us something, process it
             _callback.BytesReceived +=
                 (sender, deliveryArgs) => Task.Factory
@@ -277,17 +281,22 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
                     {
                         var properties = Map(deliveryArgs.Properties);
 
-                        consumer.HandleBasicDeliver(deliveryArgs.ConsumerTag, new DeliveryTagWrapper(deliveryArgs.DeliveryTag),
+                        var proxy = new CommonConsumerWrapperProxy(consumer, _processCounter);
+
+                        proxy.HandleBasicDeliver(deliveryArgs.ConsumerTag,
+                            new DeliveryTagWrapper(deliveryArgs.DeliveryTag),
                             deliveryArgs.Redelivered, deliveryArgs.Exchange,
                             deliveryArgs.RoutingKey, properties, deliveryArgs.Body);
-                    })
+
+
+                    }, TaskCreationOptions.None)
                     .ContinueWith(task =>
                     {
                         if (task.Exception != null)
                         {
                             _log.Error("Failed to consume message", task.Exception);
                         }
-                    });
+                    }, TaskContinuationOptions.None);
 
             //tell the server we want to consume
             _server.BasicConsume(queueName);
@@ -298,7 +307,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// </summary>
         public void Close()
         {
-            //nothing to close, the connection will close the communication object
+            //wait for all processes to exit
+            _processCounter.Wait(TimeSpan.FromSeconds(10));
+
+            _communicationObject.Close();
+
+            _callback.BytesReceived = null;
+
+            
         }
 
         /// <summary>
@@ -306,7 +322,20 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// </summary>
         public void Dispose()
         {
-            Close();
+            lock (_syncRoot)
+            {
+                if (_disposed)
+                {
+                    return;
+                }
+
+                Close();
+
+                _callback.Dispose();
+                _server.Dispose();
+                
+                _disposed = true;
+            }
         }
     }
 }

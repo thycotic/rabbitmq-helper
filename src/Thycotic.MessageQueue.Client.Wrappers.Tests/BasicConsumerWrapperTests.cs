@@ -163,7 +163,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             Then(() =>
             {
-                Sut.CommonModel.Received().BasicConsume(Arg.Any<CancellationToken>(), Arg.Any<string>(), Arg.Any<bool>(), Sut);
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
                 if (!expired || relayIfExpired)
                 {
@@ -221,7 +221,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             Then(() =>
             {
-                Sut.CommonModel.Received().BasicConsume(Arg.Any<CancellationToken>(), Arg.Any<string>(), Arg.Any<bool>(), Sut);
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
                 _consumer.DidNotReceive().Consume(Arg.Any<IBasicConsumable>());
                 _consumer.DidNotReceive().Consume(Arg.Any<TestBasicConsumable>());

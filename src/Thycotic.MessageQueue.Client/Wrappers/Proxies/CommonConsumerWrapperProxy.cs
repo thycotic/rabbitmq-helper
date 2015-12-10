@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
 using Thycotic.MessageQueue.Client.QueueClient;
 
 namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
@@ -9,10 +10,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
     /// </summary>
     public class CommonConsumerWrapperProxy : IConsumerWrapperBase
     {
+        private readonly ProcessCounter _processCounter;
+
         /// <summary>
         /// The target of the proxy.
         /// </summary>
-        protected readonly IConsumerWrapperBase Target;
+        protected  IConsumerWrapperBase Target { get; private set; }
 
         /// <summary>
         /// Retrieve the IModel this consumer is associated
@@ -25,14 +28,17 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CommonConsumerWrapperProxy"/> class.
+        /// Initializes a new instance of the <see cref="CommonConsumerWrapperProxy" /> class.
         /// </summary>
         /// <param name="target">The target.</param>
-        public CommonConsumerWrapperProxy(IConsumerWrapperBase target)
+        /// <param name="processCounter">The process counter.</param>
+        public CommonConsumerWrapperProxy(IConsumerWrapperBase target, ProcessCounter processCounter)
         {
             Contract.Requires<ArgumentNullException>(target != null);
+            Contract.Requires<ArgumentNullException>(processCounter != null);
 
             Target = target;
+            _processCounter = processCounter;
         }
 
         /// <summary>
@@ -56,10 +62,20 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
-        public void HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey, ICommonModelProperties properties,
+        public Task HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey, ICommonModelProperties properties,
             byte[] body)
         {
-            Target.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, exchange, routingKey, properties, body);
+            //add another process to the counter
+            _processCounter.Increment();
+
+            var task = Target.HandleBasicDeliver(consumerTag, deliveryTag, redelivered, exchange, routingKey, properties, body);
+
+            //wait for the task to complete and decrement the counter
+            task.ContinueWith(task2 => { _processCounter.Decrement(); });
+
+            return task;
+
+
         }
 
         /// <summary>

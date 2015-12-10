@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.Wrappers;
+using Thycotic.MessageQueue.Client.Wrappers.Proxies;
 
 namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
 {
@@ -16,13 +17,16 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
     {
         private readonly IAzureServiceBusConnection _connection;
         private MessageReceiver _requestClient;
+        private readonly ProcessCounter _processCounter;
+
+        private Task _consumeTask;
+        private CancellationTokenSource _cts;
+
         private readonly object _syncRoot = new object();
-        private long _currentDeliveryCount;
+        private bool _disposed;
 
         private readonly ILogWriter _log = Log.Get(typeof(AzureServiceBusModel));
 
-        private Task _consumeTask;
-        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureServiceBusModel" /> class.
@@ -33,6 +37,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             Contract.Requires<ArgumentNullException>(connection != null);
 
             _connection = connection;
+            _processCounter = new ProcessCounter(GetType());
+
             IsOpen = true;
         }
 
@@ -93,7 +99,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         {
             //nothing here
         }
-        
+
         /// <summary>
         /// Declares the specified topic.
         /// </summary>
@@ -104,7 +110,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             var manager = _connection.CreateManager();
             manager.CreateTopic(exchangeName);
         }
-        
+
         /// <summary>
         /// Publishes to the topic.
         /// </summary>
@@ -243,12 +249,11 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <summary>
         /// Basics the consume.
         /// </summary>
-        /// <param name="token">The token.</param>
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="noAck">if set to <c>true</c> [no ack].</param>
         /// <param name="consumer">The consumer.</param>
         /// <exception cref="System.ApplicationException">Already consuming</exception>
-        public void BasicConsume(CancellationToken token, string queueName, bool noAck, IConsumerWrapperBase consumer)
+        public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
             //no need to look up the queue
 
@@ -259,6 +264,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
                     throw new ApplicationException("Already consuming");
                 }
             }
+
+            _cts = new CancellationTokenSource();
+            var token = _cts.Token;
 
             _requestClient = _connection.CreateReceiver(queueName);
 
@@ -275,45 +283,29 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
                             continue;
                         }
 
-                        _log.Debug(string.Format("Processing message {0} with lock token {1}", message.MessageId, message.LockToken));
+                        _log.Debug(string.Format("Processing message {0} with lock token {1}", message.MessageId,
+                            message.LockToken));
 
                         if (message.DeliveryCount > 5)
                         {
-                            _log.Error(string.Format("Throwing away message {0} for {1} because too many deliveries", message.MessageId, _requestClient.Path));
+                            _log.Error(string.Format("Throwing away message {0} for {1} because too many deliveries",
+                                message.MessageId, _requestClient.Path));
                             _requestClient.DeadLetter(message.LockToken, "Too many redeliveries", string.Empty);
                             continue;
                         }
 
                         var properties = Map(message);
 
-                        var messageForTask = message;
-                        Task.Factory
-                            .StartNew(() =>
-                            {
-                                try
-                                {
-                                    Interlocked.Increment(ref _currentDeliveryCount);
+                        var proxy = new CommonConsumerWrapperProxy(consumer, _processCounter);
+                        
+                        proxy.HandleBasicDeliver(string.Empty, new DeliveryTagWrapper(message.LockToken),
+                            message.DeliveryCount > 0,
+                            properties.Exchange,
+                            properties.RoutingKey,
+                            properties, message.GetBytes());
 
-                                    consumer.HandleBasicDeliver(string.Empty, new DeliveryTagWrapper(messageForTask.LockToken),
-                                        messageForTask.DeliveryCount > 0,
-                                        properties.Exchange,
-                                        properties.RoutingKey,
-                                        properties, messageForTask.GetBytes());
-                                }
-                                finally
-                                {
-                                    Interlocked.Decrement(ref _currentDeliveryCount);
-                                }
-
-                            }, token)
-                            .ContinueWith(task =>
-                            {
-                                if (task.Exception != null)
-                                {
-                                    _log.Error("Failed to deliver message", task.Exception);
-                                }
-                            }, CancellationToken.None);
                     }
+
                     catch (Exception ex)
                     {
                         _log.Error("Failed to deliver message. Waiting 15 seconds...", ex);
@@ -338,7 +330,19 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// </summary>
         public void Close()
         {
-            //nothing to close
+            //should exit cleanly
+            _cts.Cancel();
+
+            //wait for all processes to exit
+            _processCounter.Wait(TimeSpan.FromSeconds(10));
+
+            lock (_syncRoot)
+            {
+                if (_consumeTask != null)
+                {
+                    _consumeTask.Wait(TimeSpan.FromSeconds(10));
+                }
+            }
         }
 
         /// <summary>
@@ -353,27 +357,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
                     return;
                 }
 
-                var tries = 0;
-                while (Interlocked.Read(ref _currentDeliveryCount) > 0)
-                {
-                    if (tries > 5)
-                    {
-                        _log.Error("Too many tries attempting to dispose model");
-                    }
-
-                    Task.Delay(TimeSpan.FromSeconds(1)).Wait();
-                    tries++;
-                }
-
-                lock (_syncRoot)
-                {
-                    if (_consumeTask != null)
-                    {
-                        _consumeTask.Wait(TimeSpan.FromSeconds(10));
-                    }
-                }
-
-                _requestClient = null;
+                Close();
 
                 _disposed = true;
             }

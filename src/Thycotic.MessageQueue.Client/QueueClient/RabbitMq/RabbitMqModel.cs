@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading;
 using RabbitMQ.Client;
+using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.MessageQueue.Client.Wrappers.Proxies;
 
@@ -11,7 +12,13 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
     internal class RabbitMqModel : ICommonModel
     {
         private readonly IModel _rawModel;
-        
+        private readonly ProcessCounter _processCounter;
+
+        private readonly object _syncRoot = new object();
+        private bool _disposed;
+
+        private readonly ILogWriter _log = Log.Get(typeof(RabbitMqModel));
+
         public object RawValue { get { return _rawModel; } }
 
         public EventHandler<ModelShutdownEventArgs> ModelShutdown { get; set; }
@@ -36,6 +43,8 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
                     });
                 }
             };
+
+            _processCounter = new ProcessCounter(GetType());
         }
 
 
@@ -58,7 +67,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             return new RabbitMqModelProperties(properties);
         }
         #endregion
-        
+
         public ICommonModelProperties CreateBasicProperties()
         {
             var rawProperties = _rawModel.CreateBasicProperties();
@@ -122,7 +131,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 
         public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
-           return Map( _rawModel.QueueDeclare(queueName, durable, exclusive, autoDelete, arguments));
+            return Map(_rawModel.QueueDeclare(queueName, durable, exclusive, autoDelete, arguments));
         }
 
         public void QueueBind(string queueName, string exchangeName, string routingKey)
@@ -135,22 +144,33 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             return new RabbitMqSubscription(this, queueName);
         }
 
-        public void BasicConsume(CancellationToken token, string queueName, bool noAck, IConsumerWrapperBase consumer)
+        public void BasicConsume(string queueName, bool noAck, IConsumerWrapperBase consumer)
         {
-            //TODO: Honor the cancellation token
-
-            _rawModel.BasicConsume(queueName, noAck, new RabbitMqConsumerWrapperProxy(consumer));
+            _rawModel.BasicConsume(queueName, noAck, new RabbitMqConsumerWrapperProxy(consumer, _processCounter));
         }
 
         public void Close()
         {
+            //wait for all processes to exit
+            _processCounter.Wait(TimeSpan.FromSeconds(10));
+
             _rawModel.Close();
         }
 
         public void Dispose()
         {
-            _rawModel.Dispose();
-        }
+            lock (_syncRoot)
+            {
+                if (_disposed)
+                {
+                    return;
+                }
 
+                _rawModel.Close();
+                _rawModel.Dispose();
+
+                _disposed = true;
+            }
+        }
     }
 }

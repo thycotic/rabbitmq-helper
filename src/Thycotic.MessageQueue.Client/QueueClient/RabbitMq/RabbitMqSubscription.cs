@@ -7,12 +7,10 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
 {
     internal class RabbitMqSubscription : ISubscription
     {
-        private readonly RabbitMqModel _model;
         private readonly Subscription _subscription;
 
         public RabbitMqSubscription(RabbitMqModel model, string queueName)
         {
-            _model = model;
             _subscription = new Subscription(model.GetRawValue<IModel>(), queueName);
         }
 
@@ -28,7 +26,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             response = null;
 
             BasicDeliverEventArgs eventArgs;
-            if (!_subscription.Next(timeoutMilliseconds, out eventArgs))
+            if (!_subscription.Next(timeoutMilliseconds, out eventArgs) || eventArgs == null)
             {
                 return false;
             }

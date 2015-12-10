@@ -156,7 +156,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             Then(() =>
             {
-                Sut.CommonModel.Received().BasicConsume(Arg.Any<CancellationToken>(), Arg.Any<string>(), Arg.Any<bool>(), Sut);
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
                 _consumer.Received().Consume(Arg.Any<TestBlockingConsumable>());
 
@@ -207,7 +207,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
             Then(() =>
             {
-                Sut.CommonModel.Received().BasicConsume(Arg.Any<CancellationToken>(), Arg.Any<string>(), Arg.Any<bool>(), Sut);
+                Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
                 _consumer.DidNotReceive().Consume(Arg.Any<IBlockingConsumable>());
                 _consumer.DidNotReceive().Consume(Arg.Any<TestBlockingConsumable>());

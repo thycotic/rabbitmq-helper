@@ -37,7 +37,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         private readonly object _syncRoot = new object();
 
         private readonly ILogWriter _log = Log.Get(typeof(TConsumer));
-        private CancellationTokenSource _cts;
 
         /// <summary>
         /// PriorityScheduler to use (sets thread priority)
@@ -83,13 +82,6 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                     CommonModel.Dispose();
                 }
 
-                if (_cts != null)
-                {
-                    _cts.Cancel();
-                }
-
-                _cts = new CancellationTokenSource();
-
                 const int retryAttempts = -1; //forever
                 const int retryDelayGrowthFactor = 1;
 
@@ -115,7 +107,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 const bool noAck = false; //since this consumer will send an acknowledgement
                 var consumer = this;
 
-                model.BasicConsume(_cts.Token, _queueName, noAck, consumer); //we will ack, hence no-ack=false
+                model.BasicConsume(_queueName, noAck, consumer); //we will ack, hence no-ack=false
 
                 CommonModel = model;
             }
@@ -216,11 +208,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
-        public void HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange,
+        public Task HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange,
             string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
-            StartHandleTask(consumerTag, deliveryTag, redelivered, exchange, routingKey, properties, body);
+            return StartHandleTask(consumerTag, deliveryTag, redelivered, exchange, routingKey, properties, body);
         }
 
         /// <summary>
@@ -233,17 +225,16 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 return;
             }
 
-            if (_cts != null)
-            {
-                _cts.Cancel();
-            }
-
             _terminated = true;
 
             if (CommonModel == null || !CommonModel.IsOpen) return;
 
             _log.Debug("Closing channel...");
+            CommonModel.Close();
+
+            _log.Debug("Disposing channel...");
             CommonModel.Dispose();
+
             _log.Debug("Channel closed");
             CommonModel = null;
 

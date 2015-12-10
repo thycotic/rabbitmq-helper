@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Common;
 
@@ -36,7 +37,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
-        void HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
+        Task HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body);
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <remarks>
         /// Be aware that acknowledgement may be required. See IModel.BasicAck.
         /// </remarks>
-        public void HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
+        public Task HandleBasicDeliver(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
             //Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(consumerTag));
@@ -94,6 +95,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             Contract.Requires<ArgumentException>(properties != null);
             Contract.Requires<ArgumentException>(body != null);
             Contract.Requires<ArgumentException>(body.Length > 0);
+
+            Contract.Ensures(Contract.Result<Task>() != null);
+
+            return null;
         }
 
         /// <summary>

@@ -29,12 +29,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
 #pragma warning restore 0067
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RabbitMqConsumerWrapperProxy"/> class.
+        /// Initializes a new instance of the <see cref="RabbitMqConsumerWrapperProxy" /> class.
         /// </summary>
         /// <param name="target">The target.</param>
-        public RabbitMqConsumerWrapperProxy(IConsumerWrapperBase target) : base(target)
+        /// <param name="processCounter">The process counter.</param>
+        public RabbitMqConsumerWrapperProxy(IConsumerWrapperBase target, ProcessCounter processCounter) : base(target, processCounter)
         {
             Contract.Requires<ArgumentNullException>(target != null);
+            Contract.Requires<ArgumentNullException>(processCounter != null);
         }
         
         #region Not needed
@@ -93,8 +95,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Proxies
         public void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties,
             byte[] body)
         {
-            Target.HandleBasicDeliver(consumerTag, new DeliveryTagWrapper(deliveryTag), redelivered, exchange, routingKey, new RabbitMqModelProperties(properties), body);
+            base.HandleBasicDeliver(consumerTag, new DeliveryTagWrapper(deliveryTag), redelivered, exchange, routingKey, new RabbitMqModelProperties(properties), body );
         }
-
     }
 }
