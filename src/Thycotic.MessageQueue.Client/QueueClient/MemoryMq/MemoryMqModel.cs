@@ -233,7 +233,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.MemoryMq
         /// <param name="exclusive">if set to <c>true</c> [exclusive].</param>
         /// <param name="autoDelete">if set to <c>true</c> [automatic delete].</param>
         /// <param name="arguments">The arguments.</param>
-        public ICommonQueue AutoDeleteQueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
+        public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
             return new MemoryMqQueue(queueName);
         }

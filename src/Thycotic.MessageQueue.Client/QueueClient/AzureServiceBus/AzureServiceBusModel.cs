@@ -198,7 +198,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         public ICommonQueue AutoDeleteQueueDeclare()
         {
             var queueName = string.Format("temp-{0}", Guid.NewGuid());
-            return AutoDeleteQueueDeclare(queueName, false, true, true, null);
+            return QueueDeclare(queueName, false, true, true, null);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <param name="autoDelete"></param>
         /// <param name="arguments"></param>
         /// <returns></returns>
-        public ICommonQueue AutoDeleteQueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
+        public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
             var manager = _connection.CreateManager();
             manager.CreateQueue(queueName, autoDelete);

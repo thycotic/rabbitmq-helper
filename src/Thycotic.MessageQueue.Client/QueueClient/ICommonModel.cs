@@ -107,7 +107,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="exclusive">if set to <c>true</c> exclusive.</param>
         /// <param name="autoDelete">if set to <c>true</c> auto delete.</param>
         /// <param name="arguments">The arguments.</param>
-        ICommonQueue AutoDeleteQueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments);
+        ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments);
 
         /// <summary>
         /// Queues the bind.
@@ -276,7 +276,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="exclusive">if set to <c>true</c> exclusive.</param>
         /// <param name="autoDelete">if set to <c>true</c> auto delete.</param>
         /// <param name="arguments">The arguments.</param>
-        public ICommonQueue AutoDeleteQueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
+        public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(queueName));
 

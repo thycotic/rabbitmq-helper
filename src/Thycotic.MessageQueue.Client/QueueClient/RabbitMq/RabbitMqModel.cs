@@ -120,7 +120,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.RabbitMq
             return Map(rawQueue);
         }
 
-        public ICommonQueue AutoDeleteQueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
+        public ICommonQueue QueueDeclare(string queueName, bool durable, bool exclusive, bool autoDelete, IDictionary<string, object> arguments)
         {
            return Map( _rawModel.QueueDeclare(queueName, durable, exclusive, autoDelete, arguments));
         }
