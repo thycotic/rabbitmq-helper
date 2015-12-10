@@ -313,11 +313,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.ActiveDirectory">
-      <HintPath>..\packages\Thycotic.ActiveDirectory.1.0.0.41\lib\net451\Thycotic.ActiveDirectory.dll</HintPath>
+    <Reference Include="Thycotic.ActiveDirectory, Version=1.0.0.42, Culture=neutral, PublicKeyToken=029133c20de6def0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.1.0.0.42\lib\net451\Thycotic.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.ActiveDirectory.Core, Version=1.0.0.9, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.0.9\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
+    <Reference Include="Thycotic.ActiveDirectory.Core, Version=1.0.0.10, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.0.10\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.BlackBox, Version=5.0.0.17, Culture=neutral, PublicKeyToken=6faa24c50f43cf8d, processorArchitecture=MSIL">
