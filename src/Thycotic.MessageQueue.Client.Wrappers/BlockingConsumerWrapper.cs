@@ -70,6 +70,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         protected override Task StartHandleTask(string consumerTag, DeliveryTagWrapper deliveryTag, bool redelivered, string exchange, string routingKey,
             ICommonModelProperties properties, byte[] body)
         {
+            if (redelivered)
+            {
+                _log.Warn(string.Format("Blocking requests cannot be redelivered. Will not process message for {0}", routingKey));
+                CommonModel.BasicNack(deliveryTag, exchange, routingKey, false, requeue: false);
+                return Task.FromResult(false);
+            }
 
             return Task.Factory.StartNew(() => ExecuteMessage(deliveryTag, exchange, routingKey, properties, body),
                 CancellationToken.None,
@@ -94,7 +100,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
 
                 try
                 {
-
+                    
                     TConsumable message;
 
                     try
