@@ -104,8 +104,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 {
                     if (tasks.Length > 0)
                     {
-                        _log.Info(string.Format("Waiting for {0} task(s) to complete", tasks.Length));
+                        _log.Info(string.Format("Waiting for {0} task(s) to complete/abort", tasks.Length));
                         Task.WaitAll(tasks, timeout);
+                        _log.Info("Wait complete");
                     }
                 }
                 catch (Exception ex)
