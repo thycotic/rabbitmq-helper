@@ -86,11 +86,11 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
             switch (uri.Scheme)
             {
                 case "net.tcp":
-                    _log.Info(string.Format("Using Net/TCP channel to {0}", _connectionString));
+                    _log.Debug(string.Format("Using Net/TCP channel to {0}", _connectionString));
                     return NetTcpChannelFactory.CreateDuplexChannel<IDuplexEngineToServerCommunicationWcfService>(GetNetTcpCoreConnectionString(), callback, _useSsl);
                 case "http":
                 case "https":
-                    _log.Info(string.Format("Using HTTP channel to {0}", _connectionString));
+                    _log.Debug(string.Format("Using HTTP channel to {0}", _connectionString));
                     return HttpChannelFactory.CreateChannel<IUnidirectionalEngineToServerCommunicationWcfService>(GetHttpCoreConnectionString(), _useSsl);
                 default:
                     throw new NotSupportedException("Requested schema does not have a supported channel");
