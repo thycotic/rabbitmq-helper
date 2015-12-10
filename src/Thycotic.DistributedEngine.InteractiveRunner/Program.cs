@@ -36,12 +36,11 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
             try
             {
                 var startPipeline = !args.Contains(CommandLineSwitches.PipelineDisabled);
-             
+
                 ConfigureTraceListener();
 
                 var cli = new CommandLineInterface("Thycotic Distributed Engine");
-
-
+               
                 Trace.TraceInformation("Starting interactive runner...");
 
                 SiteConnectorService pipelineService = null;
@@ -59,6 +58,8 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     Trace.TraceInformation("Pipeline is disabled...");
                 }
 
+                var mre = new ManualResetEventSlim(false);
+
                 EngineService engineService;
                 using (LogContext.Create("Engine service startup"))
                 {
@@ -70,28 +71,34 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                     ConfigureMockConfiguration(engineService);
 
                     //every time engine IoCContainer changes reconfigure the CLI
-                    engineService.IoCContainerConfigured += (sender, container) => ConfigureCli(cli, container);
+                    engineService.IoCContainerConfigured += (sender, container) =>
+                    {
+                        Task.Delay(StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
+                            .ContinueWith(task =>
+                            {
+                                var initialCommand =
+                                    args.SingleOrDefault(
+                                        a =>
+                                            a != CommandLineSwitches.PipelineDisabled &&
+                                            a != CommandLineSwitches.ConsumptionDisabled);
+
+                                ConfigureCli(cli, container);
+
+                                Trace.TraceInformation(@"Console attached and ready. Enter ""h"" for available commands.");
+                                mre.Set();
+
+                                cli.BeginInputLoop(initialCommand);
+                            });
+                    };
 
                     engineService.Start();
-               
 
-                //begin the input loop but after the logo prints
-                Task.Delay(StartupMessageWriter.StartupMessageDelay.Add(TimeSpan.FromMilliseconds(500)))
-                    .ContinueWith(task =>
-                    {
-                        var initialCommand =
-                            args.SingleOrDefault(
-                                a =>
-                                    a != CommandLineSwitches.PipelineDisabled &&
-                                    a != CommandLineSwitches.ConsumptionDisabled);
-
-                        cli.BeginInputLoop(initialCommand);
-                    });
                 }
 
-                
-                #region Clean up
+                Trace.TraceInformation("Waiting for console to attach...");
+                mre.Wait();
 
+                #region Clean up
                 cli.Wait();
 
                 //Trace.TraceInformation("Stopping engine...");
@@ -174,15 +181,6 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 var staticIdentityGuidProvider = Substitute.For<IIdentityGuidProvider>();
                 staticIdentityGuidProvider.IdentityGuid.Returns(staticIdentityGuid);
                 engineService.IoCConfigurator.IdentityGuidProvider = staticIdentityGuidProvider;
-
-                //TODO: Do we need this?
-                //var configurationProvider = Substitute.For<IConfigurationProvider>();
-                //ServiceLocator.ConfigurationProvider = configurationProvider;
-
-                //var configuration = Substitute.For<IConfiguration>();
-                //configuration.FipsEnabled.Returns(false);
-
-                //configurationProvider.GetCurrentConfiguration().Returns(configuration);
             }
         }
     }
