@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Thycotic.ActiveDirectory;
 using Thycotic.ActiveDirectory.Core;
 using Thycotic.Logging;
@@ -26,11 +27,27 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         /// <returns></returns>
         public ADObjectsQueryResult Consume(AllUsersByDomainQueryMessage request)
         {
+            const int maxSize = 300;
             try
             {
                 _log.Info(string.Format("{0} : Searching for all users.", string.Join(", ", request.DomainInfo.DomainName)));
 
-                return new ActiveDirectorySearcher().GetAllUserADObjectsInActiveDirectory(ConvertRequestToActiveDirectoryDomainInfo(request));
+                var results = new ActiveDirectorySearcher().GetAllUserADObjectsInActiveDirectory(ConvertRequestToActiveDirectoryDomainInfo(request));
+
+                var totalUsers = results.ADObjects.Count;
+                _log.Info(String.Format("{0} users found.", totalUsers));
+
+                if (totalUsers > maxSize)
+                {
+                    _log.Info(String.Format("There more than {0} users. Results will be truncated.", maxSize));
+                    return new ADObjectsQueryResult
+                    {
+                        ADObjects = results.ADObjects.OrderBy(o => o.Name).Take(maxSize).ToList(),
+                        Error = results.Error
+                    };
+                }
+
+                return results;
             }
             catch (Exception e)
             {
