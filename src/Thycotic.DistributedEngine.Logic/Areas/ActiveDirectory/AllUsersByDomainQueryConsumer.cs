@@ -9,6 +9,7 @@ using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Areas.ActiveDirectory;
 using Thycotic.Messages.Common;
+using DomainInfo = Thycotic.ActiveDirectory.Core.DomainInfo;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
 {
@@ -17,7 +18,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
     /// </summary>
     public class AllUsersByDomainQueryConsumer : IBasicConsumer<AllUsersByDomainQueryMessage>
     {
-        private const int WCF_MAX_RESULT_SIZE = 300;
+        private const int WCF_MAX_RESULT_SIZE = 250;
 
         private readonly IResponseBus _responseBus;
         private readonly IActiveDirectorySearcher _activeDirectorySearcher;
@@ -66,9 +67,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
             {
                 var currentPage = results.ADObjects
                     .Skip((i-1)* WCF_MAX_RESULT_SIZE)
-                    .Take(WCF_MAX_RESULT_SIZE);
+                    .Take(WCF_MAX_RESULT_SIZE)
+                    .ToList();
 
-                _log.Debug(String.Format("{2} Sending batch {0} of {1}.", i, pageCount, request.BatchId.ToString("B")));
+                _log.Info(String.Format("{2} Sending batch {0} of {1}.", i, pageCount, request.BatchId.ToString("B")));
 
                 _responseBus.Execute(new AllUsersByDomainQueryResponse
                 {
