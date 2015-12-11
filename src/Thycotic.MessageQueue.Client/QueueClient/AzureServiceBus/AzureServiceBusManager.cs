@@ -115,7 +115,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         {
             return HashValues.GetOrAdd(input, i =>
             {
-                using (var generator = new BasicHashGenerator(MD5.Create()))
+                using (var generator = new BasicHashGenerator(SHA1.Create()))
                 {
                     var hash = generator.GetHash(i);
 
