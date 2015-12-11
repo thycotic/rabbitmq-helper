@@ -190,6 +190,10 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Thycotic.ActiveDirectory.Core, Version=1.0.0.10, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.0.10\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.BlackBox">
       <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>
@@ -202,9 +206,9 @@
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.144\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.397, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.397\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.398, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.398\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.13\lib\net451\Thycotic.Encryption.dll</HintPath>
