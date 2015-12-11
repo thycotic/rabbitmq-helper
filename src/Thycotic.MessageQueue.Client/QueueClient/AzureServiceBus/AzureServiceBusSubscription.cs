@@ -68,7 +68,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
                 var properties = new AzureServiceBusModelProperties(message);
 
                 response = new CommonDeliveryEventArgs(string.Empty, new DeliveryTagWrapper(message.LockToken),
-                    message.DeliveryCount > 0, properties.Exchange,
+                    message.DeliveryCount > 1, properties.Exchange,
                     properties.RoutingKey, properties, message.GetBytes());
 
                 return true;

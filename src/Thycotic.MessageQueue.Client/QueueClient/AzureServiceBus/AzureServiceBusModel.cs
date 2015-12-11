@@ -297,7 +297,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
                         var proxy = new CommonConsumerWrapperProxy(consumer);
 
                         proxy.HandleBasicDeliver(string.Empty, new DeliveryTagWrapper(message.LockToken),
-                            message.DeliveryCount > 0,
+                            message.DeliveryCount > 1,
                             properties.Exchange,
                             properties.RoutingKey,
                             properties, message.GetBytes())
@@ -325,7 +325,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
                     }
                 }
 
-                _log.Info("Consuming cancelled");
+                //_log.Info("Consuming cancelled");
 
             }, CancellationToken.None);
         }
@@ -335,11 +335,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// </summary>
         public void Close()
         {
-            //should exit cleanly
-            _cts.Cancel();
-
             lock (_syncRoot)
             {
+                if (_cts != null)
+                {
+                    //should exit cleanly
+                    _cts.Cancel();
+                }
+
                 if (_consumeTask != null)
                 {
                     _consumeTask.Wait(TimeSpan.FromSeconds(10));
