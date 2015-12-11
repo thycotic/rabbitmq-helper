@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Autofac;
 using Thycotic.DistributedEngine.Service.Security;
 using Thycotic.Encryption;
@@ -99,15 +98,31 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("Azure ServiceBus"))
             {
                 var connectionString =
-                    _configurationProvider(ConfigurationKeys.Pipeline.AzureServiceBus.ConnectionString);
+                    _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.ConnectionString);
+                _log.Info(string.Format("Azure ServiceBus connection is {0}", connectionString));
 
-                connectionString =
-                    @"Endpoint=sb://bus01-qa01-ss-east-us-thycotic.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=vuaqtrteQG53qu18ZFKOzz74XRiOnNnrY1lmXL+tZm8=";
-                
-                _log.Info(string.Format("Azure ServiceBus connection is {0}", 
-                    Regex.Replace(connectionString, @"SharedAccessKeyName=\w+|SharedAccessKey=.*", "*")));
+                //HACK: Remove
+                connectionString = connectionString.Replace(":443", string.Empty);
 
-                builder.Register(context => new AzureServiceBusConnection(connectionString))
+                var sharedAccessKeyName = _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.UserName);
+                _log.Info(string.Format("Azure ServiceBus shared access key name is {0}", sharedAccessKeyName));
+
+                var sharedAccessKeyValue = _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.Password);
+                _log.Info(string.Format("Azure ServiceBus shared access key value is {0}",
+                    string.Join("", Enumerable.Range(0, sharedAccessKeyValue.Length).Select(i => "*"))));
+
+                var useSsl =
+                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.UseSsl));
+                if (useSsl)
+                {
+                    _log.Info("Azure ServiceBus using encryption");
+                }
+                else
+                {
+                    _log.Debug("Azure ServiceBus is not using encryption");
+                }
+
+                builder.Register(context => new AzureServiceBusConnection(connectionString, sharedAccessKeyName, sharedAccessKeyValue))
                     .As<ICommonConnection>().SingleInstance();
                 
                 LoadRequestBus(builder);

@@ -1,8 +1,5 @@
 using System;
-using System.Configuration;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text.RegularExpressions;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 
@@ -24,9 +21,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             public const string RoutingKey = "RoutingKey";
         }
 
-        private static readonly Regex ConnectionStringRegex = new Regex(@"([\w]+)=([^;]+);?", RegexOptions.Compiled );
-
         private readonly string _connectionString;
+        private readonly string _sharedAccessKeyName;
+        private readonly string _sharedAccessKeyValue;
 
         /// <summary>
         /// Server version
@@ -48,15 +45,21 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         public EventHandler ConnectionCreated { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureServiceBusConnection"/> class.
+        /// Initializes a new instance of the <see cref="AzureServiceBusConnection" /> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
-        public AzureServiceBusConnection(string connectionString)
+        /// <param name="sharedAccessKeyName">Name of the user.</param>
+        /// <param name="sharedAccessKeyValue">The sharedAccessKeyValue.</param>
+        public AzureServiceBusConnection(string connectionString, string sharedAccessKeyName, string sharedAccessKeyValue)
         {
             Contract.Requires<ArgumentNullException>(connectionString != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(sharedAccessKeyName));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(sharedAccessKeyValue));
 
             _connectionString = connectionString;
+            _sharedAccessKeyName = sharedAccessKeyName;
+            _sharedAccessKeyValue = sharedAccessKeyValue;
         }
 
         /// <summary>
@@ -65,7 +68,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public IAzureServiceBusManager CreateManager()
         {
-            return new AzureServiceBusManager(_connectionString);
+            return new AzureServiceBusManager(_connectionString, _sharedAccessKeyName, _sharedAccessKeyValue);
+        }
+
+        private MessagingFactory GetFactory()
+        {
+            var uri = new Uri(_connectionString);
+            var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(_sharedAccessKeyName, _sharedAccessKeyValue);
+            return MessagingFactory.Create(uri, tokenProvider);
         }
 
         /// <summary>
@@ -75,7 +85,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public TopicClient CreateTopicClient(string topicPath)
         {
-            var messagingFactory = GetFactory(_connectionString);
+            var messagingFactory = GetFactory();
 
             return messagingFactory.CreateTopicClient(topicPath);
         }
@@ -87,7 +97,7 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public MessageSender CreateSender(string entityName)
         {
-            var messagingFactory = GetFactory(_connectionString);
+            var messagingFactory = GetFactory();
 
             return messagingFactory.CreateMessageSender(entityName);
         }
@@ -99,33 +109,12 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         /// <returns></returns>
         public MessageReceiver CreateReceiver(string entityName)
         {
-            var messagingFactory = GetFactory(_connectionString);
+            var messagingFactory = GetFactory();
 
             return messagingFactory.CreateMessageReceiver(entityName, ReceiveMode.PeekLock);
         }
        
-        private static MessagingFactory GetFactory(string connectionString)
-        {
-            var match = ConnectionStringRegex.Matches(connectionString);
-
-            if (match.Count != 3)
-            {
-                throw new ConfigurationErrorsException("Connection string could not be parsed");
-            }
-
-            //key = group 1
-            //value = group 2
-            var values = Enumerable.Range(0, match.Count).ToDictionary(i => match[i].Groups[1].Value, i => match[i].Groups[2].Value);
-
-            var serviceBusFqdn = values["Endpoint"];
-            var serviceBusKeyName = values["SharedAccessKeyName"];
-            var serviceBusKey = values["SharedAccessKey"];
-
-            var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(serviceBusKeyName, serviceBusKey);
-
-            var uri = new Uri(serviceBusFqdn);
-            return MessagingFactory.Create(uri, tokenProvider);
-        }
+       
 
         /// <summary>
         /// Opens the model/channel.

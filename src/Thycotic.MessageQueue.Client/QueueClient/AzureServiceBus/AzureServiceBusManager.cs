@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.ServiceBus;
@@ -21,12 +20,14 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
         private static NamespaceManager _namespaceManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureServiceBusManager"/> class.
+        /// Initializes a new instance of the <see cref="AzureServiceBusManager" /> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
-        public AzureServiceBusManager(string connectionString)
+        /// <param name="sharedAccessKeyName">Name of the shared access key.</param>
+        /// <param name="sharedAccessKeyValue">The shared access key value.</param>
+        public AzureServiceBusManager(string connectionString, string sharedAccessKeyName, string sharedAccessKeyValue)
         {
-            _namespaceManager = GetNamespaceManager(connectionString);
+            _namespaceManager = GetNamespaceManager(connectionString, sharedAccessKeyName, sharedAccessKeyValue);
         }
 
         /// <summary>
@@ -161,16 +162,12 @@ namespace Thycotic.MessageQueue.Client.QueueClient.AzureServiceBus
             _namespaceManager.CreateSubscription(description, filter);
         }
 
-        private static NamespaceManager GetNamespaceManager(string connectionString)
+        private static NamespaceManager GetNamespaceManager(string connectionString, string sharedAccessKeyName, string sharedAccessKeyValue)
         {
-            var values = connectionString.Split(';').ToDictionary(pair => pair.Split('=')[0], pair => pair.Split('=')[1]);
+            var uri = new Uri(connectionString);
+            var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(sharedAccessKeyName, sharedAccessKeyValue);
 
-            var serviceBusFqdn = values["Endpoint"];
-            var serviceBusKeyName = values["SharedAccessKeyName"];
-            var serviceBusKey = values["SharedAccessKey"] + "=";
-
-            var uri = new Uri(serviceBusFqdn);
-            return new NamespaceManager(uri, TokenProvider.CreateSharedAccessSignatureTokenProvider(serviceBusKeyName, serviceBusKey));
+            return new NamespaceManager(uri, tokenProvider);
         }
 
         private class BasicHashGenerator : IDisposable
