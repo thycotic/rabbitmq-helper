@@ -318,7 +318,9 @@
     <Compile Include="..\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="Areas\ActiveDirectory\AllUsersByDomainQueryConsumer.cs" />
     <Compile Include="Areas\ActiveDirectory\BatchExtensions.cs" />
+    <Compile Include="Areas\ActiveDirectory\DomainInfoExtensions.cs" />
     <Compile Include="Areas\ActiveDirectory\ResolveDomainNameConsumer.cs" />
     <Compile Include="Areas\ActiveDirectory\GenericQueryConsumer.cs" />
     <Compile Include="Areas\ActiveDirectory\ADSyncRequestConsumer.cs" />
