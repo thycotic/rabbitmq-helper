@@ -38,7 +38,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="prioritySchedulerProvider">The priority scheduler provider.</param>
         /// <param name="consumerFactory">The handler factory.</param>
         public BlockingConsumerWrapper(ICommonConnection connection, IExchangeNameProvider exchangeNameProvider, IObjectSerializer objectSerializer,
-            IMessageEncryptor messageEncryptor, IPrioritySchedulerProvider prioritySchedulerProvider,  Func<Owned<TConsumer>> consumerFactory)
+            IMessageEncryptor messageEncryptor, IPrioritySchedulerProvider prioritySchedulerProvider, Func<Owned<TConsumer>> consumerFactory)
             : base(connection, exchangeNameProvider)
         {
             Contract.Requires<ArgumentNullException>(connection != null);
@@ -120,11 +120,20 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                         throw;
                     }
 
-                    using (var consumer = _consumerFactory())
+                    try
                     {
-                        response = consumer.Value.Consume(message);
+                        PreConsume(message);
 
-                        _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof (TConsumable))));
+                        using (var consumer = _consumerFactory())
+                        {
+                            response = consumer.Value.Consume(message);
+
+                            _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TConsumable))));
+                        }
+                    }
+                    finally
+                    {
+                        PostConsume(message);
                     }
 
                     CommonModel.BasicAck(deliveryTag, exchangeName, routingKey, false);
@@ -139,12 +148,12 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                 catch (Exception ex)
                 {
                     _log.Error(
-                        string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof (TConsumable)),
+                        string.Format("Failed to process {0} because {1}", this.GetRoutingKey(typeof(TConsumable)),
                             ex.Message), ex);
 
                     CommonModel.BasicNack(deliveryTag, exchangeName, routingKey, false, requeue: false);
 
-                    response = new BlockingConsumerError {Message = ex.Message};
+                    response = new BlockingConsumerError { Message = ex.Message };
                     responseType = BlockingConsumerResponseTypes.Error;
                 }
 

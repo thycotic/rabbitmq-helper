@@ -220,6 +220,24 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         }
 
         /// <summary>
+        /// Runs the optional pre processing.
+        /// </summary>
+        /// <param name="message"></param>
+        public virtual void PreConsume(TConsumable message)
+        {
+            //nothing here
+        }
+
+        /// <summary>
+        /// Runs the optional post processing.
+        /// </summary>
+        /// <param name="message"></param>
+        public virtual void PostConsume(TConsumable message)
+        {
+            //nothing here
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()

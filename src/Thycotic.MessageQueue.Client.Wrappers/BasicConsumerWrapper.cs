@@ -130,9 +130,18 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                         }
                     }
 
-                    using (var consumer = _consumerFactory())
+                    try
                     {
-                        consumer.Value.Consume(message);
+                        PreConsume(message);
+                        
+                        using (var consumer = _consumerFactory())
+                        {
+                            consumer.Value.Consume(message);
+                        }
+                    }
+                    finally
+                    {
+                        PostConsume(message);
                     }
 
                     _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TConsumable))));
