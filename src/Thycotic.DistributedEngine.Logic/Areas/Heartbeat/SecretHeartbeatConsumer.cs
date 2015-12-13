@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
@@ -35,9 +36,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Heartbeat
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
-        public void Consume(SecretHeartbeatMessage request)
+        public void Consume(CancellationToken token, SecretHeartbeatMessage request)
         {
             
 

@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System.Threading;
+using NSubstitute;
 using NUnit.Framework;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.Logic.Areas.Heartbeat;
@@ -20,7 +21,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.Heartbeat
 
             var message = new SecretHeartbeatMessage();
             message.VerifyCredentialsInfo = verifyCredentialsInfo;
-            consumer.Consume(message);
+            consumer.Consume(CancellationToken.None, message);
 
             responseBus.Received().ExecuteAsync(Arg.Is<SecretHeartbeatResponse>(x => x.Status == OperationStatus.Unknown));
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Threading;
 using NSubstitute;
 using NUnit.Framework;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Dependency.Response;
@@ -23,7 +24,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.PasswordChanging
 
             var message = new SecretChangeDependencyMessage();
             message.DependencyChangeInfos = new IDependencyChangeInfo[0];
-            consumer.Consume(message);
+            consumer.Consume(CancellationToken.None, message);
 
             responseBus.DidNotReceive().ExecuteAsync(Arg.Any<DependencyChangeResponse>());
         }

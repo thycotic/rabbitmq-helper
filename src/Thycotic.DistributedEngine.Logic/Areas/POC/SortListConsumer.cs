@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using Thycotic.Messages.Areas.POC.Request;
 using Thycotic.Messages.Areas.POC.Response;
 using Thycotic.Messages.Common;
@@ -15,9 +16,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public SortListResponse Consume(SortListMessage request)
+        public SortListResponse Consume(CancellationToken token, SortListMessage request)
         {
             ConsumerConsole.WriteLine(string.Format("Received \"{0}\" item(s)", request.Items.Length));
 

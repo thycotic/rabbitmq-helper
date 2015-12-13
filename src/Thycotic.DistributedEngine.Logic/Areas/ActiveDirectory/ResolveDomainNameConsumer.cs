@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Thycotic.ActiveDirectory;
 using Thycotic.ActiveDirectory.Core;
 using Thycotic.Logging;
@@ -20,9 +21,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         /// <summary>
         /// Consumes a ResolveDomainDistinguishedNameMessage.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">A ResolveDomainDistinguishedNameMessage.</param>
-        /// <returns>A DomainDistinguishedNameResponse.</returns>
-        public DomainDistinguishedNameResponse Consume(ResolveDomainDistinguishedNameMessage request)
+        /// <returns>
+        /// A DomainDistinguishedNameResponse.
+        /// </returns>
+        public DomainDistinguishedNameResponse Consume(CancellationToken token, ResolveDomainDistinguishedNameMessage request)
         {
             try
             {
@@ -53,9 +57,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         /// <summary>
         /// Consumes a ResolveFullyQualifiedDomainNameMessage.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">A ResolveFullyQualifiedDomainNameMessage.</param>
-        /// <returns>A FullyQualifiedDomainNameResponse.</returns>
-        public FullyQualifiedDomainNameResponse Consume(ResolveFullyQualifiedDomainNameMessage request)
+        /// <returns>
+        /// A FullyQualifiedDomainNameResponse.
+        /// </returns>
+        public FullyQualifiedDomainNameResponse Consume(CancellationToken token, ResolveFullyQualifiedDomainNameMessage request)
         {
             try
             {

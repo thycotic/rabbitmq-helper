@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading;
 using Thycotic.DistributedEngine.Logic.Areas.PasswordChanging;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
@@ -19,8 +20,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.General
         /// <summary>
         /// Consumes a domain credential test message and attempts to authenticate with the given credentials.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
-        public CredentialOperationResult Consume(DomainCredentialTestMessage request)
+        /// <returns></returns>
+        public CredentialOperationResult Consume(CancellationToken token, DomainCredentialTestMessage request)
         {
             
 

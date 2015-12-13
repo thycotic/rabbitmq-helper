@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
 using Thycotic.Logging;
@@ -130,18 +131,20 @@ namespace Thycotic.MessageQueue.Client.Wrappers
                         }
                     }
 
+                    var linkedToken = CancellationTokenSource.CreateLinkedTokenSource(ActiveTasks.Token).Token;
+
                     try
                     {
-                        PreConsume(message);
+                        PreConsume(linkedToken, message);
                         
                         using (var consumer = _consumerFactory())
                         {
-                            consumer.Value.Consume(message);
+                            consumer.Value.Consume(linkedToken, message);
                         }
                     }
                     finally
                     {
-                        PostConsume(message);
+                        PostConsume(linkedToken, message);
                     }
 
                     _log.Debug(string.Format("Successfully processed {0}", this.GetRoutingKey(typeof(TConsumable))));

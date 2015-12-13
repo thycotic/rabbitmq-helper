@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading;
 using Thycotic.ActiveDirectory;
 using Thycotic.ActiveDirectory.Core;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectory;
@@ -43,8 +44,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         /// <summary>
         /// Scan AD
         /// </summary>
-        /// <param name="message"></param>
-        public void Consume(ADSyncMessage message)
+        /// <param name="token">The token.</param>
+        /// <param name="message">The message.</param>
+        public void Consume(CancellationToken token, ADSyncMessage message)
         {
             try
             {

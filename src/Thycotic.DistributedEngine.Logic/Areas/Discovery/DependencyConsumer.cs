@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading;
 using Thycotic.Discovery.Core.Elements;
 using Thycotic.Discovery.Core.Results;
 using Thycotic.Discovery.Sources.Scanners;
@@ -40,8 +41,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <summary>
         /// Scan Dependencies
         /// </summary>
-        /// <param name="request"></param>
-        public void Consume(ScanDependencyMessage request)
+        /// <param name="token">The token.</param>
+        /// <param name="request">The request.</param>
+        public void Consume(CancellationToken token, ScanDependencyMessage request)
         {
             try
             {
@@ -76,8 +78,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <summary>
         /// Scan Dependencies
         /// </summary>
-        /// <param name="request"></param>
-        public ScanDependencyResponse Consume(ScanDependencyBlockingMessage request)
+        /// <param name="token">The token.</param>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public ScanDependencyResponse Consume(CancellationToken token, ScanDependencyBlockingMessage request)
         {
             try
             {

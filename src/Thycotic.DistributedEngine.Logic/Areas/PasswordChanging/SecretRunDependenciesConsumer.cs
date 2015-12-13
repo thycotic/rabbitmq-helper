@@ -39,9 +39,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
-        public void Consume(SecretChangeDependencyMessage request)
+        public void Consume(CancellationToken token, SecretChangeDependencyMessage request)
         {
             _log.Info(string.Format("Got a change dependency request for Secret Id {0}", request.SecretId));
 

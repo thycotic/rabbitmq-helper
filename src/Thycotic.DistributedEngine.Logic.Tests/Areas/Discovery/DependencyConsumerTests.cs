@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using NSubstitute;
 using NUnit.Framework;
 using Thycotic.Discovery.Core.Inputs;
@@ -30,7 +31,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.Discovery
             var message = new ScanDependencyMessage();
             message.DiscoveryScannerId = 1;
             message.Input = scanInput;
-            consumer.Consume(message);
+            consumer.Consume(CancellationToken.None, message);
 
             responseBus.Received().Execute(Arg.Any<ScanDependencyResponse>());
         }
@@ -51,7 +52,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.Discovery
             var message = new ScanDependencyMessage();
             message.DiscoveryScannerId = 1;
             message.Input = scanInput;
-            consumer.Consume(message);
+            consumer.Consume(CancellationToken.None, message);
 
             responseBus.DidNotReceive().Execute(Arg.Any<ScanDependencyResponse>());
         }

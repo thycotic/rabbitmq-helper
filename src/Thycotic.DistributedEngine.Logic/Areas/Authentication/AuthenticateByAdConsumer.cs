@@ -1,5 +1,6 @@
 ﻿using System;
 using System.DirectoryServices;
+using System.Threading;
 using Thycotic.Logging;
 using Thycotic.Messages.Authenticate.Request;
 using Thycotic.Messages.Authenticate.Response;
@@ -18,9 +19,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Authentication
         /// <summary>
         /// Consumes the request
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">AuthenticateByAdMessage</param>
-        /// <returns>AuthenticateByAdResponse</returns>
-        public AuthenticateByAdResponse Consume(AuthenticateByAdMessage request)
+        /// <returns>
+        /// AuthenticateByAdResponse
+        /// </returns>
+        public AuthenticateByAdResponse Consume(CancellationToken token, AuthenticateByAdMessage request)
         {
             _log.Info(string.Format("Got an Authenticate-By-AD request for {0}@{1}: ", request.Username, request.UserDomain));
 

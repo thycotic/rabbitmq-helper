@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
@@ -222,8 +223,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <summary>
         /// Runs the optional pre processing.
         /// </summary>
-        /// <param name="message"></param>
-        public virtual void PreConsume(TConsumable message)
+        /// <param name="token">The token.</param>
+        /// <param name="message">The message.</param>
+        public virtual void PreConsume(CancellationToken token, TConsumable message)
         {
             //nothing here
         }
@@ -231,8 +233,9 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <summary>
         /// Runs the optional post processing.
         /// </summary>
-        /// <param name="message"></param>
-        public virtual void PostConsume(TConsumable message)
+        /// <param name="token">The token.</param>
+        /// <param name="message">The message.</param>
+        public virtual void PostConsume(CancellationToken token, TConsumable message)
         {
             //nothing here
         }

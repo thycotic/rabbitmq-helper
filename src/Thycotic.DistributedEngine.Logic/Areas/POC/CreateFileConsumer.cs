@@ -54,9 +54,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public BlockingConsumerResult Consume(CreateDirectoryMessage request)
+        public BlockingConsumerResult Consume(CancellationToken token, CreateDirectoryMessage request)
         {
             ConsumerConsole.WriteLine("Received directory message but will wait 2 seconds");
 
@@ -74,8 +75,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
-        public void Consume(CreateFileMessage request)
+        public void Consume(CancellationToken token, CreateFileMessage request)
         {
             ConsumerConsole.WriteLine("Received file message");
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using NSubstitute;
 using NUnit.Framework;
 using Thycotic.ActiveDirectory;
@@ -39,7 +40,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.ActiveDirectory
             });
             var adSyncRequestConsumer = new ADSyncRequestConsumer(responseBus, adSearcher);
 
-            adSyncRequestConsumer.Consume(new ADSyncMessage());
+            adSyncRequestConsumer.Consume(CancellationToken.None, new ADSyncMessage());
 
             responseBus.Received().Execute(Arg.Is<ADSyncBatchResponse>(r => r.IsBatchComplete == false && r.BatchCount == null));
             responseBus.Received().Execute(Arg.Is<ADSyncBatchResponse>(r => r.IsBatchComplete == false && r.BatchCount == null));

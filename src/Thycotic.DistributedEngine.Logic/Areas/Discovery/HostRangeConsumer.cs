@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading;
 using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -37,8 +38,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <summary>
         /// Scan Host Range
         /// </summary>
-        /// <param name="request"></param>
-        public void Consume(ScanHostRangeMessage request)
+        /// <param name="token">The token.</param>
+        /// <param name="request">The request.</param>
+        public void Consume(CancellationToken token, ScanHostRangeMessage request)
         {
             try
             {
@@ -80,8 +82,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Discovery
         /// <summary>
         /// Specific OU Host Range
         /// </summary>
-        /// <param name="request"></param>
-        public void Consume(SpecificOuScanHostRangeMessage request)
+        /// <param name="token">The token.</param>
+        /// <param name="request">The request.</param>
+        public void Consume(CancellationToken token, SpecificOuScanHostRangeMessage request)
         {
             try
             {

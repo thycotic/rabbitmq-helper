@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.Messages.Areas.POC.Request;
@@ -32,8 +33,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.POC
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
-        public void Consume(ChainMessage request)
+        public void Consume(CancellationToken token, ChainMessage request)
         {
             ConsumerConsole.WriteLine("Received chain message");
 

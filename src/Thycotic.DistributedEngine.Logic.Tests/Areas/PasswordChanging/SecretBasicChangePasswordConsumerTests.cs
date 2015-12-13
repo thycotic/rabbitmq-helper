@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 using Autofac.Features.OwnedInstances;
 using NSubstitute;
 using NUnit.Framework;
@@ -28,7 +29,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.PasswordChanging
 
             var message = new SecretBasicPasswordChangeMessage();
             message.OperationInfo = info;
-            consumer.Consume(message);
+            consumer.Consume(CancellationToken.None, message);
 
             responseBus.Received().ExecuteAsync(Arg.Is<RemotePasswordChangeResponse>(x => x.Status == OperationStatus.Unknown));
         }
@@ -80,7 +81,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.PasswordChanging
 
             var message = new SecretBasicPasswordChangeMessage();
             message.OperationInfo = info;
-            consumer.Consume(message);
+            consumer.Consume(CancellationToken.None, message);
 
             responseBus.Received().ExecuteAsync(Arg.Is<RemotePasswordChangeResponse>(x => x.Status == OperationStatus.AccessDenied));
         }

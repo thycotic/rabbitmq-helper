@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Thycotic.ActiveDirectory;
 using Thycotic.ActiveDirectory.Core;
 using Thycotic.Logging;
@@ -20,11 +21,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         private readonly ILogWriter _log = Log.Get(typeof(GenericQueryConsumer));
 
         /// <summary>
-        /// 
+        /// Consumes the specified request.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="token">The token.</param>
+        /// <param name="request">The request.</param>
         /// <returns></returns>
-        public ADObjectsQueryResult Consume(AllUsersByDomainQueryMessage request)
+        public ADObjectsQueryResult Consume(CancellationToken token, AllUsersByDomainQueryMessage request)
         {
             try
             {
@@ -41,11 +43,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         }
 
         /// <summary>
-        /// 
+        /// Consumes the specified request.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="token">The token.</param>
+        /// <param name="request">The request.</param>
         /// <returns></returns>
-        public ADObjectsQueryResult Consume(GroupsByDomainQueryMessage request)
+        public ADObjectsQueryResult Consume(CancellationToken token, GroupsByDomainQueryMessage request)
         {
             try
             {
@@ -70,11 +73,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
         }
 
         /// <summary>
-        /// 
+        /// Consumes the specified token.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="token">The token.</param>
+        /// <param name="request">The request.</param>
         /// <returns></returns>
-        public ADObjectsQueryResult Consume(UsersByGroupsQueryMessage request)
+        public ADObjectsQueryResult Consume(CancellationToken token, UsersByGroupsQueryMessage request)
         {
             try
             {

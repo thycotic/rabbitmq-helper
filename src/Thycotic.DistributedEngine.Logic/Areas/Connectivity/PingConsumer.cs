@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Engine.Request;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -35,8 +36,11 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Connectivity
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
-        public PingResponse Consume(PingMessage request)
+        /// <returns></returns>
+        /// <exception cref="System.ApplicationException"></exception>
+        public PingResponse Consume(CancellationToken token, PingMessage request)
         {
             Contract.Ensures(_log != null);
 

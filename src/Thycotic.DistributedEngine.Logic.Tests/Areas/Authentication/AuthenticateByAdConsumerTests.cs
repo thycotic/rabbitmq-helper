@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Threading;
+using NUnit.Framework;
 using Thycotic.DistributedEngine.Logic.Areas.Authentication;
 using Thycotic.Messages.Authenticate.Request;
 
@@ -29,7 +30,7 @@ namespace Thycotic.DistributedEngine.Logic.Tests.Areas.Authentication
                 UserDomain = userDomain
             };
 
-            var response = new AuthenticateByAdConsumer().Consume(message);
+            var response = new AuthenticateByAdConsumer().Consume(CancellationToken.None, message);
             Assert.AreEqual(result, response.Success, response.ErrorMessage);
         }             
     }

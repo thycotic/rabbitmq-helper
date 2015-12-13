@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using Thycotic.Utility.TestChain;
 
 namespace Thycotic.Messages.Common
@@ -18,9 +19,10 @@ namespace Thycotic.Messages.Common
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        TResponse Consume(TRequest request);
+        TResponse Consume(CancellationToken token, TRequest request);
     }
 
     /// <summary>
@@ -36,9 +38,12 @@ namespace Thycotic.Messages.Common
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token"></param>
         /// <param name="request">The request.</param>
-        public TResponse Consume(TRequest request)
+        /// <returns></returns>
+        public TResponse Consume(CancellationToken token, TRequest request)
         {
+            Contract.Requires<ArgumentNullException>(token != null);
             Contract.Requires<ArgumentNullException>(request != null);
 
             Contract.Ensures(Contract.Result<TResponse>() != null);

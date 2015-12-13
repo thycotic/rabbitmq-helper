@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading;
 using Autofac.Features.OwnedInstances;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChanging.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
@@ -39,9 +40,9 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
-        public void Consume(SecretBasicPasswordChangeMessage request)
+        public void Consume(CancellationToken token, SecretBasicPasswordChangeMessage request)
         {
             _log.Info(string.Format("Got a basic change password request for Secret Id {0}:", request.SecretId));
 
@@ -99,10 +100,12 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                 _responseBus.ExecuteAsync(response);
                 _log.Info(string.Format("Change Password Result for Secret Id {0}: {1}", request.SecretId, response.Status));
-
+                
                 if (runDependencies)
                 {
-                    _consumerFactory().Value.Consume(request.SecretChangeDependencyMessage);
+                    var linkedToken = CancellationTokenSource.CreateLinkedTokenSource(token).Token;
+
+                    _consumerFactory().Value.Consume(linkedToken, request.SecretChangeDependencyMessage);
                 }
             }
             catch (Exception ex)

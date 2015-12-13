@@ -141,7 +141,7 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
                 Sut.StartConsuming();
 
-                _consumer.When(c => c.Consume(Arg.Any<IBasicConsumable>())).Do(info =>
+                _consumer.When(c => c.Consume(Arg.Any<CancellationToken>(), Arg.Any<IBasicConsumable>())).Do(info =>
                 {
                     var consumable2 = (TestBasicConsumable)info.Args().First();
 
@@ -167,14 +167,14 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
                 if (!expired || relayIfExpired)
                 {
-                    _consumer.Received().Consume(Arg.Any<TestBasicConsumable>());
+                    _consumer.Received().Consume(Arg.Any<CancellationToken>(), Arg.Any<TestBasicConsumable>());
 
                     Sut.CommonModel.Received().BasicAck(deliveryTag, _exchangeName, routingKey, false);
                 }
                 else
                 {
-                    _consumer.DidNotReceive().Consume(Arg.Any<IBasicConsumable>());
-                    _consumer.DidNotReceive().Consume(Arg.Any<TestBasicConsumable>());
+                    _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<IBasicConsumable>());
+                    _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<TestBasicConsumable>());
 
                     Sut.CommonModel.Received().BasicNack(deliveryTag, _exchangeName, routingKey, false, false);
                 }
@@ -223,8 +223,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             {
                 Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
-                _consumer.DidNotReceive().Consume(Arg.Any<IBasicConsumable>());
-                _consumer.DidNotReceive().Consume(Arg.Any<TestBasicConsumable>());
+                _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<IBasicConsumable>());
+                _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<TestBasicConsumable>());
 
                 Sut.CommonModel.Received().BasicNack(deliveryTag, _exchangeName, routingKey, false, false);
 

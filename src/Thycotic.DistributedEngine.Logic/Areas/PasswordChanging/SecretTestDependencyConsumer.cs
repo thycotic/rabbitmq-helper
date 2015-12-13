@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
@@ -29,9 +30,10 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
         /// <summary>
         /// Consumes the specified request.
         /// </summary>
+        /// <param name="token">The token.</param>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public SecretTestDependencyResponse Consume(SecretTestDependencyMessage request)
+        public SecretTestDependencyResponse Consume(CancellationToken token, SecretTestDependencyMessage request)
         {
             _log.Info(string.Format("Got a Test Dependency request for Secret Id {0} (Dependency Id {1})", request.SecretId, request.DependencyChangeInfo.SecretDependencyId));
             var response = new SecretTestDependencyResponse();
