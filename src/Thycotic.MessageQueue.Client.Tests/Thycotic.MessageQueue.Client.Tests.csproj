@@ -160,6 +160,10 @@
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Thycotic.Messages.Common, Version=5.0.0.2, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Messages.Common.5.0.0.2\lib\net451\Thycotic.Messages.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Utility.5.0.0.29\lib\net451\Thycotic.Utility.dll</HintPath>
       <Private>True</Private>
@@ -184,6 +188,7 @@
   <ItemGroup>
     <Compile Include="MessageEncryptorSteps.cs" />
     <Compile Include="ITestConsumerInvoker.cs" />
+    <Compile Include="TestBasicConsumable.cs" />
     <Compile Include="Wrappers\BasicConsumerWrapperTests.cs" />
     <Compile Include="Wrappers\BlockingConsumerWrapperTests.cs" />
     <Compile Include="QueueClient\CommonConnectionSteps.cs" />
@@ -192,7 +197,8 @@
     <Compile Include="QueueClient\ExchangeNameProviderSteps.cs" />
     <Compile Include="Wrappers\LeakyOwned.cs" />
     <Compile Include="Wrappers\LifetimeDummy.cs" />
-    <Compile Include="Wrappers\TestConnection.cs" />
+    <Compile Include="TestBlockingConsumable.cs" />
+    <Compile Include="TestConnection.cs" />
     <Compile Include="RequestBusTests.cs" />
     <Compile Include="TestConsumerInvoker.cs" />
     <Compile Include="TestMqRequestBus.cs" />
@@ -208,14 +214,6 @@
     <ProjectReference Include="..\Thycotic.MessageQueue.Client\Thycotic.MessageQueue.Client.csproj">
       <Project>{23d33205-a493-4977-831a-3487ec2042d6}</Project>
       <Name>Thycotic.MessageQueue.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Messages.Common.Tests\Thycotic.Messages.Common.Tests.csproj">
-      <Project>{9E5E3B06-B6FC-44F3-B25B-1ED6FE4DD7B6}</Project>
-      <Name>Thycotic.Messages.Common.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
-      <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
-      <Name>Thycotic.Messages.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

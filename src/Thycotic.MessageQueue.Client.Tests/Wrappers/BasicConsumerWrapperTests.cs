@@ -10,7 +10,6 @@ using NUnit.Framework;
 using Thycotic.MessageQueue.Client.QueueClient;
 using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.Messages.Common;
-using Thycotic.Messages.Common.Tests;
 using Thycotic.Utility.Serialization;
 using Thycotic.Utility.Testing.BDD;
 using Thycotic.Utility.Testing.DataGeneration;

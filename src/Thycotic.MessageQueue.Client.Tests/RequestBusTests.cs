@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
-using FluentAssertions.Events;
 using NSubstitute;
 using NUnit.Framework;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.Common;
-using Thycotic.Messages.Common.Tests;
 using Thycotic.Utility.Serialization;
 using Thycotic.Utility.Testing.BDD;
 using Thycotic.Utility.Testing.DataGeneration;
