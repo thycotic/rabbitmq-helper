@@ -227,9 +227,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="IProcessRunner.cs" />
     <Compile Include="IServiceManagerInteractor.cs" />
     <Compile Include="IServiceUpdater.cs" />
