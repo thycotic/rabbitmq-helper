@@ -19,6 +19,8 @@
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
     <TargetFrameworkProfile />
     <DontImportPostSharp>True</DontImportPostSharp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -161,12 +163,20 @@
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Thycotic.MemoryMq">
+      <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.13\lib\net451\Thycotic.MemoryMq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Utility.5.0.0.29\lib\net451\Thycotic.Utility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Utility.Testing, Version=5.0.0.20, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Utility.Testing.5.0.0.20\lib\net451\Thycotic.Utility.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Wcf">
+      <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -196,10 +206,6 @@
     <Compile Include="TestConnection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.MemoryMq\Thycotic.MemoryMq.csproj">
-      <Project>{60af5da6-343c-4c6f-9cd5-2b5f04d9af92}</Project>
-      <Name>Thycotic.MemoryMq</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Thycotic.MessageQueue.Client.Tests\Thycotic.MessageQueue.Client.Tests.csproj">
       <Project>{9c4e6fbc-bf2b-4099-816c-89098229ea6d}</Project>
       <Name>Thycotic.MessageQueue.Client.Tests</Name>
@@ -251,6 +257,13 @@
   <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
     <Error Condition="!Exists('..\packages\PostSharp.4.0.41\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
     <Error Condition="Exists('..\packages\PostSharp.4.0.41\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
