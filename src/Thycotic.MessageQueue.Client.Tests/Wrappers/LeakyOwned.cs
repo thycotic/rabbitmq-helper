@@ -1,7 +1,7 @@
 using System;
 using Autofac.Features.OwnedInstances;
 
-namespace Thycotic.MessageQueue.Client.Wrappers.Tests
+namespace Thycotic.MessageQueue.Client.Tests.Wrappers
 {
     public class LeakyOwned<T> : Owned<T>
     {

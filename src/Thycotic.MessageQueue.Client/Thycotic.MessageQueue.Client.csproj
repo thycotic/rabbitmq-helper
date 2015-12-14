@@ -184,6 +184,10 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -224,6 +228,10 @@
       <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.15\lib\net451\Thycotic.MemoryMq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Thycotic.Messages.Common, Version=5.0.0.2, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Messages.Common.5.0.0.2\lib\net451\Thycotic.Messages.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Utility.5.0.0.29\lib\net451\Thycotic.Utility.dll</HintPath>
@@ -239,6 +247,7 @@
     <Compile Include="ConnectionStringHelpers.cs" />
     <Compile Include="DefaultSchemas.cs" />
     <Compile Include="DefaultPorts.cs" />
+    <Compile Include="IoC\WrappersModule.cs" />
     <Compile Include="IPriorityScheduler.cs" />
     <Compile Include="IRequestBus.cs" />
     <Compile Include="QueueClient\AzureServiceBus\AzureServiceBusConnection.cs" />
@@ -281,8 +290,16 @@
     <Compile Include="QueueClient\RoutingHelpers.cs" />
     <Compile Include="RequestBusFactory.cs" />
     <Compile Include="SupportedMessageQueues.cs" />
+    <Compile Include="Wrappers\ActiveTasksMonitor.cs" />
+    <Compile Include="Wrappers\BasicConsumerWrapper.cs" />
+    <Compile Include="Wrappers\BlockingConsumerWrapper.cs" />
+    <Compile Include="Wrappers\ConsumerWrapperBase.cs" />
+    <Compile Include="Wrappers\ConsumerWrapperFactory.cs" />
     <Compile Include="Wrappers\DeliveryTagWrapper.cs" />
     <Compile Include="Wrappers\IConsumerWrapperBase.cs" />
+    <Compile Include="Wrappers\IPrioritySchedulerProvider.cs" />
+    <Compile Include="Wrappers\PriorityScheduler.cs" />
+    <Compile Include="Wrappers\PrioritySchedulerProvider.cs" />
     <Compile Include="Wrappers\Proxies\CommonConsumerWrapperProxy.cs" />
     <Compile Include="Wrappers\Proxies\RabbitMqConsumerWrapperProxy.cs" />
   </ItemGroup>
@@ -297,12 +314,6 @@
     <None Include="Thycotic.MessageQueue.Client.nuspec" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\Thycotic.Messages.Common\Thycotic.Messages.Common.csproj">
-      <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
-      <Name>Thycotic.Messages.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

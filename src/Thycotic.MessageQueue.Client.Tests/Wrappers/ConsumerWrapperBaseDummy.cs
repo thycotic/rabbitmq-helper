@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.MessageQueue.Client.Wrappers.Tests
+namespace Thycotic.MessageQueue.Client.Tests.Wrappers
 {
     internal class RequestDummy : IConsumable
     {

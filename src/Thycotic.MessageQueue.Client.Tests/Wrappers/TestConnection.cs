@@ -1,8 +1,7 @@
 using System;
-using System.Threading.Tasks;
 using Thycotic.MessageQueue.Client.QueueClient;
 
-namespace Thycotic.MessageQueue.Client.Wrappers.Tests
+namespace Thycotic.MessageQueue.Client.Tests.Wrappers
 {
     public class TestConnection : ICommonConnection
     {

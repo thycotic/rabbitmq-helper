@@ -123,6 +123,10 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentAssertions, Version=3.4.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.dll</HintPath>
@@ -180,8 +184,15 @@
   <ItemGroup>
     <Compile Include="MessageEncryptorSteps.cs" />
     <Compile Include="ITestConsumerInvoker.cs" />
+    <Compile Include="Wrappers\BasicConsumerWrapperTests.cs" />
+    <Compile Include="Wrappers\BlockingConsumerWrapperTests.cs" />
     <Compile Include="QueueClient\CommonConnectionSteps.cs" />
+    <Compile Include="Wrappers\ConsumerWrapperBaseDummy.cs" />
+    <Compile Include="Wrappers\ConsumerWrapperBaseSteps.cs" />
     <Compile Include="QueueClient\ExchangeNameProviderSteps.cs" />
+    <Compile Include="Wrappers\LeakyOwned.cs" />
+    <Compile Include="Wrappers\LifetimeDummy.cs" />
+    <Compile Include="Wrappers\TestConnection.cs" />
     <Compile Include="RequestBusTests.cs" />
     <Compile Include="TestConsumerInvoker.cs" />
     <Compile Include="TestMqRequestBus.cs" />

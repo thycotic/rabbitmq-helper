@@ -8,6 +8,7 @@ using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.MessageQueue.Client.Wrappers;
 using Thycotic.Messages.Common;
 using Thycotic.Messages.Common.Tests;
 using Thycotic.Utility.Serialization;
@@ -15,10 +16,12 @@ using Thycotic.Utility.Testing.BDD;
 using Thycotic.Utility.Testing.DataGeneration;
 using Thycotic.Utility.Testing.TestChain;
 
-namespace Thycotic.MessageQueue.Client.Wrappers.Tests
+namespace Thycotic.MessageQueue.Client.Tests.Wrappers
 {
-    public class BasicConsumerWrapperTests : BehaviorTestBase<BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>>
+    [TestFixture]
+    public class BlockingConsumerWrapperTests : BehaviorTestBase<BlockingConsumerWrapper<IBlockingConsumable, object, IBlockingConsumer<IBlockingConsumable, object>>>
     {
+
         private CancellationTokenSource _cts = new CancellationTokenSource();
         private string _exchangeName;
         private ICommonModel _model;
@@ -27,9 +30,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         private IObjectSerializer _objectSerializer;
         private IMessageEncryptor _messageEncryptor;
         private IPrioritySchedulerProvider _prioritySchedulerProvider;
-        private Func<Owned<IBasicConsumer<IBasicConsumable>>> _consumerFactory;
-        private IBasicConsumer<IBasicConsumable> _consumer;
-
+        private Func<Owned<IBlockingConsumer<IBlockingConsumable, object>>> _consumerFactory;
+        private IBlockingConsumer<IBlockingConsumable, object> _consumer;
 
         private void WaitToOpenChannel()
         {
@@ -79,48 +81,41 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             _prioritySchedulerProvider.AboveNormal.Returns(new PriorityScheduler(testContext, ThreadPriority.AboveNormal));
             _prioritySchedulerProvider.Highest.Returns(new PriorityScheduler(testContext, ThreadPriority.Highest));
 
-            _consumer = TestedSubstitute.For<IBasicConsumer<IBasicConsumable>>();
+            _consumer = TestedSubstitute.For<IBlockingConsumer<IBlockingConsumable, object>>();
 
             _consumerFactory =
                 () =>
-                    new LeakyOwned<IBasicConsumer<IBasicConsumable>>(
+                    new LeakyOwned<IBlockingConsumer<IBlockingConsumable, object>>(
                         _consumer, new LifetimeDummy());
 
-            Sut = new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory);
+            Sut = new BlockingConsumerWrapper<IBlockingConsumable, object, IBlockingConsumer<IBlockingConsumable, object>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory);
         }
 
-        /// <summary>
-        /// Constructors the parameters do not except invalid parameters.
-        /// </summary>
         [Test]
         public override void ConstructorParametersDoNotExceptInvalidParameters()
         {
-            this.ShouldFail<ArgumentNullException>("Precondition failed: connection != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(null, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: exchangeNameProvider != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, null, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: objectSerializer != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, null, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: messageEncryptor != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, null, _prioritySchedulerProvider, _consumerFactory));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: prioritySchedulerProvider != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, null, _consumerFactory));
-            this.ShouldFail<ArgumentNullException>("Precondition failed: consumerFactory != null", () => new BasicConsumerWrapper<IBasicConsumable, IBasicConsumer<IBasicConsumable>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, null));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: connection != null", () => new BlockingConsumerWrapper<IBlockingConsumable, object, IBlockingConsumer<IBlockingConsumable, object>>(null, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: exchangeNameProvider != null", () => new BlockingConsumerWrapper<IBlockingConsumable, object, IBlockingConsumer<IBlockingConsumable, object>>(_commonConnection, null, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: objectSerializer != null", () => new BlockingConsumerWrapper<IBlockingConsumable, object, IBlockingConsumer<IBlockingConsumable, object>>(_commonConnection, _exchangeNameProvider, null, _messageEncryptor, _prioritySchedulerProvider, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: messageEncryptor != null", () => new BlockingConsumerWrapper<IBlockingConsumable, object, IBlockingConsumer<IBlockingConsumable, object>>(_commonConnection, _exchangeNameProvider, _objectSerializer, null, _prioritySchedulerProvider, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: prioritySchedulerProvider != null", () => new BlockingConsumerWrapper<IBlockingConsumable, object, IBlockingConsumer<IBlockingConsumable, object>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, null, _consumerFactory));
+            this.ShouldFail<ArgumentNullException>("Precondition failed: consumerFactory != null", () => new BlockingConsumerWrapper<IBlockingConsumable, object, IBlockingConsumer<IBlockingConsumable, object>>(_commonConnection, _exchangeNameProvider, _objectSerializer, _messageEncryptor, _prioritySchedulerProvider, null));
         }
 
         /// <summary>
         /// Basic deliver should relay when appropriate.
         /// </summary>
-        /// <param name="redelivered">if set to <c>true</c> [redelivered].</param>
-        /// <param name="expired">if set to <c>true</c> [expired].</param>
-        /// <param name="relayIfExpired">if set to <c>true</c> [relay if expired].</param>
         [Test]
-        [TestCase(false, false, false, TestName = "Normal execution")]
-        [TestCase(true, false, false, TestName = "Relay redelivered")]
-        [TestCase(false, true, false, TestName = "Don't relay expired")]
-        [TestCase(false, true, true, TestName = "Relay expired")]
-        public void HandleBasicDeliverShouldRelayWhenAppropriate(bool redelivered, bool expired, bool relayIfExpired)
+        public void HandleBasicDeliverShouldRelayWhenAppropriate()
         {
+            //TODO: Clean up this test and make BLocking publish
+
             var consumerTag = string.Empty;
             var deliveryTag = new DeliveryTagWrapper(0);
+            var redelivered = false;
             var routingKey = string.Empty;
             ICommonModelProperties properties = null;
-            TestBasicConsumable consumable = null;
+            TestBlockingConsumable consumable = null;
             byte[] body = null;
 
             Given(() =>
@@ -128,23 +123,22 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
                 consumerTag = this.GenerateUniqueDummyName();
                 deliveryTag = new DeliveryTagWrapper(1);
+                redelivered = false;
                 routingKey = this.GenerateUniqueDummyName();
                 properties = TestedSubstitute.For<ICommonModelProperties>();
-                consumable = new TestBasicConsumable
+                consumable = new TestBlockingConsumable
                 {
                     Content = this.GenerateUniqueDummyName(),
-                    RelayEvenIfExpired = relayIfExpired,
-                    ExpiresOn = expired ? DateTime.UtcNow - TimeSpan.FromSeconds(30) : (DateTime?)null
 
                 };
                 body = _objectSerializer.ToBytes(consumable);
 
                 Sut.StartConsuming();
 
-                _consumer.When(c => c.Consume(Arg.Any<CancellationToken>(), Arg.Any<IBasicConsumable>())).Do(info =>
+                _consumer.When(c => c.Consume(Arg.Any<CancellationToken>(), Arg.Any<IBlockingConsumable>())).Do(info =>
                 {
                     var token = (CancellationToken)info.Args().First();
-                    var consumable2 = (TestBasicConsumable)info.Args().Skip(1).First();
+                    var consumable2 = (TestBlockingConsumable)info.Args().Skip(1).First();
 
                     consumable2.Content.Should().Be(consumable.Content);
                 });
@@ -166,19 +160,10 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             {
                 Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
-                if (!expired || relayIfExpired)
-                {
-                    _consumer.Received().Consume(Arg.Any<CancellationToken>(), Arg.Any<TestBasicConsumable>());
+                _consumer.Received().Consume(Arg.Any<CancellationToken>(), Arg.Any<TestBlockingConsumable>());
 
-                    Sut.CommonModel.Received().BasicAck(deliveryTag, _exchangeName, routingKey, false);
-                }
-                else
-                {
-                    _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<IBasicConsumable>());
-                    _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<TestBasicConsumable>());
+                Sut.CommonModel.Received().BasicAck(deliveryTag, _exchangeName, routingKey, false);
 
-                    Sut.CommonModel.Received().BasicNack(deliveryTag, _exchangeName, routingKey, false, false);
-                }
             });
         }
 
@@ -188,6 +173,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
         [Test]
         public void HandleBasicDeliverShouldNotRelayCorrupted()
         {
+            //TODO: Clean up this test and make BLocking publish
+
             var consumerTag = string.Empty;
             var deliveryTag = new DeliveryTagWrapper(0);
             var redelivered = false;
@@ -224,8 +211,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
             {
                 Sut.CommonModel.Received().BasicConsume(Arg.Any<string>(), Arg.Any<bool>(), Sut);
 
-                _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<IBasicConsumable>());
-                _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<TestBasicConsumable>());
+                _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<IBlockingConsumable>());
+                _consumer.DidNotReceive().Consume(Arg.Any<CancellationToken>(), Arg.Any<TestBlockingConsumable>());
 
                 Sut.CommonModel.Received().BasicNack(deliveryTag, _exchangeName, routingKey, false, false);
 

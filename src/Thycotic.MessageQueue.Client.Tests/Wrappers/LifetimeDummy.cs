@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.MessageQueue.Client.Wrappers.Tests
+namespace Thycotic.MessageQueue.Client.Tests.Wrappers
 {
     public class LifetimeDummy : IDisposable
     {
