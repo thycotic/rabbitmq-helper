@@ -6,6 +6,13 @@
 [assembly: AssemblyTitle("Thycotic.DistributedEngine.Logic.Tests")]
 [assembly: AssemblyDescription("")]
 
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Thycotic Software Ltd")]
+[assembly: AssemblyProduct("")]
+[assembly: AssemblyCopyright("Copyright © Thycotic Software Ltd 2016")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version

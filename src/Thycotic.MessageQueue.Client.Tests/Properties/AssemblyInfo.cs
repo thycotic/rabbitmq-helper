@@ -7,9 +7,9 @@
 [assembly: AssemblyDescription("")]
 
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Thycotic")]
+[assembly: AssemblyCompany("Thycotic Software Ltd")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
+[assembly: AssemblyCopyright("Copyright © Thycotic Software Ltd 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

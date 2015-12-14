@@ -6,6 +6,15 @@ using System.Windows;
 // associated with an assembly.
 [assembly: AssemblyTitle("Thycotic.DistributedEngine.LogViewer")]
 [assembly: AssemblyDescription("")]
+
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Thycotic Software Ltd")]
+[assembly: AssemblyProduct("")]
+[assembly: AssemblyCopyright("Copyright © Thycotic Software Ltd 2016")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+
+
 //In order to begin building localizable applications, set 
 //<UICulture>CultureYouAreCodingWith</UICulture> in your .csproj file
 //inside a <PropertyGroup>.  For example, if you are using US english
