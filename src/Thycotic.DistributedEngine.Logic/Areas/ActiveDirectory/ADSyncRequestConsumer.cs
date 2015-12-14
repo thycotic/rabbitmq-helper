@@ -165,7 +165,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
                     DistinguishedName = u.DistinguishedName,
                     ADGuid = u.ADGuid,
                     Email = u.Email,
-                    Name = u.Name,
+                    Name = u.SamAccountName,
                     DomainName = u.DomainName,
                     OUPath = u.OUPath,
                     DisplayName = u.DisplayName,
