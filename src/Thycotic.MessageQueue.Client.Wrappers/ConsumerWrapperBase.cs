@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client.QueueClient;
+using Thycotic.MessageQueue.Client.QueueClient.RabbitMq;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.MessageQueue.Client.Wrappers
@@ -62,7 +63,11 @@ namespace Thycotic.MessageQueue.Client.Wrappers
             _connection = connection;
             _exchangeName = exchangeNameProvider.GetCurrentExchange();
             _routingKey = this.GetRoutingKey(typeof(TConsumable));
-            _queueName = this.GetQueueName(_exchangeName, typeof(TConsumer), typeof(TConsumable));
+
+            //TODO: Remove at some point when we have a good RabbitMq clean up method.
+            var useLegacyQueueNames = connection is RabbitMqConnection;
+
+            _queueName = this.GetQueueName(_exchangeName, typeof(TConsumer), typeof(TConsumable), useLegacyQueueNames);
         }
 
         /// <summary>

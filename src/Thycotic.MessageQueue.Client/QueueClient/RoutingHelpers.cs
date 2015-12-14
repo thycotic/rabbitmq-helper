@@ -49,8 +49,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
         /// <param name="exchangeName">Name of the exchange.</param>
         /// <param name="consumerType">Type of the consumer.</param>
         /// <param name="consumableType">Type of the consumable.</param>
+        /// <param name="useLegacyQueueNames"></param>
         /// <returns></returns>
-        public static string GetQueueName(this IConsumerWrapperBase consumer, string exchangeName, Type consumerType, Type consumableType)
+        public static string GetQueueName(this IConsumerWrapperBase consumer, string exchangeName, Type consumerType, Type consumableType, bool useLegacyQueueNames)
         {
             Contract.Requires<ArgumentNullException>(consumer != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(exchangeName));
@@ -60,7 +61,9 @@ namespace Thycotic.MessageQueue.Client.QueueClient
             Contract.Ensures(Contract.Result<string>() != null);
             Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
-            var queueName = string.Format("{0}-{1}-{2}", exchangeName, consumerType.FullName, consumer.GetRoutingKey(consumableType));
+            var separator = useLegacyQueueNames ? ":" : "-";
+
+            var queueName = string.Format("{0}{3}{1}{3}{2}", exchangeName, consumerType.FullName, consumer.GetRoutingKey(consumableType), separator);
 
             Contract.Assume(queueName != null);
             Contract.Assume(!string.IsNullOrWhiteSpace(queueName));
