@@ -210,10 +210,6 @@
       <Project>{818f6124-14c0-447f-8001-4c8ddc2f83ff}</Project>
       <Name>Thycotic.Messages.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Thycotic.Messages.Tests\Thycotic.Messages.Tests.csproj">
-      <Project>{b8df9bce-75a1-4690-adc2-409d55095a26}</Project>
-      <Name>Thycotic.Messages.Tests</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

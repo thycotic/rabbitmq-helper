@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -63,6 +64,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers
         /// <param name="task">The task.</param>
         public void AddTask(Task task)
         {
+            Contract.Requires<ArgumentNullException>(task != null);
+
             lock (_syncRoot)
             {
                 if (_cts.Token.IsCancellationRequested)
