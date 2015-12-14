@@ -182,6 +182,10 @@
     <CodeContractsAnalysisWarningLevel>3</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -219,12 +223,12 @@
       <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.15\lib\net451\Thycotic.MemoryMq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.MessageQueue.Client, Version=5.0.0.12, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.MessageQueue.Client.5.0.0.12\lib\net451\Thycotic.MessageQueue.Client.dll</HintPath>
+    <Reference Include="Thycotic.MessageQueue.Client, Version=5.0.0.14, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.MessageQueue.Client.5.0.0.14\lib\net451\Thycotic.MessageQueue.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Messages.Common, Version=5.0.0.12, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.MessageQueue.Client.5.0.0.12\lib\net451\Thycotic.Messages.Common.dll</HintPath>
+    <Reference Include="Thycotic.Messages.Common, Version=5.0.0.2, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Messages.Common.5.0.0.2\lib\net451\Thycotic.Messages.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
