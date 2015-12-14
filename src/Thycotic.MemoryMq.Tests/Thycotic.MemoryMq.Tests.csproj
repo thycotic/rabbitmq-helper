@@ -175,9 +175,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="MemoryMqDeliveryEventArgsSteps.cs" />
     <Compile Include="Subsystem\CallbackChannelProviderSteps.cs" />
     <Compile Include="Subsystem\ExchangeDictionaryTests.cs" />
