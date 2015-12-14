@@ -274,6 +274,7 @@
     <Compile Include="QueueClient\RabbitMq\RabbitMqConnection.cs" />
     <Compile Include="QueueClient\DefaultConfigValues.cs" />
     <Compile Include="QueueClient\RoutingHelpers.cs" />
+    <Compile Include="RequestBusFactory.cs" />
     <Compile Include="SupportedMessageQueues.cs" />
     <Compile Include="Wrappers\DeliveryTagWrapper.cs" />
     <Compile Include="Wrappers\IConsumerWrapperBase.cs" />
