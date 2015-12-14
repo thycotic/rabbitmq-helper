@@ -136,7 +136,8 @@ namespace Thycotic.MessageQueue.Client.Wrappers.Tests
 
                 _consumer.When(c => c.Consume(Arg.Any<CancellationToken>(), Arg.Any<IBlockingConsumable>())).Do(info =>
                 {
-                    var consumable2 = (TestBlockingConsumable)info.Args().First();
+                    var token = (CancellationToken)info.Args().First();
+                    var consumable2 = (TestBlockingConsumable)info.Args().Skip(1).First();
 
                     consumable2.Content.Should().Be(consumable.Content);
                 });
