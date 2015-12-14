@@ -191,9 +191,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="BasicConsumerWrapperTests.cs" />
     <Compile Include="BlockingConsumerWrapperTests.cs" />
     <Compile Include="ConsumerWrapperBaseDummy.cs" />

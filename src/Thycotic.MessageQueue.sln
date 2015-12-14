@@ -11,11 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Common", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MessageQueue.Client.Wrappers", "Thycotic.MessageQueue.Client.Wrappers\Thycotic.MessageQueue.Client.Wrappers.csproj", "{D0D2D7E5-D147-47E9-8D8F-18F6F6B19720}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B3CBDC28-C295-42B9-9AF3-1EE0B536D58E}"
-	ProjectSection(SolutionItems) = preProject
-		ProductInfo.cs = ProductInfo.cs
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.MessageQueue.Client.Tests", "Thycotic.MessageQueue.Client.Tests\Thycotic.MessageQueue.Client.Tests.csproj", "{9C4E6FBC-BF2B-4099-816C-89098229EA6D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Common.Tests", "Thycotic.Messages.Common.Tests\Thycotic.Messages.Common.Tests.csproj", "{9E5E3B06-B6FC-44F3-B25B-1ED6FE4DD7B6}"

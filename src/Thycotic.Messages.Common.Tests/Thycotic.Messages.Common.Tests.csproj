@@ -170,9 +170,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="TestBasicConsumable.cs" />
     <Compile Include="TestBlockingConsumable.cs" />
     <Compile Include="BlockingConsumerInterfaceSteps.cs" />

@@ -220,9 +220,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ProductInfo.cs">
-      <Link>Properties\ProductInfo.cs</Link>
-    </Compile>
     <Compile Include="ActiveTasksMonitor.cs" />
     <Compile Include="ConsumerWrapperFactory.cs" />
     <Compile Include="IoC\WrappersModule.cs" />
