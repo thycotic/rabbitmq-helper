@@ -30,18 +30,18 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("RabbitMq"))
             {
                 var connectionString =
-                    _configurationProvider(ConfigurationKeys.Pipeline.RabbitMq.ConnectionString);
+                    _configurationProvider(ConfigurationKeys.Pipeline.ConnectionString);
                 _log.Info(string.Format("RabbitMq connection is {0}", connectionString));
 
-                var userName = _configurationProvider(ConfigurationKeys.Pipeline.RabbitMq.UserName);
+                var userName = _configurationProvider(ConfigurationKeys.Pipeline.UserName);
                 _log.Info(string.Format("RabbitMq username is {0}", userName));
 
-                var password = _configurationProvider(ConfigurationKeys.Pipeline.RabbitMq.Password);
+                var password = _configurationProvider(ConfigurationKeys.Pipeline.Password);
                 _log.Info(string.Format("RabbitMq password is {0}",
                     string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.RabbitMq.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.UseSsl));
                 if (useSsl)
                 {
                     _log.Info("RabbitMq using encryption");
@@ -64,18 +64,18 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("MemoryMq"))
             {
                 var connectionString =
-                    _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.ConnectionString);
+                    _configurationProvider(ConfigurationKeys.Pipeline.ConnectionString);
                 _log.Info(string.Format("MemoryMq connection is {0}", connectionString));
 
-                var userName = _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.UserName);
+                var userName = _configurationProvider(ConfigurationKeys.Pipeline.UserName);
                 _log.Info(string.Format("MemoryMq username is {0}", userName));
 
-                var password = _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.Password);
+                var password = _configurationProvider(ConfigurationKeys.Pipeline.Password);
                 _log.Info(string.Format("MemoryMq password is {0}",
                     string.Join("", Enumerable.Range(0, password.Length).Select(i => "*"))));
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.UseSsl));
                 if (useSsl)
                 {
                     _log.Info("MemoryMq using encryption");
@@ -98,21 +98,21 @@ namespace Thycotic.DistributedEngine.Service.IoC
             using (LogContext.Create("Azure ServiceBus"))
             {
                 var connectionString =
-                    _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.ConnectionString);
+                    _configurationProvider(ConfigurationKeys.Pipeline.ConnectionString);
                 _log.Info(string.Format("Azure ServiceBus connection is {0}", connectionString));
 
                 //HACK: Remove
                 connectionString = connectionString.Replace(":443", string.Empty);
 
-                var sharedAccessKeyName = _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.UserName);
+                var sharedAccessKeyName = _configurationProvider(ConfigurationKeys.Pipeline.UserName);
                 _log.Info(string.Format("Azure ServiceBus shared access key name is {0}", sharedAccessKeyName));
 
-                var sharedAccessKeyValue = _configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.Password);
+                var sharedAccessKeyValue = _configurationProvider(ConfigurationKeys.Pipeline.Password);
                 _log.Info(string.Format("Azure ServiceBus shared access key value is {0}",
                     string.Join("", Enumerable.Range(0, sharedAccessKeyValue.Length).Select(i => "*"))));
 
                 var useSsl =
-                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.MemoryMq.UseSsl));
+                    Convert.ToBoolean(_configurationProvider(ConfigurationKeys.Pipeline.UseSsl));
                 if (useSsl)
                 {
                     _log.Info("Azure ServiceBus using encryption");
