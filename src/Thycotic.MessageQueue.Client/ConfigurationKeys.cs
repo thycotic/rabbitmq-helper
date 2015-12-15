@@ -33,86 +33,31 @@ namespace Thycotic.MessageQueue.Client
         /// </summary>
         public static class Pipeline
         {
-
             /// <summary>
             /// The queue type
             /// </summary>
             public const string QueueType = "Pipeline.QueueType";
 
             /// <summary>
-            /// MemoryMq specific configuration keys
+            /// The connection string
             /// </summary>
-            public class MemoryMq 
-            {
-                /// <summary>
-                /// The connection string
-                /// </summary>
-                public const string ConnectionString = "Pipeline.ConnectionString";
-
-                /// <summary>
-                /// The user name
-                /// </summary>
-                public const string UserName = "Pipeline.UserName";
-
-                /// <summary>
-                /// The password
-                /// </summary>
-                public const string Password = "Pipeline.Password";
-
-                /// <summary>
-                /// Whether or not to use SSL
-                /// </summary>
-                public static string UseSsl = "Pipeline.UseSsl";
-
-                /// <summary>
-                /// The thumbprint
-                /// </summary>
-                public static string Thumbprint = "Pipeline.Thumbprint";
-            }
+            public const string ConnectionString = "Pipeline.ConnectionString";
 
             /// <summary>
-            /// RabbitMq specific configuration keys
+            /// The user name
             /// </summary>
-            public class RabbitMq
-            {
-                /// <summary>
-                /// The connection string
-                /// </summary>
-                public const string ConnectionString = "Pipeline.ConnectionString";
-
-                /// <summary>
-                /// The user name
-                /// </summary>
-                public const string UserName = "Pipeline.UserName";
-
-                /// <summary>
-                /// The password
-                /// </summary>
-                public const string Password = "Pipeline.Password";
-
-                /// <summary>
-                /// Whether or not to use SSL
-                /// </summary>
-                public static string UseSsl = "Pipeline.UseSsl";
-
-                /// <summary>
-                /// The thumbprint
-                /// </summary>
-                public static string Thumbprint = "Pipeline.Thumbprint";
-            }
+            public const string UserName = "Pipeline.UserName";
 
             /// <summary>
-            /// MemoryMq specific configuration keys
+            /// The password
             /// </summary>
-            public class AzureServiceBus 
-            {
+            public const string Password = "Pipeline.Password";
 
-                /// <summary>
-                /// The connection string
-                /// </summary>
-                public const string ConnectionString = "Pipeline.ConnectionString";
+            /// <summary>
+            /// Whether or not to use SSL
+            /// </summary>
+            public static string UseSsl = "Pipeline.UseSsl";
 
-            }
         }
 
         /// <summary>
