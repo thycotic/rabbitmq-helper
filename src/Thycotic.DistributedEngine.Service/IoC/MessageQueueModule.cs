@@ -101,9 +101,6 @@ namespace Thycotic.DistributedEngine.Service.IoC
                     _configurationProvider(ConfigurationKeys.Pipeline.ConnectionString);
                 _log.Info(string.Format("Azure ServiceBus connection is {0}", connectionString));
 
-                //HACK: Remove
-                connectionString = connectionString.Replace(":443", string.Empty);
-
                 var sharedAccessKeyName = _configurationProvider(ConfigurationKeys.Pipeline.UserName);
                 _log.Info(string.Format("Azure ServiceBus shared access key name is {0}", sharedAccessKeyName));
 
