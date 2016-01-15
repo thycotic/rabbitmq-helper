@@ -186,6 +186,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Integration\FullCycleTests.cs" />
     <Compile Include="MessageEncryptorSteps.cs" />
     <Compile Include="ITestConsumerInvoker.cs" />
     <Compile Include="TestBasicConsumable.cs" />
