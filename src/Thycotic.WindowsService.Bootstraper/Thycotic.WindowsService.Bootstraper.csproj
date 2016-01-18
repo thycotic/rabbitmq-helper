@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\Thycotic.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -251,7 +251,7 @@
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Thycotic.snk">
+    <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
     <None Include="app.config" />
