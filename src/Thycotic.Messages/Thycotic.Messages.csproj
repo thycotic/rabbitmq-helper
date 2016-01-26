@@ -217,8 +217,8 @@
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Messages.Common, Version=5.0.0.2, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Messages.Common.5.0.0.2\lib\net451\Thycotic.Messages.Common.dll</HintPath>
+    <Reference Include="Thycotic.Messages.Common, Version=5.0.0.5, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Messages.Common.5.0.0.5\lib\net451\Thycotic.Messages.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
