@@ -287,9 +287,6 @@
     <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
