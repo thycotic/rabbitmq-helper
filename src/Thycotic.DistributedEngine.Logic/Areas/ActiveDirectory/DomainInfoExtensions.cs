@@ -5,7 +5,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
     internal static class DomainInfoExtensions
     {
         // ReSharper disable once RedundantNameQualifier
-        public static Thycotic.ActiveDirectory.Core.DomainInfo ToCoreDomainInfo(this Messages.Areas.ActiveDirectory.DomainInfo src)
+        public static Thycotic.ActiveDirectory.Core.DomainInfo ToCoreDomainInfo(this Messages.DE.Areas.ActiveDirectory.DomainInfo src)
         {
             return new DomainInfo
             {

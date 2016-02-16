@@ -8,7 +8,7 @@ using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.Areas.Discovery;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
-using Thycotic.Messages.Areas.Discovery.Request;
+using Thycotic.Messages.DE.Areas.Discovery.Request;
 
 namespace Thycotic.DistributedEngine.Logic.Tests.Areas.Discovery
 {

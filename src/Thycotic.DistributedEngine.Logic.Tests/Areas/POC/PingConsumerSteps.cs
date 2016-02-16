@@ -1,7 +1,7 @@
 ﻿//using TechTalk.SpecFlow;
 //using Thycotic.DistributedEngine.Logic.Areas.POC;
 //using Thycotic.DistributedEngine.Logic.EngineToServer;
-//using Thycotic.Messages.Areas.POC.Request;
+//using Thycotic.Messages.DE.Areas.POC.Request;
 //using Thycotic.Messages.Common;
 //using Thycotic.Utility.Specflow;
 

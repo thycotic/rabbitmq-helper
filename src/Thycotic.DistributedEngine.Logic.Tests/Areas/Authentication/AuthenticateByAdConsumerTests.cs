@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using NUnit.Framework;
 using Thycotic.DistributedEngine.Logic.Areas.Authentication;
-using Thycotic.Messages.Authenticate.Request;
+using Thycotic.Messages.DE.Areas.Authenticate.Request;
 
 namespace Thycotic.DistributedEngine.Logic.Tests.Areas.Authentication
 {

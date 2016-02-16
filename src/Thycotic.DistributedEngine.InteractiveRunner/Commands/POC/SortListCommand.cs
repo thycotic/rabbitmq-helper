@@ -5,8 +5,8 @@ using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.Areas.POC.Request;
-using Thycotic.Messages.Areas.POC.Response;
+using Thycotic.Messages.DE.Areas.POC.Request;
+using Thycotic.Messages.DE.Areas.POC.Response;
 
 namespace Thycotic.DistributedEngine.InteractiveRunner.Commands.POC
 {

@@ -3,8 +3,8 @@ using System.Threading;
 using Thycotic.ActiveDirectory;
 using Thycotic.ActiveDirectory.Core;
 using Thycotic.Logging;
-using Thycotic.Messages.Areas.ActiveDirectory;
-using Thycotic.Messages.Areas.ActiveDirectory.Response;
+using Thycotic.Messages.DE.Areas.ActiveDirectory;
+using Thycotic.Messages.DE.Areas.ActiveDirectory.Response;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory

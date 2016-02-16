@@ -2,9 +2,9 @@
 using System.DirectoryServices;
 using System.Threading;
 using Thycotic.Logging;
-using Thycotic.Messages.Authenticate.Request;
-using Thycotic.Messages.Authenticate.Response;
 using Thycotic.Messages.Common;
+using Thycotic.Messages.DE.Areas.Authenticate.Request;
+using Thycotic.Messages.DE.Areas.Authenticate.Response;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.Authentication
 {

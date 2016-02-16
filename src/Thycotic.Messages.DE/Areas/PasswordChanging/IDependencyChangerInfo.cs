@@ -1,4 +1,4 @@
-﻿namespace Thycotic.Messages.DE.PasswordChanging
+﻿namespace Thycotic.Messages.DE.Areas.PasswordChanging
 {
     /// <summary>
     /// Interface to identify 

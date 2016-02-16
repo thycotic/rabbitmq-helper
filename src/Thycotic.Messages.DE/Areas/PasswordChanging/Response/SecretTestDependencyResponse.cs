@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Thycotic.Messages.DE.PasswordChanging.Response
+namespace Thycotic.Messages.DE.Areas.PasswordChanging.Response
 {
     /// <summary>
     /// Secret Test Dependency response

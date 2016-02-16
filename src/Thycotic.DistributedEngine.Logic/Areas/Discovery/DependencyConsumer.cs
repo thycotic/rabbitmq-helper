@@ -9,7 +9,7 @@ using Thycotic.Discovery.Sources.Scanners;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Discovery.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
-using Thycotic.Messages.Areas.Discovery.Request;
+using Thycotic.Messages.DE.Areas.Discovery.Request;
 using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.General;
 
