@@ -369,8 +369,8 @@
       <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.15\lib\net451\Thycotic.MemoryMq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.MessageQueue.Client, Version=5.0.0.28, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.MessageQueue.Client.5.0.0.28\lib\net451\Thycotic.MessageQueue.Client.dll</HintPath>
+    <Reference Include="Thycotic.MessageQueue.Client, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.MessageQueue.Client.5.0.0.29\lib\net451\Thycotic.MessageQueue.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Messages.Common, Version=5.0.0.5, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
