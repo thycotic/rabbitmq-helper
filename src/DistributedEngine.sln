@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages", "Thycotic.Messages\Thycotic.Messages.csproj", "{BB022C12-4D04-4195-BBB7-BAAA0E20FCB7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.DE", "Thycotic.Messages.DE\Thycotic.Messages.DE.csproj", "{BB022C12-4D04-4195-BBB7-BAAA0E20FCB7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Service", "Thycotic.DistributedEngine.Service\Thycotic.DistributedEngine.Service.csproj", "{DF86AFEF-6D78-46C9-9BDA-419C4547EFE3}"
 EndProject
@@ -17,8 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.RabbitMq.Helper", "Thycotic.RabbitMq.Helper\Thycotic.RabbitMq.Helper.csproj", "{8E815A53-4472-4C31-9FF5-1BD48B976565}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.Messages.Tests", "Thycotic.Messages.Tests\Thycotic.Messages.Tests.csproj", "{B8DF9BCE-75A1-4690-ADC2-409D55095A26}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.DistributedEngine.Service.Tests", "Thycotic.DistributedEngine.Service.Tests\Thycotic.DistributedEngine.Service.Tests.csproj", "{8E2112AB-6688-4E3A-B23D-6C606B848B81}"
 EndProject
@@ -106,15 +104,6 @@ Global
 		{8E815A53-4472-4C31-9FF5-1BD48B976565}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8E815A53-4472-4C31-9FF5-1BD48B976565}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
 		{8E815A53-4472-4C31-9FF5-1BD48B976565}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26}.MSI.32Bit|Any CPU.Build.0 = Release|Any CPU
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26}.MSI|Any CPU.ActiveCfg = Release|Any CPU
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26}.MSI|Any CPU.Build.0 = Release|Any CPU
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26}.Static Analysis|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E2112AB-6688-4E3A-B23D-6C606B848B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E2112AB-6688-4E3A-B23D-6C606B848B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E2112AB-6688-4E3A-B23D-6C606B848B81}.MSI.32Bit|Any CPU.ActiveCfg = Release|Any CPU
@@ -171,7 +160,6 @@ Global
 		{BB022C12-4D04-4195-BBB7-BAAA0E20FCB7} = {135CB337-DA1B-4552-9240-73E31876E0AA}
 		{DF86AFEF-6D78-46C9-9BDA-419C4547EFE3} = {F1376B91-E52B-4C41-B510-A27E6ACA795B}
 		{8E815A53-4472-4C31-9FF5-1BD48B976565} = {DDEABD7C-BFD5-49F0-94FB-D803B2F7C685}
-		{B8DF9BCE-75A1-4690-ADC2-409D55095A26} = {135CB337-DA1B-4552-9240-73E31876E0AA}
 		{8E2112AB-6688-4E3A-B23D-6C606B848B81} = {F1376B91-E52B-4C41-B510-A27E6ACA795B}
 		{7D0ED7EF-9B42-425F-ADD4-260565FF231A} = {8F1CF29E-0250-42FE-87BC-67BE9F0658BF}
 		{B8F73DAD-1146-4E09-914A-035D2BA99476} = {7D0ED7EF-9B42-425F-ADD4-260565FF231A}
