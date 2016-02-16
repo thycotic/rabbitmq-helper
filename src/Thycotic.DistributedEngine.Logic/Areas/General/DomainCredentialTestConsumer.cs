@@ -1,10 +1,8 @@
-﻿using System.Diagnostics.Contracts;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
-using Thycotic.DistributedEngine.Logic.Areas.PasswordChanging;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
-using Thycotic.Messages.General;
+using Thycotic.Messages.DE.Areas.General;
 using Thycotic.PasswordChangers.DomainValidation;
 using Thycotic.SharedTypes.PasswordChangers;
 

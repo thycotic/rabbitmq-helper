@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Threading;
-using System.Threading.Tasks;
 using Thycotic.CLI.Commands;
 using Thycotic.Discovery.Core.Elements;
 using Thycotic.Discovery.Core.Inputs;
 using Thycotic.Discovery.Sources.Scanners;
-using Thycotic.DistributedEngine.InteractiveRunner.Commands.POC;
 using Thycotic.DistributedEngine.InteractiveRunner.ConsoleCommands;
 using Thycotic.Logging;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.Areas.Discovery.Request;
-using Thycotic.Messages.Areas.POC.Request;
+using Thycotic.Messages.DE.Areas.Discovery.Request;
 using System.Linq;
 using System.Collections.Generic;
 

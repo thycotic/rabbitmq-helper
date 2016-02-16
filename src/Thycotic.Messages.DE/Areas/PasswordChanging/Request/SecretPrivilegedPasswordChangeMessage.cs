@@ -1,17 +1,17 @@
 ﻿using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.PasswordChangers;
 
-namespace Thycotic.Messages.DE.PasswordChanging.Request
+namespace Thycotic.Messages.DE.Areas.PasswordChanging.Request
 {
     /// <summary>
-    /// Secret password change (using the account's credentials) message
+    /// Secret password change (using privileged credentials) message
     /// </summary>
-    public class SecretBasicPasswordChangeMessage : BasicConsumableBase
+    public class SecretPrivilegedPasswordChangeMessage : BasicConsumableBase
     {
         /// <summary>
         /// Gets or sets the info required for the password change.
         /// </summary>
-        public IBasicPasswordChangerInfo OperationInfo { get; set; }
+        public IPrivilegedPasswordChangerInfo OperationInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the Secret Id

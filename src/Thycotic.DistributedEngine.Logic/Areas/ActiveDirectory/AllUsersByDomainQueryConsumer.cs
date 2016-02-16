@@ -8,7 +8,7 @@ using Thycotic.ActiveDirectory.Core;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectory.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
-using Thycotic.Messages.Areas.ActiveDirectory;
+using Thycotic.Messages.DE.Areas.ActiveDirectory;
 using Thycotic.Messages.Common;
 using DomainInfo = Thycotic.ActiveDirectory.Core.DomainInfo;
 

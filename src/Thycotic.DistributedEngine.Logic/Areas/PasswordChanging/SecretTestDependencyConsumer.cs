@@ -4,8 +4,8 @@ using System.Threading;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
-using Thycotic.Messages.PasswordChanging.Request;
-using Thycotic.Messages.PasswordChanging.Response;
+using Thycotic.Messages.DE.Areas.PasswordChanging.Request;
+using Thycotic.Messages.DE.Areas.PasswordChanging.Response;
 using Thycotic.PasswordChangers.DependencyChangers;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging

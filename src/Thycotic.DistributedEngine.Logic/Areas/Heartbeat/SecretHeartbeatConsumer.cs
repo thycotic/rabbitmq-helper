@@ -6,7 +6,7 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Res
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
-using Thycotic.Messages.Heartbeat.Request;
+using Thycotic.Messages.DE.Areas.Heartbeat.Request;
 using Thycotic.PasswordChangers;
 using Thycotic.SharedTypes.Logging;
 using Thycotic.SharedTypes.PasswordChangers;

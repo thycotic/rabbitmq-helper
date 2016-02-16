@@ -8,7 +8,7 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChang
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
 using Thycotic.Messages.Common;
-using Thycotic.Messages.PasswordChanging.Request;
+using Thycotic.Messages.DE.Areas.PasswordChanging.Request;
 using Thycotic.PasswordChangers;
 using Thycotic.SharedTypes.PasswordChangers;
 

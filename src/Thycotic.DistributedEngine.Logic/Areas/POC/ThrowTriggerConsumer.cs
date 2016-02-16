@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Thycotic.Logging;
-using Thycotic.Messages.Areas.POC.Request;
+using Thycotic.Messages.DE.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.POC

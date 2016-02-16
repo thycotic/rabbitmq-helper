@@ -1,4 +1,4 @@
-﻿namespace Thycotic.Messages.DE.PasswordChanging
+﻿namespace Thycotic.Messages.DE.Areas.PasswordChanging
 {
     /// <summary>
     /// Holds info for running SQL Scripts

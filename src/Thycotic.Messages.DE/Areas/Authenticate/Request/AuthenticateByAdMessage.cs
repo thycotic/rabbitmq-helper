@@ -1,6 +1,6 @@
 ﻿using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.DE.Authenticate.Request
+namespace Thycotic.Messages.DE.Areas.Authenticate.Request
 {
     /// <summary>
     /// Authenticate with an AD controller

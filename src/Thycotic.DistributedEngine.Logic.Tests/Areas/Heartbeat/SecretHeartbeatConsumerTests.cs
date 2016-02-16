@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Heartbeat.Response;
 using Thycotic.DistributedEngine.Logic.Areas.Heartbeat;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
-using Thycotic.Messages.Heartbeat.Request;
+using Thycotic.Messages.DE.Areas.Heartbeat.Request;
 using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.DistributedEngine.Logic.Tests.Areas.Heartbeat

@@ -1,4 +1,4 @@
-﻿namespace Thycotic.Messages.DE.Authenticate.Response
+﻿namespace Thycotic.Messages.DE.Areas.Authenticate.Response
 {
     /// <summary>
     /// Authenticate by AD Response

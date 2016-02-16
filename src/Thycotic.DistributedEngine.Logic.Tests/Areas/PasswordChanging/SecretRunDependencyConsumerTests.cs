@@ -1,12 +1,11 @@
-﻿using System.Collections.Concurrent;
-using System.Threading;
+﻿using System.Threading;
 using NSubstitute;
 using NUnit.Framework;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.Dependency.Response;
 using Thycotic.DistributedEngine.Logic.Areas.PasswordChanging;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.PasswordChanging.Request;
+using Thycotic.Messages.DE.Areas.PasswordChanging.Request;
 using Thycotic.SharedTypes.Dependencies;
 
 namespace Thycotic.DistributedEngine.Logic.Tests.Areas.PasswordChanging

@@ -8,7 +8,7 @@ using Thycotic.ActiveDirectory.Core;
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectory.Response;
 using Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
-using Thycotic.Messages.Areas.ActiveDirectory;
+using Thycotic.Messages.DE.Areas.ActiveDirectory;
 using GroupInfo = Thycotic.ActiveDirectory.Core.GroupInfo;
 
 namespace Thycotic.DistributedEngine.Logic.Tests.Areas.ActiveDirectory

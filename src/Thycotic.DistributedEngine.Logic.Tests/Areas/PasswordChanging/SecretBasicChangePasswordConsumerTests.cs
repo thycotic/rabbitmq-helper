@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
 using Autofac.Features.OwnedInstances;
 using NSubstitute;
@@ -9,7 +7,7 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.PasswordChang
 using Thycotic.DistributedEngine.Logic.Areas.PasswordChanging;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Messages.Common;
-using Thycotic.Messages.PasswordChanging.Request;
+using Thycotic.Messages.DE.Areas.PasswordChanging.Request;
 using Thycotic.PasswordChangers.Windows;
 using Thycotic.SharedTypes.PasswordChangers;
 

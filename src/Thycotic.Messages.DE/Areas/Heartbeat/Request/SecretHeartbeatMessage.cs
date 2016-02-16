@@ -1,7 +1,7 @@
 ﻿using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.PasswordChangers;
 
-namespace Thycotic.Messages.DE.Heartbeat.Request
+namespace Thycotic.Messages.DE.Areas.Heartbeat.Request
 {
     /// <summary>
     /// Secret heartbeat message

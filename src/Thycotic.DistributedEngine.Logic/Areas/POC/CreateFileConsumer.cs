@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading;
 using Thycotic.MessageQueue.Client;
 using Thycotic.MessageQueue.Client.QueueClient;
-using Thycotic.Messages.Areas.POC.Request;
+using Thycotic.Messages.DE.Areas.POC.Request;
 using Thycotic.Messages.Common;
 
 namespace Thycotic.DistributedEngine.Logic.Areas.POC

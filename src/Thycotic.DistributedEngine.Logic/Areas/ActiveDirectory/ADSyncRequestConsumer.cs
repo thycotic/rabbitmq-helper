@@ -9,7 +9,7 @@ using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirecto
 using Thycotic.DistributedEngine.EngineToServerCommunication.Areas.ActiveDirectory.Response;
 using Thycotic.DistributedEngine.Logic.EngineToServer;
 using Thycotic.Logging;
-using Thycotic.Messages.Areas.ActiveDirectory;
+using Thycotic.Messages.DE.Areas.ActiveDirectory;
 using Thycotic.Messages.Common;
 using DomainInfo = Thycotic.ActiveDirectory.Core.DomainInfo;
 using GroupInfo = Thycotic.ActiveDirectory.Core.GroupInfo;
@@ -145,7 +145,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
             }
         }
 
-        private IList<GroupQueryInfo> MapADScanResultToEngineToServerType(GroupsAndMembersQueryResult result, List<Messages.Areas.ActiveDirectory.GroupInfo> synchronizationGroups)
+        private IList<GroupQueryInfo> MapADScanResultToEngineToServerType(GroupsAndMembersQueryResult result, List<Messages.DE.Areas.ActiveDirectory.GroupInfo> synchronizationGroups)
         {
             var mappedGroups = new List<GroupQueryInfo>();
             
@@ -177,7 +177,7 @@ namespace Thycotic.DistributedEngine.Logic.Areas.ActiveDirectory
             return mappedGroups;
         }
 
-        private List<DomainInfo> Convert(List<Messages.Areas.ActiveDirectory.DomainInfo> infos)
+        private List<DomainInfo> Convert(List<Messages.DE.Areas.ActiveDirectory.DomainInfo> infos)
         {
             var mappedInfos = new List<DomainInfo>();
             foreach (var requestInfo in infos)
