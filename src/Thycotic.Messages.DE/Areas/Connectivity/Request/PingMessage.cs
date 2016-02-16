@@ -1,6 +1,6 @@
 ﻿using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.Areas.Connectivity.Request
+namespace Thycotic.Messages.DE.Areas.Connectivity.Request
 {
     /// <summary>
     /// Hello world message

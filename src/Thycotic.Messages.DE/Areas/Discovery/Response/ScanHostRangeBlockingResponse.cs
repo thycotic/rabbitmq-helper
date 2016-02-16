@@ -2,7 +2,7 @@
 using Thycotic.Discovery.Core.Elements;
 using Thycotic.Discovery.Core.Results;
 
-namespace Thycotic.Messages.Areas.Discovery.Response
+namespace Thycotic.Messages.DE.Areas.Discovery.Response
 {
     /// <summary>
     /// Response for ScanHostRangeBlocking call

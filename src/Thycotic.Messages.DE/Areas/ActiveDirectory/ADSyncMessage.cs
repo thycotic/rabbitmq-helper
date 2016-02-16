@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.Areas.ActiveDirectory
+namespace Thycotic.Messages.DE.Areas.ActiveDirectory
 {
     /// <summary>
     /// ADSync Message

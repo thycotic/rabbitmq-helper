@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace Thycotic.Messages.Areas.ActiveDirectory
+namespace Thycotic.Messages.DE.Areas.ActiveDirectory
 {
     /// <summary>
     /// 

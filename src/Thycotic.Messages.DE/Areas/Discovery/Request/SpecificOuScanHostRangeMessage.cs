@@ -1,4 +1,4 @@
-﻿namespace Thycotic.Messages.Areas.Discovery.Request
+﻿namespace Thycotic.Messages.DE.Areas.Discovery.Request
 {
     /// <summary>
     /// Specific OU Scan Host Range Message

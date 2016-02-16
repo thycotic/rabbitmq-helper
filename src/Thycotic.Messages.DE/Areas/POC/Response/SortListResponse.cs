@@ -1,4 +1,4 @@
-﻿namespace Thycotic.Messages.Areas.POC.Response
+﻿namespace Thycotic.Messages.DE.Areas.POC.Response
 {
     /// <summary>
     /// Sort list response

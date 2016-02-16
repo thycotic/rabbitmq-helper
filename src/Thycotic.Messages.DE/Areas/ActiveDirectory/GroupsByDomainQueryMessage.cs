@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Thycotic.Messages.Areas.ActiveDirectory
+namespace Thycotic.Messages.DE.Areas.ActiveDirectory
 {
     /// <summary>
     /// 

@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.Areas.ActiveDirectory
+namespace Thycotic.Messages.DE.Areas.ActiveDirectory
 {
     /// <summary>
     /// Requests a query on AD that returns all user for a domain.

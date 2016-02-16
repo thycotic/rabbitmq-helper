@@ -1,6 +1,6 @@
 ﻿using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.Areas.ActiveDirectory
+namespace Thycotic.Messages.DE.Areas.ActiveDirectory
 {
     /// <summary>
     /// Request for resolving a Domain's distinguished name.

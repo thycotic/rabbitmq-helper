@@ -1,6 +1,6 @@
 ﻿using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.Areas.POC.Request
+namespace Thycotic.Messages.DE.Areas.POC.Request
 {
     /// <summary>
     /// Chain message

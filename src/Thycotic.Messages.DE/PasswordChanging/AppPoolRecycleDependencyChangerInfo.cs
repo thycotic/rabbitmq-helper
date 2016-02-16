@@ -1,4 +1,4 @@
-﻿namespace Thycotic.Messages.PasswordChanging
+﻿namespace Thycotic.Messages.DE.PasswordChanging
 {
     /// <summary>
     /// Holds info for recycling application pools

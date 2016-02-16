@@ -1,4 +1,4 @@
-﻿namespace Thycotic.Messages.Areas.Connectivity.Response
+﻿namespace Thycotic.Messages.DE.Areas.Connectivity.Response
 {
     /// <summary>
     /// Sort list response

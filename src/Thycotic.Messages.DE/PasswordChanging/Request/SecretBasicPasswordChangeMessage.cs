@@ -1,7 +1,7 @@
 ﻿using Thycotic.Messages.Common;
 using Thycotic.SharedTypes.PasswordChangers;
 
-namespace Thycotic.Messages.PasswordChanging.Request
+namespace Thycotic.Messages.DE.PasswordChanging.Request
 {
     /// <summary>
     /// Secret password change (using the account's credentials) message

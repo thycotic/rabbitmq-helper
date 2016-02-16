@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thycotic.Messages.Areas.ActiveDirectory.Response
+namespace Thycotic.Messages.DE.Areas.ActiveDirectory.Response
 {
     /// <summary>
     /// Response for Domain distinguished name resolution.

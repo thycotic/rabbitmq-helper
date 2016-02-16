@@ -1,6 +1,6 @@
 ﻿using Thycotic.Messages.Common;
 
-namespace Thycotic.Messages.General
+namespace Thycotic.Messages.DE.General
 {
     /// <summary>
     /// Domain credential validation message
