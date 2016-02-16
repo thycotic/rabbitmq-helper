@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{74EC374A-729A-4707-8586-32D10CDC3ECC}</ProjectGuid>
+    <ProjectGuid>{BB022C12-4D04-4195-BBB7-BAAA0E20FCB7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.DistributedEngine.Logic</RootNamespace>
-    <AssemblyName>Thycotic.DistributedEngine.Logic</AssemblyName>
+    <RootNamespace>Thycotic.Messages.DE</RootNamespace>
+    <AssemblyName>Thycotic.Messages.DE</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
-    <DontImportPostSharp>True</DontImportPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\Thycotic.DistributedEngine.Logic.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Thycotic.Messages.DE.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -68,7 +67,6 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
-    <SkipPostSharp>True</SkipPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -78,7 +76,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Release\Thycotic.DistributedEngine.Logic.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Thycotic.Messages.DE.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -122,7 +120,6 @@
     <CodeContractsRuntimeCheckingLevel>Pre and Post</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
-    <SkipPostSharp>True</SkipPostSharp>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -162,7 +159,7 @@
     <CodeContractsInferObjectInvariants>True</CodeContractsInferObjectInvariants>
     <CodeContractsSuggestAssumptions>True</CodeContractsSuggestAssumptions>
     <CodeContractsSuggestAssumptionsForCallees>True</CodeContractsSuggestAssumptionsForCallees>
-    <CodeContractsSuggestRequires>False</CodeContractsSuggestRequires>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
     <CodeContractsNecessaryEnsures>True</CodeContractsNecessaryEnsures>
     <CodeContractsSuggestObjectInvariants>True</CodeContractsSuggestObjectInvariants>
     <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
@@ -176,7 +173,7 @@
     <CodeContractsExtraRewriteOptions />
     <CodeContractsExtraAnalysisOptions />
     <CodeContractsSQLServerOption />
-    <CodeContractsBaseLineFile />
+    <CodeContractsBaseLineFile>..\..\baseline.xml</CodeContractsBaseLineFile>
     <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
     <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
     <CodeContractsFailBuildOnWarnings>True</CodeContractsFailBuildOnWarnings>
@@ -186,76 +183,16 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
-      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Interop.ActiveDs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cda7f064205a299b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.159\lib\net451\Interop.ActiveDs.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Jscape.Ssh, Version=2.7.0.0, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.268\lib\net451\Jscape.Ssh.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.ServiceBus.3.0.9\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.5.12.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.TaskScheduler.1.0.0.37\lib\net40\Microsoft.Win32.TaskScheduler.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PostSharp, Version=4.0.41.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <HintPath>..\packages\PostSharp.4.0.41\lib\net35-client\PostSharp.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RabbitMQ.Client, Version=3.5.6.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-      <HintPath>..\packages\RabbitMQ.Client.3.5.6\lib\net40\RabbitMQ.Client.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SecureBlackbox">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.dll</HintPath>
-    </Reference>
-    <Reference Include="SecureBlackbox.SSHClient">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHClient.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SecureBlackbox.SSHCommon">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHCommon.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SecureBlackbox.SSHServer">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\SecureBlackbox.SSHServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.Protocols" />
@@ -268,63 +205,20 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.ActiveDirectory, Version=1.0.0.43, Culture=neutral, PublicKeyToken=029133c20de6def0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.ActiveDirectory.1.0.0.43\lib\net451\Thycotic.ActiveDirectory.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Thycotic.ActiveDirectory.Core, Version=1.0.0.10, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.0.10\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.BlackBox">
-      <HintPath>..\packages\Thycotic.BlackBox.5.0.0.17\lib\net451\Thycotic.BlackBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.107, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.107\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.159, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.159\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.0.403, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.0.403\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.Encryption">
-      <HintPath>..\packages\Thycotic.Encryption.5.0.0.13\lib\net451\Thycotic.Encryption.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.Foundation, Version=2.5.0.0, Culture=neutral, PublicKeyToken=d3c50e8fc4a39908, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Foundation.2.5.0.0\lib\net451\Thycotic.Foundation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.Licensing.Common, Version=1.0.0.20, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Licensing.Public.1.0.0.20\lib\net35\Thycotic.Licensing.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.Licensing.Public, Version=1.0.0.20, Culture=neutral, PublicKeyToken=64ae9a88a5fb7596, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Licensing.Public.1.0.0.20\lib\net35\Thycotic.Licensing.Public.dll</HintPath>
-    </Reference>
     <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.MemoryMq, Version=5.0.0.15, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.15\lib\net451\Thycotic.MemoryMq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.MessageQueue.Client, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.MessageQueue.Client.5.0.0.29\lib\net451\Thycotic.MessageQueue.Client.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Thycotic.Messages.Common, Version=5.0.0.5, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Messages.Common.5.0.0.5\lib\net451\Thycotic.Messages.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.PasswordChangers, Version=1.0.9.268, Culture=neutral, PublicKeyToken=fd31d0a9372d3669, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.PasswordChangers.1.0.9.268\lib\net451\Thycotic.PasswordChangers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
@@ -335,72 +229,71 @@
       <HintPath>..\packages\Thycotic.Utility.5.0.0.29\lib\net451\Thycotic.Utility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Wcf, Version=5.0.0.125, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Areas\ActiveDirectory\AllUsersByDomainQueryConsumer.cs" />
-    <Compile Include="Areas\ActiveDirectory\BatchExtensions.cs" />
-    <Compile Include="Areas\ActiveDirectory\DomainInfoExtensions.cs" />
-    <Compile Include="Areas\ActiveDirectory\ResolveDomainNameConsumer.cs" />
-    <Compile Include="Areas\ActiveDirectory\GenericQueryConsumer.cs" />
-    <Compile Include="Areas\ActiveDirectory\ADSyncRequestConsumer.cs" />
-    <Compile Include="Areas\ActiveDirectory\GroupQueryInfoPager.cs" />
-    <Compile Include="Areas\Authentication\AuthenticateByAdConsumer.cs" />
-    <Compile Include="Areas\Discovery\DependencyConsumer.cs" />
-    <Compile Include="Areas\Discovery\DiscoveryLogExtensions.cs" />
-    <Compile Include="Areas\Discovery\LocalAccountConsumer.cs" />
-    <Compile Include="Areas\Discovery\MachineConsumer.cs" />
-    <Compile Include="Areas\Discovery\HostRangeConsumer.cs">
+    <Compile Include="Areas\ActiveDirectory\AllUsersByDomainQueryMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\DomainInfo.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupInfo.cs" />
+    <Compile Include="Areas\ActiveDirectory\GroupsByDomainQueryMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\QueryMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\ADSyncMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\ResolveFullyQualifiedDomainNameMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\ResolveDomainDistinguishedNameMessage.cs" />
+    <Compile Include="Areas\ActiveDirectory\Response\FullyQualifiedDomainNameResponse.cs" />
+    <Compile Include="Areas\ActiveDirectory\Response\DomainDistinguishedNameResponse.cs" />
+    <Compile Include="Areas\ActiveDirectory\UsersByGroupsQueryMessage.cs" />
+    <Compile Include="Areas\Connectivity\Response\PingResponse.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanDependencyBlockingMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanDependencyMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\SpecificOuScanHostRangeMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanHostRangeMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanLocalAccountMessage.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanMachineMessage.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Areas\General\DomainCredentialTestConsumer.cs" />
-    <Compile Include="Areas\Heartbeat\SecretHeartbeatConsumer.cs" />
-    <Compile Include="Areas\PasswordChanging\SecretBasicChangePasswordConsumer.cs" />
-    <Compile Include="Areas\PasswordChanging\SecretPrivilegeChangePasswordConsumer.cs" />
-    <Compile Include="Areas\PasswordChanging\SecretTestDependencyConsumer.cs" />
-    <Compile Include="Areas\PasswordChanging\SecretRunDependenciesConsumer.cs" />
-    <Compile Include="Areas\POC\CreateFileConsumer.cs" />
-    <Compile Include="Areas\POC\ChainMessageConsumer.cs" />
-    <Compile Include="Areas\POC\ConsumerConsole.cs" />
-    <Compile Include="Areas\POC\IRegisterForPocOnly.cs" />
-    <Compile Include="Areas\Connectivity\PingConsumer.cs" />
-    <Compile Include="Areas\POC\SortListConsumer.cs" />
-    <Compile Include="Areas\POC\ThrowTriggerConsumer.cs" />
-    <Compile Include="Areas\POC\StepConsumer.cs" />
-    <Compile Include="Areas\POC\HelloWorldConsumer.cs" />
-    <Compile Include="EngineToServer\IUpdateBus.cs" />
-    <Compile Include="EngineToServer\IConfigurationBus.cs" />
-    <Compile Include="EngineToServer\IResponseBus.cs" />
+    <Compile Include="Areas\Discovery\Request\ScanMessageBase.cs" />
+    <Compile Include="Areas\Discovery\Response\ScanHostRangeBlockingResponse.cs" />
+    <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
+    <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
+    <Compile Include="Areas\POC\Request\ChainMessage.cs" />
+    <Compile Include="Areas\Connectivity\Request\PingMessage.cs" />
+    <Compile Include="Areas\POC\Request\SortListMessage.cs" />
+    <Compile Include="Areas\POC\Request\ThrowTriggerMessage.cs" />
+    <Compile Include="Areas\POC\Request\StepMessage.cs" />
+    <Compile Include="Areas\POC\Request\HelloWorldMessage.cs" />
+    <Compile Include="Areas\POC\Response\SortListResponse.cs" />
+    <Compile Include="Authenticate\Request\AuthenticateByAdMessage.cs" />
+    <Compile Include="Authenticate\Response\AuthenticateByAdResponse.cs" />
+    <Compile Include="General\DomainCredentialTestMessage.cs" />
+    <Compile Include="Heartbeat\Request\SecretHeartbeatMessage.cs" />
+    <Compile Include="PasswordChanging\IDependencyChangerInfo.cs" />
+    <Compile Include="PasswordChanging\Request\SecretBasicPasswordChangeMessage.cs" />
+    <Compile Include="PasswordChanging\Request\SecretTestDependencyMessage.cs" />
+    <Compile Include="PasswordChanging\Request\SecretPrivilegedPasswordChangeMessage.cs" />
+    <Compile Include="PasswordChanging\Response\SecretTestDependencyResponse.cs" />
+    <Compile Include="PasswordChanging\SqlScriptDependencyChangerInfo.cs" />
+    <Compile Include="PasswordChanging\SshScriptDependencyChangerInfo.cs" />
+    <Compile Include="PasswordChanging\PowershellScriptDependencyChangerInfo.cs" />
+    <Compile Include="PasswordChanging\AppPoolRecycleDependencyChangerInfo.cs" />
+    <Compile Include="PasswordChanging\RegexFileReplaceDependencyChangerInfo.cs" />
+    <Compile Include="PasswordChanging\ComPlusDependencyChangerInfo.cs" />
+    <Compile Include="PasswordChanging\ScheduledTaskDependencyChangerInfo.cs" />
+    <Compile Include="PasswordChanging\AppPoolDependencyChangerInfo.cs" />
+    <Compile Include="PasswordChanging\Request\SecretChangeDependencyMessage.cs" />
+    <Compile Include="PasswordChanging\WindowsServiceDependencyChangerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringSplitter.cs" />
-    <Compile Include="Update\EngineToServerCommunicationCallback.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Thycotic.Messages.DE\Thycotic.Messages.DE.csproj">
-      <Project>{bb022c12-4d04-4195-bbb7-baaa0e20fcb7}</Project>
-      <Name>Thycotic.Messages.DE</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Thycotic.Messages.DE.nuspec" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\PostSharp.4.0.41\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.4.0.41\tools\PostSharp.targets')" />
-  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
-    <Error Condition="!Exists('..\packages\PostSharp.4.0.41\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
-    <Error Condition="Exists('..\packages\PostSharp.4.0.41\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
