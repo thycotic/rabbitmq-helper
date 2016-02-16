@@ -4,7 +4,7 @@ using System.Threading;
 using Autofac;
 using Thycotic.DistributedEngine.Logic.Areas.POC;
 using Thycotic.Logging;
-using Thycotic.MessageQueue.Client.Wrappers;
+using Thycotic.MessageQueue.Client;
 using Thycotic.Messages.Common;
 using Thycotic.Utility.Reflection;
 using Module = Autofac.Module;
