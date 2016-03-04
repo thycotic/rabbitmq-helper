@@ -202,10 +202,9 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Interop.ActiveDs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cda7f064205a299b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.159\lib\net451\Interop.ActiveDs.dll</HintPath>
+    <Reference Include="Interop.ActiveDs">
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.1.10\lib\net451\Interop.ActiveDs.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -284,21 +283,21 @@
       <HintPath>..\packages\Thycotic.CLI.5.0.0.35\lib\net451\Thycotic.CLI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Core, Version=1.0.0.107, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.0.107\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Discovery.Core, Version=1.0.1.19, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Discovery.Core.1.0.1.19\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.0.159, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.0.159\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Discovery.Sources, Version=1.0.1.10, Culture=neutral, PublicKeyToken=0ee4a5cc35cfd219, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.1.10\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.Foundation, Version=2.5.0.0, Culture=neutral, PublicKeyToken=d3c50e8fc4a39908, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Foundation.2.5.0.0\lib\net451\Thycotic.Foundation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.218, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.218\lib\net451\Thycotic.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Thycotic.MemoryMq, Version=5.0.0.15, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.15\lib\net451\Thycotic.MemoryMq.dll</HintPath>
