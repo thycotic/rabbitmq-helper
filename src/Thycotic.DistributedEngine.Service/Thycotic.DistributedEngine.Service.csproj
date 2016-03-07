@@ -349,9 +349,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Discovery.Sources.1.0.1.10\lib\net451\Thycotic.Discovery.Sources.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.1.8, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.1.8\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+    <Reference Include="Thycotic.DistributedEngine.EngineToServerCommunication, Version=5.0.1.407, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.DistributedEngine.EngineToServerCommunication.5.0.1.407\lib\net451\Thycotic.DistributedEngine.EngineToServerCommunication.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Encryption">
       <HintPath>..\packages\Thycotic.Encryption.5.0.0.13\lib\net451\Thycotic.Encryption.dll</HintPath>
@@ -360,32 +360,32 @@
       <HintPath>..\packages\Thycotic.Foundation.2.5.0.0\lib\net451\Thycotic.Foundation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Logging, Version=5.0.0.218, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.218\lib\net451\Thycotic.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Thycotic.MemoryMq, Version=5.0.0.15, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.15\lib\net451\Thycotic.MemoryMq.dll</HintPath>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.222, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.222\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.MessageQueue.Client, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.MessageQueue.Client.5.0.0.29\lib\net451\Thycotic.MessageQueue.Client.dll</HintPath>
+    <Reference Include="Thycotic.MemoryMq, Version=5.0.0.22, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.22\lib\net451\Thycotic.MemoryMq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Messages.Common, Version=5.0.0.5, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Messages.Common.5.0.0.5\lib\net451\Thycotic.Messages.Common.dll</HintPath>
+    <Reference Include="Thycotic.MessageQueue.Client, Version=5.0.0.34, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.MessageQueue.Client.5.0.0.34\lib\net451\Thycotic.MessageQueue.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Thycotic.Messages.Common, Version=5.0.0.9, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Messages.Common.5.0.0.9\lib\net451\Thycotic.Messages.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.SharedTypes, Version=5.0.0.126, Culture=neutral, PublicKeyToken=ba36f1f458df13fd, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.SharedTypes.5.0.0.126\lib\net451\Thycotic.SharedTypes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Utility.5.0.0.29\lib\net451\Thycotic.Utility.dll</HintPath>
+    <Reference Include="Thycotic.Utility, Version=5.0.1.40, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Utility.5.0.1.40\lib\net451\Thycotic.Utility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Wcf, Version=5.0.0.125, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
+    <Reference Include="Thycotic.Wcf, Version=5.0.1.142, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Wcf.5.0.1.142\lib\net451\Thycotic.Wcf.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -443,7 +443,7 @@
     <Compile Include="IoC\MessageQueueModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TempReleaseInformationHelper.cs" />
+    <Compile Include="ReleaseInformationHelper.cs" />
     <Compile Include="Update\IUpdateInitializer.cs" />
     <Compile Include="Update\UpdateInitializer.cs" />
   </ItemGroup>

@@ -213,8 +213,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.Discovery.Core.1.0.1.19\lib\net451\Thycotic.Discovery.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.222, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.222\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Messages.Common, Version=5.0.0.5, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
@@ -287,6 +287,7 @@
     <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

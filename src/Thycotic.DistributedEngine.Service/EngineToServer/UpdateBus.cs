@@ -76,7 +76,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                     IsLegacyAgent = _engineIdentificationProvider.IsLegacyAgent,
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
-                    Version = TempReleaseInformationHelper.Version.ToString()
+                    Version = ReleaseInformationHelper.Version.ToString()
                 };
 
                 var wrappedRequest = WrapRequest<EngineUpdateResponse>(request);
@@ -113,7 +113,7 @@ namespace Thycotic.DistributedEngine.Service.EngineToServer
                     IsLegacyAgent = _engineIdentificationProvider.IsLegacyAgent,
                     IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                     OrganizationId = _engineIdentificationProvider.OrganizationId,
-                    Version = TempReleaseInformationHelper.Version.ToString()
+                    Version = ReleaseInformationHelper.Version.ToString()
                 };
 
                 var wrappedRequest = WrapRequest<EngineUpdateOverHttpResponse>(request);

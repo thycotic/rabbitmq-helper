@@ -45,7 +45,7 @@ namespace Thycotic.DistributedEngine.Service.Update
         /// </summary>
         public void ApplyLatestUpdate()
         {
-            _log.Info(string.Format("This engine version is outdated ({0}). Updating...", TempReleaseInformationHelper.Version));
+            _log.Info(string.Format("This engine version is outdated ({0}). Updating...", ReleaseInformationHelper.Version));
 
             lock (_syncRoot)
             {

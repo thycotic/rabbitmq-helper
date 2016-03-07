@@ -295,9 +295,9 @@
       <HintPath>..\packages\Thycotic.Foundation.2.5.0.0\lib\net451\Thycotic.Foundation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Logging, Version=5.0.0.218, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.218\lib\net451\Thycotic.Logging.dll</HintPath>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.222, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.222\lib\net451\Thycotic.Logging.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.MemoryMq, Version=5.0.0.15, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.15\lib\net451\Thycotic.MemoryMq.dll</HintPath>

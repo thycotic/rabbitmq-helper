@@ -217,8 +217,8 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.Logging, Version=5.0.0.206, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.Logging.5.0.0.206\lib\net451\Thycotic.Logging.dll</HintPath>
+    <Reference Include="Thycotic.Logging, Version=5.0.0.222, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Logging.5.0.0.222\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.0.29, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">

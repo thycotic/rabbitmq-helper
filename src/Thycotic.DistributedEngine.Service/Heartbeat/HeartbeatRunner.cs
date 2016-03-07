@@ -60,7 +60,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
        [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant", Justification = "Bogus warning about _cts.Token.IsCancellationRequested")]
         private void Pump()
         {
-            Contract.Assume(TempReleaseInformationHelper.Version != null);
+            Contract.Assume(ReleaseInformationHelper.Version != null);
 
             if (_cts.Token.IsCancellationRequested)
             {
@@ -73,7 +73,7 @@ namespace Thycotic.DistributedEngine.Service.Heartbeat
             {
                 IdentityGuid = _engineIdentificationProvider.IdentityGuid,
                 OrganizationId = _engineIdentificationProvider.OrganizationId,
-                Version = TempReleaseInformationHelper.Version.ToString(),
+                Version = ReleaseInformationHelper.Version.ToString(),
                 LastActivity = DateTime.UtcNow
             };
 
