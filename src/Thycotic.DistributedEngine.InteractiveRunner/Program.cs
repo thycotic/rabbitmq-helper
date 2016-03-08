@@ -47,7 +47,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 if (startPipeline)
                 {
                     //Trace.TraceInformation("Starting pipeline...");
-                    using (LogContext.Create("Pipeline service startup"))
+                    using (LogContext.Create("PipelineServiceStartup"))
                     {
                         pipelineService = new SiteConnectorService();
                         pipelineService.Start();
@@ -61,7 +61,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
                 var mre = new ManualResetEventSlim(false);
 
                 EngineService engineService;
-                using (LogContext.Create("Engine service startup"))
+                using (LogContext.Create("EngineServiceStartup"))
                 {
                     Trace.TraceInformation("Starting engine...");
                     var startConsuming = !args.Contains(CommandLineSwitches.ConsumptionDisabled);
@@ -137,7 +137,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
         private static void ConfigureCli(CommandLineInterface cli, IComponentContext parentContext)
         {
-            using (LogContext.Create("CLI configuration"))
+            using (LogContext.Create("CliConfiguration"))
             {
                 cli.ClearCommands();
 
@@ -173,7 +173,7 @@ namespace Thycotic.DistributedEngine.InteractiveRunner
 
         private static void ConfigureMockConfiguration(EngineService engineService)
         {
-            using (LogContext.Create("Mock configuration"))
+            using (LogContext.Create("MockConfiguration"))
             {
                 var staticIdentityGuid = new Guid("f00abcde-1337-1337-1337-d235bc2ce1b1");
                 Log.Warn("Using static/development identity guid");

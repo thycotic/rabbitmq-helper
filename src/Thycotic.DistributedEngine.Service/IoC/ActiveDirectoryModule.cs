@@ -11,7 +11,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            using (LogContext.Create("Engine Active Directory"))
+            using (LogContext.Create("EngineActiveDirectory"))
             {
                 _log.Debug("Initializing Active Directory...");
                 builder.RegisterType<ActiveDirectorySearcher>()

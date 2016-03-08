@@ -24,7 +24,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.IoC
         {
             base.Load(builder);
 
-            using (LogContext.Create("MemoryMq Service"))
+            using (LogContext.Create("MemoryMqService"))
             {
                 var connectionString =
                     _configurationProvider(ConfigurationKeys.ConnectionString);

@@ -72,7 +72,7 @@ namespace Thycotic.DistributedEngine.Service.Update
                         return;
                     }
 
-                    using (LogContext.Create("Update download"))
+                    using (LogContext.Create("UpdateDownload"))
                     {
                         _log.Info("Initializing update download...");
 
@@ -139,7 +139,7 @@ namespace Thycotic.DistributedEngine.Service.Update
 
         private void CleanBackupDirectory(string path)
         {
-            using (LogContext.Create("Backup clean up"))
+            using (LogContext.Create("BackupCleanUp"))
             {
                 if (!Directory.Exists(path)) return;
 
@@ -179,7 +179,7 @@ namespace Thycotic.DistributedEngine.Service.Update
 
         private void Bootstrap(string updatePath, bool isLegacyAgent)
         {
-            using (LogContext.Create("Update bootstrap"))
+            using (LogContext.Create("UpdateBootstrap"))
             {
                 var directoryCopier = new DirectoryCopier();
 

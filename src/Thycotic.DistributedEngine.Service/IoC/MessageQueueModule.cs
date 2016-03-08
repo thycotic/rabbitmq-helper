@@ -95,7 +95,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
         private void LoadAzureServiceBus(ContainerBuilder builder)
         {
-            using (LogContext.Create("Azure ServiceBus"))
+            using (LogContext.Create("AzureServiceBus"))
             {
                 var connectionString =
                     _configurationProvider(ConfigurationKeys.Pipeline.ConnectionString);
