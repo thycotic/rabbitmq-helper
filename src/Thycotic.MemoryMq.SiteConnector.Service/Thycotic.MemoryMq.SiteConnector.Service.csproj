@@ -241,16 +241,16 @@
       <HintPath>..\packages\Thycotic.Logging.5.0.0.222\lib\net451\Thycotic.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.MemoryMq, Version=5.0.0.15, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.15\lib\net451\Thycotic.MemoryMq.dll</HintPath>
+    <Reference Include="Thycotic.MemoryMq, Version=5.0.0.22, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.MemoryMq.5.0.0.22\lib\net451\Thycotic.MemoryMq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Utility, Version=5.0.1.40, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <HintPath>..\packages\Thycotic.Utility.5.0.1.40\lib\net451\Thycotic.Utility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Thycotic.Wcf">
-      <HintPath>..\packages\Thycotic.Wcf.5.0.0.125\lib\net451\Thycotic.Wcf.dll</HintPath>
+    <Reference Include="Thycotic.Wcf, Version=5.0.1.142, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.Wcf.5.0.1.142\lib\net451\Thycotic.Wcf.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
