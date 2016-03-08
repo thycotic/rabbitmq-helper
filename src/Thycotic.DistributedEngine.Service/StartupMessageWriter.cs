@@ -56,8 +56,7 @@ namespace Thycotic.DistributedEngine.Service
                     var sr = new StreamReader(logoStream);
                     var logoAscii = sr.ReadToEnd();
 
-                    logoAscii = logoAscii.Replace("{version}", TempReleaseInformationHelper.Version.ToString());
-                    logoAscii = logoAscii.Replace("{architecture}", ReleaseInformationHelper.Architecture);
+                    logoAscii = logoAscii.Replace("{version}", ReleaseInformationHelper.Version.ToString());
 
                     //don't use the log since it just spams the table
                     Console.WriteLine();
