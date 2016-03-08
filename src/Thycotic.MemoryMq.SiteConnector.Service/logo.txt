@@ -16,7 +16,7 @@
 #  |                   o                                                     
 #   o-o  o-o o-o o   o    o-o o-o                                            
 #      | |-' |    \ /  | |    |-'                                            
-#  o--o  o-o o     o   |  o-o o-o              Version: {version} ({architecture})                                        
+#  o--o  o-o o     o   |  o-o o-o              Version: {version}       
 #                                                                            
 #                                                                            
 #
