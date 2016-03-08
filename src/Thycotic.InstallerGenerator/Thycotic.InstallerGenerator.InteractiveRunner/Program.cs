@@ -32,6 +32,8 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
             }
             catch (Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.StackTrace);
                 //superfluous, mostly used for testing and consuming exceptions that are already logged but we want to bubble to the OS
                 Trace.TraceError(ex.Message);
                 Environment.Exit(1);
