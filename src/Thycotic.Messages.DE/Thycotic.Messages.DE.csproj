@@ -201,8 +201,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.ActiveDirectory.Core, Version=1.0.0.10, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.0.10\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
+    <Reference Include="Thycotic.ActiveDirectory.Core, Version=1.0.1.11, Culture=neutral, PublicKeyToken=8798ddef59a3f9b6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thycotic.ActiveDirectory.Core.1.0.1.11\lib\net451\Thycotic.ActiveDirectory.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Thycotic.Discovery.Core, Version=1.0.1.19, Culture=neutral, PublicKeyToken=33ff8c00c367b219, processorArchitecture=MSIL">
