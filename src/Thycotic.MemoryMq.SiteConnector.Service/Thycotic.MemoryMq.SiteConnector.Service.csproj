@@ -286,12 +286,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thycotic.DistributedEngine.Logic\Thycotic.DistributedEngine.Logic.csproj">
-      <Project>{74ec374a-729a-4707-8586-32d10cdc3ecc}</Project>
-      <Name>Thycotic.DistributedEngine.Logic</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="logo.txt" />
     <EmbeddedResource Include="SiteConnectorService.resx">
       <DependentUpon>SiteConnectorService.cs</DependentUpon>
