@@ -78,7 +78,7 @@ namespace Thycotic.WindowsService.Bootstraper
 
         private void CleanServiceDirectory()
         {
-            using (LogContext.Create("Service Directory Clean up"))
+            using (LogContext.Create("ServiceDirectoryCleanUp"))
             {
 
                 const int maxRetryCount = 5;

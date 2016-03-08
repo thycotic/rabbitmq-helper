@@ -20,7 +20,7 @@ namespace Thycotic.DistributedEngine.Service.Security
         {
             _pair = new Lazy<AsymmetricKeyPair>(() =>
             {
-                using (LogContext.Create("Key generation"))
+                using (LogContext.Create("KeyGeneration"))
                 {
                     _log.Info("Generating local public/private pair...");
 

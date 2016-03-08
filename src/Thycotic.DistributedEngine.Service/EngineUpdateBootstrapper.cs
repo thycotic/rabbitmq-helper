@@ -63,7 +63,7 @@ namespace Thycotic.DistributedEngine.Service
             Trace.TraceInformation("Configuring bootstrap logging...");
             Log.Configure();
 
-            using (LogContext.Create("Child process"))
+            using (LogContext.Create("ChildProcess"))
             {
 
                 _log.Info("Running bootstrapper");

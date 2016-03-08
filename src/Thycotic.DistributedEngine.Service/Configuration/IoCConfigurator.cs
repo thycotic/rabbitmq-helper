@@ -220,7 +220,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// <returns></returns>
         public IContainer BuildPreAuthorizationOnly()
         {
-            using (LogContext.Create("IoC - Pre-Authentication only"))
+            using (LogContext.Create("IoCPreAuthenticationOnly"))
             {
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();
@@ -242,7 +242,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
         /// <returns></returns>
         public IContainer BuildAll(EngineService engineService, bool startConsuming)
         {
-            using (LogContext.Create("IoC - All"))
+            using (LogContext.Create("IoCAll"))
             {
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();

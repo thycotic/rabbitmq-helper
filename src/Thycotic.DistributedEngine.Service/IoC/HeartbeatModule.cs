@@ -23,7 +23,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
         {
             base.Load(builder);
 
-            using (LogContext.Create("Engine Heartbeat"))
+            using (LogContext.Create("EngineHeartbeat"))
             {
                 
                 _log.Debug("Initializing heartbeat...");

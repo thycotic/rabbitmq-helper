@@ -76,7 +76,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
         /// <returns></returns>
         public IContainer BuildPreAuthorizationOnly()
         {
-            using (LogContext.Create("IoC - Pre-Authentication only"))
+            using (LogContext.Create("IoCPreAuthenticationOnly"))
             {
                 // Create the builder with which components/services are registered.
                 var builder = new ContainerBuilder();
@@ -98,7 +98,7 @@ namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
         public IContainer BuildAll(SiteConnectorService pipelineService)
         {
             Contract.Ensures(Contract.Result<IContainer>() != null);
-            using (LogContext.Create("IoC - All"))
+            using (LogContext.Create("IoCAll"))
             {
                 // Create the builder with which components/services are registered.
 

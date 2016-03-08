@@ -11,7 +11,7 @@ namespace Thycotic.DistributedEngine.Service.IoC
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            using (LogContext.Create("Engine Discovery"))
+            using (LogContext.Create("EngineDiscovery"))
             {
                 _log.Debug("Initializing Discovery...");
                 builder.RegisterType<ScannerFactory>().AsImplementedInterfaces().SingleInstance();

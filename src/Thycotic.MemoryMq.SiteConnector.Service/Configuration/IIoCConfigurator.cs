@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.Runtime.Remoting.Messaging;
 using Autofac;
-using Thycotic.DistributedEngine.Logic.Areas.POC;
 
 namespace Thycotic.MemoryMq.SiteConnector.Service.Configuration
 {
