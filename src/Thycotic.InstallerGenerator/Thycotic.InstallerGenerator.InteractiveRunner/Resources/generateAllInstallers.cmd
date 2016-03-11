@@ -5,7 +5,7 @@ color
 
 SET ig=%~dp0\..\Thycotic.InstallerGenerator.InteractiveRunner.exe
 SET artifactPath=C:\Users\dobroslav.kolev\Desktop\bits
-SET illidanMapPath=M:\development\repos\distributedengine
+SET illidanMapPath=D:\development\vso\Thycotic.DistributedEngine
 
 SET pfxPath=%illidanMapPath%\src\Thycotic.InstallerGenerator\Thycotic.InstallerGenerator.InteractiveRunner\Examples\Signing\SSDESPC.pfx
 SET pfxPassword=password1
