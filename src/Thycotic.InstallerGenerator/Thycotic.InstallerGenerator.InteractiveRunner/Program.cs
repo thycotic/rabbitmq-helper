@@ -82,11 +82,11 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         //private static string GenerateMemoryMqMsi()
         //{
         //    const string someSecretServerArbitraryPathForWixRecipe =
-        //         @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service.Wix";
+        //         @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.MemoryMq.SiteConnector.Service.Wix";
         //    //@"C:\development\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service.Wix";
 
         //    const string someSecretServerArbitraryPathForBits =
-        //        @"M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service\bin\Release";
+        //        @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.MemoryMq.SiteConnector.Service\bin\Release";
         //    //@"C:\development\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service\bin\Release";
         //    const string currentSnapshottedVersion = Version;
 
@@ -106,7 +106,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         //private static string GenerateAgentToDistributedEnginePreliminaryZip()
         //{
         //    const string someSecretServerArbitraryPathForBits =
-        //        @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+        //        @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service\bin\Release";
         //    //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
         //    const string currentSnapshottedVersion = Version;
 
@@ -125,12 +125,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         //private static string GenerateDistributedEngineMsi()
         //{
         //    const string someSecretServerArbitraryPathForWixRecipe =
-        //        //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
-        //        @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
+        //        //@"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service.Wix";
+        //        @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service.Wix";
         //        //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix";
 
         //    const string someSecretServerArbitraryPathForBits =
-        //        @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+        //        @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service\bin\Release";
         //    //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
         //    const string currentSnapshottedVersion = Version;
 
@@ -151,12 +151,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         //private static string GenerateDistributedEngineMsi32Bit()
         //{
         //    const string someSecretServerArbitraryPathForWixRecipe =
-        //        //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.32bit";
-        //       @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.32bit";
+        //        //@"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service.Wix.32bit";
+        //       @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service.Wix.32bit";
         //    //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.32bit";
 
         //    const string someSecretServerArbitraryPathForBits =
-        //        @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
+        //        @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
         //    //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
         //    const string currentSnapshottedVersion = Version;
 
@@ -179,12 +179,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         //private static string GenerateDistributedEngineUpdateMsi()
         //{
         //    const string someSecretServerArbitraryPathForWixRecipe =
-        //        //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update";
-        //        @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update";
+        //        //@"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service.Wix.Update";
+        //        @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service.Wix.Update";
         //    //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update";
 
         //    const string someSecretServerArbitraryPathForBits =
-        //        @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
+        //        @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service\bin\Release";
         //    //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release";
         //    const string currentSnapshottedVersion = Version;
 
@@ -206,12 +206,12 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner
         //private static string GenerateDistributedEngineUpdateMsi32Bit()
         //{
         //    const string someSecretServerArbitraryPathForWixRecipe =
-        //        //@"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update.32bit";
-        //       @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update.32bit";
+        //        //@"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service.Wix.Update.32bit";
+        //       @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service.Wix.Update.32bit";
         //    //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service.Wix.Update.32bit";
 
         //    const string someSecretServerArbitraryPathForBits =
-        //        @"M:\development\repos\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
+        //        @"D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
         //    //@"C:\development\distributedengine\src\Thycotic.DistributedEngine.Service\bin\Release.32bit";
         //    const string currentSnapshottedVersion = Version;
 

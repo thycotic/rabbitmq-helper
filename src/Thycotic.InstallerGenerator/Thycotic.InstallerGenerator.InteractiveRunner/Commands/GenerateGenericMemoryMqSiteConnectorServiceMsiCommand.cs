@@ -26,7 +26,7 @@ namespace Thycotic.InstallerGenerator.InteractiveRunner.Commands
             {
                 return new[]
                 {
-                    @"generateGenericMemoryMqSiteConnectorServiceMsi  -ArtifactName=gmmqsvc.msi  -ArtifactPath=C:\Users\dobroslav.kolev\Desktop\bits -SourcePath.Recipes=M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service.Wix -SourcePath.Binaries=M:\development\repos\distributedengine\src\Thycotic.MemoryMq.SiteConnector.Service\bin\Release -Installer.Version=5.0.0.0 -Signing.PfxPath=C:\Users\dobroslav.kolev\Desktop\signing\SSDESPC.pfx -Signing.PfxPassword=password1"
+                    @"generateGenericMemoryMqSiteConnectorServiceMsi  -ArtifactName=gmmqsvc.msi  -ArtifactPath=C:\Users\dobroslav.kolev\Desktop\bits -SourcePath.Recipes=D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.MemoryMq.SiteConnector.Service.Wix -SourcePath.Binaries=D:\development\vso\Thycotic.DistributedEngine\src\Thycotic.MemoryMq.SiteConnector.Service\bin\Release -Installer.Version=5.0.0.0 -Signing.PfxPath=C:\Users\dobroslav.kolev\Desktop\signing\SSDESPC.pfx -Signing.PfxPassword=password1"
                 };
             }
         }
