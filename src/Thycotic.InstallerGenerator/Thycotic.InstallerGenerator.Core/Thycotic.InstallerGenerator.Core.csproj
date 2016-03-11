@@ -125,7 +125,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Static Analysis|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -234,7 +234,7 @@
     <Compile Include="Zip\ZipFileWriter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Certificates\Thycotic.snk">
+    <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
     <None Include="packages.config">
