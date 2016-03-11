@@ -5,7 +5,7 @@
     xmlns:wix="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 
-  <xsl:template match="wix:Component[@Id='Thycotic.DistributedEngine.Service.exe']">
+  <!--<xsl:template match="wix:Component[@Id='Thycotic.DistributedEngine.Service.exe']">
         <xsl:copy>
             <xsl:apply-templates select="@*" />
             <xsl:apply-templates select="*" />
@@ -14,7 +14,7 @@
             </ServiceInstall>
             <ServiceControl Id="ServiceControlDistributedEngineService" Name="Thycotic.DistributedEngine.Service" Start="install" Stop="uninstall" Remove="uninstall"/>
         </xsl:copy>
-    </xsl:template>
+    </xsl:template>-->
 
     <xsl:template match="*">
         <xsl:copy>
