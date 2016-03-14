@@ -256,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\RunServiceCommand.cs" />
+    <Compile Include="ReleaseInformationHelper.cs" />
     <Compile Include="SiteConnectorService.cs">
       <SubType>Component</SubType>
     </Compile>

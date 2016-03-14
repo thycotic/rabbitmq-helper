@@ -42,8 +42,10 @@ namespace Thycotic.DistributedEngine.Service
         public void Start()
         {
             _log.Debug("Application is starting...");
+            _log.Info(string.Format("Running on {0}", DnsEx.GetDnsHostName()));
             _log.Info(string.Format("Running as {0}", GetUserName()));
             _log.Info(string.Format("Running as {0} bit process", _engineIdentificationProvider.Is64Bit ?  "64" : "32"));
+            _log.Info(string.Format("Running version {0}", ReleaseInformationHelper.Version));
 
             Task.Delay(StartupMessageDelay).ContinueWith(task => 
             {

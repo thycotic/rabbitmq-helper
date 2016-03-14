@@ -306,8 +306,6 @@ namespace Thycotic.DistributedEngine.Service.Configuration
 
                 var tempContainer = BuildPreAuthorizationOnly();
 
-                _log.Info(string.Format("Running engine on {0}", DnsEx.GetDnsHostName()));
-
                 var engineIdentificationProvider = tempContainer.Resolve<IEngineIdentificationProvider>();
                 var engineConfigurationBus = tempContainer.Resolve<IConfigurationBus>();
 
