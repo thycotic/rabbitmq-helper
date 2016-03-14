@@ -13,7 +13,13 @@ namespace Thycotic.DistributedEngine.Service.IoC
 {
     class LogicModule : Module
     {
+        private readonly Func<string, string> _configurationProvider;
         private readonly ILogWriter _log = Log.Get(typeof(LogicModule));
+
+        public LogicModule(Func<string, string> configurationProvider)
+        {
+            _configurationProvider = configurationProvider;
+        }
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -24,7 +30,12 @@ namespace Thycotic.DistributedEngine.Service.IoC
             {
                 var syncContext = SynchronizationContext.Current ?? new SynchronizationContext();
 
-                return new PrioritySchedulerProvider(syncContext);
+                var maximumThreadMultiplierString = _configurationProvider("MaximumThreadMultiplier");
+
+                var maximumThreadMultiplier = !string.IsNullOrWhiteSpace(maximumThreadMultiplierString) ? Convert.ToInt32(maximumThreadMultiplierString) : 10;
+
+                return new PrioritySchedulerProvider(syncContext, maximumThreadMultiplier);
+
             }).As<IPrioritySchedulerProvider>().SingleInstance();
 
             _log.Debug("Initializing consumers...");

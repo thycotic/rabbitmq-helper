@@ -203,7 +203,7 @@ namespace Thycotic.DistributedEngine.Service.Configuration
 
             if (startConsuming)
             {
-                builder.RegisterModule(new LogicModule());
+                builder.RegisterModule(new LogicModule(GetInstanceConfiguration));
                 builder.RegisterModule(new WrappersModule());
                 builder.RegisterModule(new DiscoveryModule());
                 builder.RegisterModule(new ActiveDirectoryModule());
