@@ -34,6 +34,8 @@ namespace Thycotic.DistributedEngine.Service.IoC
 
                 var maximumThreadMultiplier = !string.IsNullOrWhiteSpace(maximumThreadMultiplierString) ? Convert.ToInt32(maximumThreadMultiplierString) : 10;
 
+                _log.Info(string.Format("Maximum thread multiplier is {0}", maximumThreadMultiplier));
+
                 return new PrioritySchedulerProvider(syncContext, maximumThreadMultiplier);
 
             }).As<IPrioritySchedulerProvider>().SingleInstance();
