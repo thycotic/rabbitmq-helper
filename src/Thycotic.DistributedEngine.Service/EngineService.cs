@@ -95,6 +95,8 @@ namespace Thycotic.DistributedEngine.Service
                     IoCContainerConfigured(this, _ioCContainer);
                 }
 
+                _log.Debug("Configuring IoC complete");
+
                 if (!updateNeeded)
                 {
                     return;
