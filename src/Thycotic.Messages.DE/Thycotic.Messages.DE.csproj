@@ -245,6 +245,9 @@
     </Compile>
     <Compile Include="Areas\Discovery\Request\ScanMessageBase.cs" />
     <Compile Include="Areas\Discovery\Response\ScanHostRangeBlockingResponse.cs" />
+    <Compile Include="Areas\PasswordChanging\Request\BlockingPasswordChangeMessage.cs" />
+    <Compile Include="Areas\PasswordChanging\Request\BlockingPrivilegedPasswordChangeMessage.cs" />
+    <Compile Include="Areas\PasswordChanging\Response\BlockingPasswordChangeResponse.cs" />
     <Compile Include="Areas\POC\Request\CreateDirectoryMessage.cs" />
     <Compile Include="Areas\POC\Request\CreateFileMessage.cs" />
     <Compile Include="Areas\POC\Request\ChainMessage.cs" />
@@ -273,6 +276,8 @@
     <Compile Include="Areas\PasswordChanging\AppPoolDependencyChangerInfo.cs" />
     <Compile Include="Areas\PasswordChanging\Request\SecretChangeDependencyMessage.cs" />
     <Compile Include="Areas\PasswordChanging\WindowsServiceDependencyChangerInfo.cs" />
+    <Compile Include="Areas\Verify\Request\VerifyPasswordMessage.cs" />
+    <Compile Include="Areas\Verify\Response\VerifyPasswordResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
