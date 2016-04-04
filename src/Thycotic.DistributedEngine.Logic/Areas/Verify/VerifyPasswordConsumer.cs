@@ -52,7 +52,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.Verify
                 var response = new VerifyPasswordResponse
                 {
                     Success = verifyResult.Status == OperationStatus.Success,
-                    Errors = verifyResult.Errors
+                    Errors = verifyResult.Errors,
+                    CommandExecutionResults = verifyResult.CommandExecutionResults
                 };
 
                 return response;

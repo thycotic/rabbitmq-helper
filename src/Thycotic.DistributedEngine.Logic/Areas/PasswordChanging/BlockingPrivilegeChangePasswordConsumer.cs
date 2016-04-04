@@ -62,7 +62,8 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
                     response = new BlockingPasswordChangeResponse
                     {
                         Success = changeResult.Status == OperationStatus.Success,
-                        Errors = changeResult.Errors
+                        Errors = changeResult.Errors,
+                        CommandExecutionResults = changeResult.CommandExecutionResults
                     };
                 }
                 else
