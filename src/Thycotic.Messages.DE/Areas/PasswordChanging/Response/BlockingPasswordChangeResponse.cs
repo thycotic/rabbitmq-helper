@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Thycotic.SharedTypes.PasswordChangers;
 
 namespace Thycotic.Messages.DE.Areas.PasswordChanging.Response
 {
@@ -16,5 +17,10 @@ namespace Thycotic.Messages.DE.Areas.PasswordChanging.Response
         /// Error Message
         /// </summary>
         public IReadOnlyList<SharedTypes.PasswordChangers.Error> Errors { get; set; }
+
+        /// <summary>
+        /// Command Execution Results
+        /// </summary>
+        public IReadOnlyList<CommandExecutionResult> CommandExecutionResults { get; set; }
     }
 }
