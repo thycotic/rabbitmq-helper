@@ -54,11 +54,6 @@ namespace Thycotic.DistributedEngine.Logic.Areas.PasswordChanging
 
                     var changeResult = passwordChanger.ChangeUsingPrivilegedCredentials(info);
 
-                    if (changeResult.Status == OperationStatus.Success)
-                    {
-                        changeResult = passwordChanger.VerifyNewCredentials(info);
-                    }
-
                     response = new BlockingPasswordChangeResponse
                     {
                         Success = changeResult.Status == OperationStatus.Success,
