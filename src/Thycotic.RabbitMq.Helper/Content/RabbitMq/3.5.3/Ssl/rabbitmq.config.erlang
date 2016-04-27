@@ -264,6 +264,8 @@
    %% http://www.rabbitmq.com/nettick.html for further details.
    %%
    %% {net_ticktime, 60}
+   	{inet_dist_listen_max, 44002},
+    {inet_dist_listen_min, 44002}
   ]},
 
  %% ----------------------------------------------------------------------------

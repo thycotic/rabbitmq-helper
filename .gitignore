@@ -11,3 +11,5 @@
 **/obj/Release
 **/bin/Static Analysis
 **/obj/Static Analysis
+*.suo
+
