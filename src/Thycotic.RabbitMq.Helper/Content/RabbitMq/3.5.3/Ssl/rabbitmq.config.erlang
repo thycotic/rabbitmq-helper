@@ -37,7 +37,7 @@
    %% One of 'debug', 'info', 'warning', 'error' or 'none', in decreasing
    %% order of verbosity. Defaults to 'info'.
    %%
-   %% {log_levels, [{connection, info}, {channel, info}]},
+   {log_levels, [{connection, error}, {channel, error}]},
 
    %% Set to 'true' to perform reverse DNS lookups when accepting a
    %% connection. Hostnames will then be shown instead of IP addresses
