@@ -1,0 +1,1 @@
+Release\Thycotic.RabbitMq.Helper.exe installConnector -rabbitMqUsername=SITEUN -rabbitMqPw=SITEPW -agreeErlangLicense=true -agreeRabbitMqLicense=true

@@ -1,0 +1,1 @@
+Release\Thycotic.RabbitMq.Helper.exe installConnector -skipUserCreate=true

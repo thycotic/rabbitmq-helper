@@ -1,0 +1,1 @@
+Release\Thycotic.RabbitMq.Helper.exe installConnector -rabbitMqUsername=SITEUN -rabbitMqPw=SITEPW -offlineErlangInstallerPath=Offline\o-erlang.exe -offlineRabbitMqInstallerPath=Offline\o-rabbitMq.exe
