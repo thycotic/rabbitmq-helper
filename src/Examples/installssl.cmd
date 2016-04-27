@@ -1,0 +1,1 @@
+Release\Thycotic.RabbitMq.Helper.exe installConnector -hostname=FQDNFORCERT -useSsl=true -rabbitMqUsername=SITEUN -rabbitMqPw=SITEPW -cacertpath=sc.cer -pfxPath=sc.pfx -pfxPw=password1
