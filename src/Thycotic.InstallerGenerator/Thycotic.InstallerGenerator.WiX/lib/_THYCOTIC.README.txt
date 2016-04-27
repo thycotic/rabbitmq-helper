@@ -1,3 +1,0 @@
-Folder contains WiX 3.9 R2 binaries
-
-https://wix.codeplex.com/releases
