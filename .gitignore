@@ -5,9 +5,11 @@
 /src/.nuget
 /src/**/packages
 /src/**/*.WiX/Output
-/bin/Debug
-/obj/Debug
-/bin/Release
-/obj/Release
-/bin/Static Analysis
-/obj/Static Analysis
+**/bin/Debug
+**/obj/Debug
+**/bin/Release
+**/obj/Release
+**/bin/Static Analysis
+**/obj/Static Analysis
+*.suo
+

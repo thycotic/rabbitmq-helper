@@ -37,7 +37,7 @@
    %% One of 'debug', 'info', 'warning', 'error' or 'none', in decreasing
    %% order of verbosity. Defaults to 'info'.
    %%
-   %% {log_levels, [{connection, info}, {channel, info}]},
+   {log_levels, [{connection, error}, {channel, error}]},
 
    %% Set to 'true' to perform reverse DNS lookups when accepting a
    %% connection. Hostnames will then be shown instead of IP addresses
@@ -264,6 +264,8 @@
    %% http://www.rabbitmq.com/nettick.html for further details.
    %%
    %% {net_ticktime, 60}
+   	{inet_dist_listen_max, 44002},
+    {inet_dist_listen_min, 44002}
   ]},
 
  %% ----------------------------------------------------------------------------
