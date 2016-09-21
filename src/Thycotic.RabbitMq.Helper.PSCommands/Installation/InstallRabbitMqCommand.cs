@@ -1,0 +1,76 @@
+﻿using System;
+using System.IO;
+using System.Management.Automation;
+using System.Threading.Tasks;
+using Thycotic.CLI.Commands;
+using Thycotic.Utility.OS;
+using Thycotic.Utility.Reflection;
+
+namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
+{
+    /// <summary>
+    /// Installs RabbitMq
+    /// </summary>
+    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
+    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
+    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
+    /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
+    /// <para type="link">TODO: Get-Help</para>
+    /// <example>
+    ///   <para>TODO: This is part of the first example's introduction.</para>
+    ///   <para>TODO: This is also part of the first example's introduction.</para>
+    ///   <code>TODO: New-Thingy | Write-Host</code>
+    ///   <para>TODO: This is part of the first example's remarks.</para>
+    ///   <para>TODO: This is also part of the first example's remarks.</para>
+    /// </example>
+    [Cmdlet(VerbsLifecycle.Install, "RabbitMq")]
+    public class InstallRabbitMqCommand : Cmdlet
+    {
+        /// <summary>
+        /// Processes the record.
+        /// </summary>
+        /// <exception cref="System.ApplicationException">The RABBITMQ_BASE environmental variable is not set correctly</exception>
+        /// <exception cref="System.IO.FileNotFoundException">No installer found</exception>
+        protected override void ProcessRecord()
+        {
+
+
+            var rabbitMqBase = Environment.GetEnvironmentVariable("RABBITMQ_BASE");
+
+            if (rabbitMqBase != InstallationConstants.RabbitMq.ConfigurationPath)
+            {
+                WriteWarning(string.Format("RABBITMQ_BASE is set to {0}", rabbitMqBase));
+                throw new ApplicationException("The RABBITMQ_BASE environmental variable is not set correctly");
+            }
+
+            var executablePath = GetRabbitMqInstallerCommand.RabbitMqInstallerPath;
+
+            if (!File.Exists(executablePath))
+            {
+                throw new FileNotFoundException("No installer found");
+            }
+
+            var externalProcessRunner = new ExternalProcessRunner
+            {
+                EstimatedProcessDuration = TimeSpan.FromMinutes(10)
+            };
+
+
+            var assemblyEntryPointProvider = new AssemblyEntryPointProvider();
+
+            var workingPath = assemblyEntryPointProvider.GetAssemblyDirectory(this.GetType());
+
+            const string silent = "/S";
+
+            WriteVerbose("Installing RabbitMq...");
+
+            externalProcessRunner.Run(executablePath, workingPath, silent);
+
+            WriteVerbose("Waiting for RabbitMq process to start...");
+            Task.Delay(TimeSpan.FromSeconds(10)).Wait();
+
+            WriteVerbose("Installation process completed");
+
+        }
+    }
+}
