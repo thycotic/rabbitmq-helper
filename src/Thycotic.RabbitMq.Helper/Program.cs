@@ -1,6 +1,7 @@
 ﻿using System;
 using Thycotic.CLI;
-using Thycotic.Logging;
+using Thycotic.CLI.Legacy;
+using Thycotic.RabbitMq.Helper.PSCommands.Installation;
 
 namespace Thycotic.RabbitMq.Helper
 {
@@ -19,22 +20,33 @@ namespace Thycotic.RabbitMq.Helper
                 Console.Clear();
                 Console.ResetColor();
             }
-
-            Log.Configure();
-
+            
             var initialCommand = string.Join(" ", args);
 
-            var cli = new CommandLineInterface("Thycotic RabbitMq Helper");
+            if (string.IsNullOrWhiteSpace(initialCommand.Trim()))
+            {
+                initialCommand = null;
+            }
 
-            cli.DiscoverCommands();
+            var isLegacyCli = !string.IsNullOrWhiteSpace(initialCommand) && initialCommand.StartsWith("installConnector");
 
-            cli.BeginInputLoop(initialCommand);
+#pragma warning disable 618
+            //we are basically forever married to the old cli format due to possibility of legacy documentation lingering around -dkk
+            var cli = isLegacyCli ? new CommandLineWithLegacyParameterParsing() : new CommandLineInterface();
+#pragma warning restore 618
+
+            cli.Modules = new[] {typeof (InstallConnectorCommand).Assembly.Location};
+
+            if (isLegacyCli)
+            {
+                cli.ConsumeInput(initialCommand + @" -verbose=""true""");
+            }
+            else
+            {
+                cli.BeginInputLoop(initialCommand);
+            }
 
             return 0;
         }
-
-       
-
-
     }
 }

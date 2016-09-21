@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.props" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8E815A53-4472-4C31-9FF5-1BD48B976565}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{9DFFEE65-D375-49C2-BB47-083E7F87D01B}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thycotic.RabbitMq.Helper</RootNamespace>
-    <AssemblyName>Thycotic.RabbitMq.Helper</AssemblyName>
+    <RootNamespace>Thycotic.RabbitMq.Helper.PSCommands</RootNamespace>
+    <AssemblyName>Thycotic.RabbitMq.Helper.PSCommands</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +25,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -67,16 +68,16 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <DocumentationFile>bin\Debug\Thycotic.RabbitMq.Helper.PSCommands.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
@@ -120,18 +121,14 @@
     <CodeContractsRuntimeCheckingLevel>Pre and Post</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Release\Thycotic.RabbitMq.Helper.PSCommands.XML</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Static Analysis|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Static Analysis|AnyCPU' ">
     <OutputPath>bin\Static Analysis\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -170,7 +167,7 @@
     <CodeContractsExtraRewriteOptions />
     <CodeContractsExtraAnalysisOptions />
     <CodeContractsSQLServerOption />
-    <CodeContractsBaseLineFile>..\..\baseline.xml</CodeContractsBaseLineFile>
+    <CodeContractsBaseLineFile />
     <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
     <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
     <CodeContractsFailBuildOnWarnings>True</CodeContractsFailBuildOnWarnings>
@@ -178,19 +175,31 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <DocumentationFile>bin\Static Analysis\Thycotic.RabbitMq.Helper.PSCommands.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RabbitMQ.Client, Version=3.5.6.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
       <HintPath>..\packages\RabbitMQ.Client.3.5.6\lib\net40\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Management.Automation_PowerShell_3.0.6.3.9600.17400\lib\net40\System.Management.Automation.dll</HintPath>
       <Private>True</Private>
@@ -199,42 +208,70 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Thycotic.CLI, Version=5.1.1.8, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thycotic.CLI.5.1.1.8\lib\net451\Thycotic.CLI.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Thycotic.Utility">
+      <HintPath>..\packages\Thycotic.Utility.5.0.1.42\lib\net451\Thycotic.Utility.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Certificate\ConvertCerToPemCommand.cs" />
+    <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
+    <Compile Include="CommandAreas.cs" />
+    <Compile Include="Installation\CopyRabbitMqExampleNonSslConfigFileCommand.cs" />
+    <Compile Include="Installation\CopyRabbitMqExampleSslConfigFileCommand.cs" />
+    <Compile Include="Installation\NewRabbitMqConfigDirectoryCommand.cs" />
+    <Compile Include="Installation\GetErlangInstallerCommand.cs" />
+    <Compile Include="Installation\GetRabbitMqInstallerCommand.cs" />
+    <Compile Include="Installation\InstallationConstants.cs" />
+    <Compile Include="Installation\InstallConnectorCommand.cs" />
+    <Compile Include="Installation\PrerequisiteDownloader.cs" />
+    <Compile Include="Installation\InstallErlangCommand.cs" />
+    <Compile Include="Installation\InstallRabbitMqCommand.cs" />
+    <Compile Include="Installation\GetDownloadLocationsCommand.cs" />
+    <Compile Include="Installation\SetErlangHomeEnvironmentalVariableCommand.cs" />
+    <Compile Include="Installation\SetRabbitMqBaseEnvironmentalVariableCommand.cs" />
+    <Compile Include="Installation\UninstallConnectorCommand.cs" />
+    <Compile Include="Installation\UninstallErlangCommand.cs" />
+    <Compile Include="Installation\UninstallRabbitMqCommand.cs" />
+    <Compile Include="Management\NewRabbitMqUserCommand.cs" />
+    <Compile Include="Management\EnableRabbitMqManagementPluginCommand.cs" />
+    <Compile Include="Management\LockedFileReader.cs" />
+    <Compile Include="Management\ManagementConsoleCmdlet.cs" />
+    <Compile Include="Management\GetRabbitMqLog.cs" />
+    <Compile Include="Management\GetRabbitMqSaslLog.cs" />
+    <Compile Include="Management\AssertConnectivityCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\RabbitMq\3.5.3\NonSsl\rabbitmq.config.erlang" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\RabbitMq\3.5.3\Ssl\rabbitmq.config.erlang" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
-    <None Include="App.config" />
-    <None Include="app.manifest" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Thycotic.RabbitMq.Helper.PSCommands\Thycotic.RabbitMq.Helper.PSCommands.csproj">
-      <Project>{9DFFEE65-D375-49C2-BB47-083E7F87D01B}</Project>
-      <Name>Thycotic.RabbitMq.Helper.PSCommands</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>if "$(ConfigurationName)" EQU "Static Analysis" goto end
-copy /y "$(TargetDir)..\..\..\$(ProjectName).PSCommands\$(OutDir)\$(ProjectName).PSCommands.dll-Help.xml" "$(TargetDir)"
-:end</PostBuildEvent>
-  </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.props'))" />
+    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.targets'))" />
+  </Target>
+  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
