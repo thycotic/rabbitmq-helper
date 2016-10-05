@@ -1,3 +1,4 @@
+#Please replace the sc.cer and sc.pfx files with your own certificate files
 import-module .\Release\Thycotic.RabbitMq.Helper.PSCommands.dll
 
 $path = "M:\development\vso\DistributedEngine\Thycotic.RabbitMq.Helper\src\Examples"
