@@ -51,6 +51,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     {
         private static class ParameterSets
         {
+            public const string Offline = "Offline";
+            public const string Online = "Online";
             public const string NonSsl = "NonSsl";
             public const string Ssl = "Ssl";
         }
@@ -78,8 +80,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public SwitchParameter AgreeErlangLicense { get; set; }
-
-
+        
         /// <summary>
         /// Gets or sets the offline Erlang installer path. If omitted, the installer will be downloaded.
         /// </summary>
@@ -89,7 +90,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <para type="description">Gets or sets the offline Erlang installer path. If omitted, the installer will be downloaded.</para>
         [Parameter(
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Offline)]
         public string OfflineErlangInstallerPath { get; set; }
 
 
@@ -102,7 +104,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <para type="description">Gets or sets the offline RabbitMq installer path to use. If omitted, the installer will be downloaded.</para>
         [Parameter(
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Offline)]
         public string OfflineRabbitMqInstallerPath { get; set; }
 
         /// <summary>
@@ -114,9 +117,24 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <para type="description">Gets or sets a value indicating whether force download (even they already exist) the pre-requisites. This value has no effect when using an offline installer. </para>
         [Parameter(
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Online)]
         [Alias("Force")]
         public SwitchParameter ForceDownload { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the Thycotic Mirror.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [force download]; otherwise, <c>false</c>.
+        /// </value>
+        /// <para type="description">TODO: Property description.</para>
+        [Parameter(
+        ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Online)]
+        [Alias("Mirror")]
+        public SwitchParameter UseThycoticMirror { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the RabbitMq user name of the initial user.
@@ -128,13 +146,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         [Parameter(
             Mandatory = true,
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.NonSsl)]
-        [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         [Alias("RabbitMqUserName")]
         public string UserName { get; set; }
@@ -149,13 +161,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         [Parameter(
             Mandatory = true,
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.NonSsl)]
-        [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         [Alias("RabbitMqPw", "RabbitMqPassword")]
         public string Password { get; set; }
@@ -240,14 +246,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         public string PfxPassword { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InstallConnectorCommand"/> class.
-        /// </summary>
-        public InstallConnectorCommand()
-        {
-            Hostname = DnsEx.GetDnsHostName();
-        }
-
-        /// <summary>
         /// Processes the record.
         /// </summary>
         protected override void ProcessRecord()
@@ -271,7 +269,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 CommandRuntime = CommandRuntime,
                 OfflineErlangInstallerPath = OfflineErlangInstallerPath,
-                ForceDownload = ForceDownload
+                ForceDownload = ForceDownload,
+                UseThycoticMirror = UseThycoticMirror
             }.InvokeImmediate();
 
             WriteProgress(new ProgressRecord(activityid, activity, "Checking RabbitMq pre-requisites")
@@ -290,7 +289,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 CommandRuntime = CommandRuntime,
                 OfflineRabbitMqInstallerPath = OfflineRabbitMqInstallerPath,
-                ForceDownload = ForceDownload
+                ForceDownload = ForceDownload,
+                UseThycoticMirror = UseThycoticMirror
             }.InvokeImmediate();
 
             WriteProgress(new ProgressRecord(activityid, activity, "Uninstalling prior versions") {PercentComplete = 20});
@@ -342,7 +342,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 new AssertConnectivityCommand
                 {
-                    Hostname = Hostname,
+                    Hostname = Hostname ?? DnsEx.GetDnsHostName(),
                     UserName = UserName,
                     Password = Password
                 }.AsChildOf(this).InvokeImmediate();

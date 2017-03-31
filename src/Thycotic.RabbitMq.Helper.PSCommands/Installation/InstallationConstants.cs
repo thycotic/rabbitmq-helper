@@ -33,6 +33,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_1_general/esl-erlang_17.5-1~windows_i386.exe";
 
             /// <summary>
+            /// The download URL using the Thycotic mirror
+            /// </summary>
+            public static readonly string ThycoticMirrorDownloadUrl =
+                Environment.Is64BitOperatingSystem ?
+                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/esl-erlang_17.5-1-windows_amd64.exe" :
+                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/esl-erlang_17.5-1-windows_i386.exe";
+
+            /// <summary>
             /// The install path
             /// </summary>
             public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4");
@@ -58,6 +66,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             /// </summary>
             public const string DownloadUrl =
                 "https://www.rabbitmq.com/releases/rabbitmq-server/v3.5.3/rabbitmq-server-3.5.3.exe";
+
+            /// <summary>
+            /// The download URL using the Thycotic mirror
+            /// </summary>
+            public const string ThycoticMirrorDownloadUrl =
+                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/rabbitmq/rabbitmq-server-3.5.3.exe";
 
             /// <summary>
             /// The configuration path
