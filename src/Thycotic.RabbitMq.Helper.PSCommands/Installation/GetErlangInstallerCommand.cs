@@ -24,6 +24,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     [Cmdlet(VerbsCommon.Get, "ErlangInstaller")]
     public class GetErlangInstallerCommand : Cmdlet
     {
+        private static class ParameterSets
+        {
+            public const string Offline = "Offline";
+            public const string Online = "Online";
+        }
+
         /// <summary>
         /// The erlang installer path
         /// </summary>
@@ -39,7 +45,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         [Parameter(
             Position = 0,
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Offline)]
         [Alias("OfflinePath")]
         public string OfflineErlangInstallerPath { get; set; }
 
@@ -52,10 +59,24 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <para type="description">TODO: Property description.</para>
         [Parameter(
         ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Online)]
         [Alias("Force")]
-        public bool ForceDownload { get; set; }
+        public SwitchParameter ForceDownload { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the Thycotic Mirror.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [force download]; otherwise, <c>false</c>.
+        /// </value>
+        /// <para type="description">TODO: Property description.</para>
+        [Parameter(
+        ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Online)]
+        [Alias("Mirror")]
+        public SwitchParameter UseThycoticMirror { get; set; }
 
         /// <summary>
         /// Processes the record.
@@ -91,8 +112,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 WriteVerbose("Downloading Erlang");
 
                 var downloader = new PrerequisiteDownloader();
-                
-                downloader.Download(CancellationToken.None, InstallationConstants.Erlang.DownloadUrl,
+
+                var downloadUrl = UseThycoticMirror ? InstallationConstants.Erlang.ThycoticMirrorDownloadUrl : InstallationConstants.Erlang.DownloadUrl;
+
+                downloader.Download(CancellationToken.None, downloadUrl,
                     ErlangInstallerPath, ForceDownload, 5, WriteDebug, WriteVerbose, (s, exception) =>
                     {
                         throw exception;
