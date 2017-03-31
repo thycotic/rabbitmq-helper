@@ -240,8 +240,9 @@
     <Compile Include="Installation\UninstallConnectorCommand.cs" />
     <Compile Include="Installation\UninstallErlangCommand.cs" />
     <Compile Include="Installation\UninstallRabbitMqCommand.cs" />
-    <Compile Include="Management\NewRabbitMqUserCommand.cs" />
     <Compile Include="Management\EnableRabbitMqManagementPluginCommand.cs" />
+    <Compile Include="Management\NewRabbitMqUserCommand.cs" />
+    <Compile Include="Management\DeleteAllQueuesCommand.cs" />
     <Compile Include="Management\LockedFileReader.cs" />
     <Compile Include="Management\ManagementConsoleCmdlet.cs" />
     <Compile Include="Management\GetRabbitMqLog.cs" />
