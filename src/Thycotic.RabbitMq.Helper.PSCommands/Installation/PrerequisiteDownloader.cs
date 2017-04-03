@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.PowerShell.Commands;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -50,26 +52,39 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 try
                 {
+                    var stopWatch = new Stopwatch();
+                    stopWatch.Start();
+
                     var client = new WebClient();
 
                     //use a queue to be able to store and report back progress form the original thread.
                     var progressQueue = new ConcurrentQueue<PrerequisiteDownloaderProgress>();
 
+                    var lastReportedProgressPercentage = 0;
+
                     client.DownloadProgressChanged += (sender, args) =>
                     {
+                        var progressPercentage = args.ProgressPercentage;
+
+                        if (progressPercentage <= lastReportedProgressPercentage)
+                        {
+                            return;
+                        }
+
                         progressQueue.Enqueue(new PrerequisiteDownloaderProgress
                         {
-                            ProgressPercentage = args.ProgressPercentage,
+                            ProgressPercentage = progressPercentage,
                             BytesReceived = args.BytesReceived,
                             TotalBytesToReceive = args.TotalBytesToReceive
                         });
 
+                        lastReportedProgressPercentage = progressPercentage;
                     };
 
                     var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
                     var task = client.DownloadFileTaskAsync(new Uri(downloadUrl, UriKind.Absolute), tempPath);
                     var awaiter = task.GetAwaiter();
-                    
+
                     while (!awaiter.IsCompleted)
                     {
                         PrerequisiteDownloaderProgress prerequisiteDownloaderProgress;
@@ -88,6 +103,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     }
 
                     Contract.Assume(installerPath.Length != 0);
+
+                    stopWatch.Stop();
+                    Console.WriteLine(stopWatch.Elapsed);
 
                     File.Move(tempPath, installerPath);
 
