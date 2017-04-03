@@ -61,8 +61,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Online)]
-        [Alias("Force")]
-        public SwitchParameter ForceDownload { get; set; }
+        [Alias("ForceDownload")]
+        public SwitchParameter Force { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use the Thycotic Mirror.
@@ -104,7 +104,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             }
             else
             {
-                if (ForceDownload)
+                if (Force)
                 {
                     WriteVerbose("Forcing download");
                 }
@@ -116,7 +116,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 var downloadUrl = UseThycoticMirror ? InstallationConstants.Erlang.ThycoticMirrorDownloadUrl : InstallationConstants.Erlang.DownloadUrl;
 
                 downloader.Download(CancellationToken.None, downloadUrl,
-                    ErlangInstallerPath, ForceDownload, 5, WriteDebug, WriteVerbose, (s, exception) =>
+                    ErlangInstallerPath, Force, 5, WriteDebug, WriteVerbose, (s, exception) =>
                     {
                         throw exception;
                     }, progress =>

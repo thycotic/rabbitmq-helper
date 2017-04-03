@@ -269,7 +269,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 CommandRuntime = CommandRuntime,
                 OfflineErlangInstallerPath = OfflineErlangInstallerPath,
-                ForceDownload = ForceDownload,
+                Force = ForceDownload,
                 UseThycoticMirror = UseThycoticMirror
             }.InvokeImmediate();
 
@@ -289,7 +289,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 CommandRuntime = CommandRuntime,
                 OfflineRabbitMqInstallerPath = OfflineRabbitMqInstallerPath,
-                ForceDownload = ForceDownload,
+                Force = ForceDownload,
                 UseThycoticMirror = UseThycoticMirror
             }.InvokeImmediate();
 
