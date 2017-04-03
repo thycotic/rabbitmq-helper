@@ -105,7 +105,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     Contract.Assume(installerPath.Length != 0);
 
                     stopWatch.Stop();
-                    Console.WriteLine(stopWatch.Elapsed);
+                    debugHandler(string.Format("File downloaded in {0}", stopWatch.Elapsed));
 
                     File.Move(tempPath, installerPath);
 
