@@ -6,10 +6,10 @@ Import-module $modulePath
 #get-help get-help -full
 #get-help Convert-CaCertToPem -full 
 #Convert-CaCertToPem -CaCertPath "$PSScriptRoot\..\Examples\sc.cer" -Verbose
-get-help Convert-PfxToPem -full
+#get-help Convert-PfxToPem -full
 #Convert-PfxToPem -PfxPath "$PSScriptRoot\..\Examples\sc.pfx" -PfxPassword "password1" -Verbose
 
-#get-help Copy-RabbitMqExampleNonSslConfigFile -full
+get-help Copy-RabbitMqExampleNonSslConfigFile -full
 #get-help Copy-RabbitMqExampleSslConfigFile -full
 #get-help Get-DownloadLocations -full
 #get-help Get-ErlangInstaller -full

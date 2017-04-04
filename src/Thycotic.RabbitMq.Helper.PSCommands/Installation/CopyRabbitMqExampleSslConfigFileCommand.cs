@@ -5,12 +5,12 @@ using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
     /// <summary>
-    ///     Copies RabbitMq example configuration file
+    ///     Copies RabbitMq SSL example configuration file. The configuration file will be located in the Thycotic RabbitMq Site Connector folder.
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
+    /// <para type="synopsis">Copies RabbitMq SSL example configuration file.</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
     /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
-    /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
+    /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">TODO: Get-Help</para>
     /// <example>
     ///     <para>TODO: This is part of the first example's introduction.</para>
