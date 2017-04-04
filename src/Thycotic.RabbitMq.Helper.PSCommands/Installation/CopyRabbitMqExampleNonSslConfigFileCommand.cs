@@ -7,16 +7,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Copies RabbitMq non-SSL example configuration file. The configuration file will be located in the Thycotic RabbitMq Site Connector folder.
     /// </summary>
     /// <para type="synopsis">Copies RabbitMq non-SSL example configuration file. </para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
+    /// <para type="description">The Copy-RabbitMqExampleNonSslConfigFile cmdlet copies RabbitMq non-SSL example configuration file.</para>
+    /// <para type="description">The configuration file will be located in the Thycotic RabbitMq Site Connector folder.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
-    /// <para type="link">TODO: Get-Help</para>
+    /// <para type="link">Copy-RabbitMqExampleSslConfigFile</para>
     /// <example>
-    ///     <para>TODO: This is part of the first example's introduction.</para>
-    ///     <para>TODO: This is also part of the first example's introduction.</para>
-    ///     <code>TODO: New-Thingy | Write-Host</code>
-    ///     <para>TODO: This is part of the first example's remarks.</para>
-    ///     <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <code>Copy-RabbitMqExampleNonSslConfigFile</code>
     /// </example>
     [Cmdlet(VerbsCommon.Copy, "RabbitMqExampleNonSslConfigFile")]
     public class CopyRabbitMqExampleNonSslConfigFileCommand : Cmdlet
