@@ -2,14 +2,13 @@ using System;
 using System.IO;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using Thycotic.CLI.Commands;
 using Thycotic.Utility.IO;
 using Thycotic.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
     /// <summary>
-    /// Uninstalls prior installation of Erlang
+    ///     Uninstalls prior installation of Erlang
     /// </summary>
     /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
@@ -17,21 +16,20 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
     /// <para type="link">TODO: Get-Help</para>
     /// <example>
-    ///   <para>TODO: This is part of the first example's introduction.</para>
-    ///   <para>TODO: This is also part of the first example's introduction.</para>
-    ///   <code>TODO: New-Thingy | Write-Host</code>
-    ///   <para>TODO: This is part of the first example's remarks.</para>
-    ///   <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>TODO: This is part of the first example's introduction.</para>
+    ///     <para>TODO: This is also part of the first example's introduction.</para>
+    ///     <code>TODO: New-Thingy | Write-Host</code>
+    ///     <para>TODO: This is part of the first example's remarks.</para>
+    ///     <para>TODO: This is also part of the first example's remarks.</para>
     /// </example>
     [Cmdlet(VerbsLifecycle.Uninstall, "Erlang")]
     public class UninstallErlangCommand : Cmdlet
     {
         /// <summary>
-        /// Processes the record.
+        ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
-
             WriteVerbose("Uninstalling prior version of Erlang");
 
             var executablePath = InstallationConstants.Erlang.UninstallerPath;
@@ -56,7 +54,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
             try
             {
-
                 const string erlandProcessKill = " /F /IM epmd.exe";
                 externalProcessRunner.Run("taskkill", workingPath, erlandProcessKill);
             }
@@ -71,7 +68,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             CleanUpFolders();
 
             WriteVerbose("Uninstallation process completed");
-
         }
 
         private void CleanUpFolders()

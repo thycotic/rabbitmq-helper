@@ -7,13 +7,12 @@ using System.Security.Cryptography.X509Certificates;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Security.Certificates;
-using Thycotic.CLI.Commands;
 using Thycotic.RabbitMq.Helper.PSCommands.Installation;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
 {
     /// <summary>
-    /// Converts a PFX cert to a pem/key combination.
+    ///     Converts a PFX cert to a pem/key combination.
     /// </summary>
     /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
@@ -21,83 +20,77 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
     /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
     /// <para type="link">TODO: Get-Help</para>
     /// <example>
-    ///   <para>TODO: This is part of the first example's introduction.</para>
-    ///   <para>TODO: This is also part of the first example's introduction.</para>
-    ///   <code>TODO: New-Thingy | Write-Host</code>
-    ///   <para>TODO: This is part of the first example's remarks.</para>
-    ///   <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>TODO: This is part of the first example's introduction.</para>
+    ///     <para>TODO: This is also part of the first example's introduction.</para>
+    ///     <code>TODO: New-Thingy | Write-Host</code>
+    ///     <para>TODO: This is part of the first example's remarks.</para>
+    ///     <para>TODO: This is also part of the first example's remarks.</para>
     /// </example>
     [Cmdlet(VerbsData.Convert, "PfxToPem")]
     public class ConvertPfxToPemCommand : Cmdlet
     {
         /// <summary>
-        /// The certificate path
+        ///     The certificate path
         /// </summary>
         public static readonly string CertificatePath = Path.Combine(InstallationConstants.RabbitMq.ConfigurationPath,
             "cert.pem");
 
         /// <summary>
-        /// The key path
+        ///     The key path
         /// </summary>
         public static readonly string KeyPath = Path.Combine(InstallationConstants.RabbitMq.ConfigurationPath,
             "cert.key");
 
         /// <summary>
-        /// Gets or sets the PFX path.
+        ///     Gets or sets the PFX path.
         /// </summary>
         /// <value>
-        /// The PFX path.
+        ///     The PFX path.
         /// </value>
         /// <para type="description">TODO: Property description.</para>
         [Parameter(
-            Mandatory = true,
-            Position = 0,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             Mandatory = true,
+             Position = 0,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         public string PfxPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the PFX password.
+        ///     Gets or sets the PFX password.
         /// </summary>
         /// <value>
-        /// The PFX password.
+        ///     The PFX password.
         /// </value>
         /// <para type="description">TODO: Property description.</para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         [Alias("PfxPw")]
         public string PfxPassword { get; set; }
 
         /// <summary>
-        /// Processes the record.
+        ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
             ConvertToPem(PfxPath, PfxPassword);
-
         }
 
         [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant",
-            Justification = "File info bogus warning")]
+             Justification = "File info bogus warning")]
         private void ConvertToPem(string pfxPath, string password)
         {
-
             WriteVerbose(string.Format("Attempting to convert {0} to .pem file...", pfxPath));
 
             var file = new FileInfo(pfxPath);
 
             if (file.Extension.ToLower() != ".pfx")
-            {
                 throw new ApplicationException("File is not .PFX");
-            }
 
 
-            if (file.Directory == null || !file.Directory.Exists || !file.Exists)
-            {
+            if ((file.Directory == null) || !file.Directory.Exists || !file.Exists)
                 throw new ApplicationException("File does not exist");
-            }
 
             X509Certificate2 cert;
 

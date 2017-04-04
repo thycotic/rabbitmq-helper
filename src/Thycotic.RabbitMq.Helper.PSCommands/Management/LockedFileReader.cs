@@ -5,14 +5,14 @@ using System.Linq;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
     /// <summary>
-    /// Locked/log file reader
+    ///     Locked/log file reader
     /// </summary>
     public class LockedFileReader
     {
         private readonly string _path;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LockedFileReader"/> class.
+        ///     Initializes a new instance of the <see cref="LockedFileReader" /> class.
         /// </summary>
         /// <param name="path">The path.</param>
         public LockedFileReader(string path)
@@ -21,13 +21,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         }
 
         /// <summary>
-        /// Gets the tail lines.
+        ///     Gets the tail lines.
         /// </summary>
         /// <param name="linesToReturn">The lines to return.</param>
         /// <returns>List of the tail lines</returns>
         public string[] GetTailLines(int linesToReturn)
         {
-            Contract.Ensures(Contract.Result<System.String[]>() != null);
+            Contract.Ensures(Contract.Result<string[]>() != null);
 
             using (var fileStream = new FileStream(_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
@@ -38,9 +38,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                     var lines = contents.Split('\n');
 
                     if (lines.Length > linesToReturn)
-                    {
                         lines = lines.Skip(lines.Length - linesToReturn).ToArray();
-                    }
 
                     return lines;
                 }

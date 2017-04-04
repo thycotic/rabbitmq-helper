@@ -20,31 +20,26 @@ namespace Thycotic.RabbitMq.Helper
                 Console.Clear();
                 Console.ResetColor();
             }
-            
+
             var initialCommand = string.Join(" ", args);
 
             if (string.IsNullOrWhiteSpace(initialCommand.Trim()))
-            {
                 initialCommand = null;
-            }
 
-            var isLegacyCli = !string.IsNullOrWhiteSpace(initialCommand) && initialCommand.StartsWith("installConnector");
+            var isLegacyCli = !string.IsNullOrWhiteSpace(initialCommand) &&
+                              initialCommand.StartsWith("installConnector");
 
 #pragma warning disable 618
             //we are basically forever married to the old cli format due to possibility of legacy documentation lingering around -dkk
             var cli = isLegacyCli ? new CommandLineWithLegacyParameterParsing() : new CommandLineInterface();
 #pragma warning restore 618
 
-            cli.Modules = new[] {typeof (InstallConnectorCommand).Assembly.Location};
+            cli.Modules = new[] {typeof(InstallConnectorCommand).Assembly.Location};
 
             if (isLegacyCli)
-            {
                 cli.ConsumeInput(initialCommand + @" -verbose=""true""");
-            }
             else
-            {
                 cli.BeginInputLoop(initialCommand);
-            }
 
             return 0;
         }

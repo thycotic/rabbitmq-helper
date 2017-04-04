@@ -7,7 +7,7 @@ using Thycotic.RabbitMq.Helper.PSCommands.Installation;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
     /// <summary>
-    /// Selects the tail of the RabbitMq Simple Authentication and Security Layer (SASL) log
+    ///     Selects the tail of the RabbitMq Simple Authentication and Security Layer (SASL) log
     /// </summary>
     /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
@@ -15,11 +15,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
     /// <para type="link">TODO: Get-Help</para>
     /// <example>
-    ///   <para>TODO: This is part of the first example's introduction.</para>
-    ///   <para>TODO: This is also part of the first example's introduction.</para>
-    ///   <code>TODO: New-Thingy | Write-Host</code>
-    ///   <para>TODO: This is part of the first example's remarks.</para>
-    ///   <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>TODO: This is part of the first example's introduction.</para>
+    ///     <para>TODO: This is also part of the first example's introduction.</para>
+    ///     <code>TODO: New-Thingy | Write-Host</code>
+    ///     <para>TODO: This is part of the first example's remarks.</para>
+    ///     <para>TODO: This is also part of the first example's remarks.</para>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "RabbitMqSaslLog")]
     [Alias("tailRabbitmqSqslLog", "tailsasllog")]
@@ -27,20 +27,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     public class GetRabbitMqSaslLog : ManagementConsoleCmdlet
     {
         /// <summary>
-        /// Gets or sets the count.
-        /// </summary>
-        /// <value>
-        /// The count.
-        /// </value>
-        /// <para type="description">TODO: Property description.</para>
-        [Parameter(
-          Position = 0,
-          ValueFromPipeline = true,
-          ValueFromPipelineByPropertyName = true)]
-        public int Count { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetRabbitMqSaslLog"/> class.
+        ///     Initializes a new instance of the <see cref="GetRabbitMqSaslLog" /> class.
         /// </summary>
         public GetRabbitMqSaslLog()
         {
@@ -48,7 +35,20 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         }
 
         /// <summary>
-        /// Processes the record.
+        ///     Gets or sets the count.
+        /// </summary>
+        /// <value>
+        ///     The count.
+        /// </value>
+        /// <para type="description">TODO: Property description.</para>
+        [Parameter(
+             Position = 0,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
+        public int Count { get; set; }
+
+        /// <summary>
+        ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
@@ -62,8 +62,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             var lines = lockedFileReader.GetTailLines(Count);
 
             lines.ToList().ForEach(WriteObject);
-
-
         }
     }
 }

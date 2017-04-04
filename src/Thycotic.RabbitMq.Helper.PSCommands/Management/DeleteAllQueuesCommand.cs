@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
 using System.Management.Automation;
-using Thycotic.RabbitMq.Helper.PSCommands.Installation;
-using Thycotic.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
-
     /// <summary>
-    /// Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)
+    ///     Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)
     /// </summary>
     /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
@@ -17,30 +12,30 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
     /// <para type="link">TODO: Get-Help</para>
     /// <example>
-    ///   <para>TODO: This is part of the first example's introduction.</para>
-    ///   <para>TODO: This is also part of the first example's introduction.</para>
-    ///   <code>TODO: New-Thingy | Write-Host</code>
-    ///   <para>TODO: This is part of the first example's remarks.</para>
-    ///   <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>TODO: This is part of the first example's introduction.</para>
+    ///     <para>TODO: This is also part of the first example's introduction.</para>
+    ///     <code>TODO: New-Thingy | Write-Host</code>
+    ///     <para>TODO: This is part of the first example's remarks.</para>
+    ///     <para>TODO: This is also part of the first example's remarks.</para>
     /// </example>
     [Cmdlet(VerbsLifecycle.Enable, "DeleteAllQueues")]
     public class DeleteAllQueuesCommand : ManagementConsoleCmdlet
     {
         /// <summary>
-        /// Gets or sets the agree rabbit mq license.
+        ///     Gets or sets the agree rabbit mq license.
         /// </summary>
         /// <value>
-        /// The agree rabbit mq license.
+        ///     The agree rabbit mq license.
         /// </value>
         /// <para type="description">TODO: Property description.</para>
         [Parameter(
-            Position = 0,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             Position = 0,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         public SwitchParameter OpenConsoleAfterInstall { get; set; }
 
         /// <summary>
-        /// Processes the record.
+        ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {

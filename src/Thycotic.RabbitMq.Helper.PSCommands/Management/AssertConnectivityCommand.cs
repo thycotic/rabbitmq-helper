@@ -5,7 +5,7 @@ using RabbitMQ.Client;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
     /// <summary>
-    /// Validates connectivity to RabbitMq
+    ///     Validates connectivity to RabbitMq
     /// </summary>
     /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
@@ -13,78 +13,76 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
     /// <para type="link">TODO: Get-Help</para>
     /// <example>
-    ///   <para>TODO: This is part of the first example's introduction.</para>
-    ///   <para>TODO: This is also part of the first example's introduction.</para>
-    ///   <code>TODO: New-Thingy | Write-Host</code>
-    ///   <para>TODO: This is part of the first example's remarks.</para>
-    ///   <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>TODO: This is part of the first example's introduction.</para>
+    ///     <para>TODO: This is also part of the first example's introduction.</para>
+    ///     <code>TODO: New-Thingy | Write-Host</code>
+    ///     <para>TODO: This is part of the first example's remarks.</para>
+    ///     <para>TODO: This is also part of the first example's remarks.</para>
     /// </example>
     [Cmdlet(VerbsLifecycle.Assert, "RabbitMqConnectivity")]
     public class AssertConnectivityCommand : ManagementConsoleCmdlet
     {
         /// <summary>
-        /// Gets or sets the use SSL.
+        ///     Gets or sets the use SSL.
         /// </summary>
         /// <value>
-        /// The use SSL.
+        ///     The use SSL.
         /// </value>
         /// <para type="description">TODO: Property description.</para>
         [Parameter(
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "SSL")]
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
+             ParameterSetName = "SSL")]
         public SwitchParameter UseSsl { get; set; }
 
         /// <summary>
-        /// Gets or sets the hostname.
+        ///     Gets or sets the hostname.
         /// </summary>
         /// <value>
-        /// The hostname.
+        ///     The hostname.
         /// </value>
         /// <para type="description">TODO: Property description.</para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "SSL")]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
+             ParameterSetName = "SSL")]
         [Alias("SubjectName", "FQDN")]
         public string Hostname { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the rabbit mq user.
+        ///     Gets or sets the name of the rabbit mq user.
         /// </summary>
         /// <value>
-        /// The name of the rabbit mq user.
+        ///     The name of the rabbit mq user.
         /// </value>
         /// <para type="description">TODO: Property description.</para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         [Alias("RabbitMqUserName")]
         public string UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets the rabbit mq password.
+        ///     Gets or sets the rabbit mq password.
         /// </summary>
         /// <value>
-        /// The rabbit mq password.
+        ///     The rabbit mq password.
         /// </value>
         /// <para type="description">TODO: Property description.</para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         [Alias("RabbitMqPw", "RabbitMqPassword")]
         public string Password { get; set; }
 
         /// <summary>
-        /// Processes the record.
+        ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
-
-
             try
             {
                 using (var connection = GetConnection(Hostname, UserName, Password, UseSsl))
@@ -92,9 +90,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                     using (var model = connection.CreateModel())
                     {
                         if (model.IsOpen)
-                        {
                             WriteVerbose("Connection successful");
-                        }
                     }
                 }
             }
@@ -103,10 +99,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 WriteWarning(
                     "Connection failed. There might be an issues with the installation. Please check the RabbitMq log files:" +
                     ex.Message);
-
             }
-
-
         }
 
         private IConnection GetConnection(string hostname, string userName, string password, bool useSsl)
@@ -133,13 +126,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 connectionFactory.Ssl = new SslOption
                 {
                     Enabled = true,
-                    ServerName = uri.Host,
+                    ServerName = uri.Host
                     //AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch | SslPolicyErrors.RemoteCertificateChainErrors,
                 };
             }
 
             return connectionFactory.CreateConnection();
-
         }
     }
 }

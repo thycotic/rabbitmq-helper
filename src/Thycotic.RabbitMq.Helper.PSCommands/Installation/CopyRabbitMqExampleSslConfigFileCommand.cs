@@ -1,12 +1,11 @@
 ﻿using System.IO;
 using System.Management.Automation;
-using Thycotic.CLI.Commands;
 using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
     /// <summary>
-    /// Copies RabbitMq example configuration file
+    ///     Copies RabbitMq example configuration file
     /// </summary>
     /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
@@ -14,56 +13,41 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
     /// <para type="link">TODO: Get-Help</para>
     /// <example>
-    ///   <para>TODO: This is part of the first example's introduction.</para>
-    ///   <para>TODO: This is also part of the first example's introduction.</para>
-    ///   <code>TODO: New-Thingy | Write-Host</code>
-    ///   <para>TODO: This is part of the first example's remarks.</para>
-    ///   <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>TODO: This is part of the first example's introduction.</para>
+    ///     <para>TODO: This is also part of the first example's introduction.</para>
+    ///     <code>TODO: New-Thingy | Write-Host</code>
+    ///     <para>TODO: This is part of the first example's remarks.</para>
+    ///     <para>TODO: This is also part of the first example's remarks.</para>
     /// </example>
     [Cmdlet(VerbsCommon.Copy, "RabbitMqExampleSslConfigFile")]
     public class CopyRabbitMqExampleSslConfigFileCommand : Cmdlet
     {
-
-        private static class TokenNames
-        {
-            public const string PathToCaCert = "%THYCOTIC_PATHTOCACERT%";
-            public const string PathToCert = "%THYCOTIC_PATHTOCERT%";
-            public const string PathToKey = "%THYCOTIC_PATHTOKEY%";
-        }
-
         /// <summary>
-        /// Processes the record.
+        ///     Processes the record.
         /// </summary>
         /// <exception cref="System.IO.FileNotFoundException">
-        /// CA certificate not found
-        /// or
-        /// Certificate not found
-        /// or
-        /// Key not found
-        /// or
-        /// Could not locate sample configuration file
+        ///     CA certificate not found
+        ///     or
+        ///     Certificate not found
+        ///     or
+        ///     Key not found
+        ///     or
+        ///     Could not locate sample configuration file
         /// </exception>
         protected override void ProcessRecord()
         {
-
             if (!File.Exists(ConvertCaCerToPemCommand.CertificatePath))
-            {
                 throw new FileNotFoundException("CA certificate not found");
-            }
 
             if (!File.Exists(ConvertPfxToPemCommand.CertificatePath))
-            {
                 throw new FileNotFoundException("Certificate not found");
-            }
 
             if (!File.Exists(ConvertPfxToPemCommand.KeyPath))
-            {
                 throw new FileNotFoundException("Key not found");
-            }
 
             WriteVerbose("Creating RabbitMq configuration file.");
 
-            var contentAssembly = this.GetType().Assembly;
+            var contentAssembly = GetType().Assembly;
 
             var resourceName = string.Format("{0}.Content.RabbitMq._3._5._3.Ssl.rabbitmq.config.erlang",
                 contentAssembly.GetName().Name);
@@ -73,14 +57,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             using (var stream = contentAssembly.GetManifestResourceStream(resourceName))
             {
                 if (stream == null)
-                {
                     throw new FileNotFoundException("Could not locate sample configuration file");
-                }
 
                 using (var reader = new StreamReader(stream))
                 {
                     contents = reader.ReadToEnd();
-
                 }
             }
 
@@ -100,6 +81,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             value = value.Replace(@"\", @"\\");
 
             contents = contents.Replace(tokenName, value);
+        }
+
+        private static class TokenNames
+        {
+            public const string PathToCaCert = "%THYCOTIC_PATHTOCACERT%";
+            public const string PathToCert = "%THYCOTIC_PATHTOCERT%";
+            public const string PathToKey = "%THYCOTIC_PATHTOKEY%";
         }
     }
 }

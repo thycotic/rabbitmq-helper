@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Thycotic.CLI.Commands;
 using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
 using Thycotic.RabbitMq.Helper.PSCommands.Management;
@@ -8,12 +7,18 @@ using Thycotic.Utility;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
     /// <summary>
-    /// Installs the site connector
+    ///     Installs the site connector
     /// </summary>
     /// <para type="synopsis">Installs the site connector. </para>
     /// <para type="description">This cmdlet is designed to make the installation of a non-SSL and SSL site connector easier.</para>
-    /// <para type="description">It will install both Erlang and RabbitMq provided that the appropriate parameters are supplied.</para>
-    /// <para type="description">The cmdlet requires that a basic user also be created. This user is strictly for putting and pulling messages from RabbitMq.</para>
+    /// <para type="description">
+    ///     It will install both Erlang and RabbitMq provided that the appropriate parameters are
+    ///     supplied.
+    /// </para>
+    /// <para type="description">
+    ///     The cmdlet requires that a basic user also be created. This user is strictly for putting and
+    ///     pulling messages from RabbitMq.
+    /// </para>
     /// <para type="link">Convert-CaCertToPem</para>
     /// <para type="link">Convert-PfxToPem</para>
     /// <para type="link">Copy-RabbitMqExampleNonSslConfigFile</para>
@@ -30,223 +35,235 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <para type="link">Uninstall-Erlang</para>
     /// <para type="link">Uninstall-RabbitMq</para>
     /// <example>
-    ///   <para>The most basic use case to install RabbitMq is to have a single node without using encryption.</para>
-    ///   <para>This is generally useful during development or during POC stages.</para>
-    ///   <para>To do so, you could use the following:</para>
-    ///   <code>Install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -agreeErlangLicense -agreeRabbitMqLicense</code>
+    ///     <para>The most basic use case to install RabbitMq is to have a single node without using encryption.</para>
+    ///     <para>This is generally useful during development or during POC stages.</para>
+    ///     <para>To do so, you could use the following:</para>
+    ///     <code>Install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -agreeErlangLicense -agreeRabbitMqLicense</code>
     /// </example>
     /// <example>
-    ///   <para>You can avoid being prompted to agree to Erlang or RabbitMq licenses (during automated deployment) use</para>
-    ///   <para>To do so, you could use the following:</para>
-    ///   <code>Install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -agreeErlangLicense -agreeRabbitMqLicense</code>
+    ///     <para>You can avoid being prompted to agree to Erlang or RabbitMq licenses (during automated deployment) use</para>
+    ///     <para>To do so, you could use the following:</para>
+    ///     <code>Install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -agreeErlangLicense -agreeRabbitMqLicense</code>
     /// </example>
     /// <example>
-    ///   <para>The leverage secure communication between RabbitMq and its clients, you should use encryption.</para>
-    ///   <para>To do so, you could use the following:</para>
-    ///   <code>Install-Connector -verbose -hostname RABBITHOST1.FQDN -useSsl -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -cacertpath $path\sc.cer -pfxPath $path\sc.pfx -pfxPw SOMEPASSWORD</code>
+    ///     <para>The leverage secure communication between RabbitMq and its clients, you should use encryption.</para>
+    ///     <para>To do so, you could use the following:</para>
+    ///     <code>Install-Connector -verbose -hostname RABBITHOST1.FQDN -useSsl -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -cacertpath $path\sc.cer -pfxPath $path\sc.pfx -pfxPw SOMEPASSWORD</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Install, "Connector")]
     [Alias("installConnector")]
     public class InstallConnectorCommand : PSCmdlet
     {
-        private static class ParameterSets
-        {
-            public const string Offline = "Offline";
-            public const string Online = "Online";
-            public const string NonSsl = "NonSsl";
-            public const string Ssl = "Ssl";
-        }
-
         /// <summary>
-        /// Gets or sets the agree rabbit mq license. If omitted, the user will not be prompted to agree to the license.
+        ///     Gets or sets the agree rabbit mq license. If omitted, the user will not be prompted to agree to the license.
         /// </summary>
         /// <value>
-        /// The agree rabbit mq license.
+        ///     The agree rabbit mq license.
         /// </value>
-        /// <para type="description">Gets or sets the agree rabbit mq license. If omitted, the user will not be prompted to agree to the license.</para>
+        /// <para type="description">
+        ///     Gets or sets the agree rabbit mq license. If omitted, the user will not be prompted to agree
+        ///     to the license.
+        /// </para>
         [Parameter(
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         public SwitchParameter AgreeRabbitMqLicense { get; set; }
 
         /// <summary>
-        /// Gets or sets the agree Erlang license. If omitted, the user will not be prompted to agree to the license.
+        ///     Gets or sets the agree Erlang license. If omitted, the user will not be prompted to agree to the license.
         /// </summary>
         /// <value>
-        /// The agree Erlang license.
+        ///     The agree Erlang license.
         /// </value>
-        /// <para type="description">Gets or sets the agree Erlang license. If omitted, the user will not be prompted to agree to the license.</para>
+        /// <para type="description">
+        ///     Gets or sets the agree Erlang license. If omitted, the user will not be prompted to agree to
+        ///     the license.
+        /// </para>
         [Parameter(
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         public SwitchParameter AgreeErlangLicense { get; set; }
-        
+
         /// <summary>
-        /// Gets or sets the offline Erlang installer path. If omitted, the installer will be downloaded.
+        ///     Gets or sets the offline Erlang installer path. If omitted, the installer will be downloaded.
         /// </summary>
         /// <value>
-        /// The offline Erlang installer path.
+        ///     The offline Erlang installer path.
         /// </value>
         /// <para type="description">Gets or sets the offline Erlang installer path. If omitted, the installer will be downloaded.</para>
         [Parameter(
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Offline)]
         public string OfflineErlangInstallerPath { get; set; }
 
 
         /// <summary>
-        /// Gets or sets the offline RabbitMq installer path to use. If omitted, the installer will be downloaded.
+        ///     Gets or sets the offline RabbitMq installer path to use. If omitted, the installer will be downloaded.
         /// </summary>
         /// <value>
-        /// The offline RabbitMq installer path to use.
+        ///     The offline RabbitMq installer path to use.
         /// </value>
-        /// <para type="description">Gets or sets the offline RabbitMq installer path to use. If omitted, the installer will be downloaded.</para>
+        /// <para type="description">
+        ///     Gets or sets the offline RabbitMq installer path to use. If omitted, the installer will be
+        ///     downloaded.
+        /// </para>
         [Parameter(
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Offline)]
         public string OfflineRabbitMqInstallerPath { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether force download (even they already exist) the pre-requisites. This value has no effect when using an offline installer. 
+        ///     Gets or sets a value indicating whether force download (even they already exist) the pre-requisites. This value has
+        ///     no effect when using an offline installer.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [force download]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [force download]; otherwise, <c>false</c>.
         /// </value>
-        /// <para type="description">Gets or sets a value indicating whether force download (even they already exist) the pre-requisites. This value has no effect when using an offline installer. </para>
+        /// <para type="description">
+        ///     Gets or sets a value indicating whether force download (even they already exist) the
+        ///     pre-requisites. This value has no effect when using an offline installer.
+        /// </para>
         [Parameter(
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Online)]
         [Alias("Force")]
         public SwitchParameter ForceDownload { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use the Thycotic Mirror.
+        ///     Gets or sets a value indicating whether to use the Thycotic Mirror.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [force download]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [force download]; otherwise, <c>false</c>.
         /// </value>
         /// <para type="description">TODO: Property description.</para>
         [Parameter(
-        ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Online)]
         [Alias("Mirror")]
         public SwitchParameter UseThycoticMirror { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the RabbitMq user name of the initial user.
+        ///     Gets or sets the name of the RabbitMq user name of the initial user.
         /// </summary>
         /// <value>
-        /// The name of the RabbitMq user.
+        ///     The name of the RabbitMq user.
         /// </value>
         /// <para type="description">Gets or sets the name of the RabbitMq user name of the initial user.</para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         [Alias("RabbitMqUserName")]
         public string UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets the RabbitMq password of the initial user.
+        ///     Gets or sets the RabbitMq password of the initial user.
         /// </summary>
         /// <value>
-        /// The RabbitMq password.
+        ///     The RabbitMq password.
         /// </value>
         /// <para type="description">Gets or sets the RabbitMq password of the initial user.</para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         [Alias("RabbitMqPw", "RabbitMqPassword")]
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to use SSL or not.
+        ///     Gets or sets whether to use SSL or not.
         /// </summary>
         /// <value>
-        /// The use SSL.
+        ///     The use SSL.
         /// </value>
         /// <para type="description">Gets or sets whether to use SSL or not.</para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = ParameterSets.Ssl)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Ssl)]
         [ValidateNotNullOrEmpty]
         public SwitchParameter UseSsl { get; set; }
 
         /// <summary>
-        /// Gets or sets the hostname or FQDN of the server which will host the RabbitMq node.
+        ///     Gets or sets the hostname or FQDN of the server which will host the RabbitMq node.
         /// </summary>
         /// <value>
-        /// The hostname.
+        ///     The hostname.
         /// </value>
         /// <para type="description">Gets or sets the hostname or FQDN of the server which will host the RabbitMq node.</para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = ParameterSets.Ssl)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Ssl)]
         [Alias("SubjectName", "FQDN")]
         [ValidateNotNullOrEmpty]
         public string Hostname { get; set; }
 
         /// <summary>
-        /// Gets or sets the CA certificate path. This certificate is use to establish the trust chain to the CA.
+        ///     Gets or sets the CA certificate path. This certificate is use to establish the trust chain to the CA.
         /// </summary>
         /// <value>
-        /// The ca cert path.
+        ///     The ca cert path.
         /// </value>
-        /// <para type="description">Gets or sets the CA certificate path. This certificate is use to establish the trust chain to the CA.</para>
+        /// <para type="description">
+        ///     Gets or sets the CA certificate path. This certificate is use to establish the trust chain to
+        ///     the CA.
+        /// </para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = ParameterSets.Ssl)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Ssl)]
         [ValidateNotNullOrEmpty]
         public string CaCertPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the PFX path. This could be a self-signed or a certificate from a public CA. 
-        /// If self-signed, the certificate should be installed on all client/engine machines. It does NOT to be installed on the RabbitMq node.
+        ///     Gets or sets the PFX path. This could be a self-signed or a certificate from a public CA.
+        ///     If self-signed, the certificate should be installed on all client/engine machines. It does NOT to be installed on
+        ///     the RabbitMq node.
         /// </summary>
         /// <value>
-        /// The PFX path.
+        ///     The PFX path.
         /// </value>
         /// <para type="description">Gets or sets the PFX path. This could be a self-signed or a certificate from a public CA.</para>
-        /// <para type="description">If self-signed, the certificate should be installed on all client/engine machines. It does NOT to be installed on the RabbitMq node.</para>
+        /// <para type="description">
+        ///     If self-signed, the certificate should be installed on all client/engine machines. It does NOT
+        ///     to be installed on the RabbitMq node.
+        /// </para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = ParameterSets.Ssl)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Ssl)]
         [ValidateNotNullOrEmpty]
         public string PfxPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the PFX password.
+        ///     Gets or sets the PFX password.
         /// </summary>
         /// <value>
-        /// The PFX password.
+        ///     The PFX password.
         /// </value>
         /// <para type="description">Gets or sets the PFX password.</para>
         [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = ParameterSets.Ssl)]
+             Mandatory = true,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Ssl)]
         [ValidateNotNullOrEmpty]
         [Alias("PfxPw")]
         public string PfxPassword { get; set; }
 
         /// <summary>
-        /// Processes the record.
+        ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
@@ -261,9 +278,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             if (!AgreeErlangLicense &&
                 !ShouldContinue("Do you agree and accept the Erlang license (http://www.erlang.org/EPLICENSE)?",
                     "License"))
-            {
                 return;
-            }
 
             new GetErlangInstallerCommand
             {
@@ -281,9 +296,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             if (!AgreeRabbitMqLicense &&
                 !ShouldContinue("Do you agree and accept the RabbitMq license (https://www.rabbitmq.com/mpl.html)?",
                     "License"))
-            {
                 return;
-            }
 
             new GetRabbitMqInstallerCommand
             {
@@ -332,10 +345,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 WriteProgress(new ProgressRecord(activityid, activity, "Final configurations") {PercentComplete = 90});
 
                 new NewRabbitMqUserCommand
-                {
-                    UserName = UserName,
-                    Password = Password
-                }
+                    {
+                        UserName = UserName,
+                        Password = Password
+                    }
                     .AsChildOf(this).InvokeImmediate();
 
                 new EnableRabbitMqManagementPluginCommand().AsChildOf(this).InvokeImmediate();
@@ -349,8 +362,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
 
                 WriteVerbose("RabbitMq is ready to use with encryption. Please open port 5671 on the machine firewall");
-
-
             }
             else
             {
@@ -365,7 +376,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 new InstallRabbitMqCommand().AsChildOf(this).InvokeImmediate();
 
                 WriteProgress(new ProgressRecord(activityid, activity, "Final configurations") {PercentComplete = 90});
-                
+
                 new NewRabbitMqUserCommand
                 {
                     UserName = UserName,
@@ -383,8 +394,15 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 WriteVerbose(
                     "RabbitMq is ready to use without encryption. Please open port 5672 on the machine firewall.");
-
             }
+        }
+
+        private static class ParameterSets
+        {
+            public const string Offline = "Offline";
+            public const string Online = "Online";
+            public const string NonSsl = "NonSsl";
+            public const string Ssl = "Ssl";
         }
     }
 }
