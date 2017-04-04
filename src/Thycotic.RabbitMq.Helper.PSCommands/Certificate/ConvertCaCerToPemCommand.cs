@@ -11,19 +11,15 @@ using Thycotic.RabbitMq.Helper.PSCommands.Installation;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
 {
     /// <summary>
-    ///     Converts a Certificate Authority cert to a pem.
+    ///     Converts a Certificate Authority cert to a pem. The pem file will be located in the Thycotic RabbitMq Site Connector folder.
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
-    /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
-    /// <para type="link">TODO: Get-Help</para>
+    /// <para type="synopsis">Converts a Certificate Authority cert to a pem.</para>
+    /// <para type="description">The Convert-CaCertToPem cmdlet converts a Certificate Authority cert to a pem.</para>
+    /// <para type="description">The pem file will be located in the Thycotic RabbitMq Site Connector folder.</para>
+    /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
+    /// <para type="link">Convert-PfxToPem</para>
     /// <example>
-    ///     <para>TODO: This is part of the first example's introduction.</para>
-    ///     <para>TODO: This is also part of the first example's introduction.</para>
-    ///     <code>TODO: New-Thingy | Write-Host</code>
-    ///     <para>TODO: This is part of the first example's remarks.</para>
-    ///     <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>Convert-CaCertToPem -CaCertPath "$PSScriptRoot\..\Examples\sc.cer" -Verbose</para>
     /// </example>
     [Cmdlet(VerbsData.Convert, "CaCertToPem")]
     public class ConvertCaCerToPemCommand : Cmdlet
@@ -40,7 +36,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
         /// <value>
         ///     The ca cert path.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets the ca cert path.</para>
         [Parameter(
              Mandatory = true,
              Position = 0,

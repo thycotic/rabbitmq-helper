@@ -12,19 +12,15 @@ using Thycotic.RabbitMq.Helper.PSCommands.Installation;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
 {
     /// <summary>
-    ///     Converts a PFX cert to a pem/key combination.
+    ///     Converts a PFX cert to a pem/key combination. The pem file will be located in the Thycotic RabbitMq Site Connector folder.
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
-    /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
-    /// <para type="link">TODO: Get-Help</para>
+    /// <para type="synopsis">Converts a PFX cert to a pem/key combination.</para>
+    /// <para type="description">The Convert-PfxToPem cmdlet converts a PFX cert to a pem/key combination.</para>
+    /// <para type="description">The pem file will be located in the Thycotic RabbitMq Site Connector folder.</para>
+    /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
+    /// <para type="link">Convert-CaCerToPem</para>
     /// <example>
-    ///     <para>TODO: This is part of the first example's introduction.</para>
-    ///     <para>TODO: This is also part of the first example's introduction.</para>
-    ///     <code>TODO: New-Thingy | Write-Host</code>
-    ///     <para>TODO: This is part of the first example's remarks.</para>
-    ///     <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <code>Convert-PfxToPem -PfxPath "$PSScriptRoot\..\Examples\sc.pfx" -PfxPassword "password1" -Verbose</code>
     /// </example>
     [Cmdlet(VerbsData.Convert, "PfxToPem")]
     public class ConvertPfxToPemCommand : Cmdlet
@@ -47,7 +43,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
         /// <value>
         ///     The PFX path.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets the PFX path.</para>
         [Parameter(
              Mandatory = true,
              Position = 0,
@@ -61,7 +57,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
         /// <value>
         ///     The PFX password.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets the PFX password.</para>
         [Parameter(
              Mandatory = true,
              ValueFromPipeline = true,

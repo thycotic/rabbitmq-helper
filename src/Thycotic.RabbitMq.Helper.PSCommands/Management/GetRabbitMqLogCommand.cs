@@ -24,12 +24,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     [Cmdlet(VerbsCommon.Get, "RabbitMqLog")]
     [Alias("tailRabbitmqLog", "tailLog")]
     [OutputType(typeof(string))]
-    public class GetRabbitMqLog : ManagementConsoleCmdlet
+    public class GetRabbitMqLogCommand : ManagementConsoleCmdlet
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="GetRabbitMqLog" /> class.
+        ///     Initializes a new instance of the <see cref="GetRabbitMqLogCommand" /> class.
         /// </summary>
-        public GetRabbitMqLog()
+        public GetRabbitMqLogCommand()
         {
             Count = 50;
         }

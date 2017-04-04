@@ -21,7 +21,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// </example>
     [Cmdlet(VerbsCommon.New, "BasicRabbitMqUser")]
     [Alias("addRabbitMqUser")]
-    public class NewRabbitMqUserCommand : ManagementConsoleCmdlet
+    public class NewBasicRabbitMqUserCommand : ManagementConsoleCmdlet
     {
         /// <summary>
         ///     Gets or sets the name of the rabbit mq user.

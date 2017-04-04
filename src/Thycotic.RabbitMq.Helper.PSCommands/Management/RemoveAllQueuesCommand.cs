@@ -4,7 +4,7 @@ using System.Management.Automation;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
     /// <summary>
-    ///     Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)
+    ///     Deletes all queues in the current instance of RabbitMq
     /// </summary>
     /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
@@ -18,8 +18,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <para>TODO: This is part of the first example's remarks.</para>
     ///     <para>TODO: This is also part of the first example's remarks.</para>
     /// </example>
-    [Cmdlet(VerbsLifecycle.Enable, "DeleteAllQueues")]
-    public class DeleteAllQueuesCommand : ManagementConsoleCmdlet
+    [Cmdlet(VerbsCommon.Remove, "AllQueues")]
+    public class RemoveAllQueuesCommand : ManagementConsoleCmdlet
     {
         /// <summary>
         ///     Gets or sets the agree rabbit mq license.

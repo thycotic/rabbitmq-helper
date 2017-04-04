@@ -221,7 +221,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Certificate\ConvertCerToPemCommand.cs" />
+    <Compile Include="Certificate\ConvertCaCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
     <Compile Include="CommandAreas.cs" />
     <Compile Include="Installation\CopyRabbitMqExampleNonSslConfigFileCommand.cs" />
@@ -241,12 +241,12 @@
     <Compile Include="Installation\UninstallErlangCommand.cs" />
     <Compile Include="Installation\UninstallRabbitMqCommand.cs" />
     <Compile Include="Management\EnableRabbitMqManagementPluginCommand.cs" />
-    <Compile Include="Management\NewRabbitMqUserCommand.cs" />
-    <Compile Include="Management\DeleteAllQueuesCommand.cs" />
+    <Compile Include="Management\NewBasicRabbitMqUserCommand.cs" />
+    <Compile Include="Management\RemoveAllQueuesCommand.cs" />
     <Compile Include="Management\LockedFileReader.cs" />
     <Compile Include="Management\ManagementConsoleCmdlet.cs" />
-    <Compile Include="Management\GetRabbitMqLog.cs" />
-    <Compile Include="Management\GetRabbitMqSaslLog.cs" />
+    <Compile Include="Management\GetRabbitMqLogCommand.cs" />
+    <Compile Include="Management\GetRabbitMqSaslLogCommand.cs" />
     <Compile Include="Management\AssertConnectivityCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

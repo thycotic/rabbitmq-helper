@@ -344,7 +344,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 WriteProgress(new ProgressRecord(activityid, activity, "Final configurations") {PercentComplete = 90});
 
-                new NewRabbitMqUserCommand
+                new NewBasicRabbitMqUserCommand
                     {
                         UserName = UserName,
                         Password = Password
@@ -377,7 +377,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 WriteProgress(new ProgressRecord(activityid, activity, "Final configurations") {PercentComplete = 90});
 
-                new NewRabbitMqUserCommand
+                new NewBasicRabbitMqUserCommand
                 {
                     UserName = UserName,
                     Password = Password
