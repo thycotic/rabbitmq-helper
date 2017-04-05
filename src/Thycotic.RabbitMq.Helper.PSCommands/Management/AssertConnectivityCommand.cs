@@ -7,11 +7,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// <summary>
     ///     Validates connectivity to RabbitMq
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
+    /// <para type="synopsis">Validates connectivity to RabbitMq</para>
+    /// <para type="description">The Assert-RabbitMqConnectivity attempts to connect to RabbitMq the same way a Distributed Engine or Secret Server would.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
-    /// <para type="link">TODO: Get-Help</para>
     /// <example>
     ///     <para>TODO: This is part of the first example's introduction.</para>
     ///     <para>TODO: This is also part of the first example's introduction.</para>

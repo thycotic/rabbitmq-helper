@@ -5,9 +5,9 @@ using Thycotic.Utility.OS;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
     /// <summary>
-    ///     Adds a basic user to RabbitMq
+    ///     Adds a basic user to RabbitMq. This used has publish and consumer permissions
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
+    /// <para type="synopsis">Adds a basic user to RabbitMq. This used has publish and consumer permissions</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
     /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>

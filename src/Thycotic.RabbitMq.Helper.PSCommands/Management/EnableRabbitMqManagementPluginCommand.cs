@@ -10,11 +10,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// <summary>
     ///     Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
+    /// <para type="synopsis"> Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
-    /// <para type="link">TODO: Get-Help</para>
     /// <example>
     ///     <para>TODO: This is part of the first example's introduction.</para>
     ///     <para>TODO: This is also part of the first example's introduction.</para>

@@ -10,7 +10,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <summary>
     ///     Uninstalls prior installation of Erlang
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
+    /// <para type="synopsis">Uninstalls prior installation of Erlang</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
     /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>

@@ -6,11 +6,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <summary>
     ///     Gets download locations for Erlang and RabbitMq (most helpful when needing to do offline installation)
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
+    /// <para type="synopsis">Gets download locations for Erlang and RabbitMq (most helpful when needing to do offline installation)</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
     /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
-    /// <para type="link">TODO: Get-Help</para>
+    /// <para type="link">Get-ErlangInstaller</para>
+    /// <para type="link">Get-RabbitMqInstaller</para>
     /// <example>
     ///     <para>TODO: This is part of the first example's introduction.</para>
     ///     <para>TODO: This is also part of the first example's introduction.</para>

@@ -10,7 +10,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Installs the site connector
     /// </summary>
     /// <para type="synopsis">Installs the site connector. </para>
-    /// <para type="description">This cmdlet is designed to make the installation of a non-SSL and SSL site connector easier.</para>
+    /// <para type="description">The Install-Connector cmdlet is designed to make the installation of a non-SSL and SSL site connector easier.</para>
     /// <para type="description">
     ///     It will install both Erlang and RabbitMq provided that the appropriate parameters are
     ///     supplied.

@@ -7,7 +7,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <summary>
     ///     Sets the ERLANG_HOME environmental variable
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
+    /// <para type="synopsis">Sets the ERLANG_HOME environmental variable</para>
     /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
     /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
