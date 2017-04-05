@@ -14,11 +14,19 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <para type="link">Get-DownloadLocations</para>
     /// <para type="link">Get-RabbitMqInstaller</para>
     /// <example>
-    ///     <para>TODO: This is part of the first example's introduction.</para>
-    ///     <para>TODO: This is also part of the first example's introduction.</para>
-    ///     <code>TODO: New-Thingy | Write-Host</code>
-    ///     <para>TODO: This is part of the first example's remarks.</para>
-    ///     <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>Download from erlang's web site</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Get-ErlangInstaller</code>
+    /// </example>
+    /// <example>
+    ///     <para>Download from Thycotic's mirror web site</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Get-ErlangInstaller -UseThycoticMirror</code>
+    /// </example>
+    /// <example>
+    ///     <para>Froce download from Thycotic's mirror web site even if the file already exists</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Get-ErlangInstaller -UseThycoticMirror -Force</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "ErlangInstaller")]
     public class GetErlangInstallerCommand : Cmdlet
@@ -39,8 +47,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
              Position = 0,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
+             Mandatory = true,
              ParameterSetName = ParameterSets.Offline)]
         [Alias("OfflinePath")]
+        [ValidateNotNullOrEmpty]
         public string OfflineErlangInstallerPath { get; set; }
 
         /// <summary>

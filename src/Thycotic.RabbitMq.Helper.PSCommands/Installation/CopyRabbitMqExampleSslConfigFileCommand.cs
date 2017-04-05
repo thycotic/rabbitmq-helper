@@ -13,6 +13,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Copy-RabbitMqExampleNonSslConfigFile</para>
     /// <example>
+    ///     <para>PS C:\></para> 
     ///     <code>Copy-RabbitMqExampleSslConfigFile</code>
     /// </example>
     [Cmdlet(VerbsCommon.Copy, "RabbitMqExampleSslConfigFile")]

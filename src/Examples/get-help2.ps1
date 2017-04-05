@@ -9,11 +9,14 @@ Import-module $modulePath
 #get-help Convert-PfxToPem -full
 #Convert-PfxToPem -PfxPath "$PSScriptRoot\..\Examples\sc.pfx" -PfxPassword "password1" -Verbose
 
-get-help Copy-RabbitMqExampleNonSslConfigFile -full
+#get-help Copy-RabbitMqExampleNonSslConfigFile -full
+#Copy-RabbitMqExampleNonSslConfigFile -Verbose
 #get-help Copy-RabbitMqExampleSslConfigFile -full
 #get-help Get-DownloadLocations -full
-#get-help Get-ErlangInstaller -full
+get-help Get-ErlangInstaller -full
 #get-help Get-RabbitMqInstaller -full
+#Get-RabbitMqInstaller -Verbose
+#Get-RabbitMqInstaller -Verbose -Force
 #get-help Install-Connector -full
 #get-help Install-Erlang -full
 #get-help Install-RabbitMq -full

@@ -14,11 +14,19 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <para type="link">Get-DownloadLocations</para>
     /// <para type="link">Get-ErlangInstaller</para>
     /// <example>
-    ///     <para>TODO: This is part of the first example's introduction.</para>
-    ///     <para>TODO: This is also part of the first example's introduction.</para>
-    ///     <code>TODO: New-Thingy | Write-Host</code>
-    ///     <para>TODO: This is part of the first example's remarks.</para>
-    ///     <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>Download from rabbitmq's web site</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Get-RabbitMqInstaller</code>
+    /// </example>
+    /// <example>
+    ///     <para>Download from Thycotic's mirror web site</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Get-RabbitMqInstaller -UseThycoticMirror</code>
+    /// </example>
+    /// <example>
+    ///     <para>Froce download from Thycotic's mirror web site even if the file already exists</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Get-RabbitMqInstaller -UseThycoticMirror -Force</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "RabbitMqInstaller")]
     public class GetRabbitMqInstallerCommand : Cmdlet
@@ -40,6 +48,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
              Position = 0,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
+             Mandatory = true,
              ParameterSetName = ParameterSets.Offline)]
         [Alias("OfflinePath")]
         public string OfflineRabbitMqInstallerPath { get; set; }
@@ -56,7 +65,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Online)]
         [Alias("ForceDownload")]
-        public bool Force { get; set; }
+        public SwitchParameter Force { get; set; }
 
 
         /// <summary>
