@@ -53,7 +53,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         public string OfflineRabbitMqInstallerPath { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether [force download].
+        ///     Gets or sets a value indicating whether to force download even the file exists.
         /// </summary>
         /// <value>
         ///     <c>true</c> if [force download]; otherwise, <c>false</c>.
@@ -68,12 +68,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
 
         /// <summary>
-        ///     Gets or sets a value indicating whether to use the Thycotic Mirror.
+        ///     Gets or sets a value indicating whether to use the Thycotic Mirror during download.
         /// </summary>
         /// <value>
-        ///     <c>true</c> if [force download]; otherwise, <c>false</c>.
+        ///     <c>true</c> if mirror will be used; otherwise, <c>false</c>.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets a value indicating whether to use the Thycotic Mirror during download.</para>
         [Parameter(
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
