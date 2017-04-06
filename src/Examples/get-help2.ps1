@@ -13,11 +13,12 @@ Import-module $modulePath
 #Copy-RabbitMqExampleNonSslConfigFile -Verbose
 #get-help Copy-RabbitMqExampleSslConfigFile -full
 #get-help Get-DownloadLocations -full
-get-help Get-ErlangInstaller -full
+#get-help Get-ErlangInstaller -full
 #get-help Get-RabbitMqInstaller -full
 #Get-RabbitMqInstaller -Verbose
 #Get-RabbitMqInstaller -Verbose -Force
-#get-help Install-Connector -full
+get-help Install-Connector -full
+#Install-Connector
 #get-help Install-Erlang -full
 #get-help Install-RabbitMq -full
 #get-help New-RabbitMqConfigDirectory -full

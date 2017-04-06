@@ -46,8 +46,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
         /// </value>
         /// <para type="description">Gets or sets the PFX path.</para>
         [Parameter(
-             Mandatory = true,
              Position = 0,
+             Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true)]
         public string PfxPath { get; set; }

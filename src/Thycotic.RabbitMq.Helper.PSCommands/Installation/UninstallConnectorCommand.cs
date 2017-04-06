@@ -24,6 +24,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         protected override void ProcessRecord()
         {
+            this.RequireRunningWithElevated();
+
             const int activityid = 7;
             const string activity = "Uninstalling";
 

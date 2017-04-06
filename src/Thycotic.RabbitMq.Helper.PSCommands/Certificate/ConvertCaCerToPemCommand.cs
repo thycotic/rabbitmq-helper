@@ -39,8 +39,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
         /// </value>
         /// <para type="description">Gets or sets the ca cert path.</para>
         [Parameter(
-             Mandatory = true,
              Position = 0,
+             Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true)]
         public string CaCertPath { get; set; }

@@ -28,6 +28,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <exception cref="System.IO.FileNotFoundException">No installer found</exception>
         protected override void ProcessRecord()
         {
+            this.RequireRunningWithElevated();
+            
             var rabbitMqBase = Environment.GetEnvironmentVariable("RABBITMQ_BASE");
 
             if (rabbitMqBase != InstallationConstants.RabbitMq.ConfigurationPath)

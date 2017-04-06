@@ -27,6 +27,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         protected override void ProcessRecord()
         {
+            this.RequireRunningWithElevated();
+
             WriteVerbose("Uninstalling prior version of RabbitMq");
 
             var executablePath = InstallationConstants.RabbitMq.UninstallerPath;

@@ -57,6 +57,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     [Alias("installConnector")]
     public class InstallConnectorCommand : PSCmdlet
     {
+        private static class ParameterSets
+        {
+            public const string Offline = "Offline";
+            public const string Online = "Online";
+            public const string NonSsl = "NonSsl";
+            public const string Ssl = "Ssl";
+        }
+
         /// <summary>
         ///     Gets or sets the agree rabbit mq license. If omitted, the user will not be prompted to agree to the license.
         /// </summary>
@@ -95,6 +103,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </value>
         /// <para type="description">Gets or sets the offline Erlang installer path. If omitted, the installer will be downloaded.</para>
         [Parameter(
+             Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Offline)]
@@ -112,6 +121,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         ///     downloaded.
         /// </para>
         [Parameter(
+             Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Offline)]
@@ -270,6 +280,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         protected override void ProcessRecord()
         {
+            this.RequireRunningWithElevated();
+
             const int activityid = 7;
             const string activity = "Installing";
 
@@ -309,12 +321,15 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 UseThycoticMirror = UseThycoticMirror
             }.InvokeImmediate();
 
-            WriteProgress(new ProgressRecord(activityid, activity, "Uninstalling prior versions") {PercentComplete = 20});
+            WriteProgress(new ProgressRecord(activityid, activity, "Uninstalling prior versions")
+            {
+                PercentComplete = 20
+            });
 
             new UninstallRabbitMqCommand().AsChildOf(this).InvokeImmediate();
             new UninstallErlangCommand().AsChildOf(this).InvokeImmediate();
 
-            WriteProgress(new ProgressRecord(activityid, activity, "Installing Erlang") {PercentComplete = 30});
+            WriteProgress(new ProgressRecord(activityid, activity, "Installing Erlang") { PercentComplete = 30 });
 
             new SetErlangHomeEnvironmentalVariableCommand().AsChildOf(this).InvokeImmediate();
             new InstallErlangCommand().AsChildOf(this).InvokeImmediate();
@@ -336,22 +351,25 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     PercentComplete = 60
                 });
 
-                new ConvertCaCerToPemCommand {CaCertPath = CaCertPath}.AsChildOf(this).InvokeImmediate();
-                new ConvertPfxToPemCommand {PfxPath = PfxPath, PfxPassword = PfxPassword}.AsChildOf(this)
+                new ConvertCaCerToPemCommand { CaCertPath = CaCertPath }.AsChildOf(this).InvokeImmediate();
+                new ConvertPfxToPemCommand { PfxPath = PfxPath, PfxPassword = PfxPassword }.AsChildOf(this)
                     .InvokeImmediate();
                 new CopyRabbitMqExampleSslConfigFileCommand().AsChildOf(this).InvokeImmediate();
 
-                WriteProgress(new ProgressRecord(activityid, activity, "Installing RabbitMq") {PercentComplete = 70});
+                WriteProgress(new ProgressRecord(activityid, activity, "Installing RabbitMq") { PercentComplete = 70 });
 
                 new InstallRabbitMqCommand().AsChildOf(this).InvokeImmediate();
 
-                WriteProgress(new ProgressRecord(activityid, activity, "Final configurations") {PercentComplete = 90});
+                WriteProgress(new ProgressRecord(activityid, activity, "Final configurations")
+                {
+                    PercentComplete = 90
+                });
 
                 new NewBasicRabbitMqUserCommand
-                    {
-                        UserName = UserName,
-                        Password = Password
-                    }
+                {
+                    UserName = UserName,
+                    Password = Password
+                }
                     .AsChildOf(this).InvokeImmediate();
 
                 new EnableRabbitMqManagementPluginCommand().AsChildOf(this).InvokeImmediate();
@@ -364,21 +382,25 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 }.AsChildOf(this).InvokeImmediate();
 
 
-                WriteVerbose("RabbitMq is ready to use with encryption. Please open port 5671 on the machine firewall");
+                WriteVerbose(
+                    "RabbitMq is ready to use with encryption. Please open port 5671 on the machine firewall");
             }
             else
             {
                 WriteVerbose("Configuring RabbitMq without encryption support");
 
-                WriteProgress(new ProgressRecord(activityid, activity, "Configuring") {PercentComplete = 60});
+                WriteProgress(new ProgressRecord(activityid, activity, "Configuring") { PercentComplete = 60 });
 
                 new CopyRabbitMqExampleNonSslConfigFileCommand().AsChildOf(this).InvokeImmediate();
 
-                WriteProgress(new ProgressRecord(activityid, activity, "Installing RabbitMq") {PercentComplete = 70});
+                WriteProgress(new ProgressRecord(activityid, activity, "Installing RabbitMq") { PercentComplete = 70 });
 
                 new InstallRabbitMqCommand().AsChildOf(this).InvokeImmediate();
 
-                WriteProgress(new ProgressRecord(activityid, activity, "Final configurations") {PercentComplete = 90});
+                WriteProgress(new ProgressRecord(activityid, activity, "Final configurations")
+                {
+                    PercentComplete = 90
+                });
 
                 new NewBasicRabbitMqUserCommand
                 {
@@ -398,14 +420,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 WriteVerbose(
                     "RabbitMq is ready to use without encryption. Please open port 5672 on the machine firewall.");
             }
-        }
-
-        private static class ParameterSets
-        {
-            public const string Offline = "Offline";
-            public const string Online = "Online";
-            public const string NonSsl = "NonSsl";
-            public const string Ssl = "Ssl";
         }
     }
 }

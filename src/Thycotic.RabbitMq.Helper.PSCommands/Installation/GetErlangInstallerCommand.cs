@@ -44,9 +44,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <para type="description">Gets or sets the offline erlang installer path.</para>
         [Parameter(
              Position = 0,
+             Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             Mandatory = true,
              ParameterSetName = ParameterSets.Offline)]
         [Alias("OfflinePath")]
         [ValidateNotNullOrEmpty]
