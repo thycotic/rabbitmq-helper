@@ -15,7 +15,7 @@
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5.1</FrameworkVersion>
     <OutputPath>.\Help\</OutputPath>
-    <HtmlHelpName>grmqhh</HtmlHelpName>
+    <HtmlHelpName>Thycotic.RabbitMq.Helper.PSCommands.Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
       <Argument Key="logoFile" Value="Help.png" xmlns="" />
@@ -46,7 +46,7 @@
     <PresentationStyle>VS2013</PresentationStyle>
     <Preliminary>True</Preliminary>
     <NamingMethod>Guid</NamingMethod>
-    <HelpTitle>Thycotic RabbitMq Helper PowerShell Commands Class Library</HelpTitle>
+    <HelpTitle>Thycotic RabbitMq Helper PowerShell Documentation</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="Thycotic.RabbitMq.Helper.PSCommands.Certificate" isDocumented="True" xmlns="">Certificate transform and manipulation commands.</NamespaceSummaryItem>
