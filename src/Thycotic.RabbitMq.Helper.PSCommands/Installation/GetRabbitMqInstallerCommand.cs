@@ -42,7 +42,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <value>
         ///     The offline rabbit mq installer path.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets the offline rabbit mq installer path.</para>
         [Parameter(
              Position = 0,
              ValueFromPipeline = true,
@@ -58,7 +58,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <value>
         ///     <c>true</c> if [force download]; otherwise, <c>false</c>.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets a value indicating whether to force download even the file exists.</para>
         [Parameter(
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
