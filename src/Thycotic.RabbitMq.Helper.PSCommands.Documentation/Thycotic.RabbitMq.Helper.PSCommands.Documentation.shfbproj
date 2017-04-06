@@ -6,32 +6,28 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8efd0b20-0103-4e81-9350-58a6be8ee6c6}</ProjectGuid>
+    <ProjectGuid>ee9d119e-8e10-40d3-a969-6d0330891e1f</ProjectGuid>
     <SHFBSchemaVersion>2015.6.5.0</SHFBSchemaVersion>
     <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual Studio adds them anyway -->
     <AssemblyName>Thycotic.RabbitMq.Helper.PSCommands.Documentation</AssemblyName>
     <RootNamespace>Thycotic.RabbitMq.Helper.PSCommands.Documentation</RootNamespace>
-    <Name>Thycotic.RabbitMq.Helper.PSCommands.Documentation.Html</Name>
+    <Name>Thycotic.RabbitMq.Helper.PSCommands.Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5.1</FrameworkVersion>
-    <OutputPath>.\Help</OutputPath>
+    <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>grmqhh</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
-      <Argument Key="logoFile" Value="ThycoticHelp.png" />
-      <Argument Key="logoHeight" Value="" />
-      <Argument Key="logoWidth" Value="" />
-      <Argument Key="logoAltText" Value="" />
-      <Argument Key="logoPlacement" Value="left" />
-      <Argument Key="logoAlignment" Value="left" />
-      <Argument Key="maxVersionParts" Value="" />
-      <Argument Key="defaultLanguage" Value="cs" />
-      <Argument Key="includeEnumValues" Value="true" />
-      <Argument Key="baseSourceCodeUrl" Value="" />
-      <Argument Key="requestExampleUrl" Value="" />
+      <Argument Key="logoFile" Value="Help.png" xmlns="" />
+      <Argument Key="logoHeight" Value="" xmlns="" />
+      <Argument Key="logoWidth" Value="" xmlns="" />
+      <Argument Key="logoAltText" Value="" xmlns="" />
+      <Argument Key="logoPlacement" Value="left" xmlns="" />
+      <Argument Key="logoAlignment" Value="left" xmlns="" />
+      <Argument Key="maxVersionParts" Value="" xmlns="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Thycotic.RabbitMq.Helper.PSCommands\Thycotic.RabbitMq.Helper.PSCommands.csproj" xmlns="" />
+      <DocumentationSource sourceFile="..\Thycotic.RabbitMq.Helper.PSCommands\Thycotic.RabbitMq.Helper.PSCommands.csproj" />
       <DocumentationSource sourceFile="..\Thycotic.RabbitMq.Helper\Thycotic.RabbitMq.Helper.csproj" />
     </DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
@@ -43,16 +39,15 @@
     <CleanIntermediates>True</CleanIntermediates>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>
-    <NamespaceGrouping>True</NamespaceGrouping>
-    <SyntaxFilters>C#</SyntaxFilters>
+    <NamespaceGrouping>False</NamespaceGrouping>
+    <SyntaxFilters>Standard</SyntaxFilters>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <RootNamespaceContainer>False</RootNamespaceContainer>
     <PresentationStyle>VS2013</PresentationStyle>
     <Preliminary>True</Preliminary>
     <NamingMethod>Guid</NamingMethod>
-    <HelpTitle>Thycotic.RabbitMq.Helper.PSCommands</HelpTitle>
+    <HelpTitle>Thycotic RabbitMq Helper PowerShell Commands Class Library</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
-    <VisibleItems>None</VisibleItems>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="Thycotic.RabbitMq.Helper.PSCommands.Certificate" isDocumented="True" xmlns="">Certificate transform and manipulation commands.</NamespaceSummaryItem>
       <NamespaceSummaryItem name="Thycotic.RabbitMq.Helper.PSCommands.Installation" isDocumented="True" xmlns="">Installation commands.</NamespaceSummaryItem>
@@ -79,6 +74,23 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Content" />
+    <Folder Include="Content\VersionHistory" />
+    <Folder Include="icons" />
+    <Folder Include="media" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\VersionHistory\v1.0.0.0.aml" />
+    <None Include="Content\VersionHistory\VersionHistory.aml" />
+    <None Include="Content\Welcome.aml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ContentLayout Include="ContentLayout.content" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icons\Help.png" />
+  </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
   <!-- The pre-build and post-build event properties must appear *after* the targets file import in order to be
@@ -90,13 +102,4 @@
     </PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="icons" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="icons\ThycoticHelp.png">
-      <ImageId>ThycoticHelp</ImageId>
-      <AlternateText>Thycotic Help</AlternateText>
-    </Content>
-  </ItemGroup>
 </Project>
