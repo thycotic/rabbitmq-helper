@@ -15,18 +15,43 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     <para>PS C:\></para> 
     ///     <code>Get-DownloadLocations</code>
     /// </example>
+    /// <example>
+    ///     <para>PS C:\></para> 
+    ///     <code>Get-DownloadLocations -UseThycoticMirror</code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "DownloadLocations")]
     [Alias("pdl")]
     [OutputType(typeof(KeyValuePair<string, string>))]
     public class GetDownloadLocationsCommand : Cmdlet
     {
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether to use the Thycotic Mirror even if the file exists.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if mirror will be used; otherwise, <c>false</c>.
+        /// </value>
+        /// <para type="description">Gets or sets a value indicating whether to use the Thycotic Mirror even if the file exists.</para>
+        [Parameter(
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
+        [Alias("Mirror")]
+        public SwitchParameter UseThycoticMirror { get; set; }
+
         /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
-            WriteObject(new KeyValuePair<string, string>("Erlang:", InstallationConstants.Erlang.DownloadUrl));
-            WriteObject(new KeyValuePair<string, string>("RabbitMq:", InstallationConstants.RabbitMq.DownloadUrl));
+            WriteObject(new KeyValuePair<string, string>("Erlang:",
+                UseThycoticMirror
+                    ? InstallationConstants.Erlang.ThycoticMirrorDownloadUrl
+                    : InstallationConstants.Erlang.DownloadUrl));
+
+            WriteObject(new KeyValuePair<string, string>("RabbitMq:",
+                UseThycoticMirror
+                    ? InstallationConstants.RabbitMq.ThycoticMirrorDownloadUrl
+                    : InstallationConstants.RabbitMq.DownloadUrl));
         }
     }
 }
