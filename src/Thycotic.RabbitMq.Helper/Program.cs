@@ -20,31 +20,38 @@ namespace Thycotic.RabbitMq.Helper
                 Console.Clear();
                 Console.ResetColor();
             }
-            
+
             var initialCommand = string.Join(" ", args);
 
             if (string.IsNullOrWhiteSpace(initialCommand.Trim()))
-            {
                 initialCommand = null;
-            }
 
-            var isLegacyCli = !string.IsNullOrWhiteSpace(initialCommand) && initialCommand.StartsWith("installConnector");
+            var isLegacyCli = !string.IsNullOrWhiteSpace(initialCommand) &&
+                              initialCommand.StartsWith("installConnector");
 
 #pragma warning disable 618
             //we are basically forever married to the old cli format due to possibility of legacy documentation lingering around -dkk
             var cli = isLegacyCli ? new CommandLineWithLegacyParameterParsing() : new CommandLineInterface();
 #pragma warning restore 618
 
-            cli.Modules = new[] {typeof (InstallConnectorCommand).Assembly.Location};
+            cli.Modules = new[] {typeof(InstallConnectorCommand).Assembly.Location};
 
             if (isLegacyCli)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("WARNING: You are running the helper using legacy syntax. ");
+                Console.WriteLine("We recommend using the latest PowerShell module specification.");
+                Console.WriteLine();
+                Console.WriteLine("Close this window now to abort or press any key to proceed anyway...");
+                Console.ReadKey();
+                Console.Clear();
+                Console.ResetColor();
+
                 cli.ConsumeInput(initialCommand + @" -verbose=""true""");
+                Console.ReadKey();
             }
             else
-            {
                 cli.BeginInputLoop(initialCommand);
-            }
 
             return 0;
         }
