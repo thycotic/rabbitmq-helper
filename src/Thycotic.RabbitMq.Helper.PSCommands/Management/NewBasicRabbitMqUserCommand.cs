@@ -23,7 +23,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// <value>
         ///     The name of the rabbit mq user.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets the name of the rabbit mq user.</para>
         [Parameter(
              Mandatory = true,
              ValueFromPipeline = true,
@@ -37,7 +37,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// <value>
         ///     The rabbit mq password.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets the rabbit mq password.</para>
         [Parameter(
              Mandatory = true,
              ValueFromPipeline = true,

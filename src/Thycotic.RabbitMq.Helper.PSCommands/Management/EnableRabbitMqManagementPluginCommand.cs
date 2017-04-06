@@ -20,12 +20,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     public class EnableRabbitMqManagementPluginCommand : ManagementConsoleCmdlet
     {
         /// <summary>
-        ///     Gets or sets the agree rabbit mq license.
+        ///     Gets or sets whether to open console when ready.
         /// </summary>
         /// <value>
         ///     The agree rabbit mq license.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets whether to open console when ready.</para>
         [Parameter(
              Position = 0,
              ValueFromPipeline = true,

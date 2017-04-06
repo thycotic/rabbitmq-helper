@@ -16,19 +16,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     public class RemoveAllQueuesCommand : ManagementConsoleCmdlet
     {
         /// <summary>
-        ///     Gets or sets the agree rabbit mq license.
-        /// </summary>
-        /// <value>
-        ///     The agree rabbit mq license.
-        /// </value>
-        /// <para type="description">TODO: Property description.</para>
-        [Parameter(
-             Position = 0,
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
-        public SwitchParameter OpenConsoleAfterInstall { get; set; }
-
-        /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()

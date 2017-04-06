@@ -7,13 +7,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Creates a RabbitMq configuration directory
     /// </summary>
     /// <para type="synopsis">Creates a RabbitMq configuration directory</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
-    /// <para type="link">TODO: Get-Help</para>
     /// <example>
     ///     <para>PS C:\></para> 
-    ///     <code>New-RabbbitMqConfigDirectory</code>
+    ///     <code>New-RabbitMqConfigDirectory</code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "RabbitMqConfigDirectory")]
     public class NewRabbitMqConfigDirectoryCommand : Cmdlet

@@ -35,7 +35,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// <value>
         ///     The count.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets the count.</para>
         [Parameter(
              Position = 0,
              ValueFromPipeline = true,
