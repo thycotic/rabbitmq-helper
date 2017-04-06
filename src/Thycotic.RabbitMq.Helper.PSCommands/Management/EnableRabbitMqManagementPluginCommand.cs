@@ -50,6 +50,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             const string parameters2 = "enable rabbitmq_management";
 
+            WriteVerbose("Enabling management console");
+
             externalProcessRunner.Run(pluginsExecutablePath, WorkingPath, parameters2);
 
             if (OpenConsoleAfterInstall)
