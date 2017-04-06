@@ -107,6 +107,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Offline)]
+        [Parameter(
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Ssl)]
         public string OfflineErlangInstallerPath { get; set; }
 
 
@@ -125,6 +129,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Offline)]
+        [Parameter(
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true,
+             ParameterSetName = ParameterSets.Ssl)]
         public string OfflineRabbitMqInstallerPath { get; set; }
 
         /// <summary>
