@@ -11,7 +11,7 @@
     <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual Studio adds them anyway -->
     <AssemblyName>Thycotic.RabbitMq.Helper.PSCommands.Documentation</AssemblyName>
     <RootNamespace>Thycotic.RabbitMq.Helper.PSCommands.Documentation</RootNamespace>
-    <Name>Thycotic.RabbitMq.Helper.PSCommands.Documentation</Name>
+    <Name>Thycotic.RabbitMq.Helper.PSCommands.Documentation.DocX</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5.1</FrameworkVersion>
     <OutputPath>.\bin\Release\</OutputPath>
@@ -50,8 +50,9 @@
     <VisibleItems>None</VisibleItems>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="Thycotic.RabbitMq.Helper.PSCommands.Certificate" isDocumented="True" xmlns="">Certificate transform and manipulation commands.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Thycotic.RabbitMq.Helper.PSCommands.Installation" isDocumented="True" xmlns="">Installation commands.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Thycotic.RabbitMq.Helper.PSCommands.Management" isDocumented="True" xmlns="">Management commands.</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Thycotic.RabbitMq.Helper.PSCommands.Installation" isDocumented="True" xmlns="">Installation commands.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Thycotic.RabbitMq.Helper.PSCommands.Management" isDocumented="True" xmlns="">Management commands.</NamespaceSummaryItem>
+    </NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
