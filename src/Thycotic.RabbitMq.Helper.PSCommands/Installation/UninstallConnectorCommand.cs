@@ -7,16 +7,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Uninstalls Erlang and RabbitMq
     /// </summary>
     /// <para type="synopsis">Uninstalls Erlang and RabbitMq</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
-    /// <para type="link">TODO: Get-Help</para>
+    /// <para type="link">Uninstall-Erlang</para>
+    /// <para type="link">Uninstall-RabbitMq</para>
+    /// <para type="link">Install-Connector</para>
     /// <example>
-    ///     <para>TODO: This is part of the first example's introduction.</para>
-    ///     <para>TODO: This is also part of the first example's introduction.</para>
-    ///     <code>TODO: New-Thingy | Write-Host</code>
-    ///     <para>TODO: This is part of the first example's remarks.</para>
-    ///     <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Uninstall-Connector</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Uninstall, "Connector")]
     [Alias("uninstallConnector")]

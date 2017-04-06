@@ -12,7 +12,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <para type="link">Get-RabbitMqInstaller</para>
     /// <example>
     ///     <para>PS C:\></para> 
-    ///     <code>Copy-RabbitMqExampleNonSslConfigFile</code>
+    ///     <code>Get-DownloadLocations</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "DownloadLocations")]
     [Alias("pdl")]

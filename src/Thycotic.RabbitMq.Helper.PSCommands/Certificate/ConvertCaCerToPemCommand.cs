@@ -19,6 +19,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Convert-PfxToPem</para>
     /// <example>
+    ///     <para>PS C:\></para> 
     ///     <para>Convert-CaCertToPem -CaCertPath "$PSScriptRoot\..\Examples\sc.cer" -Verbose</para>
     /// </example>
     [Cmdlet(VerbsData.Convert, "CaCertToPem")]

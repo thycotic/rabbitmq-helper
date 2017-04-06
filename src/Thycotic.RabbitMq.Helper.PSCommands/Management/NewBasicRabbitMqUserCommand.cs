@@ -8,16 +8,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     Adds a basic user to RabbitMq. This used has publish and consumer permissions
     /// </summary>
     /// <para type="synopsis">Adds a basic user to RabbitMq. This used has publish and consumer permissions</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
-    /// <para type="link">TODO: Get-Help</para>
     /// <example>
-    ///     <para>TODO: This is part of the first example's introduction.</para>
-    ///     <para>TODO: This is also part of the first example's introduction.</para>
-    ///     <code>TODO: New-Thingy | Write-Host</code>
-    ///     <para>TODO: This is part of the first example's remarks.</para>
-    ///     <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>New-BasicRabbitMqUser</code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "BasicRabbitMqUser")]
     [Alias("addRabbitMqUser")]

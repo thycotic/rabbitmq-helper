@@ -13,11 +13,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// <para type="synopsis"> Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
-    ///     <para>TODO: This is part of the first example's introduction.</para>
-    ///     <para>TODO: This is also part of the first example's introduction.</para>
-    ///     <code>TODO: New-Thingy | Write-Host</code>
-    ///     <para>TODO: This is part of the first example's remarks.</para>
-    ///     <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Enable-RabbitMqManagementPlugin</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Enable, "RabbitMqManagementPlugin")]
     public class EnableRabbitMqManagementPluginCommand : ManagementConsoleCmdlet
