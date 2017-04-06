@@ -8,6 +8,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Sets the RABBITMQ_BASE environmental variable
     /// </summary>
     /// <para type="synopsis">Sets the RABBITMQ_BASE environmental variable</para>
+    /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
     ///     <para>PS C:\></para> 

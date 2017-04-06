@@ -8,6 +8,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Downloads RabbitMq
     /// </summary>
     /// <para type="synopsis">Downloads RabbitMq</para>
+    /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Get-DownloadLocations</para>
     /// <para type="link">Get-ErlangInstaller</para>

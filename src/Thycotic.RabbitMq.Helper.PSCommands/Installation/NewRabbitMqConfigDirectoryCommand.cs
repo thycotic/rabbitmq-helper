@@ -7,6 +7,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Creates a RabbitMq configuration directory
     /// </summary>
     /// <para type="synopsis">Creates a RabbitMq configuration directory</para>
+    /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
     ///     <para>PS C:\></para> 

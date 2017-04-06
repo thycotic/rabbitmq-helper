@@ -7,6 +7,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Uninstalls Erlang and RabbitMq
     /// </summary>
     /// <para type="synopsis">Uninstalls Erlang and RabbitMq</para>
+    /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Uninstall-Erlang</para>
     /// <para type="link">Uninstall-RabbitMq</para>

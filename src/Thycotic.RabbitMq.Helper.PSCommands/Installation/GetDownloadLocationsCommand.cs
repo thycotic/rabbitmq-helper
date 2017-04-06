@@ -7,6 +7,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Gets download locations for Erlang and RabbitMq (most helpful when needing to do offline installation)
     /// </summary>
     /// <para type="synopsis">Gets download locations for Erlang and RabbitMq (most helpful when needing to do offline installation)</para>
+    /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Get-ErlangInstaller</para>
     /// <para type="link">Get-RabbitMqInstaller</para>

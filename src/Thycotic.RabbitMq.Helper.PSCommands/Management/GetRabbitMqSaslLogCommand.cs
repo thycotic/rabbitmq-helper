@@ -10,6 +10,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     Selects the tail of the RabbitMq Simple Authentication and Security Layer (SASL) log
     /// </summary>
     /// <para type="synopsis">Selects the tail of the RabbitMq Simple Authentication and Security Layer (SASL) log</para>
+    /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Get-RabbitMqLog</para>
     /// <example>
