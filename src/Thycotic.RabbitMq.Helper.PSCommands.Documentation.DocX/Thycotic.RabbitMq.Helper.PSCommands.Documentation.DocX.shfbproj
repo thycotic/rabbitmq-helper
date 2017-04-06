@@ -14,7 +14,7 @@
     <Name>Thycotic.RabbitMq.Helper.PSCommands.Documentation.DocX</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5.1</FrameworkVersion>
-    <OutputPath>.\bin\Release\</OutputPath>
+    <OutputPath>.\Help</OutputPath>
     <HtmlHelpName>grmqhh</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
