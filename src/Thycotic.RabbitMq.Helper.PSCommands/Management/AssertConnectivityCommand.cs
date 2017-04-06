@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using RabbitMQ.Client;
+using Thycotic.Utility;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -78,6 +79,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
+            Hostname = Hostname ?? DnsEx.GetDnsHostName();
+
             try
             {
                 using (var connection = GetConnection(Hostname, UserName, Password, UseSsl))
@@ -85,7 +88,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                     using (var model = connection.CreateModel())
                     {
                         if (model.IsOpen)
+                        {
                             WriteVerbose("Connection successful");
+                        }
                     }
                 }
             }

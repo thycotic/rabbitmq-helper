@@ -376,7 +376,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 new AssertConnectivityCommand
                 {
-                    Hostname = Hostname ?? DnsEx.GetDnsHostName(),
+                    Hostname = Hostname,
                     UserName = UserName,
                     Password = Password
                 }.AsChildOf(this).InvokeImmediate();
