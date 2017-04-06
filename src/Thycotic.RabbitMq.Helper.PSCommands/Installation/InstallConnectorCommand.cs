@@ -378,7 +378,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 {
                     Hostname = Hostname,
                     UserName = UserName,
-                    Password = Password
+                    Password = Password,
+                    UseSsl = UseSsl
                 }.AsChildOf(this).InvokeImmediate();
 
 
