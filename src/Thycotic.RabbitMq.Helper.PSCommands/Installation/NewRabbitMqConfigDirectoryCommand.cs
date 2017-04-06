@@ -22,7 +22,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         protected override void ProcessRecord()
         {
             if (Directory.Exists(InstallationConstants.RabbitMq.ConfigurationPath))
+            {
+                WriteVerbose("RabbitMq configuration folder already exists");
                 return;
+            }
 
             WriteVerbose("Creating RabbitMq configuration folder");
 
