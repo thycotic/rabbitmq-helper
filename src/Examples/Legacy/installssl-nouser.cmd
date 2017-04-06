@@ -1,2 +1,2 @@
 ::Please replace the sc.cer and sc.pfx files with your own certificate files
-Release\Thycotic.RabbitMq.Helper.exe installConnector -hostname=FQDNFORCERT -useSsl=true -skipUserCreate=true -cacertpath=sc.cer -pfxPath=sc.pfx -pfxPw=password1
+Release\Thycotic.RabbitMq.Helper.exe installConnector -hostname=localhost -useSsl=true -skipUserCreate=true -cacertpath=sc.cer -pfxPath=sc.pfx -pfxPw=password1
