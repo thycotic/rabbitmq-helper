@@ -7,40 +7,34 @@ using Thycotic.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
-
     /// <summary>
-    /// Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)
+    ///     Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
-    /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
-    /// <para type="link">TODO: Get-Help</para>
+    /// <para type="synopsis"> Enables the RabbitMq management plugin (https://www.rabbitmq.com/management.html)</para>
+    /// <para type="description"></para>
+    /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
-    ///   <para>TODO: This is part of the first example's introduction.</para>
-    ///   <para>TODO: This is also part of the first example's introduction.</para>
-    ///   <code>TODO: New-Thingy | Write-Host</code>
-    ///   <para>TODO: This is part of the first example's remarks.</para>
-    ///   <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Enable-RabbitMqManagementPlugin</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Enable, "RabbitMqManagementPlugin")]
     public class EnableRabbitMqManagementPluginCommand : ManagementConsoleCmdlet
     {
         /// <summary>
-        /// Gets or sets the agree rabbit mq license.
+        ///     Gets or sets whether to open console when ready.
         /// </summary>
         /// <value>
-        /// The agree rabbit mq license.
+        ///     The agree rabbit mq license.
         /// </value>
-        /// <para type="description">TODO: Property description.</para>
+        /// <para type="description">Gets or sets whether to open console when ready.</para>
         [Parameter(
-            Position = 0,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
+             Position = 0,
+             ValueFromPipeline = true,
+             ValueFromPipelineByPropertyName = true)]
         public SwitchParameter OpenConsoleAfterInstall { get; set; }
 
         /// <summary>
-        /// Processes the record.
+        ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
@@ -55,6 +49,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             };
 
             const string parameters2 = "enable rabbitmq_management";
+
+            WriteVerbose("Enabling management console");
 
             externalProcessRunner.Run(pluginsExecutablePath, WorkingPath, parameters2);
 

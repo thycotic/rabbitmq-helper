@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.RabbitMq.Helper.PSCommands", "Thycotic.RabbitMq.Helper.PSCommands\Thycotic.RabbitMq.Helper.PSCommands.csproj", "{9DFFEE65-D375-49C2-BB47-083E7F87D01B}"
 EndProject
-Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Thycotic.RabbitMq.Helper.PSCommands.Documentation", "Thycotic.RabbitMq.Helper.PSCommands.Documentation\Thycotic.RabbitMq.Helper.PSCommands.Documentation.shfbproj", "{ECF15F13-741B-4F25-9F49-531042A8DB2B}"
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Thycotic.RabbitMq.Helper.PSCommands.Documentation", "Thycotic.RabbitMq.Helper.PSCommands.Documentation\Thycotic.RabbitMq.Helper.PSCommands.Documentation.shfbproj", "{EE9D119E-8E10-40D3-A969-6D0330891E1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,12 +20,12 @@ Global
 		{9DFFEE65-D375-49C2-BB47-083E7F87D01B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9DFFEE65-D375-49C2-BB47-083E7F87D01B}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
 		{9DFFEE65-D375-49C2-BB47-083E7F87D01B}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
+		{EE9D119E-8E10-40D3-A969-6D0330891E1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE9D119E-8E10-40D3-A969-6D0330891E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE9D119E-8E10-40D3-A969-6D0330891E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE9D119E-8E10-40D3-A969-6D0330891E1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE9D119E-8E10-40D3-A969-6D0330891E1F}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{EE9D119E-8E10-40D3-A969-6D0330891E1F}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

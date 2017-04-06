@@ -3,35 +3,32 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using Thycotic.CLI.Commands;
 using Thycotic.Utility.IO;
 using Thycotic.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
     /// <summary>
-    /// Uninstalls prior installation of RabbitMq
+    ///     Uninstalls prior installation of RabbitMq
     /// </summary>
-    /// <para type="synopsis">TODO: This is the cmdlet synopsis.</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
-    /// <para type="link" uri="http://tempuri.org">TODO: Thycotic</para>
-    /// <para type="link">TODO: Get-Help</para>
+    /// <para type="synopsis">Uninstalls prior installation of RabbitMq</para>
+    /// <para type="description"></para>
+    /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
+    /// <para type="link">Uninstall-Erlang</para>
+    /// <para type="link">Install-Connector</para>
     /// <example>
-    ///   <para>TODO: This is part of the first example's introduction.</para>
-    ///   <para>TODO: This is also part of the first example's introduction.</para>
-    ///   <code>TODO: New-Thingy | Write-Host</code>
-    ///   <para>TODO: This is part of the first example's remarks.</para>
-    ///   <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Uninstall-RabbitMq</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Uninstall, "RabbitMq")]
     public class UninstallRabbitMqCommand : Cmdlet
     {
         /// <summary>
-        /// Processes the record.
+        ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
+            this.RequireRunningWithElevated();
 
             WriteVerbose("Uninstalling prior version of RabbitMq");
 
@@ -59,10 +56,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             if (Directory.Exists(InstallationConstants.RabbitMq.BinPath))
             {
                 //rabbit mq uninstaller seems to be async so we need to monitor the install directory until it's empty
-                while (Directory.Exists(InstallationConstants.RabbitMq.BinPath) && Directory.EnumerateFiles(InstallationConstants.RabbitMq.BinPath).Any())
-                {
+                while (Directory.Exists(InstallationConstants.RabbitMq.BinPath) &&
+                       Directory.EnumerateFiles(InstallationConstants.RabbitMq.BinPath).Any())
                     Task.Delay(TimeSpan.FromSeconds(1)).Wait();
-                }
 
                 //one last wait for system to release resources
                 Task.Delay(TimeSpan.FromSeconds(1)).Wait();
@@ -71,8 +67,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             CleanUpFolders();
 
             WriteVerbose("Uninstallation process completed");
-
-
         }
 
         private void CleanUpFolders()
@@ -81,7 +75,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
             try
             {
-
                 directoryCleaner.Clean(InstallationConstants.RabbitMq.InstallPath);
             }
             catch (Exception ex)

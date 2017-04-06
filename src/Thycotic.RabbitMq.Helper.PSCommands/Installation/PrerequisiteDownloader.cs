@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Net;
@@ -9,12 +10,12 @@ using System.Threading.Tasks;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
     /// <summary>
-    /// Pre-requisite downloader
+    ///     Pre-requisite downloader
     /// </summary>
     public class PrerequisiteDownloader
     {
         /// <summary>
-        /// Downloads the prerequisite.
+        ///     Downloads the prerequisite.
         /// </summary>
         /// <param name="token">The token.</param>
         /// <param name="downloadUrl">The download URL.</param>
@@ -27,7 +28,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <param name="progressHandler">The progress handler.</param>
         /// <exception cref="System.IO.FileNotFoundException">Failed to download</exception>
         public void Download(CancellationToken token, string downloadUrl, string installerPath,
-            bool forceDownload = false, int maxRetries = 5, Action<string> debugHandler = null, Action<string> infoHandler = null, Action<string, Exception> warnHandler = null, Action<PrerequisiteDownloaderProgress> progressHandler = null)
+            bool forceDownload = false, int maxRetries = 5, Action<string> debugHandler = null,
+            Action<string> infoHandler = null, Action<string, Exception> warnHandler = null,
+            Action<PrerequisiteDownloaderProgress> progressHandler = null)
         {
             debugHandler = debugHandler ?? (str => { });
             infoHandler = infoHandler ?? (str => { });
@@ -46,30 +49,40 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
             var downloaded = false;
 
-            while (!downloaded && tries < maxRetries)
-            {
+            while (!downloaded && (tries < maxRetries))
                 try
                 {
+                    var stopWatch = new Stopwatch();
+                    stopWatch.Start();
+
                     var client = new WebClient();
 
                     //use a queue to be able to store and report back progress form the original thread.
                     var progressQueue = new ConcurrentQueue<PrerequisiteDownloaderProgress>();
 
+                    var lastReportedProgressPercentage = 0;
+
                     client.DownloadProgressChanged += (sender, args) =>
                     {
+                        var progressPercentage = args.ProgressPercentage;
+
+                        if (progressPercentage <= lastReportedProgressPercentage)
+                            return;
+
                         progressQueue.Enqueue(new PrerequisiteDownloaderProgress
                         {
-                            ProgressPercentage = args.ProgressPercentage,
+                            ProgressPercentage = progressPercentage,
                             BytesReceived = args.BytesReceived,
                             TotalBytesToReceive = args.TotalBytesToReceive
                         });
 
+                        lastReportedProgressPercentage = progressPercentage;
                     };
 
                     var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
                     var task = client.DownloadFileTaskAsync(new Uri(downloadUrl, UriKind.Absolute), tempPath);
                     var awaiter = task.GetAwaiter();
-                    
+
                     while (!awaiter.IsCompleted)
                     {
                         PrerequisiteDownloaderProgress prerequisiteDownloaderProgress;
@@ -83,18 +96,17 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     }
 
                     if (File.Exists(installerPath))
-                    {
                         File.Delete(installerPath);
-                    }
 
                     Contract.Assume(installerPath.Length != 0);
+
+                    stopWatch.Stop();
+                    debugHandler(string.Format("File downloaded in {0}", stopWatch.Elapsed));
 
                     File.Move(tempPath, installerPath);
 
                     if (File.Exists(tempPath))
-                    {
                         warnHandler(string.Format("Temp installer files still exists at {0}", tempPath), null);
-                    }
 
                     downloaded = true;
                 }
@@ -106,41 +118,38 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 finally
                 {
                 }
-            }
 
             if (!downloaded)
-            {
                 throw new FileNotFoundException("Failed to download");
-            }
         }
     }
 
     /// <summary>
-    /// Prerequisite downloader
+    ///     Prerequisite downloader
     /// </summary>
     public class PrerequisiteDownloaderProgress
     {
         /// <summary>
-        /// Gets or sets the progress percentage.
+        ///     Gets or sets the progress percentage.
         /// </summary>
         /// <value>
-        /// The progress percentage.
+        ///     The progress percentage.
         /// </value>
         public int ProgressPercentage { get; set; }
 
         /// <summary>
-        /// Gets or sets the total bytes to receive.
+        ///     Gets or sets the total bytes to receive.
         /// </summary>
         /// <value>
-        /// The total bytes to receive.
+        ///     The total bytes to receive.
         /// </value>
         public long TotalBytesToReceive { get; set; }
 
         /// <summary>
-        /// Gets or sets the bytes received.
+        ///     Gets or sets the bytes received.
         /// </summary>
         /// <value>
-        /// The bytes received.
+        ///     The bytes received.
         /// </value>
         public long BytesReceived { get; set; }
     }
