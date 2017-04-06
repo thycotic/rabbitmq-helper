@@ -94,8 +94,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
                     WriteVerbose(string.Format("Certificate file written to {0}", CertificatePath));
                 }
             }
-
-            WriteVerbose("Done");
         }
     }
 }
