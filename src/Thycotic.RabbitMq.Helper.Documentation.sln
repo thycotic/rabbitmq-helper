@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.RabbitMq.Helper.PSCommands", "Thycotic.RabbitMq.Helper.PSCommands\Thycotic.RabbitMq.Helper.PSCommands.csproj", "{9DFFEE65-D375-49C2-BB47-083E7F87D01B}"
 EndProject
-Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Thycotic.RabbitMq.Helper.PSCommands.Documentation.DocX", "Thycotic.RabbitMq.Helper.PSCommands.Documentation.DocX\Thycotic.RabbitMq.Helper.PSCommands.Documentation.DocX.shfbproj", "{ECF15F13-741B-4F25-9F49-531042A8DB2B}"
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Thycotic.RabbitMq.Helper.PSCommands.Documentation", "Thycotic.RabbitMq.Helper.PSCommands.Documentation\Thycotic.RabbitMq.Helper.PSCommands.Documentation.shfbproj", "{8EFD0B20-0103-4E81-9350-58A6BE8EE6C6}"
 EndProject
-Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Thycotic.RabbitMq.Helper.PSCommands.Documentation.Html", "Thycotic.RabbitMq.Helper.PSCommands.Documentation.Html\Thycotic.RabbitMq.Helper.PSCommands.Documentation.Html.shfbproj", "{8EFD0B20-0103-4E81-9350-58A6BE8EE6C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.RabbitMq.Helper", "Thycotic.RabbitMq.Helper\Thycotic.RabbitMq.Helper.csproj", "{8E815A53-4472-4C31-9FF5-1BD48B976565}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,18 +22,18 @@ Global
 		{9DFFEE65-D375-49C2-BB47-083E7F87D01B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9DFFEE65-D375-49C2-BB47-083E7F87D01B}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
 		{9DFFEE65-D375-49C2-BB47-083E7F87D01B}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
-		{ECF15F13-741B-4F25-9F49-531042A8DB2B}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
 		{8EFD0B20-0103-4E81-9350-58A6BE8EE6C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EFD0B20-0103-4E81-9350-58A6BE8EE6C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EFD0B20-0103-4E81-9350-58A6BE8EE6C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EFD0B20-0103-4E81-9350-58A6BE8EE6C6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8EFD0B20-0103-4E81-9350-58A6BE8EE6C6}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
 		{8EFD0B20-0103-4E81-9350-58A6BE8EE6C6}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
+		{8E815A53-4472-4C31-9FF5-1BD48B976565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E815A53-4472-4C31-9FF5-1BD48B976565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E815A53-4472-4C31-9FF5-1BD48B976565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E815A53-4472-4C31-9FF5-1BD48B976565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E815A53-4472-4C31-9FF5-1BD48B976565}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
+		{8E815A53-4472-4C31-9FF5-1BD48B976565}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
