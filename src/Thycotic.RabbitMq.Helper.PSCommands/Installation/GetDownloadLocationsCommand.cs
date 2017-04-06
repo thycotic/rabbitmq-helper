@@ -11,11 +11,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <para type="link">Get-ErlangInstaller</para>
     /// <para type="link">Get-RabbitMqInstaller</para>
     /// <example>
-    ///     <para>TODO: This is part of the first example's introduction.</para>
-    ///     <para>TODO: This is also part of the first example's introduction.</para>
-    ///     <code>TODO: New-Thingy | Write-Host</code>
-    ///     <para>TODO: This is part of the first example's remarks.</para>
-    ///     <para>TODO: This is also part of the first example's remarks.</para>
+    ///     <para>PS C:\></para> 
+    ///     <code>Copy-RabbitMqExampleNonSslConfigFile</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "DownloadLocations")]
     [Alias("pdl")]

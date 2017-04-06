@@ -8,11 +8,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Downloads RabbitMq
     /// </summary>
     /// <para type="synopsis">Downloads RabbitMq</para>
-    /// <para type="description">TODO: This is part of the longer cmdlet description.</para>
-    /// <para type="description">TODO: Also part of the longer cmdlet description.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Get-DownloadLocations</para>
     /// <para type="link">Get-ErlangInstaller</para>
+    /// <para type="link">Install-RabbitMq</para>
     /// <example>
     ///     <para>Download from rabbitmq's web site</para>
     ///     <para>PS C:\></para> 
@@ -24,7 +23,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     <code>Get-RabbitMqInstaller -UseThycoticMirror</code>
     /// </example>
     /// <example>
-    ///     <para>Froce download from Thycotic's mirror web site even if the file already exists</para>
+    ///     <para>Force download from Thycotic's mirror web site even if the file already exists</para>
     ///     <para>PS C:\></para> 
     ///     <code>Get-RabbitMqInstaller -UseThycoticMirror -Force</code>
     /// </example>
