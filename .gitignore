@@ -12,4 +12,5 @@
 **/bin/Static Analysis
 **/obj/Static Analysis
 *.suo
-
+*.user
+**/Help
