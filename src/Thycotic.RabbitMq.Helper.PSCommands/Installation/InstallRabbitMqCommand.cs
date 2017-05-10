@@ -11,7 +11,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Installs RabbitMq
     /// </summary>
     /// <para type="synopsis">Installs RabbitMq</para>
-    /// <para type="description">Tee Install-RabbitMq cmdlet will attempt to load the installed from Path.Combine(Path.GetTempPath(), "rabbitMq.exe");</para>
+    /// <para type="description">The Install-RabbitMq cmdlet will attempt to load the installed from Path.Combine(Path.GetTempPath(), "rabbitMq.exe");</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Get-RabbitMqInstaller</para>
     /// <example>
@@ -28,8 +28,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <exception cref="System.IO.FileNotFoundException">No installer found</exception>
         protected override void ProcessRecord()
         {
-            this.RequireRunningWithElevated();
-            
             var rabbitMqBase = Environment.GetEnvironmentVariable("RABBITMQ_BASE");
 
             if (rabbitMqBase != InstallationConstants.RabbitMq.ConfigurationPath)
