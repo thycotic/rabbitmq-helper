@@ -221,7 +221,6 @@
   <ItemGroup>
     <Compile Include="Certificate\ConvertCaCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
-    <Compile Include="UacHelper.cs" />
     <Compile Include="CommandAreas.cs" />
     <Compile Include="Installation\CopyRabbitMqExampleNonSslConfigFileCommand.cs" />
     <Compile Include="Installation\CopyRabbitMqExampleSslConfigFileCommand.cs" />
