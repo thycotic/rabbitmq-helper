@@ -10,7 +10,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     Installs Erlang
     /// </summary>
     /// <para type="synopsis">Installs Erlang</para>
-    /// <para type="description">Tee Install-Erlang cmdlet will attempt to load the installed from Path.Combine(Path.GetTempPath(), "erlang.exe");</para>
+    /// <para type="description">The Install-Erlang cmdlet will attempt to load the installed from Path.Combine(Path.GetTempPath(), "erlang.exe");</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Get-ErlangInstaller</para>
     /// <example>
@@ -26,8 +26,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <exception cref="System.IO.FileNotFoundException">No installer found</exception>
         protected override void ProcessRecord()
         {
-            this.RequireRunningWithElevated();
-
             var executablePath = GetErlangInstallerCommand.ErlangInstallerPath;
 
             if (!File.Exists(executablePath))
