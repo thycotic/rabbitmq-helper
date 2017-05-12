@@ -18,7 +18,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <code>Enable-RabbitMqManagementPlugin</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Enable, "RabbitMqManagementPlugin")]
-    public class EnableRabbitMqManagementPluginCommand : ManagementConsoleCmdlet
+    public class EnableRabbitMqManagementPluginCommand : CtlManagementConsoleCmdlet
     {
         /// <summary>
         ///     Gets or sets whether to open console when ready.
@@ -32,6 +32,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true)]
         public SwitchParameter OpenConsoleAfterInstall { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnableRabbitMqManagementPluginCommand"/> class.
+        /// </summary>
+        public EnableRabbitMqManagementPluginCommand()
+        {
+            OpenConsoleAfterInstall = true;
+        }
 
         /// <summary>
         ///     Processes the record.
