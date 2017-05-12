@@ -390,7 +390,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 WriteProgress(new ProgressRecord(activityid, activity, "Installation completed")
                 {
-                    PercentComplete = 100
+                    PercentComplete = 100,
+                    RecordType = ProgressRecordType.Completed
                 });
 
                 WriteVerbose(
@@ -431,7 +432,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 WriteProgress(new ProgressRecord(activityid, activity, "Installation completed")
                 {
-                    PercentComplete = 100
+                    PercentComplete = 100,
+                    RecordType = ProgressRecordType.Completed
                 });
 
                 WriteVerbose(
