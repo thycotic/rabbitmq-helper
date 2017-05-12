@@ -215,34 +215,6 @@
     <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
-    <Content Include="..\Examples\helpers-combined.ps1">
-      <Link>Examples\helpers-combined.ps1</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Examples\installnonssl-offline.ps1">
-      <Link>Examples\installnonssl-offline.ps1</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Examples\installnonssl.ps1">
-      <Link>Examples\installnonssl.ps1</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Examples\installnossl-nolicenseprompts.ps1">
-      <Link>Examples\installnossl-nolicenseprompts.ps1</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Examples\installssl-nolicenseprompts.ps1">
-      <Link>Examples\installssl-nolicenseprompts.ps1</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Examples\installssl-offline.ps1">
-      <Link>Examples\installssl-offline.ps1</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Examples\installssl.ps1">
-      <Link>Examples\installssl.ps1</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="App.config" />
     <None Include="app.manifest" />
     <None Include="packages.config">
