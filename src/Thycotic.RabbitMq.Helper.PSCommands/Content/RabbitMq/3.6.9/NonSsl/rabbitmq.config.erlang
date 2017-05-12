@@ -3,6 +3,9 @@
 %% RabbitMQ Sample Configuration File.
 %%
 %% See http://www.rabbitmq.com/configure.html for details.
+%%
+%% Configuration file has been modified with custom setting from Thycotic.
+%%
 %% ----------------------------------------------------------------------------
 [
  %%{ssl, [{versions, ['tlsv1.2', 'tlsv1.1']}]},
