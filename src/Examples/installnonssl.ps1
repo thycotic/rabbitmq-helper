@@ -1,3 +1,3 @@
-import-module $PSScriptRoot\..\Thycotic.RabbitMq.Helper.PSCommands\bin\Release\Thycotic.RabbitMq.Helper.PSCommands.dll
+import-module $PSScriptRoot\Release\Thycotic.RabbitMq.Helper.PSCommands.dll
 
-install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW
+install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -UseThycoticMirror -Verbose

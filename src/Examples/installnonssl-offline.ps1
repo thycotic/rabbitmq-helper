@@ -1,3 +1,4 @@
-import-module $PSScriptRoot\..\Thycotic.RabbitMq.Helper.PSCommands\bin\Release\Thycotic.RabbitMq.Helper.PSCommands.dll
+import-module $PSScriptRoot\Release\Thycotic.RabbitMq.Helper.PSCommands.dll
 
-install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -offlineErlangInstallerPath Offline\o-erlang.exe -offlineRabbitMqInstallerPath Offline\o-rabbitMq.exe
+$path = "$PSScriptRoot"
+install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -offlineErlangInstallerPath $path\Offline\o-erlang.exe -offlineRabbitMqInstallerPath $path\Offline\o-rabbitMq.exe -Verbose
