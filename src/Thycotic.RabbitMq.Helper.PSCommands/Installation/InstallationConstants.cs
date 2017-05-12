@@ -86,7 +86,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             /// <summary>
             ///     The install path
             /// </summary>
-            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles32Bit,
+            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles,
                 "RabbitMQ Server", "rabbitmq_server-3.6.9");
 
             /// <summary>
