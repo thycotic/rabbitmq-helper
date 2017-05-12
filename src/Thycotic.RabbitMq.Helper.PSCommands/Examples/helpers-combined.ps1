@@ -1,5 +1,5 @@
 $moduleName = "Thycotic.RabbitMq.Helper.PSCommands";
-$modulePath = "$PSScriptRoot\Release\$moduleName.dll"
+$modulePath = "$PSScriptRoot\..\$moduleName.dll"
 
 Import-module $modulePath
 
