@@ -16,7 +16,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <code>Assert-RabbitMqConnectivity</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Assert, "RabbitMqConnectivity")]
-    public class AssertConnectivityCommand : ManagementConsoleCmdlet
+    public class AssertConnectivityCommand : Cmdlet
     {
         /// <summary>
         ///     Gets or sets the use SSL.
