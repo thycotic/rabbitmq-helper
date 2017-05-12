@@ -249,12 +249,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\RabbitMq\3.5.3\NonSsl\rabbitmq.config.erlang" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\RabbitMq\3.5.3\Ssl\rabbitmq.config.erlang" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
