@@ -46,7 +46,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
             var contentAssembly = GetType().Assembly;
 
-            var resourceName = string.Format("{0}.Content.RabbitMq._3._5._3.Ssl.rabbitmq.config.erlang",
+            var resourceName = string.Format("{0}.Content.RabbitMq._3._6._9.Ssl.rabbitmq.config.erlang",
                 contentAssembly.GetName().Name);
 
             string contents;
