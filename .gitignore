@@ -16,5 +16,5 @@
 **/Help
 
 #offline installer
-/src/Examples/Offline/o-erlang.exe
-/src/Examples/Offline/o-rabbitMq.exe
+**/Offline/*.exe
+
