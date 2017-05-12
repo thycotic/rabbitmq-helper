@@ -77,6 +77,9 @@ Import-module $modulePath
 #Get-RabbitMqSaslLog
 #Get-RabbitMqSaslLog -Count 1000
 
+#get-help Remove-AllQueues -full
+#Remove-AllQueues -Verbose
+
 #get-help UnInstall-RabbitMq -full
 #UnInstall-RabbitMq -Verbose
 
