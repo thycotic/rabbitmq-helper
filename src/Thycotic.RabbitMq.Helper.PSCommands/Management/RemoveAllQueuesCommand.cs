@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
+using System.Net;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -14,43 +19,76 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <code>Remove-AllQueues</code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "AllQueues")]
-    public class RemoveAllQueuesCommand : ManagementConsoleCmdlet
+    public class RemoveAllQueuesCommand : RestManagementConsoleCmdlet
     {
         /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
-            throw new NotImplementedException();
+            var client = new RestClient(BaseUrl) {Authenticator = new HttpBasicAuthenticator(AdminUserName, AdminPassword)};
 
-//            $cred = Get - Credential
-//$result = iwr - ContentType 'application/json' - Method Get - Credential $cred   'http://localhost:15672/api/queues' | % {
-//                ConvertFrom - Json  $_.Content } | % { $_ } | ? { $_.messages - eq 0} | % {
-//                iwr - method DELETE - Credential $cred - uri  $("http://localhost:15672/api/queues/{0}/{1}" - f[System.Web.HttpUtility]::UrlEncode($_.vhost),  $_.name)
-// }
+            var getRequest = new RestRequest("api/queues");
 
-//            Write - Host 'Empty queues were deleted'
+            var getResponse = client.Execute<List<QueueSlim>>(getRequest);
 
+            if (getResponse.ErrorException != null)
+            {
+                throw getResponse.ErrorException;
+            }
 
-            ////we have to use local host because guest account does not work under FQDN
-            //const string pluginUrl = "http://localhost:15672/";
-            //const string executable = "rabbitmq-plugins.bat";
-            //var pluginsExecutablePath = Path.Combine(InstallationConstants.RabbitMq.BinPath, executable);
+            if (!getResponse.Data.Any())
+            {
+                WriteVerbose($"There are no queues to remove");
+                return;
+            }
 
-            //var externalProcessRunner = new ExternalProcessRunner
-            //{
-            //    EstimatedProcessDuration = TimeSpan.FromSeconds(15)
-            //};
+            const int activityid = 7;
+            const string activity = "Removing";
 
-            //const string parameters2 = "enable rabbitmq_management";
+            WriteProgress(new ProgressRecord(activityid, activity, "Checking Erlang pre-requisites")
+            {
+                PercentComplete = 5
+            });
 
-            //externalProcessRunner.Run(pluginsExecutablePath, WorkingPath, parameters2);
+            var queues = getResponse.Data.OrderBy(q => q.VHost).ThenBy(q => q.Name).ToList();
 
-            //if (OpenConsoleAfterInstall)
-            //{
-            //    WriteVerbose(string.Format("Opening management console at {0}", pluginUrl));
-            //    Process.Start(pluginUrl);
-            //}
+            var c = 0;
+            var total = queues.Count;
+            queues.ForEach(q =>
+            {
+                WriteProgress(new ProgressRecord(activityid, activity, $"Removing {q.Name} on {q.VHost}")
+                {
+                    PercentComplete = Convert.ToInt32(Convert.ToDouble(c)/total * 100) 
+                });
+                WriteVerbose($"Deleting {q.Name} on {q.VHost}");
+
+                var deleteRequest = new RestRequest("api/queues/{host}/{name}", Method.DELETE);
+                deleteRequest.AddUrlSegment("host", q.VHost);
+                deleteRequest.AddUrlSegment("name", q.Name);
+
+                var deleteResponse = client.Execute(deleteRequest);
+
+                if (deleteResponse.ErrorException != null)
+                {
+                    throw deleteResponse.ErrorException;
+                }
+                c++;
+            });
+
+            WriteProgress(new ProgressRecord(activityid, activity, "Removed all queues")
+            {
+                PercentComplete = 100,
+                RecordType = ProgressRecordType.Completed
+            });
+        }
+
+        // ReSharper disable once ClassNeverInstantiated.Local
+        private class QueueSlim
+        {
+            public string Name { get; set; }
+            public string VHost { get; set; }
+            public int Messages { get; set; }
         }
     }
 }

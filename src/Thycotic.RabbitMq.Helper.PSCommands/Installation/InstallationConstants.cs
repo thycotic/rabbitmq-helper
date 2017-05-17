@@ -25,33 +25,33 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             /// <summary>
             ///     The version
             /// </summary>
-            public static readonly Version Version = new Version(17, 5);
+            public static readonly Version Version = new Version(19, 3);
 
             /// <summary>
             ///     The download URL
             /// </summary>
             public static readonly string DownloadUrl =
                 Environment.Is64BitOperatingSystem
-                    ? "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_1_general/esl-erlang_17.5-1~windows_amd64.exe"
-                    : "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_1_general/esl-erlang_17.5-1~windows_i386.exe";
+                    ? "http://erlang.org/download/otp_win64_19.3.exe"
+                    : "http://erlang.org/download/otp_win32_19.3.exe";
 
             /// <summary>
             ///     The download URL using the Thycotic mirror
             /// </summary>
             public static readonly string ThycoticMirrorDownloadUrl =
                 Environment.Is64BitOperatingSystem
-                    ? "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/esl-erlang_17.5-1-windows_amd64.exe"
-                    : "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/esl-erlang_17.5-1-windows_i386.exe";
+                    ? "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win64_19.3.exe"
+                    : "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win32_19.3.exe";
 
             /// <summary>
             ///     The install path
             /// </summary>
-            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4");
+            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl8.3");
 
             /// <summary>
             ///     The uninstaller path
             /// </summary>
-            public static readonly string UninstallerPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4",
+            public static readonly string UninstallerPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl8.3",
                 "uninstall.exe");
         }
 
@@ -64,18 +64,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             ///     The download URL
             /// </summary>
             public const string DownloadUrl =
-                "https://www.rabbitmq.com/releases/rabbitmq-server/v3.5.3/rabbitmq-server-3.5.3.exe";
+                "http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.9/rabbitmq-server-3.6.9.exe";
 
             /// <summary>
             ///     The download URL using the Thycotic mirror
             /// </summary>
             public const string ThycoticMirrorDownloadUrl =
-                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/rabbitmq/rabbitmq-server-3.5.3.exe";
+                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/rabbitmq/rabbitmq-server-3.6.9.exe";
 
             /// <summary>
             ///     The version
             /// </summary>
-            public static readonly Version Version = new Version(3, 5, 3);
+            public static readonly Version Version = new Version(3, 6, 9);
 
             /// <summary>
             ///     The configuration path
@@ -86,8 +86,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             /// <summary>
             ///     The install path
             /// </summary>
-            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles32Bit,
-                "RabbitMQ Server", "rabbitmq_server-3.5.3");
+            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles,
+                "RabbitMQ Server", "rabbitmq_server-3.6.9");
 
             /// <summary>
             ///     The bin path
@@ -97,7 +97,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             /// <summary>
             ///     The uninstaller path
             /// </summary>
-            public static readonly string UninstallerPath = Path.Combine(EnvironmentalVariables.ProgramFiles32Bit,
+            public static readonly string UninstallerPath = Path.Combine(EnvironmentalVariables.ProgramFiles,
                 "RabbitMQ Server", "uninstall.exe");
         }
     }

@@ -1,5 +1,5 @@
 $moduleName = "Thycotic.RabbitMq.Helper.PSCommands";
-$modulePath = "$PSScriptRoot\..\Thycotic.RabbitMq.Helper.PSCommands\bin\Release\$moduleName.dll"
+$modulePath = "$PSScriptRoot\..\$moduleName.dll"
 
 Import-module $modulePath
 
@@ -76,6 +76,9 @@ Import-module $modulePath
 #get-help Get-RabbitMqSaslLog -full
 #Get-RabbitMqSaslLog
 #Get-RabbitMqSaslLog -Count 1000
+
+#get-help Remove-AllQueues -full
+#Remove-AllQueues -Verbose
 
 #get-help UnInstall-RabbitMq -full
 #UnInstall-RabbitMq -Verbose

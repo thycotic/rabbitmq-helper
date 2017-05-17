@@ -14,3 +14,7 @@
 *.suo
 *.user
 **/Help
+
+#offline installer
+**/Offline/*.exe
+
