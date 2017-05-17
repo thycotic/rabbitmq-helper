@@ -7,12 +7,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// <summary>
     ///     Base class for a management console command
     /// </summary>
-    public abstract class ManagementConsoleCmdlet : Cmdlet
+    public abstract class CtlManagementConsoleCmdlet : Cmdlet
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ManagementConsoleCmdlet" /> class.
+        ///     Initializes a new instance of the <see cref="CtlManagementConsoleCmdlet" /> class.
         /// </summary>
-        protected ManagementConsoleCmdlet()
+        protected CtlManagementConsoleCmdlet()
         {
             if (File.Exists(ExecutablePath)) return;
 

@@ -388,9 +388,16 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     UseSsl = UseSsl
                 }.AsChildOf(this).InvokeImmediate();
 
+                WriteProgress(new ProgressRecord(activityid, activity, "Installation completed")
+                {
+                    PercentComplete = 100,
+                    RecordType = ProgressRecordType.Completed
+                });
 
                 WriteVerbose(
                     "RabbitMq is ready to use with encryption. Please open port 5671 on the machine firewall");
+
+                WriteObject("Installation completed");
             }
             else
             {
@@ -423,9 +430,16 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     Password = Password
                 }.AsChildOf(this).InvokeImmediate();
 
+                WriteProgress(new ProgressRecord(activityid, activity, "Installation completed")
+                {
+                    PercentComplete = 100,
+                    RecordType = ProgressRecordType.Completed
+                });
 
                 WriteVerbose(
                     "RabbitMq is ready to use without encryption. Please open port 5672 on the machine firewall.");
+
+                WriteObject("Installation completed");
             }
         }
     }
