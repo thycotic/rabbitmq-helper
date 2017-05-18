@@ -36,6 +36,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             {
                 throw getResponse.ErrorException;
             }
+            else if (getResponse.StatusCode != HttpStatusCode.OK)
+            {
+                throw new ApplicationException(getResponse.StatusDescription);
+            }
 
             if (!getResponse.Data.Any())
             {
@@ -57,6 +61,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             var total = queues.Count;
             queues.ForEach(q =>
             {
+                if (q.AutoDelete || q.Exclusive)
+                {
+                    WriteVerbose($"Skipping {q.Name} on {q.VHost}");
+                    c++;
+                    return;
+                }
+
                 WriteProgress(new ProgressRecord(activityid, activity, $"Removing {q.Name} on {q.VHost}")
                 {
                     PercentComplete = Convert.ToInt32(Convert.ToDouble(c)/total * 100) 
@@ -68,10 +79,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 deleteRequest.AddUrlSegment("name", q.Name);
 
                 var deleteResponse = client.Execute(deleteRequest);
-
+                
                 if (deleteResponse.ErrorException != null)
                 {
-                    throw deleteResponse.ErrorException;
+                    WriteWarning(deleteResponse.ErrorException.Message);
+                }
+                else if (getResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    WriteWarning(getResponse.StatusDescription);
+                }
+                else
+                {
+                    WriteObject(new KeyValuePair<string,HttpStatusCode>(q.Name, deleteResponse.StatusCode));    
                 }
                 c++;
             });
@@ -89,6 +108,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             public string Name { get; set; }
             public string VHost { get; set; }
             public int Messages { get; set; }
+            public bool Exclusive { get; set; }
+            public bool AutoDelete { get; set; }
         }
     }
 }
