@@ -26,7 +26,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
-            var client = new RestClient(BaseUrl) {Authenticator = new HttpBasicAuthenticator(AdminUserName, AdminPassword)};
+            var client = new RestClient(BaseUrl) { Authenticator = new HttpBasicAuthenticator(AdminUserName, AdminPassword) };
 
             var getRequest = new RestRequest("api/queues");
 
@@ -36,10 +36,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             {
                 throw getResponse.ErrorException;
             }
+            else if (getResponse.StatusCode != HttpStatusCode.OK)
+            {
+                throw new ApplicationException(getResponse.StatusDescription);
+            }
 
             if (!getResponse.Data.Any())
             {
-                WriteVerbose($"There are no queues to remove");
+                WriteVerbose("There are no queues to remove");
                 return;
             }
 
@@ -57,11 +61,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             var total = queues.Count;
             queues.ForEach(q =>
             {
-                WriteProgress(new ProgressRecord(activityid, activity, $"Removing {q.Name} on {q.VHost}")
+                if (q.AutoDelete || q.Exclusive)
                 {
-                    PercentComplete = Convert.ToInt32(Convert.ToDouble(c)/total * 100) 
+                    WriteVerbose(string.Format("Skipping {0} on {1}", q.Name, q.VHost));
+                    c++;
+                    return;
+                }
+
+                WriteProgress(new ProgressRecord(activityid, activity, string.Format("Removing {0} on {1}", q.Name, q.VHost))
+                {
+                    PercentComplete = Convert.ToInt32(Convert.ToDouble(c) / total * 100)
                 });
-                WriteVerbose($"Deleting {q.Name} on {q.VHost}");
+                WriteVerbose(string.Format("Removing {0} on {1}", q.Name, q.VHost));
 
                 var deleteRequest = new RestRequest("api/queues/{host}/{name}", Method.DELETE);
                 deleteRequest.AddUrlSegment("host", q.VHost);
@@ -71,7 +82,15 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
                 if (deleteResponse.ErrorException != null)
                 {
-                    throw deleteResponse.ErrorException;
+                    WriteWarning(deleteResponse.ErrorException.Message);
+                }
+                else if (getResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    WriteWarning(getResponse.StatusDescription);
+                }
+                else
+                {
+                    WriteObject(new KeyValuePair<string, HttpStatusCode>(q.Name, deleteResponse.StatusCode));
                 }
                 c++;
             });
@@ -89,6 +108,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             public string Name { get; set; }
             public string VHost { get; set; }
             public int Messages { get; set; }
+            public bool Exclusive { get; set; }
+            public bool AutoDelete { get; set; }
         }
     }
 }
