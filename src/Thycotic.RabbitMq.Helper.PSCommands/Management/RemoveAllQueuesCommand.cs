@@ -26,7 +26,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
-            var client = new RestClient(BaseUrl) {Authenticator = new HttpBasicAuthenticator(AdminUserName, AdminPassword)};
+            var client = new RestClient(BaseUrl) { Authenticator = new HttpBasicAuthenticator(AdminUserName, AdminPassword) };
 
             var getRequest = new RestRequest("api/queues");
 
@@ -63,14 +63,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             {
                 if (q.AutoDelete || q.Exclusive)
                 {
-                    WriteVerbose("Skipping {q.Name} on {q.VHost}");
+                    WriteVerbose(string.Format("Skipping {0} on {1}", q.Name, q.VHost));
                     c++;
                     return;
                 }
 
-                WriteProgress(new ProgressRecord(activityid, activity, string.Format("Removing {0} on {1}",q.Name, q.VHost))
+                WriteProgress(new ProgressRecord(activityid, activity, string.Format("Removing {0} on {1}", q.Name, q.VHost))
                 {
-                    PercentComplete = Convert.ToInt32(Convert.ToDouble(c)/total * 100) 
+                    PercentComplete = Convert.ToInt32(Convert.ToDouble(c) / total * 100)
                 });
                 WriteVerbose(string.Format("Removing {0} on {1}", q.Name, q.VHost));
 
@@ -79,7 +79,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 deleteRequest.AddUrlSegment("name", q.Name);
 
                 var deleteResponse = client.Execute(deleteRequest);
-                
+
                 if (deleteResponse.ErrorException != null)
                 {
                     WriteWarning(deleteResponse.ErrorException.Message);
@@ -90,7 +90,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 }
                 else
                 {
-                    WriteObject(new KeyValuePair<string,HttpStatusCode>(q.Name, deleteResponse.StatusCode));    
+                    WriteObject(new KeyValuePair<string, HttpStatusCode>(q.Name, deleteResponse.StatusCode));
                 }
                 c++;
             });
