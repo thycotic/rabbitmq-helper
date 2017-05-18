@@ -34,7 +34,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <summary>
         ///     The erlang installer path
         /// </summary>
-        public static readonly string ErlangInstallerPath = Path.Combine(Path.GetTempPath(), $"erlang{InstallationConstants.Erlang.Version}.exe");
+        public static readonly string ErlangInstallerPath = Path.Combine(Path.GetTempPath(), string.Format("erlang{0}.exe", InstallationConstants.Erlang.Version));
 
         /// <summary>
         ///     Gets or sets the offline erlang installer path.
