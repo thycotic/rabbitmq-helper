@@ -34,7 +34,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <summary>
         ///     The rabbit mq installer path
         /// </summary>
-        public static readonly string RabbitMqInstallerPath = Path.Combine(Path.GetTempPath(), $"rabbitMq{InstallationConstants.RabbitMq.Version}.exe");
+        public static readonly string RabbitMqInstallerPath = Path.Combine(Path.GetTempPath(), string.Format("rabbitMq{0}.exe", InstallationConstants.RabbitMq.Version));
 
 
         /// <summary>
