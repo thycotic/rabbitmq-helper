@@ -43,7 +43,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             if (!getResponse.Data.Any())
             {
-                WriteVerbose($"There are no queues to remove");
+                WriteVerbose("There are no queues to remove");
                 return;
             }
 
@@ -63,16 +63,16 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             {
                 if (q.AutoDelete || q.Exclusive)
                 {
-                    WriteVerbose($"Skipping {q.Name} on {q.VHost}");
+                    WriteVerbose("Skipping {q.Name} on {q.VHost}");
                     c++;
                     return;
                 }
 
-                WriteProgress(new ProgressRecord(activityid, activity, $"Removing {q.Name} on {q.VHost}")
+                WriteProgress(new ProgressRecord(activityid, activity, string.Format("Removing {0} on {1}",q.Name, q.VHost))
                 {
                     PercentComplete = Convert.ToInt32(Convert.ToDouble(c)/total * 100) 
                 });
-                WriteVerbose($"Deleting {q.Name} on {q.VHost}");
+                WriteVerbose(string.Format("Removing {0} on {1}", q.Name, q.VHost));
 
                 var deleteRequest = new RestRequest("api/queues/{host}/{name}", Method.DELETE);
                 deleteRequest.AddUrlSegment("host", q.VHost);
