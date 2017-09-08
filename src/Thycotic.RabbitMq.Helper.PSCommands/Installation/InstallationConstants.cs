@@ -25,15 +25,15 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             /// <summary>
             ///     The version
             /// </summary>
-            public static readonly Version Version = new Version(19, 3);
+            public static readonly Version Version = new Version(20, 0);
 
             /// <summary>
             ///     The download URL
             /// </summary>
             public static readonly string DownloadUrl =
                 Environment.Is64BitOperatingSystem
-                    ? "http://erlang.org/download/otp_win64_19.3.exe"
-                    : "http://erlang.org/download/otp_win32_19.3.exe";
+                    ? "http://erlang.org/download/otp_win64_20.0.exe"
+                    : "http://erlang.org/download/otp_win32_20.0.exe";
 
             /// <summary>
             ///     The download URL using the Thycotic mirror
@@ -64,13 +64,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             ///     The download URL
             /// </summary>
             public const string DownloadUrl =
-                "http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.9/rabbitmq-server-3.6.9.exe";
+                "http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.11/rabbitmq-server-3.6.11.exe";
 
             /// <summary>
             ///     The download URL using the Thycotic mirror
             /// </summary>
             public const string ThycoticMirrorDownloadUrl =
-                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/rabbitmq/rabbitmq-server-3.6.9.exe";
+                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/rabbitmq/rabbitmq-server-3.6.11.exe";
 
             /// <summary>
             ///     The version
@@ -87,7 +87,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             ///     The install path
             /// </summary>
             public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles,
-                "RabbitMQ Server", "rabbitmq_server-3.6.9");
+                "RabbitMQ Server", "rabbitmq_server-3.6.11");
 
             /// <summary>
             ///     The bin path
