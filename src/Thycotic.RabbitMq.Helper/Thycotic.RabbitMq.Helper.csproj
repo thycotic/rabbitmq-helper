@@ -215,6 +215,7 @@
     <None Include="..\Certificates\Thycotic.snk">
       <Link>Thycotic.snk</Link>
     </None>
+    <None Include="App.config" />
     <None Include="app.manifest" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
