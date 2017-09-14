@@ -27,53 +27,55 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         protected override void ProcessRecord()
         {
-            WriteVerbose("Uninstalling prior version of Erlang");
+            WriteVerbose("Uninstalling prior versions of Erlang");
 
-            var executablePath = InstallationConstants.Erlang.UninstallerPath;
+            var executablePaths = InstallationConstants.Erlang.UninstallerPaths;
 
-            if (!File.Exists(executablePath))
+            foreach (var executablePath in executablePaths)
             {
-                WriteVerbose("No uninstaller found");
+                var directoryInfo = new FileInfo(executablePath);
+                var workingPath = directoryInfo.DirectoryName;
 
-                CleanUpFolders();
+                if (!File.Exists(executablePath))
+                {
+                    WriteVerbose("No uninstaller found at " + executablePath);
 
-                return;
+                    CleanUpFolders(workingPath);
+
+                    continue;
+                }
+
+                var externalProcessRunner = new ExternalProcessRunner();
+
+                const string silent = "/S";
+
+                externalProcessRunner.Run(executablePath, workingPath, silent);
+
+                try
+                {
+                    const string erlandProcessKill = " /F /IM epmd.exe";
+                    externalProcessRunner.Run("taskkill", workingPath, erlandProcessKill);
+                }
+                catch (Exception ex)
+                {
+                    WriteWarning("Failed to terminate erlang process. Clean removal might fail: " + ex.Message);
+                }
+
+                WriteVerbose("Waiting for Erlang process to exit...");
+                Task.Delay(TimeSpan.FromSeconds(15)).Wait();
+
+                CleanUpFolders(workingPath);
             }
-
-            var externalProcessRunner = new ExternalProcessRunner();
-
-            var directoryInfo = new FileInfo(executablePath);
-            var workingPath = directoryInfo.DirectoryName;
-
-            const string silent = "/S";
-
-            externalProcessRunner.Run(executablePath, workingPath, silent);
-
-            try
-            {
-                const string erlandProcessKill = " /F /IM epmd.exe";
-                externalProcessRunner.Run("taskkill", workingPath, erlandProcessKill);
-            }
-            catch (Exception ex)
-            {
-                WriteWarning("Failed to terminate erlang process. Clean removal might fail: " + ex.Message);
-            }
-
-            WriteVerbose("Waiting for Erlang process to exit...");
-            Task.Delay(TimeSpan.FromSeconds(15)).Wait();
-
-            CleanUpFolders();
-
             WriteVerbose("Uninstallation process completed");
         }
 
-        private void CleanUpFolders()
+        private void CleanUpFolders(string installPath)
         {
             var directoryCleaner = new DirectoryCleaner();
 
             try
             {
-                directoryCleaner.Clean(InstallationConstants.Erlang.InstallPath);
+                directoryCleaner.Clean(installPath);
             }
             catch (Exception ex)
             {

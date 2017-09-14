@@ -28,52 +28,57 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         protected override void ProcessRecord()
         {
-            WriteVerbose("Uninstalling prior version of RabbitMq");
+            WriteVerbose("Uninstalling prior versions of RabbitMq");
 
-            var executablePath = InstallationConstants.RabbitMq.UninstallerPath;
+            var executablePaths = InstallationConstants.RabbitMq.UninstallerPaths;
 
-            if (!File.Exists(executablePath))
+            foreach (var executablePath in executablePaths)
             {
-                WriteVerbose("No uninstaller found");
+                var directoryInfo = new FileInfo(executablePath);
+                var workingPath = directoryInfo.DirectoryName;
 
-                CleanUpFolders();
+                if (!File.Exists(executablePath))
+                {
+                    WriteVerbose("No uninstaller found at " + executablePath);
 
-                return;
-            }
+                    CleanUpFolders(workingPath);
 
-            var externalProcessRunner = new ExternalProcessRunner();
+                    continue;
+                }
 
-            var directoryInfo = new FileInfo(executablePath);
-            var workingPath = directoryInfo.DirectoryName;
+                var externalProcessRunner = new ExternalProcessRunner();
 
-            const string silent = "/S";
+                const string silent = "/S";
 
-            externalProcessRunner.Run(executablePath, workingPath, silent);
+                externalProcessRunner.Run(executablePath, workingPath, silent);
 
-            WriteVerbose("Waiting for RabbitMq process to exit...");
-            if (Directory.Exists(InstallationConstants.RabbitMq.BinPath))
-            {
-                //rabbit mq uninstaller seems to be async so we need to monitor the install directory until it's empty
-                while (Directory.Exists(InstallationConstants.RabbitMq.BinPath) &&
-                       Directory.EnumerateFiles(InstallationConstants.RabbitMq.BinPath).Any())
+                WriteVerbose("Waiting for RabbitMq process to exit...");
+
+                var binPath = Path.Combine(workingPath, InstallationConstants.RabbitMq.BinDir);
+
+                if (Directory.Exists(binPath))
+                {
+                    //rabbit mq uninstaller seems to be async so we need to monitor the install directory until it's empty
+                    while (Directory.Exists(binPath) &&
+                           Directory.EnumerateFiles(binPath).Any())
+                        Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+
+                    //one last wait for system to release resources
                     Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                }
 
-                //one last wait for system to release resources
-                Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                CleanUpFolders(workingPath);
             }
-
-            CleanUpFolders();
-
             WriteVerbose("Uninstallation process completed");
         }
 
-        private void CleanUpFolders()
+        private void CleanUpFolders(string installPath)
         {
             var directoryCleaner = new DirectoryCleaner();
 
             try
             {
-                directoryCleaner.Clean(InstallationConstants.RabbitMq.InstallPath);
+                directoryCleaner.Clean(installPath);
             }
             catch (Exception ex)
             {
