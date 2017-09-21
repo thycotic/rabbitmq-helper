@@ -113,12 +113,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             var connectionFactory = new ConnectionFactory
             {
-                Uri = url,
+                Uri = new Uri(url),
                 RequestedHeartbeat = 300,
                 UserName = userName,
                 Password = password
             };
-
+            
             if (useSsl)
             {
                 var uri = new Uri(url);
