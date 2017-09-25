@@ -68,7 +68,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             ///     The download URL
             /// </summary>
             public const string DownloadUrl =
-                "http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.11/rabbitmq-server-3.6.12.exe";
+                "http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.12/rabbitmq-server-3.6.12.exe";
 
             /// <summary>
             ///     The download URL using the Thycotic mirror
