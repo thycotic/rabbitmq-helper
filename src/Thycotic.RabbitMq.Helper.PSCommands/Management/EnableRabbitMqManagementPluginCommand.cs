@@ -38,7 +38,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         public EnableRabbitMqManagementPluginCommand()
         {
-            OpenConsoleAfterInstall = false;
         }
 
         /// <summary>
