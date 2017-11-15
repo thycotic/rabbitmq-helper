@@ -21,10 +21,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     public class EnableRabbitMqManagementPluginCommand : CtlManagementConsoleCmdlet
     {
         /// <summary>
-        ///     Gets or sets whether to open console when ready.
+        ///     Gets or sets whether to open console when ready. Default to false.
         /// </summary>
         /// <value>
-        ///     The agree rabbit mq license.
+        ///    Boolean
         /// </value>
         /// <para type="description">Gets or sets whether to open console when ready.</para>
         [Parameter(
@@ -38,7 +38,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         public EnableRabbitMqManagementPluginCommand()
         {
-            OpenConsoleAfterInstall = true;
         }
 
         /// <summary>

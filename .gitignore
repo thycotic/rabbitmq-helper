@@ -18,3 +18,4 @@
 #offline installer
 **/Offline/*.exe
 
+**/.vs/
