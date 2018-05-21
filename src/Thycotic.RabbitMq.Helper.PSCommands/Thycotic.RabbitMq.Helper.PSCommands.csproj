@@ -181,7 +181,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.RabbitMq.Helper.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
@@ -256,11 +256,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Certificates\Thycotic.snk">
-      <Link>Thycotic.snk</Link>
-    </None>
     <EmbeddedResource Include="Content\RabbitMq\3.6.9\NonSsl\rabbitmq.config.erlang" />
     <EmbeddedResource Include="Content\RabbitMq\3.6.9\Ssl\rabbitmq.config.erlang" />
+    <None Include="..\Certificates\Thycotic.RabbitMq.Helper.snk">
+      <Link>Thycotic.RabbitMq.Helper.snk</Link>
+    </None>
     <None Include="app.config" />
     <None Include="Examples\helpers-combined.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

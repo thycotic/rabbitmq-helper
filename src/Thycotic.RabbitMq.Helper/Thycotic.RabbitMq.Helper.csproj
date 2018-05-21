@@ -127,7 +127,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Certificates\Thycotic.RabbitMq.Helper.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Static Analysis|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -216,8 +216,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Certificates\Thycotic.snk">
-      <Link>Thycotic.snk</Link>
+    <None Include="..\Certificates\Thycotic.RabbitMq.Helper.snk">
+      <Link>Thycotic.RabbitMq.Helper.snk</Link>
     </None>
     <None Include="App.config">
       <SubType>Designer</SubType>
