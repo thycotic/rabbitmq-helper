@@ -26,13 +26,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Utility.IO
                 {
                     Directory.Delete(path, true);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     tries++;
 
                     if (tries >= maxRetries)
                     {
-                        throw new ApplicationException(string.Format("Failed to clean path {0}", path));
+                        throw new ApplicationException(string.Format("Failed to clean path {0}", path), ex);
                     }
 
 
