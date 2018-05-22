@@ -37,9 +37,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         public static readonly string RabbitMqInstallerPath = Path.Combine(Path.GetTempPath(), string.Format("rabbitMq{0}.exe", InstallationConstants.RabbitMq.Version));
 
         /// <summary>
-        ///     The rabbit mq installer size in bytes
+        ///     The rabbit mq installer checksum
         /// </summary>
-        public const long RabbitMqInstallerSizeInBytes = 100;
+        public const string RabbitMqInstallerChecksum = "5d48c2de0c1ce55167d974d735f43b44";
 
         /// <summary>
         ///     Gets or sets the offline rabbit mq installer path.
@@ -96,17 +96,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 WriteVerbose(string.Format("Using offline installer path {0}", OfflineRabbitMqInstallerPath));
 
-                var fileInfo = new FileInfo(RabbitMqInstallerPath);
-                
-
-                if (!fileInfo.Exists)
+                if (!File.Exists(OfflineRabbitMqInstallerPath))
                 {
                     throw new FileNotFoundException("Installer does not exist");
                 }
 
-                if (fileInfo.Length != RabbitMqInstallerSizeInBytes)
+                if (PrerequisiteDownloader.CalculateMD5(OfflineRabbitMqInstallerPath) != RabbitMqInstallerChecksum)
                 {
-                    throw new FileNotFoundException("Installer is not the correct size or is corrupted");
+                    throw new FileNotFoundException("Installer checksum does not match");
                 }
 
                 if (File.Exists(RabbitMqInstallerPath))
@@ -128,7 +125,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     : InstallationConstants.RabbitMq.DownloadUrl;
 
                 downloader.Download(CancellationToken.None, downloadUrl,
-                    RabbitMqInstallerPath, RabbitMqInstallerSizeInBytes, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
+                    RabbitMqInstallerPath, RabbitMqInstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
                     progress =>
                     {
                         WriteProgress(new ProgressRecord(1, "RabbitMq download in progress", "Downloading")
@@ -136,6 +133,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                             PercentComplete = progress.ProgressPercentage
                         });
                     });
+
             }
         }
 

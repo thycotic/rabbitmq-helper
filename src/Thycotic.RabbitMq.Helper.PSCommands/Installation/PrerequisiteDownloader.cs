@@ -15,12 +15,23 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     public class PrerequisiteDownloader
     {
         /// <summary>
+        ///     Static constructor to allow TLS
+        /// </summary>
+        static PrerequisiteDownloader()
+        {
+            //ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = 
+                //SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | 
+                SecurityProtocolType.Tls12;
+        }
+
+        /// <summary>
         ///     Downloads the prerequisite.
         /// </summary>
         /// <param name="token">The token.</param>
         /// <param name="downloadUrl">The download URL.</param>
         /// <param name="installerPath">The installer path.</param>
-        /// <param name="installerSizeInBytes">The installer size.</param>
+        /// <param name="checksum">The installer checksum.</param>
         /// <param name="forceDownload">if set to <c>true</c> [force download].</param>
         /// <param name="maxRetries">The maximum retries.</param>
         /// <param name="debugHandler">The debug handler.</param>
@@ -28,7 +39,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <param name="warnHandler">The warn handler.</param>
         /// <param name="progressHandler">The progress handler.</param>
         /// <exception cref="System.IO.FileNotFoundException">Failed to download</exception>
-        public void Download(CancellationToken token, string downloadUrl, string installerPath, long installerSizeInBytes,
+        public void Download(CancellationToken token, string downloadUrl, string installerPath, string checksum,
             bool forceDownload = false, int maxRetries = 5, Action<string> debugHandler = null,
             Action<string> infoHandler = null, Action<string, Exception> warnHandler = null,
             Action<PrerequisiteDownloaderProgress> progressHandler = null)
@@ -38,9 +49,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             warnHandler = warnHandler ?? ((str, ex) => { });
             progressHandler = progressHandler ?? (progress => { });
 
-            var fileInfo = new FileInfo(installerPath);
-
-            if (!forceDownload && fileInfo.Exists && fileInfo.Length == installerSizeInBytes)
+            if (!forceDownload && File.Exists(installerPath) && CalculateMD5(installerPath) == checksum)
             {
                 infoHandler(string.Format("File already exists in {0}. Skipping download", installerPath));
                 return;
@@ -82,7 +91,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                         lastReportedProgressPercentage = progressPercentage;
                     };
 
-                    var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+                    var tempPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid().ToString()}.bin");
                     var task = client.DownloadFileTaskAsync(new Uri(downloadUrl, UriKind.Absolute), tempPath);
                     var awaiter = task.GetAwaiter();
 
@@ -98,10 +107,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                         Task.Delay(TimeSpan.FromSeconds(1), token).GetAwaiter().GetResult();
                     }
 
+                    if (task.Exception != null)
+                    {
+                    }
+
                     if (File.Exists(installerPath))
                         File.Delete(installerPath);
-
-                    Contract.Assume(installerPath.Length != 0);
 
                     stopWatch.Stop();
                     debugHandler(string.Format("File downloaded in {0}", stopWatch.Elapsed));
@@ -124,6 +135,27 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
             if (!downloaded)
                 throw new FileNotFoundException("Failed to download");
+
+            if (CalculateMD5(installerPath) != checksum)
+            {
+                throw new FileNotFoundException("Checksum does not match");
+            }
+        }
+
+
+        /// <summary>
+        ///    Calculates the MD5 hash of a file
+        /// </summary>
+        public static string CalculateMD5(string path)
+        {
+            using (var md5 = System.Security.Cryptography.MD5.Create())
+            {
+                using (var stream = File.OpenRead(path))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
+            }
         }
     }
 
