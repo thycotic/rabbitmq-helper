@@ -1,8 +1,7 @@
 ﻿using System.Management.Automation;
-using Thycotic.CLI.Commands;
 using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
 using Thycotic.RabbitMq.Helper.PSCommands.Management;
-using Thycotic.Utility;
+using Thycotic.RabbitMq.Helper.PSCommands.Utility;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {

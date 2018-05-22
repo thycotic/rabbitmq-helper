@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using RabbitMQ.Client;
-using Thycotic.Utility;
+using Thycotic.RabbitMq.Helper.PSCommands.Utility;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
