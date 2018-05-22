@@ -27,8 +27,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// <returns>List of the tail lines</returns>
         public string[] GetTailLines(int linesToReturn)
         {
-            Contract.Ensures(Contract.Result<string[]>() != null);
-
             using (var fileStream = new FileStream(_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (var streamReader = new StreamReader(fileStream))
