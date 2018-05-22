@@ -25,7 +25,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             /// <summary>
             ///     The version
             /// </summary>
-            public static readonly Version Version = new Version(20, 0);
+            public static readonly Version Version = new Version(20, 3);
 
             /// <summary>
             ///     The download URL
@@ -80,7 +80,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             /// <summary>
             ///     The version
             /// </summary>
-            public static readonly Version Version = new Version(3, 6, 12);
+            public static readonly Version Version = new Version(3, 7, 5);
 
             /// <summary>
             ///     The configuration path

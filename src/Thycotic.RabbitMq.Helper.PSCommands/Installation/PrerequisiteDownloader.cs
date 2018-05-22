@@ -20,6 +20,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <param name="token">The token.</param>
         /// <param name="downloadUrl">The download URL.</param>
         /// <param name="installerPath">The installer path.</param>
+        /// <param name="installerSizeInBytes">The installer size.</param>
         /// <param name="forceDownload">if set to <c>true</c> [force download].</param>
         /// <param name="maxRetries">The maximum retries.</param>
         /// <param name="debugHandler">The debug handler.</param>
@@ -27,7 +28,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <param name="warnHandler">The warn handler.</param>
         /// <param name="progressHandler">The progress handler.</param>
         /// <exception cref="System.IO.FileNotFoundException">Failed to download</exception>
-        public void Download(CancellationToken token, string downloadUrl, string installerPath,
+        public void Download(CancellationToken token, string downloadUrl, string installerPath, long installerSizeInBytes,
             bool forceDownload = false, int maxRetries = 5, Action<string> debugHandler = null,
             Action<string> infoHandler = null, Action<string, Exception> warnHandler = null,
             Action<PrerequisiteDownloaderProgress> progressHandler = null)
@@ -37,7 +38,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             warnHandler = warnHandler ?? ((str, ex) => { });
             progressHandler = progressHandler ?? (progress => { });
 
-            if (!forceDownload && File.Exists(installerPath))
+            var fileInfo = new FileInfo(installerPath);
+
+            if (!forceDownload && fileInfo.Exists && fileInfo.Length == installerSizeInBytes)
             {
                 infoHandler(string.Format("File already exists in {0}. Skipping download", installerPath));
                 return;

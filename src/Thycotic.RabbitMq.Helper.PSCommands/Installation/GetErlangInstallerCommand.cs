@@ -37,6 +37,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         public static readonly string ErlangInstallerPath = Path.Combine(Path.GetTempPath(), string.Format("erlang{0}.exe", InstallationConstants.Erlang.Version));
 
         /// <summary>
+        ///     The erlang installer size in bytes
+        /// </summary>
+        public const long ErlangInstallerSizeInBytes = 100;
+
+        /// <summary>
         ///     Gets or sets the offline erlang installer path.
         /// </summary>
         /// <value>
@@ -91,10 +96,21 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 WriteDebug(string.Format("Using offline installer path {0}", OfflineErlangInstallerPath));
 
-                if (!File.Exists(OfflineErlangInstallerPath))
+                var fileInfo = new FileInfo(OfflineErlangInstallerPath);
+
+
+
+                if (!fileInfo.Exists)
                 {
                     throw new FileNotFoundException("Installer does not exist");
                 }
+
+                if (fileInfo.Length != ErlangInstallerSizeInBytes)
+                {
+                    throw new FileNotFoundException("Installer is not the correct size or is corrupted");
+                }
+
+
                 if (File.Exists(ErlangInstallerPath))
                     File.Delete(ErlangInstallerPath);
 
@@ -114,7 +130,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     : InstallationConstants.Erlang.DownloadUrl;
 
                 downloader.Download(CancellationToken.None, downloadUrl,
-                    ErlangInstallerPath, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
+                    ErlangInstallerPath, ErlangInstallerSizeInBytes, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
                     progress =>
                     {
                         WriteProgress(new ProgressRecord(1, "Erlang download in progress", "Downloading")

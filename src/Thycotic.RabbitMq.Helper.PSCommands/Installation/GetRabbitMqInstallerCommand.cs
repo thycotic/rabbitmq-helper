@@ -36,6 +36,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         public static readonly string RabbitMqInstallerPath = Path.Combine(Path.GetTempPath(), string.Format("rabbitMq{0}.exe", InstallationConstants.RabbitMq.Version));
 
+        /// <summary>
+        ///     The rabbit mq installer size in bytes
+        /// </summary>
+        public const long RabbitMqInstallerSizeInBytes = 100;
 
         /// <summary>
         ///     Gets or sets the offline rabbit mq installer path.
@@ -92,10 +96,19 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 WriteVerbose(string.Format("Using offline installer path {0}", OfflineRabbitMqInstallerPath));
 
-                if (!File.Exists(OfflineRabbitMqInstallerPath))
+                var fileInfo = new FileInfo(RabbitMqInstallerPath);
+                
+
+                if (!fileInfo.Exists)
                 {
                     throw new FileNotFoundException("Installer does not exist");
                 }
+
+                if (fileInfo.Length != RabbitMqInstallerSizeInBytes)
+                {
+                    throw new FileNotFoundException("Installer is not the correct size or is corrupted");
+                }
+
                 if (File.Exists(RabbitMqInstallerPath))
                     File.Delete(RabbitMqInstallerPath);
 
@@ -115,7 +128,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     : InstallationConstants.RabbitMq.DownloadUrl;
 
                 downloader.Download(CancellationToken.None, downloadUrl,
-                    RabbitMqInstallerPath, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
+                    RabbitMqInstallerPath, RabbitMqInstallerSizeInBytes, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
                     progress =>
                     {
                         WriteProgress(new ProgressRecord(1, "RabbitMq download in progress", "Downloading")
