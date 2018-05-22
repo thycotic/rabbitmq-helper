@@ -259,6 +259,9 @@
       <Link>Thycotic.RabbitMq.Helper.snk</Link>
     </None>
     <None Include="app.config" />
+    <None Include="Examples\remove-all-queues.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\installnonssl-offline.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
