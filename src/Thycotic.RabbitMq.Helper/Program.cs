@@ -1,59 +1,58 @@
 ﻿using System;
-using Thycotic.CLI;
-using Thycotic.CLI.Legacy;
+using System.Diagnostics;using System.IO;
+using System.Linq;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
+using System.Threading.Tasks;
 using Thycotic.RabbitMq.Helper.PSCommands.Installation;
 
 namespace Thycotic.RabbitMq.Helper
 {
     internal class Program
     {
-        private static int Main(string[] args)
+        private static void Main(string[] args)
         {
-            if (!Environment.Is64BitOperatingSystem || !Environment.Is64BitProcess)
+            Console.Write("Starting PowerShell...");
+
+            var task = Task.Run(() =>
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("WARNING: You are running the helper in a 32-bit process/operating system.");
-                Console.WriteLine("We recommend installing site connectors on a 64-bit operating systems.");
-                Console.WriteLine();
-                Console.WriteLine("Close this window now to abort or press any key to proceed anyway...");
-                Console.ReadKey();
-                Console.Clear();
-                Console.ResetColor();
-            }
+                var module = typeof(InstallConnectorCommand).Assembly;
 
-            var initialCommand = string.Join(" ", args);
+                var exampleFolder = ".\\Examples";
+                var preparationScript = $"Write-Host \"Running RabbitMq Helper version {module.GetName().Version}\"; " +
+                                        $"Write-Host \"Execution Policy:\";" +
+                                        $"Get-ExecutionPolicy | Write-Host;" +
+                                        $"Write-Host;" +
 
-            if (string.IsNullOrWhiteSpace(initialCommand.Trim()))
-                initialCommand = null;
+                                        $"Import-Module \"{module.Location}\"; " +
 
-            var isLegacyCli = !string.IsNullOrWhiteSpace(initialCommand) &&
-                              initialCommand.StartsWith("installConnector");
+                                        $"Write-Host \"You can use the provided Example PowerShell scripts or invoke any of the available command-lets directly.\";" +
+                                        $"Write-Host;" +
 
-#pragma warning disable 618
-            //we are basically forever married to the old cli format due to possibility of legacy documentation lingering around -dkk
-            var cli = isLegacyCli ? new CommandLineWithLegacyParameterParsing() : new CommandLineInterface();
-#pragma warning restore 618
+                                        $"Write-Host \"Available scripts in {exampleFolder}:\";" +
+                                        $"Get-ChildItem -Filter *.ps1 -Path {exampleFolder} -Recurse -File | % {{ Write-Host \"`t {exampleFolder}\\$_\" }};" +
+                                        $"Write-Host;" +
+                                        
+                                        $"Write-Host \"Available command-lets:\";" +
+                                        $"Get-Command -Module {module.GetName().Name} | % {{ Write-Host \"`t $_.Name\" }};" +
+                                        $"Write-Host;";
 
-            cli.Modules = new[] {typeof(InstallConnectorCommand).Assembly.Location};
+                var psi = new ProcessStartInfo
+                {
+                    FileName = "powershell.exe",
+                    Arguments = $" -NoExit -ExecutionPolicy RemoteSigned & {{& {preparationScript} }}"
 
-            if (isLegacyCli)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("WARNING: You are running the helper using legacy syntax. ");
-                Console.WriteLine("We recommend using the latest PowerShell module specification.");
-                Console.WriteLine();
-                Console.WriteLine("Close this window now to abort or press any key to proceed anyway...");
-                Console.ReadKey();
-                Console.Clear();
-                Console.ResetColor();
+                };
+                var process = new Process {StartInfo = psi};
+                process.Start();
 
-                cli.ConsumeInput(initialCommand + @" -verbose=""true""");
-                Console.ReadKey();
-            }
-            else
-                cli.BeginInputLoop(initialCommand);
+                process.WaitForExit();
 
-            return 0;
+            });
+
+            Console.Write("done.");
+
+            task.Wait();
         }
     }
 }

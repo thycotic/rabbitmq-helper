@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
-using Thycotic.Utility.OS;
+using Thycotic.RabbitMq.Helper.PSCommands.Utility;
+using Thycotic.RabbitMq.Helper.PSCommands.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {

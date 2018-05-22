@@ -215,14 +215,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thycotic.CLI, Version=5.2.1.12, Culture=neutral, PublicKeyToken=40f42b7d5a8011f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thycotic.CLI.5.2.1.12\lib\net451\Thycotic.CLI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Thycotic.Utility">
-      <HintPath>..\packages\Thycotic.Utility.5.0.1.42\lib\net451\Thycotic.Utility.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Certificate\ConvertCaCerToPemCommand.cs" />
@@ -254,6 +246,11 @@
     <Compile Include="Management\GetRabbitMqSaslLogCommand.cs" />
     <Compile Include="Management\AssertConnectivityCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Reflection\AssemblyEntryPointProvider.cs" />
+    <Compile Include="Utility\IO\DirectoryCleaner.cs" />
+    <Compile Include="Utility\CmdletExtensions.cs" />
+    <Compile Include="Utility\DnsEx.cs" />
+    <Compile Include="Utility\OS\ExternalProcessRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\RabbitMq\3.6.9\NonSsl\rabbitmq.config.erlang" />
@@ -262,16 +259,13 @@
       <Link>Thycotic.RabbitMq.Helper.snk</Link>
     </None>
     <None Include="app.config" />
-    <None Include="Examples\helpers-combined.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Examples\installnonssl-offline.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Examples\installnonssl.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\installnossl-nolicenseprompts.ps1">
+    <None Include="Examples\installnonssl-nolicenseprompts.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Examples\installssl-nolicenseprompts.ps1">
@@ -288,7 +282,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Examples\Offline\README.txt" />
+    <Content Include="Examples\Offline\README.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.8\build\XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.8\build\XmlDoc2CmdletDoc.targets')" />
