@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Thycotic.RabbitMq.Helper.PSCommands.Utility;
 using Thycotic.RabbitMq.Helper.PSCommands.Utility.IO;
 using Thycotic.RabbitMq.Helper.PSCommands.Utility.OS;
+using Thycotic.RabbitMq.Helper.PSCommands.Management;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -22,13 +23,34 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     <code>Uninstall-RabbitMq</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Uninstall, "RabbitMq")]
-    public class UninstallRabbitMqCommand : Cmdlet
+    public class UninstallRabbitMqCommand : CtlManagementConsoleCmdlet
     {
         /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
+            if (File.Exists(ExecutablePath))
+            {
+                var externalProcessRunner = new ExternalProcessRunner
+                {
+                    EstimatedProcessDuration = TimeSpan.FromSeconds(15)
+                };
+
+                WriteVerbose("Stopping RabbitMq");
+
+                var parameters2 = "stop";
+
+                try
+                {
+                    externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException("Failed to create user. Manual creation might be necessary", ex);
+                }
+            }
+            
             WriteVerbose("Uninstalling prior versions of RabbitMq");
 
             var executablePaths = InstallationConstants.RabbitMq.UninstallerPaths;

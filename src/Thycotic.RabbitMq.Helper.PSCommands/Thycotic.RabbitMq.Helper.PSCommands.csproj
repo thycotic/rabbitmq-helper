@@ -253,8 +253,8 @@
     <Compile Include="Utility\OS\ExternalProcessRunner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\RabbitMq\3.6.9\NonSsl\rabbitmq.config.erlang" />
-    <EmbeddedResource Include="Content\RabbitMq\3.6.9\Ssl\rabbitmq.config.erlang" />
+    <EmbeddedResource Include="Content\RabbitMq\3.7.5\NonSsl\rabbitmq.config.erlang" />
+    <EmbeddedResource Include="Content\RabbitMq\3.7.5\Ssl\rabbitmq.config.erlang" />
     <None Include="..\Certificates\Thycotic.RabbitMq.Helper.snk">
       <Link>Thycotic.RabbitMq.Helper.snk</Link>
     </None>
