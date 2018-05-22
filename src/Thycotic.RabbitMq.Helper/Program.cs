@@ -23,8 +23,10 @@ namespace Thycotic.RabbitMq.Helper
 
                     var psi = new ProcessStartInfo
                     {
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden,
                         FileName = "powershell.exe",
-                        Arguments = $" -Version 3.0 -NoExit"
+                        Arguments = $"-Version 3.0 -ExecutionPolicy RemoteSigned & {{& Write-Host $PSVersionTable.PSVersion }}"
 
                     };
                     var process = new Process { StartInfo = psi };
@@ -59,7 +61,7 @@ namespace Thycotic.RabbitMq.Helper
                     psi = new ProcessStartInfo
                     {
                         FileName = "powershell.exe",
-                        Arguments = $" -Version 3.0 -NoExit -ExecutionPolicy RemoteSigned & {{& {preparationScript} }}"
+                        Arguments = $"-Version 3.0 -NoExit -ExecutionPolicy RemoteSigned & {{& {preparationScript} }}"
 
                     };
                     process = new Process { StartInfo = psi };
@@ -67,12 +69,17 @@ namespace Thycotic.RabbitMq.Helper
 
                     process.WaitForExit();
 
-                    if (process.ExitCode != 0)
+                    if (process.ExitCode != 0 && process.ExitCode != -1073741510)
                     {
-                        throw new ApplicationFailedException($"PowerShell existed with code {process.ExitCode}");
+                        throw new ApplicationFailedException($"PowerShell existed with unexpected code {process.ExitCode}");
                     }
 
                 });
+
+                if (!task.IsCanceled && !task.IsFaulted)
+                {
+                    Console.WriteLine("PowerShell running. This window will close when the PowerShell host closes.");
+                }
 
                 task.Wait();
 
