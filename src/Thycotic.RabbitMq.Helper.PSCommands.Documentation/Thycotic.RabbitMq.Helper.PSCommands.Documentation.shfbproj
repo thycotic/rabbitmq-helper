@@ -35,7 +35,7 @@
     <CleanIntermediates>True</CleanIntermediates>
     <HelpFileVersion>7.0.0.0</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>
-    <NamespaceGrouping>False</NamespaceGrouping>
+    <NamespaceGrouping>True</NamespaceGrouping>
     <SyntaxFilters>C#</SyntaxFilters>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <RootNamespaceContainer>False</RootNamespaceContainer>
@@ -52,6 +52,8 @@
     <ProjectSummary>RabbitMq Helper is a tool provided by Thycotic to aid the installation/management of RabbitMq and RabbitMq clusters.</ProjectSummary>
     <PlugInConfigurations />
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
+    <MissingTags>Summary, Parameter, Returns, Namespace, TypeParameter</MissingTags>
+    <VisibleItems>None</VisibleItems>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
