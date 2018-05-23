@@ -259,6 +259,7 @@
       <Link>Thycotic.RabbitMq.Helper.snk</Link>
     </None>
     <None Include="app.config" />
+    <None Include="Content\RabbitMq\3.7.5\rabbitmq.conf.example" />
     <None Include="Examples\Offline\README.md" />
     <None Include="Examples\remove-all-queues.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

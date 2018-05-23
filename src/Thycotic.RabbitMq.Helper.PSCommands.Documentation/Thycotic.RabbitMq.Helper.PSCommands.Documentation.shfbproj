@@ -14,17 +14,13 @@
     <Name>Thycotic.RabbitMq.Helper.PSCommands.Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5.1</FrameworkVersion>
-    <OutputPath>..\..\doc\</OutputPath>
+    <OutputPath>..\..\..\rabbitmq-helper.wiki\</OutputPath>
     <HtmlHelpName>Thycotic.RabbitMq.Helper.PSCommands.Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
-      <Argument Key="logoFile" Value="Help.png" xmlns="" />
-      <Argument Key="logoHeight" Value="" xmlns="" />
-      <Argument Key="logoWidth" Value="" xmlns="" />
-      <Argument Key="logoAltText" Value="" xmlns="" />
-      <Argument Key="logoPlacement" Value="left" xmlns="" />
-      <Argument Key="logoAlignment" Value="left" xmlns="" />
-      <Argument Key="maxVersionParts" Value="" xmlns="" />
+      <Argument Key="maxVersionParts" Value="" />
+      <Argument Key="includeEnumValues" Value="true" />
+      <Argument Key="baseSourceCodeUrl" Value="https://raw.githubusercontent.com/bharaba/rabbitmq-helper/master/src/" />
     </TransformComponentArguments>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\Thycotic.RabbitMq.Helper.PSCommands\Thycotic.RabbitMq.Helper.PSCommands.csproj" />
