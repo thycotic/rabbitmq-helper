@@ -14,7 +14,7 @@
     <Name>Thycotic.RabbitMq.Helper.PSCommands.Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5.1</FrameworkVersion>
-    <OutputPath>..\doc\</OutputPath>
+    <OutputPath>..\..\doc\</OutputPath>
     <HtmlHelpName>Thycotic.RabbitMq.Helper.PSCommands.Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
