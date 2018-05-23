@@ -347,6 +347,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             new NewRabbitMqConfigDirectoryCommand().AsChildOf(this).InvokeImmediate();
             new SetRabbitMqBaseEnvironmentalVariableCommand().AsChildOf(this).InvokeImmediate();
 
+            new CopyErlangCookieFileCommand().AsChildOf(this).InvokeImmediate();
+
             if (UseSsl)
             {
                 WriteVerbose("Configuring RabbitMq with encryption support");
@@ -404,7 +406,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 WriteProgress(new ProgressRecord(activityid, activity, "Configuring") { PercentComplete = 60 });
 
-                new CopyRabbitMqExampleNonSslConfigFileCommand().AsChildOf(this).InvokeImmediate();
+                new CopyRabbitMqExampleNonTlsConfigFileCommand().AsChildOf(this).InvokeImmediate();
 
                 WriteProgress(new ProgressRecord(activityid, activity, "Installing RabbitMq") { PercentComplete = 70 });
 

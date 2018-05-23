@@ -4,7 +4,7 @@ using System.Management.Automation;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
     /// <summary>
-    ///     Copies RabbitMq non-SSL example configuration file. The configuration file will be located in the Thycotic RabbitMq Site Connector folder.
+    ///     Copies RabbitMq non-TLS example configuration file. The configuration file will be located in the Thycotic RabbitMq Site Connector folder.
     /// </summary>
     /// <para type="synopsis">Copies RabbitMq non-SSL example configuration file. </para>
     /// <para type="description">The Copy-RabbitMqExampleNonSslConfigFile cmdlet copies RabbitMq non-SSL example configuration file.</para>
@@ -16,7 +16,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     <code>Copy-RabbitMqExampleNonSslConfigFile</code>
     /// </example>
     [Cmdlet(VerbsCommon.Copy, "RabbitMqExampleNonSslConfigFile")]
-    public class CopyRabbitMqExampleNonSslConfigFileCommand : Cmdlet
+    public class CopyRabbitMqExampleNonTlsConfigFileCommand : Cmdlet
     {
         /// <summary>
         ///     Processes the record.
@@ -28,7 +28,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
             var contentAssembly = GetType().Assembly;
 
-            var resourceName = string.Format("{0}.Content.RabbitMq._3._7._5.NonSsl.rabbitmq.config.erlang",
+            var resourceName = string.Format("{0}.Content.RabbitMq._3._7._5.rabbitmq.conf.example",
                 contentAssembly.GetName().Name);
 
             string contents;
@@ -45,7 +45,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             }
 
             var configFilePath = Path.Combine(InstallationConstants.RabbitMq.ConfigurationPath,
-                "rabbitmq.config");
+                "rabbitmq.conf");
 
             File.WriteAllText(configFilePath, contents);
         }
