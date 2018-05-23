@@ -14,34 +14,38 @@
     <Name>Thycotic.RabbitMq.Helper.PSCommands.Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5.1</FrameworkVersion>
-    <OutputPath>..\..\..\rabbitmq-helper.wiki\</OutputPath>
+    <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>Thycotic.RabbitMq.Helper.PSCommands.Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
-      <Argument Key="maxVersionParts" Value="" />
-      <Argument Key="includeEnumValues" Value="true" />
-      <Argument Key="baseSourceCodeUrl" Value="https://raw.githubusercontent.com/bharaba/rabbitmq-helper/master/src/" />
+      <Argument Key="logoFile" Value="Help.png" xmlns="" />
+      <Argument Key="logoHeight" Value="" xmlns="" />
+      <Argument Key="logoWidth" Value="" xmlns="" />
+      <Argument Key="logoAltText" Value="" xmlns="" />
+      <Argument Key="logoPlacement" Value="left" xmlns="" />
+      <Argument Key="logoAlignment" Value="left" xmlns="" />
+      <Argument Key="maxVersionParts" Value="" xmlns="" />
     </TransformComponentArguments>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\Thycotic.RabbitMq.Helper.PSCommands\Thycotic.RabbitMq.Helper.PSCommands.csproj" />
       <DocumentationSource sourceFile="..\Thycotic.RabbitMq.Helper\Thycotic.RabbitMq.Helper.csproj" />
     </DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
-    <BuildAssemblerVerbosity>OnlyErrors</BuildAssemblerVerbosity>
-    <HelpFileFormat>Markdown</HelpFileFormat>
+    <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
+    <HelpFileFormat>Website</HelpFileFormat>
     <IndentHtml>False</IndentHtml>
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
-    <HelpFileVersion>7.0.0.0</HelpFileVersion>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>
-    <NamespaceGrouping>True</NamespaceGrouping>
+    <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>C#</SyntaxFilters>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <RootNamespaceContainer>False</RootNamespaceContainer>
-    <PresentationStyle>Markdown</PresentationStyle>
+    <PresentationStyle>VS2013</PresentationStyle>
     <Preliminary>True</Preliminary>
-    <NamingMethod>MemberName</NamingMethod>
+    <NamingMethod>Guid</NamingMethod>
     <HelpTitle>Thycotic RabbitMq Helper PowerShell Documentation</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <NamespaceSummaries>
@@ -51,9 +55,6 @@
     </NamespaceSummaries>
     <ProjectSummary>RabbitMq Helper is a tool provided by Thycotic to aid the installation/management of RabbitMq and RabbitMq clusters.</ProjectSummary>
     <PlugInConfigurations />
-    <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
-    <MissingTags>Summary, Parameter, Returns, Namespace, TypeParameter</MissingTags>
-    <VisibleItems>None</VisibleItems>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
