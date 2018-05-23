@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpKI>
+  <HelpKINode Title="AdminPassword property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet_AdminPassword.htm" />
+  <HelpKINode Title="AdminUserName property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet_AdminUserName.htm" />
+  <HelpKINode Title="AgreeErlangLicense property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_AgreeErlangLicense.htm" />
+  <HelpKINode Title="AgreeRabbitMqLicense property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_AgreeRabbitMqLicense.htm" />
+  <HelpKINode Title="AsChildOf method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_CmdletExtensions_AsChildOf.htm" />
+  <HelpKINode Title="AssemblyEntryPointProvider class">
+    <HelpKINode Title="AssemblyEntryPointProvider Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_Reflection_AssemblyEntryPointProvider.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_Reflection_AssemblyEntryPointProvider__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Utility_Reflection_AssemblyEntryPointProvider.htm" />
+  </HelpKINode>
+  <HelpKINode Title="AssemblyEntryPointProvider.AssemblyEntryPointProvider constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_Reflection_AssemblyEntryPointProvider__ctor.htm" />
+  <HelpKINode Title="AssemblyEntryPointProvider.GetAssemblyDirectory method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_Reflection_AssemblyEntryPointProvider_GetAssemblyDirectory.htm" />
+  <HelpKINode Title="AssertConnectivityCommand class">
+    <HelpKINode Title="AssertConnectivityCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="AssertConnectivityCommand.AssertConnectivityCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand__ctor.htm" />
+  <HelpKINode Title="AssertConnectivityCommand.Hostname property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_Hostname.htm" />
+  <HelpKINode Title="AssertConnectivityCommand.Password property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_Password.htm" />
+  <HelpKINode Title="AssertConnectivityCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_ProcessRecord.htm" />
+  <HelpKINode Title="AssertConnectivityCommand.UserName property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_UserName.htm" />
+  <HelpKINode Title="AssertConnectivityCommand.UseSsl property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_UseSsl.htm" />
+  <HelpKINode Title="BaseUrl property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet_BaseUrl.htm" />
+  <HelpKINode Title="BinDir field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_BinDir.htm" />
+  <HelpKINode Title="BinPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_BinPath.htm" />
+  <HelpKINode Title="BytesReceived property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress_BytesReceived.htm" />
+  <HelpKINode Title="CaCertPath property">
+    <HelpKINode Title="ConvertCaCerToPemCommand.CaCertPath Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand_CaCertPath.htm" />
+    <HelpKINode Title="InstallConnectorCommand.CaCertPath Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_CaCertPath.htm" />
+  </HelpKINode>
+  <HelpKINode Title="CalculateMD5 method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloader_CalculateMD5.htm" />
+  <HelpKINode Title="CertificatePath field">
+    <HelpKINode Title="ConvertCaCerToPemCommand.CertificatePath Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand_CertificatePath.htm" />
+    <HelpKINode Title="ConvertPfxToPemCommand.CertificatePath Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_CertificatePath.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Clean method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_IO_DirectoryCleaner_Clean.htm" />
+  <HelpKINode Title="CmdletExtensions class">
+    <HelpKINode Title="CmdletExtensions Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_CmdletExtensions.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Utility_CmdletExtensions.htm" />
+  </HelpKINode>
+  <HelpKINode Title="CmdletExtensions.AsChildOf method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_CmdletExtensions_AsChildOf.htm" />
+  <HelpKINode Title="CmdletExtensions.InvokeImmediate method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_CmdletExtensions_InvokeImmediate.htm" />
+  <HelpKINode Title="ConfigurationPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_ConfigurationPath.htm" />
+  <HelpKINode Title="ConvertCaCerToPemCommand class">
+    <HelpKINode Title="ConvertCaCerToPemCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand__ctor.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConvertCaCerToPemCommand.CaCertPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand_CaCertPath.htm" />
+  <HelpKINode Title="ConvertCaCerToPemCommand.CertificatePath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand_CertificatePath.htm" />
+  <HelpKINode Title="ConvertCaCerToPemCommand.ConvertCaCerToPemCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand__ctor.htm" />
+  <HelpKINode Title="ConvertCaCerToPemCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand_ProcessRecord.htm" />
+  <HelpKINode Title="ConvertPfxToPemCommand class">
+    <HelpKINode Title="ConvertPfxToPemCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand__ctor.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConvertPfxToPemCommand.CertificatePath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_CertificatePath.htm" />
+  <HelpKINode Title="ConvertPfxToPemCommand.ConvertPfxToPemCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand__ctor.htm" />
+  <HelpKINode Title="ConvertPfxToPemCommand.KeyPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_KeyPath.htm" />
+  <HelpKINode Title="ConvertPfxToPemCommand.PfxPassword property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_PfxPassword.htm" />
+  <HelpKINode Title="ConvertPfxToPemCommand.PfxPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_PfxPath.htm" />
+  <HelpKINode Title="ConvertPfxToPemCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_ProcessRecord.htm" />
+  <HelpKINode Title="CopyRabbitMqExampleNonSslConfigFileCommand class">
+    <HelpKINode Title="CopyRabbitMqExampleNonSslConfigFileCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleNonSslConfigFileCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleNonSslConfigFileCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleNonSslConfigFileCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleNonSslConfigFileCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="CopyRabbitMqExampleNonSslConfigFileCommand.CopyRabbitMqExampleNonSslConfigFileCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleNonSslConfigFileCommand__ctor.htm" />
+  <HelpKINode Title="CopyRabbitMqExampleNonSslConfigFileCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleNonSslConfigFileCommand_ProcessRecord.htm" />
+  <HelpKINode Title="CopyRabbitMqExampleSslConfigFileCommand class">
+    <HelpKINode Title="CopyRabbitMqExampleSslConfigFileCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleSslConfigFileCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleSslConfigFileCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleSslConfigFileCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleSslConfigFileCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="CopyRabbitMqExampleSslConfigFileCommand.CopyRabbitMqExampleSslConfigFileCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleSslConfigFileCommand__ctor.htm" />
+  <HelpKINode Title="CopyRabbitMqExampleSslConfigFileCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleSslConfigFileCommand_ProcessRecord.htm" />
+  <HelpKINode Title="Count property">
+    <HelpKINode Title="GetRabbitMqLogCommand.Count Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand_Count.htm" />
+    <HelpKINode Title="GetRabbitMqSaslLogCommand.Count Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand_Count.htm" />
+  </HelpKINode>
+  <HelpKINode Title="CtlManagementConsoleCmdlet class">
+    <HelpKINode Title="CtlManagementConsoleCmdlet Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet.htm" />
+  </HelpKINode>
+  <HelpKINode Title="CtlManagementConsoleCmdlet.CtlManagementConsoleCmdlet constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet__ctor.htm" />
+  <HelpKINode Title="CtlManagementConsoleCmdlet.Executable property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet_Executable.htm" />
+  <HelpKINode Title="CtlManagementConsoleCmdlet.ExecutablePath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet_ExecutablePath.htm" />
+  <HelpKINode Title="CtlManagementConsoleCmdlet.WorkingPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet_WorkingPath.htm" />
+  <HelpKINode Title="DirectoryCleaner class">
+    <HelpKINode Title="DirectoryCleaner Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_IO_DirectoryCleaner.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_IO_DirectoryCleaner__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Utility_IO_DirectoryCleaner.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DirectoryCleaner.Clean method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_IO_DirectoryCleaner_Clean.htm" />
+  <HelpKINode Title="DirectoryCleaner.DirectoryCleaner constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_IO_DirectoryCleaner__ctor.htm" />
+  <HelpKINode Title="DnsEx class">
+    <HelpKINode Title="DnsEx Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_DnsEx.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Utility_DnsEx.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DnsEx.GetDnsHostName method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_DnsEx_GetDnsHostName.htm" />
+  <HelpKINode Title="Download method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloader_Download.htm" />
+  <HelpKINode Title="DownloadUrl field">
+    <HelpKINode Title="InstallationConstants.Erlang.DownloadUrl Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_DownloadUrl.htm" />
+    <HelpKINode Title="InstallationConstants.RabbitMq.DownloadUrl Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_DownloadUrl.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EnableRabbitMqManagementPluginCommand class">
+    <HelpKINode Title="EnableRabbitMqManagementPluginCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EnableRabbitMqManagementPluginCommand.EnableRabbitMqManagementPluginCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand__ctor.htm" />
+  <HelpKINode Title="EnableRabbitMqManagementPluginCommand.OpenConsoleAfterInstall property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand_OpenConsoleAfterInstall.htm" />
+  <HelpKINode Title="EnableRabbitMqManagementPluginCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand_ProcessRecord.htm" />
+  <HelpKINode Title="Erlang class">
+    <HelpKINode Title="fields" Url="html/Fields_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ErlangHomeEnvironmentalVariableName field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand_ErlangHomeEnvironmentalVariableName.htm" />
+  <HelpKINode Title="ErlangInstallerChecksum field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_ErlangInstallerChecksum.htm" />
+  <HelpKINode Title="ErlangInstallerPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_ErlangInstallerPath.htm" />
+  <HelpKINode Title="EstimatedProcessDuration property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner_EstimatedProcessDuration.htm" />
+  <HelpKINode Title="Executable property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet_Executable.htm" />
+  <HelpKINode Title="ExecutablePath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet_ExecutablePath.htm" />
+  <HelpKINode Title="ExternalProcessRunner class">
+    <HelpKINode Title="ExternalProcessRunner Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ExternalProcessRunner.EstimatedProcessDuration property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner_EstimatedProcessDuration.htm" />
+  <HelpKINode Title="ExternalProcessRunner.ExternalProcessRunner constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner__ctor.htm" />
+  <HelpKINode Title="ExternalProcessRunner.Run method" Url="html/Overload_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner_Run.htm" />
+  <HelpKINode Title="Force property">
+    <HelpKINode Title="GetErlangInstallerCommand.Force Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_Force.htm" />
+    <HelpKINode Title="GetRabbitMqInstallerCommand.Force Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_Force.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ForceDownload property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_ForceDownload.htm" />
+  <HelpKINode Title="GetAssemblyDirectory method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_Reflection_AssemblyEntryPointProvider_GetAssemblyDirectory.htm" />
+  <HelpKINode Title="GetDnsHostName method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_DnsEx_GetDnsHostName.htm" />
+  <HelpKINode Title="GetDownloadLocationsCommand class">
+    <HelpKINode Title="GetDownloadLocationsCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetDownloadLocationsCommand.GetDownloadLocationsCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand__ctor.htm" />
+  <HelpKINode Title="GetDownloadLocationsCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand_ProcessRecord.htm" />
+  <HelpKINode Title="GetDownloadLocationsCommand.UseThycoticMirror property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand_UseThycoticMirror.htm" />
+  <HelpKINode Title="GetErlangInstallerCommand class">
+    <HelpKINode Title="GetErlangInstallerCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand__ctor.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetErlangInstallerCommand.ErlangInstallerChecksum field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_ErlangInstallerChecksum.htm" />
+  <HelpKINode Title="GetErlangInstallerCommand.ErlangInstallerPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_ErlangInstallerPath.htm" />
+  <HelpKINode Title="GetErlangInstallerCommand.Force property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_Force.htm" />
+  <HelpKINode Title="GetErlangInstallerCommand.GetErlangInstallerCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand__ctor.htm" />
+  <HelpKINode Title="GetErlangInstallerCommand.OfflineErlangInstallerPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_OfflineErlangInstallerPath.htm" />
+  <HelpKINode Title="GetErlangInstallerCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_ProcessRecord.htm" />
+  <HelpKINode Title="GetErlangInstallerCommand.UseThycoticMirror property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_UseThycoticMirror.htm" />
+  <HelpKINode Title="GetRabbitMqInstallerCommand class">
+    <HelpKINode Title="GetRabbitMqInstallerCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand__ctor.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetRabbitMqInstallerCommand.Force property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_Force.htm" />
+  <HelpKINode Title="GetRabbitMqInstallerCommand.GetRabbitMqInstallerCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand__ctor.htm" />
+  <HelpKINode Title="GetRabbitMqInstallerCommand.OfflineRabbitMqInstallerPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_OfflineRabbitMqInstallerPath.htm" />
+  <HelpKINode Title="GetRabbitMqInstallerCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_ProcessRecord.htm" />
+  <HelpKINode Title="GetRabbitMqInstallerCommand.RabbitMqInstallerChecksum field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_RabbitMqInstallerChecksum.htm" />
+  <HelpKINode Title="GetRabbitMqInstallerCommand.RabbitMqInstallerPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_RabbitMqInstallerPath.htm" />
+  <HelpKINode Title="GetRabbitMqInstallerCommand.UseThycoticMirror property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_UseThycoticMirror.htm" />
+  <HelpKINode Title="GetRabbitMqLogCommand class">
+    <HelpKINode Title="GetRabbitMqLogCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetRabbitMqLogCommand.Count property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand_Count.htm" />
+  <HelpKINode Title="GetRabbitMqLogCommand.GetRabbitMqLogCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand__ctor.htm" />
+  <HelpKINode Title="GetRabbitMqLogCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand_ProcessRecord.htm" />
+  <HelpKINode Title="GetRabbitMqSaslLogCommand class">
+    <HelpKINode Title="GetRabbitMqSaslLogCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetRabbitMqSaslLogCommand.Count property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand_Count.htm" />
+  <HelpKINode Title="GetRabbitMqSaslLogCommand.GetRabbitMqSaslLogCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand__ctor.htm" />
+  <HelpKINode Title="GetRabbitMqSaslLogCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand_ProcessRecord.htm" />
+  <HelpKINode Title="GetTailLines method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_LockedFileReader_GetTailLines.htm" />
+  <HelpKINode Title="Hostname property">
+    <HelpKINode Title="AssertConnectivityCommand.Hostname Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_Hostname.htm" />
+    <HelpKINode Title="InstallConnectorCommand.Hostname Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_Hostname.htm" />
+  </HelpKINode>
+  <HelpKINode Title="InstallationConstants class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants.htm" />
+  <HelpKINode Title="InstallationConstants.Erlang class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang.htm" />
+  <HelpKINode Title="InstallationConstants.Erlang.DownloadUrl field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_DownloadUrl.htm" />
+  <HelpKINode Title="InstallationConstants.Erlang.InstallPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_InstallPath.htm" />
+  <HelpKINode Title="InstallationConstants.Erlang.ThycoticMirrorDownloadUrl field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_ThycoticMirrorDownloadUrl.htm" />
+  <HelpKINode Title="InstallationConstants.Erlang.UninstallerPaths field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_UninstallerPaths.htm" />
+  <HelpKINode Title="InstallationConstants.Erlang.Version field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_Version.htm" />
+  <HelpKINode Title="InstallationConstants.RabbitMq class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq.htm" />
+  <HelpKINode Title="InstallationConstants.RabbitMq.BinDir field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_BinDir.htm" />
+  <HelpKINode Title="InstallationConstants.RabbitMq.BinPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_BinPath.htm" />
+  <HelpKINode Title="InstallationConstants.RabbitMq.ConfigurationPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_ConfigurationPath.htm" />
+  <HelpKINode Title="InstallationConstants.RabbitMq.DownloadUrl field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_DownloadUrl.htm" />
+  <HelpKINode Title="InstallationConstants.RabbitMq.InstallPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_InstallPath.htm" />
+  <HelpKINode Title="InstallationConstants.RabbitMq.ThycoticMirrorDownloadUrl field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_ThycoticMirrorDownloadUrl.htm" />
+  <HelpKINode Title="InstallationConstants.RabbitMq.UninstallerPaths field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_UninstallerPaths.htm" />
+  <HelpKINode Title="InstallationConstants.RabbitMq.Version field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_Version.htm" />
+  <HelpKINode Title="InstallConnectorCommand class">
+    <HelpKINode Title="InstallConnectorCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="InstallConnectorCommand.AgreeErlangLicense property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_AgreeErlangLicense.htm" />
+  <HelpKINode Title="InstallConnectorCommand.AgreeRabbitMqLicense property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_AgreeRabbitMqLicense.htm" />
+  <HelpKINode Title="InstallConnectorCommand.CaCertPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_CaCertPath.htm" />
+  <HelpKINode Title="InstallConnectorCommand.ForceDownload property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_ForceDownload.htm" />
+  <HelpKINode Title="InstallConnectorCommand.Hostname property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_Hostname.htm" />
+  <HelpKINode Title="InstallConnectorCommand.InstallConnectorCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand__ctor.htm" />
+  <HelpKINode Title="InstallConnectorCommand.OfflineErlangInstallerPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_OfflineErlangInstallerPath.htm" />
+  <HelpKINode Title="InstallConnectorCommand.OfflineRabbitMqInstallerPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_OfflineRabbitMqInstallerPath.htm" />
+  <HelpKINode Title="InstallConnectorCommand.Password property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_Password.htm" />
+  <HelpKINode Title="InstallConnectorCommand.PfxPassword property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_PfxPassword.htm" />
+  <HelpKINode Title="InstallConnectorCommand.PfxPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_PfxPath.htm" />
+  <HelpKINode Title="InstallConnectorCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_ProcessRecord.htm" />
+  <HelpKINode Title="InstallConnectorCommand.UserName property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_UserName.htm" />
+  <HelpKINode Title="InstallConnectorCommand.UseSsl property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_UseSsl.htm" />
+  <HelpKINode Title="InstallConnectorCommand.UseThycoticMirror property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_UseThycoticMirror.htm" />
+  <HelpKINode Title="InstallErlangCommand class">
+    <HelpKINode Title="InstallErlangCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallErlangCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallErlangCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallErlangCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallErlangCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="InstallErlangCommand.InstallErlangCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallErlangCommand__ctor.htm" />
+  <HelpKINode Title="InstallErlangCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallErlangCommand_ProcessRecord.htm" />
+  <HelpKINode Title="InstallPath field">
+    <HelpKINode Title="InstallationConstants.Erlang.InstallPath Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_InstallPath.htm" />
+    <HelpKINode Title="InstallationConstants.RabbitMq.InstallPath Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_InstallPath.htm" />
+  </HelpKINode>
+  <HelpKINode Title="InstallRabbitMqCommand class">
+    <HelpKINode Title="InstallRabbitMqCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallRabbitMqCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallRabbitMqCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallRabbitMqCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallRabbitMqCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="InstallRabbitMqCommand.InstallRabbitMqCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallRabbitMqCommand__ctor.htm" />
+  <HelpKINode Title="InstallRabbitMqCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallRabbitMqCommand_ProcessRecord.htm" />
+  <HelpKINode Title="InvokeImmediate method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Utility_CmdletExtensions_InvokeImmediate.htm" />
+  <HelpKINode Title="KeyPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_KeyPath.htm" />
+  <HelpKINode Title="LockedFileReader class">
+    <HelpKINode Title="LockedFileReader Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_LockedFileReader.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_LockedFileReader__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Management_LockedFileReader.htm" />
+  </HelpKINode>
+  <HelpKINode Title="LockedFileReader.GetTailLines method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_LockedFileReader_GetTailLines.htm" />
+  <HelpKINode Title="LockedFileReader.LockedFileReader constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_LockedFileReader__ctor.htm" />
+  <HelpKINode Title="NewBasicRabbitMqUserCommand class">
+    <HelpKINode Title="NewBasicRabbitMqUserCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="NewBasicRabbitMqUserCommand.NewBasicRabbitMqUserCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand__ctor.htm" />
+  <HelpKINode Title="NewBasicRabbitMqUserCommand.Password property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand_Password.htm" />
+  <HelpKINode Title="NewBasicRabbitMqUserCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand_ProcessRecord.htm" />
+  <HelpKINode Title="NewBasicRabbitMqUserCommand.UserName property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand_UserName.htm" />
+  <HelpKINode Title="NewRabbitMqConfigDirectoryCommand class">
+    <HelpKINode Title="NewRabbitMqConfigDirectoryCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_NewRabbitMqConfigDirectoryCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_NewRabbitMqConfigDirectoryCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_NewRabbitMqConfigDirectoryCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_NewRabbitMqConfigDirectoryCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="NewRabbitMqConfigDirectoryCommand.NewRabbitMqConfigDirectoryCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_NewRabbitMqConfigDirectoryCommand__ctor.htm" />
+  <HelpKINode Title="NewRabbitMqConfigDirectoryCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_NewRabbitMqConfigDirectoryCommand_ProcessRecord.htm" />
+  <HelpKINode Title="OfflineErlangInstallerPath property">
+    <HelpKINode Title="GetErlangInstallerCommand.OfflineErlangInstallerPath Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_OfflineErlangInstallerPath.htm" />
+    <HelpKINode Title="InstallConnectorCommand.OfflineErlangInstallerPath Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_OfflineErlangInstallerPath.htm" />
+  </HelpKINode>
+  <HelpKINode Title="OfflineRabbitMqInstallerPath property">
+    <HelpKINode Title="GetRabbitMqInstallerCommand.OfflineRabbitMqInstallerPath Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_OfflineRabbitMqInstallerPath.htm" />
+    <HelpKINode Title="InstallConnectorCommand.OfflineRabbitMqInstallerPath Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_OfflineRabbitMqInstallerPath.htm" />
+  </HelpKINode>
+  <HelpKINode Title="OpenConsoleAfterInstall property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand_OpenConsoleAfterInstall.htm" />
+  <HelpKINode Title="Password property">
+    <HelpKINode Title="AssertConnectivityCommand.Password Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_Password.htm" />
+    <HelpKINode Title="InstallConnectorCommand.Password Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_Password.htm" />
+    <HelpKINode Title="NewBasicRabbitMqUserCommand.Password Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand_Password.htm" />
+  </HelpKINode>
+  <HelpKINode Title="PfxPassword property">
+    <HelpKINode Title="ConvertPfxToPemCommand.PfxPassword Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_PfxPassword.htm" />
+    <HelpKINode Title="InstallConnectorCommand.PfxPassword Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_PfxPassword.htm" />
+  </HelpKINode>
+  <HelpKINode Title="PfxPath property">
+    <HelpKINode Title="ConvertPfxToPemCommand.PfxPath Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_PfxPath.htm" />
+    <HelpKINode Title="InstallConnectorCommand.PfxPath Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_PfxPath.htm" />
+  </HelpKINode>
+  <HelpKINode Title="PrerequisiteDownloader class">
+    <HelpKINode Title="PrerequisiteDownloader Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloader.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloader__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloader.htm" />
+  </HelpKINode>
+  <HelpKINode Title="PrerequisiteDownloader.CalculateMD5 method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloader_CalculateMD5.htm" />
+  <HelpKINode Title="PrerequisiteDownloader.Download method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloader_Download.htm" />
+  <HelpKINode Title="PrerequisiteDownloader.PrerequisiteDownloader constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloader__ctor.htm" />
+  <HelpKINode Title="PrerequisiteDownloaderProgress class">
+    <HelpKINode Title="PrerequisiteDownloaderProgress Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress.htm" />
+  </HelpKINode>
+  <HelpKINode Title="PrerequisiteDownloaderProgress.BytesReceived property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress_BytesReceived.htm" />
+  <HelpKINode Title="PrerequisiteDownloaderProgress.PrerequisiteDownloaderProgress constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress__ctor.htm" />
+  <HelpKINode Title="PrerequisiteDownloaderProgress.ProgressPercentage property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress_ProgressPercentage.htm" />
+  <HelpKINode Title="PrerequisiteDownloaderProgress.TotalBytesToReceive property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress_TotalBytesToReceive.htm" />
+  <HelpKINode Title="ProcessRecord method">
+    <HelpKINode Title="AssertConnectivityCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_ProcessRecord.htm" />
+    <HelpKINode Title="ConvertCaCerToPemCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand_ProcessRecord.htm" />
+    <HelpKINode Title="ConvertPfxToPemCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand_ProcessRecord.htm" />
+    <HelpKINode Title="CopyRabbitMqExampleNonSslConfigFileCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleNonSslConfigFileCommand_ProcessRecord.htm" />
+    <HelpKINode Title="CopyRabbitMqExampleSslConfigFileCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleSslConfigFileCommand_ProcessRecord.htm" />
+    <HelpKINode Title="EnableRabbitMqManagementPluginCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand_ProcessRecord.htm" />
+    <HelpKINode Title="GetDownloadLocationsCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand_ProcessRecord.htm" />
+    <HelpKINode Title="GetErlangInstallerCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_ProcessRecord.htm" />
+    <HelpKINode Title="GetRabbitMqInstallerCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_ProcessRecord.htm" />
+    <HelpKINode Title="GetRabbitMqLogCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand_ProcessRecord.htm" />
+    <HelpKINode Title="GetRabbitMqSaslLogCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand_ProcessRecord.htm" />
+    <HelpKINode Title="InstallConnectorCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_ProcessRecord.htm" />
+    <HelpKINode Title="InstallErlangCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallErlangCommand_ProcessRecord.htm" />
+    <HelpKINode Title="InstallRabbitMqCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallRabbitMqCommand_ProcessRecord.htm" />
+    <HelpKINode Title="NewBasicRabbitMqUserCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand_ProcessRecord.htm" />
+    <HelpKINode Title="NewRabbitMqConfigDirectoryCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_NewRabbitMqConfigDirectoryCommand_ProcessRecord.htm" />
+    <HelpKINode Title="RemoveAllQueuesCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_RemoveAllQueuesCommand_ProcessRecord.htm" />
+    <HelpKINode Title="SetErlangHomeEnvironmentalVariableCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand_ProcessRecord.htm" />
+    <HelpKINode Title="SetRabbitMqBaseEnvironmentalVariableCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand_ProcessRecord.htm" />
+    <HelpKINode Title="UninstallConnectorCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallConnectorCommand_ProcessRecord.htm" />
+    <HelpKINode Title="UninstallErlangCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallErlangCommand_ProcessRecord.htm" />
+    <HelpKINode Title="UninstallRabbitMqCommand.ProcessRecord Method " Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallRabbitMqCommand_ProcessRecord.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ProgressPercentage property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress_ProgressPercentage.htm" />
+  <HelpKINode Title="RabbitMq class">
+    <HelpKINode Title="fields" Url="html/Fields_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RabbitMqBaseEnvironmentalVariableName field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand_RabbitMqBaseEnvironmentalVariableName.htm" />
+  <HelpKINode Title="RabbitMqInstallerChecksum field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_RabbitMqInstallerChecksum.htm" />
+  <HelpKINode Title="RabbitMqInstallerPath field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_RabbitMqInstallerPath.htm" />
+  <HelpKINode Title="RemoveAllQueuesCommand class">
+    <HelpKINode Title="RemoveAllQueuesCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_RemoveAllQueuesCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_RemoveAllQueuesCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Management_RemoveAllQueuesCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Management_RemoveAllQueuesCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RemoveAllQueuesCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_RemoveAllQueuesCommand_ProcessRecord.htm" />
+  <HelpKINode Title="RemoveAllQueuesCommand.RemoveAllQueuesCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_RemoveAllQueuesCommand__ctor.htm" />
+  <HelpKINode Title="RestManagementConsoleCmdlet class">
+    <HelpKINode Title="RestManagementConsoleCmdlet Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RestManagementConsoleCmdlet.AdminPassword property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet_AdminPassword.htm" />
+  <HelpKINode Title="RestManagementConsoleCmdlet.AdminUserName property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet_AdminUserName.htm" />
+  <HelpKINode Title="RestManagementConsoleCmdlet.BaseUrl property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet_BaseUrl.htm" />
+  <HelpKINode Title="RestManagementConsoleCmdlet.RestManagementConsoleCmdlet constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet__ctor.htm" />
+  <HelpKINode Title="Run method" Url="html/Overload_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner_Run.htm" />
+  <HelpKINode Title="SetErlangHomeEnvironmentalVariableCommand class">
+    <HelpKINode Title="SetErlangHomeEnvironmentalVariableCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand__ctor.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SetErlangHomeEnvironmentalVariableCommand.ErlangHomeEnvironmentalVariableName field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand_ErlangHomeEnvironmentalVariableName.htm" />
+  <HelpKINode Title="SetErlangHomeEnvironmentalVariableCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand_ProcessRecord.htm" />
+  <HelpKINode Title="SetErlangHomeEnvironmentalVariableCommand.SetErlangHomeEnvironmentalVariableCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand__ctor.htm" />
+  <HelpKINode Title="SetRabbitMqBaseEnvironmentalVariableCommand class">
+    <HelpKINode Title="SetRabbitMqBaseEnvironmentalVariableCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand__ctor.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SetRabbitMqBaseEnvironmentalVariableCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand_ProcessRecord.htm" />
+  <HelpKINode Title="SetRabbitMqBaseEnvironmentalVariableCommand.RabbitMqBaseEnvironmentalVariableName field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand_RabbitMqBaseEnvironmentalVariableName.htm" />
+  <HelpKINode Title="SetRabbitMqBaseEnvironmentalVariableCommand.SetRabbitMqBaseEnvironmentalVariableCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand__ctor.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Certificate namespace" Url="html/N_Thycotic_RabbitMq_Helper_PSCommands_Certificate.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Certificate.ConvertCaCerToPemCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertCaCerToPemCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Certificate.ConvertPfxToPemCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Certificate_ConvertPfxToPemCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation namespace" Url="html/N_Thycotic_RabbitMq_Helper_PSCommands_Installation.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.CopyRabbitMqExampleNonSslConfigFileCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleNonSslConfigFileCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.CopyRabbitMqExampleSslConfigFileCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_CopyRabbitMqExampleSslConfigFileCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.GetDownloadLocationsCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.GetErlangInstallerCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.GetRabbitMqInstallerCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.InstallationConstants class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.InstallationConstants.Erlang class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.InstallationConstants.RabbitMq class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.InstallConnectorCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.InstallErlangCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallErlangCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.InstallRabbitMqCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallRabbitMqCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.NewRabbitMqConfigDirectoryCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_NewRabbitMqConfigDirectoryCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.PrerequisiteDownloader class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloader.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.PrerequisiteDownloaderProgress class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.SetErlangHomeEnvironmentalVariableCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetErlangHomeEnvironmentalVariableCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.SetRabbitMqBaseEnvironmentalVariableCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_SetRabbitMqBaseEnvironmentalVariableCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.UninstallConnectorCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallConnectorCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.UninstallErlangCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallErlangCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Installation.UninstallRabbitMqCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallRabbitMqCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management namespace" Url="html/N_Thycotic_RabbitMq_Helper_PSCommands_Management.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management.AssertConnectivityCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management.CtlManagementConsoleCmdlet class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management.EnableRabbitMqManagementPluginCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_EnableRabbitMqManagementPluginCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management.GetRabbitMqLogCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqLogCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management.GetRabbitMqSaslLogCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_GetRabbitMqSaslLogCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management.LockedFileReader class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_LockedFileReader.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management.NewBasicRabbitMqUserCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management.RemoveAllQueuesCommand class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_RemoveAllQueuesCommand.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Management.RestManagementConsoleCmdlet class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Management_RestManagementConsoleCmdlet.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Utility namespace" Url="html/N_Thycotic_RabbitMq_Helper_PSCommands_Utility.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Utility.CmdletExtensions class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_CmdletExtensions.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Utility.DnsEx class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_DnsEx.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Utility.IO namespace" Url="html/N_Thycotic_RabbitMq_Helper_PSCommands_Utility_IO.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Utility.IO.DirectoryCleaner class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_IO_DirectoryCleaner.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Utility.OS namespace" Url="html/N_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Utility.OS.ExternalProcessRunner class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_OS_ExternalProcessRunner.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Utility.Reflection namespace" Url="html/N_Thycotic_RabbitMq_Helper_PSCommands_Utility_Reflection.htm" />
+  <HelpKINode Title="Thycotic.RabbitMq.Helper.PSCommands.Utility.Reflection.AssemblyEntryPointProvider class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Utility_Reflection_AssemblyEntryPointProvider.htm" />
+  <HelpKINode Title="ThycoticMirrorDownloadUrl field">
+    <HelpKINode Title="InstallationConstants.Erlang.ThycoticMirrorDownloadUrl Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_ThycoticMirrorDownloadUrl.htm" />
+    <HelpKINode Title="InstallationConstants.RabbitMq.ThycoticMirrorDownloadUrl Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_ThycoticMirrorDownloadUrl.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TotalBytesToReceive property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_PrerequisiteDownloaderProgress_TotalBytesToReceive.htm" />
+  <HelpKINode Title="UninstallConnectorCommand class">
+    <HelpKINode Title="UninstallConnectorCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallConnectorCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallConnectorCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallConnectorCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallConnectorCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="UninstallConnectorCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallConnectorCommand_ProcessRecord.htm" />
+  <HelpKINode Title="UninstallConnectorCommand.UninstallConnectorCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallConnectorCommand__ctor.htm" />
+  <HelpKINode Title="UninstallErlangCommand class">
+    <HelpKINode Title="UninstallErlangCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallErlangCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallErlangCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallErlangCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallErlangCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="UninstallErlangCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallErlangCommand_ProcessRecord.htm" />
+  <HelpKINode Title="UninstallErlangCommand.UninstallErlangCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallErlangCommand__ctor.htm" />
+  <HelpKINode Title="UninstallerPaths field">
+    <HelpKINode Title="InstallationConstants.Erlang.UninstallerPaths Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_UninstallerPaths.htm" />
+    <HelpKINode Title="InstallationConstants.RabbitMq.UninstallerPaths Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_UninstallerPaths.htm" />
+  </HelpKINode>
+  <HelpKINode Title="UninstallRabbitMqCommand class">
+    <HelpKINode Title="UninstallRabbitMqCommand Class" Url="html/T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallRabbitMqCommand.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallRabbitMqCommand__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallRabbitMqCommand.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallRabbitMqCommand.htm" />
+  </HelpKINode>
+  <HelpKINode Title="UninstallRabbitMqCommand.ProcessRecord method" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallRabbitMqCommand_ProcessRecord.htm" />
+  <HelpKINode Title="UninstallRabbitMqCommand.UninstallRabbitMqCommand constructor" Url="html/M_Thycotic_RabbitMq_Helper_PSCommands_Installation_UninstallRabbitMqCommand__ctor.htm" />
+  <HelpKINode Title="UserName property">
+    <HelpKINode Title="AssertConnectivityCommand.UserName Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_UserName.htm" />
+    <HelpKINode Title="InstallConnectorCommand.UserName Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_UserName.htm" />
+    <HelpKINode Title="NewBasicRabbitMqUserCommand.UserName Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_NewBasicRabbitMqUserCommand_UserName.htm" />
+  </HelpKINode>
+  <HelpKINode Title="UseSsl property">
+    <HelpKINode Title="AssertConnectivityCommand.UseSsl Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_AssertConnectivityCommand_UseSsl.htm" />
+    <HelpKINode Title="InstallConnectorCommand.UseSsl Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_UseSsl.htm" />
+  </HelpKINode>
+  <HelpKINode Title="UseThycoticMirror property">
+    <HelpKINode Title="GetDownloadLocationsCommand.UseThycoticMirror Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetDownloadLocationsCommand_UseThycoticMirror.htm" />
+    <HelpKINode Title="GetErlangInstallerCommand.UseThycoticMirror Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetErlangInstallerCommand_UseThycoticMirror.htm" />
+    <HelpKINode Title="GetRabbitMqInstallerCommand.UseThycoticMirror Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_GetRabbitMqInstallerCommand_UseThycoticMirror.htm" />
+    <HelpKINode Title="InstallConnectorCommand.UseThycoticMirror Property " Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallConnectorCommand_UseThycoticMirror.htm" />
+  </HelpKINode>
+  <HelpKINode Title="version">
+    <HelpKINode Title="1.0.0.0" Url="html/951081e7-af35-4609-a943-cd8991845df9.htm" />
+    <HelpKINode Title="history" Url="html/dea71406-661f-4bd6-9b1c-029d0816cbbc.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Version field">
+    <HelpKINode Title="InstallationConstants.Erlang.Version Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_Erlang_Version.htm" />
+    <HelpKINode Title="InstallationConstants.RabbitMq.Version Field" Url="html/F_Thycotic_RabbitMq_Helper_PSCommands_Installation_InstallationConstants_RabbitMq_Version.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Welcome" Url="html/aa6f1763-6dbc-481f-82c3-c55b3415dc70.htm" />
+  <HelpKINode Title="WorkingPath property" Url="html/P_Thycotic_RabbitMq_Helper_PSCommands_Management_CtlManagementConsoleCmdlet_WorkingPath.htm" />
+</HelpKI>
