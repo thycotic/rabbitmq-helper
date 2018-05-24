@@ -220,9 +220,9 @@
     <Compile Include="Certificate\ConvertCaCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
     <Compile Include="CommandAreas.cs" />
-    <Compile Include="Installation\CopyRabbitMqExampleNonTlsConfigFileCommand.cs" />
+    <Compile Include="Installation\NewRabbitMqNonTlsConfigFilesCommand.cs" />
     <Compile Include="Management\CopyErlangCookieFileCommand.cs" />
-    <Compile Include="Installation\CopyRabbitMqExampleTlsConfigFileCommand.cs" />
+    <Compile Include="Installation\NewRabbitMqTlsConfigFilesCommand.cs" />
     <Compile Include="Installation\NewRabbitMqConfigDirectoryCommand.cs" />
     <Compile Include="Installation\GetErlangInstallerCommand.cs" />
     <Compile Include="Installation\GetRabbitMqInstallerCommand.cs" />

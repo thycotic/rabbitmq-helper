@@ -21,8 +21,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     <para>PS C:\></para> 
     ///     <code>New-RabbitMqExampleNonTlsConfigFile</code>
     /// </example>
-    [Cmdlet(VerbsCommon.New, "RabbitMqExampleNonTlsConfigFile")]
-    public class CopyRabbitMqExampleNonTlsConfigFileCommand : Cmdlet
+    [Cmdlet(VerbsCommon.New, "RabbitMqNonTlsConfigFiles")]
+    public class NewRabbitMqNonTlsConfigFilesCommand : Cmdlet
     {
         /// <summary>
         ///     Processes the record.
@@ -121,7 +121,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         {
             return new Dictionary<string, string>
             {
-                {"listeners.tcp.default = ","5672" },
+                {"listeners.tcp.default","5672" },
 
                 {"log.exchange", "false"},
                 {"log.exchange.level", "info"},

@@ -335,7 +335,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             .ReportProgress("Converting certificates and configuring", 60)
                             .Then(() => new ConvertCaCerToPemCommand {CaCertPath = CaCertPath})
                             .Then(() => new ConvertPfxToPemCommand {PfxPath = PfxPath, PfxPassword = PfxPassword})
-                            .Then(() => new CopyRabbitMqExampleTlsConfigFileCommand())
+                            .Then(() => new NewRabbitMqTlsConfigFilesCommand())
 
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
@@ -364,7 +364,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                         nonTlsFlow
                             .Then(() => WriteVerbose("Configuring RabbitMq without TLS support"))
                             .ReportProgress("Configuring", 60)
-                            .Then(() => new CopyRabbitMqExampleNonTlsConfigFileCommand())
+                            .Then(() => new NewRabbitMqNonTlsConfigFilesCommand())
 
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
