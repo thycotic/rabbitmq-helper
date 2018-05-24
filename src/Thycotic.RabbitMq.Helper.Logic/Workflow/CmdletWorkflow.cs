@@ -123,7 +123,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.Workflow
             {
                 var retry = true;
                 var success = false;
-                while (retry)
+                while (retry && !success)
                 {
                     try
                     {
