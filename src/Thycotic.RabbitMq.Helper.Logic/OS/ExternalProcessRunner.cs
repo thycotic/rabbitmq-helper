@@ -40,7 +40,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
         {
             Process process = null;
 
-            var task = Task.Run(() =>
+            var runTask = Task.Run(() =>
             {
                 try
                 {
@@ -62,26 +62,25 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
             });
 
             //wait for process to complete
-            task.Wait(EstimatedProcessDuration);
+            runTask.Wait(EstimatedProcessDuration);
 
             //there was an exception, rethrow it
-            if (task.Exception != null)
+            if (runTask.Exception != null)
             {
-                throw task.Exception;
+                throw runTask.Exception;
             }
 
-            if (task.Status != TaskStatus.RanToCompletion)
+            if (runTask.Status != TaskStatus.RanToCompletion)
             {
                 throw new Exception("Could not run or exit the process due to an unknown reason");
             }
 
-            var output = string.Empty;
 
-            Task.Run(() =>
+            var outputTask = Task.Run(() =>
             {
                 if (process == null)
                 {
-                    return;
+                    return string.Empty;
                 }
 
                 if (!process.HasExited)
@@ -89,7 +88,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
                     process.Kill();
                 }
 
-                output = process.StandardOutput.ReadToEnd();
+                var output = process.StandardOutput.ReadToEnd();
 
                 //process didn't exit correctly, extract output and throw
                 if (process.ExitCode != 0)
@@ -101,21 +100,23 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
                 {
                     throw new ApplicationException("Process appears to have failed", new Exception(output));
                 }
+
+                return output;
             });
 
-            task.Wait(TimeSpan.FromSeconds(5));
+            outputTask.Wait(TimeSpan.FromSeconds(5));
 
-            if (task.Exception != null)
+            if (outputTask.Exception != null)
             {
-                throw task.Exception;
+                throw outputTask.Exception;
             }
 
-            if (task.Status != TaskStatus.RanToCompletion)
+            if (outputTask.Status != TaskStatus.RanToCompletion)
             {
                 throw new Exception("Could not get the output of process due to an unknown reason");
             }
 
-            return output;
+            return outputTask.Result;
         }
 
         /// <summary>
