@@ -75,11 +75,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 try
                 {
-                    output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(5));
+                    output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(15));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    throw new ApplicationException("Failed to get RabbitMq uptime information", ex);
+                    // ignored
                 }
             }
 
