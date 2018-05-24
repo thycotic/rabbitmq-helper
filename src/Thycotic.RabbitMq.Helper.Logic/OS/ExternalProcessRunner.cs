@@ -40,7 +40,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
         {
             Process process = null;
 
-            var task = Task.Factory.StartNew(() =>
+            var task = Task.Run(() =>
             {
                 try
                 {
@@ -70,14 +70,26 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
                 throw task.Exception;
             }
 
-            if (process != null)
+            if (task.Status != TaskStatus.RanToCompletion)
             {
+                throw new Exception("Could not run or exit the process due to an unknown reason");
+            }
+
+            var output = string.Empty;
+
+            Task.Run(() =>
+            {
+                if (process == null)
+                {
+                    return;
+                }
+
                 if (!process.HasExited)
                 {
                     process.Kill();
                 }
 
-                var output = process.StandardOutput.ReadToEnd();
+                output = process.StandardOutput.ReadToEnd();
 
                 //process didn't exit correctly, extract output and throw
                 if (process.ExitCode != 0)
@@ -89,11 +101,21 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
                 {
                     throw new ApplicationException("Process appears to have failed", new Exception(output));
                 }
+            });
 
-                return output;
+            task.Wait(TimeSpan.FromSeconds(5));
+
+            if (task.Exception != null)
+            {
+                throw task.Exception;
             }
 
-            return string.Empty;
+            if (task.Status != TaskStatus.RanToCompletion)
+            {
+                throw new Exception("Could not get the output of process due to an unknown reason");
+            }
+
+            return output;
         }
 
         /// <summary>
