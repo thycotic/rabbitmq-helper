@@ -12,7 +12,7 @@
 %%
 {kernel, 
 	[
-		{net_ticktime, 60},
+		{net_ticktime, 120},
 
 		{inet_dist_listen_max, 44002},
 		{inet_dist_listen_min, 44002}
