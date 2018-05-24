@@ -164,6 +164,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Online)]
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = ParameterSets.Ssl)]
         [Alias("Mirror")]
         public SwitchParameter UseThycoticMirror { get; set; }
 
