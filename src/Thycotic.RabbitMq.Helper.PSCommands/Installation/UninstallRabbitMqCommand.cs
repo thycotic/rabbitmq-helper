@@ -41,7 +41,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException("Failed to stop RabbitMq. Manual creation might be necessary", ex);
+                    throw new ApplicationException("Failed to stop RabbitMq. Manual stop/uninstall might be necessary", ex);
                 }
             }
 
