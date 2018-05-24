@@ -247,8 +247,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\RabbitMq\3.7.5\NonSsl\rabbitmq.config.erlang" />
-    <EmbeddedResource Include="Content\RabbitMq\3.7.5\Ssl\rabbitmq.config.erlang" />
     <None Include="..\Certificates\Thycotic.RabbitMq.Helper.snk">
       <Link>Thycotic.RabbitMq.Helper.snk</Link>
     </None>
@@ -281,6 +279,7 @@
     <Content Include="Examples\remove-all-queues.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Content\RabbitMq\3.7.5\advanced.config.example" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

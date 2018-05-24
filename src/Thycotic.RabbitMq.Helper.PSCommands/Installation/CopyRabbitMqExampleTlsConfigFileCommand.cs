@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Management.Automation;
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
@@ -8,84 +10,45 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <summary>
     ///     Copies RabbitMq TLS example configuration file. The configuration file will be located in the Thycotic RabbitMq Site Connector folder.
     /// </summary>
-    /// <para type="synopsis">Copies RabbitMq SSL example configuration file.</para>
-    /// <para type="description">The Copy-RabbitMqExampleSslConfigFile cmdlet copies RabbitMq SSL example configuration file.</para>
+    /// <para type="synopsis">Copies RabbitMq TLS example configuration file.</para>
+    /// <para type="description">The Copy-RabbitMqExampleSslConfigFile cmdlet copies RabbitMq TLS example configuration file.</para>
     /// <para type="description">The configuration file will be located in the Thycotic RabbitMq Site Connector folder.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <para type="link">Copy-RabbitMqExampleNonSslConfigFile</para>
     /// <example>
     ///     <para>PS C:\></para> 
-    ///     <code>Copy-RabbitMqExampleSslConfigFile</code>
+    ///     <code>New-RabbitMqExampleSslConfigFile</code>
     /// </example>
-    [Cmdlet(VerbsCommon.Copy, "RabbitMqExampleSslConfigFile")]
-    public class CopyRabbitMqExampleSslConfigFileCommand : Cmdlet
+    [Cmdlet(VerbsCommon.New, "RabbitMqExampleTlsConfigFile")]
+    public class CopyRabbitMqExampleTlsConfigFileCommand : CopyRabbitMqExampleNonTlsConfigFileCommand
     {
         /// <summary>
-        ///     Processes the record.
+        /// Gets the default configuration settings.
         /// </summary>
-        /// <exception cref="System.IO.FileNotFoundException">
-        ///     CA certificate not found
-        ///     or
-        ///     Certificate not found
-        ///     or
-        ///     Key not found
-        ///     or
-        ///     Could not locate sample configuration file
-        /// </exception>
-        protected override void ProcessRecord()
+        /// <returns></returns>
+        protected override IDictionary<string, string> GetDefaultConfigurationSettings()
         {
-            if (!File.Exists(ConvertCaCerToPemCommand.CertificatePath))
-                throw new FileNotFoundException("CA certificate not found");
+            var defaultSettings = base.GetDefaultConfigurationSettings();
 
-            if (!File.Exists(ConvertPfxToPemCommand.CertificatePath))
-                throw new FileNotFoundException("Certificate not found");
-
-            if (!File.Exists(ConvertPfxToPemCommand.KeyPath))
-                throw new FileNotFoundException("Key not found");
-
-            WriteVerbose("Creating RabbitMq configuration file.");
-
-            var contentAssembly = GetType().Assembly;
-
-            var resourceName = string.Format("{0}.Content.RabbitMq._3._7._5.rabbitmq.conf.example",
-                contentAssembly.GetName().Name);
-
-            string contents;
-
-            using (var stream = contentAssembly.GetManifestResourceStream(resourceName))
-            {
-                if (stream == null)
-                    throw new FileNotFoundException("Could not locate sample configuration file");
-
-                using (var reader = new StreamReader(stream))
+            var tlsSettings = new Dictionary<string, string>
                 {
-                    contents = reader.ReadToEnd();
-                }
-            }
+                    {"listeners.ssl.default", "5671"},
 
-            ReplaceToken(ref contents, TokenNames.PathToCaCert, ConvertCaCerToPemCommand.CertificatePath);
-            ReplaceToken(ref contents, TokenNames.PathToCert, ConvertPfxToPemCommand.CertificatePath);
-            ReplaceToken(ref contents, TokenNames.PathToKey, ConvertPfxToPemCommand.KeyPath);
+                    {"ssl_options.versions.1", "tlsv1.2"},
+                    {"ssl_options.versions.2", "tlsv1.1"},
+                    //{"ssl_options.versions.3", "tlsv1"},
 
-            var configFilePath = Path.Combine(InstallationConstants.RabbitMq.ConfigurationPath,
-                "rabbitmq.conf");
+                    {"ssl_options.verify", "verify_peer"},
+                    {"ssl_options.fail_if_no_peer_cert", "false"},
+                    {"ssl_options.cacertfile", ConvertCaCerToPemCommand.CertificatePath},
+                    {"ssl_options.certfile", ConvertPfxToPemCommand.CertificatePath},
+                    {"ssl_options.keyfile", ConvertPfxToPemCommand.KeyPath}
+                };
 
-            File.WriteAllText(configFilePath, contents);
-        }
+            return new[] {defaultSettings, tlsSettings}.SelectMany(dict => dict)
+                .ToLookup(pair => pair.Key, pair => pair.Value)
+                .ToDictionary(group => group.Key, group => group.First());
 
-        private static void ReplaceToken(ref string contents, string tokenName, string value)
-        {
-            //rabbit doesn't like single slashed in paths
-            value = value.Replace(@"\", @"\\");
-
-            contents = contents.Replace(tokenName, value);
-        }
-
-        private static class TokenNames
-        {
-            public const string PathToCaCert = "%THYCOTIC_PATHTOCACERT%";
-            public const string PathToCert = "%THYCOTIC_PATHTOCERT%";
-            public const string PathToKey = "%THYCOTIC_PATHTOKEY%";
         }
     }
 }

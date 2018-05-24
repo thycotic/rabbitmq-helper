@@ -38,11 +38,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         public static readonly string ErlangInstallerPath = Path.Combine(Path.GetTempPath(), string.Format("erlang{0}.exe", InstallationConstants.Erlang.Version));
 
         /// <summary>
-        ///     The erlang installer checksum
-        /// </summary>
-        public const string ErlangInstallerChecksum = "4c40709f983541676e171b1859fd2d7b";
-
-        /// <summary>
         ///     Gets or sets the offline erlang installer path.
         /// </summary>
         /// <value>
@@ -102,7 +97,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     throw new FileNotFoundException("Installer does not exist");
                 }
 
-                if (PrerequisiteDownloader.CalculateMD5(OfflineErlangInstallerPath) != ErlangInstallerChecksum)
+                if (PrerequisiteDownloader.CalculateMD5(OfflineErlangInstallerPath) != InstallationConstants.Erlang.InstallerChecksum)
                 {
                     throw new FileNotFoundException("Installer checksum does not match");
                 }
@@ -125,7 +120,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     : InstallationConstants.Erlang.DownloadUrl;
 
                 downloader.Download(CancellationToken.None, downloadUrl,
-                    ErlangInstallerPath, ErlangInstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
+                    ErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
                     progress =>
                     {
                         WriteProgress(new ProgressRecord(1, "Erlang download in progress", "Downloading")

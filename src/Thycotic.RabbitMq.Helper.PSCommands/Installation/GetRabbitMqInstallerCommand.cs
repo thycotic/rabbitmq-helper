@@ -38,11 +38,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         public static readonly string RabbitMqInstallerPath = Path.Combine(Path.GetTempPath(), string.Format("rabbitMq{0}.exe", InstallationConstants.RabbitMq.Version));
 
         /// <summary>
-        ///     The rabbit mq installer checksum
-        /// </summary>
-        public const string RabbitMqInstallerChecksum = "5d48c2de0c1ce55167d974d735f43b44";
-
-        /// <summary>
         ///     Gets or sets the offline rabbit mq installer path.
         /// </summary>
         /// <value>
@@ -109,7 +104,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     throw new FileNotFoundException("Installer does not exist");
                 }
 
-                if (PrerequisiteDownloader.CalculateMD5(OfflineRabbitMqInstallerPath) != RabbitMqInstallerChecksum)
+                if (PrerequisiteDownloader.CalculateMD5(OfflineRabbitMqInstallerPath) != InstallationConstants.RabbitMq.InstallerChecksum)
                 {
                     throw new FileNotFoundException("Installer checksum does not match");
                 }
@@ -133,7 +128,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     : InstallationConstants.RabbitMq.DownloadUrl;
 
                 downloader.Download(CancellationToken.None, downloadUrl,
-                    RabbitMqInstallerPath, RabbitMqInstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
+                    RabbitMqInstallerPath, InstallationConstants.RabbitMq.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
                     progress =>
                     {
                         WriteProgress(new ProgressRecord(1, "RabbitMq download in progress", "Downloading")

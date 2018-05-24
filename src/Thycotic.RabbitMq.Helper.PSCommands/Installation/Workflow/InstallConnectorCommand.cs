@@ -338,7 +338,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                         .ReportProgress("Converting certificates and configuring", 60)
                             .Then(() => new ConvertCaCerToPemCommand {CaCertPath = CaCertPath})
                             .Then(() =>new ConvertPfxToPemCommand {PfxPath = PfxPath, PfxPassword = PfxPassword})
-                            .Then(() =>new CopyRabbitMqExampleSslConfigFileCommand())
+                            .Then(() =>new CopyRabbitMqExampleTlsConfigFileCommand())
 
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())

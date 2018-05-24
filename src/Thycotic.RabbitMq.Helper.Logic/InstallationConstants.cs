@@ -22,6 +22,13 @@ namespace Thycotic.RabbitMq.Helper.Logic
         /// </summary>
         public static class Erlang
         {
+
+            /// <summary>
+            ///     The erlang installer checksum
+            /// </summary>
+            public static readonly string InstallerChecksum =
+                Environment.Is64BitOperatingSystem ? "4c40709f983541676e171b1859fd2d7b" : "";
+
             /// <summary>
             ///     The version
             /// </summary>
@@ -53,10 +60,10 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// </summary>
             public static readonly string[] UninstallerPaths = new[]
             {
-             Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4", "uninstall.exe"),
-             Path.Combine(EnvironmentalVariables.ProgramFiles, "erl8.3", "uninstall.exe"),
-             Path.Combine(EnvironmentalVariables.ProgramFiles, "erl9.0", "uninstall.exe"),
-             Path.Combine(EnvironmentalVariables.ProgramFiles, "erl9.3", "uninstall.exe"),
+                Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4", "uninstall.exe"),
+                Path.Combine(EnvironmentalVariables.ProgramFiles, "erl8.3", "uninstall.exe"),
+                Path.Combine(EnvironmentalVariables.ProgramFiles, "erl9.0", "uninstall.exe"),
+                Path.Combine(EnvironmentalVariables.ProgramFiles, "erl9.3", "uninstall.exe"),
             };
         }
 
@@ -65,6 +72,12 @@ namespace Thycotic.RabbitMq.Helper.Logic
         /// </summary>
         public static class RabbitMq
         {
+
+            /// <summary>
+            /// The installer RabbitMq checksum
+            /// </summary>
+            public static readonly string InstallerChecksum = "5d48c2de0c1ce55167d974d735f43b44";
+
             /// <summary>
             ///     The download URL
             /// </summary>
