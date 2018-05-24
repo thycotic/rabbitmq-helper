@@ -121,7 +121,20 @@ namespace Thycotic.RabbitMq.Helper.Logic.Workflow
         {
             while (_steps.TryDequeue(out var func))
             {
-                var success = func();
+                var retry = true;
+                var success = false;
+                while (retry)
+                {
+                    try
+                    {
+                        success = func();
+                    }
+                    catch (Exception e)
+                    {
+                        retry = _parent.ShouldContinue($"{e.Message}. Retry?", "Operation failed. Retry?");
+                    }
+                }
+
                 if (!success)
                 {
                     return;
