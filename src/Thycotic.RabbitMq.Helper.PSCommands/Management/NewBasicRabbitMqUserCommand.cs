@@ -64,7 +64,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             try
             {
-                var  output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(15));
+                var  output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(30));
                 WriteVerbose(output);
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             try
             {
-                var output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(15));
+                var output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(30));
                 WriteVerbose(output);
             }
             catch (Exception ex)
