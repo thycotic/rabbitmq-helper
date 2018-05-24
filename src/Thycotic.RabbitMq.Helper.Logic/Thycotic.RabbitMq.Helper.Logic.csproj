@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="CmdletExtensions.cs" />
     <Compile Include="DnsEx.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="InstallationConstants.cs" />
     <Compile Include="IO\DirectoryCleaner.cs" />
     <Compile Include="OS\ExternalProcessRunner.cs" />
