@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Management.Automation;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Utility
+namespace Thycotic.RabbitMq.Helper.Logic
 {
     /// <summary>
     /// Commandlet extensions.
@@ -32,6 +32,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Utility
 
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             cmd.Invoke<object>().ToArray();
+        }
+
+        /// <summary>
+        /// Continues the command with the child one.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
+        /// <param name="child">The child.</param>
+        /// <returns></returns>
+        public static Cmdlet ContinueWith(this Cmdlet parent, Cmdlet child)
+        {
+            child.AsChildOf(parent).InvokeImmediate();
+            return child;
         }
     }
 }

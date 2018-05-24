@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
+using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.OS;
 using Thycotic.RabbitMq.Helper.PSCommands.Installation;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -19,7 +19,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <code>Enable-RabbitMqManagementPlugin</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Enable, "RabbitMqManagementPlugin")]
-    public class EnableRabbitMqManagementPluginCommand : CtlManagementConsoleCmdlet
+    public class EnableRabbitMqManagementPluginCommand : Cmdlet
     {
         /// <summary>
         ///     Gets or sets whether to open console when ready. Default to false.
@@ -60,7 +60,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             WriteVerbose("Enabling management console");
 
-            externalProcessRunner.Run(pluginsExecutablePath, WorkingPath, parameters2);
+            var output = externalProcessRunner.Run(pluginsExecutablePath, InstallationConstants.RabbitMq.BinPath, parameters2);
+
+            WriteVerbose(output);
 
             if (OpenConsoleAfterInstall)
             {

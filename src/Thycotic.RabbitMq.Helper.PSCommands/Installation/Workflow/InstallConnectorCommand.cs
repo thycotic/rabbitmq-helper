@@ -1,9 +1,10 @@
 ﻿using System.Management.Automation;
+using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.Workflow;
 using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
 using Thycotic.RabbitMq.Helper.PSCommands.Management;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
+namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 {
     /// <summary>
     ///     Installs the site connector
@@ -287,160 +288,111 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         protected override void ProcessRecord()
         {
-            const int activityid = 7;
-            const string activity = "Installing";
 
-            WriteProgress(new ProgressRecord(activityid, activity, "Checking Erlang pre-requisites")
+            using (var workflow = new CmdletWorkflow(this, "Installing"))
             {
-                PercentComplete = 5
-            });
 
-            if (!AgreeErlangLicense &&
-                !ShouldContinue("Do you agree and accept the Erlang license (http://www.erlang.org/EPLICENSE)?",
-                    "License"))
-                return;
+                workflow
+                    .ReportProgress("Checking Erlang pre-requisites", 5)
+                    .If(() => AgreeErlangLicense || ShouldContinue(
+                                  "Do you agree and accept the Erlang license (http://www.erlang.org/EPLICENSE)?",
+                                  "License"))
+                    .Then(() => new GetErlangInstallerCommand
+                    {
+                        CommandRuntime = CommandRuntime,
+                        OfflineErlangInstallerPath = OfflineErlangInstallerPath,
+                        Force = ForceDownload,
+                        UseThycoticMirror = UseThycoticMirror
+                    })
 
-            new GetErlangInstallerCommand
-            {
-                CommandRuntime = CommandRuntime,
-                OfflineErlangInstallerPath = OfflineErlangInstallerPath,
-                Force = ForceDownload,
-                UseThycoticMirror = UseThycoticMirror
-            }.InvokeImmediate();
+                    .ReportProgress("Checking RabbitMq pre-requisites", 10)
+                    .If(() => AgreeRabbitMqLicense || ShouldContinue(
+                                  "Do you agree and accept the RabbitMq license (https://www.rabbitmq.com/mpl.html)?",
+                                  "License"))
+                    .Then(() => new GetRabbitMqInstallerCommand
+                    {
+                        CommandRuntime = CommandRuntime,
+                        OfflineRabbitMqInstallerPath = OfflineRabbitMqInstallerPath,
+                        Force = ForceDownload,
+                        UseThycoticMirror = UseThycoticMirror
+                    })
 
-            WriteProgress(new ProgressRecord(activityid, activity, "Checking RabbitMq pre-requisites")
-            {
-                PercentComplete = 10
-            });
+                    .ReportProgress("Un-installing prior versions", 20)
+                    .Then(() => new UninstallRabbitMqCommand())
+                    .Then(() => new UninstallErlangCommand())
 
-            if (!AgreeRabbitMqLicense &&
-                !ShouldContinue("Do you agree and accept the RabbitMq license (https://www.rabbitmq.com/mpl.html)?",
-                    "License"))
-                return;
+                    .ReportProgress("Installing Erlang", 30)
+                    .Then(() => new SetErlangHomeEnvironmentalVariableCommand())
+                    .Then(() => new InstallErlangCommand())
 
-            new GetRabbitMqInstallerCommand
-            {
-                CommandRuntime = CommandRuntime,
-                OfflineRabbitMqInstallerPath = OfflineRabbitMqInstallerPath,
-                Force = ForceDownload,
-                UseThycoticMirror = UseThycoticMirror
-            }.InvokeImmediate();
+                    .ReportProgress("Preparing for RabbitMq installation Erlang", 50)
+                    .Then(() => new NewRabbitMqConfigDirectoryCommand())
+                    .Then(() => new SetRabbitMqBaseEnvironmentalVariableCommand())
+                    .Then(() => new CopyErlangCookieFileCommand())
 
-            WriteProgress(new ProgressRecord(activityid, activity, "Uninstalling prior versions")
-            {
-                PercentComplete = 20
-            });
+                    .ThenFork(UseSsl, tlsFlow =>
+                    {
+                        WriteVerbose("Configuring RabbitMq with TLS support");
 
-            new UninstallRabbitMqCommand().AsChildOf(this).InvokeImmediate();
-            new UninstallErlangCommand().AsChildOf(this).InvokeImmediate();
+                        tlsFlow
+                        .ReportProgress("Converting certificates and configuring", 60)
+                            .Then(() => new ConvertCaCerToPemCommand {CaCertPath = CaCertPath})
+                            .Then(() =>new ConvertPfxToPemCommand {PfxPath = PfxPath, PfxPassword = PfxPassword})
+                            .Then(() =>new CopyRabbitMqExampleSslConfigFileCommand())
 
-            WriteProgress(new ProgressRecord(activityid, activity, "Installing Erlang") { PercentComplete = 30 });
+                            .ReportProgress("Installing RabbitMq", 70)
+                            .Then(() => new InstallRabbitMqCommand())
 
-            new SetErlangHomeEnvironmentalVariableCommand().AsChildOf(this).InvokeImmediate();
-            new InstallErlangCommand().AsChildOf(this).InvokeImmediate();
+                            .ReportProgress("Final configurations", 90)
+                            .Then(() => new NewBasicRabbitMqUserCommand
+                            {
+                                UserName = UserName,
+                                Password = Password
+                            })
+                            .Then(() => new EnableRabbitMqManagementPluginCommand())
+                            .Then(() => new AssertConnectivityCommand
+                            {
+                                Hostname = Hostname,
+                                UserName = UserName,
+                                Password = Password,
+                                UseSsl = UseSsl
+                            });
 
-            WriteProgress(new ProgressRecord(activityid, activity, "Preparing for RabbitMq installation Erlang")
-            {
-                PercentComplete = 50
-            });
+                        WriteVerbose(
+                            "RabbitMq is ready to use with TLS. Please open port 5671 on the machine firewall");
 
-            new NewRabbitMqConfigDirectoryCommand().AsChildOf(this).InvokeImmediate();
-            new SetRabbitMqBaseEnvironmentalVariableCommand().AsChildOf(this).InvokeImmediate();
+                        WriteObject("Installation completed");
+                    }, nonTlsFlow =>
+                    {
+                        WriteVerbose("Configuring RabbitMq without TLS support");
 
-            new CopyErlangCookieFileCommand().AsChildOf(this).InvokeImmediate();
+                        nonTlsFlow
+                            .ReportProgress("Configuring", 60)
+                            .Then(() => new CopyRabbitMqExampleNonTlsConfigFileCommand())
+                            
+                            .ReportProgress("Installing RabbitMq", 70)
+                            .Then(() => new InstallRabbitMqCommand())
+                            
+                            .ReportProgress("Final configurations", 90)
+                            .Then(() => new NewBasicRabbitMqUserCommand
+                            {
+                                UserName = UserName,
+                                Password = Password
+                            })
+                            .Then(() => new EnableRabbitMqManagementPluginCommand())
+                            .Then(() => new AssertConnectivityCommand
+                            {
+                                UserName = UserName,
+                                Password = Password
+                            });
 
-            if (UseSsl)
-            {
-                WriteVerbose("Configuring RabbitMq with encryption support");
+                        WriteVerbose(
+                            "RabbitMq is ready to use without TLS. Please open port 5672 on the machine firewall.");
 
-                WriteProgress(new ProgressRecord(activityid, activity, "Converting certificates and configuring")
-                {
-                    PercentComplete = 60
-                });
-
-                new ConvertCaCerToPemCommand { CaCertPath = CaCertPath }.AsChildOf(this).InvokeImmediate();
-                new ConvertPfxToPemCommand { PfxPath = PfxPath, PfxPassword = PfxPassword }.AsChildOf(this)
-                    .InvokeImmediate();
-                new CopyRabbitMqExampleSslConfigFileCommand().AsChildOf(this).InvokeImmediate();
-
-                WriteProgress(new ProgressRecord(activityid, activity, "Installing RabbitMq") { PercentComplete = 70 });
-
-                new InstallRabbitMqCommand().AsChildOf(this).InvokeImmediate();
-
-                WriteProgress(new ProgressRecord(activityid, activity, "Final configurations")
-                {
-                    PercentComplete = 90
-                });
-
-                new NewBasicRabbitMqUserCommand
-                {
-                    UserName = UserName,
-                    Password = Password
-                }
-                    .AsChildOf(this).InvokeImmediate();
-
-                new EnableRabbitMqManagementPluginCommand().AsChildOf(this).InvokeImmediate();
-
-                new AssertConnectivityCommand
-                {
-                    Hostname = Hostname,
-                    UserName = UserName,
-                    Password = Password,
-                    UseSsl = UseSsl
-                }.AsChildOf(this).InvokeImmediate();
-
-                WriteProgress(new ProgressRecord(activityid, activity, "Installation completed")
-                {
-                    PercentComplete = 100,
-                    RecordType = ProgressRecordType.Completed
-                });
-
-                WriteVerbose(
-                    "RabbitMq is ready to use with encryption. Please open port 5671 on the machine firewall");
-
-                WriteObject("Installation completed");
-            }
-            else
-            {
-                WriteVerbose("Configuring RabbitMq without encryption support");
-
-                WriteProgress(new ProgressRecord(activityid, activity, "Configuring") { PercentComplete = 60 });
-
-                new CopyRabbitMqExampleNonTlsConfigFileCommand().AsChildOf(this).InvokeImmediate();
-
-                WriteProgress(new ProgressRecord(activityid, activity, "Installing RabbitMq") { PercentComplete = 70 });
-
-                new InstallRabbitMqCommand().AsChildOf(this).InvokeImmediate();
-
-                WriteProgress(new ProgressRecord(activityid, activity, "Final configurations")
-                {
-                    PercentComplete = 90
-                });
-
-                new NewBasicRabbitMqUserCommand
-                {
-                    UserName = UserName,
-                    Password = Password
-                }.AsChildOf(this).InvokeImmediate();
-
-                new EnableRabbitMqManagementPluginCommand().AsChildOf(this).InvokeImmediate();
-
-                new AssertConnectivityCommand
-                {
-                    UserName = UserName,
-                    Password = Password
-                }.AsChildOf(this).InvokeImmediate();
-
-                WriteProgress(new ProgressRecord(activityid, activity, "Installation completed")
-                {
-                    PercentComplete = 100,
-                    RecordType = ProgressRecordType.Completed
-                });
-
-                WriteVerbose(
-                    "RabbitMq is ready to use without encryption. Please open port 5672 on the machine firewall.");
-
-                WriteObject("Installation completed");
+                        WriteObject("Installation completed");
+                    })
+                    .Invoke();
+                    
             }
         }
     }

@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.IO;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.OS;
+using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.IO;
+using Thycotic.RabbitMq.Helper.Logic.OS;
 using Thycotic.RabbitMq.Helper.PSCommands.Management;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
@@ -23,35 +23,30 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     ///     <code>Uninstall-RabbitMq</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Uninstall, "RabbitMq")]
-    public class UninstallRabbitMqCommand : CtlManagementConsoleCmdlet
+    public class UninstallRabbitMqCommand : Cmdlet
     {
         /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
-            if (File.Exists(ExecutablePath))
+            var ctlInteractor = new CtlRabbitMqProcessInteractor();
+            if (ctlInteractor.Exists)
             {
-                var externalProcessRunner = new ExternalProcessRunner
-                {
-                    EstimatedProcessDuration = TimeSpan.FromSeconds(15)
-                };
-
-                WriteVerbose("Stopping RabbitMq");
-
-                var parameters2 = "stop";
-
                 try
                 {
-                    externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
+                    WriteVerbose("Stopping RabbitMq");
+
+                    var parameters2 = "stop";
+                    ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(15));
                 }
                 catch (Exception ex)
                 {
                     throw new ApplicationException("Failed to stop RabbitMq. Manual creation might be necessary", ex);
                 }
             }
-            
-            WriteVerbose("Uninstalling prior versions of RabbitMq");
+
+            WriteVerbose("Un-installing prior versions of RabbitMq");
 
             var executablePaths = InstallationConstants.RabbitMq.UninstallerPaths;
 

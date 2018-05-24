@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Management.Automation;
+using System.Threading;
 using System.Threading.Tasks;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.OS;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.Reflection;
+using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.OS;
+using Thycotic.RabbitMq.Helper.Logic.Reflection;
+using Thycotic.RabbitMq.Helper.PSCommands.Management;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -58,8 +60,35 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
             externalProcessRunner.Run(executablePath, workingPath, silent);
 
+           
+            var ctlInteractor = new CtlRabbitMqProcessInteractor();
+         
             WriteVerbose("Waiting for RabbitMq process to start...");
-            Task.Delay(TimeSpan.FromSeconds(10)).Wait();
+
+            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+            var output = string.Empty;
+
+            while (!output.Contains("uptime") && !cts.IsCancellationRequested)
+            {
+
+                var parameters2 = "status";
+
+                try
+                {
+                    output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(5));
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException("Failed to get RabbitMq uptime information", ex);
+                }
+            }
+
+            if (!output.Contains("uptime"))
+            {
+                throw new ApplicationException("Failed to get RabbitMq uptime information. RabbitMq is probably not running");
+            }
+
+
 
             WriteVerbose("Installation process completed");
         }

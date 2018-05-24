@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
+namespace Thycotic.RabbitMq.Helper.Logic
 {
     /// <summary>
     ///     Installation constants

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.OS;
+using Thycotic.RabbitMq.Helper.Logic.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -17,7 +16,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// </example>
     [Cmdlet(VerbsCommon.New, "BasicRabbitMqUser")]
     [Alias("addRabbitMqUser")]
-    public class NewBasicRabbitMqUserCommand : CtlManagementConsoleCmdlet
+    public class NewBasicRabbitMqUserCommand : Cmdlet
     {
         /// <summary>
         ///     Gets or sets the name of the rabbit mq user.
@@ -57,31 +56,30 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </exception>
         protected override void ProcessRecord()
         {
-            var externalProcessRunner = new ExternalProcessRunner
-            {
-                EstimatedProcessDuration = TimeSpan.FromSeconds(15)
-            };
+            var ctlInteractor = new CtlRabbitMqProcessInteractor();
 
-            WriteVerbose(string.Format("Adding limited-access user {0}", UserName));
+            WriteVerbose($"Adding limited-access user {UserName}");
 
-            var parameters2 = string.Format("add_user {0} {1}", UserName, Password);
+            var parameters2 = $"add_user {UserName} {Password}";
 
             try
             {
-                externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
+                var  output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(15));
+                WriteVerbose(output);
             }
             catch (Exception ex)
             {
                 throw new ApplicationException("Failed to create user. Manual creation might be necessary", ex);
             }
 
-            WriteVerbose(string.Format("Granting permissions to user {0}", UserName));
+            WriteVerbose($"Granting permissions to user {UserName}");
 
-            parameters2 = string.Format("set_permissions -p / {0} \".*\" \".*\" \".*\"", UserName);
+            parameters2 = $"set_permissions -p / {UserName} \".*\" \".*\" \".*\"";
 
             try
             {
-                externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters2);
+                var output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(15));
+                WriteVerbose(output);
             }
             catch (Exception ex)
             {

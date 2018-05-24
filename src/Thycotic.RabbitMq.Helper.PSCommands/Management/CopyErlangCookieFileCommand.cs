@@ -24,21 +24,33 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
-            const string filename = ".erlang.cookie";
-            var windowsCookiePath = Path.Combine(@"C:\Windows\System32\config\systemprofile\", filename);
-            if (File.Exists(windowsCookiePath))
+            try
             {
-                var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-                var userProfileCookiePath = Path.Combine(userProfile, filename);
-                File.Copy(windowsCookiePath, userProfileCookiePath);
+                const string filename = ".erlang.cookie";
+                var windowsCookiePath = Path.Combine(@"C:\Windows\System32\config\systemprofile\", filename);
+                if (File.Exists(windowsCookiePath))
+                {
+                    var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                    var userProfileCookiePath = Path.Combine(userProfile, filename);
 
-                WriteWarning($"System cookie copied to {userProfileCookiePath}");
+                    if (File.Exists(userProfileCookiePath))
+                    {
+                        File.Delete(userProfileCookiePath);
+                    }
+
+                    File.Copy(windowsCookiePath, userProfileCookiePath);
+
+                    WriteVerbose($"System cookie copied to {userProfileCookiePath}");
+                }
+                else
+                {
+                    WriteWarning($"System cookie path not found in {windowsCookiePath}. Installation may fail.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                WriteWarning($"System cookie path not found in {windowsCookiePath}. Installation may fail.");
+                WriteWarning($"Failed to copy system cookie: {ex.Message}");
             }
-
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Utility.Reflection
+namespace Thycotic.RabbitMq.Helper.Logic.Reflection
 {
     /// <summary>
     /// Assembly entry point provider

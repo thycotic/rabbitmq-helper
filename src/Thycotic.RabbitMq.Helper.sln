@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.RabbitMq.Helper", "Thycotic.RabbitMq.Helper\Thycotic.RabbitMq.Helper.csproj", "{8E815A53-4472-4C31-9FF5-1BD48B976565}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.RabbitMq.Helper.PSCommands", "Thycotic.RabbitMq.Helper.PSCommands\Thycotic.RabbitMq.Helper.PSCommands.csproj", "{9DFFEE65-D375-49C2-BB47-083E7F87D01B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.RabbitMq.Helper.Logic", "Thycotic.RabbitMq.Helper.Logic\Thycotic.RabbitMq.Helper.Logic.csproj", "{822E6B77-9A0F-45CE-9BEA-7714128575C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,8 +28,17 @@ Global
 		{9DFFEE65-D375-49C2-BB47-083E7F87D01B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9DFFEE65-D375-49C2-BB47-083E7F87D01B}.Static Analysis|Any CPU.ActiveCfg = Static Analysis|Any CPU
 		{9DFFEE65-D375-49C2-BB47-083E7F87D01B}.Static Analysis|Any CPU.Build.0 = Static Analysis|Any CPU
+		{822E6B77-9A0F-45CE-9BEA-7714128575C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822E6B77-9A0F-45CE-9BEA-7714128575C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822E6B77-9A0F-45CE-9BEA-7714128575C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822E6B77-9A0F-45CE-9BEA-7714128575C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{822E6B77-9A0F-45CE-9BEA-7714128575C0}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{822E6B77-9A0F-45CE-9BEA-7714128575C0}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA6EF612-C191-4A9E-B787-1C3D070A55EF}
 	EndGlobalSection
 EndGlobal

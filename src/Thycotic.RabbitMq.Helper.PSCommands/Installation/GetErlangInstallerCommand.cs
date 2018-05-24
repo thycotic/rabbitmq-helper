@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Management.Automation;
 using System.Threading;
+using Thycotic.RabbitMq.Helper.Logic;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {

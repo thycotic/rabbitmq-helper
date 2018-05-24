@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.IO;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.OS;
+using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.IO;
+using Thycotic.RabbitMq.Helper.Logic.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {

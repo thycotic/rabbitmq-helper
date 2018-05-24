@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Utility.OS
+namespace Thycotic.RabbitMq.Helper.Logic.OS
 {
     /// <summary>
     /// External process runner
@@ -36,7 +36,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Utility.OS
         /// </exception>
         /// <exception cref="System.Exception">
         /// </exception>
-        public void Run(ProcessStartInfo processInfo)
+        public string Run(ProcessStartInfo processInfo)
         {
             Process process = null;
 
@@ -89,12 +89,15 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Utility.OS
                 {
                     throw new ApplicationException("Process appears to have failed", new Exception(output));
                 }
+
+                return output;
             }
 
+            return string.Empty;
         }
 
         /// <summary>
-        /// Runs the specified executable path.
+        /// Runs the specified executable path and returns the output.
         /// </summary>
         /// <param name="executablePath">The executable path.</param>
         /// <param name="workingPath">The working path.</param>
@@ -106,7 +109,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Utility.OS
         /// </exception>
         /// <exception cref="System.Exception">
         /// </exception>
-        public void Run(string executablePath, string workingPath, string parameters = null)
+        public string Run(string executablePath, string workingPath, string parameters = null)
         {
             var processInfo = new ProcessStartInfo(executablePath, parameters)
             {
@@ -116,7 +119,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Utility.OS
                 WorkingDirectory = workingPath
             };
 
-            Run(processInfo);
+            return Run(processInfo);
         }
 
     }

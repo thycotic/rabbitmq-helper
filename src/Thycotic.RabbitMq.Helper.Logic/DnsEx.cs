@@ -1,4 +1,4 @@
-﻿namespace Thycotic.RabbitMq.Helper.PSCommands.Utility
+﻿namespace Thycotic.RabbitMq.Helper.Logic
 {
     /// <summary>
     /// DNS Extensions

@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
+using Thycotic.RabbitMq.Helper.Logic.Workflow;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
+namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 {
     /// <summary>
     ///     Uninstalls Erlang and RabbitMq
@@ -25,21 +25,19 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         protected override void ProcessRecord()
         {
-            const int activityid = 7;
-            const string activity = "Uninstalling";
+            using (var workflow = new CmdletWorkflow(this, "Un-installing"))
+            {
+                workflow
+                    .ReportProgress("Un-installing RabbitMq", 10)
+                    .Then(() => new UninstallRabbitMqCommand())
 
-            WriteProgress(new ProgressRecord(activityid, activity, "Uninstalling RabbitMq") {PercentComplete = 10});
+                    .ReportProgress("Un-installing Erlang", 30)
+                    .Then(() => new UninstallErlangCommand())
 
-            new UninstallRabbitMqCommand().AsChildOf(this).InvokeImmediate();
+                    .Invoke();
 
-            WriteProgress(new ProgressRecord(activityid, activity, "Uninstalling Erlang") {PercentComplete = 30});
-
-            new UninstallErlangCommand().AsChildOf(this).InvokeImmediate();
-
-            WriteProgress(new ProgressRecord(activityid, activity, "Done") {RecordType = ProgressRecordType.Completed});
-
-
-            WriteVerbose("Connector has been uninstalled.");
+                WriteVerbose("Connector has been un-installed.");
+            }
         }
     }
 }

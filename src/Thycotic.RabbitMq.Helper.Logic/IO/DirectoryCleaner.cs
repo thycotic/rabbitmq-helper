@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Utility.IO
+namespace Thycotic.RabbitMq.Helper.Logic.IO
 {
     /// <summary>
     /// Directory cleaner.
