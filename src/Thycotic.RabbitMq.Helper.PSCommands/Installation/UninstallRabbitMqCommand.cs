@@ -37,8 +37,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 {
                     WriteVerbose("Stopping RabbitMq");
 
-                    var parameters2 = "stop";
-                    ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(15));
+                    ctlInteractor.Stop();
                 }
                 catch (Exception ex)
                 {
