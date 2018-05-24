@@ -288,10 +288,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         /// </summary>
         protected override void ProcessRecord()
         {
-
             using (var workflow = new CmdletWorkflow(this, "Installing"))
             {
-
                 workflow
                     .ReportProgress("Checking Erlang pre-requisites", 5)
                     .If(() => AgreeErlangLicense || ShouldContinue(
@@ -332,13 +330,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                     .ThenFork(UseSsl, tlsFlow =>
                     {
-                        WriteVerbose("Configuring RabbitMq with TLS support");
-
                         tlsFlow
-                        .ReportProgress("Converting certificates and configuring", 60)
+                            .Then(() => WriteVerbose("Configuring RabbitMq with TLS support"))
+                            .ReportProgress("Converting certificates and configuring", 60)
                             .Then(() => new ConvertCaCerToPemCommand {CaCertPath = CaCertPath})
-                            .Then(() =>new ConvertPfxToPemCommand {PfxPath = PfxPath, PfxPassword = PfxPassword})
-                            .Then(() =>new CopyRabbitMqExampleTlsConfigFileCommand())
+                            .Then(() => new ConvertPfxToPemCommand {PfxPath = PfxPath, PfxPassword = PfxPassword})
+                            .Then(() => new CopyRabbitMqExampleTlsConfigFileCommand())
 
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
@@ -356,23 +353,22 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                                 UserName = UserName,
                                 Password = Password,
                                 UseSsl = UseSsl
-                            });
+                            })
 
-                        WriteVerbose(
-                            "RabbitMq is ready to use with TLS. Please open port 5671 on the machine firewall");
+                            .Then(() => WriteVerbose(
+                                "RabbitMq is ready to use with TLS. Please open port 5671 on the machine firewall"))
+                            .Then(() => WriteObject("Installation completed"));
 
-                        WriteObject("Installation completed");
                     }, nonTlsFlow =>
                     {
-                        WriteVerbose("Configuring RabbitMq without TLS support");
-
                         nonTlsFlow
+                            .Then(() => WriteVerbose("Configuring RabbitMq without TLS support"))
                             .ReportProgress("Configuring", 60)
                             .Then(() => new CopyRabbitMqExampleNonTlsConfigFileCommand())
-                            
+
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
-                            
+
                             .ReportProgress("Final configurations", 90)
                             .Then(() => new NewBasicRabbitMqUserCommand
                             {
@@ -384,15 +380,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             {
                                 UserName = UserName,
                                 Password = Password
-                            });
+                            })
 
-                        WriteVerbose(
-                            "RabbitMq is ready to use without TLS. Please open port 5672 on the machine firewall.");
+                            .Then(() => WriteVerbose(
+                                "RabbitMq is ready to use without TLS. Please open port 5672 on the machine firewall."))
+                            .Then(() => WriteObject("Installation completed"));
 
-                        WriteObject("Installation completed");
                     })
                     .Invoke();
-                    
             }
         }
     }

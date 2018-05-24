@@ -32,7 +32,20 @@ namespace Thycotic.RabbitMq.Helper.Logic.Workflow
             _activityName = activityName;
         }
 
-
+        /// <summary>
+        /// Thens the specified action.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <returns></returns>
+        public CmdletWorkflow Then(Action action)
+        {
+            _steps.Enqueue(() =>
+            {
+                action();
+                return true;
+            });
+            return this;
+        }
 
         /// <summary>
         /// Thens the specified cmdlet.

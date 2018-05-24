@@ -33,10 +33,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                     .ReportProgress("Un-installing Erlang", 30)
                     .Then(() => new UninstallErlangCommand())
+                    
 
+                    .Then(() => WriteVerbose("Connector has been un-installed."))
                     .Invoke();
-
-                WriteVerbose("Connector has been un-installed.");
             }
         }
     }
