@@ -53,7 +53,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             var externalProcessRunner = new ExternalProcessRunner
             {
-                EstimatedProcessDuration = TimeSpan.FromSeconds(15)
+                EstimatedProcessDuration = TimeSpan.FromSeconds(60)
             };
 
             const string parameters2 = "enable rabbitmq_management";
