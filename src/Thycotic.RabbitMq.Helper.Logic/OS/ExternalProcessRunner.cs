@@ -86,6 +86,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
                 if (!process.HasExited)
                 {
                     process.Kill();
+                    throw new Exception("Process took longer than expected and had to be terminated");
                 }
 
                 var output = process.StandardOutput.ReadToEnd();
