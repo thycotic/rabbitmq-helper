@@ -71,7 +71,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
         /// <exception cref="System.NotImplementedException"></exception>
         public void Stop()
         {
-            throw new NotImplementedException();
+            Invoke("stop", TimeSpan.FromSeconds(15));
         }
 
         /// <summary>
