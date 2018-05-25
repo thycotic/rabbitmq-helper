@@ -65,12 +65,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             {
                 var  output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(30));
                 WriteVerbose(output);
-                if (output != $"Adding user \"{UserName}\" ...")
+                if (string.IsNullOrWhiteSpace(output) || output.Trim() != $"Adding user \"{UserName}\" ...")
                 {
                     throw new ApplicationException(CtlRabbitMqProcessInteractor.ExceptionMessages.InvalidOutput);
                 }
-
-
             }
             catch (Exception ex)
             {
