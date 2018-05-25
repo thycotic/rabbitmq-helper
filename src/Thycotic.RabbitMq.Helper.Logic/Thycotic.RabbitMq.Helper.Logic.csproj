@@ -65,6 +65,7 @@
     <Compile Include="IO\DirectoryCleaner.cs" />
     <Compile Include="IO\LockedFileReader.cs" />
     <Compile Include="IO\PrerequisiteDownloader.cs" />
+    <Compile Include="IO\RabbitMqConfigurationPathSanitizer.cs" />
     <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="OS\IProcessInteractor.cs" />
     <Compile Include="OS\ErlangProcessInteractor.cs" />

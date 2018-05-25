@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using Thycotic.RabbitMq.Helper.Logic;
-using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
+using Thycotic.RabbitMq.Helper.Logic.IO;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -104,7 +103,17 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             WriteVerbose("Creating RabbitMq configuration file.");
 
             var contents = string.Join(Environment.NewLine,
-                GetDefaultConfigurationSettings().Select(kvp => $"{kvp.Key} = {kvp.Value}"));
+                GetDefaultConfigurationSettings().Select(kvp =>
+                {
+                    //comment
+                    if (kvp.Key.StartsWith("#") && string.IsNullOrWhiteSpace(kvp.Value))
+                    {
+                        return kvp.Key;
+                    }
+
+                    //configuration value
+                    return $"{kvp.Key} = {kvp.Value}";
+                }));
            
             var configFilePath = Path.Combine(InstallationConstants.RabbitMq.ConfigurationPath,
                 "rabbitmq.conf");
@@ -123,8 +132,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 {"listeners.tcp.default","5672" },
 
-                {"log.exchange", "false"},
-                {"log.exchange.level", "info"},
+                {"# logging to file and/or to an exchange", ""},
+                {"# log.dir", RabbitMqConfigurationPathSanitizer.Sanitize(@"C:\temp")},
+                {"log.file", "rabbit.log"},
+                {"# log.file", "false"},
+                {"log.file.level", "error"},
+
+                {"# log.exchange", "true"},
+                {"# log.exchange.level", "error"},
             };
         }
     }

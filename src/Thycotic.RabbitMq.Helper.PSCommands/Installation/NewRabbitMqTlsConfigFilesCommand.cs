@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.IO;
 using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
@@ -40,12 +41,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                     {"ssl_options.verify", "verify_peer"},
                     {"ssl_options.fail_if_no_peer_cert", "false"},
-                    {"ssl_options.cacertfile", ConvertCaCerToPemCommand.CertificatePath},
-                    {"ssl_options.certfile", ConvertPfxToPemCommand.CertificatePath},
-                    {"ssl_options.keyfile", ConvertPfxToPemCommand.KeyPath}
+                    {"ssl_options.cacertfile",  RabbitMqConfigurationPathSanitizer.Sanitize(ConvertCaCerToPemCommand.CertificatePath)},
+                    {"ssl_options.certfile",  RabbitMqConfigurationPathSanitizer.Sanitize(ConvertPfxToPemCommand.CertificatePath)},
+                    {"ssl_options.keyfile",  RabbitMqConfigurationPathSanitizer.Sanitize(ConvertPfxToPemCommand.KeyPath)}
                 };
 
-            return new[] {defaultSettings, tlsSettings}.SelectMany(dict => dict)
+            return new[] { defaultSettings, tlsSettings }.SelectMany(dict => dict)
                 .ToLookup(pair => pair.Key, pair => pair.Value)
                 .ToDictionary(group => group.Key, group => group.First());
 
