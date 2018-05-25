@@ -49,7 +49,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             }
             catch (Exception ex)
             {
-                throw new ApplicationException($"Failed to copy system cookie: {ex.Message}", ex);
+                throw new ApplicationException($"Failed to copy system cookie: {ex.Message}. Manual deletion might be necessary", ex);
             }
         }
     }
