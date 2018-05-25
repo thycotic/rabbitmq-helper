@@ -237,9 +237,10 @@
     <Compile Include="Installation\Workflow\UninstallConnectorCommand.cs" />
     <Compile Include="Installation\UninstallErlangCommand.cs" />
     <Compile Include="Installation\UninstallRabbitMqCommand.cs" />
+    <Compile Include="Management\OpenRabbitMqManagementCommand.cs" />
     <Compile Include="Management\GrantRabbitMqUserPermissionCommand.cs" />
     <Compile Include="Management\RestManagementConsoleCmdlet.cs" />
-    <Compile Include="Management\EnableRabbitMqManagementPluginCommand.cs" />
+    <Compile Include="Management\EnableRabbitMqManagementCommand.cs" />
     <Compile Include="Management\NewRabbitMqUserCommand.cs" />
     <Compile Include="Management\RemoveAllQueuesCommand.cs" />
     <Compile Include="Management\GetRabbitMqLogCommand.cs" />

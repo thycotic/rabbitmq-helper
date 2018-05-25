@@ -16,39 +16,16 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
     ///     <para>PS C:\></para> 
-    ///     <code>Enable-RabbitMqManagementPlugin</code>
+    ///     <code>Enable-RabbitMqManagement</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Enable, "RabbitMqManagementPlugin")]
-    public class EnableRabbitMqManagementPluginCommand : Cmdlet
+    public class EnableRabbitMqManagementCommand : Cmdlet
     {
-        /// <summary>
-        ///     Gets or sets whether to open console when ready. Defaults to true.
-        /// </summary>
-        /// <value>
-        ///    Boolean
-        /// </value>
-        /// <para type="description">Gets or sets whether to open console when ready. Defaults to true.</para>
-        [Parameter(
-             Position = 0,
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
-        public SwitchParameter OpenConsoleAfterInstall { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnableRabbitMqManagementPluginCommand"/> class.
-        /// </summary>
-        public EnableRabbitMqManagementPluginCommand()
-        {
-            OpenConsoleAfterInstall = true;
-        }
-
         /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
-            //we have to use local host because guest account does not work under FQDN
-            const string pluginUrl = "http://localhost:15672/";
             const string executable = "rabbitmq-plugins.bat";
             var pluginsExecutablePath = Path.Combine(InstallationConstants.RabbitMq.BinPath, executable);
 
@@ -69,14 +46,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             }
 
             WriteVerbose(output);
-
-            if (!OpenConsoleAfterInstall)
-            {
-                return;
-            }
-
-            WriteVerbose($"Opening management console at {pluginUrl}");
-            Process.Start(pluginUrl);
         }
     }
 }

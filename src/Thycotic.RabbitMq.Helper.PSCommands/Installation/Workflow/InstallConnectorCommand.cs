@@ -347,7 +347,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .ReportProgress("Final configurations", 90)
 
-                            .Then(() => new EnableRabbitMqManagementPluginCommand())
+                            .Then(() => new EnableRabbitMqManagementCommand())
 
                             .Then(() => new NewRabbitMqUserCommand
                             {
@@ -368,6 +368,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .Then(() => WriteVerbose(
                                 "RabbitMq is ready to use with TLS. Please open port 5671 on the machine firewall"))
+
+                            .Then(() => new OpenRabbitMqManagementCommand())
                             .Then(() => WriteObject("Installation completed"));
 
                     }, nonTlsFlow =>
@@ -384,7 +386,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .ReportProgress("Final configurations", 90)
 
-                            .Then(() => new EnableRabbitMqManagementPluginCommand())
+                            .Then(() => new EnableRabbitMqManagementCommand())
 
                             .Then(() => new NewRabbitMqUserCommand
                             {
@@ -403,6 +405,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .Then(() => WriteVerbose(
                                 "RabbitMq is ready to use without TLS. Please open port 5672 on the machine firewall."))
+
+                            .Then(() => new OpenRabbitMqManagementCommand())
                             .Then(() => WriteObject("Installation completed"));
 
                     })
