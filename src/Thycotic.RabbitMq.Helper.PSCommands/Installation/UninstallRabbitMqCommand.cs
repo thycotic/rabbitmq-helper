@@ -56,7 +56,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 if (!File.Exists(executablePath))
                 {
-                    WriteVerbose("No uninstaller found at " + executablePath);
+                    //WriteVerbose("No uninstaller found at " + executablePath);
 
                     CleanUpFolders(workingPath);
 
