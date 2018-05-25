@@ -44,12 +44,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 }
                 else
                 {
-                    WriteWarning($"System cookie path not found in {windowsCookiePath}. Installation may fail.");
+                    throw new ApplicationException($"System cookie path not found in {windowsCookiePath}. Installation may fail.");
                 }
             }
             catch (Exception ex)
             {
-                WriteWarning($"Failed to copy system cookie: {ex.Message}");
+                throw new ApplicationException($"Failed to copy system cookie: {ex.Message}", ex);
             }
         }
     }
