@@ -346,6 +346,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             .Then(() => new AssertRabbitIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
+
+                            .Then(() => new EnableRabbitMqManagementPluginCommand())
+
                             .Then(() => new NewRabbitMqUserCommand
                             {
                                 UserName = UserName,
@@ -355,7 +358,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             {
                                 UserName = UserName
                             })
-                            .Then(() => new EnableRabbitMqManagementPluginCommand())
                             .Then(() => new AssertConnectivityCommand
                             {
                                 Hostname = Hostname,
@@ -381,6 +383,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             .Then(() => new AssertRabbitIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
+
+                            .Then(() => new EnableRabbitMqManagementPluginCommand())
+
                             .Then(() => new NewRabbitMqUserCommand
                             {
                                 UserName = UserName,
@@ -390,7 +395,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             {
                                 UserName = UserName
                             })
-                            .Then(() => new EnableRabbitMqManagementPluginCommand())
                             .Then(() => new AssertConnectivityCommand
                             {
                                 UserName = UserName,

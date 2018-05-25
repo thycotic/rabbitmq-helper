@@ -64,13 +64,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             try
             {
                 var  output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(30));
-
+                WriteVerbose(output);
                 if (output != $"Adding user \"{UserName}\" ...")
                 {
                     throw new ApplicationException(CtlRabbitMqProcessInteractor.ExceptionMessages.InvalidOutput);
                 }
 
-                WriteVerbose(output);
+
             }
             catch (Exception ex)
             {

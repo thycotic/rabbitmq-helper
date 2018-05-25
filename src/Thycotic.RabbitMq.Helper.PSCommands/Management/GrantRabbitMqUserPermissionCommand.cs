@@ -72,14 +72,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             try
             {
                 var output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(30));
-
+                WriteVerbose(output);
                 if (output != $"Setting permissions for user \"{UserName}\" in vhost \" {VirtualHost} \" ...")
                 {
                     throw new ApplicationException(CtlRabbitMqProcessInteractor.ExceptionMessages.InvalidOutput);
                 }
-
-
-                WriteVerbose(output);
             }
             catch (Exception ex)
             {

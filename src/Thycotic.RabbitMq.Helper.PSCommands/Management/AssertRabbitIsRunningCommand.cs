@@ -38,6 +38,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 try
                 {
                     output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(15));
+                    WriteVerbose(output);
                 }
                 catch (Exception)
                 {
