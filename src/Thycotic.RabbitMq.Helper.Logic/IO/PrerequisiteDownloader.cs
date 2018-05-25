@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
+namespace Thycotic.RabbitMq.Helper.Logic.IO
 {
     /// <summary>
     ///     Pre-requisite downloader

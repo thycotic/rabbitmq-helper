@@ -129,9 +129,14 @@ namespace Thycotic.RabbitMq.Helper.Logic.Workflow
                     {
                         success = func();
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        retry = _parent.ShouldContinue($"{e.Message}. Retry?", "Operation failed. Retry?");
+                        retry = _parent.ShouldContinue($"Operation failed with: {ex.GetCombinedMessage()}. Would you like to Retry?", "Operation failed. Retry?");
+
+                        if (!retry)
+                        {
+                            throw new ApplicationException("Operation failed", ex);
+                        }
                     }
                 }
 

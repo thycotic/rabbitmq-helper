@@ -1,8 +1,7 @@
-﻿using System.Diagnostics.Contracts;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Management
+namespace Thycotic.RabbitMq.Helper.Logic.IO
 {
     /// <summary>
     ///     Locked/log file reader

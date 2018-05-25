@@ -220,14 +220,15 @@
     <Compile Include="Certificate\ConvertCaCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
     <Compile Include="CommandAreas.cs" />
+    <Compile Include="General\SelectExceptionCommand.cs" />
     <Compile Include="Installation\NewRabbitMqNonTlsConfigFilesCommand.cs" />
+    <Compile Include="Management\AssertRabbitIsRunningCommand.cs" />
     <Compile Include="Management\CopyErlangCookieFileCommand.cs" />
     <Compile Include="Installation\NewRabbitMqTlsConfigFilesCommand.cs" />
     <Compile Include="Installation\NewRabbitMqConfigDirectoryCommand.cs" />
     <Compile Include="Installation\GetErlangInstallerCommand.cs" />
     <Compile Include="Installation\GetRabbitMqInstallerCommand.cs" />
     <Compile Include="Installation\Workflow\InstallConnectorCommand.cs" />
-    <Compile Include="Installation\PrerequisiteDownloader.cs" />
     <Compile Include="Installation\InstallErlangCommand.cs" />
     <Compile Include="Installation\InstallRabbitMqCommand.cs" />
     <Compile Include="Installation\GetDownloadLocationsCommand.cs" />
@@ -236,13 +237,12 @@
     <Compile Include="Installation\Workflow\UninstallConnectorCommand.cs" />
     <Compile Include="Installation\UninstallErlangCommand.cs" />
     <Compile Include="Installation\UninstallRabbitMqCommand.cs" />
+    <Compile Include="Management\GrantRabbitMqUserPermissionCommand.cs" />
     <Compile Include="Management\RestManagementConsoleCmdlet.cs" />
     <Compile Include="Management\EnableRabbitMqManagementPluginCommand.cs" />
-    <Compile Include="Management\NewBasicRabbitMqUserCommand.cs" />
+    <Compile Include="Management\NewRabbitMqUserCommand.cs" />
     <Compile Include="Management\RemoveAllQueuesCommand.cs" />
-    <Compile Include="Management\LockedFileReader.cs" />
     <Compile Include="Management\GetRabbitMqLogCommand.cs" />
-    <Compile Include="Management\GetRabbitMqSaslLogCommand.cs" />
     <Compile Include="Management\AssertConnectivityCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

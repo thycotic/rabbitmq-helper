@@ -10,6 +10,16 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
     /// <seealso cref="IProcessInteractor" />
     public class CtlRabbitMqProcessInteractor : IProcessInteractor
     {
+        /// <summary>
+        /// Standard exception messages
+        /// </summary>
+        public static class ExceptionMessages
+        {
+            /// <summary>
+            /// The invalid output
+            /// </summary>
+            public const string InvalidOutput = "Invalid output received";
+        }
 
         /// <summary>
         ///     Gets the executable.
