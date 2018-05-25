@@ -330,7 +330,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                     .ReportProgress("Preparing for RabbitMq installation Erlang", 50)
                     .Then(() => new NewRabbitMqConfigDirectoryCommand())
                     .Then(() => new SetRabbitMqBaseEnvironmentalVariableCommand())
-                    .Then(() => new CopyErlangCookieFileCommand())
 
                     .ThenFork(UseSsl, tlsFlow =>
                     {
@@ -343,6 +342,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
+                            .Then(() => new CopyErlangCookieFileCommand())
                             .Then(() => new AssertRabbitIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
@@ -377,6 +377,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
+                            .Then(() => new CopyErlangCookieFileCommand())
                             .Then(() => new AssertRabbitIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
