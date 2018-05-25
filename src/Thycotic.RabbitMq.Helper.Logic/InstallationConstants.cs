@@ -27,7 +27,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             ///     The erlang installer checksum
             /// </summary>
             public static readonly string InstallerChecksum =
-                !Environment.Is64BitOperatingSystem ? "4c40709f983541676e171b1859fd2d7b" : "1ce2554af9f841141f08d940ec72a99a";
+                Environment.Is64BitOperatingSystem ? "4c40709f983541676e171b1859fd2d7b" : "1ce2554af9f841141f08d940ec72a99a";
 
             /// <summary>
             ///     The version
@@ -38,7 +38,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             ///     The download URL
             /// </summary>
             public static readonly string DownloadUrl =
-                !Environment.Is64BitOperatingSystem
+                Environment.Is64BitOperatingSystem
                     ? "http://erlang.org/download/otp_win64_20.3.exe"
                     : "http://erlang.org/download/otp_win32_20.3.exe";
 
@@ -46,7 +46,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             ///     The download URL using the Thycotic mirror
             /// </summary>
             public static readonly string ThycoticMirrorDownloadUrl =
-                !Environment.Is64BitOperatingSystem
+                Environment.Is64BitOperatingSystem
                     ? "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win64_20.3.exe"
                     : "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win32_20.3.exe";
 
