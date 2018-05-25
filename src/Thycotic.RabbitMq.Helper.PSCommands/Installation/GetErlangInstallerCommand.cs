@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using System.Threading;
 using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.IO;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -50,6 +51,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Offline)]
+        [Parameter(
+            Position = 0,
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = ParameterSets.Prepare)]
         [Alias("OfflinePath")]
         [ValidateNotNullOrEmpty]
         public string OfflineErlangInstallerPath { get; set; }
@@ -65,6 +72,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Online)]
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = ParameterSets.Prepare)]
         [Alias("ForceDownload")]
         public SwitchParameter Force { get; set; }
 
@@ -79,8 +90,25 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Online)]
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = ParameterSets.Prepare)]
         [Alias("Mirror")]
         public SwitchParameter UseThycoticMirror { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to prepare for offline install.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [force download]; otherwise, <c>false</c>.
+        /// </value>
+        /// <para type="description">Gets or sets whether to prepare for offline install.</para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = ParameterSets.Prepare)]
+        public SwitchParameter PrepareForOfflineInstall { get; set; }
 
         /// <summary>
         ///     Processes the record.
@@ -88,23 +116,54 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <exception cref="System.IO.FileNotFoundException">Installer does not exist</exception>
         protected override void ProcessRecord()
         {
+
             if (!string.IsNullOrWhiteSpace(OfflineErlangInstallerPath))
             {
-                WriteDebug(string.Format("Using offline installer path {0}", OfflineErlangInstallerPath));
-                
-                if (!File.Exists(OfflineErlangInstallerPath))
+                if (PrepareForOfflineInstall)
                 {
-                    throw new FileNotFoundException("Installer does not exist");
-                }
+                    WriteDebug($"Preparing offline installer path {OfflineErlangInstallerPath}");
 
-                if (PrerequisiteDownloader.CalculateMD5(OfflineErlangInstallerPath) != InstallationConstants.Erlang.InstallerChecksum)
+                    if (Force)
+                        WriteVerbose("Forcing download");
+
+                    WriteVerbose("Downloading Erlang");
+
+                    var downloader = new PrerequisiteDownloader();
+
+                    var downloadUrl = UseThycoticMirror
+                        ? InstallationConstants.Erlang.ThycoticMirrorDownloadUrl
+                        : InstallationConstants.Erlang.DownloadUrl;
+
+                    downloader.Download(CancellationToken.None, downloadUrl,
+                        OfflineErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
+                        progress =>
+                        {
+                            WriteProgress(new ProgressRecord(1, "Erlang download in progress", "Downloading")
+                            {
+                                PercentComplete = progress.ProgressPercentage
+                            });
+                        });
+
+                }
+                else
                 {
-                    throw new FileNotFoundException("Installer checksum does not match");
-                }
-                if (File.Exists(ErlangInstallerPath))
-                    File.Delete(ErlangInstallerPath);
+                    WriteDebug($"Using offline installer path {OfflineErlangInstallerPath}");
 
-                File.Copy(OfflineErlangInstallerPath, ErlangInstallerPath);
+                    if (!File.Exists(OfflineErlangInstallerPath))
+                    {
+                        throw new FileNotFoundException("Installer does not exist");
+                    }
+
+                    if (PrerequisiteDownloader.CalculateMD5(OfflineErlangInstallerPath) !=
+                        InstallationConstants.Erlang.InstallerChecksum)
+                    {
+                        throw new FileNotFoundException("Installer checksum does not match");
+                    }
+                    if (File.Exists(ErlangInstallerPath))
+                        File.Delete(ErlangInstallerPath);
+
+                    File.Copy(OfflineErlangInstallerPath, ErlangInstallerPath);
+                }
             }
             else
             {
@@ -136,6 +195,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         {
             public const string Offline = "Offline";
             public const string Online = "Online";
+            public const string Prepare = "Prepare";
         }
     }
 }
