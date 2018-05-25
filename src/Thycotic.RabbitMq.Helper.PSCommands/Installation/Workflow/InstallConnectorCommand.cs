@@ -343,12 +343,17 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
+                            .Then(() => new AssertRabbitIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
-                            .Then(() => new NewBasicRabbitMqUserCommand
+                            .Then(() => new NewRabbitMqUserCommand
                             {
                                 UserName = UserName,
                                 Password = Password
+                            })
+                            .Then(() => new GrantRabbitMqUserPermissionCommand
+                            {
+                                UserName = UserName
                             })
                             .Then(() => new EnableRabbitMqManagementPluginCommand())
                             .Then(() => new AssertConnectivityCommand
@@ -372,12 +377,17 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
+                            .Then(() => new AssertRabbitIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
-                            .Then(() => new NewBasicRabbitMqUserCommand
+                            .Then(() => new NewRabbitMqUserCommand
                             {
                                 UserName = UserName,
                                 Password = Password
+                            })
+                            .Then(() => new GrantRabbitMqUserPermissionCommand
+                            {
+                                UserName = UserName
                             })
                             .Then(() => new EnableRabbitMqManagementPluginCommand())
                             .Then(() => new AssertConnectivityCommand

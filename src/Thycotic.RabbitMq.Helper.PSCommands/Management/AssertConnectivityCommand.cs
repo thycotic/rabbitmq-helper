@@ -96,8 +96,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             }
             catch (Exception ex)
             {
-                WriteWarning(
-                    "Connection failed. There might be an issue with the installation. Please check the RabbitMq log files:" + ex.GetCombinedMessage());
+               throw new ApplicationException("Connection failed. There might be an issue with the installation. Please check the RabbitMq log files:" + ex.Message, ex);
             }
         }
 

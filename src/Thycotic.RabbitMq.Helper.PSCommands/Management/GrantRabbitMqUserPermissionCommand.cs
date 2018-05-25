@@ -5,19 +5,32 @@ using Thycotic.RabbitMq.Helper.Logic.OS;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
     /// <summary>
-    ///     Adds a basic user to RabbitMq. This used has publish and consumer permissions
+    ///     Grants a RabbitMq permissions
     /// </summary>
-    /// <para type="synopsis">Adds a basic user to RabbitMq. This used has publish and consumer permissions</para>
+    /// <para type="synopsis">Grants a RabbitMq permissions</para>
     /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
     ///     <para>PS C:\></para> 
     ///     <code>New-BasicRabbitMqUser</code>
     /// </example>
-    [Cmdlet(VerbsCommon.New, "BasicRabbitMqUser")]
-    [Alias("addRabbitMqUser")]
-    public class NewBasicRabbitMqUserCommand : Cmdlet
+    [Cmdlet(VerbsSecurity.Grant, "RabbitMqUserPermission")]
+    public class GrantRabbitMqUserPermissionCommand : Cmdlet
     {
+        /// <summary>
+        /// Gets or sets the virtual host.
+        /// </summary>
+        /// <value>
+        /// The virtual host.
+        /// </value>
+        /// <para type="description">Gets or sets the virtual host.</para>
+        [Parameter(
+            Mandatory = false,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [Alias("VHost")]
+        public string VirtualHost { get; set; }
+
         /// <summary>
         ///     Gets or sets the name of the rabbit mq user.
         /// </summary>
@@ -33,18 +46,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         public string UserName { get; set; }
 
         /// <summary>
-        ///     Gets or sets the rabbit mq password.
+        /// Initializes a new instance of the <see cref="GrantRabbitMqUserPermissionCommand"/> class.
         /// </summary>
-        /// <value>
-        ///     The rabbit mq password.
-        /// </value>
-        /// <para type="description">Gets or sets the rabbit mq password.</para>
-        [Parameter(
-             Mandatory = true,
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
-        [Alias("RabbitMqPw", "RabbitMqPassword")]
-        public string Password { get; set; }
+        public GrantRabbitMqUserPermissionCommand()
+        {
+            VirtualHost = "/";
+        }
 
         /// <summary>
         ///     Processes the record.
@@ -58,27 +65,20 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         {
             var ctlInteractor = new CtlRabbitMqProcessInteractor();
 
-            WriteVerbose($"Adding limited-access user {UserName}");
-
-            var parameters2 = $"add_user {UserName} {Password}";
-
-            try
-            {
-                var  output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(30));
-                WriteVerbose(output);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Failed to create user. Manual creation might be necessary", ex);
-            }
-
             WriteVerbose($"Granting permissions to user {UserName}");
 
-            parameters2 = $"set_permissions -p / {UserName} \".*\" \".*\" \".*\"";
+            var parameters2 = $"set_permissions -p {VirtualHost} {UserName} \".*\" \".*\" \".*\"";
 
             try
             {
                 var output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(30));
+
+                if (output != $"Setting permissions for user \"{UserName}\" in vhost \" {VirtualHost} \" ...")
+                {
+                    throw new ApplicationException(CtlRabbitMqProcessInteractor.ExceptionMessages.InvalidOutput);
+                }
+
+
                 WriteVerbose(output);
             }
             catch (Exception ex)
