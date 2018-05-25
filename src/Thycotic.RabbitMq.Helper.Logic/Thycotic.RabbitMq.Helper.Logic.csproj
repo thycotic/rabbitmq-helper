@@ -72,7 +72,6 @@
     <Compile Include="OS\IRestRabbitMqProcessInteractorProxy.cs" />
     <Compile Include="OS\RestRabbitMqProcessInteractor.cs" />
     <Compile Include="OS\CtlRabbitMqProcessInteractor.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\AssemblyEntryPointProvider.cs" />
     <Compile Include="Workflow\CmdletWorkflow.cs" />
