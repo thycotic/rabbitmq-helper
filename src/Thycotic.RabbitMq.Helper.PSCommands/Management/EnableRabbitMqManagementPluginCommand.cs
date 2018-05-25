@@ -22,12 +22,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     public class EnableRabbitMqManagementPluginCommand : Cmdlet
     {
         /// <summary>
-        ///     Gets or sets whether to open console when ready. Default to false.
+        ///     Gets or sets whether to open console when ready. Defaults to true.
         /// </summary>
         /// <value>
         ///    Boolean
         /// </value>
-        /// <para type="description">Gets or sets whether to open console when ready.</para>
+        /// <para type="description">Gets or sets whether to open console when ready. Defaults to true.</para>
         [Parameter(
              Position = 0,
              ValueFromPipeline = true,
@@ -39,6 +39,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         public EnableRabbitMqManagementPluginCommand()
         {
+            OpenConsoleAfterInstall = true;
         }
 
         /// <summary>
@@ -62,13 +63,20 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             var output = externalProcessRunner.Run(pluginsExecutablePath, InstallationConstants.RabbitMq.BinPath, parameters2);
 
+            if (!output.Contains("started") && !output.Contains("Plugin configuration unchanged."))
+            {
+                throw new ApplicationException(CtlRabbitMqProcessInteractor.ExceptionMessages.InvalidOutput);
+            }
+
             WriteVerbose(output);
 
-            if (OpenConsoleAfterInstall)
+            if (!OpenConsoleAfterInstall)
             {
-                WriteVerbose(string.Format("Opening management console at {0}", pluginUrl));
-                Process.Start(pluginUrl);
+                return;
             }
+
+            WriteVerbose($"Opening management console at {pluginUrl}");
+            Process.Start(pluginUrl);
         }
     }
 }
