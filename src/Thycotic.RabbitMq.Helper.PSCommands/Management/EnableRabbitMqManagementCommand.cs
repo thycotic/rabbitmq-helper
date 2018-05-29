@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.OS;
-using Thycotic.RabbitMq.Helper.PSCommands.Installation;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -18,7 +16,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <para>PS C:\></para> 
     ///     <code>Enable-RabbitMqManagement</code>
     /// </example>
-    [Cmdlet(VerbsLifecycle.Enable, "RabbitMqManagementPlugin")]
+    [Cmdlet(VerbsLifecycle.Enable, "RabbitMqManagement")]
     public class EnableRabbitMqManagementCommand : Cmdlet
     {
         /// <summary>
