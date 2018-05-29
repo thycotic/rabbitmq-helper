@@ -39,6 +39,7 @@ namespace Thycotic.RabbitMq.Helper
                     var exampleFolder = ".\\Examples";
                     var preparationScript =
                         $"Write-Host 'Running RabbitMq Helper version {module.GetName().Version} as administrator'; " +
+                        $"Write-Host 'This is open source software: https://github.com/thycotic/rabbitmq-helper. See LICENSE file for details'; " +
                         $"Write-Host 'Execution Policy:';" +
                         $"Get-ExecutionPolicy | Write-Host;" +
                         $"Write-Host;" +
