@@ -136,7 +136,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                         : InstallationConstants.Erlang.DownloadUrl;
 
                     downloader.Download(CancellationToken.None, new Uri(downloadUrl, UriKind.Absolute),
-                        OfflineErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
+                        OfflineErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => throw exception,
                         progress =>
                         {
                             WriteProgress(new ProgressRecord(1, "Erlang download in progress", "Downloading")
@@ -180,7 +180,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     : InstallationConstants.Erlang.DownloadUrl;
 
                 downloader.Download(CancellationToken.None, new Uri(downloadUrl, UriKind.Absolute),
-                    ErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
+                    ErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => throw exception,
                     progress =>
                     {
                         WriteProgress(new ProgressRecord(1, "Erlang download in progress", "Downloading")

@@ -2,7 +2,7 @@ Due to the size and licensing of the erlang and rabbitmq installers,they are not
 
 Name them o-erlang.exe and o-rabbitMq.exe respectively. 
 
-You can use the following helper commands for download lcoations
+You can use the following helper commands for download locations
 
 Get-DownloadLocations
 Get-DownloadLocations -UseThycoticMirror
