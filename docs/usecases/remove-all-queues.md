@@ -1,5 +1,5 @@
-```powershell
-import-module $PSScriptRoot\..\Thycotic.RabbitMq.Helper.PSCommands.dll
+# Remove all queues on a RabbitMq node
 
+```powershell
 remove-allqueues
 ```
