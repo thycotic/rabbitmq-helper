@@ -19,13 +19,30 @@
           <Directory Id="INSTALLLOCATION" Name="RabbitMq Helper"/>
         </Directory>
       </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="SHORTCUTLOCATION" Name="Thycotic RabbitMq Helper"/>
+      </Directory>
     </Directory>
+
+    <DirectoryRef Id="SHORTCUTLOCATION">
+      <Component Id="ApplicationShortcut" Guid="69D8450B-F322-461C-AF3A-225049FF65D3">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Thycotic RabbitMq Helper PowerShell Host"
+                  Description="The Rabbit MQ Helper is a tool whose purpose is to assist with installing Rabbit Mq."
+                  Target="[#Thycotic.RabbitMq.Helper.exe]"
+                  WorkingDirectory="INSTALLLOCATION"/>
+        <RemoveFolder Id="SHORTCUTLOCATION" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
 
     <Icon Id="icon.ico" SourceFile="icon.ico"/>
     <Property Id="ARPPRODUCTICON" Value="icon.ico"/>
 
     <Feature Id="Complete" Title="All Services" Level="1">
       <ComponentGroupRef Id="main_component_group" />
+      <ComponentRef Id="ApplicationShortcut" />
     </Feature>
 
     <!--<CustomAction Id='SetRootDrive' Property='ROOTDRIVE' Value='[%SystemDrive]\'/>-->

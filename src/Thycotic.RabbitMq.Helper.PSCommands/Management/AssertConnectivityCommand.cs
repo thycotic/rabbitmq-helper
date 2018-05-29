@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Management.Automation;
+using System.Security.Authentication;
 using RabbitMQ.Client;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
+using Thycotic.RabbitMq.Helper.Logic;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -96,9 +97,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             }
             catch (Exception ex)
             {
-                WriteWarning(
-                    "Connection failed. There might be an issue with the installation. Please check the RabbitMq log files:" +
-                    ex.Message);
+               throw new ApplicationException("Connection failed. There might be an issue with the installation. Please check the RabbitMq log files:" + ex.Message, ex);
             }
         }
 
@@ -126,8 +125,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 connectionFactory.Ssl = new SslOption
                 {
                     Enabled = true,
-                    ServerName = uri.Host
-                    //AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch | SslPolicyErrors.RemoteCertificateChainErrors,
+                    ServerName = uri.Host,
+                    Version = SslProtocols.Tls11 | SslProtocols.Tls12
                 };
             }
 

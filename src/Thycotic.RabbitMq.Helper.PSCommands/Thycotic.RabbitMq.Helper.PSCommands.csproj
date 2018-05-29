@@ -220,74 +220,88 @@
     <Compile Include="Certificate\ConvertCaCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
     <Compile Include="CommandAreas.cs" />
-    <Compile Include="Installation\CopyRabbitMqExampleNonSslConfigFileCommand.cs" />
-    <Compile Include="Installation\CopyRabbitMqExampleSslConfigFileCommand.cs" />
+    <Compile Include="General\SelectExceptionCommand.cs" />
+    <Compile Include="Installation\NewRabbitMqNonTlsConfigFilesCommand.cs" />
+    <Compile Include="Management\AssertRabbitIsRunningCommand.cs" />
+    <Compile Include="Management\CopyErlangCookieFileCommand.cs" />
+    <Compile Include="Installation\NewRabbitMqTlsConfigFilesCommand.cs" />
     <Compile Include="Installation\NewRabbitMqConfigDirectoryCommand.cs" />
     <Compile Include="Installation\GetErlangInstallerCommand.cs" />
     <Compile Include="Installation\GetRabbitMqInstallerCommand.cs" />
-    <Compile Include="Installation\InstallationConstants.cs" />
-    <Compile Include="Installation\InstallConnectorCommand.cs" />
-    <Compile Include="Installation\PrerequisiteDownloader.cs" />
+    <Compile Include="Installation\Workflow\InstallConnectorCommand.cs" />
     <Compile Include="Installation\InstallErlangCommand.cs" />
     <Compile Include="Installation\InstallRabbitMqCommand.cs" />
     <Compile Include="Installation\GetDownloadLocationsCommand.cs" />
     <Compile Include="Installation\SetErlangHomeEnvironmentalVariableCommand.cs" />
     <Compile Include="Installation\SetRabbitMqBaseEnvironmentalVariableCommand.cs" />
-    <Compile Include="Installation\UninstallConnectorCommand.cs" />
+    <Compile Include="Installation\Workflow\UninstallConnectorCommand.cs" />
     <Compile Include="Installation\UninstallErlangCommand.cs" />
     <Compile Include="Installation\UninstallRabbitMqCommand.cs" />
+    <Compile Include="Management\OpenRabbitMqManagementCommand.cs" />
+    <Compile Include="Management\GrantRabbitMqUserPermissionCommand.cs" />
     <Compile Include="Management\RestManagementConsoleCmdlet.cs" />
-    <Compile Include="Management\EnableRabbitMqManagementPluginCommand.cs" />
-    <Compile Include="Management\NewBasicRabbitMqUserCommand.cs" />
+    <Compile Include="Management\EnableRabbitMqManagementCommand.cs" />
+    <Compile Include="Management\NewRabbitMqUserCommand.cs" />
     <Compile Include="Management\RemoveAllQueuesCommand.cs" />
-    <Compile Include="Management\LockedFileReader.cs" />
-    <Compile Include="Management\CtlManagementConsoleCmdlet.cs" />
     <Compile Include="Management\GetRabbitMqLogCommand.cs" />
-    <Compile Include="Management\GetRabbitMqSaslLogCommand.cs" />
     <Compile Include="Management\AssertConnectivityCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\Reflection\AssemblyEntryPointProvider.cs" />
-    <Compile Include="Utility\IO\DirectoryCleaner.cs" />
-    <Compile Include="Utility\CmdletExtensions.cs" />
-    <Compile Include="Utility\DnsEx.cs" />
-    <Compile Include="Utility\OS\ExternalProcessRunner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\RabbitMq\3.6.9\NonSsl\rabbitmq.config.erlang" />
-    <EmbeddedResource Include="Content\RabbitMq\3.6.9\Ssl\rabbitmq.config.erlang" />
     <None Include="..\Certificates\Thycotic.RabbitMq.Helper.snk">
       <Link>Thycotic.RabbitMq.Helper.snk</Link>
     </None>
     <None Include="app.config" />
-    <None Include="Examples\remove-all-queues.ps1">
+    <EmbeddedResource Include="Content\RabbitMq\3.7.5\rabbitmq.conf.example" />
+    <Content Include="Examples\installnontls-nolicenseprompts.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\installnonssl-offline.ps1">
+    </Content>
+    <Content Include="Examples\installnontls-offline.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\installnonssl.ps1">
+    </Content>
+    <Content Include="Examples\installnontls.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\installnonssl-nolicenseprompts.ps1">
+    </Content>
+    <Content Include="Examples\installtls-nolicenseprompts.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\installssl-nolicenseprompts.ps1">
+    </Content>
+    <Content Include="Examples\installtls-offline.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\installssl-offline.ps1">
+    </Content>
+    <Content Include="Examples\installtls.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\installssl.ps1">
+    </Content>
+    <Content Include="Examples\Offline\README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="Examples\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Examples\remove-all-queues.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Content\RabbitMq\3.7.5\advanced.config.example" />
+    <Content Include="Examples\convert-cacerttopem.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Examples\convert-pfxtopem.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Examples\localhost.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Examples\localhost.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Examples\Offline\README.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\Thycotic.RabbitMq.Helper.Logic\Thycotic.RabbitMq.Helper.Logic.csproj">
+      <Project>{822E6B77-9A0F-45CE-9BEA-7714128575C0}</Project>
+      <Name>Thycotic.RabbitMq.Helper.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.8\build\XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.8\build\XmlDoc2CmdletDoc.targets')" />

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Management.Automation;
+using System.Threading;
 using System.Threading.Tasks;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.OS;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.Reflection;
+using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.OS;
+using Thycotic.RabbitMq.Helper.Logic.Reflection;
+using Thycotic.RabbitMq.Helper.PSCommands.Management;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -57,9 +59,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             WriteVerbose("Installing RabbitMq...");
 
             externalProcessRunner.Run(executablePath, workingPath, silent);
-
-            WriteVerbose("Waiting for RabbitMq process to start...");
-            Task.Delay(TimeSpan.FromSeconds(10)).Wait();
 
             WriteVerbose("Installation process completed");
         }
