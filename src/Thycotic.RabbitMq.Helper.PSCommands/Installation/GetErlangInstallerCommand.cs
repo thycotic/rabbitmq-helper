@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Management.Automation;
 using System.Threading;
 using Thycotic.RabbitMq.Helper.Logic;
@@ -134,7 +135,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                         ? InstallationConstants.Erlang.ThycoticMirrorDownloadUrl
                         : InstallationConstants.Erlang.DownloadUrl;
 
-                    downloader.Download(CancellationToken.None, downloadUrl,
+                    downloader.Download(CancellationToken.None, new Uri(downloadUrl, UriKind.Absolute),
                         OfflineErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
                         progress =>
                         {
@@ -178,7 +179,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     ? InstallationConstants.Erlang.ThycoticMirrorDownloadUrl
                     : InstallationConstants.Erlang.DownloadUrl;
 
-                downloader.Download(CancellationToken.None, downloadUrl,
+                downloader.Download(CancellationToken.None, new Uri(downloadUrl, UriKind.Absolute),
                     ErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
                     progress =>
                     {

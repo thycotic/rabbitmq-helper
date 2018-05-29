@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
         ///     Downloads the prerequisite.
         /// </summary>
         /// <param name="token">The token.</param>
-        /// <param name="downloadUrl">The download URL.</param>
+        /// <param name="downloadUri">The download URI.</param>
         /// <param name="installerPath">The installer path.</param>
         /// <param name="checksum">The installer checksum.</param>
         /// <param name="forceDownload">if set to <c>true</c> [force download].</param>
@@ -38,7 +39,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
         /// <param name="warnHandler">The warn handler.</param>
         /// <param name="progressHandler">The progress handler.</param>
         /// <exception cref="System.IO.FileNotFoundException">Failed to download</exception>
-        public void Download(CancellationToken token, string downloadUrl, string installerPath, string checksum,
+        public void Download(CancellationToken token, Uri downloadUri, string installerPath, string checksum,
             bool forceDownload = false, int maxRetries = 5, Action<string> debugHandler = null,
             Action<string> infoHandler = null, Action<string, Exception> warnHandler = null,
             Action<PrerequisiteDownloaderProgress> progressHandler = null)
@@ -54,9 +55,27 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
                 return;
             }
 
+            //check for outbound connectivity
+            using (var client = new TcpClient())
+            {
+                try
+                {
+                    infoHandler($"Checking connectivity to {downloadUri.Host}...");
+                    
+                    client.Connect(downloadUri.Host, downloadUri.Port);
+
+                    infoHandler($"{downloadUri.Host} appears online and ready.");
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException("Failed to connect to download host", ex);
+                }
+
+            }
+
             var tries = 0;
 
-            infoHandler(string.Format("Downloading installer from {0}. Please wait...", downloadUrl));
+            infoHandler($"Downloading installer from {downloadUri}. Please wait...");
 
             var downloaded = false;
 
@@ -91,7 +110,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
                     };
 
                     var tempPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid().ToString()}.bin");
-                    var task = client.DownloadFileTaskAsync(new Uri(downloadUrl, UriKind.Absolute), tempPath);
+                    var task = client.DownloadFileTaskAsync(downloadUri, tempPath);
                     var awaiter = task.GetAwaiter();
 
                     while (!awaiter.IsCompleted)
