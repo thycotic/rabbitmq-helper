@@ -131,18 +131,15 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     var downloader = new PrerequisiteDownloader();
 
                     var downloadUrl = UseThycoticMirror
-                        ? InstallationConstants.Erlang.ThycoticMirrorDownloadUrl
-                        : InstallationConstants.Erlang.DownloadUrl;
+                        ? InstallationConstants.RabbitMq.ThycoticMirrorDownloadUrl
+                        : InstallationConstants.RabbitMq.DownloadUrl;
 
                     downloader.Download(CancellationToken.None, new Uri(downloadUrl, UriKind.Absolute),
-                        OfflineRabbitMqInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5,
-                        WriteDebug, WriteVerbose, (s, exception) =>
-                        {
-                            throw exception;
-                        },
+                        OfflineRabbitMqInstallerPath, InstallationConstants.RabbitMq.InstallerChecksum, Force, 5,
+                        WriteDebug, WriteVerbose, (s, exception) => throw exception,
                         progress =>
                         {
-                            WriteProgress(new ProgressRecord(1, "Erlang download in progress", "Downloading")
+                            WriteProgress(new ProgressRecord(1, "RabbitMq download in progress", "Downloading")
                             {
                                 PercentComplete = progress.ProgressPercentage
                             });
@@ -184,7 +181,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     : InstallationConstants.RabbitMq.DownloadUrl;
 
                 downloader.Download(CancellationToken.None, new Uri(downloadUrl, UriKind.Absolute),
-                    RabbitMqInstallerPath, InstallationConstants.RabbitMq.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => { throw exception; },
+                    RabbitMqInstallerPath, InstallationConstants.RabbitMq.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => throw exception,
                     progress =>
                     {
                         WriteProgress(new ProgressRecord(1, "RabbitMq download in progress", "Downloading")
