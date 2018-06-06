@@ -59,9 +59,6 @@ namespace Thycotic.RabbitMq.Helper
 
                         $"Write-Host 'Available command-lets in the ''{module.GetName().Name}'' module (use ''get-help CMDLETNAME'' for help and usage):';" +
                         $"Get-Command -Module {module.GetName().Name} | Sort | % {{ Write-Host \"\"`t $_.Name\"\" }};" +
-                        $"Write-Host;" +
-
-                        $"Write-Host 'For a guided installation run ''Use-GuidedInstallConnector''';" +
                         $"Write-Host;";
 
                     psi = new ProcessStartInfo
