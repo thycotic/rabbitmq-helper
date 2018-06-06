@@ -222,6 +222,7 @@
     <Compile Include="CommandAreas.cs" />
     <Compile Include="General\SelectExceptionCommand.cs" />
     <Compile Include="Installation\NewRabbitMqNonTlsConfigFilesCommand.cs" />
+    <Compile Include="Installation\Workflow\UseGuidedInstallConnectorCommand.cs" />
     <Compile Include="Management\AssertRabbitIsRunningCommand.cs" />
     <Compile Include="Management\CopyErlangCookieFileCommand.cs" />
     <Compile Include="Installation\NewRabbitMqTlsConfigFilesCommand.cs" />
@@ -253,49 +254,17 @@
     </None>
     <None Include="app.config" />
     <EmbeddedResource Include="Content\RabbitMq\3.7.5\rabbitmq.conf.example" />
-    <Content Include="Examples\installnontls-nolicenseprompts.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\installnontls-offline.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\installnontls.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\installtls-nolicenseprompts.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\installtls-offline.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\installtls.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Examples\Offline\README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Examples\README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Examples\remove-all-queues.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="Content\RabbitMq\3.7.5\advanced.config.example" />
-    <Content Include="Examples\convert-cacerttopem.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\convert-pfxtopem.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\localhost.cer">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Examples\localhost.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Examples\prepare-offline.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="Examples\localhostca.cer" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
