@@ -54,6 +54,10 @@ RabbitMq is not a Thycotic product and we do not receive revenue for it. We buil
 
 - [Remove all queues on a RabbitMq node](usecases/remove-all-queues.md)
 
+## Having an issue?
+- [Review the common troubleshooting tips](troubleshooting.md)
+- If you are still having difficulties, [submit an issue on Github](https://github.com/thycotic/rabbitmq-helper/issues)
+
 ## Feedback & comments
     - Email dkolev@compfreak.com?subject=rabbitmq-helper-feedback
 
