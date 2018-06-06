@@ -10,7 +10,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
     ///     Installs the site connector
     /// </summary>
     /// <para type="synopsis">Installs the site connector. </para>
-    /// <para type="description">The Install-Connector cmdlet is designed to make the installation of a non-SSL and SSL site connector easier.</para>
+    /// <para type="description">The Install-Connector cmdlet is designed to make the installation of a non-TLS and TLS site connector.</para>
     /// <para type="description">
     ///     It will install both Erlang and RabbitMq provided that the appropriate parameters are
     ///     supplied.
@@ -21,14 +21,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
     /// </para>
     /// <para type="link">Convert-CaCertToPem</para>
     /// <para type="link">Convert-PfxToPem</para>
-    /// <para type="link">Copy-RabbitMqExampleNonSslConfigFile</para>
-    /// <para type="link">Copy-RabbitMqExampleSslConfigFile</para>
     /// <para type="link">Get-DownloadLocations</para>
     /// <para type="link">Get-ErlangInstaller</para>
     /// <para type="link">Get-RabbitMqInstaller</para>
     /// <para type="link">Install-Erlang</para>
     /// <para type="link">Install-RabbitMq</para>
     /// <para type="link">New-RabbitMqConfigDirectory</para>
+    /// <para type="link">New-RabbitMqNonTlsConfigFiles</para>
+    /// <para type="link">New-RabbitMqTlsConfigFiles</para>
     /// <para type="link">Set-ErlangHomeEnvironmentalVariable</para>
     /// <para type="link">Set-RabbitMqBaseEnvironmentalVariable</para>
     /// <para type="link">Uninstall-Connector</para>
@@ -39,19 +39,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
     ///     <para>This is generally useful during development or during POC stages.</para>
     ///     <para>To do so, you could use the following:</para>
     ///     <para>PS C:\></para> 
-    ///     <code>Install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -agreeErlangLicense -agreeRabbitMqLicense</code>
-    /// </example>
-    /// <example>
-    ///     <para>You can avoid being prompted to agree to Erlang or RabbitMq licenses (during automated deployment) use</para>
-    ///     <para>To do so, you could use the following:</para>
-    ///     <para>PS C:\></para> 
-    ///     <code>Install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -agreeErlangLicense -agreeRabbitMqLicense</code>
-    /// </example>
-    /// <example>
-    ///     <para>The leverage secure communication between RabbitMq and its clients, you should use encryption.</para>
-    ///     <para>To do so, you could use the following:</para>
-    ///     <para>PS C:\></para> 
-    ///     <code>Install-Connector -verbose -hostname RABBITHOST1.FQDN -useSsl -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -cacertpath $path\sc.cer -pfxPath $path\sc.pfx -pfxPw SOMEPASSWORD</code>
+    ///     <code>Install-Connector -agreeErlangLicense -agreeRabbitMqLicense</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Install, "Connector")]
     [Alias("installConnector")]
@@ -61,8 +49,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         {
             public const string Offline = "Offline";
             public const string Online = "Online";
-            public const string NonSsl = "NonSsl";
-            public const string Ssl = "Ssl";
+            public const string NonTls = "NonTls";
+            public const string Tls = "Tls";
         }
 
         /// <summary>
@@ -110,7 +98,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         [Parameter(
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         public string OfflineErlangInstallerPath { get; set; }
 
 
@@ -132,7 +120,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         [Parameter(
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         public string OfflineRabbitMqInstallerPath { get; set; }
 
         /// <summary>
@@ -167,54 +155,37 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         [Parameter(
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = ParameterSets.Ssl)]
+            ParameterSetName = ParameterSets.Tls)]
         [Alias("Mirror")]
         public SwitchParameter UseThycoticMirror { get; set; }
 
         /// <summary>
-        ///     Gets or sets the name of the RabbitMq user name of the initial user.
+        ///     Gets or sets the credential of the rabbit mq user.
         /// </summary>
         /// <value>
-        ///     The name of the RabbitMq user.
+        ///     The credential of the rabbit mq user.
         /// </value>
-        /// <para type="description">Gets or sets the name of the RabbitMq user name of the initial user.</para>
+        /// <para type="description">Gets or sets the name of the rabbit mq user.</para>
         [Parameter(
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        [Alias("RabbitMqUserName")]
-        public string UserName { get; set; }
+        public PSCredential Credential { get; set; }
 
         /// <summary>
-        ///     Gets or sets the RabbitMq password of the initial user.
+        ///     Gets or sets whether to use TLS or not.
         /// </summary>
         /// <value>
-        ///     The RabbitMq password.
+        ///     The use TLS.
         /// </value>
-        /// <para type="description">Gets or sets the RabbitMq password of the initial user.</para>
-        [Parameter(
-             Mandatory = true,
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        [Alias("RabbitMqPw", "RabbitMqPassword")]
-        public string Password { get; set; }
-
-        /// <summary>
-        ///     Gets or sets whether to use SSL or not.
-        /// </summary>
-        /// <value>
-        ///     The use SSL.
-        /// </value>
-        /// <para type="description">Gets or sets whether to use SSL or not.</para>
+        /// <para type="description">Gets or sets whether to use TLS or not.</para>
         [Parameter(
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         [ValidateNotNullOrEmpty]
-        public SwitchParameter UseSsl { get; set; }
+        public SwitchParameter UseTls { get; set; }
 
         /// <summary>
         ///     Gets or sets the hostname or FQDN of the server which will host the RabbitMq node.
@@ -227,7 +198,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         [Alias("SubjectName", "FQDN")]
         [ValidateNotNullOrEmpty]
         public string Hostname { get; set; }
@@ -246,7 +217,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         [ValidateNotNullOrEmpty]
         public string CaCertPath { get; set; }
 
@@ -267,25 +238,23 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         [ValidateNotNullOrEmpty]
         public string PfxPath { get; set; }
 
         /// <summary>
-        ///     Gets or sets the PFX password.
+        ///     Gets or sets the PFX password. Username part is ignored.
         /// </summary>
         /// <value>
-        ///     The PFX password.
+        ///     The credential for the PFX.
         /// </value>
-        /// <para type="description">Gets or sets the PFX password.</para>
+        /// <para type="description">Gets or set the credential for the PFX. Username part is ignored.</para>
         [Parameter(
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
-        [ValidateNotNullOrEmpty]
-        [Alias("PfxPw")]
-        public string PfxPassword { get; set; }
+             ParameterSetName = ParameterSets.Tls)]
+        public PSCredential PfxCredential { get; set; }
 
         /// <summary>
         ///     Processes the record.
@@ -331,13 +300,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                     .Then(() => new NewRabbitMqConfigDirectoryCommand())
                     .Then(() => new SetRabbitMqBaseEnvironmentalVariableCommand())
 
-                    .ThenFork(UseSsl, tlsFlow =>
+                    .ThenFork(UseTls, tlsFlow =>
                     {
                         tlsFlow
                             .Then(() => WriteVerbose("Configuring RabbitMq with TLS support"))
                             .ReportProgress("Converting certificates and configuring", 60)
-                            .Then(() => new ConvertCaCerToPemCommand {CaCertPath = CaCertPath})
-                            .Then(() => new ConvertPfxToPemCommand {PfxPath = PfxPath, PfxPassword = PfxPassword})
+                            .Then(() => new ConvertCaCerToPemCommand { CaCertPath = CaCertPath })
+                            .Then(() => new ConvertPfxToPemCommand { PfxPath = PfxPath, PfxCredential = PfxCredential })
                             .Then(() => new NewRabbitMqTlsConfigFilesCommand())
 
                             .ReportProgress("Installing RabbitMq", 70)
@@ -351,19 +320,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .Then(() => new NewRabbitMqUserCommand
                             {
-                                UserName = UserName,
-                                Password = Password
+                                UserName = Credential.UserName,
+                                Password = Credential.GetNetworkCredential().Password
                             })
                             .Then(() => new GrantRabbitMqUserPermissionCommand
                             {
-                                UserName = UserName
+                                UserName = Credential.UserName
                             })
                             .Then(() => new AssertConnectivityCommand
                             {
                                 Hostname = Hostname,
-                                UserName = UserName,
-                                Password = Password,
-                                UseSsl = UseSsl
+                                Credential = Credential,
+                                UseTls = UseTls
                             })
 
                             .Then(() => WriteVerbose(
@@ -390,17 +358,16 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .Then(() => new NewRabbitMqUserCommand
                             {
-                                UserName = UserName,
-                                Password = Password
+                                UserName = Credential.UserName,
+                                Password = Credential.GetNetworkCredential().Password
                             })
                             .Then(() => new GrantRabbitMqUserPermissionCommand
                             {
-                                UserName = UserName
+                                UserName = Credential.UserName
                             })
                             .Then(() => new AssertConnectivityCommand
                             {
-                                UserName = UserName,
-                                Password = Password
+                                Credential = Credential
                             })
 
                             .Then(() => WriteVerbose(

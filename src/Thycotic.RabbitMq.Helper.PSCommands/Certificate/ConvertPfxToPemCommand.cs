@@ -54,25 +54,24 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
         public string PfxPath { get; set; }
 
         /// <summary>
-        ///     Gets or sets the PFX password.
+        ///     Gets or sets the PFX password. Username part is ignored.
         /// </summary>
         /// <value>
-        ///     The PFX password.
+        ///     The credential for the PFX.
         /// </value>
-        /// <para type="description">Gets or sets the PFX password.</para>
+        /// <para type="description">Gets or set the credential for the PFX. Username part is ignored.</para>
         [Parameter(
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true)]
-        [Alias("PfxPw")]
-        public string PfxPassword { get; set; }
+        public PSCredential PfxCredential { get; set; }
 
         /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
-            ConvertToPem(PfxPath, PfxPassword);
+            ConvertToPem(PfxPath, PfxCredential.GetNetworkCredential().Password);
         }
 
         [SuppressMessage("Microsoft.Contracts", "TestAlwaysEvaluatingToAConstant",

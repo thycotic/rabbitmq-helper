@@ -1,15 +1,22 @@
 # Simple installation of RabbitMq without TLS from a computer NOT connected to the Internet
 
-*You have to have the Erlang and RabbitMq installers pre-downloaded for this step*
+## Preparation
 
-## Prompt for initial username/password
-
-```powershell
-install-Connector -offlineErlangInstallerPath $path\Offline\o-erlang.exe -offlineRabbitMqInstallerPath $path\Offline\o-rabbitMq.exe -Verbose
-```
-
-## Specify the initial username/password
+You have to have the [Erlang and RabbitMq installers pre-downloaded](prepare-offline.md) for this step. Otherwise, installation will fail.
 
 ```powershell
-install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -offlineErlangInstallerPath $path\Offline\o-erlang.exe -offlineRabbitMqInstallerPath $path\Offline\o-rabbitMq.exe -Verbose
+$path = "$env:programfiles\Thycotic Software Ltd\RabbitMq Helper\Examples";
+
+$cred = Get-Credential -Message "Enter the initial RabbitMq user username and password";
+#if you don't want to be prompted you can hardcode your credential in the script
+#$password = ConvertTo-SecureString “PlainTextPassword” -AsPlainText -Force
+#$cred = New-Object System.Management.Automation.PSCredential (“CustomUserName”, $password)
+
+install-Connector `
+    -Credential $cred `
+    -OfflineErlangInstallerPath $path\Offline\o-erlang.exe `
+    -OfflineRabbitMqInstallerPath $path\Offline\o-rabbitMq.exe `
+    -Verbose;
 ```
+
+There are more switches for this commandlet, your run "get-help install-connector" when inside the helper for more information

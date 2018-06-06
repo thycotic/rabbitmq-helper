@@ -7,14 +7,33 @@
 - The certificate chain has to be trusted by both the RabbitMq node and anything connecting to the RabbitMq host
     - If using self-signed certificated, ensure that the certificates are properly installed in the certificate store.
 
-## Prompt for initial username/password
-
 ```powershell
-install-Connector -hostname localhost -useSsl -cacertpath $path\sc.cer -pfxPath $path\sc.pfx -pfxPw password1 -UseThycoticMirror -Verbose
+$path = "$env:programfiles\Thycotic Software Ltd\RabbitMq Helper\Examples";
+
+$cred = Get-Credential -Message "Enter the initial RabbitMq user username and password";
+#if you don't want to be prompted you can hardcode your credential in the script
+#$password = ConvertTo-SecureString “PlainTextPassword” -AsPlainText -Force
+#$cred = New-Object System.Management.Automation.PSCredential (“CustomUserName”, $password)
+
+# FQDN which will be used by clients connecting to this RabbitMq host
+$fqdn = "localhost";
+
+$certpath = $path;
+
+$pfxCred = Get-Credential -UserName PfxUserName -Message "Enter the PFX password. Username is ignored";
+#if you don't want to be prompted you can hardcode your credential in the script
+#$password = ConvertTo-SecureString “PlainTextPassword” -AsPlainText -Force
+#$pfxCred = New-Object System.Management.Automation.PSCredential (“Ignored”, $password)
+
+install-Connector `
+    -Hostname $fqdn `
+    -Credential $cred `
+    -UseTls `
+    -CaCertPath "$certpath\cacert.cer" `
+    -PfxPath "$certpath\fqdn.pfx" `
+    -PfxCredential $pfxCred `
+    -Verbose
+
 ```
 
-## Specify the initial username/password
-
-```powershell
-install-Connector -hostname localhost -useSsl -rabbitMqUsername SITEUN1 -rabbitMqPw SITEPW1 -cacertpath $path\sc.cer -pfxPath $path\sc.pfx -pfxPw password1 -UseThycoticMirror -Verbose
-```
+There are more switches for this commandlet, your run "get-help install-connector" when inside the helper for more information
