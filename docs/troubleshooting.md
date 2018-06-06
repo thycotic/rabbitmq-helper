@@ -20,9 +20,11 @@ taskkill /pid {PROCESSID} /F
 
 ## Cannot remove Erlang cookie during installation
 
-Example error: Failed to copy system cookie: Access to the path 'C:\Users\user1\.erlang.cookie' is denied.. Manual deletion might be necessary;Access to the path 'C:\Users\user1\.erlang.cookie' is denied.;. Would you like to Retry?
+```
+Failed to copy system cookie: Access to the path 'C:\Users\user1\\.erlang.cookie' is denied.. Manual deletion might be necessary;Access to the path 'C:\Users\user1\\.erlang.cookie' is denied.;. Would you like to Retry?
+```
 
-Work-around: Manually delete the cookie from the location the helper has no access to and retry.
+You can manually delete the cookie from the location the helper has no access to and retry.
 
 ## Management Plugin Does Not Load
 
