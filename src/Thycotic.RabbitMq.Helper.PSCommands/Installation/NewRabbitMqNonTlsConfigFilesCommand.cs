@@ -11,14 +11,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
     /// <summary>
     ///     Copies RabbitMq non-TLS example configuration file. The configuration file will be located in the Thycotic RabbitMq Site Connector folder.
     /// </summary>
-    /// <para type="synopsis">Copies RabbitMq non-SSL example configuration file. </para>
-    /// <para type="description">The Copy-RabbitMqExampleNonTlsConfigFile cmdlet copies RabbitMq non-SSL example configuration file.</para>
+    /// <para type="synopsis">Copies RabbitMq non-TLS example configuration file. </para>
+    /// <para type="description">The Copy-RabbitMqExampleNonTlsConfigFile cmdlet copies RabbitMq non-TLS example configuration file.</para>
     /// <para type="description">The configuration file will be located in the Thycotic RabbitMq Site Connector folder.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
-    /// <para type="link">Copy-RabbitMqExampleSslConfigFile</para>
+    /// <para type="link">New-RabbitMqTlsConfigFiles</para>
     /// <example>
     ///     <para>PS C:\></para> 
-    ///     <code>New-RabbitMqExampleNonTlsConfigFile</code>
+    ///     <code>New-RabbitMqNonTlsConfigFiles</code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "RabbitMqNonTlsConfigFiles")]
     public class NewRabbitMqNonTlsConfigFilesCommand : Cmdlet

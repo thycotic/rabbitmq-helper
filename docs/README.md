@@ -1,4 +1,5 @@
 # RabbitMq Helper
+
 The RabbitMQ Helper is a tool whose purpose is to assist with installing [RabbitMq](https://www.rabbitmq.com)
 
 RabbitMq is not a Thycotic product and we do not receive revenue for it. We built the RabbitMq Helper to help our customers more easily install RabbitMq (RabbitMq is an important component of Secret Server’s on-premises environment).
@@ -54,6 +55,7 @@ RabbitMq is not a Thycotic product and we do not receive revenue for it. We buil
 
 - [Remove all queues on a RabbitMq node](usecases/remove-all-queues.md)
 
-## Feedback & comments
-    - Email dkolev@compfreak.com?subject=rabbitmq-helper-feedback
+## Having an issue?
 
+- [Review the common troubleshooting tips](troubleshooting.md)
+- If you are still having difficulties, [submit an issue on Github](https://github.com/thycotic/rabbitmq-helper/issues)
