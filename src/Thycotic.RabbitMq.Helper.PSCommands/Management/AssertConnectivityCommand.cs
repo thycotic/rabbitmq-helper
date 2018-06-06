@@ -48,32 +48,17 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         public string Hostname { get; set; }
 
         /// <summary>
-        ///     Gets or sets the name of the rabbit mq user.
+        ///     Gets or sets the credential of the rabbit mq user.
         /// </summary>
         /// <value>
-        ///     The name of the rabbit mq user.
+        ///     The credential of the rabbit mq user.
         /// </value>
-        /// <para type="description">Gets or sets the name of the rabbit mq user.</para>
+        /// <para type="description">Gets or sets the credential of the rabbit mq user.</para>
         [Parameter(
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true)]
-        [Alias("RabbitMqUserName")]
-        public string UserName { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the rabbit mq password.
-        /// </summary>
-        /// <value>
-        ///     The rabbit mq password.
-        /// </value>
-        /// <para type="description">Gets or sets the rabbit mq password.</para>
-        [Parameter(
-             Mandatory = true,
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
-        [Alias("RabbitMqPw", "RabbitMqPassword")]
-        public string Password { get; set; }
+        public PSCredential Credential { get; set; }
 
         /// <summary>
         ///     Processes the record.
@@ -84,7 +69,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             try
             {
-                using (var connection = GetConnection(Hostname, UserName, Password, UseSsl))
+                using (var connection = GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseSsl))
                 {
                     using (var model = connection.CreateModel())
                     {
