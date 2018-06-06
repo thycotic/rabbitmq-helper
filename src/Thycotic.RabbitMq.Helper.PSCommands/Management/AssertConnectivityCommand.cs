@@ -19,18 +19,23 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     [Cmdlet(VerbsLifecycle.Assert, "RabbitMqConnectivity")]
     public class AssertConnectivityCommand : Cmdlet
     {
+        private static class ParameterSets
+        {
+            public const string Tls = "Tls";
+        }
+
         /// <summary>
-        ///     Gets or sets the use SSL.
+        ///     Gets or sets the use TLS.
         /// </summary>
         /// <value>
-        ///     The use SSL.
+        ///     The use TLS.
         /// </value>
-        /// <para type="description">Gets or sets the use SSL.</para>
+        /// <para type="description">Gets or sets the use TLS.</para>
         [Parameter(
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = "SSL")]
-        public SwitchParameter UseSsl { get; set; }
+             ParameterSetName = ParameterSets.Tls)]
+        public SwitchParameter UseTls { get; set; }
 
         /// <summary>
         ///     Gets or sets the hostname.
@@ -43,7 +48,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = "SSL")]
+             ParameterSetName = ParameterSets.Tls)]
         [Alias("SubjectName", "FQDN")]
         public string Hostname { get; set; }
 
@@ -69,7 +74,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             try
             {
-                using (var connection = GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseSsl))
+                using (var connection = GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseTls))
                 {
                     using (var model = connection.CreateModel())
                     {
@@ -86,12 +91,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             }
         }
 
-        private IConnection GetConnection(string hostname, string userName, string password, bool useSsl)
+        private IConnection GetConnection(string hostname, string userName, string password, bool useTls)
         {
-            const int nonSslPort = 5672;
-            const int sslPost = 5671;
-            //using FQDN to avoid running into errors when under SSL
-            var url = string.Format("amqp://{0}:{1}", hostname, useSsl ? sslPost : nonSslPort);
+            const int nonTlsPort = 5672;
+            const int tlsPort = 5671;
+            //using FQDN to avoid running into errors when under TLS
+            var url = string.Format("amqp://{0}:{1}", hostname, useTls ? tlsPort : nonTlsPort);
 
             WriteVerbose(string.Format("Getting connection for {0}", url));
 
@@ -102,18 +107,19 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 UserName = userName,
                 Password = password
             };
-            
-            if (useSsl)
-            {
-                var uri = new Uri(url);
 
-                connectionFactory.Ssl = new SslOption
-                {
-                    Enabled = true,
-                    ServerName = uri.Host,
-                    Version = SslProtocols.Tls11 | SslProtocols.Tls12
-                };
+            if (!useTls)
+            {
+                return connectionFactory.CreateConnection();
             }
+            var uri = new Uri(url);
+
+            connectionFactory.Ssl = new SslOption
+            {
+                Enabled = true,
+                ServerName = uri.Host,
+                Version = SslProtocols.Tls11 | SslProtocols.Tls12
+            };
 
             return connectionFactory.CreateConnection();
         }

@@ -10,7 +10,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
     ///     Installs the site connector
     /// </summary>
     /// <para type="synopsis">Installs the site connector. </para>
-    /// <para type="description">The Install-Connector cmdlet is designed to make the installation of a non-SSL and SSL site connector easier.</para>
+    /// <para type="description">The Install-Connector cmdlet is designed to make the installation of a non-TLS and TLS site connector.</para>
     /// <para type="description">
     ///     It will install both Erlang and RabbitMq provided that the appropriate parameters are
     ///     supplied.
@@ -49,8 +49,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         {
             public const string Offline = "Offline";
             public const string Online = "Online";
-            public const string NonSsl = "NonSsl";
-            public const string Ssl = "Ssl";
+            public const string NonTls = "NonTls";
+            public const string Tls = "Tls";
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         [Parameter(
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         public string OfflineErlangInstallerPath { get; set; }
 
 
@@ -120,7 +120,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         [Parameter(
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         public string OfflineRabbitMqInstallerPath { get; set; }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         [Parameter(
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = ParameterSets.Ssl)]
+            ParameterSetName = ParameterSets.Tls)]
         [Alias("Mirror")]
         public SwitchParameter UseThycoticMirror { get; set; }
 
@@ -173,19 +173,19 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
         public PSCredential Credential { get; set; }
 
         /// <summary>
-        ///     Gets or sets whether to use SSL or not.
+        ///     Gets or sets whether to use TLS or not.
         /// </summary>
         /// <value>
-        ///     The use SSL.
+        ///     The use TLS.
         /// </value>
-        /// <para type="description">Gets or sets whether to use SSL or not.</para>
+        /// <para type="description">Gets or sets whether to use TLS or not.</para>
         [Parameter(
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         [ValidateNotNullOrEmpty]
-        public SwitchParameter UseSsl { get; set; }
+        public SwitchParameter UseTls { get; set; }
 
         /// <summary>
         ///     Gets or sets the hostname or FQDN of the server which will host the RabbitMq node.
@@ -198,7 +198,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         [Alias("SubjectName", "FQDN")]
         [ValidateNotNullOrEmpty]
         public string Hostname { get; set; }
@@ -217,7 +217,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         [ValidateNotNullOrEmpty]
         public string CaCertPath { get; set; }
 
@@ -238,7 +238,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         [ValidateNotNullOrEmpty]
         public string PfxPath { get; set; }
 
@@ -253,7 +253,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
              Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Ssl)]
+             ParameterSetName = ParameterSets.Tls)]
         public PSCredential PfxCredential { get; set; }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                     .Then(() => new NewRabbitMqConfigDirectoryCommand())
                     .Then(() => new SetRabbitMqBaseEnvironmentalVariableCommand())
 
-                    .ThenFork(UseSsl, tlsFlow =>
+                    .ThenFork(UseTls, tlsFlow =>
                     {
                         tlsFlow
                             .Then(() => WriteVerbose("Configuring RabbitMq with TLS support"))
@@ -331,7 +331,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             {
                                 Hostname = Hostname,
                                 Credential = Credential,
-                                UseSsl = UseSsl
+                                UseTls = UseTls
                             })
 
                             .Then(() => WriteVerbose(
