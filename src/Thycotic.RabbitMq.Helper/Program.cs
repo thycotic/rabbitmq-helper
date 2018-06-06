@@ -36,7 +36,7 @@ namespace Thycotic.RabbitMq.Helper
                         throw new ApplicationFailedException($"PowerShell version check failed. Process existed with code {process.ExitCode}. RabbitMq Helper requires PowerShell version 3 or higher. Please verify your installation.");
                     }
 
-                    var exampleFolder = ".\\Examples";
+                    //var exampleFolder = ".\\Examples";
                     var preparationScript =
                         $"Write-Host 'Running RabbitMq Helper version {module.GetName().Version} as administrator'; " +
                         $"Write-Host 'This is open source software: https://github.com/thycotic/rabbitmq-helper. See LICENSE file for details'; " +
@@ -49,15 +49,15 @@ namespace Thycotic.RabbitMq.Helper
                         $"Write-Warning 'IMPORTANT: *** Always use a local administrator account to install RabbitMq. Otherwise, exit the helper ***';" +
                         $"Write-Host;" +
 
-                        $"Write-Host 'You can use the provided Example PowerShell scripts or invoke any of the available command-lets directly.';" +
-                        $"Write-Host;" +
+                        //$"Write-Host 'You can use the provided Example PowerShell scripts or invoke any of the available command-lets directly.';" +
+                        //$"Write-Host;" +
 
-                        $"Write-Host 'Available scripts in {exampleFolder}:';" +
-                        $"Get-ChildItem -Filter *.ps1 -Path {exampleFolder} -Recurse -File | % {{ Write-Host \"\"`t {exampleFolder}\\$_\"\" }};" +
-                        $"Write-Host;" +
+                        //$"Write-Host 'Available scripts in {exampleFolder}:';" +
+                        //$"Get-ChildItem -Filter *.ps1 -Path {exampleFolder} -Recurse -File | % {{ Write-Host \"\"`t {exampleFolder}\\$_\"\" }};" +
+                        //$"Write-Host;" +
 
                         $"Write-Host 'Available command-lets (use ''get-help CMDLETNAME'' for help and usage):';" +
-                        $"Get-Command -Module {module.GetName().Name} | % {{ Write-Host \"\"`t $_.Name\"\" }};" +
+                        $"Get-Command -Module {module.GetName().Name} | Sort | % {{ Write-Host \"\"`t $_.Name\"\" }};" +
                         $"Write-Host;";
 
                     psi = new ProcessStartInfo
