@@ -40,7 +40,8 @@ namespace Thycotic.RabbitMq.Helper
                     var preparationScript =
                         $"Write-Host 'Running RabbitMq Helper version {module.GetName().Version} as administrator'; " +
                         $"Write-Host 'This is open source software: https://github.com/thycotic/rabbitmq-helper. See LICENSE file for details'; " +
-                        $"Write-Host 'Execution Policy:';" +
+                        $"Write-Host 'Documentation and examples located: https://thycotic.github.io/rabbitmq-helper'; " +
+                        $"Write-Host -NoNewLine 'Execution Policy: ';" +
                         $"Get-ExecutionPolicy | Write-Host;" +
                         $"Write-Host;" +
 
@@ -56,8 +57,11 @@ namespace Thycotic.RabbitMq.Helper
                         //$"Get-ChildItem -Filter *.ps1 -Path {exampleFolder} -Recurse -File | % {{ Write-Host \"\"`t {exampleFolder}\\$_\"\" }};" +
                         //$"Write-Host;" +
 
-                        $"Write-Host 'Available command-lets (use ''get-help CMDLETNAME'' for help and usage):';" +
+                        $"Write-Host 'Available command-lets in the ''{module.GetName().Name}'' module (use ''get-help CMDLETNAME'' for help and usage):';" +
                         $"Get-Command -Module {module.GetName().Name} | Sort | % {{ Write-Host \"\"`t $_.Name\"\" }};" +
+                        $"Write-Host;" +
+
+                        $"Write-Host 'For a guided installation run ''Use-GuidedInstallConnector''';" +
                         $"Write-Host;";
 
                     psi = new ProcessStartInfo
