@@ -14,12 +14,14 @@ $path = "$env:programfiles\Thycotic Software Ltd\RabbitMq Helper\Examples";
 Get-ErlangInstaller `
     -PrepareForOfflineInstall `
     -OfflineErlangInstallerPath "$path\Offline\o-erlang.exe" `
-    -UseThycoticMirror -Verbose;
+    -UseThycoticMirror `
+    -Verbose;
 
 Get-RabbitMqInstaller `
     -PrepareForOfflineInstall `
     -OfflineRabbitMqInstallerPath "$path\Offline\o-rabbitMq.exe" `
-    -UseThycoticMirror -Verbose;
+    -UseThycoticMirror `
+    -Verbose;
 
 #Use the -Force switch to force download even if the files are present
 
@@ -39,5 +41,5 @@ Get-DownloadLocations -UseThycoticMirror;
 
 ## Related 
 
-- [Simple installation of RabbitMq without TLS from a computer NOT connected to the Internet.](installnontls-offline.md)
-- [Advanced installation of RabbitMq with TLS from a computer NOT connected to the Internet.](installtls-offline.md)
+- [Simple installation of RabbitMq without TLS from a computer NOT connected to the Internet](installnontls-offline.md)
+- [Advanced installation of RabbitMq with TLS from a computer NOT connected to the Internet](installtls-offline.md)
