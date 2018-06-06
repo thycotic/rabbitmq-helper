@@ -39,19 +39,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
     ///     <para>This is generally useful during development or during POC stages.</para>
     ///     <para>To do so, you could use the following:</para>
     ///     <para>PS C:\></para> 
-    ///     <code>Install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -agreeErlangLicense -agreeRabbitMqLicense</code>
-    /// </example>
-    /// <example>
-    ///     <para>You can avoid being prompted to agree to Erlang or RabbitMq licenses (during automated deployment) use</para>
-    ///     <para>To do so, you could use the following:</para>
-    ///     <para>PS C:\></para> 
-    ///     <code>Install-Connector -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -agreeErlangLicense -agreeRabbitMqLicense</code>
-    /// </example>
-    /// <example>
-    ///     <para>The leverage secure communication between RabbitMq and its clients, you should use encryption.</para>
-    ///     <para>To do so, you could use the following:</para>
-    ///     <para>PS C:\></para> 
-    ///     <code>Install-Connector -verbose -hostname RABBITHOST1.FQDN -useSsl -rabbitMqUsername SITEUN -rabbitMqPw SITEPW -cacertpath $path\sc.cer -pfxPath $path\sc.pfx -pfxPw SOMEPASSWORD</code>
+    ///     <code>Install-Connector -agreeErlangLicense -agreeRabbitMqLicense</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Install, "Connector")]
     [Alias("installConnector")]
