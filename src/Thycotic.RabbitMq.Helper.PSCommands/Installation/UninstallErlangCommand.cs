@@ -83,7 +83,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     WriteWarning("Failed to terminate epmd process. Clean removal might fail: " + ex.Message);
                 }
 
-                WriteVerbose("Waiting for Erlang process to exit...");
+                WriteVerbose("Waiting for Erlang processes to exit...");
                 Task.Delay(TimeSpan.FromSeconds(15)).Wait();
 
                 CleanUpFolders(workingPath);
@@ -100,7 +100,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 }
                 else
                 {
-                    using (var erlangKey = rootKey.OpenSubKey(keyName, true))
+                    using (var erlangKey = rootKey.OpenSubKey("Erlang", true))
                     {
                         if (erlangKey == null)
                         {
