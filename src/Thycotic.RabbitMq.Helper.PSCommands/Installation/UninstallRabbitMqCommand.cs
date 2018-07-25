@@ -50,6 +50,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
             var externalProcessRunner = new ExternalProcessRunner();
 
+            var shouldDeleteService = false;
+
             foreach (var executablePath in executablePaths)
             {
                 var directoryInfo = new FileInfo(executablePath);
@@ -63,6 +65,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                     continue;
                 }
+
+                shouldDeleteService = true;
                 
                 const string silent = "/S";
 
@@ -86,16 +90,20 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 CleanUpFolders(workingPath);
             }
 
-            WriteVerbose("Removing RabbitMq windows service");
+            if (shouldDeleteService)
+            {
 
-            try
-            {
-                const string serviceToDelete = " delete RabbitMQ";
-                externalProcessRunner.Run("sc", Directory.GetCurrentDirectory(), serviceToDelete);
-            }
-            catch (Exception ex)
-            {
-                WriteWarning("Failed to remove RabbitMq windows service. Clean removal might fail: " + ex.Message);
+                WriteVerbose("Removing RabbitMq windows service");
+
+                try
+                {
+                    const string serviceToDelete = " delete RabbitMQ";
+                    externalProcessRunner.Run("sc", Directory.GetCurrentDirectory(), serviceToDelete);
+                }
+                catch (Exception ex)
+                {
+                    WriteWarning("Failed to remove RabbitMq windows service. Clean removal might fail: " + ex.Message);
+                }
             }
 
 
