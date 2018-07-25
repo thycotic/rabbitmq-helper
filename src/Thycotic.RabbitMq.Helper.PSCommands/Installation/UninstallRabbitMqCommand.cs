@@ -3,9 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.IO;
-using Thycotic.RabbitMq.Helper.PSCommands.Utility.OS;
+using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.IO;
+using Thycotic.RabbitMq.Helper.Logic.OS;
+using Thycotic.RabbitMq.Helper.PSCommands.Management;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -29,7 +30,22 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         protected override void ProcessRecord()
         {
-            WriteVerbose("Uninstalling prior versions of RabbitMq");
+            var ctlInteractor = new CtlRabbitMqProcessInteractor();
+            if (ctlInteractor.Exists)
+            {
+                try
+                {
+                    WriteVerbose("Stopping RabbitMq");
+
+                    ctlInteractor.Stop();
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException("Failed to stop RabbitMq. Manual stop/uninstall might be necessary", ex);
+                }
+            }
+
+            WriteVerbose("Un-installing prior versions of RabbitMq");
 
             var executablePaths = InstallationConstants.RabbitMq.UninstallerPaths;
 
@@ -40,7 +56,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 if (!File.Exists(executablePath))
                 {
-                    WriteVerbose("No uninstaller found at " + executablePath);
+                    //WriteVerbose("No uninstaller found at " + executablePath);
 
                     CleanUpFolders(workingPath);
 

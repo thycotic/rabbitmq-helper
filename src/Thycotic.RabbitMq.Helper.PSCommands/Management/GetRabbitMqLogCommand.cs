@@ -2,7 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using Thycotic.RabbitMq.Helper.PSCommands.Installation;
+using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.IO;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
