@@ -34,10 +34,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
                     if (File.Exists(userProfileCookiePath))
                     {
-                        File.Delete(userProfileCookiePath);
+                        //remove readonly
+                        File.SetAttributes(userProfileCookiePath, File.GetAttributes(userProfileCookiePath) & ~FileAttributes.ReadOnly);
                     }
 
-                    File.Copy(windowsCookiePath, userProfileCookiePath);
+                    File.Copy(windowsCookiePath, userProfileCookiePath, true);
 
                     WriteVerbose($"System cookie copied to {userProfileCookiePath}");
                 }

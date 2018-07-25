@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.IO;
 using Thycotic.RabbitMq.Helper.Logic.OS;
-using Thycotic.RabbitMq.Helper.PSCommands.Management;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -49,6 +48,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
             var executablePaths = InstallationConstants.RabbitMq.UninstallerPaths;
 
+            var externalProcessRunner = new ExternalProcessRunner();
+
+            var shouldDeleteService = false;
+
             foreach (var executablePath in executablePaths)
             {
                 var directoryInfo = new FileInfo(executablePath);
@@ -63,8 +66,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     continue;
                 }
 
-                var externalProcessRunner = new ExternalProcessRunner();
-
+                shouldDeleteService = true;
+                
                 const string silent = "/S";
 
                 externalProcessRunner.Run(executablePath, workingPath, silent);
@@ -86,6 +89,24 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 
                 CleanUpFolders(workingPath);
             }
+
+            if (shouldDeleteService)
+            {
+
+                WriteVerbose("Removing RabbitMq windows service");
+
+                try
+                {
+                    const string serviceToDelete = " delete RabbitMQ";
+                    externalProcessRunner.Run("sc", Directory.GetCurrentDirectory(), serviceToDelete);
+                }
+                catch (Exception ex)
+                {
+                    WriteWarning("Failed to remove RabbitMq windows service. Clean removal might fail: " + ex.Message);
+                }
+            }
+
+
             WriteVerbose("Uninstallation process completed");
         }
 

@@ -47,15 +47,11 @@ namespace Thycotic.RabbitMq.Helper
 
                         $"Import-Module '{module.Location}'; " +
 
-                        $"Write-Warning 'IMPORTANT: *** Always use a local administrator account to install RabbitMq. Otherwise, exit the helper ***';" +
+                        $"Write-Warning 'IMPORTANT: *** The helper re-installs RabbitMq and Erlang during install/re-install/upgrade, even if the same version(s) are installed. ***';" +
                         $"Write-Host;" +
 
-                        //$"Write-Host 'You can use the provided Example PowerShell scripts or invoke any of the available command-lets directly.';" +
-                        //$"Write-Host;" +
-
-                        //$"Write-Host 'Available scripts in {exampleFolder}:';" +
-                        //$"Get-ChildItem -Filter *.ps1 -Path {exampleFolder} -Recurse -File | % {{ Write-Host \"\"`t {exampleFolder}\\$_\"\" }};" +
-                        //$"Write-Host;" +
+                        $"Write-Warning 'IMPORTANT: *** Always use a local administrator account to install RabbitMq. Otherwise, exit now ***';" +
+                        $"Write-Host;" +
 
                         $"Write-Host 'Available command-lets in the ''{module.GetName().Name}'' module (use ''get-help CMDLETNAME'' for help and usage):';" +
                         $"Get-Command -Module {module.GetName().Name} | Sort | % {{ Write-Host \"\"`t $_.Name\"\" }};" +
