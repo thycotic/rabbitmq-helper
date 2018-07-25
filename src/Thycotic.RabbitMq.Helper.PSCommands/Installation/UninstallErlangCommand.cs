@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Management.Automation;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.IO;
 using Thycotic.RabbitMq.Helper.Logic.OS;
@@ -51,6 +52,26 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 const string silent = "/S";
 
                 externalProcessRunner.Run(executablePath, workingPath, silent);
+                
+                try
+                {
+                    const string erlandProcessKill = " /F /IM erl.exe";
+                    externalProcessRunner.Run("taskkill", workingPath, erlandProcessKill);
+                }
+                catch (Exception ex)
+                {
+                    WriteWarning("Failed to terminate erl process. Clean removal might fail: " + ex.Message);
+                }
+
+                try
+                {
+                    const string erlandProcessKill = " /F /IM erlsrv.exe";
+                    externalProcessRunner.Run("taskkill", workingPath, erlandProcessKill);
+                }
+                catch (Exception ex)
+                {
+                    WriteWarning("Failed to terminate erlsrv process. Clean removal might fail: " + ex.Message);
+                }
 
                 try
                 {
@@ -59,14 +80,41 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 }
                 catch (Exception ex)
                 {
-                    WriteWarning("Failed to terminate erlang process. Clean removal might fail: " + ex.Message);
+                    WriteWarning("Failed to terminate epmd process. Clean removal might fail: " + ex.Message);
                 }
 
-                WriteVerbose("Waiting for Erlang process to exit...");
+                WriteVerbose("Waiting for Erlang processes to exit...");
                 Task.Delay(TimeSpan.FromSeconds(15)).Wait();
 
                 CleanUpFolders(workingPath);
             }
+
+            WriteVerbose("Removing Erlang registry information");
+
+            var keyName = @"SOFTWARE\Ericsson";
+            using (var rootKey = Registry.LocalMachine.OpenSubKey(keyName, true))
+            {
+                if (rootKey == null)
+                {
+                    WriteVerbose("Root key not found");
+                }
+                else
+                {
+                    using (var erlangKey = rootKey.OpenSubKey("Erlang", true))
+                    {
+                        if (erlangKey == null)
+                        {
+                            WriteVerbose("Erlang key not found");
+                            return;
+                        }
+                    }
+
+                    rootKey.DeleteSubKeyTree("Erlang");
+
+                    WriteVerbose("Key removed");
+                }
+            }
+
             WriteVerbose("Uninstallation process completed");
         }
 
