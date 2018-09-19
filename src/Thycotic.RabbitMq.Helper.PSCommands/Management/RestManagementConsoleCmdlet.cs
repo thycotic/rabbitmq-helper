@@ -1,4 +1,6 @@
 ﻿using System.Management.Automation;
+using System.Net;
+using System.Security;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -19,26 +21,17 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         public string BaseUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the admin user.
+        ///     Gets or sets the credential of the rabbit mq administrator user.
         /// </summary>
         /// <value>
-        /// The name of the admin user.
+        ///     The credential of the rabbit mq user.
         /// </value>
+        /// <para type="description">Gets or sets the credential of the rabbit mq user.</para>
         [Parameter(
+            Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
-        public string AdminUserName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the admin password.
-        /// </summary>
-        /// <value>
-        /// The admin password.
-        /// </value>
-        [Parameter(
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
-        public string AdminPassword { get; set; }
+        public PSCredential AdminCredential { get; set; }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="RestManagementConsoleCmdlet" /> class.
@@ -46,7 +39,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         protected RestManagementConsoleCmdlet()
         {
             BaseUrl = "http://localhost:15672";
-            AdminUserName = AdminPassword = "guest";
+            AdminCredential = new PSCredential("guest", new NetworkCredential("", "guest").SecurePassword);
         }
 
     }

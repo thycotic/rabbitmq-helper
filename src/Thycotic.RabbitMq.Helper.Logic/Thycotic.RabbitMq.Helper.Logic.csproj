@@ -69,8 +69,13 @@
     <Compile Include="IO\LockedFileReader.cs" />
     <Compile Include="IO\PrerequisiteDownloader.cs" />
     <Compile Include="IO\RabbitMqConfigurationPathSanitizer.cs" />
-    <Compile Include="ManagementClients\CliManagementClient.cs" />
-    <Compile Include="ManagementClients\RestManagementClient.cs" />
+    <Compile Include="ManagementClients\Cli\CliManagementClient.cs" />
+    <Compile Include="ManagementClients\Rest\Models\BackingQueueStatus.cs" />
+    <Compile Include="ManagementClients\Rest\Models\QueueMessagesDetails.cs" />
+    <Compile Include="ManagementClients\Rest\Models\Queue.cs" />
+    <Compile Include="ManagementClients\Rest\Models\QueueArguments.cs" />
+    <Compile Include="ManagementClients\Rest\Models\QueueGarbageCollection.cs" />
+    <Compile Include="ManagementClients\Rest\RestManagementClient.cs" />
     <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="OS\IProcessInteractor.cs" />
     <Compile Include="OS\ErlangProcessInteractor.cs" />

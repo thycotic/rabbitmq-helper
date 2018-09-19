@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
 using RestSharp.Authenticators;
+using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
+using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -31,18 +31,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
-            var client = new RestClient(BaseUrl) { Authenticator = new HttpBasicAuthenticator(AdminUserName, AdminPassword) };
-            var getRequest = new RestRequest("api/queues");
-            var getResponse = client.Execute<List<QueueSlim>>(getRequest);
-            if (getResponse.ErrorException != null)
-            {
-                throw getResponse.ErrorException;
-            }
-            if (getResponse.StatusCode != HttpStatusCode.OK)
-            {
-                throw new ApplicationException(getResponse.StatusDescription);
-            }
-            if (!getResponse.Data.Any())
+            var client = new RestManagementClient(BaseUrl, AdminCredential.UserName,
+                AdminCredential.GetNetworkCredential().Password);
+            var queues = client.GetAllQueues().ToArray();
+
+            if (!queues.Any())
             {
                 WriteVerbose("There are no queues to remove");
                 return;
@@ -55,50 +48,42 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 PercentComplete = 5
             });
 
-            var queues = getResponse.Data.OrderBy(q => q.VHost).ThenBy(q => q.Name).ToList();
+            var orderedQueues = queues.OrderBy(q => q.vhost).ThenBy(q => q.name).ToList();
             var c = 0;
-            var total = queues.Count;
+            var total = orderedQueues.Count;
 
-            var byteArray = new UTF8Encoding().GetBytes(string.Format("{0}:{1}", AdminUserName, AdminPassword));
-            using (var httpClient = new HttpClient(new HttpClientHandler(), true))
+            var statuses = new List<KeyValuePair<string, string>>();
+
+            orderedQueues.ForEach(q =>
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
-                queues.ForEach(q =>
+                if (q.auto_delete || q.exclusive)
                 {
-                    if (q.AutoDelete || q.Exclusive)
-                    {
-                        WriteVerbose(string.Format("Skipping {0} on {1}", q.Name, q.VHost));
-                        c++;
-                        return;
-                    }
-
-                    WriteProgress(new ProgressRecord(activityid, activity, string.Format("Removing {0} on {1}", q.Name, q.VHost))
-                    {
-                        PercentComplete = Convert.ToInt32(Convert.ToDouble(c) / total * 100)
-                    });
-                    WriteVerbose(string.Format("Removing {0} on {1}", q.Name, q.VHost));
-
-                    var host = string.IsNullOrEmpty(q.VHost) || q.VHost.Equals("/") ? "%2f" : q.VHost;
-                    var requestUri = new Uri(string.Format(BaseUrl + "/api/queues/{0}/{1}", host, q.Name));
-                    ForceCanonicalPathAndQuery(requestUri); //ZL - Needed becuase virtual host isn't used and "/" was not being encoded properly, need to literally pass %2f
-
-                    var response = Task.FromResult(httpClient.DeleteAsync(requestUri)).Result.Result;
-                    if (response.IsSuccessStatusCode)
-                    {
-                        WriteObject(new KeyValuePair<string, HttpStatusCode>(q.Name, response.StatusCode));
-                    }
-                    else
-                    {
-                        WriteWarning(string.Format("{0}{0}StatusCode: {1}{0}ReasonPhrase: {2}{0}RequestUri: {3}{0}"
-                            , Environment.NewLine
-                            , response.StatusCode
-                            , response.ReasonPhrase
-                            , response.RequestMessage.RequestUri
-                        ));
-                    }
+                    WriteVerbose($"Skipping {q.name} on {q.vhost}");
                     c++;
+                    return;
+                }
+
+                WriteProgress(new ProgressRecord(activityid, activity, $"Removing {q.name} on {q.vhost}")
+                {
+                    PercentComplete = Convert.ToInt32(Convert.ToDouble(c) / total * 100)
                 });
-            }
+                WriteVerbose($"Removing {q.name} on {q.vhost}");
+
+                try
+                {
+                    client.DeleteQueue(q.vhost, q.name);
+                    statuses.Add(new KeyValuePair<string, string>(q.name, HttpStatusCode.OK.ToString()));
+
+                }
+                catch (Exception ex)
+                {
+                    statuses.Add(new KeyValuePair<string, string>(q.name, ex.Message));
+                }
+
+                c++;
+            });
+
+            WriteObject(statuses);
 
             WriteProgress(new ProgressRecord(activityid, activity, "Removed all queues")
             {
@@ -107,24 +92,5 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             });
         }
 
-        //https://stackoverflow.com/questions/781205/getting-a-url-with-an-url-encoded-slash
-        private void ForceCanonicalPathAndQuery(Uri uri)
-        {
-            var paq = uri.PathAndQuery; // need to access PathAndQuery
-            var flagsFieldInfo = typeof(Uri).GetField("m_Flags", BindingFlags.Instance | BindingFlags.NonPublic);
-            var flags = (ulong)flagsFieldInfo.GetValue(uri);
-            flags &= ~(ulong)0x30; // Flags.PathNotCanonical|Flags.QueryNotCanonical
-            flagsFieldInfo.SetValue(uri, flags);
-        }
-
-        // ReSharper disable once ClassNeverInstantiated.Local
-        private class QueueSlim
-        {
-            public string Name { get; set; }
-            public string VHost { get; set; }
-            public int Messages { get; set; }
-            public bool Exclusive { get; set; }
-            public bool AutoDelete { get; set; }
-        }
     }
 }
