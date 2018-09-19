@@ -31,7 +31,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
-            var client = new RestManagementClient(BaseUrl, AdminCredential.UserName,
+            var client = new RabbitMqRestClient(BaseUrl, AdminCredential.UserName,
                 AdminCredential.GetNetworkCredential().Password);
             var queues = client.GetAllQueues().ToArray();
 

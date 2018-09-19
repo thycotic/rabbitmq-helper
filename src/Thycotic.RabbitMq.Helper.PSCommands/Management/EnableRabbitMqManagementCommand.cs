@@ -2,6 +2,7 @@
 using System.IO;
 using System.Management.Automation;
 using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli;
 using Thycotic.RabbitMq.Helper.Logic.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
@@ -24,24 +25,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
-            const string executable = "rabbitmq-plugins.bat";
-            var pluginsExecutablePath = Path.Combine(InstallationConstants.RabbitMq.BinPath, executable);
-
-            var externalProcessRunner = new ExternalProcessRunner
-            {
-                EstimatedProcessDuration = TimeSpan.FromSeconds(60)
-            };
-
-            const string parameters2 = "enable rabbitmq_management";
+            var client = new RabbitMqBatPluginClient();
 
             WriteVerbose("Enabling management console");
 
-            var output = externalProcessRunner.Run(pluginsExecutablePath, InstallationConstants.RabbitMq.BinPath, parameters2);
-
-            if (!output.Contains("started") && !output.Contains("Plugin configuration unchanged."))
-            {
-                throw new ApplicationException(CtlRabbitMqProcessInteractor.ExceptionMessages.InvalidOutput);
-            }
+            var output = client.EnableManagementConsole();
 
             WriteVerbose(output);
         }

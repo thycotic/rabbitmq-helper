@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
+using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli;
 using Thycotic.RabbitMq.Helper.Logic.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
@@ -63,26 +64,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </exception>
         protected override void ProcessRecord()
         {
-            var ctlInteractor = new CtlRabbitMqProcessInteractor();
+            var client = new RabbitMqBatCtlClient();
 
             WriteVerbose($"Granting permissions to user {UserName}");
-
-            var parameters2 = $"set_permissions -p {VirtualHost} {UserName} \".*\" \".*\" \".*\"";
-
-            try
-            {
-                var output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(30));
-                WriteVerbose(output);
-                if (string.IsNullOrWhiteSpace(output) || output.Trim() != $"Setting permissions for user \"{UserName}\" in vhost \"{VirtualHost}\" ...")
-                {
-                    throw new ApplicationException(CtlRabbitMqProcessInteractor.ExceptionMessages.InvalidOutput);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Failed to grant permissions to user. Manual grant might be necessary",
-                    ex);
-            }
+            
+            client.GrantPermissionsToUser(VirtualHost, UserName);
+          
         }
     }
 }

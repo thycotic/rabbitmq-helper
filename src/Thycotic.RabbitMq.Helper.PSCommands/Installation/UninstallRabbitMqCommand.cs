@@ -5,6 +5,7 @@ using System.Management.Automation;
 using System.Threading.Tasks;
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.IO;
+using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli;
 using Thycotic.RabbitMq.Helper.Logic.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
@@ -29,14 +30,14 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// </summary>
         protected override void ProcessRecord()
         {
-            var ctlInteractor = new CtlRabbitMqProcessInteractor();
-            if (ctlInteractor.Exists)
+            var client = new RabbitMqBatCtlClient();
+            if (client.Exists)
             {
                 try
                 {
                     WriteVerbose("Stopping RabbitMq");
 
-                    ctlInteractor.Stop();
+                    client.Stop();
                 }
                 catch (Exception ex)
                 {

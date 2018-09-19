@@ -22,7 +22,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
         /// </summary>
         protected override void ProcessRecord()
         {
-            var client = new RestManagementClient(BaseUrl, AdminCredential.UserName,
+            var client = new RabbitMqRestClient(BaseUrl, AdminCredential.UserName,
                 AdminCredential.GetNetworkCredential().Password);
 
             var clusterName = client.GetClusterName();

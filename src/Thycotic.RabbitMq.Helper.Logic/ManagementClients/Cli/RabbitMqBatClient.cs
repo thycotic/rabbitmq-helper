@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
-using Thycotic.RabbitMq.Helper.Logic.Reflection;
+using Thycotic.RabbitMq.Helper.Logic.OS;
 
-namespace Thycotic.RabbitMq.Helper.Logic.OS
+namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
 {
     /// <summary>
     /// CTL RabbitMqProcess interactor 
     /// </summary>
     /// <seealso cref="IProcessInteractor" />
-    public class CtlRabbitMqProcessInteractor : IProcessInteractor
+    public abstract class RabbitMqBatClient
     {
         /// <summary>
         /// Standard exception messages
@@ -27,7 +27,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
         /// <value>
         ///     The executable.
         /// </value>
-        protected string Executable => "rabbitmqctl.bat";
+        protected abstract string Executable { get; }
 
         /// <summary>
         ///     Gets the working path.
@@ -52,37 +52,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
         ///   <c>true</c> if exists; otherwise, <c>false</c>.
         /// </value>
         public bool Exists => File.Exists(ExecutablePath);
-
-        /// <summary>
-        /// Gets a value indicating whether this instance is running.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is running; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsRunning
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-        /// <summary>
-        /// Starts this instance.
-        /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void Start()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Stops this instance.
-        /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void Stop()
-        {
-            Invoke("stop", TimeSpan.FromSeconds(15));
-        }
+        
 
         /// <summary>
         /// Invokes the specified parameters.

@@ -10,17 +10,17 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
     /// <summary>
     /// REST management client
     /// </summary>
-    public class RestManagementClient
+    public class RabbitMqRestClient : IRabbitMqRestClient
     {
         private readonly RestClient _client;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RestManagementClient"/> class.
+        /// Initializes a new instance of the <see cref="RabbitMqRestClient"/> class.
         /// </summary>
         /// <param name="baseUrl">The base URL.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password.</param>
-        public RestManagementClient(string baseUrl, string userName, string password)
+        public RabbitMqRestClient(string baseUrl, string userName, string password)
         {
             _client = new RestClient(baseUrl) { Authenticator = new HttpBasicAuthenticator(userName, password) };
         }
@@ -69,20 +69,14 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
             return getResponse.Data;
         }
 
-        /// <summary>
-        /// Gets all queues.
-        /// </summary>
-        /// <returns></returns>
+
+        /// <inheritdoc />
         public IEnumerable<Queue> GetAllQueues()
         {
             return Execute<List<Queue>>("api/queues", Method.GET);
         }
 
-        /// <summary>
-        /// Removes the queue.
-        /// </summary>
-        /// <param name="vhost">The vhost.</param>
-        /// <param name="name">The name.</param>
+        /// <inheritdoc />
         public void DeleteQueue(string vhost, string name)
         {
             var host = string.IsNullOrEmpty(vhost) || vhost.Equals("/") ? "%2f" : vhost;
@@ -107,20 +101,14 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         //}
 
 
-        /// <summary>
-        /// Gets the name of the cluster.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public string GetClusterName()
         {
             var clusterName = Execute<ClusterName>("api/cluster-name", Method.GET);
             return clusterName.name;
         }
 
-        /// <summary>
-        /// Gets the health check.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public NodeHealthCheck GetHealthCheck()
         {
 
@@ -128,11 +116,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
             return healthCheck;
         }
 
-        /// <summary>
-        /// Gets the cluster nodes.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <inheritdoc />
         public IEnumerable<Node> GetClusterNodes()
         {
             return Execute<List<Node>>("api/nodes", Method.GET);

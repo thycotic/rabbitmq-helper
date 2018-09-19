@@ -52,6 +52,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         [Alias("SubjectName", "FQDN")]
         public string Hostname { get; set; }
 
+
         /// <summary>
         ///     Gets or sets the credential of the rabbit mq user.
         /// </summary>
@@ -60,9 +61,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </value>
         /// <para type="description">Gets or sets the credential of the rabbit mq user.</para>
         [Parameter(
-             Mandatory = true,
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
         public PSCredential Credential { get; set; }
 
         /// <summary>

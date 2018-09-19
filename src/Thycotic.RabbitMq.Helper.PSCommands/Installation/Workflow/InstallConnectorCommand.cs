@@ -320,8 +320,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .Then(() => new NewRabbitMqUserCommand
                             {
-                                UserName = Credential.UserName,
-                                Password = Credential.GetNetworkCredential().Password
+                                Credential = Credential
                             })
                             .Then(() => new GrantRabbitMqUserPermissionCommand
                             {
@@ -358,8 +357,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .Then(() => new NewRabbitMqUserCommand
                             {
-                                UserName = Credential.UserName,
-                                Password = Credential.GetNetworkCredential().Password
+                                Credential = Credential
                             })
                             .Then(() => new GrantRabbitMqUserPermissionCommand
                             {

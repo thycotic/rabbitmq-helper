@@ -70,6 +70,9 @@
     <Compile Include="IO\PrerequisiteDownloader.cs" />
     <Compile Include="IO\RabbitMqConfigurationPathSanitizer.cs" />
     <Compile Include="ManagementClients\Cli\CliManagementClient.cs" />
+    <Compile Include="ManagementClients\Cli\RabbitMqBatClient.cs" />
+    <Compile Include="ManagementClients\Cli\RabbitMqBatPluginClient.cs" />
+    <Compile Include="ManagementClients\Rest\IRabbitMqRestClient.cs" />
     <Compile Include="ManagementClients\Rest\Models\Application.cs" />
     <Compile Include="ManagementClients\Rest\Models\AuthMechanism.cs" />
     <Compile Include="ManagementClients\Rest\Models\BackingQueueStatus.cs" />
@@ -83,13 +86,10 @@
     <Compile Include="ManagementClients\Rest\Models\Queue.cs" />
     <Compile Include="ManagementClients\Rest\Models\QueueArguments.cs" />
     <Compile Include="ManagementClients\Rest\Models\QueueGarbageCollection.cs" />
-    <Compile Include="ManagementClients\Rest\RestManagementClient.cs" />
+    <Compile Include="ManagementClients\Rest\RabbitMqRestClient.cs" />
     <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="OS\IProcessInteractor.cs" />
-    <Compile Include="OS\ErlangProcessInteractor.cs" />
-    <Compile Include="OS\IRestRabbitMqProcessInteractorProxy.cs" />
-    <Compile Include="OS\RestRabbitMqProcessInteractor.cs" />
-    <Compile Include="OS\CtlRabbitMqProcessInteractor.cs" />
+    <Compile Include="ManagementClients\Cli\RabbitMqBatCtlClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\AssemblyEntryPointProvider.cs" />
     <Compile Include="Workflow\CmdletWorkflow.cs" />
