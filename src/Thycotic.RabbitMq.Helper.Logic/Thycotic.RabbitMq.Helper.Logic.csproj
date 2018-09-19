@@ -45,6 +45,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RestSharp, Version=100.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharpSigned.105.2.3\lib\net451\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -66,6 +69,8 @@
     <Compile Include="IO\LockedFileReader.cs" />
     <Compile Include="IO\PrerequisiteDownloader.cs" />
     <Compile Include="IO\RabbitMqConfigurationPathSanitizer.cs" />
+    <Compile Include="ManagementClients\CliManagementClient.cs" />
+    <Compile Include="ManagementClients\RestManagementClient.cs" />
     <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="OS\IProcessInteractor.cs" />
     <Compile Include="OS\ErlangProcessInteractor.cs" />
