@@ -105,5 +105,27 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         //    flags &= ~(ulong)0x30; // Flags.PathNotCanonical|Flags.QueryNotCanonical
         //    flagsFieldInfo.SetValue(uri, flags);
         //}
+
+
+        /// <summary>
+        /// Gets the name of the cluster.
+        /// </summary>
+        /// <returns></returns>
+        public string GetClusterName()
+        {
+            var clusterName = Execute<ClusterName>("api/cluster-name", Method.GET);
+            return clusterName.name;
+        }
+
+        /// <summary>
+        /// Gets the health check.
+        /// </summary>
+        /// <returns></returns>
+        public NodeHealthCheck GetHealthCheck()
+        {
+
+            var healthCheck = Execute<NodeHealthCheck>("api/healthchecks/node", Method.GET);
+            return healthCheck;
+        }
     }
 }

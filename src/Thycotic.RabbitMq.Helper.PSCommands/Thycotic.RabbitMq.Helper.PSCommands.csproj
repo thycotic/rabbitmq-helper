@@ -237,9 +237,11 @@
     <Compile Include="Installation\Workflow\UninstallConnectorCommand.cs" />
     <Compile Include="Installation\UninstallErlangCommand.cs" />
     <Compile Include="Installation\UninstallRabbitMqCommand.cs" />
+    <Compile Include="Management\GetHealthCheckCommand.cs" />
     <Compile Include="Management\OpenRabbitMqManagementCommand.cs" />
     <Compile Include="Management\GrantRabbitMqUserPermissionCommand.cs" />
-    <Compile Include="Management\RestManagementConsoleCmdlet.cs" />
+    <Compile Include="Clustering\GetClusterNameCommand.cs" />
+    <Compile Include="RestManagementConsoleCmdlet.cs" />
     <Compile Include="Management\EnableRabbitMqManagementCommand.cs" />
     <Compile Include="Management\NewRabbitMqUserCommand.cs" />
     <Compile Include="Management\RemoveAllQueuesCommand.cs" />
@@ -275,7 +277,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Clustering\" />
     <Folder Include="Federation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
