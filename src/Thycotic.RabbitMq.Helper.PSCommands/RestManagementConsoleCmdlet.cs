@@ -1,8 +1,7 @@
 ﻿using System.Management.Automation;
 using System.Net;
-using System.Security;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Management
+namespace Thycotic.RabbitMq.Helper.PSCommands
 {
     /// <summary>
     ///     Base class for a management console command
