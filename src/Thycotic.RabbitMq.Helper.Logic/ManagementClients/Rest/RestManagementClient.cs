@@ -127,5 +127,15 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
             var healthCheck = Execute<NodeHealthCheck>("api/healthchecks/node", Method.GET);
             return healthCheck;
         }
+
+        /// <summary>
+        /// Gets the cluster nodes.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public IEnumerable<Node> GetClusterNodes()
+        {
+            return Execute<List<Node>>("api/nodes", Method.GET);
+        }
     }
 }

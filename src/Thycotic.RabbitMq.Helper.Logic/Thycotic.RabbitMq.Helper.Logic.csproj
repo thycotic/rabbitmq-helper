@@ -70,10 +70,16 @@
     <Compile Include="IO\PrerequisiteDownloader.cs" />
     <Compile Include="IO\RabbitMqConfigurationPathSanitizer.cs" />
     <Compile Include="ManagementClients\Cli\CliManagementClient.cs" />
+    <Compile Include="ManagementClients\Rest\Models\Application.cs" />
+    <Compile Include="ManagementClients\Rest\Models\AuthMechanism.cs" />
     <Compile Include="ManagementClients\Rest\Models\BackingQueueStatus.cs" />
+    <Compile Include="ManagementClients\Rest\Models\Node.cs" />
     <Compile Include="ManagementClients\Rest\Models\ClusterName.cs" />
+    <Compile Include="ManagementClients\Rest\Models\Context.cs" />
+    <Compile Include="ManagementClients\Rest\Models\ExchangeType.cs" />
+    <Compile Include="ManagementClients\Rest\Models\MetricsGcQueueLength.cs" />
     <Compile Include="ManagementClients\Rest\Models\NodeHealthCheck.cs" />
-    <Compile Include="ManagementClients\Rest\Models\QueueMessagesDetails.cs" />
+    <Compile Include="ManagementClients\Rest\Models\ThroughputDetails.cs" />
     <Compile Include="ManagementClients\Rest\Models\Queue.cs" />
     <Compile Include="ManagementClients\Rest\Models\QueueArguments.cs" />
     <Compile Include="ManagementClients\Rest\Models\QueueGarbageCollection.cs" />

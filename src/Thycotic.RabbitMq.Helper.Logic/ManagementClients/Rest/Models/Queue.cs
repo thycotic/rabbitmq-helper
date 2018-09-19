@@ -6,13 +6,13 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
     public class Queue
 
     {
-        public QueueMessagesDetails messages_details { get; set; }
+        public ThroughputDetails messages_details { get; set; }
         public int messages { get; set; }
-        public QueueMessagesDetails messages_unacknowledged_details { get; set; }
+        public ThroughputDetails messages_unacknowledged_details { get; set; }
         public int messages_unacknowledged { get; set; }
-        public QueueMessagesDetails messages_ready_details { get; set; }
+        public ThroughputDetails messages_ready_details { get; set; }
         public int messages_ready { get; set; }
-        public QueueMessagesDetails reductions_details { get; set; }
+        public ThroughputDetails reductions_details { get; set; }
         public int reductions { get; set; }
         public string node { get; set; }
         public QueueArguments arguments { get; set; }
