@@ -22,7 +22,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// <summary>
         /// Enables the management console.
         /// </summary>
-        /// <exception cref="ApplicationException"></exception>
+        /// <exception cref="Exception"></exception>
         public string EnableManagementConsole()
         {
             const string parameters2 = "enable rabbitmq_management";

@@ -27,7 +27,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <summary>
         ///     Processes the record.
         /// </summary>
-        /// <exception cref="System.ApplicationException">The RABBITMQ_BASE environmental variable is not set correctly</exception>
+        /// <exception cref="System.Exception">The RABBITMQ_BASE environmental variable is not set correctly</exception>
         /// <exception cref="System.IO.FileNotFoundException">No installer found</exception>
         protected override void ProcessRecord()
         {
@@ -36,7 +36,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             if (rabbitMqBase != InstallationConstants.RabbitMq.ConfigurationPath)
             {
                 WriteWarning(string.Format("RABBITMQ_BASE is set to {0}", rabbitMqBase));
-                throw new ApplicationException("The RABBITMQ_BASE environmental variable is not set correctly");
+                throw new Exception("The RABBITMQ_BASE environmental variable is not set correctly");
             }
 
             var executablePath = GetRabbitMqInstallerCommand.RabbitMqInstallerPath;

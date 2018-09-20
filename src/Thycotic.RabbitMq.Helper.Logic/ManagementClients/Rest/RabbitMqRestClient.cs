@@ -30,7 +30,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         /// </summary>
         /// <param name="resource">The resource.</param>
         /// <param name="method">The method.</param>
-        /// <exception cref="ApplicationException"></exception>
+        /// <exception cref="Exception"></exception>
         public void Execute(string resource, Method method = Method.POST)
         {
             var getRequest = new RestRequest(resource, method);
@@ -41,7 +41,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
             }
             if (method != Method.DELETE && getResponse.StatusCode != HttpStatusCode.OK)
             {
-                throw new ApplicationException(getResponse.StatusDescription);
+                throw new Exception(getResponse.StatusDescription);
             }
         }
 
@@ -52,7 +52,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         /// <param name="resource">The resource.</param>
         /// <param name="method">The method.</param>
         /// <returns></returns>
-        /// <exception cref="ApplicationException"></exception>
+        /// <exception cref="Exception"></exception>
         public T Execute<T>(string resource, Method method = Method.POST) where T : new()
         {
             var getRequest = new RestRequest(resource, method);
@@ -63,7 +63,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
             }
             if (getResponse.StatusCode != HttpStatusCode.OK)
             {
-                throw new ApplicationException(getResponse.StatusDescription);
+                throw new Exception(getResponse.StatusDescription);
             }
 
             return getResponse.Data;

@@ -41,12 +41,12 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 }
                 else
                 {
-                    throw new ApplicationException($"System cookie path not found in {InstallationConstants.Erlang.CookieSystemPath}. Installation may fail.");
+                    throw new Exception($"System cookie path not found in {InstallationConstants.Erlang.CookieSystemPath}. Installation may fail.");
                 }
             }
             catch (Exception ex)
             {
-                throw new ApplicationException($"Failed to copy system cookie: {ex.Message}. Manual deletion might be necessary", ex);
+                throw new Exception($"Failed to copy system cookie: {ex.Message}. Manual deletion might be necessary", ex);
             }
         }
     }

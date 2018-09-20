@@ -68,7 +68,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException("Failed to connect to download host", ex);
+                    throw new Exception("Failed to connect to download host", ex);
                 }
 
             }

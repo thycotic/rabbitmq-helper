@@ -35,7 +35,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// <summary>
         ///     Processes the record.
         /// </summary>
-        /// <exception cref="System.ApplicationException">
+        /// <exception cref="System.Exception">
         ///     Failed to create user. Manual creation might be necessary
         ///     or
         ///     Failed to grant permissions to user. Manual grant might be necessary

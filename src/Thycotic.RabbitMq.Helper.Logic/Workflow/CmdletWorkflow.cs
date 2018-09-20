@@ -135,7 +135,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.Workflow
 
                         if (!retry)
                         {
-                            throw new ApplicationException("Operation failed", ex);
+                            throw new Exception("Operation failed", ex);
                         }
                     }
                 }

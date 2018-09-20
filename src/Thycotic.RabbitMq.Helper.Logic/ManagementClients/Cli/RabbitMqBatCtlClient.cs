@@ -39,7 +39,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
 
                 if (!output.Contains("uptime"))
                 {
-                    throw new ApplicationException("Failed to get RabbitMq uptime information. RabbitMq is probably not running");
+                    throw new Exception("Failed to get RabbitMq uptime information. RabbitMq is probably not running");
                 }
 
                 return true;
@@ -58,7 +58,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Failed to start RabbitMq", ex);
+                throw new Exception("Failed to start RabbitMq", ex);
             }
             
         }
@@ -74,7 +74,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Failed to start RabbitMq", ex);
+                throw new Exception("Failed to start RabbitMq", ex);
             }
         }
 
@@ -90,7 +90,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Failed to stop RabbitMq", ex);
+                throw new Exception("Failed to stop RabbitMq", ex);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password.</param>
-        /// <exception cref="ApplicationException">
+        /// <exception cref="Exception">
         /// Failed to create user. Manual creation might be necessary
         /// </exception>
         public void CreateLimitedAccessUser(string userName, string password)
@@ -114,7 +114,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Failed to create user. Manual creation might be necessary", ex);
+                throw new Exception("Failed to create user. Manual creation might be necessary", ex);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// </summary>
         /// <param name="virtualHost">The virtual host.</param>
         /// <param name="userName">Name of the user.</param>
-        /// <exception cref="ApplicationException">
+        /// <exception cref="Exception">
         /// Failed to grant permissions to user. Manual grant might be necessary
         /// </exception>
         public void GrantPermissionsToUser(string virtualHost, string userName)
@@ -138,7 +138,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Failed to grant permissions to user. Manual grant might be necessary",
+                throw new Exception("Failed to grant permissions to user. Manual grant might be necessary",
                     ex);
             }
         }
