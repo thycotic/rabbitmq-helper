@@ -14,6 +14,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
     /// <para type="synopsis"> Joins a RabbitMq cluster</para>
     /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
+    /// <para type="link">Reset-RabbitMqNodeCommand</para>
     /// <example>
     ///     <para>PS C:\></para> 
     ///     <code>Join-RabbitMqCluster</code>
