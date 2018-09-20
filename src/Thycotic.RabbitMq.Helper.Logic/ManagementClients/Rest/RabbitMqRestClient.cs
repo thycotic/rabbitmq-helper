@@ -30,18 +30,24 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         /// </summary>
         /// <param name="resource">The resource.</param>
         /// <param name="method">The method.</param>
+        /// <param name="body">The body.</param>
         /// <exception cref="Exception"></exception>
-        public void Execute(string resource, Method method = Method.POST)
+        public void Execute(string resource, Method method = Method.POST, object body = null)
         {
-            var getRequest = new RestRequest(resource, method);
-            var getResponse = _client.Execute(getRequest);
-            if (getResponse.ErrorException != null)
+            var request = new RestRequest(resource, method) {RequestFormat = DataFormat.Json, };
+            
+            if (body != null)
             {
-                throw getResponse.ErrorException;
+                request.AddBody(body);
             }
-            if (method != Method.DELETE && getResponse.StatusCode != HttpStatusCode.OK)
+            var response = _client.Execute(request);
+            if (response.ErrorException != null)
             {
-                throw new Exception(getResponse.StatusDescription);
+                throw response.ErrorException;
+            }
+            if (method != Method.DELETE && response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception(response.StatusDescription);
             }
         }
 
@@ -51,22 +57,27 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         /// <typeparam name="T"></typeparam>
         /// <param name="resource">The resource.</param>
         /// <param name="method">The method.</param>
+        /// <param name="body">The body.</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public T Execute<T>(string resource, Method method = Method.POST) where T : new()
+        public T Execute<T>(string resource, Method method = Method.POST, object body = null) where T : new()
         {
-            var getRequest = new RestRequest(resource, method);
-            var getResponse = _client.Execute<T>(getRequest);
-            if (getResponse.ErrorException != null)
+            var request = new RestRequest(resource, method) {RequestFormat = DataFormat.Json};
+            if (body != null)
             {
-                throw getResponse.ErrorException;
+                request.AddBody(body);
             }
-            if (getResponse.StatusCode != HttpStatusCode.OK)
+            var response = _client.Execute<T>(request);
+            if (response.ErrorException != null)
             {
-                throw new Exception(getResponse.StatusDescription);
+                throw response.ErrorException;
+            }
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception(response.StatusDescription);
             }
 
-            return getResponse.Data;
+            return response.Data;
         }
 
 
@@ -109,6 +120,12 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         }
 
         /// <inheritdoc />
+        public IEnumerable<Node> GetClusterNodes()
+        {
+            return Execute<List<Node>>("api/nodes", Method.GET);
+        }
+
+        /// <inheritdoc />
         public NodeHealthCheck GetHealthCheck()
         {
 
@@ -117,9 +134,12 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         }
 
         /// <inheritdoc />
-        public IEnumerable<Node> GetClusterNodes()
+        public void CreatePolicy(string vhost, string name, Policy policy)
         {
-            return Execute<List<Node>>("api/nodes", Method.GET);
+            var host = string.IsNullOrEmpty(vhost) || vhost.Equals("/") ? "%2f" : vhost;
+            var resource = $"api/policies/{host}/{name}";
+
+            Execute(resource, Method.PUT, policy);
         }
     }
 }

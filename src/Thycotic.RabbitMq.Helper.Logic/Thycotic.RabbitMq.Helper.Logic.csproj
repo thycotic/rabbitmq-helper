@@ -83,10 +83,13 @@
     <Compile Include="ManagementClients\Rest\Models\ExchangeType.cs" />
     <Compile Include="ManagementClients\Rest\Models\MetricsGcQueueLength.cs" />
     <Compile Include="ManagementClients\Rest\Models\NodeHealthCheck.cs" />
+    <Compile Include="ManagementClients\Rest\Models\PolicyDefinition.cs" />
+    <Compile Include="ManagementClients\Rest\Models\PolicyOptions.cs" />
     <Compile Include="ManagementClients\Rest\Models\ThroughputDetails.cs" />
     <Compile Include="ManagementClients\Rest\Models\Queue.cs" />
     <Compile Include="ManagementClients\Rest\Models\QueueArguments.cs" />
     <Compile Include="ManagementClients\Rest\Models\QueueGarbageCollection.cs" />
+    <Compile Include="ManagementClients\Rest\Models\Policy.cs" />
     <Compile Include="ManagementClients\Rest\RabbitMqRestClient.cs" />
     <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="OS\IProcessInteractor.cs" />

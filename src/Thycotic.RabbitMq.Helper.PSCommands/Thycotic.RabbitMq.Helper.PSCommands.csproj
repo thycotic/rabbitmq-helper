@@ -226,6 +226,7 @@
     <Compile Include="General\SelectExceptionCommand.cs" />
     <Compile Include="Installation\NewRabbitMqNonTlsConfigFilesCommand.cs" />
     <Compile Include="Management\AssertRabbitMqIsRunningCommand.cs" />
+    <Compile Include="Clustering\NewRabbitMqBalancedOneMirrorManualSyncClusterPolicyCommand.cs" />
     <Compile Include="Management\ResetRabbitMqNodeCommand.cs" />
     <Compile Include="Management\StartRabbitMqCommand.cs" />
     <Compile Include="Management\StopRabbitMqCommand.cs" />
