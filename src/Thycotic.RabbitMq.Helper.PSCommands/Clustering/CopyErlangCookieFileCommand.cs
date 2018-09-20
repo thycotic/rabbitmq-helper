@@ -3,7 +3,7 @@ using System.IO;
 using System.Management.Automation;
 using Thycotic.RabbitMq.Helper.Logic;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Management
+namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
 {
     /// <summary>
     ///     Copies system cookie to user profile.
@@ -36,6 +36,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                     }
 
                     File.Copy(InstallationConstants.Erlang.CookieSystemPath, InstallationConstants.Erlang.CookieUserProfilePath, true);
+
+                    //add readonly
+                    File.SetAttributes(InstallationConstants.Erlang.CookieUserProfilePath, File.GetAttributes(InstallationConstants.Erlang.CookieUserProfilePath) & FileAttributes.ReadOnly);
 
                     WriteVerbose($"System cookie copied to {InstallationConstants.Erlang.CookieUserProfilePath}");
                 }

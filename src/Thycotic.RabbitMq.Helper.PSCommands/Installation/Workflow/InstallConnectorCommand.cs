@@ -2,6 +2,7 @@
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.Workflow;
 using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
+using Thycotic.RabbitMq.Helper.PSCommands.Clustering;
 using Thycotic.RabbitMq.Helper.PSCommands.Management;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow

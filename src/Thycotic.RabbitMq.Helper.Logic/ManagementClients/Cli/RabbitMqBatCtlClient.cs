@@ -39,7 +39,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
 
                 if (!output.Contains("uptime"))
                 {
-                    throw new Exception("Failed to get RabbitMq uptime information. RabbitMq is probably not running");
+                    throw new Exception($"Failed to get RabbitMq uptime information. RabbitMq is probably not running: {output}");
                 }
 
                 return true;
@@ -50,15 +50,16 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// <inheritdoc />
         public void SoftStart()
         {
+            var output = string.Empty;
             try
             {
-                var output = Invoke("start_app", TimeSpan.FromSeconds(15));
+                output = Invoke("start_app", TimeSpan.FromSeconds(15));
                 
-                ValidateOutput($"Starting node rabbit@{Environment.MachineName} ...", output);
+                ValidateOutput($"Starting node rabbit@{Environment.MachineName} ...", output, false);
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to start RabbitMq", ex);
+                throw new Exception($"Failed to start RabbitMq: {output}", ex);
             }
             
         }
@@ -66,15 +67,16 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// <inheritdoc />
         public void SoftStop()
         {
+            var output = string.Empty;
             try
             {
-                var output = Invoke("stop_app", TimeSpan.FromSeconds(15));
+                output = Invoke("stop_app", TimeSpan.FromSeconds(15));
 
                 ValidateOutput($"Stopping rabbit application on node rabbit@{Environment.MachineName} ...", output);
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to start RabbitMq", ex);
+                throw new Exception($"Failed to start RabbitMq: {output}", ex);
             }
         }
 
@@ -82,15 +84,16 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// <inheritdoc />
         public void HardStop()
         {
+            var output = string.Empty;
             try
             {
-                var output = Invoke("stop", TimeSpan.FromSeconds(15));
+                output = Invoke("stop", TimeSpan.FromSeconds(15));
 
                 ValidateOutput($"Stopping and halting node rabbit@{Environment.MachineName} ...", output);
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to stop RabbitMq", ex);
+                throw new Exception($"Failed to stop RabbitMq: {output}", ex);
             }
         }
 
@@ -106,15 +109,16 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         {
             var parameters2 = $"add_user {userName} {password}";
 
+            var output = string.Empty;
             try
             {
-                var output = Invoke(parameters2, TimeSpan.FromSeconds(30));
+                output = Invoke(parameters2, TimeSpan.FromSeconds(30));
 
                 ValidateOutput($"Adding user \"{userName}\" ...", output);
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to create user. Manual creation might be necessary", ex);
+                throw new Exception($"Failed to create user. Manual creation might be necessary: {output}", ex);
             }
         }
 
@@ -129,18 +133,64 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         public void GrantPermissionsToUser(string virtualHost, string userName)
         {
             var parameters2 = $"set_permissions -p {virtualHost} {userName} \".*\" \".*\" \".*\"";
-            
+
+            var output = string.Empty;
             try
             {
-                var output = Invoke(parameters2, TimeSpan.FromSeconds(30));
+                output = Invoke(parameters2, TimeSpan.FromSeconds(30));
 
                 ValidateOutput($"Setting permissions for user \"{userName}\" in vhost \"{virtualHost}\" ...", output);
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to grant permissions to user. Manual grant might be necessary",
+                throw new Exception($"Failed to grant permissions to user. Manual grant might be necessary: {output}",
                     ex);
             }
+        }
+
+        /// <summary>
+        /// Joins the cluster.
+        /// </summary>
+        /// <param name="otherNodeName">Name of the other node.</param>
+        public void JoinCluster(string otherNodeName)
+        {
+            var parameters2 = $"join_cluster rabbit@{otherNodeName.ToUpper()}";
+
+            var output = string.Empty;
+            try
+            {
+                output = Invoke(parameters2, TimeSpan.FromSeconds(30));
+
+                ValidateOutput($"Clustering node rabbit@{Environment.MachineName} with rabbit@{otherNodeName.ToUpper()}", output);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to join {otherNodeName}. Manual join might be necessary: {output}",
+                    ex);
+            }
+
+        }
+
+        /// <summary>
+        /// Resets this instance.
+        /// </summary>
+        /// <exception cref="Exception"></exception>
+        public void Reset()
+        {
+            var parameters2 = "reset";
+
+            var output = string.Empty;
+            try
+            {
+                output = Invoke(parameters2, TimeSpan.FromSeconds(30));
+
+                ValidateOutput($"Resetting node rabbit@{Environment.MachineName} ...", output);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to reset node: {output}", ex);
+            }
+
         }
     }
 }
