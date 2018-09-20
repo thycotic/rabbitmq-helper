@@ -10,21 +10,11 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
     /// <seealso cref="IProcessInteractor" />
     public class RabbitMqBatCtlClient : RabbitMqBatClient, IProcessInteractor
     {
-       
-        /// <summary>
-        ///     Gets the executable.
-        /// </summary>
-        /// <value>
-        ///     The executable.
-        /// </value>
+        /// <inheritdoc />
         protected override string Executable => "rabbitmqctl.bat";
 
-        /// <summary>
-        /// Gets a value indicating whether this instance is running.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is running; otherwise, <c>false</c>.
-        /// </value>
+
+        /// <inheritdoc />
         public bool IsRunning
         {
             get
@@ -55,11 +45,10 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
                 return true;
             }
         }
-        /// <summary>
-        /// Starts this instance.
-        /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void Start()
+
+
+        /// <inheritdoc />
+        public void SoftStart()
         {
             try
             {
@@ -74,11 +63,24 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             
         }
 
-        /// <summary>
-        /// Stops this instance.
-        /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void Stop()
+        /// <inheritdoc />
+        public void SoftStop()
+        {
+            try
+            {
+                var output = Invoke("stop_app", TimeSpan.FromSeconds(15));
+
+                ValidateOutput($"Stopping rabbit application on node rabbit@{Environment.MachineName} ...", output);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Failed to start RabbitMq", ex);
+            }
+        }
+
+
+        /// <inheritdoc />
+        public void HardStop()
         {
             try
             {

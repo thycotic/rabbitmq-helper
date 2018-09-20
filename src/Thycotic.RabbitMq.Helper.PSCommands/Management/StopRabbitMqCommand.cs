@@ -16,6 +16,21 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     [Cmdlet(VerbsLifecycle.Stop, "RabbitMq")]
     public class StopRabbitMqCommand : Cmdlet
     {
+
+        /// <summary>
+        ///    Stops the RabbitMq Erlang node.
+        /// </summary>
+        /// <value>
+        ///     The agree rabbit mq license.
+        /// </value>
+        /// <para type="description">
+        ///     Gets or sets whether the Erlang node should be stopped as well.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        public SwitchParameter StopErlangNode { get; set; }
+
         /// <summary>
         ///     Processes the record.
         /// </summary>
@@ -25,7 +40,16 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             WriteVerbose("Stopping RabbitMq");
 
-            client.Stop();
+            if (StopErlangNode)
+            {
+                WriteVerbose("Stopping RabbitMq and Erlang node");
+                client.HardStop();
+            }
+            else
+            {
+                WriteVerbose("Stopping RabbitMq but leaving Erlang node running");
+                client.SoftStop();
+            }
         }
     }
 }

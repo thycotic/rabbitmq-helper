@@ -52,10 +52,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
             var client = new RabbitMqBatCtlClient();
 
             WriteVerbose("Stopping RabbitMq");
-            client.Stop();
+            client.HardStop();
 
             WriteVerbose("Starting RabbitMq");
-            client.Start();
+            client.SoftStart();
 
             WriteVerbose("Cookie set");
         }

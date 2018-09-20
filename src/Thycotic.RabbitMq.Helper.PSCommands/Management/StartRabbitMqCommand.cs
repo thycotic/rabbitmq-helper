@@ -25,7 +25,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             WriteVerbose("Starting RabbitMq");
 
-            client.Start();
+            client.SoftStart();
         }
     }
 }

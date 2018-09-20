@@ -37,7 +37,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                 {
                     WriteVerbose("Stopping RabbitMq");
 
-                    client.Stop();
+                    client.HardStop();
                 }
                 catch (Exception ex)
                 {
