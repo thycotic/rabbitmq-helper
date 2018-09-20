@@ -1,7 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Management.Automation;
-using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
-using Thycotic.RabbitMq.Helper.PSCommands.Management;
+using Thycotic.RabbitMq.Helper.Logic;
+using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
 {
@@ -37,8 +38,24 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
         {
             if (string.IsNullOrWhiteSpace(CookieContent))
             {
-                throw new Exception()
+                throw new Exception("No cookie content specified");
             }
+
+            WriteVerbose($"Setting system cookie contents {InstallationConstants.Erlang.CookieSystemPath}");
+
+            File.WriteAllText(InstallationConstants.Erlang.CookieSystemPath, CookieContent);
+
+            WriteVerbose($"Setting user profile cookie contents {InstallationConstants.Erlang.CookieUserProfilePath}");
+
+            File.WriteAllText(InstallationConstants.Erlang.CookieUserProfilePath, CookieContent);
+
+            var client = new RabbitMqBatCtlClient();
+
+            WriteVerbose("Stopping RabbitMq");
+            client.Stop();
+
+            WriteVerbose("Starting RabbitMq");
+            client.Start();
 
             WriteVerbose("Cookie set");
         }

@@ -29,10 +29,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
 
             var output = Invoke(parameters2, TimeSpan.FromSeconds(60));
 
-            if (!output.Contains("started") && !output.Contains("Plugin configuration unchanged."))
-            {
-                throw new ApplicationException(ExceptionMessages.InvalidOutput);
-            }
+            ValidateOutput("Plugin configuration unchanged.", output, false);
 
             return output;
         }

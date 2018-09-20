@@ -225,6 +225,8 @@
     <Compile Include="General\SelectExceptionCommand.cs" />
     <Compile Include="Installation\NewRabbitMqNonTlsConfigFilesCommand.cs" />
     <Compile Include="Management\AssertRabbitMqIsRunningCommand.cs" />
+    <Compile Include="Management\StartRabbitMqCommand.cs" />
+    <Compile Include="Management\StopRabbitMqCommand.cs" />
     <Compile Include="Management\CopyErlangCookieFileCommand.cs" />
     <Compile Include="Installation\NewRabbitMqTlsConfigFilesCommand.cs" />
     <Compile Include="Installation\NewRabbitMqConfigDirectoryCommand.cs" />

@@ -70,6 +70,7 @@
     <Compile Include="IO\PrerequisiteDownloader.cs" />
     <Compile Include="IO\RabbitMqConfigurationPathSanitizer.cs" />
     <Compile Include="ManagementClients\Cli\CliManagementClient.cs" />
+    <Compile Include="ManagementClients\Cli\InvalidRabbitMqBatOutputException.cs" />
     <Compile Include="ManagementClients\Cli\RabbitMqBatClient.cs" />
     <Compile Include="ManagementClients\Cli\RabbitMqBatPluginClient.cs" />
     <Compile Include="ManagementClients\Rest\IRabbitMqRestClient.cs" />

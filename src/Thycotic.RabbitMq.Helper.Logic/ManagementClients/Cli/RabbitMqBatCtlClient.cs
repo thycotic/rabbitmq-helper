@@ -61,7 +61,17 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// <exception cref="System.NotImplementedException"></exception>
         public void Start()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var output = Invoke("start_app", TimeSpan.FromSeconds(15));
+                
+                ValidateOutput($"Starting node rabbit@{Environment.MachineName} ...", output);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Failed to start RabbitMq", ex);
+            }
+            
         }
 
         /// <summary>
@@ -70,7 +80,16 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// <exception cref="System.NotImplementedException"></exception>
         public void Stop()
         {
-            Invoke("stop", TimeSpan.FromSeconds(15));
+            try
+            {
+                var output = Invoke("stop", TimeSpan.FromSeconds(15));
+
+                ValidateOutput($"Stopping and halting node rabbit@{Environment.MachineName} ...", output);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Failed to stop RabbitMq", ex);
+            }
         }
 
         /// <summary>
@@ -89,10 +108,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             {
                 var output = Invoke(parameters2, TimeSpan.FromSeconds(30));
 
-                if (string.IsNullOrWhiteSpace(output) || output.Trim() != $"Adding user \"{userName}\" ...")
-                {
-                    throw new ApplicationException(ExceptionMessages.InvalidOutput);
-                }
+                ValidateOutput($"Adding user \"{userName}\" ...", output);
             }
             catch (Exception ex)
             {
@@ -115,10 +131,8 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             try
             {
                 var output = Invoke(parameters2, TimeSpan.FromSeconds(30));
-                if (string.IsNullOrWhiteSpace(output) || output.Trim() != $"Setting permissions for user \"{userName}\" in vhost \"{virtualHost}\" ...")
-                {
-                    throw new ApplicationException(ExceptionMessages.InvalidOutput);
-                }
+
+                ValidateOutput($"Setting permissions for user \"{userName}\" in vhost \"{virtualHost}\" ...", output);
             }
             catch (Exception ex)
             {

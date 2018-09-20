@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Management.Automation;
+using Thycotic.RabbitMq.Helper.Logic;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -25,26 +26,22 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         {
             try
             {
-                const string filename = ".erlang.cookie";
-                var windowsCookiePath = Path.Combine(@"C:\Windows\System32\config\systemprofile\", filename);
-                if (File.Exists(windowsCookiePath))
+                
+                if (File.Exists(InstallationConstants.Erlang.CookieSystemPath))
                 {
-                    var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-                    var userProfileCookiePath = Path.Combine(userProfile, filename);
-
-                    if (File.Exists(userProfileCookiePath))
+                    if (File.Exists(InstallationConstants.Erlang.CookieUserProfilePath))
                     {
                         //remove readonly
-                        File.SetAttributes(userProfileCookiePath, File.GetAttributes(userProfileCookiePath) & ~FileAttributes.ReadOnly);
+                        File.SetAttributes(InstallationConstants.Erlang.CookieUserProfilePath, File.GetAttributes(InstallationConstants.Erlang.CookieUserProfilePath) & ~FileAttributes.ReadOnly);
                     }
 
-                    File.Copy(windowsCookiePath, userProfileCookiePath, true);
+                    File.Copy(InstallationConstants.Erlang.CookieSystemPath, InstallationConstants.Erlang.CookieUserProfilePath, true);
 
-                    WriteVerbose($"System cookie copied to {userProfileCookiePath}");
+                    WriteVerbose($"System cookie copied to {InstallationConstants.Erlang.CookieUserProfilePath}");
                 }
                 else
                 {
-                    throw new ApplicationException($"System cookie path not found in {windowsCookiePath}. Installation may fail.");
+                    throw new ApplicationException($"System cookie path not found in {InstallationConstants.Erlang.CookieSystemPath}. Installation may fail.");
                 }
             }
             catch (Exception ex)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
 using Thycotic.RabbitMq.Helper.Logic.OS;
 
 namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
@@ -10,17 +11,6 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
     /// <seealso cref="IProcessInteractor" />
     public abstract class RabbitMqBatClient
     {
-        /// <summary>
-        /// Standard exception messages
-        /// </summary>
-        public static class ExceptionMessages
-        {
-            /// <summary>
-            /// The invalid output
-            /// </summary>
-            public const string InvalidOutput = "Invalid output received";
-        }
-
         /// <summary>
         ///     Gets the executable.
         /// </summary>
@@ -68,6 +58,31 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             };
 
             return externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters);
+        }
+
+        /// <summary>
+        /// Validates the output.
+        /// </summary>
+        /// <param name="expectedOutput">The expected output.</param>
+        /// <param name="actualOutput">The actual output.</param>
+        /// <param name="strict">if set to <c>true</c> [strict].</param>
+        /// <exception cref="InvalidRabbitMqBatOutputException"></exception>
+        public virtual void ValidateOutput(string expectedOutput, string actualOutput, bool strict = true)
+        {
+            if (string.IsNullOrWhiteSpace(actualOutput))
+            {
+                throw new InvalidRabbitMqBatOutputException(expectedOutput, "No output received");
+            }
+
+            if (strict && !actualOutput.Trim().Equals(expectedOutput, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
+            }
+
+            if (!strict && !actualOutput.ToLower().Contains(expectedOutput.ToLower()))
+            {
+                throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
+            }
         }
     }
 }
