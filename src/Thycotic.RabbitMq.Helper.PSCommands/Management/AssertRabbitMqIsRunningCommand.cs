@@ -16,8 +16,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <para>PS C:\></para> 
     ///     <code>Assert-RabbitIsRunning</code>
     /// </example>
-    [Cmdlet(VerbsLifecycle.Assert, "RabbitIsRunning")]
-    public class AssertRabbitIsRunningCommand : Cmdlet
+    [Cmdlet(VerbsLifecycle.Assert, "RabbitMqIsRunning")]
+    public class AssertRabbitMqIsRunningCommand : Cmdlet
     {
         /// <summary>
         ///     Processes the record.

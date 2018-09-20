@@ -13,8 +13,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <para>PS C:\></para> 
     ///     <code>Remove-AllQueues</code>
     /// </example>
-    [Cmdlet(VerbsCommon.Get, "HealthCheck")]
-    public class GetHealthCheckCommand : RestManagementConsoleCmdlet
+    [Cmdlet(VerbsLifecycle.Request, "RabbitMqHealthCheck")]
+    public class RequestRabbitMqHealthCheckCommand : RestManagementConsoleCmdlet
     {
         /// <summary>
         ///     Processes the record.

@@ -17,7 +17,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <code>Assert-RabbitMqConnectivity</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Assert, "RabbitMqConnectivity")]
-    public class AssertConnectivityCommand : Cmdlet
+    public class AssertRabbitMqConnectivityCommand : Cmdlet
     {
         private static class ParameterSets
         {

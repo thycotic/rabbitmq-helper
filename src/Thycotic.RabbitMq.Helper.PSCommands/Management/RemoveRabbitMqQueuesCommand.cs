@@ -23,8 +23,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <para>PS C:\></para> 
     ///     <code>Remove-AllQueues</code>
     /// </example>
-    [Cmdlet(VerbsCommon.Remove, "AllQueues")]
-    public class RemoveAllQueuesCommand : RestManagementConsoleCmdlet
+    [Cmdlet(VerbsCommon.Remove, "RabbitMqQueues")]
+    public class RemoveRabbitMqQueuesCommand : RestManagementConsoleCmdlet
     {
         /// <summary>
         ///     Processes the record.

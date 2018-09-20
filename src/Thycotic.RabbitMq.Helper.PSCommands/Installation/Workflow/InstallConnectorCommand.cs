@@ -312,7 +312,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
                             .Then(() => new CopyErlangCookieFileCommand())
-                            .Then(() => new AssertRabbitIsRunningCommand())
+                            .Then(() => new AssertRabbitMqIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
 
@@ -326,7 +326,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             {
                                 UserName = Credential.UserName
                             })
-                            .Then(() => new AssertConnectivityCommand
+                            .Then(() => new AssertRabbitMqConnectivityCommand
                             {
                                 Hostname = Hostname,
                                 Credential = Credential,
@@ -349,7 +349,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
                             .Then(() => new CopyErlangCookieFileCommand())
-                            .Then(() => new AssertRabbitIsRunningCommand())
+                            .Then(() => new AssertRabbitMqIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
 
@@ -363,7 +363,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             {
                                 UserName = Credential.UserName
                             })
-                            .Then(() => new AssertConnectivityCommand
+                            .Then(() => new AssertRabbitMqConnectivityCommand
                             {
                                 Credential = Credential
                             })

@@ -13,8 +13,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
     ///     <para>PS C:\></para> 
     ///     <code>Remove-AllQueues</code>
     /// </example>
-    [Cmdlet(VerbsCommon.Get, "ClusterNodes")]
-    public class GetClusterNodesCommand : RestManagementConsoleCmdlet
+    [Cmdlet(VerbsCommon.Get, "RabbitMqClusterNodes")]
+    public class GetRabbitMqClusterNodesCommand : RestManagementConsoleCmdlet
     {
         /// <summary>
         ///     Processes the record.

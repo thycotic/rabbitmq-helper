@@ -219,11 +219,12 @@
   <ItemGroup>
     <Compile Include="Certificate\ConvertCaCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
-    <Compile Include="Clustering\GetClusterNodesCommand.cs" />
+    <Compile Include="Clustering\SetRabbitMqClusterCookieCommand.cs" />
+    <Compile Include="Clustering\GetRabbitMqClusterNodesCommand.cs" />
     <Compile Include="CommandAreas.cs" />
     <Compile Include="General\SelectExceptionCommand.cs" />
     <Compile Include="Installation\NewRabbitMqNonTlsConfigFilesCommand.cs" />
-    <Compile Include="Management\AssertRabbitIsRunningCommand.cs" />
+    <Compile Include="Management\AssertRabbitMqIsRunningCommand.cs" />
     <Compile Include="Management\CopyErlangCookieFileCommand.cs" />
     <Compile Include="Installation\NewRabbitMqTlsConfigFilesCommand.cs" />
     <Compile Include="Installation\NewRabbitMqConfigDirectoryCommand.cs" />
@@ -238,16 +239,16 @@
     <Compile Include="Installation\Workflow\UninstallConnectorCommand.cs" />
     <Compile Include="Installation\UninstallErlangCommand.cs" />
     <Compile Include="Installation\UninstallRabbitMqCommand.cs" />
-    <Compile Include="Management\GetHealthCheckCommand.cs" />
+    <Compile Include="Management\RequestRabbitMqHealthCheckCommand.cs" />
     <Compile Include="Management\OpenRabbitMqManagementCommand.cs" />
     <Compile Include="Management\GrantRabbitMqUserPermissionCommand.cs" />
-    <Compile Include="Clustering\GetClusterNameCommand.cs" />
+    <Compile Include="Clustering\GetRabbitMqClusterNameCommand.cs" />
     <Compile Include="RestManagementConsoleCmdlet.cs" />
     <Compile Include="Management\EnableRabbitMqManagementCommand.cs" />
     <Compile Include="Management\NewRabbitMqUserCommand.cs" />
-    <Compile Include="Management\RemoveAllQueuesCommand.cs" />
+    <Compile Include="Management\RemoveRabbitMqQueuesCommand.cs" />
     <Compile Include="Management\GetRabbitMqLogCommand.cs" />
-    <Compile Include="Management\AssertConnectivityCommand.cs" />
+    <Compile Include="Management\AssertRabbitMqConnectivityCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
