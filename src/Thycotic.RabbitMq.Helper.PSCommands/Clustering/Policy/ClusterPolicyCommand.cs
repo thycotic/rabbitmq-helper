@@ -61,8 +61,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
             var client = new RabbitMqRestClient(BaseUrl, AdminCredential.UserName,
                 AdminCredential.GetNetworkCredential().Password);
 
-
-
             client.CreatePolicy(string.Empty, Name, GetPolicy());
 
             WriteVerbose("Policy created/updated");

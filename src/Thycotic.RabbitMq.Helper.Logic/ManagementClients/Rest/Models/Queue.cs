@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
 {
@@ -24,7 +25,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
         public int message_bytes_paged_out { get; set; }
         public int messages_paged_out { get; set; }
         public BackingQueueStatus backing_queue_status { get; set; }
-        public object head_message_timestamp { get; set; }
+        public int head_message_timestamp { get; set; }
         public int message_bytes_persistent { get; set; }
         public int message_bytes_ram { get; set; }
         public int message_bytes_unacknowledged { get; set; }
@@ -36,13 +37,15 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
         public int messages_ram { get; set; }
         public QueueGarbageCollection garbage_collection { get; set; }
         public string state { get; set; }
-        public object recoverable_slaves { get; set; }
+        public string[] recoverable_slaves { get; set; }
+        public string[] synchronised_slave_nodes { get; set; }
+        public string[] slave_nodes { get; set; }
         public int consumers { get; set; }
-        public object exclusive_consumer_tag { get; set; }
-        public List<object> effective_policy_definition { get; set; }
-        public object operator_policy { get; set; }
-        public object policy { get; set; }
-        public object consumer_utilisation { get; set; }
+        public string exclusive_consumer_tag { get; set; }
+        public PolicyDefinition effective_policy_definition { get; set; }
+        public string operator_policy { get; set; }
+        public string policy { get; set; }
+        public int consumer_utilisation { get; set; }
         public string idle_since { get; set; }
         public int memory { get; set; }
     }

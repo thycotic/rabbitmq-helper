@@ -15,6 +15,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         /// <param name="vhost">The vhost.</param>
         /// <param name="name">The name.</param>
         void DeleteQueue(string vhost, string name);
+        
         /// <summary>
         /// Gets all queues.
         /// </summary>

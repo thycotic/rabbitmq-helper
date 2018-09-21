@@ -14,14 +14,14 @@ using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
     /// <summary>
-    ///     Deletes all queues in the current instance of RabbitMq
+    ///     Removes all non-autodelete and non-exclusive queues in the RabbitMq cluster.
     /// </summary>
-    /// <para type="synopsis">Deletes all queues in the current instance of RabbitMq</para>
+    /// <para type="synopsis">Removes all non-autodelete and non-exclusive queues in the RabbitMq cluster.</para>
     /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
     ///     <para>PS C:\></para> 
-    ///     <code>Remove-AllQueues</code>
+    ///     <code>Remove-RabbitMqQueues</code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "RabbitMqQueues")]
     public class RemoveRabbitMqQueuesCommand : RestManagementConsoleCmdlet
