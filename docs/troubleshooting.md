@@ -26,7 +26,7 @@ Failed to copy system cookie: Access to the path 'C:\Users\user1\\.erlang.cookie
 
 You can manually delete the cookie from the location the helper has no access to and retry.
 
-## Management Plugin Does Not Load
+## Management Plugin Does Not Load 
 
 The management plugin is the web page where the user logs in to manage RabbitMQ. This is usually located at [http://localhost:15672](http://localhost:15672)
 

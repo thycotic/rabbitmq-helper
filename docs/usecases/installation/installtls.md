@@ -25,7 +25,7 @@ $pfxCred = Get-Credential -UserName PfxUserName -Message "Enter the PFX password
 #$password = ConvertTo-SecureString “PlainTextPassword” -AsPlainText -Force
 #$pfxCred = New-Object System.Management.Automation.PSCredential (“Ignored”, $password)
 
-install-Connector `
+Install-Connector `
     -Hostname $fqdn `
     -Credential $cred `
     -UseTls `

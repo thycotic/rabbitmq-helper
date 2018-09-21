@@ -132,6 +132,15 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
             {
                 WriteWarning("Failed to clean configuration path. Clean removal might fail: " + ex.Message);
             }
+
+            try
+            {
+                directoryCleaner.Clean(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RabbitMq"));
+            }
+            catch (Exception ex)
+            {
+                WriteWarning("Failed to clean roaming path. Clean removal might fail: " + ex.Message);
+            }
         }
     }
 }
