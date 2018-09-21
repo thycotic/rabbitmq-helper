@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
+using RestSharp.Deserializers;
+using RestSharp.Serializers;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
 
 namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
@@ -23,6 +27,13 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         public RabbitMqRestClient(string baseUrl, string userName, string password)
         {
             _client = new RestClient(baseUrl) { Authenticator = new HttpBasicAuthenticator(userName, password) };
+
+            _client.AddHandler("application/json", NewtonsoftJsonSerializer.Default);
+            _client.AddHandler("text/json", NewtonsoftJsonSerializer.Default);
+            _client.AddHandler("text/x-json", NewtonsoftJsonSerializer.Default);
+            _client.AddHandler("text/javascript", NewtonsoftJsonSerializer.Default);
+            _client.AddHandler("*+json", NewtonsoftJsonSerializer.Default);
+
         }
 
         /// <summary>
@@ -34,21 +45,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         /// <exception cref="Exception"></exception>
         public void Execute(string resource, Method method = Method.POST, object body = null)
         {
-            var request = new RestRequest(resource, method) {RequestFormat = DataFormat.Json, };
-            
-            if (body != null)
-            {
-                request.AddBody(body);
-            }
-            var response = _client.Execute(request);
-            if (response.ErrorException != null)
-            {
-                throw response.ErrorException;
-            }
-            if (method != Method.DELETE && response.StatusCode != HttpStatusCode.OK)
-            {
-                throw new Exception(response.StatusDescription);
-            }
+            Execute<object>(resource, method, body);
         }
 
         /// <summary>
@@ -62,7 +59,12 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         /// <exception cref="Exception"></exception>
         public T Execute<T>(string resource, Method method = Method.POST, object body = null) where T : new()
         {
-            var request = new RestRequest(resource, method) {RequestFormat = DataFormat.Json};
+            var request = new RestRequest(resource, method)
+            {
+                RequestFormat = DataFormat.Json,
+                JsonSerializer = NewtonsoftJsonSerializer.Default
+            };
+
             if (body != null)
             {
                 request.AddBody(body);
@@ -72,7 +74,19 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
             {
                 throw response.ErrorException;
             }
-            if (response.StatusCode != HttpStatusCode.OK)
+
+            if (method == Method.PUT &&
+                (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.NoContent))
+            {
+            }
+            else if (method == Method.DELETE &&
+                response.StatusCode == HttpStatusCode.NoContent)
+            {
+            }
+            else if (response.StatusCode == HttpStatusCode.OK)
+            {
+            }
+            else
             {
                 throw new Exception(response.StatusDescription);
             }
@@ -80,6 +94,59 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
             return response.Data;
         }
 
+        //source: https://bytefish.de/blog/restsharp_custom_json_serializer/
+        private class NewtonsoftJsonSerializer : ISerializer, IDeserializer
+        {
+            private readonly Newtonsoft.Json.JsonSerializer _serializer;
+
+            private NewtonsoftJsonSerializer(Newtonsoft.Json.JsonSerializer serializer)
+            {
+                _serializer = serializer;
+            }
+
+            public string ContentType
+            {
+                get { return "application/json"; } // Probably used for Serialization?
+                set { }
+            }
+
+            public string DateFormat { get; set; }
+
+            public string Namespace { get; set; }
+
+            public string RootElement { get; set; }
+
+            public string Serialize(object obj)
+            {
+                using (var stringWriter = new StringWriter())
+                {
+                    using (var jsonTextWriter = new JsonTextWriter(stringWriter))
+                    {
+                        _serializer.Serialize(jsonTextWriter, obj);
+
+                        return stringWriter.ToString();
+                    }
+                }
+            }
+
+            public T Deserialize<T>(IRestResponse response)
+            {
+                var content = response.Content;
+
+                using (var stringReader = new StringReader(content))
+                {
+                    using (var jsonTextReader = new JsonTextReader(stringReader))
+                    {
+                        return _serializer.Deserialize<T>(jsonTextReader);
+                    }
+                }
+            }
+
+            public static NewtonsoftJsonSerializer Default => new NewtonsoftJsonSerializer(new Newtonsoft.Json.JsonSerializer
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+        }
 
         /// <inheritdoc />
         public IEnumerable<Queue> GetAllQueues()

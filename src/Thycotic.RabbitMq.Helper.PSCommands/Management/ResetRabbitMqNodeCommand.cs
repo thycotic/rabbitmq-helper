@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Management.Automation;
-using System.Net.Sockets;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli;
-using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
-using Thycotic.RabbitMq.Helper.PSCommands.Management;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
+namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
     /// <summary>
     ///     Resets a RabbitMq node and removes it from a cluster if any.

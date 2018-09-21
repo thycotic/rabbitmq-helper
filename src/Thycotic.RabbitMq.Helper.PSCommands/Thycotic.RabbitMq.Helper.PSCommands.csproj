@@ -192,10 +192,6 @@
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net40\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
@@ -220,13 +216,14 @@
     <Compile Include="Certificate\ConvertCaCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
     <Compile Include="Clustering\JoinRabbitMqClusterCommand.cs" />
+    <Compile Include="Clustering\Policy\SetRabbitMqBalancedOneMirrorManualSyncClusterPolicyCommand.cs" />
     <Compile Include="Clustering\SetErlangCookieFileCommand.cs" />
     <Compile Include="Clustering\GetRabbitMqClusterNodesCommand.cs" />
     <Compile Include="CommandAreas.cs" />
     <Compile Include="General\SelectExceptionCommand.cs" />
     <Compile Include="Installation\NewRabbitMqNonTlsConfigFilesCommand.cs" />
     <Compile Include="Management\AssertRabbitMqIsRunningCommand.cs" />
-    <Compile Include="Clustering\NewRabbitMqBalancedOneMirrorManualSyncClusterPolicyCommand.cs" />
+    <Compile Include="Clustering\Policy\ClusterPolicyCommand.cs" />
     <Compile Include="Management\ResetRabbitMqNodeCommand.cs" />
     <Compile Include="Management\StartRabbitMqCommand.cs" />
     <Compile Include="Management\StopRabbitMqCommand.cs" />
