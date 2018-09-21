@@ -6,6 +6,28 @@
     public static class PolicyOptions
     {
         /// <summary>
+        /// Supported policy applications
+        /// </summary>
+        public static class PolicyApplications
+        {
+            /// <summary>
+            /// All
+            /// </summary>
+            public const string All = "all";
+            
+            /// <summary>
+            /// The exchanges
+            /// </summary>
+            public const string Exchanges = "exchanges";
+
+            /// <summary>
+            /// The queues
+            /// </summary>
+            public const string Queues = "queues";
+        }
+
+
+        /// <summary>
         /// Supported queue master locations
         /// </summary>
         public static class QueueMasterLocation

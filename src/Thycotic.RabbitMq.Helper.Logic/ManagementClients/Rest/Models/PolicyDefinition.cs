@@ -18,13 +18,13 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
         public string ha_mode { get; set; }
 
         [JsonProperty("ha-params")]
-        public string ha_params { get; set; }
+        public object ha_params { get; set; }
 
         [JsonProperty("ha-sync-mode")]
         public string ha_sync_mode { get; set; }
 
         [JsonProperty("ha-sync-batch-size")]
-        public string ha_sync_batch_size { get; set; }
+        public int ha_sync_batch_size { get; set; }
     }
 
 

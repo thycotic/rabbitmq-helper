@@ -39,6 +39,21 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
         public string Pattern { get; set; }
 
         /// <summary>
+        /// Priority for the policy. In the event that more than one policy can match a given exchange or queue, the policy with the greatest priority applies.
+        /// </summary>
+        /// <value>
+        /// The priority.
+        /// </value>
+        /// <para type="description">
+        /// Priority for the policy.In the event that more than one policy can match a given exchange or queue, the policy with the greatest priority applies.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateRange(1, 100)]
+        public int Priority { get; set; } = 10;
+
+        /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
