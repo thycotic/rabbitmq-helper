@@ -53,7 +53,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             var output = string.Empty;
             try
             {
-                output = Invoke("start_app", TimeSpan.FromSeconds(15));
+                output = Invoke("start_app", TimeSpan.FromSeconds(30));
                 
                 ValidateOutput($"Starting node rabbit@{Environment.MachineName} ...", output, false);
             }
@@ -70,7 +70,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             var output = string.Empty;
             try
             {
-                output = Invoke("stop_app", TimeSpan.FromSeconds(15));
+                output = Invoke("stop_app", TimeSpan.FromSeconds(30));
 
                 ValidateOutput($"Stopping rabbit application on node rabbit@{Environment.MachineName} ...", output);
             }
@@ -87,7 +87,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             var output = string.Empty;
             try
             {
-                output = Invoke("stop", TimeSpan.FromSeconds(15));
+                output = Invoke("stop", TimeSpan.FromSeconds(30));
 
                 ValidateOutput($"Stopping and halting node rabbit@{Environment.MachineName} ...", output);
             }
