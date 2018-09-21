@@ -45,13 +45,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </value>
         /// <para type="description">Gets or sets the hostname.</para>
         [Parameter(
-             Mandatory = true,
              ValueFromPipeline = true,
              ValueFromPipelineByPropertyName = true,
              ParameterSetName = ParameterSets.Tls)]
         [Alias("SubjectName", "FQDN")]
-        public string Hostname { get; set; }
-
+        public string Hostname { get; set; } = DnsEx.GetDnsHostName();
 
         /// <summary>
         ///     Gets or sets the credential of the rabbit mq user.
@@ -71,8 +69,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
-            Hostname = Hostname ?? DnsEx.GetDnsHostName();
-
             try
             {
                 using (var connection = GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseTls))
