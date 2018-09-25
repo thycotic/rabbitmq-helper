@@ -83,6 +83,11 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             {
                 throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
             }
+
+            if (actualOutput.Contains("Error"))
+            {
+                throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
+            }
         }
     }
 }
