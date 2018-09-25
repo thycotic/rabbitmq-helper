@@ -69,9 +69,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
+            WriteVerbose("Checking credentials");
+
             try
             {
-                using (var connection = GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseTls))
+                using (var connection = this.GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseTls))
                 {
                     using (var model = connection.CreateModel())
                     {
@@ -88,37 +90,5 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             }
         }
 
-        private IConnection GetConnection(string hostname, string userName, string password, bool useTls)
-        {
-            const int nonTlsPort = 5672;
-            const int tlsPort = 5671;
-            //using FQDN to avoid running into errors when under TLS
-            var url = string.Format("amqp://{0}:{1}", hostname, useTls ? tlsPort : nonTlsPort);
-
-            WriteVerbose(string.Format("Getting connection for {0}", url));
-
-            var connectionFactory = new ConnectionFactory
-            {
-                Uri = new Uri(url),
-                RequestedHeartbeat = 300,
-                UserName = userName,
-                Password = password
-            };
-
-            if (!useTls)
-            {
-                return connectionFactory.CreateConnection();
-            }
-            var uri = new Uri(url);
-
-            connectionFactory.Ssl = new SslOption
-            {
-                Enabled = true,
-                ServerName = uri.Host,
-                Version = SslProtocols.Tls11 | SslProtocols.Tls12
-            };
-
-            return connectionFactory.CreateConnection();
-        }
     }
 }

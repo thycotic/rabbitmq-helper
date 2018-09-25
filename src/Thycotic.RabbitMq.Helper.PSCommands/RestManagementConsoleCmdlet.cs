@@ -17,7 +17,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
         [Parameter(
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
-        public string BaseUrl { get; set; }
+        public string BaseUrl { get; set; } = "http://localhost:15672";
 
         /// <summary>
         ///     Gets or sets the credential of the rabbit mq administrator user.
@@ -30,16 +30,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
-        public PSCredential AdminCredential { get; set; }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="RestManagementConsoleCmdlet" /> class.
-        /// </summary>
-        protected RestManagementConsoleCmdlet()
-        {
-            BaseUrl = "http://localhost:15672";
-            AdminCredential = new PSCredential("guest", new NetworkCredential("", "guest").SecurePassword);
-        }
+        public PSCredential AdminCredential { get; set; } = new PSCredential("guest", new NetworkCredential("", "guest").SecurePassword);
 
     }
 }

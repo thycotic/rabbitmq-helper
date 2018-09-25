@@ -6,9 +6,9 @@ using Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
 {
     /// <summary>
-    ///     Creates a policy balanced policy on the RabbitMq node
+    ///     Creates a balanced policy on the RabbitMq node
     /// </summary>
-    /// <para type="synopsis">Deletes all queues in the current instance of RabbitMq</para>
+    /// <para type="synopsis">Creates a balanced policy on the RabbitMq node</para>
     /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>

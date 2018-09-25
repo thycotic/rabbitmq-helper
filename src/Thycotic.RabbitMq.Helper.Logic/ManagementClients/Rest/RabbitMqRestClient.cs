@@ -67,7 +67,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
 
             if (body != null)
             {
-                request.AddBody(body);
+                request.AddJsonBody(body);
             }
             var response = _client.Execute<T>(request);
             if (response.ErrorException != null)
@@ -208,5 +208,37 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
 
             Execute(resource, Method.PUT, policy);
         }
+
+        /// <inheritdoc />
+        public void CreateFederationUpstream(string vhost, string name, FederationUpstream upstream)
+        {
+            var host = string.IsNullOrEmpty(vhost) || vhost.Equals("/") ? "%2f" : vhost;
+            var resource = $"api/parameters/federation-upstream/{host}/{name}";
+
+            //HACK: The federation api wants the payload to be in a value element
+            var upstreamValue = new {value = upstream};
+
+            Execute(resource, Method.PUT, upstreamValue);
+        }
+        
+        /*
+
+
+                $feduser = "fed1“;$fedpw = 'passw0rd!’; $fedserver = "Test1" #replace with the other node's real hostname
+        $upstream = "$fedserver-upstream"
+        $upstreamdef = @{ value = @{    uri = "amqp://$($feduser):$($fedpw)@$($fedserver)";     expires = 3600000;     } }
+        $cred = Get-Credential
+        $upstreamdefjson = $upstreamdef | ConvertTo-Json
+        Invoke-RestMethod "http://localhost:15672/api/parameters/federation-upstream/%2f/$upstream" -Body $upstreamdefjson -Credential $cred -Method Put
+
+        $exchange = "ActiveNonSslRabbitMq"; #change to whatever your site name is that you are using for the test
+        $exchangeMatchPattern = "^$exchange.*";
+        $policydef = @{ "pattern" =$exchangeMatchPattern; "definition" =@{     "federation-upstream-set"="all"}; "apply-to" ="queues"; }
+        $policydefjson = $policydef | ConvertTo-Json
+        Invoke-RestMethod "http://localhost:15672/api/policies/%2f/$upstream-$exchange" -Body $policydefjson -Credential $cred -Method Put
+
+            */
+
+
     }
 }

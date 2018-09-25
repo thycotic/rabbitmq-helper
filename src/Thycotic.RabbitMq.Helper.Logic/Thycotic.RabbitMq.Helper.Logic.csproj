@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CmdletExtensions.cs" />
+    <Compile Include="ConnectionExtensions.cs" />
     <Compile Include="DnsEx.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="InstallationConstants.cs" />
@@ -80,12 +81,14 @@
     <Compile Include="ManagementClients\Rest\Models\Application.cs" />
     <Compile Include="ManagementClients\Rest\Models\AuthMechanism.cs" />
     <Compile Include="ManagementClients\Rest\Models\BackingQueueStatus.cs" />
+    <Compile Include="ManagementClients\Rest\Models\FederationUpstreamSets.cs" />
     <Compile Include="ManagementClients\Rest\Models\Node.cs" />
     <Compile Include="ManagementClients\Rest\Models\ClusterName.cs" />
     <Compile Include="ManagementClients\Rest\Models\Context.cs" />
     <Compile Include="ManagementClients\Rest\Models\ExchangeType.cs" />
     <Compile Include="ManagementClients\Rest\Models\MetricsGcQueueLength.cs" />
     <Compile Include="ManagementClients\Rest\Models\NodeHealthCheck.cs" />
+    <Compile Include="ManagementClients\Rest\Models\FederationUpstream.cs" />
     <Compile Include="ManagementClients\Rest\Models\PolicyDefinition.cs" />
     <Compile Include="ManagementClients\Rest\Models\PolicyOptions.cs" />
     <Compile Include="ManagementClients\Rest\Models\ThroughputDetails.cs" />
