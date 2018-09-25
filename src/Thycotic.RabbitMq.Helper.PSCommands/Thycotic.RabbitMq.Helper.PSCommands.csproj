@@ -215,6 +215,7 @@
   <ItemGroup>
     <Compile Include="Certificate\ConvertCaCerToPemCommand.cs" />
     <Compile Include="Certificate\ConvertPfxToPemCommand.cs" />
+    <Compile Include="Clustering\RemoveRabbitMqClusterNodeCommand.cs" />
     <Compile Include="Clustering\JoinRabbitMqClusterCommand.cs" />
     <Compile Include="Clustering\Policy\SetRabbitMqBalancedClusterPolicyCommand.cs" />
     <Compile Include="Clustering\SetErlangCookieFileCommand.cs" />
