@@ -37,17 +37,33 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Federation
         public string Name { get; set; }
 
         /// <summary>
-        ///     Gets or sets the hostname of the upstream. Can be a FQDN.
+        ///     Gets or sets the hostname of the upstream.
         /// </summary>
         /// <value>
         ///     The name.
         /// </value>
-        /// <para type="description">Gets or sets the hostname. Can be a FQDN.</para>
+        /// <para type="description">Gets or sets the hostname.</para>
         [Parameter(
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
+        [Alias("SubjectName", "FQDN")]
         public string Hostname { get; set; }
+
+        /// <summary>
+        /// Port to connect to the upstream on.
+        /// </summary>
+        /// <value>
+        /// The port connect to the upstream on.
+        /// </value>
+        /// <para type="description">
+        /// Port to connect to the upstream on.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateRange(1, 65535)]
+        public int Port { get; set; } = 5672;
 
         /// <summary>
         ///     Gets or sets the credential of the rabbit mq user to connect with on the upstream.
@@ -62,20 +78,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Federation
             ValueFromPipelineByPropertyName = true)]
         public PSCredential Credential { get; set; }
 
-        /// <summary>
-        /// Port to connect to the upstream on. Only 5672 currently supported.
-        /// </summary>
-        /// <value>
-        /// The port connect to the upstream on.
-        /// </value>
-        /// <para type="description">
-        /// Port to connect to the upstream on. Only 5672 currently supported.
-        /// </para>
-        [Parameter(
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
-        //[ValidateRange(5672, 5672)]
-        public int Port { get; set; } = 5672;
+        
 
         /// <summary>
         /// The upstream will be defined to buffer messages when disconnected for up to one the specified number of milliseconds

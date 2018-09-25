@@ -46,10 +46,24 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// <para type="description">Gets or sets the hostname.</para>
         [Parameter(
              ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Tls)]
+             ValueFromPipelineByPropertyName = true)]
         [Alias("SubjectName", "FQDN")]
         public string Hostname { get; set; } = DnsEx.GetDnsHostName();
+
+        /// <summary>
+        /// Port to connect on.
+        /// </summary>
+        /// <value>
+        /// The port to connect on.
+        /// </value>
+        /// <para type="description">
+        /// Port to connect on.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateRange(1, 65535)]
+        public int Port { get; set; } = 5672;
 
         /// <summary>
         ///     Gets or sets the credential of the rabbit mq user.
@@ -73,7 +87,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             try
             {
-                using (var connection = this.GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseTls))
+                using (var connection = this.GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseTls, Port))
                 {
                     using (var model = connection.CreateModel())
                     {
