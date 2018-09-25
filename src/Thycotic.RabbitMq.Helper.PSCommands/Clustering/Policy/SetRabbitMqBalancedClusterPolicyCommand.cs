@@ -1,9 +1,7 @@
 ﻿using System.Management.Automation;
-using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
-using Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
+namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
 {
     /// <summary>
     ///     Creates a balanced policy on the RabbitMq node
