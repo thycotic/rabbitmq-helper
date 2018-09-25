@@ -54,12 +54,17 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 
             WriteVerbose("Stopping RabbitMq application");
             client.SoftStop();
-            
-            WriteVerbose($"Resetting");
-            client.Reset();
-            
-            WriteVerbose("Starting RabbitMq application");
-            client.SoftStart();
+
+            try
+            {
+                WriteVerbose($"Resetting");
+                client.Reset();
+            }
+            finally
+            {
+                WriteVerbose("Starting RabbitMq application");
+                client.SoftStart();
+            }
 
         }
     }

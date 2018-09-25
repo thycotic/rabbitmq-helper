@@ -29,6 +29,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
         /// The name of the other node.
         /// </value>
         [Parameter(
+            Position = 0,
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
@@ -119,13 +120,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
 
             WriteVerbose("Stopping RabbitMq application");
             client.SoftStop();
-            
-            WriteVerbose($"Joining {OtherNodeName}");
-            client.JoinCluster(OtherNodeName);
-            
-            WriteVerbose("Starting RabbitMq application");
-            client.SoftStart();
 
+            try
+            {
+
+                WriteVerbose($"Joining {OtherNodeName}");
+                client.JoinCluster(OtherNodeName);
+            }
+            finally
+            {
+                WriteVerbose("Starting RabbitMq application");
+                client.SoftStart();
+            }
         }
     }
 }
