@@ -53,7 +53,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             var output = string.Empty;
             try
             {
-                output = Invoke("start_app", TimeSpan.FromSeconds(60));
+                output = Invoke("start_app", TimeSpan.FromMinutes(5));
                 
                 ValidateOutput($"Starting node rabbit@{Environment.MachineName} ...", output, false);
             }
@@ -70,7 +70,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             var output = string.Empty;
             try
             {
-                output = Invoke("stop_app", TimeSpan.FromSeconds(60));
+                output = Invoke("stop_app", TimeSpan.FromMinutes(5));
 
                 ValidateOutput($"Stopping rabbit application on node rabbit@{Environment.MachineName} ...", output);
             }
@@ -87,7 +87,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             var output = string.Empty;
             try
             {
-                output = Invoke("stop", TimeSpan.FromSeconds(60));
+                output = Invoke("stop", TimeSpan.FromMinutes(5));
 
                 ValidateOutput($"Stopping and halting node rabbit@{Environment.MachineName} ...", output);
             }
@@ -112,7 +112,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             var output = string.Empty;
             try
             {
-                output = Invoke(parameters2, TimeSpan.FromSeconds(30));
+                output = Invoke(parameters2, TimeSpan.FromSeconds(60));
 
                 ValidateOutput($"Adding user \"{userName}\" ...", output);
             }
@@ -137,7 +137,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             var output = string.Empty;
             try
             {
-                output = Invoke(parameters2, TimeSpan.FromSeconds(30));
+                output = Invoke(parameters2, TimeSpan.FromSeconds(60));
 
                 ValidateOutput($"Setting permissions for user \"{userName}\" in vhost \"{virtualHost}\" ...", output);
             }
@@ -154,12 +154,12 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// <param name="otherNodeName">Name of the other node.</param>
         public void JoinCluster(string otherNodeName)
         {
-            var parameters2 = $"join_cluster rabbit@{otherNodeName.ToUpper()}";
+            var parameters2 = $"join_cluster rabbit@{otherNodeName}";
 
             var output = string.Empty;
             try
             {
-                output = Invoke(parameters2, TimeSpan.FromSeconds(30));
+                output = Invoke(parameters2, TimeSpan.FromMinutes(5));
 
                 ValidateOutput($"Clustering node rabbit@{Environment.MachineName} with rabbit@{otherNodeName.ToUpper()}", output);
             }
@@ -169,6 +169,30 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
                     ex);
             }
 
+        }
+
+
+        /// <summary>
+        /// Removes from cluster cluster.
+        /// </summary>
+        /// <param name="otherNodeName">Name of the other node.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void RemoveFromClusterCluster(string otherNodeName)
+        {
+            var parameters2 = $"forget_cluster_node rabbit@{otherNodeName}";
+
+            var output = string.Empty;
+            try
+            {
+                output = Invoke(parameters2, TimeSpan.FromMinutes(5));
+
+                ValidateOutput($"Removing node rabbit@{otherNodeName} from the cluster", output, false);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to remove {otherNodeName}. Manual removal might be necessary: {output}",
+                    ex);
+            }
         }
 
         /// <summary>
@@ -182,7 +206,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
             var output = string.Empty;
             try
             {
-                output = Invoke(parameters2, TimeSpan.FromSeconds(30));
+                output = Invoke(parameters2, TimeSpan.FromMinutes(5));
 
                 ValidateOutput($"Resetting node rabbit@{Environment.MachineName} ...", output);
             }
