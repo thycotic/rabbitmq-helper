@@ -51,11 +51,10 @@
         public static class FederationUpstreamSets
         {
             /// <summary>
-            /// All
+            /// All. Federate all the built-in exchanges except for the default exchange, with a single upstream
             /// </summary>
             public const string All = "all";
         }
-
 
         /// <summary>
         /// Supported HA sync modes
@@ -95,6 +94,42 @@
             /// The nodes
             /// </summary>
             public const string Nodes = "nodes";
+        }
+
+        /// <summary>
+        /// Supporter policy keys
+        /// </summary>
+        public static class PolicyKeys
+        {
+            /// <summary>
+            /// The queue master locator
+            /// </summary>
+            public const string QueueMasterLocator = "queue-master-locator";
+
+            /// <summary>
+            /// The ha mode
+            /// </summary>
+            public const string HaMode = "ha-mode";
+
+            /// <summary>
+            /// The ha parameters
+            /// </summary>
+            public const string HaParams = "ha_params";
+
+            /// <summary>
+            /// The ha synchronize mode
+            /// </summary>
+            public const string HaSyncMode = "ha-sync-mode";
+
+            /// <summary>
+            /// The ha synchronize batch size
+            /// </summary>
+            public const string HaSyncBatchSize = "ha-sync-batch-size";
+
+            /// <summary>
+            /// The federation upstream set
+            /// </summary>
+            public const string FederationUpstreamSet = "federation-upstream-set";
         }
     }
 }

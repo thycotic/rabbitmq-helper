@@ -27,7 +27,6 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
         /// </value>
         /// <para type="description">Gets or sets the credential of the rabbit mq user.</para>
         [Parameter(
-            Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public PSCredential AdminCredential { get; set; } = new PSCredential("guest", new NetworkCredential("", "guest").SecurePassword);

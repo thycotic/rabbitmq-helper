@@ -1,16 +1,14 @@
 ﻿using System.Management.Automation;
-using Microsoft.PowerShell.Commands;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
-using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
 
-namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
+namespace Thycotic.RabbitMq.Helper.PSCommands
 {
 
     /// <summary>
-    /// Base class for a cluster policy
+    /// Base class for a policy cmdlet
     /// </summary>
     /// <seealso cref="Thycotic.RabbitMq.Helper.PSCommands.RestManagementConsoleCmdlet" />
-    public abstract class ClusterPolicyCommand : RestManagementConsoleCmdlet
+    public abstract class PolicyCommand : RestManagementConsoleCmdlet
     {
         /// <summary>
         ///     Gets or sets the name.

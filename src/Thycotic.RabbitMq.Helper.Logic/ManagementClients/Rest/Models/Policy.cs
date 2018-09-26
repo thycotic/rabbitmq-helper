@@ -8,7 +8,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
     public class Policy
     {
         public string pattern { get; set; }
-        public PolicyDefinition definition { get; set; }
+        public Dictionary<string,object> definition { get; set; }
         public int priority { get; set; }
 
         [DeserializeAs(Name = "apply-to")]

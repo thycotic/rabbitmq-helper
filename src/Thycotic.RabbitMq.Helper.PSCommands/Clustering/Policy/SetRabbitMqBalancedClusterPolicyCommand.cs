@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System.Collections.Generic;
+using System.Management.Automation;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
@@ -14,7 +15,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
     ///     <code>Set-RabbitMqBalancedOneMirrorManualSyncClusterPolicy</code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "RabbitMqBalancedClusterPolicy")]
-    public class SetRabbitMqBalancedClusterPolicyCommand : ClusterPolicyCommand
+    public class SetRabbitMqBalancedClusterPolicyCommand : PolicyCommand
     {
 
         /// <summary>
@@ -77,16 +78,16 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
             {
                 pattern = Pattern,
                 applyTo = PolicyOptions.PolicyApplications.All,
-                definition = new PolicyDefinition
+                definition = new Dictionary<string, object>
                 {
-                    ha_mode = PolicyOptions.HaModes.Exactly,
-                    ha_params = QueueReplicaCount,
-                    ha_sync_batch_size = SyncBatchSize,
-                    ha_sync_mode = AutomaticSyncMode ? PolicyOptions.HaSyncModes.Automatic : PolicyOptions.HaSyncModes.Manual,
-                    queue_master_locator = PolicyOptions.QueueMasterLocation.MinMasters
+                    {PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.Exactly},
+                    {PolicyOptions.PolicyKeys.HaParams, QueueReplicaCount},
+                    {PolicyOptions.PolicyKeys.HaSyncBatchSize, SyncBatchSize},
+                    {PolicyOptions.PolicyKeys.HaSyncMode, AutomaticSyncMode ? PolicyOptions.HaSyncModes.Automatic : PolicyOptions.HaSyncModes.Manual},
+                    {PolicyOptions.PolicyKeys.QueueMasterLocator, PolicyOptions.QueueMasterLocation.MinMasters},
                 },
                 priority = Priority
-                
+
             };
         }
     }

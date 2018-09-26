@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
 {
@@ -8,13 +9,13 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
 
     {
         public ThroughputDetails messages_details { get; set; }
-        public int messages { get; set; }
+        public long messages { get; set; }
         public ThroughputDetails messages_unacknowledged_details { get; set; }
-        public int messages_unacknowledged { get; set; }
+        public long messages_unacknowledged { get; set; }
         public ThroughputDetails messages_ready_details { get; set; }
-        public int messages_ready { get; set; }
+        public long messages_ready { get; set; }
         public ThroughputDetails reductions_details { get; set; }
-        public int reductions { get; set; }
+        public long reductions { get; set; }
         public string node { get; set; }
         public QueueArguments arguments { get; set; }
         public bool exclusive { get; set; }
@@ -22,19 +23,19 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
         public bool durable { get; set; }
         public string vhost { get; set; }
         public string name { get; set; }
-        public int message_bytes_paged_out { get; set; }
-        public int messages_paged_out { get; set; }
+        public long message_bytes_paged_out { get; set; }
+        public long messages_paged_out { get; set; }
         public BackingQueueStatus backing_queue_status { get; set; }
         public int head_message_timestamp { get; set; }
-        public int message_bytes_persistent { get; set; }
-        public int message_bytes_ram { get; set; }
-        public int message_bytes_unacknowledged { get; set; }
-        public int message_bytes_ready { get; set; }
-        public int message_bytes { get; set; }
-        public int messages_persistent { get; set; }
-        public int messages_unacknowledged_ram { get; set; }
-        public int messages_ready_ram { get; set; }
-        public int messages_ram { get; set; }
+        public long message_bytes_persistent { get; set; }
+        public long message_bytes_ram { get; set; }
+        public long message_bytes_unacknowledged { get; set; }
+        public long message_bytes_ready { get; set; }
+        public long message_bytes { get; set; }
+        public long messages_persistent { get; set; }
+        public long messages_unacknowledged_ram { get; set; }
+        public long messages_ready_ram { get; set; }
+        public long messages_ram { get; set; }
         public QueueGarbageCollection garbage_collection { get; set; }
         public string state { get; set; }
         public string[] recoverable_slaves { get; set; }
@@ -42,12 +43,14 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
         public string[] slave_nodes { get; set; }
         public int consumers { get; set; }
         public string exclusive_consumer_tag { get; set; }
-        public PolicyDefinition effective_policy_definition { get; set; }
+
+        [JsonExtensionData]
+        public IDictionary<string, JToken> effective_policy_definition { get; set; }
         public string operator_policy { get; set; }
         public string policy { get; set; }
-        public int consumer_utilisation { get; set; }
+        public decimal consumer_utilisation { get; set; }
         public string idle_since { get; set; }
-        public int memory { get; set; }
+        public long memory { get; set; }
     }
 #pragma warning restore 1591
 }
