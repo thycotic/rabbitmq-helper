@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using RestSharp.Deserializers;
 
 namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
@@ -8,10 +9,10 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
     public class Policy
     {
         public string pattern { get; set; }
-        public Dictionary<string,object> definition { get; set; }
+        public IDictionary<string,object> definition { get; set; }
         public int priority { get; set; }
 
-        [DeserializeAs(Name = "apply-to")]
+        [JsonProperty(PropertyName = "apply-to")]
         public string applyTo { get; set; }
 }
 #pragma warning restore 1591

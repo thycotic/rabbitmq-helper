@@ -6,7 +6,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
 
     public class FederationUpstream
     {
-        public Uri uri { get; set; }
+        public string uri { get; set; }
         public int expires { get; set; }
 }
 #pragma warning restore 1591

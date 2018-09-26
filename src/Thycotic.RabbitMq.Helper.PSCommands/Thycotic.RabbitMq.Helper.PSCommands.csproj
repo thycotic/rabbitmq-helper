@@ -225,7 +225,6 @@
     <Compile Include="Federation\DisableRabbitMqFederationAndManagementCommand.cs" />
     <Compile Include="Federation\EnableRabbitMqFederationAndManagementCommand.cs" />
     <Compile Include="Federation\NewRabbitMqFederationUpstreamCommand.cs" />
-    <Compile Include="Federation\Policy\SetRabbitMqQueueOnlyFederationPolicyCommand.cs" />
     <Compile Include="General\SelectExceptionCommand.cs" />
     <Compile Include="Installation\NewRabbitMqNonTlsConfigFilesCommand.cs" />
     <Compile Include="Management\AssertRabbitMqIsRunningCommand.cs" />

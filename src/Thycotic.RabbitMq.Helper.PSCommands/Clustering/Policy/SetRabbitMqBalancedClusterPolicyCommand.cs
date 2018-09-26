@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Management.Automation;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
 
@@ -70,24 +71,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
             ValueFromPipelineByPropertyName = true)]
         public SwitchParameter AutomaticSyncMode { get; set; }
 
-        
+
         /// <inheritdoc />
-        protected override Logic.ManagementClients.Rest.Models.Policy GetPolicy()
+        protected override IDictionary<string, object> GetPolicyDefinition()
         {
-            return new Logic.ManagementClients.Rest.Models.Policy
-            {
-                pattern = Pattern,
-                applyTo = PolicyOptions.PolicyApplications.All,
-                definition = new Dictionary<string, object>
+            return new Dictionary<string, object>
                 {
-                    {PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.Exactly},
-                    {PolicyOptions.PolicyKeys.HaParams, QueueReplicaCount},
+                    //{PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.Exactly},
+                    //{PolicyOptions.PolicyKeys.HaParams, QueueReplicaCount},
+                    {PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.All},
                     {PolicyOptions.PolicyKeys.HaSyncBatchSize, SyncBatchSize},
                     {PolicyOptions.PolicyKeys.HaSyncMode, AutomaticSyncMode ? PolicyOptions.HaSyncModes.Automatic : PolicyOptions.HaSyncModes.Manual},
-                    {PolicyOptions.PolicyKeys.QueueMasterLocator, PolicyOptions.QueueMasterLocation.MinMasters},
-                },
-                priority = Priority
-
+                    {PolicyOptions.PolicyKeys.QueueMasterLocator, PolicyOptions.QueueMasterLocation.MinMasters}
             };
         }
     }

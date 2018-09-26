@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Management.Automation;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp;
-using RestSharp.Authenticators;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
-using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {

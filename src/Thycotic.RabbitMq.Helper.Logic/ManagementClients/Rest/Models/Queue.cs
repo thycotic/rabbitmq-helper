@@ -45,7 +45,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
         public string exclusive_consumer_tag { get; set; }
 
         [JsonExtensionData]
-        public IDictionary<string, JToken> effective_policy_definition { get; set; }
+        public IDictionary<string, object> effective_policy_definition { get; set; }
         public string operator_policy { get; set; }
         public string policy { get; set; }
         public decimal consumer_utilisation { get; set; }

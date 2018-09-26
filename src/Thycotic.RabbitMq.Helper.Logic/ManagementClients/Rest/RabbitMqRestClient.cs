@@ -220,25 +220,5 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
 
             Execute(resource, Method.PUT, upstreamValue);
         }
-        
-        /*
-
-
-                $feduser = "fed1“;$fedpw = 'passw0rd!’; $fedserver = "Test1" #replace with the other node's real hostname
-        $upstream = "$fedserver-upstream"
-        $upstreamdef = @{ value = @{    uri = "amqp://$($feduser):$($fedpw)@$($fedserver)";     expires = 3600000;     } }
-        $cred = Get-Credential
-        $upstreamdefjson = $upstreamdef | ConvertTo-Json
-        Invoke-RestMethod "http://localhost:15672/api/parameters/federation-upstream/%2f/$upstream" -Body $upstreamdefjson -Credential $cred -Method Put
-
-        $exchange = "ActiveNonSslRabbitMq"; #change to whatever your site name is that you are using for the test
-        $exchangeMatchPattern = "^$exchange.*";
-        $policydef = @{ "pattern" =$exchangeMatchPattern; "definition" =@{     "federation-upstream-set"="all"}; "apply-to" ="queues"; }
-        $policydefjson = $policydef | ConvertTo-Json
-        Invoke-RestMethod "http://localhost:15672/api/policies/%2f/$upstream-$exchange" -Body $policydefjson -Credential $cred -Method Put
-
-            */
-
-
     }
 }

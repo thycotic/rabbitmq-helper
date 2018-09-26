@@ -1,5 +1,9 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Management.Automation;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
+using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands
 {
@@ -51,6 +55,51 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
         [ValidateRange(1, 100)]
         public int Priority { get; set; } = 10;
 
+
+
+        /// <summary>
+        /// Policy will apply to queues.
+        /// </summary>
+        /// <value>
+        /// The policy will apply to queues.
+        /// </value>
+        /// <para type="description">
+        /// Policy will apply to queues.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        public SwitchParameter ApplyToQueues { get; set; } = true;
+
+        /// <summary>
+        /// Policy will apply to exchanges.
+        /// </summary>
+        /// <value>
+        /// The policy will apply to exchanges.
+        /// </value>
+        /// <para type="description">
+        /// Policy will apply to exchanges.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        public SwitchParameter ApplyToExchanges { get; set; }
+
+
+        /// <summary>
+        /// Policy will include the matching targets in federation.
+        /// </summary>
+        /// <value>
+        /// The policy will include the matching targets in federation.
+        /// </value>
+        /// <para type="description">
+        /// Policy will include the matching targets in federation.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        public SwitchParameter IncludeInFederation { get; set; }
+
         /// <summary>
         ///     Processes the record.
         /// </summary>
@@ -59,15 +108,63 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
             var client = new RabbitMqRestClient(BaseUrl, AdminCredential.UserName,
                 AdminCredential.GetNetworkCredential().Password);
 
-            client.CreatePolicy(string.Empty, Name, GetPolicy());
+            client.CreatePolicy(string.Empty, Name, GetPolicy(GetPolicyDefinition()));
 
             WriteVerbose("Policy created/updated");
         }
 
         /// <summary>
-        /// Gets the policy.
+        /// Gets the policy definition.
         /// </summary>
         /// <returns></returns>
-        protected abstract Logic.ManagementClients.Rest.Models.Policy GetPolicy();
+        protected abstract IDictionary<string, object> GetPolicyDefinition();
+
+        private Policy GetPolicy(IDictionary<string, object> definition)
+        {
+            var policy = new Policy
+            {
+                pattern = Pattern,
+                definition = definition,
+                priority = Priority
+            };
+
+            SetApplyTo(policy);
+
+            SetIncludeInFederation(policy);
+
+            return policy;
+        }
+
+        private void SetApplyTo(Policy policy)
+        {
+            string applyTo;
+            if (ApplyToExchanges && ApplyToQueues)
+            {
+                applyTo = PolicyOptions.PolicyApplications.All;
+            }
+            else if (ApplyToExchanges)
+            {
+                applyTo = PolicyOptions.PolicyApplications.Exchanges;
+            }
+            else if (ApplyToQueues)
+            {
+                applyTo = PolicyOptions.PolicyApplications.Queues;
+            }
+            else
+            {
+                throw new Exception("Policy has to apply to queues, exchanges or both");
+            }
+
+            policy.applyTo = applyTo;
+        }
+
+
+        private void SetIncludeInFederation(Policy policy)
+        {
+            if (IncludeInFederation)
+            {
+                policy.definition.Add(PolicyOptions.PolicyKeys.FederationUpstreamSet, PolicyOptions.FederationUpstreamSets.All);
+            }
+        }
     }
 }
