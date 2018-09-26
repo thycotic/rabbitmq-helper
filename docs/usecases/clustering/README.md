@@ -2,7 +2,7 @@
 
 The RabbitMq Helper is a tool that streamlines the RabbitMq clustering process on Windows. See [Clustering Guide](https://www.rabbitmq.com/clustering.html) and [Highly Available (Mirrored) Queues](https://www.rabbitmq.com/ha.html) for vanilla instructions. 
 
-> The helper does not assist with load-balancing. See [Load balancing](loadbalancing.md) for details.
+> The helper does not assist with load-balancing. See [Load balancing](../loadbalancing.md) for details.
 
 ## Clustering workflow
 
@@ -13,9 +13,11 @@ When RabbitMq is installed on a virtual/physical machine, it is already in a clu
 ## Joining a cluster
 
 ### Preliminary steps
-* Install RabbitMq on N+1 virtual/physical machines* Open firewall for cluster ports. 
+* Ensure that all cluster nodes can resolve each others' IP addresses
+* Install RabbitMq on N+1 virtual/physical machines
+* Open firewall for cluster ports. 
     * Make sure the firewall rule is open for the network type (private/domain only) on each virtual/physical machine where RabbitMq nodes will be installed.
-	* TCP ports: 4369, 25672,44002
+    * TCP ports: 4369, 25672,44002
 
 
 ### Steps using the helper
@@ -27,10 +29,10 @@ When RabbitMq is installed on a virtual/physical machine, it is already in a clu
 #on the node to join
 
 #obviously use your own custom character cookie and not this value!
-Set-ErlangCookieFileCommand -CookieContent MYCUSTOMSECURECOOKIE
+Set-ErlangCookieFileCommand -CookieContent MYCUSTOMSECURECOOKIE -Verbose
 
 #using the CookieSet and FirewallConfigured will prevent the helper for prompting. Only use if you have actually already set the cluster cookie and you have configured your firewall
-Join-RabbitMqCluster -OtherNodeName OTHERHOSTNAME -CookieSet -FirewallConfigured
+Join-RabbitMqCluster -OtherNodeName OTHERHOSTNAME -CookieSet -FirewallConfigured -Verbose
 ```
 
 ### Alternate steps without the helper
@@ -72,20 +74,20 @@ Being part of a cluster isn't enough to achieve High Availability. Clusters do n
 ```powershell
 $admincred = Get-Credential -Message "Enter the administrative user RabbitMq user username and password";
 
-Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^cluster\-test:" -AdminCredential $admincred
+Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^ActiveNonSslRabbitMq:" -AdminCredential $admincred
 
 # you can create a policy with a custom sync batch size. The default is 400 for Set-RabbitMqBalancedClusterPolicy because Thycotic products have a worst case scenario size for messages to be at 256KB. When a sync message is generated 256*400 = 100MB. Larger sync message can cause fragementation if there is latency or network connection drops between cluster node. Alter as needed
-Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^cluster\-test:" -AdminCredential $admincred -SyncBatchSize 100
+Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^ActiveNonSslRabbitMq:" -AdminCredential $admincred -SyncBatchSize 100
 
 # you can create a policy with a custom replica count batch size. The default is 2 for Set-RabbitMqBalancedClusterPolicy because anything higher puts strain on the cluster. 
 # 2 replicas means 1 master and 1 mirror. Alter as needed
-Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^cluster\-test:" -AdminCredential $admincred -QueueReplicaCount 3
+Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^ActiveNonSslRabbitMq:" -AdminCredential $admincred -QueueReplicaCount 3
 
 # you can create a policy with automatic sync mode. The default for Set-RabbitMqBalancedClusterPolicy is manual to avoid forcing a queue to automatically synchronize when a new mirror joins.
-Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^cluster\-test:" -AdminCredential $admincred -AutomaticSyncMode
+Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^ActiveNonSslRabbitMq:" -AdminCredential $admincred -AutomaticSyncMode
 
 # you can create a policy with a combination of policy definitions
-Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^cluster\-test:" -AdminCredential $admincred -SyncBatchSize 100 -QueueReplicaCount 3 -AutomaticSyncMode
+Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^ActiveNonSslRabbitMq:" -AdminCredential $admincred -SyncBatchSize 100 -QueueReplicaCount 3 -AutomaticSyncMode
 
 ```
 

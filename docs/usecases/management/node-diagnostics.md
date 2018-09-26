@@ -44,4 +44,8 @@ $queues | Where-Object {$_.node -ne 'rabbit@Nefarian'} | Measure
 
 #select all queues which have a node as their salve node
 $queues | Where-Object {$_.slave_nodes.Contains('rabbit@Nefarian')} | Select name,node | format-list
+
+#select all queues and their respective effective policies
+$queues | Select name,effective_policy_definition | format-list
+
 ```
