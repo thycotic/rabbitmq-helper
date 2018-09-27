@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using System.Threading;
+using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli;
 using Thycotic.RabbitMq.Helper.Logic.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
@@ -15,41 +16,24 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <para>PS C:\></para> 
     ///     <code>Assert-RabbitIsRunning</code>
     /// </example>
-    [Cmdlet(VerbsLifecycle.Assert, "RabbitIsRunning")]
-    public class AssertRabbitIsRunningCommand : Cmdlet
+    [Cmdlet(VerbsLifecycle.Assert, "RabbitMqIsRunning")]
+    public class AssertRabbitMqIsRunningCommand : Cmdlet
     {
         /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
-            var ctlInteractor = new CtlRabbitMqProcessInteractor();
+            var client = new RabbitMqBatCtlClient();
 
             WriteVerbose("Reading RabbitMq status");
 
-            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
-            var output = string.Empty;
-
-            while (!output.Contains("uptime") && !cts.IsCancellationRequested)
+            if (!client.IsRunning)
             {
-
-                var parameters2 = "status";
-
-                try
-                {
-                    output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(15));
-                    WriteVerbose(output);
-                }
-                catch (Exception)
-                {
-                    // ignored
-                }
+                throw new Exception("RabbitMq is not running");
             }
 
-            if (!output.Contains("uptime"))
-            {
-                throw new ApplicationException("Failed to get RabbitMq uptime information. RabbitMq is probably not running");
-            }
+            WriteVerbose("RabbitMq is running");
         }
     }
 }

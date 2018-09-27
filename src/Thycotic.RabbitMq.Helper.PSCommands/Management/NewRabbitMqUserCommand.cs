@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
+using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli;
 using Thycotic.RabbitMq.Helper.Logic.OS;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
@@ -17,63 +18,35 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     [Cmdlet(VerbsCommon.New, "RabbitMqUser")]
     public class NewRabbitMqUserCommand : Cmdlet
     {
-        /// <summary>
-        ///     Gets or sets the name of the rabbit mq user.
-        /// </summary>
-        /// <value>
-        ///     The name of the rabbit mq user.
-        /// </value>
-        /// <para type="description">Gets or sets the name of the rabbit mq user.</para>
-        [Parameter(
-             Mandatory = true,
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
-        [Alias("RabbitMqUserName")]
-        public string UserName { get; set; }
 
         /// <summary>
-        ///     Gets or sets the rabbit mq password.
+        ///     Gets or sets the credential of the rabbit mq user.
         /// </summary>
         /// <value>
-        ///     The rabbit mq password.
+        ///     The credential of the rabbit mq user.
         /// </value>
-        /// <para type="description">Gets or sets the rabbit mq password.</para>
+        /// <para type="description">Gets or sets the credential of the rabbit mq user.</para>
         [Parameter(
-             Mandatory = true,
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
-        [Alias("RabbitMqPw", "RabbitMqPassword")]
-        public string Password { get; set; }
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        public PSCredential Credential { get; set; }
 
         /// <summary>
         ///     Processes the record.
         /// </summary>
-        /// <exception cref="System.ApplicationException">
+        /// <exception cref="System.Exception">
         ///     Failed to create user. Manual creation might be necessary
         ///     or
         ///     Failed to grant permissions to user. Manual grant might be necessary
         /// </exception>
         protected override void ProcessRecord()
         {
-            var ctlInteractor = new CtlRabbitMqProcessInteractor();
+            var client = new RabbitMqBatCtlClient();
 
-            WriteVerbose($"Adding limited-access user {UserName}");
+            WriteVerbose($"Adding limited-access user {Credential.UserName}");
 
-            var parameters2 = $"add_user {UserName} {Password}";
-
-            try
-            {
-                var  output = ctlInteractor.Invoke(parameters2, TimeSpan.FromSeconds(30));
-                WriteVerbose(output);
-                if (string.IsNullOrWhiteSpace(output) || output.Trim() != $"Adding user \"{UserName}\" ...")
-                {
-                    throw new ApplicationException(CtlRabbitMqProcessInteractor.ExceptionMessages.InvalidOutput);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Failed to create user. Manual creation might be necessary", ex);
-            }
+            client.CreateLimitedAccessUser(Credential.UserName, Credential.GetNetworkCredential().Password);
         }
     }
 }

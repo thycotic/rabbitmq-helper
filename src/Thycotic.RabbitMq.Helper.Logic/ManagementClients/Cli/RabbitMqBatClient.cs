@@ -1,33 +1,23 @@
 ﻿using System;
 using System.IO;
-using Thycotic.RabbitMq.Helper.Logic.Reflection;
+using System.Runtime.Serialization;
+using Thycotic.RabbitMq.Helper.Logic.OS;
 
-namespace Thycotic.RabbitMq.Helper.Logic.OS
+namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
 {
     /// <summary>
     /// CTL RabbitMqProcess interactor 
     /// </summary>
     /// <seealso cref="IProcessInteractor" />
-    public class CtlRabbitMqProcessInteractor : IProcessInteractor
+    public abstract class RabbitMqBatClient
     {
-        /// <summary>
-        /// Standard exception messages
-        /// </summary>
-        public static class ExceptionMessages
-        {
-            /// <summary>
-            /// The invalid output
-            /// </summary>
-            public const string InvalidOutput = "Invalid output received";
-        }
-
         /// <summary>
         ///     Gets the executable.
         /// </summary>
         /// <value>
         ///     The executable.
         /// </value>
-        protected string Executable => "rabbitmqctl.bat";
+        protected abstract string Executable { get; }
 
         /// <summary>
         ///     Gets the working path.
@@ -52,37 +42,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
         ///   <c>true</c> if exists; otherwise, <c>false</c>.
         /// </value>
         public bool Exists => File.Exists(ExecutablePath);
-
-        /// <summary>
-        /// Gets a value indicating whether this instance is running.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is running; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsRunning
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-        /// <summary>
-        /// Starts this instance.
-        /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void Start()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Stops this instance.
-        /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void Stop()
-        {
-            Invoke("stop", TimeSpan.FromSeconds(15));
-        }
+        
 
         /// <summary>
         /// Invokes the specified parameters.
@@ -98,6 +58,36 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
             };
 
             return externalProcessRunner.Run(ExecutablePath, WorkingPath, parameters);
+        }
+
+        /// <summary>
+        /// Validates the output.
+        /// </summary>
+        /// <param name="expectedOutput">The expected output.</param>
+        /// <param name="actualOutput">The actual output.</param>
+        /// <param name="strict">if set to <c>true</c> [strict].</param>
+        /// <exception cref="InvalidRabbitMqBatOutputException"></exception>
+        public virtual void ValidateOutput(string expectedOutput, string actualOutput, bool strict = true)
+        {
+            if (string.IsNullOrWhiteSpace(actualOutput))
+            {
+                throw new InvalidRabbitMqBatOutputException(expectedOutput, "No output received");
+            }
+
+            if (strict && !actualOutput.Trim().Equals(expectedOutput, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
+            }
+
+            if (!strict && !actualOutput.ToLower().Contains(expectedOutput.ToLower()))
+            {
+                throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
+            }
+
+            if (actualOutput.Contains("Error"))
+            {
+                throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
+            }
         }
     }
 }
