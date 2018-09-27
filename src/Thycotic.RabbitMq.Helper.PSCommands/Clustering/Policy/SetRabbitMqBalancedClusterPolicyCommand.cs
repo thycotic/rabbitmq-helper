@@ -75,15 +75,31 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
         /// <inheritdoc />
         protected override IDictionary<string, object> GetPolicyDefinition()
         {
-            return new Dictionary<string, object>
+            var policy = new Dictionary<string, object>
+            {
+                {PolicyOptions.PolicyKeys.HaSyncBatchSize, SyncBatchSize},
                 {
-                    //{PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.Exactly},
-                    //{PolicyOptions.PolicyKeys.HaParams, QueueReplicaCount},
-                    {PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.All},
-                    {PolicyOptions.PolicyKeys.HaSyncBatchSize, SyncBatchSize},
-                    {PolicyOptions.PolicyKeys.HaSyncMode, AutomaticSyncMode ? PolicyOptions.HaSyncModes.Automatic : PolicyOptions.HaSyncModes.Manual},
-                    {PolicyOptions.PolicyKeys.QueueMasterLocator, PolicyOptions.QueueMasterLocation.MinMasters}
+                    PolicyOptions.PolicyKeys.HaSyncMode,
+                    AutomaticSyncMode ? PolicyOptions.HaSyncModes.Automatic : PolicyOptions.HaSyncModes.Manual
+                },
+                {PolicyOptions.PolicyKeys.QueueMasterLocator, PolicyOptions.QueueMasterLocation.MinMasters}
             };
+
+            if (!IncludeInFederation)
+            {
+                WriteVerbose($"Using replica count of {QueueReplicaCount}");
+
+                policy.Add(PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.Exactly);
+                policy.Add(PolicyOptions.PolicyKeys.HaParams, QueueReplicaCount);
+            }
+            else
+            {
+                WriteVerbose($"Limitation: Replica count cannot be used for federated queues. Falling back to using ha-mode : all");
+
+                policy.Add(PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.All);
+            }
+
+            return policy;
         }
     }
 }
