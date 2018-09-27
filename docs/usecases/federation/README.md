@@ -6,7 +6,7 @@ The RabbitMq Helper is a tool that streamlines the RabbitMq federation process o
 
 ## Federation workflow
 
-When RabbitMq is installed on a virtual/physical machine, it is already in a cluster of one node. Federation enables clustered and non-clustered not off-load work to each other. To federate to a remote node, we simply need to install RabbitMq on a different virtual/physical machine and then establish an upstream to another node/cluster. 
+When RabbitMq is installed on a virtual/physical machine, it is already in a cluster of one node. Federation enables clustered and non-clustered nodes to off-load work to each other. To federate to a remote node, we simply need to install RabbitMq on a different virtual/physical machine and then establish an upstream to another node/cluster. 
 
 The basic premise of federation is that the downstream server connects to the upstream just like a consumer would. This means that same port clients use to connect to the node/cluster is the same the port the downstream will use.
 
@@ -51,7 +51,7 @@ Log into the RabbitMq management you and remove the upstream from Admin -> Feder
 
 ### Simple federation of non-HA queues
 
-TODO
+*Coming soon*
 
 ### HA queue federation
 
