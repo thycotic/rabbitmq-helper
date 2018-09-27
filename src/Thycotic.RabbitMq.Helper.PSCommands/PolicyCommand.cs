@@ -43,6 +43,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
         public string Pattern { get; set; }
 
         /// <summary>
+        ///     Gets or sets the virtual host.
+        /// </summary>
+        /// <value>
+        ///     The virtual host.
+        /// </value>
+        /// <para type="description">Gets or sets the virtual host.</para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        public string VirtualHost { get; set; } = Constants.RabbitMq.DefaultVirtualHost;
+
+        /// <summary>
         /// Priority for the policy. In the event that more than one policy can match a given exchange or queue, the policy with the greatest priority applies.
         /// </summary>
         /// <value>
@@ -111,7 +123,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
                 AdminCredential.GetNetworkCredential().Password);
 
             var policy = GetPolicy(GetPolicyDefinition());
-            client.CreatePolicy(Constants.RabbitMq.DefaultVirtualHost, Name, policy);
+            client.CreatePolicy(VirtualHost, Name, policy);
 
             WriteVerbose("Policy settings:");
             policy.definition.OrderBy(pd => pd.Key).ToList().ForEach(dv => WriteVerbose($"{dv.Key} = {dv.Value}"));
@@ -162,7 +174,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
                 throw new Exception("Policy has to apply to queues, exchanges or both");
             }
 
-            policy.applyTo = applyTo;
+            policy.apply_to = applyTo;
         }
 
 
@@ -170,7 +182,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
         {
             if (IncludeInFederation)
             {
-                policy.definition.Add(PolicyOptions.PolicyKeys.FederationUpstreamSet, PolicyOptions.FederationUpstreamSets.All);
+                policy.definition.Add(PolicyOptions.ParameterKeys.FederationUpstreamSet, PolicyOptions.FederationUpstreamSets.All);
             }
         }
     }

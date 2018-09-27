@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Sockets;
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
-using Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Federation
 {
@@ -17,10 +17,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Federation
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
     ///     <para>PS C:\></para> 
-    ///     <code>New-RabbitMqFederationUpstream</code>
+    ///     <code>Set-RabbitMqFederationUpstream</code>
     /// </example>
-    [Cmdlet(VerbsCommon.New, "RabbitMqFederationUpstream")]
-    public class NewRabbitMqFederationUpstreamCommand : RestManagementConsoleCmdlet
+    [Cmdlet(VerbsCommon.Set, "RabbitMqFederationUpstream")]
+    public class SetRabbitMqFederationUpstreamCommand : RestManagementConsoleCmdlet
     {
 
         /// <summary>
@@ -78,7 +78,17 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Federation
             ValueFromPipelineByPropertyName = true)]
         public PSCredential Credential { get; set; }
 
-        
+        /// <summary>
+        ///     Gets or sets the virtual host.
+        /// </summary>
+        /// <value>
+        ///     The virtual host.
+        /// </value>
+        /// <para type="description">Gets or sets the virtual host.</para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        public string VirtualHost { get; set; } = Constants.RabbitMq.DefaultVirtualHost;
 
         /// <summary>
         /// The upstream will be defined to buffer messages when disconnected for up to one the specified number of milliseconds
@@ -94,6 +104,36 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Federation
             ValueFromPipelineByPropertyName = true)]
         [ValidateRange(600000, 3600000)]
         public int Expires { get; set; } = 3600000;
+
+        /// <summary>
+        /// Pre-fetch count.
+        /// </summary>
+        /// <value>
+        /// The pre-fetch count.
+        /// </value>
+        /// <para type="description">
+        /// The pre-fetch count.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateRange(100, 10000)]
+        public int PreFetchCount { get; set; } = 1000;
+
+        /// <summary>
+        /// Reconnect delay in seconds.
+        /// </summary>
+        /// <value>
+        /// The reconnect delay in seconds.
+        /// </value>
+        /// <para type="description">
+        /// The reconnect delay in seconds.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateRange(1, 300)]
+        public int ReconnectDelay { get; set; } = 5;
 
         /// <summary>
         /// Gets or sets that the firewall configured.
@@ -183,13 +223,33 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Federation
                 Password = Credential.GetNetworkCredential().Password
             };
 
-            var upstream = new FederationUpstream
-            {
-                uri = uriBuild.Uri,
-                expires = Expires
-            };
+            //get rid of trailing slashes
+            var uriString = uriBuild.Uri.ToString().TrimEnd('/');
 
-            client.CreateFederationUpstream(Constants.RabbitMq.DefaultVirtualHost, Name, upstream);
+            var parameters = new ComponentParameters
+            {
+                component = ComponentParameterOptions.Federation.Component,
+                name =  Name,
+                value = new Dictionary<string, object>
+            {
+                {ComponentParameterOptions.Federation.ParameterKeys.AckMode, ComponentParameterOptions.Federation.AckModes.OnConfirm},
+
+                    { ComponentParameterOptions.Federation.ParameterKeys.PreFetchCount, PreFetchCount},
+                    { ComponentParameterOptions.Federation.ParameterKeys.ReconnectDelay, ReconnectDelay},
+                    { ComponentParameterOptions.Federation.ParameterKeys.Expires, Expires},
+                    { ComponentParameterOptions.Federation.ParameterKeys.TrustUserId, false},
+                    { ComponentParameterOptions.Federation.ParameterKeys.Uri, uriString }
+            }};
+            
+            client.CreateFederationUpstream(VirtualHost, Name, parameters);
+
+
+            //remove the uri since it has a username and password
+            parameters.value[ComponentParameterOptions.Federation.ParameterKeys.Uri] = "[redacted]";
+
+            WriteVerbose("Policy settings:");
+            parameters.value.OrderBy(pd => pd.Key).ToList().ForEach(dv => WriteVerbose($"{dv.Key} = {dv.Value}"));
+
 
             WriteVerbose("Upstream created/updated");
         }

@@ -51,7 +51,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         /// </summary>
         /// <param name="vhost">The vhost.</param>
         /// <param name="name">The name.</param>
-        /// <param name="upstream">The upstream.</param>
-        void CreateFederationUpstream(string vhost, string name, FederationUpstream upstream);
+        /// <param name="parameters">The upstream.</param>
+        void CreateFederationUpstream(string vhost, string name, ComponentParameters parameters);
     }
 }

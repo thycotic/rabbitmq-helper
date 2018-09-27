@@ -77,28 +77,19 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering.Policy
         {
             var policy = new Dictionary<string, object>
             {
-                {PolicyOptions.PolicyKeys.HaSyncBatchSize, SyncBatchSize},
+                {PolicyOptions.ParameterKeys.HaSyncBatchSize, SyncBatchSize},
                 {
-                    PolicyOptions.PolicyKeys.HaSyncMode,
+                    PolicyOptions.ParameterKeys.HaSyncMode,
                     AutomaticSyncMode ? PolicyOptions.HaSyncModes.Automatic : PolicyOptions.HaSyncModes.Manual
                 },
-                {PolicyOptions.PolicyKeys.QueueMasterLocator, PolicyOptions.QueueMasterLocation.MinMasters}
+                {PolicyOptions.ParameterKeys.QueueMasterLocator, PolicyOptions.QueueMasterLocation.MinMasters}
             };
+            
+            WriteVerbose($"Using replica count of {QueueReplicaCount}");
 
-            if (!IncludeInFederation)
-            {
-                WriteVerbose($"Using replica count of {QueueReplicaCount}");
-
-                policy.Add(PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.Exactly);
-                policy.Add(PolicyOptions.PolicyKeys.HaParams, QueueReplicaCount);
-            }
-            else
-            {
-                WriteVerbose($"Limitation: Replica count cannot be used for federated queues. Falling back to using ha-mode : all");
-
-                policy.Add(PolicyOptions.PolicyKeys.HaMode, PolicyOptions.HaModes.All);
-            }
-
+            policy.Add(PolicyOptions.ParameterKeys.HaMode, PolicyOptions.HaModes.Exactly);
+            policy.Add(PolicyOptions.ParameterKeys.HaParams, QueueReplicaCount);
+            
             return policy;
         }
     }

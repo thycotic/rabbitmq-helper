@@ -88,7 +88,7 @@
     <Compile Include="ManagementClients\Rest\Models\ExchangeType.cs" />
     <Compile Include="ManagementClients\Rest\Models\MetricsGcQueueLength.cs" />
     <Compile Include="ManagementClients\Rest\Models\NodeHealthCheck.cs" />
-    <Compile Include="ManagementClients\Rest\Models\FederationUpstream.cs" />
+    <Compile Include="ManagementClients\Rest\Models\ComponentParameters.cs" />
     <Compile Include="ManagementClients\Rest\Models\PolicyOptions.cs" />
     <Compile Include="ManagementClients\Rest\Models\ThroughputDetails.cs" />
     <Compile Include="ManagementClients\Rest\Models\Queue.cs" />

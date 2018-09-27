@@ -1,6 +1,80 @@
 ﻿namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
 {
     /// <summary>
+    /// Component options
+    /// </summary>
+    public static class ComponentParameterOptions
+    {
+        /// <summary>
+        /// Options for federation
+        /// </summary>
+        public static class Federation
+        {
+            /// <summary>
+            /// The component
+            /// </summary>
+            public const string Component = "federation-upstream";
+
+            /// <summary>
+            /// Supported federation parameter keys
+            /// </summary>
+            public static class ParameterKeys
+            {
+                /// <summary>
+                /// The ack mode
+                /// </summary>
+                public const string AckMode = "ack-mode";
+
+                /// <summary>
+                /// The pre fetch count
+                /// </summary>
+                public const string PreFetchCount = "prefetch-count";
+
+                /// <summary>
+                /// The reconnect delay
+                /// </summary>
+                public const string ReconnectDelay = "reconnect-delay";
+
+                /// <summary>
+                /// The trust user identifier
+                /// </summary>
+                public const string TrustUserId = "trust-user-id";
+
+                /// <summary>
+                /// The URI
+                /// </summary>
+                public const string Uri = "uri";
+
+                /// <summary>
+                /// The expires
+                /// </summary>
+                public const string Expires = "expires";
+            }
+
+            /// <summary>
+            /// Supported ack modes
+            /// </summary>
+            public static class AckModes
+            {
+                /// <summary>
+                /// Messages are acknowledged to the upstream broker after they have been confirmed downstream. Handles network errors and broker failures without losing messages. The slowest option, and the default.
+                /// </summary>
+                public const string OnConfirm = "on-confirm";
+                /// <summary>
+                /// Messages are acknowledged to the upstream broker after they have been published downstream. Handles network errors without losing messages, but may lose messages in the event of broker failures.
+                /// </summary>
+                public const string OnPublish = "on-publish";
+                /// <summary>
+                /// Message acknowledgements are not used. The fastest option, but may lose messages in the event of network or broker failures.
+                /// </summary>
+                public const string NoAck = "no-ack";
+
+            }
+        }
+    }
+
+
+    /// <summary>
     /// Policy options
     /// </summary>
     public static class PolicyOptions
@@ -97,9 +171,9 @@
         }
 
         /// <summary>
-        /// Supporter policy keys
+        /// Supported policy parameter keys
         /// </summary>
-        public static class PolicyKeys
+        public static class ParameterKeys
         {
             /// <summary>
             /// The queue master locator

@@ -13,7 +13,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models
         public int priority { get; set; }
 
         [JsonProperty(PropertyName = "apply-to")]
-        public string applyTo { get; set; }
+        public string apply_to { get; set; }
 }
 #pragma warning restore 1591
 

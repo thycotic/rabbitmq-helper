@@ -151,14 +151,11 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest
         }
 
         /// <inheritdoc />
-        public void CreateFederationUpstream(string vhost, string name, FederationUpstream upstream)
+        public void CreateFederationUpstream(string vhost, string name, ComponentParameters parameters)
         {
             var resource = "api/parameters/federation-upstream/{vhost}/{name}";
 
-            //HACK: The federation api wants the payload to be in a value element
-            var upstreamValue = new { value = upstream };
-
-            Execute(resource, Method.PUT, upstreamValue, new Dictionary<string, string> { { "vhost", vhost }, { "name", name } });
+            Execute(resource, Method.PUT, parameters, new Dictionary<string, string> { { "vhost", vhost }, { "name", name } });
         }
 
         #region Helper classes
