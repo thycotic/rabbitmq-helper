@@ -32,7 +32,8 @@ When RabbitMq is installed on a virtual/physical machine, it is already in a clu
 Set-ErlangCookieFileCommand -CookieContent MYCUSTOMSECURECOOKIE -Verbose
 
 #using the CookieSet and FirewallConfigured will prevent the helper for prompting. Only use if you have actually already set the cluster cookie and you have configured your firewall
-Join-RabbitMqCluster -OtherNodeName OTHERHOSTNAME -CookieSet -FirewallConfigured -Verbose
+# OTHERHOSTNAME HAS TO MATCH the machine hostname exactly to what the the machine thinks it is
+Join-RabbitMqCluster -StrictHostname OTHERHOSTNAME -CookieSet -FirewallConfigured -Verbose
 ```
 
 ### Alternate steps without the helper

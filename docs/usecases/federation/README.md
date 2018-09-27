@@ -27,23 +27,20 @@ The basic premise of federation is that the downstream server connects to the up
 
 > The helper does not currently support TLS upstreams.
 
-### Steps using the helper (downstream only)
+### Steps using the helper (on downstream only)
+
+> Upstream server does not need any additional plugs or configuration
+
 * ```Enable-RabbitMqFederationAndManagement``` - Enables the federation and federation management UI 
-* ```Enable-RabbitMqFederationAndManagement``` - Enables the federation and federation management UI 
-* ```Join-RabbitMqCluster``` - Join the other node in a cluster
+* ```Set-RabbitMqFederationUpstream``` - Set the upstream
 
 ```powershell
 #on the node to add the upstreak
 
-#obviously use your own custom character cookie and not this value!
-Set-ErlangCookieFileCommand -CookieContent MYCUSTOMSECURECOOKIE
-
-
 $cred = Get-Credential -Message "Enter the upstream user RabbitMq user username and password";
 $admincred = Get-Credential -Message "Enter the administrative user RabbitMq user username and password";
 
-
-New-RabbitMqFederationUpstream -Hostname WIN-U6PS6TNGL8J -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
+New-RabbitMqFederationUpstream -Hostname HOSTNAMEORFQDN -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
 ```
 
 ## Removing the upstream
@@ -57,6 +54,8 @@ Log into the RabbitMq management you and remove the upstream from Admin -> Feder
 TODO
 
 ### HA queue federation
+
+> The options listed here are cluster policies that can be extended to leverage federation
 
 * ```Set-RabbitMqBalancedClusterPolicy``` - creates a balanced cluster policy that distributes queues evenly around the cluster nodes and is also being federated
 
@@ -80,9 +79,3 @@ Set-RabbitMqBalancedClusterPolicy -Name fed-test-all -Pattern "^ActiveNonSslRabb
 
 ```
 
-
-### Alternate steps without the helper
-```cmd
-REM this policy is not ideal and is not balanced. Please use the helper if possible
-rabbitmqctl set_policy cluster-test-all "^cluster\-test:" "{""ha-mode"":""all""}"
-```
