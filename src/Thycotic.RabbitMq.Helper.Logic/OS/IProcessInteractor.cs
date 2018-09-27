@@ -26,12 +26,17 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
         /// <summary>
         /// Starts this instance.
         /// </summary>
-        void Start();
+        void SoftStart();
 
         /// <summary>
         /// Stops this instance.
         /// </summary>
-        void Stop();
+        void SoftStop();
+
+        /// <summary>
+        /// Stops the process
+        /// </summary>
+        void HardStop();
 
         /// <summary>
         /// Invokes the specified parameters.

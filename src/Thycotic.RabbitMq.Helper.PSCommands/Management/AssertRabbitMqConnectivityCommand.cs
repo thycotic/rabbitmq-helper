@@ -17,7 +17,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     <code>Assert-RabbitMqConnectivity</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Assert, "RabbitMqConnectivity")]
-    public class AssertConnectivityCommand : Cmdlet
+    public class AssertRabbitMqConnectivityCommand : Cmdlet
     {
         private static class ParameterSets
         {
@@ -45,12 +45,25 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </value>
         /// <para type="description">Gets or sets the hostname.</para>
         [Parameter(
-             Mandatory = true,
              ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true,
-             ParameterSetName = ParameterSets.Tls)]
+             ValueFromPipelineByPropertyName = true)]
         [Alias("SubjectName", "FQDN")]
-        public string Hostname { get; set; }
+        public string Hostname { get; set; } = DnsEx.GetDnsHostName();
+
+        /// <summary>
+        /// Port to connect on.
+        /// </summary>
+        /// <value>
+        /// The port to connect on.
+        /// </value>
+        /// <para type="description">
+        /// Port to connect on.
+        /// </para>
+        [Parameter(
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateRange(1, 65535)]
+        public int Port { get; set; } = 5672;
 
         /// <summary>
         ///     Gets or sets the credential of the rabbit mq user.
@@ -60,9 +73,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </value>
         /// <para type="description">Gets or sets the credential of the rabbit mq user.</para>
         [Parameter(
-             Mandatory = true,
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
         public PSCredential Credential { get; set; }
 
         /// <summary>
@@ -70,11 +83,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
-            Hostname = Hostname ?? DnsEx.GetDnsHostName();
+            WriteVerbose("Checking credentials");
 
             try
             {
-                using (var connection = GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseTls))
+                using (var connection = this.GetConnection(Hostname, Credential.UserName, Credential.GetNetworkCredential().Password, UseTls, Port))
                 {
                     using (var model = connection.CreateModel())
                     {
@@ -87,41 +100,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
             }
             catch (Exception ex)
             {
-               throw new ApplicationException("Connection failed. There might be an issue with the installation. Please check the RabbitMq log files:" + ex.Message, ex);
+               throw new Exception("Connection failed. There might be an issue with the installation. Please check the RabbitMq log files:" + ex.Message, ex);
             }
         }
 
-        private IConnection GetConnection(string hostname, string userName, string password, bool useTls)
-        {
-            const int nonTlsPort = 5672;
-            const int tlsPort = 5671;
-            //using FQDN to avoid running into errors when under TLS
-            var url = string.Format("amqp://{0}:{1}", hostname, useTls ? tlsPort : nonTlsPort);
-
-            WriteVerbose(string.Format("Getting connection for {0}", url));
-
-            var connectionFactory = new ConnectionFactory
-            {
-                Uri = new Uri(url),
-                RequestedHeartbeat = 300,
-                UserName = userName,
-                Password = password
-            };
-
-            if (!useTls)
-            {
-                return connectionFactory.CreateConnection();
-            }
-            var uri = new Uri(url);
-
-            connectionFactory.Ssl = new SslOption
-            {
-                Enabled = true,
-                ServerName = uri.Host,
-                Version = SslProtocols.Tls11 | SslProtocols.Tls12
-            };
-
-            return connectionFactory.CreateConnection();
-        }
     }
 }

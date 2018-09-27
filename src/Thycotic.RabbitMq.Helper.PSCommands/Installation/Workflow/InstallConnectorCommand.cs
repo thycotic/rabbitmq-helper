@@ -2,6 +2,7 @@
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.Workflow;
 using Thycotic.RabbitMq.Helper.PSCommands.Certificate;
+using Thycotic.RabbitMq.Helper.PSCommands.Clustering;
 using Thycotic.RabbitMq.Helper.PSCommands.Management;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
@@ -312,7 +313,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
                             .Then(() => new CopyErlangCookieFileCommand())
-                            .Then(() => new AssertRabbitIsRunningCommand())
+                            .Then(() => new AssertRabbitMqIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
 
@@ -320,14 +321,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .Then(() => new NewRabbitMqUserCommand
                             {
-                                UserName = Credential.UserName,
-                                Password = Credential.GetNetworkCredential().Password
+                                Credential = Credential
                             })
                             .Then(() => new GrantRabbitMqUserPermissionCommand
                             {
                                 UserName = Credential.UserName
                             })
-                            .Then(() => new AssertConnectivityCommand
+                            .Then(() => new AssertRabbitMqConnectivityCommand
                             {
                                 Hostname = Hostname,
                                 Credential = Credential,
@@ -350,7 +350,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             .ReportProgress("Installing RabbitMq", 70)
                             .Then(() => new InstallRabbitMqCommand())
                             .Then(() => new CopyErlangCookieFileCommand())
-                            .Then(() => new AssertRabbitIsRunningCommand())
+                            .Then(() => new AssertRabbitMqIsRunningCommand())
 
                             .ReportProgress("Final configurations", 90)
 
@@ -358,14 +358,13 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
 
                             .Then(() => new NewRabbitMqUserCommand
                             {
-                                UserName = Credential.UserName,
-                                Password = Credential.GetNetworkCredential().Password
+                                Credential = Credential
                             })
                             .Then(() => new GrantRabbitMqUserPermissionCommand
                             {
                                 UserName = Credential.UserName
                             })
-                            .Then(() => new AssertConnectivityCommand
+                            .Then(() => new AssertRabbitMqConnectivityCommand
                             {
                                 Credential = Credential
                             })

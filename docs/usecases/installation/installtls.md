@@ -1,8 +1,4 @@
-# Advanced installation of RabbitMq with TLS from a computer NOT connected to the Internet
-
-## Preparation
-
-You have to have the [Erlang and RabbitMq installers pre-downloaded](prepare-offline.md) for this step. Otherwise, installation will fail.
+# Advanced installation of RabbitMq with TLS from a computer connected to the Internet
 
 ## General TLS requirements
 
@@ -19,8 +15,8 @@ $cred = Get-Credential -Message "Enter the initial RabbitMq user username and pa
 #$password = ConvertTo-SecureString “PlainTextPassword” -AsPlainText -Force
 #$cred = New-Object System.Management.Automation.PSCredential (“CustomUserName”, $password)
 
-# FQDN which will be used by clients connecting to this RabbitMq host. *It has to match the subject name in the PFX*
-$fqdn = "fullyqualifieddomainname.in.the.pfx";
+# FQDN which will be used by clients connecting to this RabbitMq host
+$fqdn = "localhost";
 
 $certpath = $path;
 
@@ -29,16 +25,15 @@ $pfxCred = Get-Credential -UserName PfxUserName -Message "Enter the PFX password
 #$password = ConvertTo-SecureString “PlainTextPassword” -AsPlainText -Force
 #$pfxCred = New-Object System.Management.Automation.PSCredential (“Ignored”, $password)
 
-install-Connector `
+Install-Connector `
     -Hostname $fqdn `
     -Credential $cred `
     -UseTls `
     -CaCertPath "$certpath\cacert.cer" `
     -PfxPath "$certpath\fqdn.pfx" `
     -PfxCredential $pfxCred `
-    -OfflineErlangInstallerPath "$path\Offline\o-erlang.exe" `
-    -OfflineRabbitMqInstallerPath "$path\Offline\o-rabbitMq.exe" `
     -Verbose
+
 ```
 
 There are more switches for this commandlet, your run "get-help install-connector" when inside the helper for more information
