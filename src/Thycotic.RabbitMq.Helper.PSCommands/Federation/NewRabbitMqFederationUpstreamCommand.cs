@@ -173,21 +173,19 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Federation
             }
 
             WriteVerbose($"Federating {Environment.MachineName} to {Hostname} upstream ");
-
             
-            //var uriBuild = new UriBuilder
-            //{
-            //    Scheme = "amqp",
-            //    Host = Hostname,
-            //    Port = Port,
-            //    UserName = Credential.UserName,
-            //    Password = Credential.GetNetworkCredential().Password
-            //};
+            var uriBuild = new UriBuilder
+            {
+                Scheme = "amqp",
+                Host = Hostname,
+                Port = Port,
+                UserName = Uri.EscapeDataString(Credential.UserName),
+                Password = Credential.GetNetworkCredential().Password
+            };
 
             var upstream = new FederationUpstream
             {
-                //HACK: Sigh, uri builder fails with "Invalid URI: Invalid port specified." when using FQDNs
-                uri = $"amqp://{Credential.UserName}:{Credential.GetNetworkCredential().Password}@{Hostname}:{Port}",
+                uri = uriBuild.Uri,
                 expires = Expires
             };
 
