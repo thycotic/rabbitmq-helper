@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
+using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
 
@@ -108,7 +109,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
             var client = new RabbitMqRestClient(BaseUrl, AdminCredential.UserName,
                 AdminCredential.GetNetworkCredential().Password);
 
-            client.CreatePolicy(string.Empty, Name, GetPolicy(GetPolicyDefinition()));
+            client.CreatePolicy(Constants.RabbitMq.DefaultVirtualHost, Name, GetPolicy(GetPolicyDefinition()));
 
             WriteVerbose("Policy created/updated");
         }

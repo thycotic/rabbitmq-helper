@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="CmdletExtensions.cs" />
     <Compile Include="ConnectionExtensions.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="DnsEx.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="InstallationConstants.cs" />

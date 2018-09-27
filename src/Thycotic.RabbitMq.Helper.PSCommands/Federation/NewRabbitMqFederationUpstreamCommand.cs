@@ -191,7 +191,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Federation
                 expires = Expires
             };
 
-            client.CreateFederationUpstream(string.Empty, Name, upstream);
+            client.CreateFederationUpstream(Constants.RabbitMq.DefaultVirtualHost, Name, upstream);
 
             WriteVerbose("Upstream created/updated");
         }
