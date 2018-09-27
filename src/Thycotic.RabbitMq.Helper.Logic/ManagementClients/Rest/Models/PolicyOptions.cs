@@ -114,7 +114,7 @@
             /// <summary>
             /// The ha parameters
             /// </summary>
-            public const string HaParams = "ha_params";
+            public const string HaParams = "ha-params";
 
             /// <summary>
             /// The ha synchronize mode
