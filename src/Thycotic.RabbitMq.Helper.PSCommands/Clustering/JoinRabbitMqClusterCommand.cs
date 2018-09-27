@@ -23,17 +23,20 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
     public class JoinRabbitMqClusterCommand : Cmdlet
     {
         /// <summary>
-        /// Gets or sets name of the other node.
+        /// Gets or sets name of the other node. Not the FQDN. Has to match exactly what the target machine thinks its name is, including case.
         /// </summary>
         /// <value>
         /// The name of the other node.
         /// </value>
+        /// <para type="description">
+        /// Gets or sets name of the other node. Not the FQDN. Has to match exactly what the target machine thinks its name is, including case.
+        /// </para>
         [Parameter(
             Position = 0,
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
-        public string OtherNodeName { get; set; }
+        public string StrictHostname { get; set; }
         
         /// <summary>
         /// Gets or sets that the firewall configured.
@@ -90,15 +93,15 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
                 {
                     try
                     {
-                        WriteVerbose($"Validating connection to {OtherNodeName} on port {p}");
+                        WriteVerbose($"Validating connection to {StrictHostname} on port {p}");
 
-                        tcpClient.Connect(OtherNodeName, p);
+                        tcpClient.Connect(StrictHostname, p);
 
                         tcpClient.Close();
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception($"Failed to connect to {OtherNodeName} on port {p}", ex);
+                        throw new Exception($"Failed to connect to {StrictHostname} on port {p}", ex);
                     }
                 });
             }
@@ -114,7 +117,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
                 throw new ApplicationException("Erlang cookie not set for cluster");
             }
 
-            WriteVerbose($"Clustering {Environment.MachineName} to {OtherNodeName}");
+            WriteVerbose($"Clustering {Environment.MachineName} to {StrictHostname}");
 
             var client = new RabbitMqBatCtlClient();
 
@@ -124,8 +127,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
             try
             {
 
-                WriteVerbose($"Joining {OtherNodeName}");
-                client.JoinCluster(OtherNodeName);
+                WriteVerbose($"Joining {StrictHostname}");
+                client.JoinCluster(StrictHostname);
             }
             finally
             {

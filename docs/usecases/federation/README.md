@@ -29,10 +29,11 @@ The basic premise of federation is that the downstream server connects to the up
 
 ### Steps using the helper (downstream only)
 * ```Enable-RabbitMqFederationAndManagement``` - Enables the federation and federation management UI 
+* ```Enable-RabbitMqFederationAndManagement``` - Enables the federation and federation management UI 
 * ```Join-RabbitMqCluster``` - Join the other node in a cluster
 
 ```powershell
-#on the node to join
+#on the node to add the upstreak
 
 #obviously use your own custom character cookie and not this value!
 Set-ErlangCookieFileCommand -CookieContent MYCUSTOMSECURECOOKIE
@@ -42,7 +43,6 @@ $cred = Get-Credential -Message "Enter the upstream user RabbitMq user username 
 $admincred = Get-Credential -Message "Enter the administrative user RabbitMq user username and password";
 
 
-#using the CookieSet and FirewallConfigured will prevent the helper for prompting. Only use if you have actually already set the cluster cookie and you have configured your firewall
 New-RabbitMqFederationUpstream -Hostname WIN-U6PS6TNGL8J -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
 ```
 
@@ -63,7 +63,7 @@ TODO
 ```powershell
 $admincred = Get-Credential -Message "Enter the administrative user RabbitMq user username and password";
 
-Set-RabbitMqBalancedClusterPolicy -Name fed-test-all -Pattern "^ActiveNonSslRabbitMq:" -AdminCredential $admincred -IncludeInFederation
+Set-RabbitMqBalancedClusterPolicy -Name fed-test-all -Pattern "^ActiveNonSslRabbitMq\:.*" -AdminCredential $admincred -IncludeInFederation
 
 # you can create a policy with a custom sync batch size. The default is 400 for Set-RabbitMqBalancedClusterPolicy because Thycotic products have a worst case scenario size for messages to be at 256KB. When a sync message is generated 256*400 = 100MB. Larger sync message can cause fragementation if there is latency or network connection drops between cluster node. Alter as needed
 Set-RabbitMqBalancedClusterPolicy -Name fed-test-all -Pattern "^ActiveNonSslRabbitMq:" -AdminCredential $admincred -SyncBatchSize 100 -IncludeInFederation

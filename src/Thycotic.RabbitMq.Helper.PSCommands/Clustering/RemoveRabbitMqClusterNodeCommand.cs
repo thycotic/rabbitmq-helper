@@ -19,29 +19,32 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
     public class RemoveRabbitMqClusterNodeCommand : Cmdlet
     {
         /// <summary>
-        /// Gets or sets name of the other node.
+        /// Gets or sets name of the other node. Not the FQDN. Has to match exactly what the target machine thinks its name is, including case.
         /// </summary>
         /// <value>
         /// The name of the other node.
         /// </value>
+        /// <para type="description">
+        /// Gets or sets name of the other node. Not the FQDN. Has to match exactly what the target machine thinks its name is, including case.
+        /// </para>
         [Parameter(
             Position = 0,
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
-        public string OtherNodeName { get; set; }
+        public string StrictHostname { get; set; }
 
         /// <summary>
         ///     Processes the record.
         /// </summary>
         protected override void ProcessRecord()
         {
-            WriteVerbose($"Removing {OtherNodeName} from cluster");
+            WriteVerbose($"Removing {StrictHostname} from cluster");
 
             var client = new RabbitMqBatCtlClient();
 
-            WriteVerbose($"Removing {OtherNodeName}");
-            client.RemoveFromClusterCluster(OtherNodeName);
+            WriteVerbose($"Removing {StrictHostname}");
+            client.RemoveFromClusterCluster(StrictHostname);
         }
     }
 }

@@ -151,21 +151,21 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// <summary>
         /// Joins the cluster.
         /// </summary>
-        /// <param name="otherNodeName">Name of the other node.</param>
-        public void JoinCluster(string otherNodeName)
+        /// <param name="strictHostname">Name of the other node.</param>
+        public void JoinCluster(string strictHostname)
         {
-            var parameters2 = $"join_cluster rabbit@{otherNodeName}";
+            var parameters2 = $"join_cluster rabbit@{strictHostname}";
 
             var output = string.Empty;
             try
             {
                 output = Invoke(parameters2, TimeSpan.FromMinutes(5));
 
-                ValidateOutput($"Clustering node rabbit@{Environment.MachineName} with rabbit@{otherNodeName.ToUpper()}", output);
+                ValidateOutput($"Clustering node rabbit@{Environment.MachineName} with rabbit@{strictHostname.ToUpper()}", output);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Failed to join {otherNodeName}. Manual join might be necessary: {output}",
+                throw new Exception($"Failed to join {strictHostname}. Manual join might be necessary: {output}",
                     ex);
             }
 
@@ -175,22 +175,22 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         /// <summary>
         /// Removes from cluster cluster.
         /// </summary>
-        /// <param name="otherNodeName">Name of the other node.</param>
+        /// <param name="strictHostname">Name of the other node.</param>
         /// <exception cref="NotImplementedException"></exception>
-        public void RemoveFromClusterCluster(string otherNodeName)
+        public void RemoveFromClusterCluster(string strictHostname)
         {
-            var parameters2 = $"forget_cluster_node rabbit@{otherNodeName}";
+            var parameters2 = $"forget_cluster_node rabbit@{strictHostname}";
 
             var output = string.Empty;
             try
             {
                 output = Invoke(parameters2, TimeSpan.FromMinutes(5));
 
-                ValidateOutput($"Removing node rabbit@{otherNodeName} from the cluster", output, false);
+                ValidateOutput($"Removing node rabbit@{strictHostname} from the cluster", output, false);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Failed to remove {otherNodeName}. Manual removal might be necessary: {output}",
+                throw new Exception($"Failed to remove {strictHostname}. Manual removal might be necessary: {output}",
                     ex);
             }
         }
