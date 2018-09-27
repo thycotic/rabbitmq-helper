@@ -95,6 +95,7 @@
     <Compile Include="ManagementClients\Rest\Models\QueueGarbageCollection.cs" />
     <Compile Include="ManagementClients\Rest\Models\Policy.cs" />
     <Compile Include="ManagementClients\Rest\RabbitMqRestClient.cs" />
+    <Compile Include="ManagementClients\Rest\UriExtensions.cs" />
     <Compile Include="OS\ExternalProcessRunner.cs" />
     <Compile Include="OS\IProcessInteractor.cs" />
     <Compile Include="ManagementClients\Cli\RabbitMqBatCtlClient.cs" />
