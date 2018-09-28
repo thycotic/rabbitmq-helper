@@ -25,7 +25,11 @@ The basic premise of federation is that the downstream server connects to the up
 
 > If you are establishing one-way federation, federation needs to only be enabled on the downstream.
 
-> The helper does not currently support TLS upstreams.
+> If you plan on using the same username on both nodes. You will have to create it on both. Keep in mind, federated servers don't share policies or users. This is the opposite of clusters.
+
+>> The helper does not currently support TLS upstreams.
+
+
 
 ### Steps using the helper (on downstream only)
 
@@ -37,10 +41,12 @@ The basic premise of federation is that the downstream server connects to the up
 ```powershell
 #on the node to add the upstreak
 
+Enable-RabbitMqFederationAndManagement -Verbose
+
 $cred = Get-Credential -Message "Enter the upstream user RabbitMq user username and password";
 $admincred = Get-Credential -Message "Enter the administrative user RabbitMq user username and password";
 
-New-RabbitMqFederationUpstream -Hostname HOSTNAMEORFQDN -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
+Set-RabbitMqFederationUpstream -Hostname WIN-NMH7V61E3R2 -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
 ```
 
 ## Removing the upstream
@@ -79,3 +85,4 @@ Set-RabbitMqBalancedClusterPolicy -Name fed-test-all -Pattern "^ActiveNonSslRabb
 
 ```
 
+> IMPORTANT: Federation will not initiate for queues that are not bound or have never been consumer, even if all policies are correct. In order words, If node A is the upstream of B and B has consumers, unless A was consumed at least once, the queues in B will be created but will be empty.

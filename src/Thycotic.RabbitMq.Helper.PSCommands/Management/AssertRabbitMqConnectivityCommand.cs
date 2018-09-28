@@ -45,10 +45,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </value>
         /// <para type="description">Gets or sets the hostname.</para>
         [Parameter(
-             ValueFromPipeline = true,
-             ValueFromPipelineByPropertyName = true)]
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
         [Alias("SubjectName", "FQDN")]
-        public string Hostname { get; set; } = DnsEx.GetDnsHostName();
+        public string Hostname { get; set; } = "localhost";
 
         /// <summary>
         /// Port to connect on.

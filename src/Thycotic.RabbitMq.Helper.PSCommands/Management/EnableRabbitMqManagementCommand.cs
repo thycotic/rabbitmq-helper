@@ -10,7 +10,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     /// <summary>
     ///     Enables the RabbitMq management UI (https://www.rabbitmq.com/management.html)
     /// </summary>
-    /// <para type="synopsis"> Enables the RabbitMq management IO (https://www.rabbitmq.com/management.html)</para>
+    /// <para type="synopsis"> Enables the RabbitMq management UI (https://www.rabbitmq.com/management.html)</para>
     /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>

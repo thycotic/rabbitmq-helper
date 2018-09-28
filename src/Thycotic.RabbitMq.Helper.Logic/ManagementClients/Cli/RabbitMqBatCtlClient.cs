@@ -196,7 +196,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
         }
 
         /// <summary>
-        /// Resets this instance.
+        /// Returns a RabbitMQ node to its virgin state. Removes the node from any cluster it belongs to, removes all data from the management database, such as configured users and vhosts, and deletes all persistent messages.
         /// </summary>
         /// <exception cref="Exception"></exception>
         public void Reset()

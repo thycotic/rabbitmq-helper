@@ -63,4 +63,17 @@ Or you can select topmost/combined message
 ```powershell
 try { Stop-RabbitMq } catch { (Select-Exception $_.Exception)[0].Value}
 ```
+3) Need the PowerShell Command help content?
 
+```powershell
+
+#markdown links
+Get-Command -Module Thycotic.RabbitMq.Helper.PSCommands  | Sort | % { Write-Host "Get-Help $_ -Full | Out-File $_.txt" };
+
+#detailed help file generation script
+Get-Command -Module Thycotic.RabbitMq.Helper.PSCommands  | Sort | % { Write-Host "Get-Help $_ -Detailed | Out-File $_.txt" };
+
+#full help file generation script
+Get-Command -Module Thycotic.RabbitMq.Helper.PSCommands  | Sort | % { Write-Host "Get-Help $_ -Full | Out-File $_.txt" };
+
+```
