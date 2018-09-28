@@ -32,30 +32,36 @@ RabbitMq is not a Thycotic product and we do not receive revenue for it. We buil
 
 ## Use cases
 
+### Certificates
+
+- [Convert a CA certificate to PFX to pem file](usecases/certificate/convert-cacerttopem.md)
+- [Convert a host PFX to pem file](usecases/certificate/convert-pfxtopem.md)
+
+
 ### Preparation
 
-- [Preparing for installation on a computer NOT connected to the Internet](usecases/prepare-offline.md)
+- [Preparing for installation on a computer NOT connected to the Internet](usecases/installation/prepare-offline.md)
 
 ### Installation
 
-- [Simple installation of RabbitMq without TLS from a computer connected to the Internet](usecases/installnontls.md)
-- [Simple installation of RabbitMq without TLS from a computer NOT connected to the Internet](usecases/installnontls-offline.md)
-- [Advanced installation of RabbitMq with TLS from a computer connected to the Internet](usecases/installtls.md)
-- [Advanced installation of RabbitMq with TLS from a computer NOT connected to the Internet](usecases/installtls-offline.md)
+- [Installation overview](usecases/installation/README.md)
 
 ### Clustering
 
-*Coming soon*
+- [Clustering overview](usecases/clustering/README.md)
 
 ### Federation
 
-*Coming soon*
+- [Federation overview](usecases/federation/README.md)
 
 ### Maintenance
 
-- [Remove all queues on a RabbitMq node](usecases/remove-all-queues.md)
+- [RabbitMq node diagnostics](usecases/management/node-diagnostics.md)
+- [Remove all queues on a RabbitMq node](usecases/management/remove-all-queues.md)
 
 ## Having an issue?
 
 - [Review the common troubleshooting tips](troubleshooting.md)
 - If you are still having difficulties, [submit an issue on Github](https://github.com/thycotic/rabbitmq-helper/issues)
+
+## All available command-lets

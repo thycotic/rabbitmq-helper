@@ -26,7 +26,7 @@ Failed to copy system cookie: Access to the path 'C:\Users\user1\\.erlang.cookie
 
 You can manually delete the cookie from the location the helper has no access to and retry.
 
-## Management Plugin Does Not Load
+## Management Plugin Does Not Load 
 
 The management plugin is the web page where the user logs in to manage RabbitMQ. This is usually located at [http://localhost:15672](http://localhost:15672)
 
@@ -46,4 +46,34 @@ Enable-RabbitMqManagement -Verbose
 
 ```dos
 rabbitmq-plugins enable rabbitmq_management
+```
+
+## Getting exceptions but no seeing any details.
+
+When running a helper cmdlet you may run into an exception but you do not see any details or inner exceptions.
+
+You can wrap the cmdlet call and select the exception to get a list of key-value pairs of exception messages.
+
+```powershell
+try { Stop-RabbitMq } catch { Select-Exception $_.Exception}
+```
+
+Or you can select topmost/combined message
+
+```powershell
+try { Stop-RabbitMq } catch { (Select-Exception $_.Exception)[0].Value}
+```
+3) Need the PowerShell Command help content?
+
+```powershell
+
+#markdown links
+Get-Command -Module Thycotic.RabbitMq.Helper.PSCommands  | Sort | % { Write-Host "Get-Help $_ -Full | Out-File $_.txt" };
+
+#detailed help file generation script
+Get-Command -Module Thycotic.RabbitMq.Helper.PSCommands  | Sort | % { Write-Host "Get-Help $_ -Detailed | Out-File $_.txt" };
+
+#full help file generation script
+Get-Command -Module Thycotic.RabbitMq.Helper.PSCommands  | Sort | % { Write-Host "Get-Help $_ -Full | Out-File $_.txt" };
+
 ```

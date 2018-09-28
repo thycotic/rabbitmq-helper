@@ -23,7 +23,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.Reflection
 
             if (string.IsNullOrWhiteSpace(directory))
             {
-                throw new ApplicationException("Type assembly directory could not be found");
+                throw new Exception("Type assembly directory could not be found");
             }
 
             return directory;

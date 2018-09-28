@@ -13,7 +13,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.General
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
     ///     <para>PS C:\></para> 
-    ///     <code>try { Assert-RabbitMqConnectivity -UserName test15 -Password test15 -Hostname localhost } catch { Select-Exception $_.Exception}</code>
+    ///     <code>try { Assert-RabbitMqConnectivity -Hostname localhost -UseTls -Port 1337 -Credential $cred } catch { Select-Exception $_.Exception}</code>
     /// </example>
     [Cmdlet(VerbsCommon.Select, "Exception")]
     public class SelectExceptionCommand : Cmdlet

@@ -10,10 +10,10 @@ namespace Thycotic.RabbitMq.Helper.Logic
     {
         private static class EnvironmentalVariables
         {
-            public static readonly string ProgramFiles = Environment.GetEnvironmentVariable("ProgramFiles");
+            public static readonly string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
             public static readonly string ProgramFiles32Bit = Environment.Is64BitOperatingSystem
-                ? Environment.GetEnvironmentVariable("ProgramFiles(x86)")
+                ? Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)
                 : ProgramFiles;
         }
 
@@ -23,6 +23,24 @@ namespace Thycotic.RabbitMq.Helper.Logic
         public static class Erlang
         {
 
+            /// <summary>
+            /// The erlang cookie file name
+            /// </summary>
+            public const string CookieFileName = ".erlang.cookie";
+
+            /// <summary>
+            /// The erlang cookie system path
+            /// </summary>
+            /// <remarks>Usually something like C:\Windows\System32\config\systemprofile\</remarks>
+
+            public static readonly string CookieSystemPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "config", "systemprofile", CookieFileName);
+
+            /// <summary>
+            /// The erlang cookie user profile path
+            /// </summary>
+            public static readonly string CookieUserProfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), CookieFileName);
+
+            
             /// <summary>
             ///     The erlang installer checksum
             /// </summary>
