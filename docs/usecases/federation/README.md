@@ -46,7 +46,7 @@ Enable-RabbitMqFederationAndManagement -Verbose
 $cred = Get-Credential -Message "Enter the upstream user RabbitMq user username and password";
 $admincred = Get-Credential -Message "Enter the administrative user RabbitMq user username and password";
 
-Set-RabbitMqFederationUpstream -Hostname WIN-NMH7V61E3R2 -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
+Set-RabbitMqFederationUpstream -Hostname HOSTNAMEORFQDN -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
 ```
 
 ## Removing the upstream
@@ -85,4 +85,4 @@ Set-RabbitMqBalancedClusterPolicy -Name fed-test-all -Pattern "^ActiveNonSslRabb
 
 ```
 
-> IMPORTANT: Federation will not initiate for queues that are not bound or have never been consumer, even if all policies are correct. In order words, If node A is the upstream of B and B has consumers, unless A was consumed at least once, the queues in B will be created but will be empty.
+> IMPORTANT: Federation will not initiate for queues that are not bound or have never been consumed, even if all policies are correct. In order words, If node A is the upstream of B and B has consumers, unless A was consumed at least once, the queues in B will be created but will be empty.

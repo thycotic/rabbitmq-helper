@@ -71,13 +71,13 @@ Being part of a cluster isn't enough to achieve High Availability. Clusters do n
 
 #### Non-balanced
 
-Even though the node is in a two-node cluster. All queues have it as primary. Therefore the other nodes are not helping with the load even though they may have mirrors of those queues.
+Even though the node is in a two-node cluster, all queues have it as primary. Therefore, the other nodes are not helping with the load even though they may have mirrors of those queues.
 
 ![Non-balanced](images/non-balanced-cluster.PNG "Non-balanced")
 
 #### Min-masters
 
-Because the node is in a two-node cluster. Queues are evenly distributed inside the cluster. Almost half use one node as their primary and vise versa.
+Because the node is in a two-node cluster, the queues are evenly distributed inside the cluster. Almost half use one node as their primary and vise versa.
 
 ![Min-masters](images/minmasters-balanced-cluster.PNG "Min-masters")
 

@@ -5,9 +5,9 @@ using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
     /// <summary>
-    ///     Returns a RabbitMQ node to its virgin state. Removes the node from any cluster it belongs to, removes all data from the management database, such as configured users and vhosts, and deletes all persistent messages.
+    ///     Returns a RabbitMQ node to its original state. Removes the node from any cluster it belongs to, removes all data from the management database, such as configured users and vhosts, and deletes all persistent messages.
     /// </summary>
-    /// <para type="synopsis">Returns a RabbitMQ node to its virgin state. Removes the node from any cluster it belongs to, removes all data from the management database, such as configured users and vhosts, and deletes all persistent messages.</para>
+    /// <para type="synopsis">Returns a RabbitMQ node to its original state. Removes the node from any cluster it belongs to, removes all data from the management database, such as configured users and vhosts, and deletes all persistent messages.</para>
     /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
