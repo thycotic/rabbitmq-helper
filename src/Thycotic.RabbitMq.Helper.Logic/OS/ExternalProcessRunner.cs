@@ -29,7 +29,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
         /// Runs the specified process information.
         /// </summary>
         /// <param name="processInfo">The process information.</param>
-        /// <exception cref="System.ApplicationException">
+        /// <exception cref="System.Exception">
         /// Process failed
         /// or
         /// Process appears to have failed
@@ -48,13 +48,13 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException(string.Format("Could not start process from {0}", processInfo.FileName), ex);
+                    throw new Exception(string.Format("Could not start process from {0}", processInfo.FileName), ex);
                 }
 
 
                 if (process == null)
                 {
-                    throw new ApplicationException("Process could not start");
+                    throw new Exception("Process could not start");
                 }
 
                 process.WaitForExit();
@@ -94,12 +94,12 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
                 //process didn't exit correctly, extract output and throw
                 if (process.ExitCode != 0)
                 {
-                    throw new ApplicationException("Process failed", new Exception(output));
+                    throw new Exception("Process failed", new Exception(output));
                 }
 
                 if (output.ToLower().Contains("error"))
                 {
-                    throw new ApplicationException("Process appears to have failed", new Exception(output));
+                    throw new Exception("Process appears to have failed", new Exception(output));
                 }
 
                 return output;
@@ -126,7 +126,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.OS
         /// <param name="executablePath">The executable path.</param>
         /// <param name="workingPath">The working path.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <exception cref="System.ApplicationException">
+        /// <exception cref="System.Exception">
         /// Process failed
         /// or
         /// Process appears to have failed

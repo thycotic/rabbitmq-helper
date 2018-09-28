@@ -32,7 +32,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
 
                     if (tries >= maxRetries)
                     {
-                        throw new ApplicationException(string.Format("Failed to clean path {0}", path), ex);
+                        throw new Exception(string.Format("Failed to clean path {0}", path), ex);
                     }
 
 

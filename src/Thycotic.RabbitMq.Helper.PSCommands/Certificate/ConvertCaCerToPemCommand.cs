@@ -63,11 +63,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
             var file = new FileInfo(cacertpath);
 
             if (file.Extension.ToLower() != ".cer")
-                throw new ApplicationException("File is not .CER");
+                throw new Exception("File is not .CER");
 
 
             if ((file.Directory == null) || !file.Directory.Exists || !file.Exists)
-                throw new ApplicationException("File does not exist");
+                throw new Exception("File does not exist");
 
             X509Certificate2 cert;
 

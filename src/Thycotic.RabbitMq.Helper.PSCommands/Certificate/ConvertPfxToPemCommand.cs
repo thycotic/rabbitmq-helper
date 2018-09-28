@@ -83,11 +83,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
             var file = new FileInfo(pfxPath);
 
             if (file.Extension.ToLower() != ".pfx")
-                throw new ApplicationException("File is not .PFX");
+                throw new Exception("File is not .PFX");
 
 
             if ((file.Directory == null) || !file.Directory.Exists || !file.Exists)
-                throw new ApplicationException("File does not exist");
+                throw new Exception("File does not exist");
 
             X509Certificate2 cert;
 
