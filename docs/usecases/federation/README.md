@@ -46,7 +46,7 @@ Enable-RabbitMqFederationAndManagement -Verbose
 $cred = Get-Credential -Message "Enter the upstream user RabbitMq user username and password";
 $admincred = Get-Credential -Message "Enter the administrative user RabbitMq user username and password";
 
-Set-RabbitMqFederationUpstream -Hostname WIN-NMH7V61E3R2 -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
+Set-RabbitMqFederationUpstream -Hostname HOSTNAMEORFQDN -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
 ```
 
 ## Removing the upstream
