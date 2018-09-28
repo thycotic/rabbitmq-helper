@@ -14,6 +14,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
         /// <value>
         /// The base URL.
         /// </value>
+        /// <para type="description">Gets or sets the base URL for the RabbitMq REST API.</para>
         [Parameter(
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
@@ -25,7 +26,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands
         /// <value>
         ///     The credential of the rabbit mq user.
         /// </value>
-        /// <para type="description">Gets or sets the credential of the rabbit mq user.</para>
+        /// <para type="description">Gets or sets the credential of the RabbitMq administrator user.</para>
         [Parameter(
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]

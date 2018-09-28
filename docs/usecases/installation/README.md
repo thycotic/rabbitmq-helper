@@ -3,7 +3,7 @@
 ## Overview
 The RabbitMq Helper is a tool that streamlines the RabbitMq installation on Windows. See [Downloading and Installing RabbitMQ](https://www.rabbitmq.com/download.html) and [Installing on Windows](https://www.rabbitmq.com/install-windows.html) for vanilla instructions. 
 
-While the helper has individual cmdlets that perform the different installation/un-installation steps, it also contains two workflow cmdlets called Install-Connector and Uninstall-Connector.
+While the helper has individual cmdlets that perform the different installation/un-installation steps, it also contains two workflow cmdlets called ```Install-Connector``` and ```Uninstall-Connector```.
 
 ## Installation using ```Install-Connector``` workflow cmdlet
 * License prompts and fine-print

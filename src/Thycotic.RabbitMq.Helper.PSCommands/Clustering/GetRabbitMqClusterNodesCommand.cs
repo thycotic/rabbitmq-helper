@@ -4,9 +4,9 @@ using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
 namespace Thycotic.RabbitMq.Helper.PSCommands.Clustering
 {
     /// <summary>
-    ///     Gets the current cluster name
+    ///     Gets the current cluster nodes
     /// </summary>
-    /// <para type="synopsis"> Gets the current cluster name</para>
+    /// <para type="synopsis">Gets the current cluster nodes</para>
     /// <para type="description"></para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>

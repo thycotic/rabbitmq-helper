@@ -7,7 +7,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
     ///     Starts RabbitMq
     /// </summary>
     /// <para type="synopsis">Starts RabbitMq</para>
-    /// <para type="description">The Stop-RabbitMq cmdlet starts RabbitMq.</para>
+    /// <para type="description">The Start-RabbitMq cmdlet starts RabbitMq.</para>
     /// <para type="link" uri="http://www.thycotic.com">Thycotic Software Ltd</para>
     /// <example>
     ///     <para>PS C:\></para> 
