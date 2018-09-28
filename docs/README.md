@@ -62,5 +62,5 @@ RabbitMq is not a Thycotic product and we do not receive revenue for it. We buil
 ## Having an issue?
 
 - [Review the common troubleshooting tips](troubleshooting.md)
-- [Get-Help output for all cmdlets](get-help)
+- [Get-Help output for all cmdlets](https://github.com/thycotic/rabbitmq-helper/tree/master/docs/get-help)
 - If you are still having difficulties, [submit an issue on Github](https://github.com/thycotic/rabbitmq-helper/issues)
