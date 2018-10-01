@@ -1,11 +1,13 @@
-# Preparing for installation on a computer NOT connected to the Internet
+# Preparing for Installation on a Computer NOT Connected to the Internet
 
-You an easily prepare an offline install. This is useful in cases where the host you are trying to install RabbitMq on does not outbound Internet access and therefore cannot download any installers directly.
+You can easily prepare an offline install for RabbitMQ. This is useful in cases where the host you are trying to install RabbitMQ on does not have outbound Internet access and therefore cannot download any installers directly.
 
-- Install the helper on a host that *does* have access to the Internet
-- Run the following example.
-- Copy the downloaded installers to the target host
-- Conduct the desired off-line installation on the target host
+To perform an offline install, follow these steps:
+
+- Install the RabbitMQ Helper on a host that *does* have access to the Internet
+- Run the example script listed below on the machine where the Helper is downloaded 
+- Copy the downloaded installers (Helper & RabbitMQ) to the target (offline) host machine
+- Conduct the desired off-line installation on the target host by running the installers
 
 ```powershell
 #This can be any path you like
@@ -27,9 +29,9 @@ Get-RabbitMqInstaller `
 
 ```
 
-## Download locations
+## Download Locations
 
-To simply get the download locations for the installers run the following example
+To simply get the download locations for the installers, run the following example:
 
 ```powershell
 Get-DownloadLocations;
@@ -37,7 +39,7 @@ Get-DownloadLocations;
 Get-DownloadLocations -UseThycoticMirror;
 ```
 
-- Copy the Offline folder the host which does not have internet and proceed with the desired installation.
+- Copy the offline folder to the target host which does not have internet and proceed with the desired installation.
 
 ## Related 
 
