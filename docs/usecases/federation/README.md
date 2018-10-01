@@ -1,29 +1,29 @@
 # Federation
 
-The RabbitMq Helper is a tool that streamlines the RabbitMq federation process on Windows. See [Federation Plugin](https://www.rabbitmq.com/federation.html)
+The RabbitMQ Helper is a tool that streamlines the RabbitMQ federation process on Windows. See [Federation Plugin](https://www.rabbitmq.com/federation.html)
 
-> The helper does not assist with load-balancing. See [Load balancing](../loadbalancing.md) for details.
+> The Helper does not assist with load-balancing. See [Load Balancing](../loadbalancing.md) for details.
 
-## Federation workflow
+## Federation Workflow
 
-When RabbitMq is installed on a virtual/physical machine, it is already in a cluster of one node. Federation enables clustered and non-clustered nodes to off-load work to each other. To federate to a remote node, we simply need to install RabbitMq on a different virtual/physical machine and then establish an upstream to another node/cluster. 
+When RabbitMQ is installed on a virtual/physical machine, it is already in a cluster of one node. Federation enables clustered and non-clustered nodes to off-load work to each other. To federate to a remote node, we simply need to install RabbitMQ on a different virtual/physical machine and then establish an upstream connection to another node/cluster. 
 
-The basic premise of federation is that the downstream server connects to the upstream just like a consumer would. This means that same port clients use to connect to the node/cluster is the same the port the downstream will use.
+The basic premise of federation is that the downstream server connects to the upstream server just like a consumer would. This means that same port clients used to connect to the node/cluster are the same clients that the port the downstream will use.
 
-> To proceed, please be sure you have at least two RabbitMq node already installed following the appropriate [installation](../installation/README.md)
+> To proceed, please be sure you have at least two RabbitMQ node already installed following the appropriate [installation process](../installation/README.md)
 
-## Creating an upstream
+## Creating an Upstream Server
 
-### Preliminary steps
-* Install RabbitMq on N+1 virtual/physical machines
+### Preliminary Steps
+* Install RabbitMQ on N+1 virtual/physical machines
 * Ensure that the downstream can resolve the upstream IP address
 * Open firewall for cluster ports. 
-    * Make sure the firewall rule is open for the network type (public/private/domain) on each virtual/physical machine where RabbitMq nodes will be installed.
+    * Make sure the firewall rule is open for the network type (public/private/domain) on each virtual/physical machine where RabbitMQ nodes will be installed.
     * TCP ports: 5672 (default) but can be configured
-* Enable federation support on the node/cluster that will be creating the upstream.
-* Create a basic user on the upstream to be used by the downstream to connect.
+* Enable federation support on the node/cluster that will be creating the upstream server.
+* Create a basic user on the upstream server which will be used by the downstream server to connect.
 
-> If you are establishing one-way federation, federation needs to only be enabled on the downstream.
+> If you are establishing one-way federation, federation only needs to be enabled on the downstream server.
 
 > If you plan on using the same username on both nodes. You will have to create it on both. Keep in mind, federated servers don't share policies or users. This is the opposite of clusters.
 
@@ -31,12 +31,12 @@ The basic premise of federation is that the downstream server connects to the up
 
 
 
-### Steps using the helper (on downstream only)
+### Steps Using the Helper (On Downstream Only)
 
-> Upstream server does not need any additional plugs or configuration
+> The upstream server does not require any additional plug-ins or configuration steps.
 
 * ```Enable-RabbitMqFederationAndManagement``` - Enables the federation and federation management UI 
-* ```Set-RabbitMqFederationUpstream``` - Set the upstream
+* ```Set-RabbitMqFederationUpstream``` - Set the upstream server
 
 ```powershell
 #on the node to add the upstreak
@@ -49,19 +49,19 @@ $admincred = Get-Credential -Message "Enter the administrative user RabbitMq use
 Set-RabbitMqFederationUpstream -Hostname HOSTNAMEORFQDN -Name fed-test -Credential $cred -AdminCredential $admincred -FirewallConfigured -Verbose
 ```
 
-## Removing the upstream
+## Removing the Upstream Server
 
-Log into the RabbitMq management you and remove the upstream from Admin -> Federation Upstreams
+Log into the RabbitMQ management console and remove the upstream server from **Admin > Federation Upstreams**
 
-## Establishing a federation policy
+## Establishing a Federation Policy
 
-### Simple federation of non-HA queues
+### Simple Federation of non-HA Queues
 
 *Coming soon*
 
-### HA queue federation
+### HA Queue Federation
 
-> The options listed here are cluster policies that can be extended to leverage federation
+> The options listed here are cluster policies that can be extended to leverage federation:
 
 * ```Set-RabbitMqBalancedClusterPolicy``` - creates a balanced cluster policy that distributes queues evenly around the cluster nodes and is also being federated
 

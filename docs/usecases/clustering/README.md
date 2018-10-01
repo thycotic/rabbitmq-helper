@@ -1,28 +1,28 @@
 # Clustering
 
-The RabbitMq Helper is a tool that streamlines the RabbitMq clustering process on Windows. See [Clustering Guide](https://www.rabbitmq.com/clustering.html) and [Highly Available (Mirrored) Queues](https://www.rabbitmq.com/ha.html) for vanilla instructions. 
+The RabbitMQ Helper is a tool that streamlines the RabbitMQ clustering process on Windows. See [Clustering Guide](https://www.rabbitmq.com/clustering.html) and [Highly Available (Mirrored) Queues](https://www.rabbitmq.com/ha.html) for vanilla instructions. 
 
-> The helper does not assist with load-balancing. See [Load balancing](../loadbalancing.md) for details.
+> The Helper does not assist with load-balancing. See [Load Balancing](../loadbalancing.md) for details.
 
-## Clustering workflow
+## Clustering Workflow
 
-When RabbitMq is installed on a virtual/physical machine, it is already in a cluster of one node. To add another node to the cluster, we simply need to install RabbitMq on a different virtual/physical machine and then join either of nodes to the other's cluster. The cluster name is irrelevant and can be changed at a later time.
+When RabbitMQ is installed on a virtual/physical machine, it is already in a cluster of one node. To add another node to the cluster, we simply need to install RabbitMQ on a different virtual/physical machine and then join either of nodes to the other's cluster. The cluster name is irrelevant and can be changed at a later time.
 
-> To proceed, please be sure you have at least two RabbitMq node already installed following the appropriate [installation](../installation/README.md)
+> To proceed, please be sure you have at least two RabbitMQ nodes already installed following the appropriate [installation process].(../installation/README.md)
 
-## Joining a cluster
+## Joining a Cluster
 
-### Preliminary steps
+### Preliminary Steps
 * Ensure that all cluster nodes can resolve each others' IP addresses
-* Install RabbitMq on N+1 virtual/physical machines
-* Open firewall for cluster ports. 
-    * Make sure the firewall rule is open for the network type (private/domain only) on each virtual/physical machine where RabbitMq nodes will be installed.
+* Install RabbitMQ on N+1 virtual/physical machines
+* Open firewall for cluster ports 
+    * Make sure the firewall rule is open for the network type (private/domain only) on each virtual/physical machine where RabbitMQ nodes will be installed.
     * TCP ports: 4369, 25672,44002
 
 
-### Steps using the helper
-* ```Set-ErlangCookieFileCommand``` - Set the system and user profile cookie to the cookie of the node your joining
-    * You can alternatively use the same command with an arbitrary cookie on all nodes that will be in the cluster should like to use a new value or cannot look it up
+### Steps Using the Helper
+* ```Set-ErlangCookieFileCommand``` - Set the system and user profile cookie to the cookie of the node you are joining
+    * You can alternatively use the same command with an arbitrary cookie on all nodes (if you want to use a new value or cannot look the existing one up).
 * ```Join-RabbitMqCluster``` - Join the other node in a cluster
 
 ```powershell
@@ -36,9 +36,9 @@ Set-ErlangCookieFileCommand -CookieContent MYCUSTOMSECURECOOKIE -Verbose
 Join-RabbitMqCluster -StrictHostname OTHERHOSTNAME -CookieSet -FirewallConfigured -Verbose
 ```
 
-### Alternate steps without the helper
+### Alternate Steps Without the Helper
 * Copy the .erlang.cookie from one node to all nodes in the system profile (usually C:\Windows\System32\config\systemprofile\) and the user profile running rabbitmqctl.bat
-* Restart RabbitMq
+* Restart RabbitMQ
 ```cmd
 REM on the node to join
 rabbitmqctl stop_app 
@@ -46,11 +46,11 @@ rabbitmqctl join_cluster rabbit@OTHERHOSTNAME
 rabbitmqctl start_app
 ```
 
-## Leaving a cluster
+## Leaving a Cluster
 
-> WARNING: The helper uses ```reset``` to leave clusters. Removes the node from any cluster it belongs to, removes all data from the management database, such as configured users and vhosts, and deletes all persistent messages.
+> WARNING: The Helper uses ```reset``` to leave clusters. This removes the node from any cluster it belongs to, removes all data from the management database (such as configured users and vhosts), and deletes all persistent messages.
 
-### Steps using the helper
+### Steps Using the Helper
 
 * ```Reset-RabbitMqNodeCommand``` - resets the RabbitMq node to mint condition
 
@@ -58,30 +58,30 @@ rabbitmqctl start_app
 Reset-RabbitMqNodeCommand
 ```
 
-### Alternate steps without the helper
+### Alternate Steps Without the Helper
 ```cmd
 rabbitmqctl reset
 ```
 
-## Establishing a cluster policy
+## Establishing a Cluster Policy
 
 Being part of a cluster isn't enough to achieve High Availability. Clusters do not mirror queues unless they are configured to do so via policies.
 
 > The helper creates balanced policies by default using ```queue-master-locator: min-masters```. This enables queues to be evenly distributed to all nodes in the cluster.
 
-#### Non-balanced
+#### Non-Balanced
 
 Even though the node is in a two-node cluster, all queues have it as primary. Therefore, the other nodes are not helping with the load even though they may have mirrors of those queues.
 
 ![Non-balanced](images/non-balanced-cluster.PNG "Non-balanced")
 
-#### Min-masters
+#### Min-Masters
 
 Because the node is in a two-node cluster, the queues are evenly distributed inside the cluster. Almost half use one node as their primary and vise versa.
 
 ![Min-masters](images/minmasters-balanced-cluster.PNG "Min-masters")
 
-### Steps using the helper
+### Steps Using the Helper
 
 * ```Set-RabbitMqBalancedClusterPolicy``` - creates a balanced cluster policy that distributes queues evenly around the cluster nodes
 
@@ -106,7 +106,7 @@ Set-RabbitMqBalancedClusterPolicy -Name cluster-test-all -Pattern "^ActiveNonSsl
 ```
 
 
-### Alternate steps without the helper
+### Alternate Steps Without the Helper
 ```cmd
 REM this policy is not ideal and is not balanced. Please use the helper if possible
 rabbitmqctl set_policy cluster-test-all "^cluster\-test:" "{""ha-mode"":""all""}"
