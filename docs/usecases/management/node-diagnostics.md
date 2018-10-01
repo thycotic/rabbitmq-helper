@@ -1,8 +1,8 @@
-# RabbitMq node diagnostics
+# RabbitMQ Node Diagnostics
 
-There a number of cmdlets in the helper that allow you extract information about the cluster nodes and queues. You can use standard Powershell syntax to your needs. Here are some examples for a node where the helper is installed. The -Verbose switch can be used for more details.
+There a number of cmdlets in the Helper that allow you extract information about your cluster nodes and queues. You can use standard Powershell syntax to fit your needs. Here are some examples for a node where the Helper is installed. The -Verbose switch can be used for more details.
 
-# User credential validation
+# User Credential Validation
 ```powershell
 Assert-RabbitMqConnectivity
 
@@ -13,7 +13,7 @@ Assert-RabbitMqConnectivity -Hostname Nefarian -Credential $usercred
 
 ```
 
-## Node and queue information
+## Node and Queue Information
 ```powershell
 #check to make sure RabbitMq is running
 Assert-RabbitMqIsRunning
