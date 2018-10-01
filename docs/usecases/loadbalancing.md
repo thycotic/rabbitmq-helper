@@ -1,6 +1,6 @@
-# Load-balancing
+# Load-Balancing
 
-The helper does not provide any assistance with TCP load balancing RabbitMq. That is also out of the scope for RabbitMq itself. You are can use any load-balancer you have access to.
+The Helper does not provide any assistance with TCP load balancing RabbitMQ. That is also out of the scope for RabbitMQ itself. You are can use any load-balancer you have access to.
 
 > Possible load-balancers include but not limited to: F5, NetScaler, HAProxy.
 
