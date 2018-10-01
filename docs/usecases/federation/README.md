@@ -2,7 +2,7 @@
 
 The RabbitMQ Helper is a tool that streamlines the RabbitMQ federation process on Windows. See [Federation Plugin](https://www.rabbitmq.com/federation.html)
 
-> The Helper does not assist with load-balancing. See [Load balancing](../loadbalancing.md) for details.
+> The Helper does not assist with load-balancing. See [Load Balancing](../loadbalancing.md) for details.
 
 ## Federation Workflow
 
@@ -21,7 +21,7 @@ The basic premise of federation is that the downstream server connects to the up
     * Make sure the firewall rule is open for the network type (public/private/domain) on each virtual/physical machine where RabbitMQ nodes will be installed.
     * TCP ports: 5672 (default) but can be configured
 * Enable federation support on the node/cluster that will be creating the upstream server.
-* Create a basic user on the upstream server to be used by the downstream server for connecting to the cluster.
+* Create a basic user on the upstream server which will be used by the downstream server to connect.
 
 > If you are establishing one-way federation, federation only needs to be enabled on the downstream server.
 
