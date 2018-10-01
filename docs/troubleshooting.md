@@ -1,6 +1,6 @@
 # Troubleshooting
 
-## *Cannot Delete epmd.exe after Uninstalling RabbitMQ and Erlang*
+## Cannot Delete epmd.exe after Uninstalling RabbitMQ and Erlang
 
 This error happens when you uninstall RabbitMQ (and optionally Erlang) but cannot delete one or more programs or folders associated with RabbitMQ or Erlang. 
 
