@@ -155,7 +155,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                         throw new FileNotFoundException("Installer does not exist");
                     }
 
-                    if (PrerequisiteDownloader.CalculateMD5(OfflineErlangInstallerPath) !=
+                    if (PrerequisiteDownloader.CalculateSha512(OfflineErlangInstallerPath) !=
                         InstallationConstants.Erlang.InstallerChecksum)
                     {
                         throw new FileNotFoundException("Installer checksum does not match");

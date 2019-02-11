@@ -155,7 +155,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                         throw new FileNotFoundException("Installer does not exist");
                     }
 
-                    if (PrerequisiteDownloader.CalculateMD5(OfflineRabbitMqInstallerPath) !=
+                    if (PrerequisiteDownloader.CalculateSha512(OfflineRabbitMqInstallerPath) !=
                         InstallationConstants.RabbitMq.InstallerChecksum)
                     {
                         throw new FileNotFoundException("Installer checksum does not match");
