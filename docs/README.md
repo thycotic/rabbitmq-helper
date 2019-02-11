@@ -18,6 +18,8 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
 
 ## Getting Started
 
+### Prerequisites
+
 - Download and install the latest RabbitMQ Helper
     - Stable:
         - [Thycotic Updates - Alias to the Thycotic CDN](https://updates.thycotic.net/links.ashx?RabbitMqInstaller)
@@ -30,37 +32,32 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
     - Or navigate to the installation folder in "%PROGRAMFILES%\Thycotic Software Ltd\RabbitMq Helper"
 - Run PowerShell commandlets directly or use any of the example scripts provided.
 
-## Use Cases
+ 
+   ##### For Offline Installs:
+   - [Preparing for Installation on a Computer NOT Connected to the Internet](usecases/installation/prepare-offline.md)
 
-### Certificates
 
+### Walkthroughs
+   ##### Installation
+   - [Installation Overview](usecases/installation/README.md)
+
+   ##### Clustering
+   - [Clustering Overview](usecases/clustering/README.md)
+
+### Troubleshooting and Maintenence
+   - [RabbitMq Node Diagnostics](usecases/management/node-diagnostics.md)
+   - [Remove All Queues on a RabbitMq Node](usecases/management/remove-all-queues.md)
+   - [Review Common Troubleshooting Tips](troubleshooting.md)
+   - [Get-Help Output for all cmdlets](https://github.com/thycotic/rabbitmq-helper/tree/master/docs/get-help)
+   - If you are still having difficulties, [submit an issue on Github](https://github.com/thycotic/rabbitmq-helper/issues)
+
+
+### Miscelaneous
+
+##### Certificates 
+(Install-Connector workflow normally converts certificates without needing to use the below)
 - [Convert a CA Certificate to PFX to PEM File](usecases/certificate/convert-cacerttopem.md)
 - [Convert a Host PFX to PEM File](usecases/certificate/convert-pfxtopem.md)
 
-
-### Preparation
-
-- [Preparing for Installation on a Computer NOT Connected to the Internet](usecases/installation/prepare-offline.md)
-
-### Installation
-
-- [Installation Overview](usecases/installation/README.md)
-
-### Clustering
-
-- [Clustering Overview](usecases/clustering/README.md)
-
-### Federation
-
+##### Federation
 - [Federation Overview](usecases/federation/README.md)
-
-### Maintenance
-
-- [RabbitMq Node Diagnostics](usecases/management/node-diagnostics.md)
-- [Remove All Queues on a RabbitMq Node](usecases/management/remove-all-queues.md)
-
-## Having an Issue?
-
-- [Review Common Troubleshooting Tips](troubleshooting.md)
-- [Get-Help Output for all cmdlets](https://github.com/thycotic/rabbitmq-helper/tree/master/docs/get-help)
-- If you are still having difficulties, [submit an issue on Github](https://github.com/thycotic/rabbitmq-helper/issues)
