@@ -40,7 +40,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// </summary>
             public static readonly string CookieUserProfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), CookieFileName);
 
-            
+
             /// <summary>
             ///     The erlang installer checksum
             /// </summary>
@@ -116,8 +116,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// <summary>
             ///     The configuration path
             /// </summary>
-            public static readonly string ConfigurationPath = Path.Combine(EnvironmentalVariables.ProgramFiles,
-                "Thycotic Software Ltd", "RabbitMq Site Connector");
+            public static readonly string ConfigurationPath = @"C:\RabbitMq";
 
             /// <summary>
             ///     The install path
