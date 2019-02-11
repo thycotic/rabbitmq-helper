@@ -127,6 +127,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
 
                     if (task.Exception != null)
                     {
+                        throw task.Exception;
                     }
 
                     if (File.Exists(installerPath))
@@ -140,6 +141,10 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
                     if (File.Exists(tempPath))
                         warnHandler(string.Format("Temp installer files still exists at {0}", tempPath), null);
 
+                    progressHandler(new PrerequisiteDownloaderProgress
+                    {
+                        ProgressPercentage = 100
+                    });
                     downloaded = true;
                 }
                 catch (Exception ex)

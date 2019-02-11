@@ -4,6 +4,7 @@ using System.Management.Automation;
 using System.Threading;
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.IO;
+using Thycotic.RabbitMq.Helper.Logic.Workflow;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -117,7 +118,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <exception cref="System.IO.FileNotFoundException">Installer does not exist</exception>
         protected override void ProcessRecord()
         {
-
+            var activityId = ActivityIdProvider.GetNextActivityId();
             if (!string.IsNullOrWhiteSpace(OfflineErlangInstallerPath))
             {
                 if (PrepareForOfflineInstall)
@@ -139,9 +140,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                         OfflineErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => throw exception,
                         progress =>
                         {
-                            WriteProgress(new ProgressRecord(1, "Erlang download in progress", "Downloading")
+                            WriteProgress(new ProgressRecord(activityId, "Erlang download in progress", "Downloading")
                             {
-                                PercentComplete = progress.ProgressPercentage
+                                PercentComplete = progress.ProgressPercentage,
+                                RecordType = progress.ProgressPercentage == 100 ? ProgressRecordType.Completed : ProgressRecordType.Processing
                             });
                         });
 
@@ -183,9 +185,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     ErlangInstallerPath, InstallationConstants.Erlang.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => throw exception,
                     progress =>
                     {
-                        WriteProgress(new ProgressRecord(1, "Erlang download in progress", "Downloading")
+                        WriteProgress(new ProgressRecord(activityId, "Erlang download in progress", "Downloading")
                         {
-                            PercentComplete = progress.ProgressPercentage
+                            PercentComplete = progress.ProgressPercentage,
+                            RecordType = progress.ProgressPercentage == 100 ? ProgressRecordType.Completed : ProgressRecordType.Processing
                         });
                     });
 
