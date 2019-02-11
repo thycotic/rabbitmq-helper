@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Management.Automation;
-using System.Threading;
 
 namespace Thycotic.RabbitMq.Helper.Logic.Workflow
 {
@@ -11,8 +10,6 @@ namespace Thycotic.RabbitMq.Helper.Logic.Workflow
     /// <seealso cref="System.IDisposable" />
     public class CmdletWorkflow : IDisposable
     {
-        private static int _globalActivityId = 1;
-
         private readonly Cmdlet _parent;
         private readonly string _activityName;
         private readonly int _activityId;
@@ -26,7 +23,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.Workflow
         /// <param name="activityName">Name of the activity.</param>
         public CmdletWorkflow(Cmdlet parent, string activityName)
         {
-            _activityId = Interlocked.Increment(ref _globalActivityId);
+            _activityId = ActivityIdProvider.GetNextActivityId();
 
             _parent = parent;
             _activityName = activityName;

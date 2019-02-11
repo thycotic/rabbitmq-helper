@@ -40,12 +40,14 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// </summary>
             public static readonly string CookieUserProfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), CookieFileName);
 
-            
+
             /// <summary>
             ///     The erlang installer checksum
             /// </summary>
             public static readonly string InstallerChecksum =
-                Environment.Is64BitOperatingSystem ? "4c40709f983541676e171b1859fd2d7b" : "1ce2554af9f841141f08d940ec72a99a";
+                Environment.Is64BitOperatingSystem 
+                ? "d6b37aef6abee0dade973de1ff157b366a63e70cb85d837deb657fc31777bc0847b4878133cab591a888f28a0874f17123e392ce5cdaf26f86bb8c181f8058fb" 
+                : "5c3fe7c38cee0a0cc4c5da66efcd6ea38e2808e96fa69023f3a81e7be5b1d16ea903fcb79ccfefde7766f9ef755c585796fdeb1cc8bf53b9b346b991ba4d662b";
 
             /// <summary>
             ///     The version
@@ -94,7 +96,8 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// <summary>
             /// The installer RabbitMq checksum
             /// </summary>
-            public static readonly string InstallerChecksum = "5d48c2de0c1ce55167d974d735f43b44";
+            public static readonly string InstallerChecksum = 
+                "8e5c59b8fbcfc7cf7bf0d1ac5cceeaf508d39ccf816635ea0e51ac906d982ca14ecc1dd4f56a8ec5de84771940477571bdb2db1056eb4b819a3d0161e737905d";
 
             /// <summary>
             ///     The download URL
@@ -116,8 +119,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// <summary>
             ///     The configuration path
             /// </summary>
-            public static readonly string ConfigurationPath = Path.Combine(EnvironmentalVariables.ProgramFiles,
-                "Thycotic Software Ltd", "RabbitMq Site Connector");
+            public static readonly string ConfigurationPath = Path.Combine(Path.GetPathRoot(Environment.SystemDirectory), "RabbitMq");
 
             /// <summary>
             ///     The install path

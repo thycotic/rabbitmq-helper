@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Management.Automation;
-using Thycotic.RabbitMq.Helper.Logic;
-using Thycotic.RabbitMq.Helper.Logic.OS;
-using Thycotic.RabbitMq.Helper.PSCommands.Installation;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -28,9 +24,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         {
             //we have to use local host because guest account does not work under FQDN
             const string pluginUrl = "http://localhost:15672/";
-           
+
             WriteVerbose($"Opening management console at {pluginUrl}");
-            Process.Start(pluginUrl);
+
+            try
+            {
+                Process.Start(pluginUrl);
+            }
+            catch (Exception ex)
+            {
+                WriteVerbose($"Failed to open console: {ex.Message}. This is not an error if running non-interactive. Visit {pluginUrl} manually.");
+
+            }
         }
     }
 }
