@@ -33,15 +33,16 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
 - Run PowerShell commandlets directly or use any of the example scripts provided.
 
  
-   ##### For Offline Installs:
+#### For Offline Installs:
    - [Preparing for Installation on a Computer NOT Connected to the Internet](usecases/installation/prepare-offline.md)
 
 
-### Walkthroughs
-   ##### Installation
+### Walk-throughs
+
+#### Installation
    - [Installation Overview](usecases/installation/README.md)
 
-   ##### Clustering
+#### Clustering
    - [Clustering Overview](usecases/clustering/README.md)
 
 ### Troubleshooting and Maintenence
@@ -52,12 +53,12 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
    - If you are still having difficulties, [submit an issue on Github](https://github.com/thycotic/rabbitmq-helper/issues)
 
 
-### Miscelaneous
+### Miscellaneous
 
-##### Certificates 
+#### Certificates 
 (Install-Connector workflow normally converts certificates without needing to use the below)
 - [Convert a CA Certificate to PFX to PEM File](usecases/certificate/convert-cacerttopem.md)
 - [Convert a Host PFX to PEM File](usecases/certificate/convert-pfxtopem.md)
 
-##### Federation
+#### Federation
 - [Federation Overview](usecases/federation/README.md)

@@ -18,7 +18,7 @@ While the Helper has individual cmdlets that perform the different installation/
 
 
 ## Overview of ```Install-Connector``` Workflow cmdlet
-***The overview below is provided for informational purposes in order to explain the process in the Install-Connector cmdlet. Wherever possible, use the 'Install-Connector" commandlet to install Rabbit and not the individual commands below. See example installation sections above***
+*The overview below is provided for informational purposes in order to explain the process in the Install-Connector cmdlet. Wherever possible, use the 'Install-Connector" commandlet to install Rabbit and not the individual commands below. See example installation sections above*
 * License prompts and fine-print:
 * ```Get-ErlangInstaller``` - Download the installer for Erlang that it currently supported by Thycotic.
 * ```Get-RabbitMqInstaller``` - Download the installer for RabbitMQ that it currently supported by Thycotic.

@@ -19,21 +19,21 @@ When RabbitMQ is installed on a virtual/physical machine, it is already in a clu
 * Find the value for the Erlang cookie of Rabbit Service on the node that you are trying to join. Taken from: https://www.rabbitmq.com/clustering.html, repeating it here since it is relevant:
 
 "With Erlang versions starting with 20.2, the cookie file locations are:
-%HOMEDRIVE%%HOMEPATH%\.erlang.cookie (usually C:\Users\%USERNAME%\.erlang.cookie for user %USERNAME%) if both the HOMEDRIVE and HOMEPATH environment variables are set
-%USERPROFILE%\.erlang.cookie (usually C:\Users\%USERNAME%\.erlang.cookie) if HOMEDRIVE and HOMEPATH are not both set
+%HOMEDRIVE%%HOMEPATH%\.erlang.cookie (usually C:\\Users\\%USERNAME%\.erlang.cookie for user %USERNAME%) if both the HOMEDRIVE and HOMEPATH environment variables are set
+%USERPROFILE%\.erlang.cookie (usually C:\\Users\\%USERNAME%\\.erlang.cookie) if HOMEDRIVE and HOMEPATH are not both set
 
-For the RabbitMQ Windows service - %USERPROFILE%\.erlang.cookie (usually C:\WINDOWS\system32\config\systemprofile)
+For the RabbitMQ Windows service - %USERPROFILE%\\.erlang.cookie (usually C:\\WINDOWS\\system32\\config\\systemprofile)
 The cookie file used by the Windows service account and the user running CLI tools must be synchronised.
 
 
 On Erlang versions prior to 20.2 (e.g. 19.3 or 20.1), the cookie file locations are:
-%HOMEDRIVE%%HOMEPATH%\.erlang.cookie (usually C:\Users\%USERNAME%\.erlang.cookie for user %USERNAME%) if both the HOMEDRIVE and HOMEPATH environment variables are set
-%USERPROFILE%\.erlang.cookie (usually C:\Users\%USERNAME%\.erlang.cookie) if HOMEDRIVE and HOMEPATH are not both set
+%HOMEDRIVE%\\%HOMEPATH%\\.erlang.cookie (usually C:\\Users\\%USERNAME%\\.erlang.cookie for user %USERNAME%) if both the HOMEDRIVE and HOMEPATH environment variables are set
+%USERPROFILE%\\.erlang.cookie (usually C:\\Users\\%USERNAME%\\.erlang.cookie) if HOMEDRIVE and HOMEPATH are not both set
 
 For the RabbitMQ Windows service - %WINDIR%\.erlang.cookie (usually C:\Windows\.erlang.cookie)
 The cookie file used by the Windows service account and the user running CLI tools must be synchronised." 
 
-Usually, the cookie will be located in C:\WINDOWS\system32\config\systemprofile OR C:\WINDOWS\system32\config\systemprofile
+Usually, the cookie will be located in C:\WINDOWS\\system32\\config\\systemprofile
 
 That cookie value is the shared secret for the cluster, so all nodes which will be joined to the cluster must use this shared secret. Retrieve the value out of the cookie in the above location from the node you are trying to join so that you can use it with the Set-ErlangCookieFileCommand on another node. The other node will have its erlang cookie set to match the first node and the clustering commands will be used to join the other node to the first node. It will then be brought into mirror with the first node.
 
@@ -56,7 +56,7 @@ Join-RabbitMqCluster -StrictHostname OTHERHOSTNAME -CookieSet -FirewallConfigure
 ```
 
 ### Alternate Steps to Cluster a Rabbit Node Without the Helper
-* Copy the .erlang.cookie from one node to all nodes in the system profile (usually C:\Windows\System32\config\systemprofile\) and the user profile running rabbitmqctl.bat
+* Copy the .erlang.cookie from one node to all nodes in the system profile (usually C:\\Windows\\System32\config\\systemprofile\) and the user profile running rabbitmqctl.bat
 * Restart RabbitMQ
 ```cmd
 REM on the node to join
