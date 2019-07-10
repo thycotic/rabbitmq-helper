@@ -331,7 +331,8 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation.Workflow
                             {
                                 Hostname = Hostname,
                                 Credential = Credential,
-                                UseTls = UseTls
+                                UseTls = UseTls,
+                                Port = 5671
                             })
 
                             .Then(() => WriteVerbose(
