@@ -1,3 +1,7 @@
+[title]: # (RabbitMq Load Balancing)
+[tags]: # (rabbitmq,load balancing)
+[priority]: # (1)
+
 # Load-Balancing
 
 The Helper does not provide any assistance with TCP load balancing RabbitMQ. That is also out of the scope for RabbitMQ itself. You are can use any load-balancer you have access to.

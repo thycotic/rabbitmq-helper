@@ -1,3 +1,7 @@
+[title]: # (RabbitMq Clustering)
+[tags]: # (rabbitmq,cluster)
+[priority]: # (5)
+
 # Clustering
 
 The RabbitMQ Helper is a tool that streamlines the RabbitMQ clustering process on Windows. See [Clustering Guide](https://www.rabbitmq.com/clustering.html) and [Highly Available (Mirrored) Queues](https://www.rabbitmq.com/ha.html) for vanilla instructions. 
@@ -9,7 +13,7 @@ The RabbitMQ Helper is a tool that streamlines the RabbitMQ clustering process o
 ### Prerequisite Steps for Clustering
 When RabbitMQ is installed on a virtual/physical machine, it is already in a cluster of one node. To add another node to the cluster, we simply need to install RabbitMQ on a different virtual/physical machine and then join either of nodes to the other's cluster. The cluster name is irrelevant and can be changed at a later time.
 
-* To proceed, please be sure you have at least two RabbitMQ nodes already installed following the appropriate [installation process].(../installation/README.md)
+* To proceed, please be sure you have at least two RabbitMQ nodes already installed following the appropriate [installation process].(../installation)
 
 * Ensure that all cluster nodes can resolve each others' IP addresses
 * Install RabbitMQ on N+1 virtual/physical machines

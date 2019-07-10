@@ -1,3 +1,7 @@
+[title]: # (RabbitMq Helper)
+[tags]: # (rabbitmq,helper,powershell,cmdlet)
+[priority]: # (1)
+
 # RabbitMQ Helper
 
 The RabbitMQ Helper is a tool whose purpose is to assist with installing [RabbitMQ](https://www.rabbitmq.com)
@@ -38,11 +42,13 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
 
 
 ### Walkthroughs
-   ##### Installation
-   - [Installation Overview](usecases/installation/README.md)
+
+##### Installation
+   - [Installation Overview](usecases/installation)
 
    ##### Clustering
-   - [Clustering Overview](usecases/clustering/README.md)
+   - [Clustering Overview](usecases/clustering)
+
 
 ### Troubleshooting and Maintenence
    - [RabbitMq Node Diagnostics](usecases/management/node-diagnostics.md)
@@ -60,4 +66,4 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
 - [Convert a Host PFX to PEM File](usecases/certificate/convert-pfxtopem.md)
 
 ##### Federation
-- [Federation Overview](usecases/federation/README.md)
+- [Federation Overview](usecases/federation)

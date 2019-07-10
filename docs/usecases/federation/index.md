@@ -1,3 +1,7 @@
+[title]: # (RabbitMq Federation)
+[tags]: # (rabbitmq,federation)
+[priority]: # (10)
+
 # Federation
 
 The RabbitMQ Helper is a tool that streamlines the RabbitMQ federation process on Windows. See [Federation Plugin](https://www.rabbitmq.com/federation.html)
@@ -10,7 +14,7 @@ When RabbitMQ is installed on a virtual/physical machine, it is already in a clu
 
 The basic premise of federation is that the downstream server connects to the upstream server just like a consumer would. This means that same port clients used to connect to the node/cluster are the same clients that the port the downstream will use.
 
-> To proceed, please be sure you have at least two RabbitMQ node already installed following the appropriate [installation process](../installation/README.md)
+> To proceed, please be sure you have at least two RabbitMQ node already installed following the appropriate [installation process](../installation)
 
 ## Creating an Upstream Server
 
@@ -27,7 +31,7 @@ The basic premise of federation is that the downstream server connects to the up
 
 > If you plan on using the same username on both nodes. You will have to create it on both. Keep in mind, federated servers don't share policies or users. This is the opposite of clusters.
 
->> The helper does not currently support TLS upstreams.
+> The helper does not currently support TLS upstreams.
 
 
 

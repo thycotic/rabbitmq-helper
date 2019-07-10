@@ -1,3 +1,7 @@
+[title]: # (RabbitMq Node Diagnostics)
+[tags]: # (rabbitmq,diagnostics)
+[priority]: # (1)
+
 # RabbitMQ Node Diagnostics
 
 There a number of cmdlets in the Helper that allow you extract information about your cluster nodes and queues. You can use standard Powershell syntax to fit your needs. Here are some examples for a node where the Helper is installed. The -Verbose switch can be used for more details.

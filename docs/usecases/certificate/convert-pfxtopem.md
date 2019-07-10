@@ -1,3 +1,7 @@
+[title]: # (Convert PFX to PEM)
+[tags]: # (rabbitmq,tls)
+[priority]: # (1)
+
 # Convert a host PFX to pem file
 
 RabbitMQ only supports PEM File format for certificate verification. More on certificates and TLS Support for RabbitMQ can be found at https://www.rabbitmq.com/ssl.html

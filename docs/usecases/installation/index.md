@@ -1,3 +1,7 @@
+[title]: # (RabbitMq Installation)
+[tags]: # (rabbitmq,installation)
+[priority]: # (1)
+
 # Installation
 
 ## Overview
