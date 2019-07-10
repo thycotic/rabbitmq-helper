@@ -1,6 +1,6 @@
 [title]: # (Powershell cmdlets)
 [tags]: # (powershell,cmdlet)
-[priority]: # (100)
+[priority]: # (5000)
 
 # Powershell cmdlets
 

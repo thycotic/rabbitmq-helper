@@ -20,9 +20,7 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
 - Create basic users
 - View/manage the RabbitMQ log 
 
-## Getting Started
-
-### Prerequisites
+## Prerequisites
 
 - Download and install the latest RabbitMQ Helper
     - Stable:
@@ -38,32 +36,32 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
 
  
    ##### For Offline Installs:
-   - [Preparing for Installation on a Computer NOT Connected to the Internet](usecases/installation/prepare-offline.md)
+   - [Preparing for Installation on a Computer NOT Connected to the Internet](installation/prepare-offline.md)
 
 
-### Walk-throughs
+## Installation
+   - [Installation Overview](installation/index.md)
 
 
-#### Installation
-   - [Installation Overview](usecases/installation)
+## Advanced
 
-#### Clustering
-   - [Clustering Overview](usecases/clustering)
+### Clustering
+   - [Clustering Overview](clustering/index.md)
 
-
-#### Advanced: Certificates 
+### Certificates 
 > Install-Connector workflow normally converts certificates without needing to use the below
-- [Convert a CA Certificate to PFX to PEM File](usecases/certificate/convert-cacerttopem.md)
-- [Convert a Host PFX to PEM File](usecases/certificate/convert-pfxtopem.md)
+
+- [Convert a CA Certificate to PFX to PEM File](certificate/convert-cacerttopem.md)
+- [Convert a Host PFX to PEM File](certificate/convert-pfxtopem.md)
 
 
-#### Advanced: Federation
-- [Federation Overview](usecases/federation)
+### Federation
+- [Federation Overview](federation/index.md)
 
 
-### Troubleshooting and Maintenence
-   - [RabbitMq Node Diagnostics](usecases/management/node-diagnostics.md)
-   - [Remove All Queues on a RabbitMq Node](usecases/management/remove-all-queues.md)
+## Troubleshooting and Maintenance
+   - [RabbitMq Node Diagnostics](management/node-diagnostics.md)
+   - [Remove All Queues on a RabbitMq Node](management/remove-all-queues.md)
    - [Review Common Troubleshooting Tips](troubleshooting.md)
-   - [Get-Help Output for all cmdlets](https://github.com/thycotic/rabbitmq-helper/tree/master/docs/get-help)
+   - [Get-Help Output for all cmdlets](get-help/index.md)
    - If you are still having difficulties, [submit an issue on Github](https://github.com/thycotic/rabbitmq-helper/issues)
