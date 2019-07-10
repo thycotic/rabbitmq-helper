@@ -1,4 +1,4 @@
-[title]: # (Offline RabbitMq Install w/o TLS)
+[title]: # (Offline RabbitMq Install w/ TLS)
 [tags]: # (rabbitmq,installation,offline)
 [priority]: # (140)
 
