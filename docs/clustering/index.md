@@ -1,6 +1,6 @@
 [title]: # (RabbitMq Clustering)
 [tags]: # (rabbitmq,cluster)
-[priority]: # (5)
+[priority]: # (500)
 
 # Clustering
 

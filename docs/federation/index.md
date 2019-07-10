@@ -1,6 +1,6 @@
 [title]: # (RabbitMq Federation)
 [tags]: # (rabbitmq,federation)
-[priority]: # (10)
+[priority]: # (700)
 
 # Federation
 

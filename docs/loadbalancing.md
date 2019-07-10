@@ -1,6 +1,6 @@
 [title]: # (RabbitMq Load Balancing)
 [tags]: # (rabbitmq,load balancing)
-[priority]: # (1)
+[priority]: # (1500)
 
 # Load-Balancing
 
