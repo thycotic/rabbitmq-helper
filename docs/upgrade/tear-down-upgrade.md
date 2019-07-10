@@ -1,3 +1,7 @@
+[title]: # (Tear-down Upgrade - Reinstallation)
+[tags]: # (reinstallation)
+[priority]: # (5)
+
 # Tear-down Upgrade - Reinstallation
 
 A tear down upgrade is not an upgrade per se but simply a reinstallation using the latest versions of RabbitMq and Erlang.
