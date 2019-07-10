@@ -41,13 +41,24 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
    - [Preparing for Installation on a Computer NOT Connected to the Internet](usecases/installation/prepare-offline.md)
 
 
-### Walkthroughs
+### Walk-throughs
 
-##### Installation
+
+#### Installation
    - [Installation Overview](usecases/installation)
 
-   ##### Clustering
+#### Clustering
    - [Clustering Overview](usecases/clustering)
+
+
+#### Advanced: Certificates 
+> Install-Connector workflow normally converts certificates without needing to use the below
+- [Convert a CA Certificate to PFX to PEM File](usecases/certificate/convert-cacerttopem.md)
+- [Convert a Host PFX to PEM File](usecases/certificate/convert-pfxtopem.md)
+
+
+#### Advanced: Federation
+- [Federation Overview](usecases/federation)
 
 
 ### Troubleshooting and Maintenence
@@ -56,14 +67,3 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
    - [Review Common Troubleshooting Tips](troubleshooting.md)
    - [Get-Help Output for all cmdlets](https://github.com/thycotic/rabbitmq-helper/tree/master/docs/get-help)
    - If you are still having difficulties, [submit an issue on Github](https://github.com/thycotic/rabbitmq-helper/issues)
-
-
-### Miscelaneous
-
-##### Certificates 
-(Install-Connector workflow normally converts certificates without needing to use the below)
-- [Convert a CA Certificate to PFX to PEM File](usecases/certificate/convert-cacerttopem.md)
-- [Convert a Host PFX to PEM File](usecases/certificate/convert-pfxtopem.md)
-
-##### Federation
-- [Federation Overview](usecases/federation)
