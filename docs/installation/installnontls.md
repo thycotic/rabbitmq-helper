@@ -1,3 +1,7 @@
+[title]: # (Online RabbitMq Install w/o TLS)
+[tags]: # (rabbitmq,installation)
+[priority]: # (110)
+
 # Simple installation of RabbitMq without TLS from a computer connected to the Internet
 
 ```powershell

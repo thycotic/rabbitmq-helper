@@ -1,4 +1,4 @@
-[title]: # (RabbitMq Installation)
+[title]: # (Installation)
 [tags]: # (rabbitmq,installation)
 [priority]: # (100)
 

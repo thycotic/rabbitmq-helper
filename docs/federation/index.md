@@ -1,4 +1,4 @@
-[title]: # (RabbitMq Federation)
+[title]: # (Federation)
 [tags]: # (rabbitmq,federation)
 [priority]: # (700)
 

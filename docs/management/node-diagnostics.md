@@ -1,4 +1,4 @@
-[title]: # (RabbitMq Node Diagnostics)
+[title]: # (Node Diagnostics)
 [tags]: # (rabbitmq,diagnostics)
 [priority]: # (1)
 

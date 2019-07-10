@@ -1,3 +1,7 @@
+[title]: # (Offline Install Preparation)
+[tags]: # (rabbitmq,offline,prepare)
+[priority]: # (180)
+
 # Preparing for Installation on a Computer NOT Connected to the Internet
 
 You can easily prepare an offline install for RabbitMQ. This is useful in cases where the host you are trying to install RabbitMQ on does not have outbound Internet access and therefore cannot download any installers directly.

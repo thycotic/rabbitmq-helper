@@ -1,3 +1,7 @@
+[title]: # (Online RabbitMq Install w/ TLS)
+[tags]: # (rabbitmq,installation)
+[priority]: # (130)
+
 # Advanced installation of RabbitMq with TLS from a computer connected to the Internet
 
 ## General TLS requirements

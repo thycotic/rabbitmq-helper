@@ -1,4 +1,4 @@
-[title]: # (RabbitMq Clustering)
+[title]: # (Clustering)
 [tags]: # (rabbitmq,cluster)
 [priority]: # (500)
 

@@ -1,4 +1,4 @@
-[title]: # (RabbitMq Queue Removal)
+[title]: # (Queue Removal)
 [tags]: # (rabbitmq,queue,remove)
 [priority]: # (1)
 

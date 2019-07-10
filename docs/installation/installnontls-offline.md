@@ -1,3 +1,7 @@
+[title]: # (Offline RabbitMq Install w/o TLS)
+[tags]: # (rabbitmq,installation,offline)
+[priority]: # (120)
+
 # Simple installation of RabbitMq without TLS from a computer NOT connected to the Internet
 
 ## Preparation
