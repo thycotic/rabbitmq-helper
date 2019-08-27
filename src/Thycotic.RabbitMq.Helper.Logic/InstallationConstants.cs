@@ -46,44 +46,45 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// </summary>
             public static readonly string InstallerChecksum =
                 Environment.Is64BitOperatingSystem 
-                ? "d6b37aef6abee0dade973de1ff157b366a63e70cb85d837deb657fc31777bc0847b4878133cab591a888f28a0874f17123e392ce5cdaf26f86bb8c181f8058fb" 
-                : "5c3fe7c38cee0a0cc4c5da66efcd6ea38e2808e96fa69023f3a81e7be5b1d16ea903fcb79ccfefde7766f9ef755c585796fdeb1cc8bf53b9b346b991ba4d662b";
+                ? "bb7bc7abf367b2d14357ebf51b20eb043576b7c393a24d656753e5fc0d4802a64f72834d2ce0b6a14147c3dcfd59a692eea4b47caad764d438b1eb99d08c64e1" 
+                : "d537acaedcc0042ceb61db74707109e421776aca40f7761811ebc94449037754c65b14712080a5f119342c6b680288fc01a15427b8c0c04c3ae4436476b4220e";
 
             /// <summary>
             ///     The version
             /// </summary>
-            public static readonly Version Version = new Version(20, 3);
+            public static readonly Version Version = new Version(22, 0);
 
             /// <summary>
             ///     The download URL
             /// </summary>
             public static readonly string DownloadUrl =
                 Environment.Is64BitOperatingSystem
-                    ? "http://erlang.org/download/otp_win64_20.3.exe"
-                    : "http://erlang.org/download/otp_win32_20.3.exe";
+                    ? "http://erlang.org/download/otp_win64_22.0.exe"
+                    : "http://erlang.org/download/otp_win32_22.0.exe";
 
             /// <summary>
             ///     The download URL using the Thycotic mirror
             /// </summary>
             public static readonly string ThycoticMirrorDownloadUrl =
                 Environment.Is64BitOperatingSystem
-                    ? "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win64_20.3.exe"
-                    : "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win32_20.3.exe";
+                    ? "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win64_22.0.exe"
+                    : "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win32_22.0.exe";
 
             /// <summary>
             ///     The install path
             /// </summary>
-            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl9.3");
+            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl10.4");
 
             /// <summary>
             ///     The uninstaller path
             /// </summary>
             public static readonly string[] UninstallerPaths = new[]
             {
-                Path.Combine(EnvironmentalVariables.ProgramFiles, "erl6.4", "uninstall.exe"),
-                Path.Combine(EnvironmentalVariables.ProgramFiles, "erl8.3", "uninstall.exe"),
-                Path.Combine(EnvironmentalVariables.ProgramFiles, "erl9.0", "uninstall.exe"),
-                Path.Combine(EnvironmentalVariables.ProgramFiles, "erl9.3", "uninstall.exe"),
+                Path.Combine(Environment.Is64BitOperatingSystem ? EnvironmentalVariables.ProgramFiles : EnvironmentalVariables.ProgramFiles32Bit, "erl6.4", "uninstall.exe"),
+                Path.Combine(Environment.Is64BitOperatingSystem ? EnvironmentalVariables.ProgramFiles : EnvironmentalVariables.ProgramFiles32Bit, "erl8.3", "uninstall.exe"),
+                Path.Combine(Environment.Is64BitOperatingSystem ? EnvironmentalVariables.ProgramFiles : EnvironmentalVariables.ProgramFiles32Bit, "erl9.0", "uninstall.exe"),
+                Path.Combine(Environment.Is64BitOperatingSystem ? EnvironmentalVariables.ProgramFiles : EnvironmentalVariables.ProgramFiles32Bit, "erl9.3", "uninstall.exe"),
+                Path.Combine(Environment.Is64BitOperatingSystem ? EnvironmentalVariables.ProgramFiles : EnvironmentalVariables.ProgramFiles32Bit, "erl10.4", "uninstall.exe"),
             };
         }
 
@@ -96,25 +97,25 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// <summary>
             /// The installer RabbitMq checksum
             /// </summary>
-            public static readonly string InstallerChecksum = 
-                "8e5c59b8fbcfc7cf7bf0d1ac5cceeaf508d39ccf816635ea0e51ac906d982ca14ecc1dd4f56a8ec5de84771940477571bdb2db1056eb4b819a3d0161e737905d";
+            public static readonly string InstallerChecksum =
+                "fa1ed14d81d4f8df9e821068c5df87c35c51cfb3d52c42b53ad6e1dbebaaaf3d50616472207cd6cf3bd1b402e1f9230fc660597040f00913b59bf64830a6eaea";
 
             /// <summary>
             ///     The download URL
             /// </summary>
             public const string DownloadUrl =
-                "https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.5/rabbitmq-server-3.7.5.exe";
+                "https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.17/rabbitmq-server-3.7.17.exe";
 
             /// <summary>
             ///     The download URL using the Thycotic mirror
             /// </summary>
             public const string ThycoticMirrorDownloadUrl =
-                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/rabbitmq/rabbitmq-server-3.7.5.exe";
+                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/rabbitmq/rabbitmq-server-3.7.17.exe";
 
             /// <summary>
             ///     The version
             /// </summary>
-            public static readonly Version Version = new Version(3, 7, 5);
+            public static readonly Version Version = new Version(3, 7, 17);
 
             /// <summary>
             ///     The configuration path
@@ -125,7 +126,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             ///     The install path
             /// </summary>
             public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles,
-                "RabbitMQ Server", "rabbitmq_server-3.7.5");
+                "RabbitMQ Server", "rabbitmq_server-3.7.17");
 
             /// <summary>
             ///     The bin dir
