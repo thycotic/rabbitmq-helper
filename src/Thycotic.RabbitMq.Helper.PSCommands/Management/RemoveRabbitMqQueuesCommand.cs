@@ -10,6 +10,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest;
 using Thycotic.RabbitMq.Helper.Logic.ManagementClients.Rest.Models;
+using Thycotic.RabbitMq.Helper.Logic.Workflow;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Management
 {
@@ -41,9 +42,9 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
                 return;
             }
 
-            const int activityid = 7;
+            var activityid = ActivityIdProvider.GetNextActivityId();
             const string activity = "Removing";
-            WriteProgress(new ProgressRecord(activityid, activity, "Checking Erlang pre-requisites")
+            WriteProgress(new ProgressRecord(activityid, activity, "Removing all queues")
             {
                 PercentComplete = 5
             });

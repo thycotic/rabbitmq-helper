@@ -4,6 +4,7 @@ using System.Management.Automation;
 using System.Threading;
 using Thycotic.RabbitMq.Helper.Logic;
 using Thycotic.RabbitMq.Helper.Logic.IO;
+using Thycotic.RabbitMq.Helper.Logic.Workflow;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
 {
@@ -117,6 +118,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
         /// <exception cref="System.IO.FileNotFoundException">Installer does not exist</exception>
         protected override void ProcessRecord()
         {
+            var activityId = ActivityIdProvider.GetNextActivityId();
             if (!string.IsNullOrWhiteSpace(OfflineRabbitMqInstallerPath))
             {
                 if (PrepareForOfflineInstall)
@@ -139,9 +141,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                         WriteDebug, WriteVerbose, (s, exception) => throw exception,
                         progress =>
                         {
-                            WriteProgress(new ProgressRecord(1, "RabbitMq download in progress", "Downloading")
+                            WriteProgress(new ProgressRecord(activityId, "RabbitMq download in progress", "Downloading")
                             {
-                                PercentComplete = progress.ProgressPercentage
+                                PercentComplete = progress.ProgressPercentage,
+                                RecordType = progress.ProgressPercentage == 100 ? ProgressRecordType.Completed : ProgressRecordType.Processing
                             });
                         });
 
@@ -155,7 +158,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                         throw new FileNotFoundException("Installer does not exist");
                     }
 
-                    if (PrerequisiteDownloader.CalculateMD5(OfflineRabbitMqInstallerPath) !=
+                    if (PrerequisiteDownloader.CalculateSha512(OfflineRabbitMqInstallerPath) !=
                         InstallationConstants.RabbitMq.InstallerChecksum)
                     {
                         throw new FileNotFoundException("Installer checksum does not match");
@@ -184,9 +187,10 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Installation
                     RabbitMqInstallerPath, InstallationConstants.RabbitMq.InstallerChecksum, Force, 5, WriteDebug, WriteVerbose, (s, exception) => throw exception,
                     progress =>
                     {
-                        WriteProgress(new ProgressRecord(1, "RabbitMq download in progress", "Downloading")
+                        WriteProgress(new ProgressRecord(activityId, "RabbitMq download in progress", "Downloading")
                         {
-                            PercentComplete = progress.ProgressPercentage
+                            PercentComplete = progress.ProgressPercentage,
+                            RecordType = progress.ProgressPercentage == 100 ? ProgressRecordType.Completed : ProgressRecordType.Processing
                         });
                     });
 

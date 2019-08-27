@@ -83,6 +83,11 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Management
         /// </summary>
         protected override void ProcessRecord()
         {
+            if (UseTls && Port == 5672)
+            {
+                WriteWarning("You have selected Tls but the port used it 5672. Did you mean port 5671?");
+            }
+
             WriteVerbose("Checking credentials");
 
             try

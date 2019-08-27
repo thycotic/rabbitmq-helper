@@ -31,7 +31,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
         /// <param name="token">The token.</param>
         /// <param name="downloadUri">The download URI.</param>
         /// <param name="installerPath">The installer path.</param>
-        /// <param name="checksum">The installer checksum.</param>
+        /// <param name="expectedChecksum">The installer checksum.</param>
         /// <param name="forceDownload">if set to <c>true</c> [force download].</param>
         /// <param name="maxRetries">The maximum retries.</param>
         /// <param name="debugHandler">The debug handler.</param>
@@ -39,7 +39,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
         /// <param name="warnHandler">The warn handler.</param>
         /// <param name="progressHandler">The progress handler.</param>
         /// <exception cref="System.IO.FileNotFoundException">Failed to download</exception>
-        public void Download(CancellationToken token, Uri downloadUri, string installerPath, string checksum,
+        public void Download(CancellationToken token, Uri downloadUri, string installerPath, string expectedChecksum,
             bool forceDownload = false, int maxRetries = 5, Action<string> debugHandler = null,
             Action<string> infoHandler = null, Action<string, Exception> warnHandler = null,
             Action<PrerequisiteDownloaderProgress> progressHandler = null)
@@ -49,7 +49,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
             warnHandler = warnHandler ?? ((str, ex) => { });
             progressHandler = progressHandler ?? (progress => { });
 
-            if (!forceDownload && File.Exists(installerPath) && CalculateMD5(installerPath) == checksum)
+            if (!forceDownload && File.Exists(installerPath) && CalculateSha512(installerPath) == expectedChecksum)
             {
                 infoHandler(string.Format("File already exists in {0}. Skipping download", installerPath));
                 return;
@@ -127,6 +127,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
 
                     if (task.Exception != null)
                     {
+                        throw task.Exception;
                     }
 
                     if (File.Exists(installerPath))
@@ -140,6 +141,10 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
                     if (File.Exists(tempPath))
                         warnHandler(string.Format("Temp installer files still exists at {0}", tempPath), null);
 
+                    progressHandler(new PrerequisiteDownloaderProgress
+                    {
+                        ProgressPercentage = 100
+                    });
                     downloaded = true;
                 }
                 catch (Exception ex)
@@ -154,9 +159,10 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
             if (!downloaded)
                 throw new FileNotFoundException("Failed to download");
 
-            if (CalculateMD5(installerPath) != checksum)
+            var checksum = CalculateSha512(installerPath);
+            if (checksum != expectedChecksum)
             {
-                throw new FileNotFoundException("Checksum does not match");
+                throw new FileNotFoundException($"Checksum does not match expected {expectedChecksum} but received {checksum}");
             }
         }
 
@@ -164,13 +170,13 @@ namespace Thycotic.RabbitMq.Helper.Logic.IO
         /// <summary>
         ///    Calculates the MD5 hash of a file
         /// </summary>
-        public static string CalculateMD5(string path)
+        public static string CalculateSha512(string path)
         {
-            using (var md5 = System.Security.Cryptography.MD5.Create())
+            using (var sha512 = System.Security.Cryptography.SHA512.Create())
             {
                 using (var stream = File.OpenRead(path))
                 {
-                    var hash = md5.ComputeHash(stream);
+                    var hash = sha512.ComputeHash(stream);
                     return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
                 }
             }

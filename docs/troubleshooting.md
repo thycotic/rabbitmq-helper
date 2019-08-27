@@ -1,3 +1,7 @@
+[title]: # (Troubleshooting)
+[tags]: # (epmd,management plugin,error detail)
+[priority]: # (9000)
+
 # Troubleshooting
 
 ## Cannot Delete epmd.exe after Uninstalling RabbitMQ and Erlang
