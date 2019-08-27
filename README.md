@@ -1,3 +1,3 @@
 # RabbitMQ Helper
 
-[View the Github pages for documentation and examples](https://thycotic.github.io/rabbitmq-helper)
+[View the Thycotic Docs for documentation and examples](https://docs.thycotic.com/rabbitmq-helper)
