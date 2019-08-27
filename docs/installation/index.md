@@ -10,21 +10,19 @@ The RabbitMQ Helper is a tool that streamlines the RabbitMQ installation on Wind
 While the Helper has individual cmdlets that perform the different installation/un-installation steps, it also contains two workflow cmdlets called ```Install-Connector``` and ```Uninstall-Connector```.
 
 ## Installation Examples with Arguments
-
-> The below links show the four main scenarios when installing RabbitMQ using the Rabbit Helper and how to deploy Rabbit in each scenario. Pick the link which applies to you for example commands
+***The below links show the four main scenarios when installing RabbitMQ using the Rabbit Helper and how to deploy Rabbit in each scenario. Pick the link which applies to you for example commands***
 - [Simple installation of RabbitMQ without TLS from a computer connected to the Internet](installnontls.md)
 - [Simple installation of RabbitMQ without TLS from a computer NOT connected to the Internet](installnontls-offline.md)
 - [Advanced installation of RabbitMQ with TLS from a computer connected to the Internet](installtls.md)
 - [Advanced installation of RabbitMQ with TLS from a computer NOT connected to the Internet](installtls-offline.md)
 
 ## How to Uninstall Rabbit
-
-> This command will remove both RabbitMq and Erlang from the current system. Before running this, if you’re having issues with Rabbit, it’s recommended to look at the troubleshooting section first.
+***This command will remove both RabbitMq and Erlang from the current system. Before running this, if you’re having issues with Rabbit, it’s recommended to look at the troubleshooting section first.***
 - [Uninstall RabbitMQ and Erlang](uninstall.md)
 
 
 ## Overview of ```Install-Connector``` Workflow cmdlet
-> The overview below is provided for informational purposes in order to explain the process in the Install-Connector cmdlet. Wherever possible, use the 'Install-Connector" commandlet to install Rabbit and not the individual commands below. See example installation sections above
+***The overview below is provided for informational purposes in order to explain the process in the Install-Connector cmdlet. Wherever possible, use the 'Install-Connector" commandlet to install Rabbit and not the individual commands below. See example installation sections above***
 * License prompts and fine-print:
 * ```Get-ErlangInstaller``` - Download the installer for Erlang that it currently supported by Thycotic.
 * ```Get-RabbitMqInstaller``` - Download the installer for RabbitMQ that it currently supported by Thycotic.
