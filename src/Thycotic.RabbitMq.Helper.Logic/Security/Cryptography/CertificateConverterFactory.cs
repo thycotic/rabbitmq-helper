@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Thycotic.RabbitMq.Helper.Logic.Security.Cryptography
@@ -15,7 +16,20 @@ namespace Thycotic.RabbitMq.Helper.Logic.Security.Cryptography
         /// <returns></returns>
         public static ICertificateConverter GetConverter(X509Certificate2 cert)
         {
-            return new RSACertificateConverter();
+            try
+            {
+
+                if (cert.HasPrivateKey)
+                {
+                    return new RSACertificateConverter();
+                }
+
+                return new BasicCertificateConverter();
+            }
+            catch (Exception e)
+            {
+                throw new NotSupportedException("The certificate you are trying to use not supported", e);
+            }
         }
     }
 }

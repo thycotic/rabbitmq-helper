@@ -15,10 +15,10 @@ namespace Thycotic.RabbitMq.Helper.UnitTests
     {
 
 
-        [TestCase(@"M:\development\vso\DistributedEngine\Thycotic.RabbitMq.Helper\src\Thycotic.RabbitMq.Helper.PSCommands\Examples\localhost.pfx", "password1")]
-        //[TestCase(@"C:\Users\dkolev\Downloads\rabbit-ecc.thycotic.space.pfx", "Yagni12#")]
-        //[TestCase(@"C:\Users\dkolev\Downloads\rabbit-cng.thycotic.space.pfx", "Yagni12#")]
-        public void ShouldConvertPfxToPem(string pfxPath, string password)
+        [TestCase(@"M:\development\vso\DistributedEngine\Thycotic.RabbitMq.Helper\src\Thycotic.RabbitMq.Helper.PSCommands\Examples\localhost.pfx", "password1", true)]
+        [TestCase(@"C:\Users\dkolev\Downloads\rabbit-ecc.thycotic.space.pfx", "Yagni12#", false)]
+        [TestCase(@"C:\Users\dkolev\Downloads\rabbit-cng.thycotic.space.pfx", "Yagni12#", false)]
+        public void ShouldConvertPfxToPem(string pfxPath, string password, bool savePrivateKey)
         {
             X509Certificate2 cert;
 
@@ -40,9 +40,12 @@ namespace Thycotic.RabbitMq.Helper.UnitTests
 
                 var converter = CertificateConverterFactory.GetConverter(cert);
 
-                converter.SavePrivateKeyToPemKey(cert, tempKeyPath);
                 converter.SaveCertificateToPem(cert, tempCertPath);
 
+                if (savePrivateKey)
+                {
+                    converter.SavePrivateKeyToPemKey(cert, tempKeyPath);
+                }
             }
             finally
             {
