@@ -3,11 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using System.Security.Cryptography.X509Certificates;
-using Org.BouncyCastle.OpenSsl;
-using Org.BouncyCastle.Security;
-using Org.BouncyCastle.Security.Certificates;
 using Thycotic.RabbitMq.Helper.Logic;
-using Thycotic.RabbitMq.Helper.PSCommands.Installation;
+using Thycotic.RabbitMq.Helper.Logic.Security.Cryptography;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
 {
@@ -77,24 +74,15 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
             }
             catch (Exception ex)
             {
-                throw new CertificateException("Could not open CER", ex);
+                throw new Exception("Could not open CER", ex);
             }
 
-            using (var memoryStream = new MemoryStream())
-            {
-                using (TextWriter streamWriter = new StreamWriter(memoryStream))
-                {
-                    WriteVerbose("Creating certificate file..");
 
-                    var pemWriter = new PemWriter(streamWriter);
-                    pemWriter.WriteObject(DotNetUtilities.FromX509Certificate(cert));
-                    streamWriter.Flush();
+            var converter = CertificateConverterFactory.GetConverter(cert);
 
-                    File.WriteAllBytes(CertificatePath, memoryStream.GetBuffer());
-
-                    WriteVerbose(string.Format("Certificate file written to {0}", CertificatePath));
-                }
-            }
+            WriteVerbose("Creating certificate file..");
+            converter.SaveCertificateToPem(cert, CertificatePath);
+            WriteVerbose($"Certificate file written to {CertificatePath}");
         }
     }
 }

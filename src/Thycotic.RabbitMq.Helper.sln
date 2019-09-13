@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.RabbitMq.Helper.Lo
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Thycotic.RabbitMq.Helper.WiX", "Thycotic.RabbitMq.Helper.WiX\Thycotic.RabbitMq.Helper.WiX.wixproj", "{D5DDA25D-4204-4ECC-B97C-665416340459}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thycotic.RabbitMq.Helper.UnitTests", "Thycotic.RabbitMq.Helper.UnitTests\Thycotic.RabbitMq.Helper.UnitTests.csproj", "{1A81C06C-DD6C-4714-980A-68887765A3CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,18 @@ Global
 		{D5DDA25D-4204-4ECC-B97C-665416340459}.Static Analysis|Any CPU.Build.0 = Release|x86
 		{D5DDA25D-4204-4ECC-B97C-665416340459}.Static Analysis|x86.ActiveCfg = Release|x86
 		{D5DDA25D-4204-4ECC-B97C-665416340459}.Static Analysis|x86.Build.0 = Release|x86
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Debug|x86.Build.0 = Debug|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Release|x86.ActiveCfg = Release|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Release|x86.Build.0 = Release|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Static Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Static Analysis|Any CPU.Build.0 = Release|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Static Analysis|x86.ActiveCfg = Release|Any CPU
+		{1A81C06C-DD6C-4714-980A-68887765A3CF}.Static Analysis|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

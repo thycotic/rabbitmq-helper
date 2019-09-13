@@ -45,6 +45,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.5\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -102,6 +105,9 @@
     <Compile Include="ManagementClients\Cli\RabbitMqBatCtlClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\AssemblyEntryPointProvider.cs" />
+    <Compile Include="Security\Cryptography\CertificateConverterFactory.cs" />
+    <Compile Include="Security\Cryptography\ICertificateConverter.cs" />
+    <Compile Include="Security\Cryptography\RSACertificateConverter.cs" />
     <Compile Include="Workflow\ActivityIdProvider.cs" />
     <Compile Include="Workflow\CmdletWorkflow.cs" />
   </ItemGroup>
@@ -110,7 +116,9 @@
       <Link>Thycotic.RabbitMq.Helper.snk</Link>
     </None>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

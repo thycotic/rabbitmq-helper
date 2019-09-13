@@ -2,13 +2,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using Org.BouncyCastle.OpenSsl;
-using Org.BouncyCastle.Security;
-using Org.BouncyCastle.Security.Certificates;
 using Thycotic.RabbitMq.Helper.Logic;
-using Thycotic.RabbitMq.Helper.PSCommands.Installation;
+using Thycotic.RabbitMq.Helper.Logic.Security.Cryptography;
 
 namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
 {
@@ -98,44 +94,18 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
             }
             catch (Exception ex)
             {
-                throw new CertificateException("Could not open PFX. Perhaps the password is wrong", ex);
+                throw new Exception("Could not open PFX. Perhaps the password is wrong", ex);
             }
 
-            var rsa = (RSACryptoServiceProvider) cert.PrivateKey;
+            var converter = CertificateConverterFactory.GetConverter(cert);
 
-            using (var memoryStream = new MemoryStream())
-            {
-                using (TextWriter streamWriter = new StreamWriter(memoryStream))
-                {
-                    WriteVerbose("Creating key file..");
+            WriteVerbose("Creating key file..");
+            converter.SavePrivateKeyToPemKey(cert, KeyPath);
+            WriteVerbose($"Key file written to {KeyPath}");
 
-                    var pemWriter = new PemWriter(streamWriter);
-                    var keyPair = DotNetUtilities.GetRsaKeyPair(rsa);
-                    pemWriter.WriteObject(keyPair.Private);
-                    streamWriter.Flush();
-
-
-                    File.WriteAllBytes(KeyPath, memoryStream.GetBuffer());
-
-                    WriteVerbose(string.Format("Key file written to {0}", KeyPath));
-                }
-            }
-
-            using (var memoryStream = new MemoryStream())
-            {
-                using (TextWriter streamWriter = new StreamWriter(memoryStream))
-                {
-                    WriteVerbose("Creating certificate file..");
-
-                    var pemWriter = new PemWriter(streamWriter);
-                    pemWriter.WriteObject(DotNetUtilities.FromX509Certificate(cert));
-                    streamWriter.Flush();
-
-                    File.WriteAllBytes(CertificatePath, memoryStream.GetBuffer());
-
-                    WriteVerbose(string.Format("Certificate file written to {0}", CertificatePath));
-                }
-            }
+            WriteVerbose("Creating certificate file..");
+            converter.SaveCertificateToPem(cert, CertificatePath);
+            WriteVerbose($"Certificate file written to {CertificatePath}");
         }
     }
 }
