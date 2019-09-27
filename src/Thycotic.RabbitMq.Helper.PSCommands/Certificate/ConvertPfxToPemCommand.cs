@@ -101,7 +101,7 @@ namespace Thycotic.RabbitMq.Helper.PSCommands.Certificate
                 throw new CertificateException("Could not open PFX. Perhaps the password is wrong", ex);
             }
 
-            var rsa = (RSACryptoServiceProvider) cert.PrivateKey;
+            var rsa = (RSACryptoServiceProvider)cert.PrivateKey;
 
             using (var memoryStream = new MemoryStream())
             {
