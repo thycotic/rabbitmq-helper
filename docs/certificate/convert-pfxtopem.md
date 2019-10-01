@@ -1,6 +1,6 @@
 [title]: # (Convert PFX to PEM)
-[tags]: # (rabbitmq,tls)
-[priority]: # (1)
+[tags]: # (rabbitmq,tls,PFX,PEM)
+[priority]: # (2)
 
 # Convert a host PFX to pem file
 

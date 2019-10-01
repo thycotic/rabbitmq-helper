@@ -1,5 +1,5 @@
 [title]: # (Convert CA cert to PEM)
-[tags]: # (rabbitmq,tls)
+[tags]: # (rabbitmq,tls,CA,PFX,PEM)
 [priority]: # (1)
 
 # Convert a CA Certificate to PFX to PEM File

@@ -51,8 +51,9 @@ RabbitMQ is not a Thycotic product and we do not receive revenue for it. We buil
 ### Certificates 
 > Install-Connector workflow normally converts certificates without needing to use the below
 
-- [Convert a CA Certificate to PFX to PEM File](certificate/convert-cacerttopem.md)
+- [Convert a CA Certificate PFX to PEM File](certificate/convert-cacerttopem.md)
 - [Convert a Host PFX to PEM File](certificate/convert-pfxtopem.md)
+- [Convert a CNG or ECC certificate to PEM File](certificate/convert-cngecctopem.md)
 
 
 ### Federation
