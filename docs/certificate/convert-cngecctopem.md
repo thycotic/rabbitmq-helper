@@ -1,6 +1,6 @@
 [title]: # (Convert CNG or ECC to PEM)
-[tags]: # (rabbitmq,tls)
-[priority]: # (1)
+[tags]: # (rabbitmq,tls,CNG,ECC,PEM,OpenSSL)
+[priority]: # (10)
 
 # Convert a CNG or ECC certificate to PEM files
 
