@@ -11,7 +11,7 @@ openssl pkcs12 -in localhost.pfx -nocerts -out cert.key -nodes
 openssl pkcs12 -in localhost.pfx -clcerts -nokeys -out cert.pem
 ```
 
-# How to use CNG or ECC certificates with the RabbitMq Helper
+# How to use CNG or ECC certificates with the helper
 
 1. Run the OpenSSL commands above to convert your CNG or ECC PFX certificate to a cert.key and cert.pem file.
 2. Follow the [Convert a CA Certificate PFX to PEM File](convert-cacerttopem.md) instructions to generate your ca.pem file.
