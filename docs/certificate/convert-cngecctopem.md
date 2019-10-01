@@ -15,7 +15,7 @@ openssl pkcs12 -in localhost.pfx -clcerts -nokeys -out cert.pem
 
 1. Run the OpenSSL commands above to convert your CNG or ECC PFX certificate to a cert.key and cert.pem file.
 2. Follow the [Convert a CA Certificate PFX to PEM File](convert-cacerttopem.md) instructions to generate your ca.pem file.
-3. Follow the relevant instructions to install RabbitMq with TLS enabled, using the example certificate in the Examples folder.
+3. Follow the relevant instructions to install RabbitMq with TLS enabled, using the localhost files the Examples folder.
     - [Advanced installation of RabbitMQ with TLS from a computer connected to the Internet](../installation/installtls.md)
     - [Advanced installation of RabbitMQ with TLS from a computer NOT connected to the Internet](../installation/installtls-offline.md)
 4. Replace the example cert.key, cert.pem, and ca.pem in `C:\RabbitMq\` with your files.
