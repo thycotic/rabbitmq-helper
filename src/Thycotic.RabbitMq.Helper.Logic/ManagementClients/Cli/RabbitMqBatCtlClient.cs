@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Thycotic.RabbitMq.Helper.Logic.OS;
 
@@ -22,7 +23,9 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
                 var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
                 var output = string.Empty;
 
-                while (!output.Contains("uptime") && !cts.IsCancellationRequested)
+                var regex = new Regex("uptime", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+                while (!regex.IsMatch(output) && !cts.IsCancellationRequested)
                 {
 
                     var parameters2 = "status";
@@ -37,7 +40,7 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
                     }
                 }
 
-                if (!output.Contains("uptime"))
+                if (!regex.IsMatch(output))
                 {
                     throw new Exception($"Failed to get RabbitMq uptime information. RabbitMq is probably not running: {output}");
                 }
