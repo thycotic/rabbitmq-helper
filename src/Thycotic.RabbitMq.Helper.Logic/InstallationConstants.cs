@@ -52,7 +52,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// <summary>
             ///     The version
             /// </summary>
-            public static readonly Version Version = new Version(22, 0);
+            public static readonly Version Version = new Version(22, 2);
 
             /// <summary>
             ///     The download URL
@@ -73,7 +73,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// <summary>
             ///     The install path
             /// </summary>
-            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl10.4");
+            public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles, "erl10.6");
 
             /// <summary>
             ///     The uninstaller path
@@ -116,7 +116,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// <summary>
             ///     The version
             /// </summary>
-            public static readonly Version Version = new Version(3, 7, 17);
+            public static readonly Version Version = new Version(3, 8, 2);
 
             /// <summary>
             ///     The configuration path
@@ -127,7 +127,7 @@ namespace Thycotic.RabbitMq.Helper.Logic
             ///     The install path
             /// </summary>
             public static readonly string InstallPath = Path.Combine(EnvironmentalVariables.ProgramFiles,
-                "RabbitMQ Server", "rabbitmq_server-3.7.17");
+                "RabbitMQ Server", "rabbitmq_server-3.8.2");
 
             /// <summary>
             ///     The bin dir
