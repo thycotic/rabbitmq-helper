@@ -59,16 +59,16 @@ namespace Thycotic.RabbitMq.Helper.Logic
             /// </summary>
             public static readonly string DownloadUrl =
                 Environment.Is64BitOperatingSystem
-                    ? "http://erlang.org/download/otp_win64_22.0.exe"
-                    : "http://erlang.org/download/otp_win32_22.0.exe";
+                    ? "http://erlang.org/download/otp_win64_22.2.exe"
+                    : "http://erlang.org/download/otp_win32_22.2.exe";
 
             /// <summary>
             ///     The download URL using the Thycotic mirror
             /// </summary>
             public static readonly string ThycoticMirrorDownloadUrl =
                 Environment.Is64BitOperatingSystem
-                    ? "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win64_22.0.exe"
-                    : "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win32_22.0.exe";
+                    ? "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win64_22.2.exe"
+                    : "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/erlang/otp_win32_22.2.exe";
 
             /// <summary>
             ///     The install path
@@ -104,13 +104,13 @@ namespace Thycotic.RabbitMq.Helper.Logic
             ///     The download URL
             /// </summary>
             public const string DownloadUrl =
-                "https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.17/rabbitmq-server-3.7.17.exe";
+                "https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.2/rabbitmq-server-3.8.2.exe";
 
             /// <summary>
             ///     The download URL using the Thycotic mirror
             /// </summary>
             public const string ThycoticMirrorDownloadUrl =
-                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/rabbitmq/rabbitmq-server-3.7.17.exe";
+                "https://thycocdn.azureedge.net/rabbitmqhelperfiles-master/rabbitmq/rabbitmq-server-3.8.2.exe";
 
             /// <summary>
             ///     The version
