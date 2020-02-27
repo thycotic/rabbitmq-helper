@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 using Thycotic.RabbitMq.Helper.Logic.OS;
 
 namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
@@ -79,12 +80,16 @@ namespace Thycotic.RabbitMq.Helper.Logic.ManagementClients.Cli
                 throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
             }
 
-            if (!strict && !actualOutput.ToLower().Contains(expectedOutput.ToLower()))
+            var expectedRegex = new Regex(expectedOutput, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+            if (!strict && !expectedRegex.IsMatch(actualOutput))
             {
                 throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
             }
 
-            if (actualOutput.Contains("Error"))
+            var errorRegex = new Regex("Error", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+            if (errorRegex.IsMatch(actualOutput))
             {
                 throw new InvalidRabbitMqBatOutputException(expectedOutput, actualOutput);
             }
