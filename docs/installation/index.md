@@ -5,7 +5,7 @@
 # Installation
 
 ## Overview
-The RabbitMQ Helper is a tool that streamlines the RabbitMQ installation on Windows. See [Downloading and Installing RabbitMQ](https://www.rabbitmq.com/download.html) and [Installing on Windows](https://www.rabbitmq.com/install-windows.html) for vanilla instructions. 
+The RabbitMQ Helper is a tool that streamlines the RabbitMQ installation on Windows. Only versions of RabbitMQ/Erlang installed through the Thycotic Rabbit MQ Helper are directly supported. You can download Rabbit MQ Helper [here](https://updates.thycotic.net/links.ashx?RabbitMqInstaller). 
 
 While the Helper has individual cmdlets that perform the different installation/un-installation steps, it also contains two workflow cmdlets called ```Install-Connector``` and ```Uninstall-Connector```.
 

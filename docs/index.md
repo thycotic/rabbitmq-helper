@@ -4,9 +4,7 @@
 
 # RabbitMQ Helper
 
-The RabbitMQ Helper is a tool whose purpose is to assist with installing [RabbitMQ](https://www.rabbitmq.com)
-
-RabbitMQ is not a Thycotic product and we do not receive revenue for it. We built the RabbitMQ Helper to help our customers more easily install RabbitMQ (RabbitMQ is an important component of Secret Server’s on-premises environment).
+[RabbitMQ](https://www.rabbitmq.com) is an important component of Secret Server’s on-premises environment, but it is not a Thycotic product and we do not receive revenue for it. We built the RabbitMQ Helper to help our customers more easily install RabbitMQ on Windows. Only versions of RabbitMQ/Erlang installed through the Thycotic Rabbit MQ Helper are directly supported. You can download Rabbit MQ Helper [here](https://updates.thycotic.net/links.ashx?RabbitMqInstaller). 
 
 ## What can the Helper do for Me?
 
