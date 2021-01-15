@@ -1,10 +1,10 @@
-[title]: # (RabbitMq Helper)
+[title]: # (RabbitMq and RabbitMQ Helper)
 [tags]: # (rabbitmq,helper,powershell,cmdlet)
 [priority]: # (1)
 
-# RabbitMQ Helper
+# RabbitMQ and RabbitMQ Helper
 
-[RabbitMQ](https://www.rabbitmq.com) is an important component of Secret Server’s on-premises environment, but it is not a Thycotic product and we do not receive revenue for it. We built the RabbitMQ Helper to help our customers more easily install RabbitMQ on Windows. Only versions of RabbitMQ/Erlang installed through the Thycotic Rabbit MQ Helper are directly supported. You can download Rabbit MQ Helper [here](https://updates.thycotic.net/links.ashx?RabbitMqInstaller). 
+RabbitMQ is an important component of Secret Server’s on-premises environment, providing a robust framework for queuing messages between Secret Server and its Distributed Engines. RabbitMQ is an enterprise-ready software package that provides reliability and clustering functionality superior to other applications. For detailed information about RabbitMQ go to https://www.rabbitmq.com/. RabbitMQ is not a Thycotic product and we receive do revenue from it. We provide direct support for versions of RabbitMQ/Erlang only when they are installed through the Thycotic Rabbit MQ Helper in Windows.
 
 ## What can the Helper do for Me?
 
@@ -18,28 +18,8 @@
 - Create basic users
 - View/manage the RabbitMQ log 
 
-## Prerequisites
-
-- Download and install the latest RabbitMQ Helper
-    - Stable:
-        - [Thycotic Updates - Alias to the Thycotic CDN](https://updates.thycotic.net/links.ashx?RabbitMqInstaller)
-        - [Directly from Thycotic CDN](https://thycocdn.azureedge.net/engineinstallerfiles-master/rabbitMqSiteConnector/grmqh.msi)
-    - Pre-release
-        - [Pre-release drop](https://thycodevstorage.blob.core.windows.net/engineinstallerfiles-qa/rabbitMqSiteConnector/grmqh.msi)
-
-- Start the Helper. This will prepare and run a PowerShell instance that is pre-configured to use the Helper PowerShell module.
-    - Use the Start Menu shortcut for "Thycotic RabbitMQ Helper PowerShell Host"
-    - Or navigate to the installation folder in "%PROGRAMFILES%\Thycotic Software Ltd\RabbitMq Helper"
-- Run PowerShell commandlets directly or use any of the example scripts provided.
-
- 
-   ##### For Offline Installs:
-   - [Preparing for Installation on a Computer NOT Connected to the Internet](installation/prepare-offline.md)
-
-
 ## Installation
    - [Installation Overview](installation/index.md)
-
 
 ## Advanced
 
