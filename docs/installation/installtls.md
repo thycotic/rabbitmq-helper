@@ -2,7 +2,7 @@
 [tags]: # (rabbitmq,installation)
 [priority]: # (130)
 
-# Advanced installation of RabbitMq with TLS from a computer connected to the Internet
+# Online Advanced Installation with TLS
 
 ## General TLS requirements
 
