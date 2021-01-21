@@ -2,7 +2,7 @@
 [tags]: # (rabbitmq,installation)
 [priority]: # (110)
 
-# Simple installation of RabbitMq without TLS from a computer connected to the Internet
+# Online Simple Installation without TLS
 
 ```powershell
 $cred = Get-Credential -Message "Enter the initial RabbitMq user username and password";
